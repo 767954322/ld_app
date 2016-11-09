@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -33,6 +34,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.Deco
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.MessageUtils;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -59,6 +61,7 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
+import com.nostra13.universalimageloader.utils.L;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +69,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 
-public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener {
+public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener, MessageUtils.UnMessageCallBack {
 
     protected static final String TAB_HOME_CASE = "TAB_HOME_CASE";  /// 案例 .
     protected static final String TAB_DESIGNER = "TAB_DESIGNER";    /// 设计师列表 .
@@ -182,6 +185,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onResume() {
         UserPictureUtil.setConsumerOrDesignerPicture(this, getUserAvatar());
+        MessageUtils.getMsgConsumerInfoData(this);
         Intent intent = getIntent();
         setChooseViewWidth(true);
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
@@ -251,6 +255,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 button = super.getRadioButtonById(id);
         }
         return button;
+    }
+
+    @Override
+    public void unCOuntMsgCallBack(int msgUnCount) {
+        if (msgUnCount > 0) {
+            Log.d("test", "数：" + msgUnCount);
+        } else {
+            Log.d("test", "数： 0");
+        }
     }
 
     @Override
@@ -886,4 +899,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private DesignerListFragment designerListFragment;
     private DesignerInfoDetails designerInfoDetails;
     private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
+
+
 }
