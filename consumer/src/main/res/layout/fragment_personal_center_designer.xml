@@ -353,11 +353,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
-
+                <TextView
+                    android:id="@+id/unread_designer_message_count"
+                    android:layout_width="@dimen/chat_list_unread_side"
+                    android:layout_height="@dimen/chat_list_unread_side"
+                    android:background="@drawable/circle_shape"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/chat_list_unread_fontsize"
+                    android:visibility="gone" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_20"
                     android:layout_marginRight="@dimen/size_20"
                     android:src="@drawable/icon_unfold_normal"/>
 

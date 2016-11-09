@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_impression"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_impression"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header"/>
+        layout="@layout/view_navigation_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                         android:layout_height="@dimen/size_100"
                         android:layout_gravity="center"
                         android:background="@drawable/icon_default_avator"
-                        app:poly_vertices="0"/>
+                        app:poly_vertices="0" />
 
                     <ImageView
                         android:id="@+id/img_personal_a_certified"
@@ -50,7 +50,7 @@
                         android:layout_marginLeft="@dimen/size_20"
                         android:background="@drawable/icon_certification_normal"
                         android:textColor="@color/white"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:focusable="true"
                     android:singleLine="true"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_18" />
             </LinearLayout>
 
             <RelativeLayout
@@ -79,7 +79,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/size_20"
-                    android:src="@drawable/icon_issue_demand_normal"/>
+                    android:src="@drawable/icon_issue_demand_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/edit_icon"
                     android:text="@string/requirements"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
 
@@ -97,7 +97,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
 
             </RelativeLayout>
 
@@ -144,7 +144,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/bg_impression"/>
+                    android:background="@color/bg_impression" />
             </LinearLayout>
             <include layout="@layout/view_common_line"/>
 
@@ -194,7 +194,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/size_20"
-                    android:src="@drawable/ic_following"/>
+                    android:src="@drawable/ic_following" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -203,7 +203,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/focus_icon"
                     android:text="@string/my_attention"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
 
@@ -212,7 +212,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
 
             </RelativeLayout>
 
@@ -250,19 +250,8 @@
             </LinearLayout>
             -->
 
+            <include layout="@layout/view_common_line" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_impression"/>
-            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_personal_b_collect"
@@ -278,7 +267,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_info_normal"/>
+                    android:src="@drawable/icon_info_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -286,7 +275,20 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_my_collect"
                     android:text="@string/message_center"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_33" />
+
+                <TextView
+                    android:layout_marginRight="30dp"
+                    android:id="@+id/unread_person_message_count"
+                    android:layout_width="@dimen/chat_list_unread_side"
+                    android:layout_height="@dimen/chat_list_unread_side"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/circle_shape"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/chat_list_unread_fontsize"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -294,7 +296,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
 
             <LinearLayout
@@ -306,7 +308,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/bg_impression"/>
+                    android:background="@color/bg_impression" />
             </LinearLayout>
 
             <RelativeLayout
@@ -322,7 +324,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_more_normal"/>
+                    android:src="@drawable/icon_more_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -330,7 +332,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_essential_setting"
                     android:text="@string/consumer_more"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -338,7 +340,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
         </LinearLayout>
 

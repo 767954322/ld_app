@@ -30,6 +30,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.MessageUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -81,6 +82,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mTvAuditStatusAgo = (TextView) findViewById(R.id.tv_audit_status_ago);
         mImgCertificateIcon = (ImageView) findViewById(R.id.img_autonym_icon);
         mTvDesignerNickname = (TextView) findViewById(R.id.tv_designer_nickname);
+        tv_unread_message_count = (TextView) findViewById(R.id.unread_designer_message_count);
 
         mTvDesignerAttention = (LinearLayout) findViewById(R.id.ll_personal_designer_attention);
 
@@ -107,6 +109,18 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             mTvDesignerNickname.setText(R.string.no_data);
             mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
         }
+        MessageUtils.getMsgConsumerInfoData(new MessageUtils.UnMessageCallBack() {
+            @Override
+            public void unCOuntMsgCallBack(int msgUnCount) {
+                if (msgUnCount>0){
+                    tv_unread_message_count.setVisibility(View.VISIBLE);
+                    tv_unread_message_count.setText(msgUnCount+"");
+                }else {
+                    tv_unread_message_count.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -411,6 +425,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
     private LinearLayout mLlPersonalDesignerMsgCenter;
     private LinearLayout mLlNoAttestation;
     private TextView mTvDesignerNickname;
+    private TextView tv_unread_message_count;
     private TextView mTvAuditStatusAgo;
     private ImageView mImgCertificateIcon;
     private PolygonImageView mPolygonImageView;

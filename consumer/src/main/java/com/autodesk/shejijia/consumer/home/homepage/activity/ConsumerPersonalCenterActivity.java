@@ -18,12 +18,13 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDema
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendActivity;
+import com.autodesk.shejijia.consumer.tools.about.MPMoreSettingActivity;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.MessageUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.consumer.tools.about.MPMoreSettingActivity;
-import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
@@ -59,6 +60,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mPolygonImageView = (PolygonImageView) findViewById(R.id.ib_personal_b_photo);
         mTvLoginOrRegister = (TextView) findViewById(R.id.tv_loginOrRegister);
         mDesignerAttention = (RelativeLayout) findViewById(R.id.ll_personal_designer_attention);
+        tv_unread_message_count = (TextView) findViewById(R.id.unread_person_message_count);
 
     }
 
@@ -72,6 +74,18 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
             return;
         }
         member_id = mMemberEntity.getAcs_member_id();
+        MessageUtils.getMsgConsumerInfoData(new MessageUtils.UnMessageCallBack() {
+            @Override
+            public void unCOuntMsgCallBack(int msgUnCount) {
+                if (msgUnCount>0){
+                    tv_unread_message_count.setVisibility(View.VISIBLE);
+                    tv_unread_message_count.setText(msgUnCount+"");
+                }else {
+                    tv_unread_message_count.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
 
@@ -223,7 +237,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     private RelativeLayout mRlPersonalCollect, mRlPersonalSetting, mRlPersonalFitment;
     private PolygonImageView mPolygonImageView;
     private TextView mTvLoginOrRegister;
-
+    private TextView tv_unread_message_count;
     /// 变量.
     private String member_id;
     private String nick_name;
