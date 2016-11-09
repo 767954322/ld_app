@@ -27,11 +27,12 @@ import java.util.List;
 public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     private Context context;
     private List<Integer> itemIds;
-
-    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, List<Integer> itemIds, int layoutId) {
+    private int maxSize;
+    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, List<Integer> itemIds, int maxSize,int layoutId) {
         super(context, brandsBeens, layoutId);
         this.context = context;
         this.itemIds = itemIds;
+        this.maxSize = maxSize;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
 
     @Override
     public boolean isEnabled(int position) {
-        if (itemIds == null || itemIds.size() < 5) {
+        if (itemIds == null || itemIds.size() < maxSize) {
             return true;
         }
         for (int id : itemIds) {

@@ -38,6 +38,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private Boolean isRefresh = true;
     private TextView tvNumber;
     private AppCompatButton btFinsh;
+    private int brandsSize;
     private List<Integer> itemIds = new ArrayList<>();
     @Override
     protected int getLayoutResId() {
@@ -57,14 +58,16 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDBean = (RecommendSCFDBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        brandsSize = mRecommendSCFDBean.getBrands()!= null?mRecommendSCFDBean.getBrands().size():0;
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
+        tvNumber.setText(Constant.FragmentEnum.SIX-brandsSize+"");
         setNavigationBar();
-        addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,R.layout.add_check_textview);
+        addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,Constant.FragmentEnum.SIX-brandsSize,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
         getBrands(0,100);
 //        mPullToRefreshLayout.autoRefresh();
@@ -80,7 +83,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         long[] items = addBrandListview.getCheckedItemIds();
-        int number = Constant.FragmentEnum.FIVE - items.length;
+        int number = Constant.FragmentEnum.SIX - items.length-brandsSize;
         tvNumber.setText(number+"");
         btFinsh.setEnabled(items.length > 0?true:false);
         btFinsh.setBackground(this.getResources().getDrawable(items.length > 0?R.color.bg_0084ff:R.color.gray));
