@@ -11,21 +11,20 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
-import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -38,6 +37,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author he.liu .
@@ -106,13 +107,14 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
      * 获取消费者家装订单
      */
     public void getMyDecorationData(final int offset, final int limit, final int state) {
+        CustomProgress.showDefaultProgress(getActivity());
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
 
-                CustomProgress.cancelDialog();
+
 
                 if (isRefreshOrLoadMore) {
                     updateViewFromData(mDecorationListBean);
@@ -127,10 +129,10 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                         return;
                     } else {
                         mRlEmpty.setVisibility(View.GONE);
-                        mPlvConsumerDecoration.setSelection(0);
+//                        mPlvConsumerDecoration.setSelection(0);
                     }
                 }
-
+                scheduleTask();
                 LogUtils.i(TAG, userInfo);
             }
 
@@ -144,6 +146,20 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
             }
         });
+    }
+
+    /**
+     * 为了解决adapter刷新数据时出现的数据显示上的延迟,添加的延时取消dialog任务
+     */
+    private void scheduleTask(){
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                CustomProgress.cancelDialog();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask,500);
     }
 
     @Override
@@ -181,6 +197,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onResume() {
         super.onResume();
+        CustomProgress.showDefaultProgress(getActivity());
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             getMyDecorationData(OFFSET, LIMIT, 1);
@@ -200,6 +217,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
             }
 
@@ -209,6 +227,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                 WkFlowStateInfoBean WkFlowStateInfoBean = GsonUtil.jsonToBean(jsonString, WkFlowStateInfoBean.class);
                 List<TipWorkFlowTemplateBean> tip_work_flow_template = WkFlowStateInfoBean.getTip_work_flow_template();
                 WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
+                scheduleTask();
             }
         });
     }
