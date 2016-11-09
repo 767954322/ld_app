@@ -213,8 +213,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 //            setEmptyListDefaultButtn();
             return;
         }
-        mRecommendSCFDListEditTag.addAll(mRecommendSCFDList);
         mRecommendSCFDList.addAll(recommendscfd);
+//        if (isFirstJumpin) {
+//            mRecommendSCFDListEditTag.addAll(mRecommendSCFDList);
+//        }
+
         mLlEmptyContentView.setVisibility(View.GONE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
         for (int i = 0; i < mRecommendSCFDList.size(); i++) {
@@ -285,12 +288,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 处理退出，未保存逻辑
      */
     private void onBackEvent() {
-        boolean isNotEdited = mRecommendSCFDListEditTag.toString().equals(mRecommendSCFDList);
+        boolean isNotEdited = mRecommendSCFDListEditTag.toString().equals(mRecommendSCFDList.toString());
         if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 /*|| isNotEdited*/) {
             finish();
         } else {
             new AlertView("", "当前清单还未发送，是否保存？",
-                    "否", null, new String[]{}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    "否", null, new String[]{"是"}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object object, int position) {
                     if (position != AlertView.CANCELPOSITION) {
