@@ -56,6 +56,8 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
     @Override
     protected void initView() {
+
+        setTitleForNavbar(getResources().getString(R.string.flow_contract_detail)); /// 设置标题 .
         initViewVariables();
 
         ll_designer_action_layout.setVisibility(View.GONE);
