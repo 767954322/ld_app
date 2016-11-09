@@ -46,7 +46,7 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     private String designer_id;
     private String designer_uid;
     private List<SelectProjectEntity.DesignerProjectsBean> designerProjects = new ArrayList<>();
-    private SelectProjectEntity.DesignerProjectsBean interiorProject;
+    //    private SelectProjectEntity.DesignerProjectsBean interiorProject;
     List<RecommendDetailsBean> list = new ArrayList<>();
     private RecommendDetailsBean entity;
     private SelectProjectEntity.DesignerProjectsBean designerProjectsBean;
@@ -72,8 +72,8 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         designer_id = memberEntity.getAcs_member_id();
         designer_uid = memberEntity.getHs_uid();
-        interiorProject = new SelectProjectEntity.DesignerProjectsBean();
-        interiorProject.setCommunity_name("创建新的项目");
+//        interiorProject = new SelectProjectEntity.DesignerProjectsBean();
+//        interiorProject.setCommunity_name("创建新的项目");
 
         getSelectProjectList(designer_id);
 
@@ -150,10 +150,10 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
                 SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
 
                 designerProjects.addAll(entity.getDesignerProjects());
-                if (!designerProjects.contains(interiorProject)) {
-                    designerProjects.add(0, interiorProject);
-                    mAdapter.notifyDataSetChanged();
-                }
+//                if (!designerProjects.contains(interiorProject)) {
+//                    designerProjects.add(0, interiorProject);
+                mAdapter.notifyDataSetChanged();
+//                }
 
             }
 

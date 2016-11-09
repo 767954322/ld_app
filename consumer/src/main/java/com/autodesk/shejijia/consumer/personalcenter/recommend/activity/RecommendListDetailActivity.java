@@ -55,6 +55,7 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  */
 public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener,
         ExpandableListView.OnGroupClickListener {
+
     private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
@@ -190,8 +191,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         if (null == recommendscfd || recommendscfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
+            mBtnListSend.setClickable(false);
+            mBtnListSend.setBackgroundColor(UIUtils.getColor(R.color.gray));
             return;
         }
+
         mRecommendSCFDList.addAll(recommendscfd);
         mLlEmptyContentView.setVisibility(View.GONE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
