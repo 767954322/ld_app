@@ -238,7 +238,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                         mCurrentDistrictCode = areaCode;
 
                         area = UIUtils.getNoStringIfEmpty(area);
-                        tv_consumer_address.setText(province + city + area);
+                        tv_consumer_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();
                     }
 
