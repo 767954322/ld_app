@@ -46,16 +46,16 @@ public class ScanQrDialogActivity extends AppCompatActivity implements View.OnCl
 
     private void initData() {
         mTitle.setText("提示");
-        mContent.setText(mError==null?mFormat:mError);
+        mContent.setText(mError == null ? mFormat : mError);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(R.id.btn_submit == id) {
-            startActivity(new Intent(this,ProjectIdCodeActivity.class));
+        if (R.id.btn_submit == id) {
+            startActivity(new Intent(this, ProjectIdCodeActivity.class));
             finish();
-        } else if(R.id.btn_cancel == id) {
+        } else if (R.id.btn_cancel == id) {
             finish();
         }
     }
