@@ -29,9 +29,8 @@ public class MoreActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        MoreFragment moreFragment = (MoreFragment) getSupportFragmentManager().findFragmentById(R.id.fly_personal_center);
-        if (moreFragment == null) {
-            moreFragment = MoreFragment.newInstance();
+        if (savedInstanceState == null) {
+            MoreFragment moreFragment = MoreFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fly_personal_center, moreFragment)
                     .commit();

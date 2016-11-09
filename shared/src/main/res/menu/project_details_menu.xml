@@ -4,11 +4,11 @@
 
     <item android:id="@+id/project_toolbar_info"
         android:title="@string/menu_project_info"
-        android:icon="@drawable/ic_menu_screen"
+        android:icon="@drawable/ic_menu_zxing"
         app:showAsAction="always"/>
 
     <item android:id="@+id/project_toolbar_message"
         android:title="@string/menu_project_message"
-        android:icon="@drawable/ic_menu_search"
+        android:icon="@drawable/ic_menu_message"
         app:showAsAction="ifRoom"/>
 </menu>

@@ -240,17 +240,17 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     }
 
     private void initToolbar(Toolbar toolbar, @Nullable TextView toolbarTitle, boolean homeAsUpEnabled, boolean isSelfDefineTile, String title) {
-        if (!isSelfDefineTile) {
-            toolbar.setTitle(title);
-            toolbar.setTitleTextColor(ContextCompat.getColor(this, com.autodesk.shejijia.shared.R.color.white));
-            if (toolbarTitle != null) {
-                toolbarTitle.setVisibility(View.GONE);
-            }
-        } else {
+        if (isSelfDefineTile) {
             toolbar.setTitle("");
             if (toolbarTitle != null) {
                 toolbarTitle.setVisibility(View.VISIBLE);
                 toolbarTitle.setText(title);
+            }
+        } else {
+            toolbar.setTitle(title);
+            toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+            if (toolbarTitle != null) {
+                toolbarTitle.setVisibility(View.GONE);
             }
         }
         setSupportActionBar(toolbar);

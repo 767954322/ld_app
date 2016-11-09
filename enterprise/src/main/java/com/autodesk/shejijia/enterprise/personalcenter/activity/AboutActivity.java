@@ -29,9 +29,8 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        AboutFragment aboutFragment = (AboutFragment) getSupportFragmentManager().findFragmentById(R.id.fly_personal_center);
-        if (aboutFragment == null) {
-            aboutFragment = AboutFragment.newInstance();
+        if (savedInstanceState == null) {
+            AboutFragment aboutFragment = AboutFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fly_personal_center, aboutFragment)
                     .commit();

@@ -53,9 +53,8 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        ProjectDetailsFragment projectDetailsFragment = (ProjectDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fl_project_main);
-        if (projectDetailsFragment == null) {
-            projectDetailsFragment = ProjectDetailsFragment.newInstance();
+        if (savedInstanceState == null) {
+            ProjectDetailsFragment projectDetailsFragment = ProjectDetailsFragment.newInstance();
             if (getIntent().hasExtra("projectId")) {
                 Bundle bundle = new Bundle();
                 bundle.putLong("projectId", getIntent().getLongExtra("projectId", 0));

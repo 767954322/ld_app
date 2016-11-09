@@ -30,9 +30,8 @@ public class ProjectListActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        ProjectListFragment projectListFragment = (ProjectListFragment) getSupportFragmentManager().findFragmentById(R.id.fly_personal_center);
-        if (projectListFragment == null) {
-            projectListFragment = ProjectListFragment.newInstance();
+        if (savedInstanceState == null) {
+            ProjectListFragment projectListFragment = ProjectListFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fly_personal_center, projectListFragment)
                     .commit();
