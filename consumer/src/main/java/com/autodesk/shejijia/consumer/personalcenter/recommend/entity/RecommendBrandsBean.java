@@ -120,4 +120,21 @@ public class RecommendBrandsBean implements Serializable {
     public void setCommoditys(List<?> commoditys) {
         this.commoditys = commoditys;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"brand_name\":'" + brand_name + '\'' +
+                ", \"name\":'" + name + '\'' +
+                ", \"dimension\":'" + dimension + '\'' +
+                ", \"remarks\":'" + remarks + '\'' +
+                ", \"code\":'" + code + '\'' +
+                ", \"source\":'" + source + '\'' +
+                ", \"apartment\":'" + apartment + '\'' +
+                ", \"logo_url\":'" + logo_url + '\'' +
+                ", \"amountAndUnit\":'" + amountAndUnit + '\'' +
+                ", \"malls\":" + malls +
+                ", \"commoditys\":" + commoditys +
+                '}';
+    }
 }

@@ -50,6 +50,36 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 推荐清单更新接口,主材推荐清单、品类、品牌保存到草稿箱
+     *
+     * @param isSendInterface true: 发送接口
+     *                        false: 保存接口
+     */
+    public void saveRecommendDetail(boolean isSendInterface, String design_id, String asset_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+
+        // 发送接口．
+        String sendRecommendDetail = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s/SCFC";
+        String formatSendRecommendDetail = String.format(sendRecommendDetail, design_id, asset_id);
+
+        // 保存接口．
+        String saveRecommendDetail = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s";
+        String formatSaveRecommendDetail = String.format(saveRecommendDetail, design_id, asset_id);
+
+        OkJsonRequest okRequest = new OkJsonRequest(
+                isSendInterface ? Request.Method.POST : Request.Method.PUT,
+                isSendInterface ? formatSendRecommendDetail : formatSaveRecommendDetail,
+                jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 从推荐草稿中获取推荐清单信息
      */
     public void getRecommendDraftDetail(String asset_id, OkJsonRequest.OKResponseCallback callback) {
@@ -1935,5 +1965,6 @@ public class MPServerHttpManager {
     }
 
     private String TAG = getClass().getSimpleName();
+
 
 }

@@ -29,4 +29,14 @@ public class RecommendMallsBean implements Serializable {
     public void setMall_name(String mall_name) {
         this.mall_name = mall_name;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"mall_number\":'" + mall_number + '\'' +
+                ", \"mall_name\":'" + mall_name + '\'' +
+                ", \"booth_number\":" + booth_number +
+                ", \"booth_name\":" + booth_name +
+                '}';
+    }
 }

@@ -137,4 +137,24 @@ public class RecommendSCFDBean implements Serializable {
     public void setBrands(List<RecommendBrandsBean> brands) {
         this.brands = brands;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"category_3d_id\":'" + category_3d_id + '\'' +
+                ", \"category_3d_name\":'" + category_3d_name + '\'' +
+                ", \"category_o2o_id\":'" + category_o2o_id + '\'' +
+                ", \"category_o2o_name\":'" + category_o2o_name + '\'' +
+                ", \"category_online_id\":'" + category_online_id + '\'' +
+                ", \"category_online_name\":'" + category_online_name + '\'' +
+                ", \"sub_category_3d_id\":'" + sub_category_3d_id + '\'' +
+                ", \"sub_category_3d_name\":'" + sub_category_3d_name + '\'' +
+                ", \"sub_category_o2o_id\":'" + sub_category_o2o_id + '\'' +
+                ", \"sub_category_o2o_name\":'" + sub_category_o2o_name + '\'' +
+                ", \"sub_category_online_id\":'" + sub_category_online_id + '\'' +
+                ", \"sub_category_online_name\":'" + sub_category_online_name + '\'' +
+                ", \"brands\":" + brands +
+                ", \"source\":'" + source + '\'' +
+                '}';
+    }
 }

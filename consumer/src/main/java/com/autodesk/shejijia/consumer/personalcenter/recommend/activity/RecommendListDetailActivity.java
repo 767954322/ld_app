@@ -25,16 +25,19 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -137,16 +140,25 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     /**
      * 保存推荐清单详情页面
      */
-    private void saveRecommendDetail() {
+    private void saveOrSendRecommendDetail(boolean isSendInterface) {
+
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        String design_id = mMemberEntity.getAcs_member_id();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("asset_id", mAsset_id);
+            jsonObject.put("scfd", mRecommendSCFDList.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         CustomProgress.showDefaultProgress(mActivity);
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String jsonString = jsonObject.toString();
-                Log.d("RecommendListDetailAc", jsonString);
-                RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
-                updateUI(recommendListDetailBean);
+                finish();
+                Toast.makeText(RecommendListDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -155,8 +167,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
-        Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
+        MPServerHttpManager.getInstance().saveRecommendDetail(isSendInterface, design_id, mAsset_id, jsonObject, callback);
     }
 
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
@@ -188,10 +199,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                Log.d("RecommendListDetailActi", "mRecommendSCFDList:" + mRecommendSCFDList);
+                saveOrSendRecommendDetail(true);
                 break;
         }
     }
+
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -210,7 +222,19 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
+    public void onBackPressed() {
+        onBackEvent();
+    }
+
+    @Override
     protected void leftNavButtonClicked(View view) {
+        onBackEvent();
+    }
+
+    /**
+     * 处理退出，未保存逻辑
+     */
+    private void onBackEvent() {
         if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0) {
             finish();
         } else {
@@ -219,19 +243,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 @Override
                 public void onItemClick(Object object, int position) {
                     if (position != AlertView.CANCELPOSITION) {
-                        saveRecommendDetail();
+                        saveOrSendRecommendDetail(false);
                     } else {
                         RecommendListDetailActivity.this.finish();
                     }
                 }
             }).show();
         }
-    }
-
-    private void setTitle(RecommendDetailsBean recommendListDetailBean) {
-        setTitleForNavbar(recommendListDetailBean.getCommunity_name());
-        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
 
@@ -260,6 +278,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onSubCategoryDeleteListener(int groupPosition) {
         mRecommendSCFDList.remove(groupPosition);
         mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
+
+    private void setTitle(RecommendDetailsBean recommendListDetailBean) {
+        setTitleForNavbar(recommendListDetailBean.getCommunity_name());
+        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
     /**
@@ -372,6 +396,4 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             }
         }
     }
-
-
 }
