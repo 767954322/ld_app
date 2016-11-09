@@ -44,7 +44,10 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
 
 
-        holder.setText(R.id.brand_name, brandsBean.getBrand_name());
+        if (brandsBean != null){
+
+            holder.setText(R.id.brand_name, brandsBean.getBrand_name());
+        }
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {
 
@@ -54,14 +57,16 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
         holder.setText(R.id.store_show, storeName);
         holder.setOnClickListener(R.id.checked_img, new ItemImgListener(holder, brandsBean));
         holder.setOnClickListener(R.id.rl_item,new ItemImgListener(holder,brandsBean));
-        BtnStatusBean btnStatusBeanCompare = list.get(holder.getPosition());
+        if (list.size() != 0){
 
-        if (btnStatusBeanCompare.getSingleClickOrDoubleBtnCount() == 2) {
+            BtnStatusBean btnStatusBeanCompare = list.get(holder.getPosition());
+            if (btnStatusBeanCompare.getSingleClickOrDoubleBtnCount() == 2) {
 
-            holder.setBackgroundRes(R.id.checked_img, R.drawable.brand_unchecked);
-        } else {
+                holder.setBackgroundRes(R.id.checked_img, R.drawable.brand_unchecked);
+            } else {
 
-            holder.setBackgroundRes(R.id.checked_img, R.drawable.brand_checked);
+                holder.setBackgroundRes(R.id.checked_img, R.drawable.brand_checked);
+            }
         }
     }
 

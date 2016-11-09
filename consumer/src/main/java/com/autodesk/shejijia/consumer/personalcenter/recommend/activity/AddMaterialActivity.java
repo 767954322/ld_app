@@ -31,6 +31,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicPopWi
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -77,14 +78,18 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private List<RecommendBrandsBean> listBrands = new ArrayList<>();//复用的品牌集合
     private List<CheckedInformationBean> totalList = new ArrayList<>();//清单与主材的交互集合
     private CheckedInformationBean checkedInformationBean;
-    private String currentSubCategoryName = "";//当前正被点击到的二级品类的名字
     private LinearLayout add_for_listing;
     private List<BtnStatusBean> listTag;
     private List<BtnStatusBean> backListTag;//返回的标志位集合
     private BtnStatusBean[] btnStatusBeanList;//记录最后一次，该品类下的选中的二级品类信息，
-    private String currentOneCategoryName;//当前选中以及品类信息
     private String[] oneArr;
     private List<RecommendSCFDBean> mRecommendSCFDList;//清单中已经拥有的品类和品牌集合
+    private StoreInformationBean storeInformationBean;//店铺信息
+    private String currentCheckedOneCategoryId;
+    private String currentOneCategoryName;//当前选中以及品类信息
+    private String currentCheckedTwoCategoryId;
+    private String currentSubCategoryName = "";//当前正被点击到的二级品类的名字
+    private String currentStoreIdTotal;
 
     @Override
     public void onClick(View v) {
@@ -214,6 +219,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             case 101:
                 Bundle bundle = data.getExtras();
                 List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get("list");
+                //将返回的数据再次筛选显示
+                firstGetBrandsInformation(forResultStoreList);
                 break;
             default:
                 break;
@@ -252,11 +259,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      * 根据品类获取品牌信息
      */
     public void getMaterialCategoryBrandsInformation(String category_3d_id, String category_3d_name, String sub_category_3d_id,
-                                                     String sub_category_3d_name, String mall_number, String decoration_company_number,
-                                                     Integer offset, Integer limit) {
+                                                     String sub_category_3d_name, String mall_number, Integer offset, Integer limit) {
 
         MPServerHttpManager.getInstance().getCategoryBrandsInformation(category_3d_id, category_3d_name, sub_category_3d_id, sub_category_3d_name,
-                mall_number, decoration_company_number, offset, limit, new OKResponseCallback() {
+                mall_number, offset, limit, new OKResponseCallback() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
 
@@ -269,21 +275,73 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                         if (justRefreshOrLoadMore == 1) {
                             listBrands.clear();
-                            addDatas(getRecommendBrandsBean.getBrands());
+                            if (getRecommendBrandsBean.getBrands() != null) {
+
+                                addDatas(getRecommendBrandsBean.getBrands());
+                            }
                             showBrandsList(listBrands);
                         }
                         if (justRefreshOrLoadMore == 2) {
                             listBrands.clear();
-                            addDatas(getRecommendBrandsBean.getBrands());
-                            restartDatasForAdapter(null, getRecommendBrandsBean.getBrands());
+                            if (getRecommendBrandsBean.getBrands() != null){
+
+                                addDatas(getRecommendBrandsBean.getBrands());
+                                restartDatasForAdapter(null, getRecommendBrandsBean.getBrands());
+                            }else {
+                                restartDatasForAdapter(null, listBrands);
+                            }
                         }
                         if (justRefreshOrLoadMore == 3) {
                             mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                            changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
+                            if (getRecommendBrandsBean.getBrands() != null){
+
+                                changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
+                            }
                         }
 
                     }
                 });
+    }
+
+    /**
+     * 获取店铺
+     */
+    public void getStore() {
+
+        MPServerHttpManager.getInstance().getStores(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                storeInformationBean = GsonUtil.jsonToBean(jsonObject.toString(), StoreInformationBean.class);
+                List<StoreInformationBean.StoreListBean> store_list = storeInformationBean.getStore_list();
+                firstGetBrandsInformation(store_list);
+            }
+        });
+
+    }
+
+    /**
+     * 第一次获取品牌信息
+     */
+    public void firstGetBrandsInformation(List<StoreInformationBean.StoreListBean> store_list) {
+
+        String storeId;
+        for (int i = 0; i < store_list.size(); i++) {
+
+            storeId = store_list.get(i).getMall_number();
+            if (i == 0) {
+                currentStoreIdTotal = storeId;
+            } else {
+
+                currentStoreIdTotal = currentStoreIdTotal + "," + storeId;
+            }
+        }
+        //一二级品类信息展示之后在获取品牌信息
+        getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
     }
 
     /**
@@ -300,6 +358,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             oneArr[i] = materialCategoryBean.getCategories_3d().get(i).getCategory_3d_name();
         }
         currentOneCategoryName = oneArr[0];
+        currentCheckedOneCategoryId = materialCategoryBean.getCategories_3d().get(0).getCategory_3d_id();
         btnStatusBeanList = new BtnStatusBean[oneArr.length];
         //默认需要添加的第一个未点击的二级品类保存
         BtnStatusBean btnStatusBeanDefault = new BtnStatusBean();
@@ -320,6 +379,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 dynamicPopWindowReuse = dynamicPopWindows[btnStatusBean.getCountOffset()];
                 //当前一级主材信息
                 currentOneCategoryName = materialCategoryBean.getCategories_3d().get(btnStatusBean.getCountOffset()).getCategory_3d_name();
+                currentCheckedOneCategoryId = materialCategoryBean.getCategories_3d().get(btnStatusBean.getCountOffset()).getCategory_3d_id();
                 countArrItem = btnStatusBean.getCountOffset();//不同的一级品类
                 //选中一级品类时,将之前选择的一级品类下的二级品类信息展示出来
                 for (int i = 0; i < oneArr.length; i++) {
@@ -343,7 +403,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBean);
     }
 
-
     /**
      * 展示二级品类信息
      */
@@ -360,14 +419,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 public void onButtonClicked(BtnStatusBean btnStatusBean) {
                     if (dynamicPopWindows[countArrItem] != null) {
                         dynamicPopWindows[countArrItem].setButtonCheckedStatus(btnStatusBean);
-
                     }
                     //新建品类集合
                     adapterCategoryAll(btnStatusBean);
                     for (int i = 0; i < oneArr.length; i++) {
 
                         if (currentOneCategoryName.equals(oneArr[i])) {
-
                             btnStatusBeanList[i] = btnStatusBean;
                         }
                     }
@@ -378,8 +435,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         }
         two_level_category.addView(dynamicAddViews[0]);
         dynamicPopWindowReuse = dynamicPopWindows[0];
-        //一二级品类信息展示之后在获取品牌信息
-        getMaterialCategoryBrandsInformation("", "", "", "", "", "", 0, 20);
+        //一二级品类信息展示之后在获取,店铺,品牌信息
+        getStore();
     }
 
     /**
@@ -494,6 +551,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(btnStatusBean.getCountOffset());
         List<RecommendBrandsBean> checkedBrandsInformationBean = new ArrayList<RecommendBrandsBean>();//新建所需要的品牌集合
         currentSubCategoryName = subCategoryBean.getSub_category_3d_name();
+        currentCheckedTwoCategoryId = subCategoryBean.getSub_category_3d_id();
         List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
         //增加已经存在的该品类下的集合
         List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
@@ -544,7 +602,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             ToastUtil.showCustomToast(AddMaterialActivity.this, "fuyong");
         } else {
             //从未获取过该品类的品牌信息
-            getMaterialCategoryBrandsInformation("", "", "", "", "", "", 0, 20);
+            getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
             ToastUtil.showCustomToast(AddMaterialActivity.this, "xin");
         }
         showBrandRemainCount();
@@ -606,7 +664,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                         canChooseBrandsCount = canChooseBrandsCount - 1;
                     }
-
                 }
             }
         }
@@ -711,7 +768,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             for (int j = 0; j < mRecommendSCFDList.size(); j++) {
 
                 String categoryForList = mRecommendSCFDList.get(j).getSub_category_3d_name();
-                if (categoryForList.equals(categoryName)&&categoryName.equals(currentSubCategoryName)) {
+                if (categoryForList.equals(categoryName) && categoryName.equals(currentSubCategoryName)) {
                     //取出来该品类的tag来做修改
                     List<BtnStatusBean> listTagForTotal = totalList.get(i).getList();
                     List<RecommendBrandsBean> listInformationSendList = mRecommendSCFDList.get(j).getBrands();
@@ -766,7 +823,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         for (int i = 0; i < totalList.size(); i++) {
 
             String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
-            if (categoryName.equals("背景墙")) {
+            String categoryNameFirst = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
+            if (categoryName.equals(categoryNameFirst)) {
                 isHaveNumberOne = true;
                 break;
             } else {
@@ -797,13 +855,13 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
 
         justRefreshOrLoadMore = 2;
-        getMaterialCategoryBrandsInformation("", "", "", "", "", "", 0, 20);
+        getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
 
         justRefreshOrLoadMore = 3;
-        getMaterialCategoryBrandsInformation("", "", "", "", "", "", 0, 20);
+        getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
     }
 }

@@ -17,7 +17,11 @@ import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
- * Created by yaoxuehua on 16-10-25.
+ * @author yaoxuehua .
+ * @version v1.0 .
+ * @date 16-10-25 .
+ * @file DynamicAddViewContainer.java .
+ * @brief 动态添加按钮.====一级品类展示
  */
 
 public class DynamicAddViewContainer extends LinearLayout {
@@ -33,7 +37,7 @@ public class DynamicAddViewContainer extends LinearLayout {
     private static double NO_CHANGE_HEIGHT = 1184.00d;
     private static double ADAPTER_COUNT = 1.00d;
     private int heightParent = 0;//父控件高度
-    private int widthLine ;// 画线宽度
+    private int widthLine;// 画线宽度
     private int heightLine;//线高度
     private int startXLine;//画线起始横坐标
     private int StartYLine;//画线起始纵坐标
@@ -78,7 +82,7 @@ public class DynamicAddViewContainer extends LinearLayout {
             linearLayout.setGravity(Gravity.CENTER);
             layoutParams.weight = 1;
             linearLayout.setLayoutParams(layoutParams);
-            dynamicAddView(linearLayout, 1, i);
+            dynamicAddView(linearLayout, 0, i);
             addView(linearLayout);
 
         }
@@ -104,7 +108,11 @@ public class DynamicAddViewContainer extends LinearLayout {
         textView.setTag(btnStatusBean);
         textView.setText(arr[numberCount]);
         textView.setTextSize(15);
-        textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
+        if (numberCount == 0) {
+            textView.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
+        } else {
+            textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
+        }
         textView.setGravity(Gravity.CENTER);
 //        textView.setBackgroundResource(R.drawable.material_add_bg);
         textView.setLayoutParams(layoutParamsButton);
@@ -112,7 +120,7 @@ public class DynamicAddViewContainer extends LinearLayout {
             @Override
             public void onClick(View v) {
                 BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
-                    onButtonClickedListener.onButtonClicked(btnStatusBean);
+                onButtonClickedListener.onButtonClicked(btnStatusBean);
                 changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
                 for (int i = 0; i < textViews.length; i++) {
 
@@ -160,8 +168,8 @@ public class DynamicAddViewContainer extends LinearLayout {
 
     /**
      * 获取每个item宽度，方便画线
-     * */
-    public void getWidthAndLocation(int count){
+     */
+    public void getWidthAndLocation(int count) {
 
         this.countNumber = count;
     }
@@ -177,7 +185,7 @@ public class DynamicAddViewContainer extends LinearLayout {
         Paint paint = new Paint();
         paint.setStrokeWidth((int) heightParent * 5 / 120);
         paint.setColor(getResources().getColor(com.autodesk.shejijia.shared.R.color.my_project_title_pointer_color));
-        canvas.drawLine(startXLine,(int) heightParent * 115 / 120 + 1,widthLine + startXLine,(int) heightParent * 115 / 120 + 1,paint);
+        canvas.drawLine(startXLine, (int) heightParent * 115 / 120 + 1, widthLine + startXLine, (int) heightParent * 115 / 120 + 1, paint);
         invalidate();
     }
 
@@ -185,8 +193,8 @@ public class DynamicAddViewContainer extends LinearLayout {
         /**
          * 接口回调，方便调用数据；
          * Callback method to be invoked when current item clicked
-         *
-         *  BtnStatusBean the index of clicked button tag
+         * <p>
+         * BtnStatusBean the index of clicked button tag
          */
         void onButtonClicked(BtnStatusBean btnStatusBean);
     }
