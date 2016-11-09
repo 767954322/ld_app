@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -247,9 +248,10 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     //获取消息数据
     public void getMessageData(final String state) {
 
-        MPServerHttpManager.getInstance().getNewsMessageCenterMessages(designer_id, needs_id, message_type, offset, limit, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().getNewsMessageCenterMessages(mMemberEntity.getMember_id(), designer_id, needs_id, message_type, offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                Log.d("LOG_NET", "失败 ！");
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (state.equals(REFRESH_STATUS)) {
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
@@ -262,9 +264,19 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                Log.d("LOG_NET", "成功！");
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 MessageCenterBean messageCenter = GsonUtil.jsonToBean(jsonString, MessageCenterBean.class);
-                updateViewFromData(messageCenter.getMessages(), state);
+                if (messageCenter.getMessages() != null) {
+                    updateViewFromData(messageCenter.getMessages(), state);
+                } else {
+                    if (state.equals(REFRESH_STATUS)) {
+                        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                    } else {
+                        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                    }
+                }
+
             }
         });
 

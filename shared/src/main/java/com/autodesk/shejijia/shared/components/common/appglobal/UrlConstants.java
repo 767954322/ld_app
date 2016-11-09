@@ -261,7 +261,8 @@ public final class UrlConstants {
     /**
      * 消息中心接口
      */
-    public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
+    public static final String URL_MESSAGE_CENTER_SYSTEM = MAIN_MEMBER_V2 + "/member/";
+    public static final String URL_MESSAGE_CENTER_PEOJECT = MAIN_MEMBER + "/designers/";
 
 
     /**

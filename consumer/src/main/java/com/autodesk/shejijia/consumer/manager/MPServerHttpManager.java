@@ -1511,16 +1511,15 @@ public class MPServerHttpManager {
     /**
      * 获取消息中心数据
      */
-    public void getNewsMessageCenterMessages(String designer_id, String needs_id, String message_type, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
+    public void getNewsMessageCenterMessages(String member_id, String designer_id, String needs_id, String message_type, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
 //      String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
 
         //member_id  以刘新乐为例，假数据。后期需要更改........................................................................................
-
         String url = "";
         if (TextUtils.equals(message_type, Constant.MessageCenterActivityKey.PROJECT_MSG)) {//项目消息
-            url = "http://192.168.71.70:8080/member-app/v1/api/designers/" + "20730531" + "/demands/" + needs_id + "/messages?limit=" + limit + "&offset=" + offset;
+            url = UrlConstants.URL_MESSAGE_CENTER_PEOJECT + designer_id + "/demands/" + needs_id + "/messages?limit=" + limit + "&offset=" + offset;
         } else if (TextUtils.equals(message_type, Constant.MessageCenterActivityKey.SYSTEM_MSG)) {//系统消息
-            url = "http://192.168.71.70:8080/member-app/v2/api/member/" + "20730531" + "/sysmessages?limit=" + limit + "&offset=" + offset;
+            url = UrlConstants.URL_MESSAGE_CENTER_SYSTEM + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
         }
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {

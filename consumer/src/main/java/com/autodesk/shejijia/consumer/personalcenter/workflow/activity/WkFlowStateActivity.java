@@ -95,7 +95,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.initData(savedInstanceState);
 
         setImageForNavButton(ButtonType.SECONDARY, R.drawable.details);
-        setImageForNavButton(ButtonType.RIGHT, R.drawable.information);
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.show_more);
 
         if (footerView == null) {
             footerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_footer, null);
