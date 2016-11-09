@@ -132,9 +132,4 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
         bottomPopUp.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-    }
 }

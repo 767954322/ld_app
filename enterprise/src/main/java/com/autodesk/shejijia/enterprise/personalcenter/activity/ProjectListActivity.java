@@ -46,9 +46,7 @@ public class ProjectListActivity extends BaseActivity {
                 finish();
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

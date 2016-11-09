@@ -2,11 +2,13 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 
@@ -50,7 +52,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             public void onSuccess(ProjectInfo data) {
                 mProjectDetailsView.hideLoading();
                 LogUtils.d("project_details", data.toString());
-                // TODO: 11/1/16 调用view层方法，传递项目详情信息
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), data);
             }
 
             @Override
@@ -60,4 +62,6 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             }
         });
     }
+
+
 }

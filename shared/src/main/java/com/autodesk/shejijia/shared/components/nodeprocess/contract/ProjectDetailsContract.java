@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
@@ -12,6 +13,7 @@ public interface ProjectDetailsContract {
 
     interface View extends BaseView {
 
+        void updateProjectDetailsView(String memberType, ProjectInfo projectInfo);
     }
 
     interface Presenter extends BasePresenter {

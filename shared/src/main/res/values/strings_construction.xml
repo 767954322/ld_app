@@ -88,4 +88,8 @@
     <string name="materialstaff">材料员</string>
     <string name="foreman">班长</string>
     <string name="inspector">监理</string>
+
+    <!--项目详情里文字-->
+    <string name="work_ready">等待开工交底中</string>
+    <string name="work_inProgress">开工交底中</string>
 </resources>

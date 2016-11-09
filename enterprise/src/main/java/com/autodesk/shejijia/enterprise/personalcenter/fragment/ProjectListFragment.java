@@ -73,9 +73,4 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-    }
 }

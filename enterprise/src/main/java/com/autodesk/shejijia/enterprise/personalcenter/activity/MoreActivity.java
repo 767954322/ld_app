@@ -44,9 +44,7 @@ public class MoreActivity extends BaseActivity {
                 finish();
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

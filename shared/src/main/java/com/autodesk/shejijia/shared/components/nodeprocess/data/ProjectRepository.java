@@ -21,6 +21,7 @@ import org.json.JSONObject;
 public final class ProjectRepository implements ProjectDataSource {
 
     private ProjectList mProjectList;
+    private ProjectInfo mProjectInfo;
 
     private ProjectRepository() {
     }
@@ -57,8 +58,24 @@ public final class ProjectRepository implements ProjectDataSource {
 
 
     @Override
-    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback) {
-        ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, callback);
+    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+
+        if (mProjectInfo != null) {
+            callback.onSuccess(mProjectInfo);
+        } else {
+            ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+                @Override
+                public void onSuccess(ProjectInfo data) {
+                    mProjectInfo = data;
+                    callback.onSuccess(data);
+                }
+
+                @Override
+                public void onError(String errorMsg) {
+                    callback.onError(errorMsg);
+                }
+            });
+        }
     }
 
     @Override

@@ -87,9 +87,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

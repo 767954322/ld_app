@@ -150,11 +150,10 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
             case android.R.id.home:
                 initNavigationHeadState();
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
+                return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
