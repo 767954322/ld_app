@@ -78,7 +78,7 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         // mStyleData.addAll(filledData(getResources().getStringArray(R.array.all)));
         //mStyleData.addAll(filledData(getResources().getStringArray(R.array.style)));
         mHouseData.addAll(filledData(getResources().getStringArray(R.array.all3d)));
-        mHouseData.addAll(filledData(getResources().getStringArray(R.array.mlivingroom)));
+        mHouseData.addAll(filledData(getResources().getStringArray(R.array.dmlivingroom3d)));
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.all3d)));
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.area)));
 

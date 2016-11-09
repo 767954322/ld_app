@@ -455,7 +455,10 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
         <activity
             android:name=".codecorationBase.studio.activity.WorkRoomDetailActivity"
             android:alwaysRetainTaskState="true"
@@ -606,7 +609,10 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryDetail3DActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"
             android:alwaysRetainTaskState="true"

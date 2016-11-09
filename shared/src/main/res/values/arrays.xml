@@ -107,6 +107,15 @@
         <item>其他</item>
     </string-array>
 
+    <string-array name="dmlivingroom3d">
+        <item>一室</item>
+        <item>两室</item>
+        <item>三室</item>
+        <item>四室</item>
+        <item>五室</item>
+        <item>其他</item>
+    </string-array>
+
     <string-array name="hall">
         <item>一厅</item>
         <item>两厅</item>
