@@ -77,6 +77,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private int justRefreshOrLoadMore = 1;//判断是第一次获取，2,刷新，3 加载更多
     private List<RecommendBrandsBean> listBrands = new ArrayList<>();//复用的品牌集合
     private List<CheckedInformationBean> totalList = new ArrayList<>();//清单与主材的交互集合
+    private List<CheckedInformationBean> totalListRaplace;//总集合替身
     private CheckedInformationBean checkedInformationBean;
     private LinearLayout add_for_listing;
     private List<BtnStatusBean> listTag;
@@ -110,7 +111,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 deleteTotalEmptyDataItem();
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("totalList", (Serializable) totalList);
+                bundle.putSerializable("totalList", (Serializable) totalListRaplace);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -733,11 +734,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      */
     public void deleteTotalEmptyDataItem() {
 
+        totalListRaplace = new ArrayList<>();//总集合替身
         for (int i = 0; i < totalList.size(); i++) {
             int sizeTotal = totalList.get(i).getCheckedBrandsInformationBean().size();
-            if (sizeTotal == 0) {
+            if (sizeTotal != 0) {
 
-                totalList.remove(i);
+                totalListRaplace.add(totalList.get(i));
             }
         }
         ToastUtil.showCustomToast(AddMaterialActivity.this, "" + totalList.size());
