@@ -1,18 +1,14 @@
 package com.autodesk.shejijia.enterprise;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -25,15 +21,12 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
-import com.autodesk.shejijia.enterprise.personalcenter.fragment.MoreFragment;
-import com.autodesk.shejijia.enterprise.personalcenter.fragment.ProjectListFragment;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
-import com.autodesk.shejijia.shared.framework.activity.NavigationConstructionActivity;
+import com.autodesk.shejijia.enterprise.base.NavigationConstructionActivity;
 
 public class EnterpriseHomeActivity extends NavigationConstructionActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -75,9 +68,6 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         mUserNameView = (TextView) headerView.findViewById(R.id.tv_user_name);
         mUserRoleView = (TextView) headerView.findViewById(R.id.tv_user_role);
         mHeadPicBtn = (ImageButton) headerView.findViewById(R.id.imgBtn_personal_headPic);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, 0, 0);
-        toggle.syncState();
     }
 
     @Override
@@ -95,7 +85,7 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtn_personal_headPic:
-
+                // TODO: 11/9/16  into userInfo activity
                 break;
             case R.id.tv_toolbar_title:
                 // TODO: 10/25/16  get date from calendar and set data to taskListFragment
@@ -222,18 +212,25 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
 
         String memberType = UserInfoUtils.getMemberType(this);
         if (!TextUtils.isEmpty(memberType)) {
-            if (memberType.equals("designer")) {
-                mUserRoleView.setText(getString(R.string.designer));
-            } else if (memberType.equals("member")) {
-                mUserRoleView.setText(getString(R.string.member));
-            } else if (memberType.equals("clientmanager")) {
-                mUserRoleView.setText(getString(R.string.clientmanager));
-            } else if (memberType.equals("materialstaff")) {
-                mUserRoleView.setText(getString(R.string.materialstaff));
-            } else if (memberType.equals("foreman")) {
-                mUserRoleView.setText(getString(R.string.foreman));
-            } else if (memberType.equals("inspector")) {
-                mUserRoleView.setText(getString(R.string.inspector));
+            switch (memberType) {
+                case "designer":
+                    mUserRoleView.setText(getString(R.string.designer));
+                    break;
+                case "member":
+                    mUserRoleView.setText(getString(R.string.member));
+                    break;
+                case "clientmanager":
+                    mUserRoleView.setText(getString(R.string.clientmanager));
+                    break;
+                case "materialstaff":
+                    mUserRoleView.setText(getString(R.string.materialstaff));
+                    break;
+                case "foreman":
+                    mUserRoleView.setText(getString(R.string.foreman));
+                    break;
+                case "inspector":
+                    mUserRoleView.setText(getString(R.string.inspector));
+                    break;
             }
         }
     }

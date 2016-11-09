@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.framework.activity;
+package com.autodesk.shejijia.enterprise.base;
 
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by t_xuz on 11/8/16.

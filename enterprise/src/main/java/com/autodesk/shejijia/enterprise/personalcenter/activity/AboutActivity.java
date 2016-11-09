@@ -6,8 +6,7 @@ import android.view.MenuItem;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.personalcenter.fragment.AboutFragment;
-import com.autodesk.shejijia.enterprise.personalcenter.fragment.MoreFragment;
-import com.autodesk.shejijia.shared.framework.activity.NavigationConstructionActivity;
+import com.autodesk.shejijia.enterprise.base.NavigationConstructionActivity;
 
 /**
  * Created by t_xuz on 11/8/16.
