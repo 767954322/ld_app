@@ -19,11 +19,11 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class PrecheckActivity extends BaseActivity implements View.OnClickListener, PrecheckContract.View {
 
-    private RadioButton mOk;
-    private RadioButton mNo;
-    private LinearLayout mNecessary;
-    private LinearLayout mAdditional;
-    private Button mSelect;
+    private RadioButton mOkBtn;
+    private RadioButton mNoBtn;
+    private LinearLayout mNecessaryLayout;
+    private LinearLayout mAdditionalLayout;
+    private Button mSelectBtn;
     private Toolbar mToolbar;
 
     @Override
@@ -36,14 +36,14 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         //Toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
         //验收条件的按钮
-        mOk = (RadioButton) findViewById(R.id.btn_ok);
-        mNo = (RadioButton) findViewById(R.id.btn_no);
+        mOkBtn = (RadioButton) findViewById(R.id.btn_ok);
+        mNoBtn = (RadioButton) findViewById(R.id.btn_no);
         //必要条件
-        mNecessary = (LinearLayout) findViewById(R.id.ll_necessary);
+        mNecessaryLayout = (LinearLayout) findViewById(R.id.ll_necessary);
         //辅助条件
-        mAdditional = (LinearLayout) findViewById(R.id.ll_additional);
+        mAdditionalLayout = (LinearLayout) findViewById(R.id.ll_additional);
         //确定按钮
-        mSelect = (Button) findViewById(R.id.btn_select);
+        mSelectBtn = (Button) findViewById(R.id.btn_select);
     }
 
     @Override
@@ -60,9 +60,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     protected void initListener() {
         // TODO: 16/10/27  设置监听事件
 //        mLeft.setOnClickListener(this);
-        mOk.setOnClickListener(this);
-        mNo.setOnClickListener(this);
-        mSelect.setOnClickListener(this);
+        mOkBtn.setOnClickListener(this);
+        mNoBtn.setOnClickListener(this);
+        mSelectBtn.setOnClickListener(this);
     }
 
 
@@ -87,6 +87,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
             finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
