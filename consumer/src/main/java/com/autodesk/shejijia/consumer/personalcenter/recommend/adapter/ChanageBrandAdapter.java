@@ -50,7 +50,7 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
             index = brandName.length();
         }
         builder.setSpan(new AbsoluteSizeSpan(15,true), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
-        StyleSpan span = new StyleSpan(Typeface.BOLD_ITALIC);
+        StyleSpan span = new StyleSpan(Typeface.BOLD);
         builder.setSpan(span, 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), index, sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
