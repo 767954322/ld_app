@@ -100,16 +100,15 @@
             android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.TaskDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait" />
+
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity"/>
 
         <activity

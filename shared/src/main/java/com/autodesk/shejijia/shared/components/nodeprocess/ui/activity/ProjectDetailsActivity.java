@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -21,9 +22,6 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
     private TextView mPatrolBtn;
     private TextView mIssueBtn;
     private TextView mSessionBtn;
-    //topBar
-    private Toolbar toolbar;
-    private TextView toolbarTitle;//self define
 
     @Override
     protected int getLayoutResId() {
@@ -34,14 +32,12 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initView() {
         //top bar
-        toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
-        toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//控制左上角返回按钮是否显示
-        getSupportActionBar().setHomeButtonEnabled(true);//左上角返回按钮是否可以点击
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (getIntent().hasExtra("projectName") && !TextUtils.isEmpty(getIntent().getStringExtra("projectName"))) {
+                actionBar.setTitle(getIntent().getStringExtra("projectName"));
+            }
+        }
         //bottom bar
         mPatrolBtn = (TextView) this.findViewById(R.id.tv_project_patrol);
         mIssueBtn = (TextView) this.findViewById(R.id.tv_project_issue);
@@ -69,9 +65,6 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
                     .add(R.id.fl_project_main, projectDetailsFragment)
                     .commit();
         }
-        if (getIntent().hasExtra("projectName") && !TextUtils.isEmpty(getIntent().getStringExtra("projectName"))) {
-            toolbarTitle.setText(getIntent().getStringExtra("projectName"));
-        }
     }
 
     @Override
@@ -93,7 +86,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                break;
+                return true;
             default:
                 break;
         }

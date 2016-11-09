@@ -1,19 +1,19 @@
 package com.autodesk.shejijia.enterprise.personalcenter.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.personalcenter.fragment.ProjectListFragment;
-import com.autodesk.shejijia.enterprise.base.NavigationConstructionActivity;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by t_xuz on 11/8/16.
  * 个人中心－项目列表
  */
 
-public class ProjectListActivity extends NavigationConstructionActivity {
+public class ProjectListActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
@@ -22,8 +22,10 @@ public class ProjectListActivity extends NavigationConstructionActivity {
 
     @Override
     protected void initView() {
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
-        initToolbar(toolbar, null, true, false, getString(R.string.personal_center_completed_project));
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.personal_center_completed_project));
+        }
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ProjectListActivity extends NavigationConstructionActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                break;
+                return true;
             default:
                 break;
         }

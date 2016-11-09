@@ -3,10 +3,12 @@ package com.autodesk.shejijia.enterprise;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -26,10 +28,14 @@ import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
-import com.autodesk.shejijia.enterprise.base.NavigationConstructionActivity;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
-public class EnterpriseHomeActivity extends NavigationConstructionActivity implements View.OnClickListener, OnCheckedChangeListener,
+public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String FRAGMENT_TAG_TASK = "taskList";
+    private static final String FRAGMENT_TAG_ISSUE = "issueList";
+    private static final String FRAGMENT_TAG_GROUP_CHAT = "groupChatList";
 
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
@@ -42,7 +48,7 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
     private TextView toolbarTitle;//self define
     private TextView mUserNameView;
     private TextView mUserRoleView;
-    private int currentPosition;//左抽屉当前点击的位置
+    private String currentFragmentTag;
 
     @Override
     protected int getLayoutResId() {
@@ -90,7 +96,7 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
             case R.id.tv_toolbar_title:
                 // TODO: 10/25/16  get date from calendar and set data to taskListFragment
                 ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
-                TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(makeTag(2));
+                TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_TASK);
                 if (taskListFragment != null) {
                     taskListFragment.refreshProjectListByDate("2016-10-25");
                 }
@@ -106,15 +112,15 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
 
         switch (checkId) {
             case R.id.rdoBtn_project_task:
-                controlShowFragment(0);
+                controlShowFragment(FRAGMENT_TAG_TASK);
                 initToolbar(toolbar, toolbarTitle, true, true, getString(R.string.toolbar_task_title));
                 break;
             case R.id.rdoBtn_project_issue:
-                controlShowFragment(1);
+                controlShowFragment(FRAGMENT_TAG_ISSUE);
                 initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_question_title));
                 break;
             case R.id.rdoBtn_project_session:
-                controlShowFragment(2);
+                controlShowFragment(FRAGMENT_TAG_GROUP_CHAT);
                 initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_groupChat_title));
                 break;
         }
@@ -160,21 +166,21 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         super.onBackPressed();
     }
 
-    private void controlShowFragment(int position) {
+    private void controlShowFragment(String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        Fragment oldFragment = fragmentManager.findFragmentByTag(makeTag(currentPosition));
+        Fragment oldFragment = fragmentManager.findFragmentByTag(currentFragmentTag);
         if (oldFragment != null) {
             transaction.hide(oldFragment);
         }
-        currentPosition = position;
+        currentFragmentTag = tag;
 
-        Fragment currentFragment = fragmentManager.findFragmentByTag(makeTag(position));
+        Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
         if (currentFragment != null) {
             transaction.show(currentFragment);
         } else {
-            transaction.add(R.id.main_content, getFragment(position), makeTag(position));
+            transaction.add(R.id.main_content, getFragment(tag), tag);
         }
         transaction.commitAllowingStateLoss();
 
@@ -183,20 +189,16 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         }
     }
 
-    private String makeTag(int position) {
-        return R.id.main_content + position + "";
-    }
-
-    private Fragment getFragment(int position) {
+    private Fragment getFragment(String tag) {
         Fragment fragment = null;
-        switch (position) {
-            case 0:
+        switch (tag) {
+            case FRAGMENT_TAG_TASK:
                 fragment = TaskListFragment.newInstance();
                 break;
-            case 1:
+            case FRAGMENT_TAG_ISSUE:
                 fragment = IssueListFragment.newInstance();
                 break;
-            case 2:
+            case FRAGMENT_TAG_GROUP_CHAT:
                 fragment = GroupChatFragment.newInstance();
                 break;
             default:
@@ -231,7 +233,30 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
                 case "inspector":
                     mUserRoleView.setText(getString(R.string.inspector));
                     break;
+                default:
+                    break;
             }
+        }
+    }
+
+    private void initToolbar(Toolbar toolbar, @Nullable TextView toolbarTitle, boolean homeAsUpEnabled, boolean isSelfDefineTile, String title) {
+        if (!isSelfDefineTile) {
+            toolbar.setTitle(title);
+            toolbar.setTitleTextColor(ContextCompat.getColor(this, com.autodesk.shejijia.shared.R.color.white));
+            if (toolbarTitle != null) {
+                toolbarTitle.setVisibility(View.GONE);
+            }
+        } else {
+            toolbar.setTitle("");
+            if (toolbarTitle != null) {
+                toolbarTitle.setVisibility(View.VISIBLE);
+                toolbarTitle.setText(title);
+            }
+        }
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
     }
 
