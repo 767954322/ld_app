@@ -146,7 +146,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     /**
      * 保存推荐清单详情页面
      */
-    private void saveOrSendRecommendDetail(boolean isSendInterface) {
+    private void saveOrSendRecommendDetail(final boolean isSendInterface) {
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         String design_id = mMemberEntity.getAcs_member_id();
@@ -162,9 +162,20 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                finish();
-                Toast.makeText(RecommendListDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-
+                if (isSendInterface) {
+                    new AlertView("提示", "发送推荐清单成功",
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object object, int position) {
+                            if (position != AlertView.CANCELPOSITION) {
+                                finish();
+                            }
+                        }
+                    }).show();
+                } else {
+                    Toast.makeText(RecommendListDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override
@@ -208,7 +219,15 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                saveOrSendRecommendDetail(true);
+                new AlertView("提示", "您确定要把这份清单发送给客户吗？",
+                        "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        if (position != AlertView.CANCELPOSITION) {
+                            saveOrSendRecommendDetail(true);
+                        }
+                    }
+                }).show();
                 break;
         }
     }
