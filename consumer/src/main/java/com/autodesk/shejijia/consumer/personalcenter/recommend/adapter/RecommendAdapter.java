@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -114,10 +115,11 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     }
 
     private void deleteItemRecommend(RecommendDetailsBean item) {
-        final String member_id = AdskApplication.getInstance().getMemberEntity().getMember_id();
+        final String member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
         MPServerHttpManager.getInstance().deleteItemRecommend(member_id, item.getAsset_id(), new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                MPNetworkUtils.logError("deleteItemRecommend", error);
                 if (mCallback != null)
                     mCallback.onRevokeFailer();
             }

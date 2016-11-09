@@ -68,6 +68,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                OFFSET = 0;
                 mRecommendLogic.onLoadRecommendListData(false, 0, LIMIT, 0);
                 mFrameLayout.onRefreshComplete();
             }
@@ -94,6 +95,11 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     private void updateViewFromApi(int offset, List<RecommendDetailsBean> items) {
+        if (items.size() < LIMIT) {
+            mListView.setHasLoadMore(false);
+        } else {
+            mListView.setHasLoadMore(true);
+        }
         if (items != null && items.size() > 0) {
             if (offset == 0) {
                 mRecommends.clear();

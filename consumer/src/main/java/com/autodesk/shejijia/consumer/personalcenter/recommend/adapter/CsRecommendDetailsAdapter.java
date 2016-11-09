@@ -20,6 +20,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendM
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
 
     @Override
     public void convert(final CommonViewHolder holder, RecommendSCFDBean item) {
-        holder.setText(R.id.tv_category_name, item.getSub_category_3d_name());
+        holder.setText(R.id.tv_category_name, UIUtils.substring(item.getSub_category_3d_name(), 4));
         holder.setOnClickListener(R.id.tv_category_name, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +69,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
         if (isFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
-            tvBrandNum.setText(bean.getAmountAndUnit() + "个");
+            tvBrandNum.setText(bean.getAmountAndUnit());
         } else {
             ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
             if (mBrandLogo != null && !TextUtils.isEmpty(bean.getLogo_url()))

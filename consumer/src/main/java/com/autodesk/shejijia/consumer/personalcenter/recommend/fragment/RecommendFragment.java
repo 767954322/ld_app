@@ -71,10 +71,10 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         mListView.setOnLoadMoreListener(this);
         mListView.setOnItemClickListener(this);
         mAdapter.setOnRevokeCallback(this);
-        mListView.setHasLoadMore(true);
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                OFFSET = 0;
                 mRecommendLogic.onLoadRecommendListData(true, 0, LIMIT, mStatus);
                 mFrameLayout.onRefreshComplete();
             }
@@ -101,6 +101,11 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     }
 
     private void updateViewFromApi(int offset, List<RecommendDetailsBean> items) {
+        if (items.size() < LIMIT) {
+            mListView.setHasLoadMore(false);
+        } else {
+            mListView.setHasLoadMore(true);
+        }
         if (items != null && items.size() > 0) {
             if (offset == 0) {
                 mRecommends.clear();
