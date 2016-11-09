@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -62,6 +63,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
+    private TextView mTvNavTitle;
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -81,6 +83,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         mExpandListView = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
         mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
+        mTvNavTitle = (TextView) findViewById(R.id.nav_title_textView);
+
     }
 
     @Override
@@ -94,6 +98,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
+        mTvNavTitle.setMaxEms(6);
         mRecommendSCFDList = new ArrayList<>();
         mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
                 mExpandListView, false));
