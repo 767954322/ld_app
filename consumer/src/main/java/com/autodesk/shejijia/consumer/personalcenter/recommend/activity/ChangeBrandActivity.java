@@ -22,7 +22,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
-
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,14 +143,16 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     }
 
     private void filterBrand(List<RecommendBrandsBean> brandsBeans) {
-        for (RecommendBrandsBean brandsBean : brandsBeans) {
-            for (RecommendBrandsBean tb : mRecommendSCFDBean.getBrands()) {
-                if (brandsBean.getCode().equals(tb.getCode())) {
-                    continue;
+        for (RecommendBrandsBean brandsBean : mRecommendSCFDBean.getBrands()) {
+            Iterator<RecommendBrandsBean> iter = brandsBeans.iterator();
+            while(iter.hasNext()){
+                RecommendBrandsBean b = iter.next();
+                if(b.getCode().equals(brandsBean.getCode())){
+                    iter.remove();
                 }
-                brandsBeanList.add(brandsBean);
             }
         }
+        brandsBeanList.addAll(brandsBeans);
         updataBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }

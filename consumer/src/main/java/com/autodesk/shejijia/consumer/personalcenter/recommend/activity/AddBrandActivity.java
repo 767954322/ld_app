@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AddBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
@@ -159,14 +160,16 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
                 mRecommendSCFDBean.getSub_category_3d_name(), "", offset, limit, this);
     }
     private void filterBrand(List<RecommendBrandsBean> brandsBeans){
-        for(RecommendBrandsBean brandsBean:brandsBeans){
-            for(RecommendBrandsBean tb:mRecommendSCFDBean.getBrands()){
-                if(brandsBean.getCode().equals(tb.getCode())){
-                    continue;
+        for (RecommendBrandsBean brandsBean : mRecommendSCFDBean.getBrands()) {
+            Iterator<RecommendBrandsBean> iter = brandsBeans.iterator();
+            while(iter.hasNext()){
+                RecommendBrandsBean b = iter.next();
+                if(b.getCode().equals(brandsBean.getCode())){
+                    iter.remove();
                 }
-                brandsBeanList.add(brandsBean);
             }
         }
+        brandsBeanList.addAll(brandsBeans);
         addBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
