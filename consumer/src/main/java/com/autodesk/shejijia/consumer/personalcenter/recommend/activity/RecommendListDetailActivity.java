@@ -183,7 +183,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
 
-        if (null == recommendscfd) {
+        if (null == recommendscfd || recommendscfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             return;
         }
@@ -275,9 +275,17 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
-    public void onSubCategoryDeleteListener(int groupPosition) {
-        mRecommendSCFDList.remove(groupPosition);
-        mRecommendExpandableAdapter.notifyDataSetChanged();
+    public void onSubCategoryDeleteListener(final int groupPosition) {
+        new AlertView("", "您确定删除主材项吗？",
+                "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    mRecommendSCFDList.remove(groupPosition);
+                    mRecommendExpandableAdapter.notifyDataSetChanged();
+                }
+            }
+        }).show();
     }
 
     private void setTitle(RecommendDetailsBean recommendListDetailBean) {
