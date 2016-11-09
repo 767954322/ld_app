@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -64,6 +63,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
+    private List<RecommendSCFDBean> mRecommendSCFDListEditTag = new ArrayList<>();
     private TextView mTvNavTitle;
 
     public static void actionStartActivity(Context context, String asset_id) {
@@ -173,8 +173,15 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         }
                     }).show();
                 } else {
-                    Toast.makeText(RecommendListDetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                    finish();
+                    new AlertView("", "当前清单已保存成功",
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object object, int position) {
+                            if (position != AlertView.CANCELPOSITION) {
+                                finish();
+                            }
+                        }
+                    }).show();
                 }
             }
 
@@ -206,7 +213,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 //            setEmptyListDefaultButtn();
             return;
         }
-
+        mRecommendSCFDListEditTag.addAll(mRecommendSCFDList);
         mRecommendSCFDList.addAll(recommendscfd);
         mLlEmptyContentView.setVisibility(View.GONE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
@@ -235,7 +242,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                new AlertView("提示", "您确定要把这份清单发送给客户吗？",
+                new AlertView("", "您确定要把这份清单发送给客户吗？",
                         "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object object, int position) {
@@ -278,11 +285,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 处理退出，未保存逻辑
      */
     private void onBackEvent() {
-        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0) {
+        boolean isNotEdited = mRecommendSCFDListEditTag.toString().equals(mRecommendSCFDList);
+        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 /*|| isNotEdited*/) {
             finish();
         } else {
             new AlertView("", "当前清单还未发送，是否保存？",
-                    "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    "否", null, new String[]{}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object object, int position) {
                     if (position != AlertView.CANCELPOSITION) {

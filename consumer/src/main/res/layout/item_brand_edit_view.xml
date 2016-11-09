@@ -116,7 +116,8 @@
             style="@style/style_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请填写备注"/>
+            android:hint="请填写备注"
+            android:maxLength="200"/>
     </LinearLayout>
 
     <LinearLayout

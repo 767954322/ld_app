@@ -156,7 +156,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             }
         }
 
-
         final int currentParentPosition = groupPosition;
         final int currentChildPosition = childPosition;
         mViewHolder.spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
