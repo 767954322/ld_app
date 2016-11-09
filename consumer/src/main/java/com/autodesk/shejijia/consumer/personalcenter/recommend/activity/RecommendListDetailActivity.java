@@ -167,7 +167,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().saveRecommendDetail(isSendInterface, design_id, mAsset_id, jsonObject, callback);
+        MPServerHttpManager.getInstance().saveOrSendRecommendDetail(isSendInterface, design_id, mAsset_id, jsonObject, callback);
     }
 
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
@@ -218,7 +218,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
         startActivityForResult(intent, 24);
-
     }
 
     @Override

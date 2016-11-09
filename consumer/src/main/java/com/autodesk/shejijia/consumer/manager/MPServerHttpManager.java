@@ -55,24 +55,22 @@ public class MPServerHttpManager {
      * @param isSendInterface true: 发送接口
      *                        false: 保存接口
      */
-    public void saveRecommendDetail(boolean isSendInterface, String design_id, String asset_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-
+    public void saveOrSendRecommendDetail(boolean isSendInterface, String design_id, String asset_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         // 发送接口．
-        String sendRecommendDetail = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s/SCFC";
-        String formatSendRecommendDetail = String.format(sendRecommendDetail, design_id, asset_id);
+        String sendORSaveUrl = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s/SCFC";
+        if (!isSendInterface) {
+            // 保存接口．
+            sendORSaveUrl = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s";
+        }
+        String formatSendRecommendDetail = String.format(sendORSaveUrl, design_id, asset_id);
 
-        // 保存接口．
-        String saveRecommendDetail = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s";
-        String formatSaveRecommendDetail = String.format(saveRecommendDetail, design_id, asset_id);
-
-        OkJsonRequest okRequest = new OkJsonRequest(
-                isSendInterface ? Request.Method.POST : Request.Method.PUT,
-                isSendInterface ? formatSendRecommendDetail : formatSaveRecommendDetail,
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT,
+                formatSendRecommendDetail,
                 jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put("X-Token", xToken);
                 return header;
             }
         };
