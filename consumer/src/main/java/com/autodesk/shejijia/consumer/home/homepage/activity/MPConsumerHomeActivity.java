@@ -113,6 +113,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
         contain = (LinearLayout) findViewById(R.id.navbar_tab_container);
+        tv_unread_message_count = (TextView) findViewById(R.id.tv_unread_message_count);
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
@@ -227,7 +228,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-
     }
 
 
@@ -260,9 +260,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     public void unCOuntMsgCallBack(int msgUnCount) {
         if (msgUnCount > 0) {
-            Log.d("test", "数：" + msgUnCount);
+            tv_unread_message_count.setVisibility(View.VISIBLE);
+            Log.d("unread_message_count", "数：" + msgUnCount);
         } else {
-            Log.d("test", "数： 0");
+            tv_unread_message_count.setVisibility(View.GONE);
+            Log.d("unread_message_count", "数： 0");
         }
     }
 
@@ -875,6 +877,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private TextView design;
 
     private TextView construction;
+    private TextView tv_unread_message_count;
 
     private LinearLayout contain;
     private View contain_layout;
