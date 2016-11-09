@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.SelectProjectEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -36,7 +37,7 @@ import java.util.List;
  * @brief 选择项目.
  */
 
-public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
+public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private SelectProjectAdapter mAdapter;
     private ListView mListView;
     private DesignerInfoDetails designerInfoDetails;
@@ -88,6 +89,7 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         mSure.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //            if(view instanceof  CheckedTextView){
@@ -135,11 +137,15 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
      * @param designer_id
      */
     public void getSelectProjectList(final String designer_id) {
+
+        CustomProgress.showDefaultProgress(this);
         MPServerHttpManager.getInstance().getSelectProjectList(designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 //                getDesignerInfoData(designer_id, designer_uid);
 //                if (is_loho != 0 && designerProjects.contains(interiorProject))
+                CustomProgress.cancelDialog();
+
                 Log.d("SelectProjectActivity", jsonObject.toString());
                 SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
 
@@ -153,6 +159,7 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });

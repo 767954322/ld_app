@@ -405,7 +405,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
         }else {
             mTvProjectName.setText("创建新的项目");
-            mTvProjectName.setText("创建新的项目");
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");
             mEtPhoneNumber.setText("");
