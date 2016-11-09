@@ -156,7 +156,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private  void getBrands(int offset, int limit){
         MPServerHttpManager.getInstance().getCategoryBrandsInformation(mRecommendSCFDBean.getCategory_3d_id(),
                 mRecommendSCFDBean.getCategory_3d_name(), mRecommendSCFDBean.getSub_category_3d_id(),
-                mRecommendSCFDBean.getSub_category_3d_name(), "", "", offset, limit, this);
+                mRecommendSCFDBean.getSub_category_3d_name(), "", offset, limit, this);
     }
     private void filterBrand(List<RecommendBrandsBean> brandsBeans){
         for(RecommendBrandsBean brandsBean:brandsBeans){
