@@ -424,6 +424,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                 // 新增二级品类．
                                 recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
                             } else {
+                                //遍历品类
+                                boolean isSameCategoty = false;
                                 for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
                                     String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
                                     // 已有二级品类．
@@ -435,19 +437,21 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                         List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
                                         int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
                                         mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
-                                    } else {
-                                        recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-
-//                                        // 新增二级品类．
-//                                        // 已有recommendscdflisttemp是否已经包含相应的元素．
-//                                        Iterator<RecommendSCFDBean> iter = recommendSCFDListTemp.iterator();
-//                                        while(iter.hasNext()){
-//                                            RecommendSCFDBean recommendSCFDBean1= iter.next();
-//                                            if(!(recommendSCFDBean1.getSub_category_3d_id().equals(recommendSCFDBean.getSub_category_3d_id()))){
-//                                                recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-//                                            }
-//                                        }
                                     }
+                                }
+                                for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+                                    String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
+                                    // 已有二级品类．
+                                    if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
+                                        isSameCategoty = true;
+                                        break;
+                                    } else {
+                                        // 新增二级品类．
+                                        isSameCategoty = false;
+                                    }
+                                }
+                                if (!isSameCategoty){
+                                    recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
                                 }
                             }
                         }
