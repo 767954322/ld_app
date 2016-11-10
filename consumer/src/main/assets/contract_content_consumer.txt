@@ -102,9 +102,9 @@
                     <div class="contract-info-text" style="margin-top:10px;margin-bottom:10px;" ata-pg-collapsed>
                         <div class="detail" style="width:100%;height：100%；">
                             <h4>本项目设计费用</h4>
-                            <p>本项目设计费总额：￥#val(design_amount)元<br />
-    设计首款：￥#val(design_amount_first)元<br />
-    设计尾款：￥#val(design_amount_balance)元<br /></p>
+                            <p>本项目设计费总额：￥#val(design_amount)<br />
+    设计首款：￥#val(design_amount_first)<br />
+    设计尾款：￥#val(design_amount_balance)<br /></p>
                         </div>
                     </div>
                     <div class="contract-info-text">
