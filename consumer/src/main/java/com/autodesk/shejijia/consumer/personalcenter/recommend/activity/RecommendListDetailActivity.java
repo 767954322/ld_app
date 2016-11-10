@@ -448,7 +448,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             mLlEmptyContentView.setVisibility(View.GONE);
                         }
 
-                        // todo test．
+                        // todo．
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         for (int i = 0; i < mRecommendSCFDList.size(); i++) {
                             mExpandListView.expandGroup(i);
