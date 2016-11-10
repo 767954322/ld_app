@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.frame.http.common.Constant;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -18,6 +20,7 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -30,10 +33,10 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
 
     private List<RecommendSCFDBean> mRecommendSCFDList;
 
-    public static void jumpTo(Activity context, String scfd, int position) {
+    public static void jumpTo(Activity context, List<RecommendSCFDBean> SCFDList, int position) {
         Intent intent = new Intent(context, ViewCategoryActivity.class);
-        intent.putExtra("scfd", scfd);
-        intent.putExtra("position", position);
+        intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable)SCFDList);
+        intent.putExtra(Constant.POSITION, position);
         context.startActivityForResult(intent, 23);
     }
 
@@ -51,22 +54,16 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        if (!TextUtils.isEmpty(mScfd)) {
-            mRecommendSCFDList = new Gson()
-                    .fromJson(mScfd, new TypeToken<List<RecommendSCFDBean>>() {
-                    }.getType());
-            if (mRecommendSCFDList != null && mRecommendSCFDList.size() > 0) {
-                mAdater = new ViewCategoryAdater(this, R.layout.item_view_category, mRecommendSCFDList, mPosition);
-                mRcv_category_view.setAdapter(mAdater);
-            }
-        }
+        mAdater = new ViewCategoryAdater(this, R.layout.item_view_category, mRecommendSCFDList, mPosition);
+        mRcv_category_view.setAdapter(mAdater);
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mScfd = getIntent().getStringExtra("scfd");
-        mPosition = getIntent().getIntExtra("position", 0);
+        Intent intent = getIntent();
+        mRecommendSCFDList = (List<RecommendSCFDBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        mPosition = intent.getIntExtra(Constant.POSITION, 0);
     }
 
     @Override

@@ -261,7 +261,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mScfd, groupPosition);
+        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mRecommendSCFDList, groupPosition);
         return true;
     }
 
