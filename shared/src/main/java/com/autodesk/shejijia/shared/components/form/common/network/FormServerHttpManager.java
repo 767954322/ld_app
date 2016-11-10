@@ -50,7 +50,8 @@ public class FormServerHttpManager {
                 Map<String, String> header = new HashMap<>();
                 header.put("Accept", "application/json");
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+//                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                header.put("X-Token","587e1e6bd9c26875535868dec8e3045c");
                 return header;
             }
         };
@@ -86,7 +87,9 @@ public class FormServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+//                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                header.put("X-Token","587e1e6bd9c26875535868dec8e3045c");
+
                 return header;
             }
         };

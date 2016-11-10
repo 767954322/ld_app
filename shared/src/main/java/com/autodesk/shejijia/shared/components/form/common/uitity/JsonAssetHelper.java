@@ -36,7 +36,7 @@ public class JsonAssetHelper {
     private static final String MATERIAL_CEILING = "material_ceiling.json";
     private static final String MATERIAL_CENTRAL_AIRCONDITIONING = "material_central_airconditioning.json";
     private static final String MATERIAL_CUPBOARD = "material_cupboard.json";
-    private static final String MATERIAL_DOOR = "material_door";
+    private static final String MATERIAL_DOOR = "material_door.json";
     private static final String MATERIAL_FABRICS = "material_fabrics.json";
     private static final String MATERIAL_FLOOR = "material_floor.json";
     private static final String MATERIAL_FLOOR_HEATING = "material_floor_heating.json";
@@ -58,7 +58,7 @@ public class JsonAssetHelper {
     private static final String PATROL_CONCEALED_WORK = "patrol_concealed_work.json";
     private static final String PATROL_PROJECT_COMPLETION = "patrol_project_completion.json";
     private static final String PATROL_WATER_PROOFING = "patrol_water_proofing_work.json";
-    private static final String RECORDING_WATER_PROOFING = "recording_patrol_water_proofing_work.json";
+    private static final String RECORDING_WATER_PROOFING = "recording_water_proofing_work.json";
 
     //precheck
     private static final String PRECHECK_COMPLETE_CONDITION = "precheck_complete_condition.json";
@@ -73,7 +73,7 @@ public class JsonAssetHelper {
         //completion
     private static final String PATH_DECORATION_COMPLETION = "template/inspect/completion/inspection_decoration_completion.json";
     private static final String PATH_ELECTRIC_GAS_COMPLETION = "template/inspect/completion/inspection_electric_gas_completion.json";
-    private static final String PATH_WATER_COMPLETION = "template/inspect/completion/inspection_water_completion";
+    private static final String PATH_WATER_COMPLETION = "template/inspect/completion/inspection_water_completion.json";
 
         //concealed work
     private static final String PATH_BASIC_LEVEL = "template/inspect/concealed work/inspection_basic_level.json";
@@ -94,7 +94,7 @@ public class JsonAssetHelper {
     private static final String PATH_MATERIAL_CEILING = "template/material/material_ceiling.json";
     private static final String PATH_MATERIAL_CENTRAL_AIRCONDITIONING = "template/material/material_central_airconditioning.json";
     private static final String PATH_MATERIAL_CUPBOARD = "template/material/material_cupboard.json";
-    private static final String PATH_MATERIAL_DOOR = "template/material/material_door";
+    private static final String PATH_MATERIAL_DOOR = "template/material/material_door.json";
     private static final String PATH_MATERIAL_FABRICS = "template/material/material_fabrics.json";
     private static final String PATH_MATERIAL_FLOOR = "template/material/material_floor.json";
     private static final String PATH_PAMATERIAL_FLOOR_HEATING = "template/material/material_floor_heating.json";
@@ -116,7 +116,7 @@ public class JsonAssetHelper {
     private static final String PATH_PATROL_CONCEALED_WORK = "template/patrol/patrol_concealed_work.json";
     private static final String PATH_PATROL_PROJECT_COMPLETION = "template/patrol/patrol_project_completion.json";
     private static final String PATH_PATROL_WATER_PROOFING = "template/patrol/patrol_water_proofing_work.json";
-    private static final String PATH_RECORDING_WATER_PROOFING = "template/patrol/recording_patrol_water_proofing_work.json";
+    private static final String PATH_RECORDING_WATER_PROOFING = "template/patrol/recording_water_proofing_work.json";
 
     //precheck
     private static final String PATH_PRECHECK_COMPLETE_CONDITION = "template/precheck/precheck_complete_condition.json";
