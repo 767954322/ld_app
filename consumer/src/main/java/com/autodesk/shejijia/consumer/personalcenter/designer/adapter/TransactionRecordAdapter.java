@@ -67,7 +67,7 @@ public class TransactionRecordAdapter extends BaseAdapter<TransactionRecordBean.
             ((ViewHolder) holder).tv_project_time.setText(data);
 
             double adjustment = mDatas.get(position).getAdjustment();
-            ((ViewHolder) holder).tv_transaction_amount.setText("¥" + adjustment);
+            ((ViewHolder) holder).tv_transaction_amount.setText(adjustment + "元");
 
             String type = mDatas.get(position).getType();
             if (!TextUtils.isEmpty(type)) {
