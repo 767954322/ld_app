@@ -447,6 +447,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             mRecommendSCFDList.addAll(recommendSCFDListTemp);
                             mLlEmptyContentView.setVisibility(View.GONE);
                         }
+
+                        // todo test．
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         for (int i = 0; i < mRecommendSCFDList.size(); i++) {
                             mExpandListView.expandGroup(i);
