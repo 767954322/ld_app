@@ -30,6 +30,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -44,7 +45,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
 
@@ -63,10 +63,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private String mAsset_id;
     private LinearLayout mLlEmptyContentView;
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
-    private String mScfd;
+    //    private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private List<RecommendSCFDBean> mRecommendSCFDListEditTag = new ArrayList<>();
     private TextView mTvNavTitle;
+    private String mRecommendScfdTag;
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -81,13 +82,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     protected void initView() {
-
         super.initView();
         mExpandListView = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
         mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
         mTvNavTitle = (TextView) findViewById(R.id.nav_title_textView);
-
     }
 
     @Override
@@ -199,8 +198,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
         setTitle(recommendListDetailBean);
 
-        mScfd = recommendListDetailBean.getScfd();
-        updateItemView(mScfd);
+        String scfd = recommendListDetailBean.getScfd();
+        updateItemView(scfd);
     }
 
     private void updateItemView(String scfd) {
@@ -211,14 +210,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         if (null == recommendscfd || recommendscfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
-
 //            setEmptyListDefaultButtn();
             return;
         }
+        mRecommendScfdTag = recommendscfd.toString();
+        LogUtils.d("RecommendListDetailActi", mRecommendScfdTag);
         mRecommendSCFDList.addAll(recommendscfd);
-//        if (isFirstJumpin) {
-//            mRecommendSCFDListEditTag.addAll(mRecommendSCFDList);
-//        }
 
         mLlEmptyContentView.setVisibility(View.GONE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
@@ -290,8 +287,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 处理退出，未保存逻辑
      */
     private void onBackEvent() {
-        boolean isNotEdited = mRecommendSCFDListEditTag.toString().equals(mRecommendSCFDList.toString());
-        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 /*|| isNotEdited*/) {
+        boolean isNotEdited = mRecommendScfdTag.equals(mRecommendSCFDList.toString());
+        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 || isNotEdited) {
             finish();
         } else {
             new AlertView("", "当前清单还未发送，是否保存？",
@@ -325,9 +322,17 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
-    public void onBrandDeleteListener(int currentParentPosition, int childPosition) {
-        mRecommendSCFDList.get(currentParentPosition).getBrands().remove(childPosition);
-        mRecommendExpandableAdapter.notifyDataSetChanged();
+    public void onBrandDeleteListener(final int currentParentPosition, final int childPosition) {
+        new AlertView("", String.format("您确定删除%s吗？", mRecommendSCFDList.get(currentParentPosition).getBrands().get(childPosition).getBrand_name()),
+                "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    mRecommendSCFDList.get(currentParentPosition).getBrands().remove(childPosition);
+                    mRecommendExpandableAdapter.notifyDataSetChanged();
+                }
+            }
+        }).show();
     }
 
     @Override
