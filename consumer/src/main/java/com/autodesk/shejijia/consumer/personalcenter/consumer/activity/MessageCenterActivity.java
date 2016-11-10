@@ -124,8 +124,6 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
             @Override
             public void onResponse(String s) {
-                Log.d("MessageCenterActivity", s+"");
-                Log.d("MessageCenterActivity", s+"");
             }
         });
     }
