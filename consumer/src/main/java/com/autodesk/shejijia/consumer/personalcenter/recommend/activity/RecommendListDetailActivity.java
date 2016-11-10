@@ -32,6 +32,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -67,7 +68,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private List<RecommendSCFDBean> mRecommendSCFDListEditTag = new ArrayList<>();
     private TextView mTvNavTitle;
-    private String mRecommendScfdTag;
+    private String mRecommendScfdTag = "";
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -210,9 +211,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         if (null == recommendscfd || recommendscfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
-//            setEmptyListDefaultButtn();
+            setEmptyListDefaultButtn();
             return;
         }
+        setSendButtn();
         mRecommendScfdTag = recommendscfd.toString();
         LogUtils.d("RecommendListDetailActi", mRecommendScfdTag);
         mRecommendSCFDList.addAll(recommendscfd);
@@ -287,7 +289,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 处理退出，未保存逻辑
      */
     private void onBackEvent() {
-        boolean isNotEdited = mRecommendScfdTag.equals(mRecommendSCFDList.toString());
+        boolean isNotEdited = false;
+        if (mRecommendSCFDList != null && mRecommendSCFDList.size() > 0) {
+            isNotEdited = (!StringUtils.isEmpty(mRecommendSCFDListEditTag))
+                    && mRecommendScfdTag.equals(mRecommendSCFDList.toString());
+        }
+
         if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 || isNotEdited) {
             finish();
         } else {
@@ -391,6 +398,19 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 default:
                     break;
             }
+
+            setSendButtonState();
+        }
+    }
+
+    /**
+     * 根据
+     */
+    private void setSendButtonState() {
+        if (null != mRecommendSCFDList && mRecommendSCFDList.size() > 0) {
+            setSendButtn();
+        } else {
+            setEmptyListDefaultButtn();
         }
     }
 
