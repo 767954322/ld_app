@@ -436,12 +436,20 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                         int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
                                         mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
                                     } else {
-                                        // 新增二级品类．
                                         recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
+
+//                                        // 新增二级品类．
+//                                        // 已有recommendscdflisttemp是否已经包含相应的元素．
+//                                        Iterator<RecommendSCFDBean> iter = recommendSCFDListTemp.iterator();
+//                                        while(iter.hasNext()){
+//                                            RecommendSCFDBean recommendSCFDBean1= iter.next();
+//                                            if(!(recommendSCFDBean1.getSub_category_3d_id().equals(recommendSCFDBean.getSub_category_3d_id()))){
+//                                                recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
+//                                            }
+//                                        }
                                     }
                                 }
                             }
-
                         }
                         if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
                             mRecommendSCFDList.addAll(recommendSCFDListTemp);

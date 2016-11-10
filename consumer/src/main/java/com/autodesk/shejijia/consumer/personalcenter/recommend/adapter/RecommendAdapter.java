@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -15,17 +14,16 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.OnItemButtonClickListener;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
 
     @Override
     public void convert(CommonViewHolder holder, final RecommendDetailsBean item) {
-        holder.setText(R.id.tv_recommend_name, UIUtils.substring(item.getCommunity_name(), 4));
+        holder.setText(R.id.tv_recommend_name, StringUtils.isEmpty(item.getCommunity_name()) ? "" : (UIUtils.substring(item.getCommunity_name(), 4)));
         holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_number() + "");
         holder.setText(R.id.tv_reco_consumer_name, item.getConsumer_name());
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
@@ -65,13 +63,13 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         String status = item.getSent_status();
         String revoke_state = item.getStatus();
         //设计师　消费者退回的项目不应该被置灰　可以
-        notifyUISetChanged(holder, revoke_state.equals("canceled") || revoke_state.equals("refused"));
+        notifyUISetChanged(holder, "canceled".equals(revoke_state) || "refused".equals(revoke_state));
         if (!TextUtils.isEmpty(status)) {
-            boolean unsent = status.equals("unsent");
+            boolean unsent = "unsent".equals(status);
             holder.setVisible(R.id.iv_reco_wfsico, isDesiner ? unsent : false);
         }
         //消费者显示退回　－　设计是显示删除和撤销
-        holder.setText(R.id.tv_cancel_btn, isDesiner ? (status.equals("unsent") ? "删除" : "撤销") : "退回");
+        holder.setText(R.id.tv_cancel_btn, isDesiner ? ("unsent".equals(status) ? "删除" : "撤销") : "退回");
     }
 
     //更新撤销之后显示样式
