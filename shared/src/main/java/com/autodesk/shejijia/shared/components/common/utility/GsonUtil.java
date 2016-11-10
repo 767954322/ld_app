@@ -4,6 +4,9 @@ package com.autodesk.shejijia.shared.components.common.utility;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -31,5 +34,11 @@ public class GsonUtil {
             e.printStackTrace();
         }
         return userInfo;
+    }
+
+    public static <T> JSONObject beanToJSONObject(T bean) throws JSONException{
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(bean);
+        return new JSONObject(jsonString);
     }
 }

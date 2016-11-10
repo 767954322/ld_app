@@ -50,6 +50,11 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
+    public void onCommitSuccess() {
+        getActivity().finish();
+    }
+
+    @Override
     protected int getLayoutResId() {
         return R.layout.fragment_edit_tasknode;
     }

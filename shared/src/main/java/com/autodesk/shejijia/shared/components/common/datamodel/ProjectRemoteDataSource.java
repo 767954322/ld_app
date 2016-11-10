@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
@@ -14,7 +15,6 @@ import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpMa
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +24,6 @@ import org.json.JSONObject;
  * 与 project 相关的api对应的dataModel
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
-    private final static String LOG_TAG = "ProjectRemoteDataSource";
 
     private ProjectRemoteDataSource() {
     }
@@ -100,7 +99,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.d(LOG_TAG, jsonObject.toString());
+                LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, jsonObject.toString());
                 try {
                     JSONObject planJsonObject = jsonObject.getJSONObject("plan");
                     String result = planJsonObject.toString();
@@ -118,7 +117,30 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             }
         });
     }
-    
+
+    @Override
+    public void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
+        PlanInfo plan = (PlanInfo) requestParams.getSerializable("body");
+        requestParams.remove("body");
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            JSONObject planJsonObject = GsonUtil.beanToJSONObject(plan);
+            jsonRequest.put("plan_id", planJsonObject.get("plan_id"));
+            jsonRequest.put("start", planJsonObject.get("start"));
+            jsonRequest.put("completion", planJsonObject.get("completion"));
+            jsonRequest.put("tasks", planJsonObject.get("tasks"));
+            jsonRequest.put("project_id", pid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            // TODO Optimize error hint
+            callback.onError("Date format error");
+            return;
+        }
+
+        ConstructionHttpManager.getInstance().updatePlan(pid, jsonRequest, requestParams, requestTag,
+                getDefaultCallback(callback, Project.class));
+    }
+
 
     public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like> callback) {
         ConstructionHttpManager.getInstance().putProjectLikes(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
@@ -137,5 +159,26 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             }
 
         });
+    }
+
+    private <T> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz) {
+        return new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String result = jsonObject.toString();
+                LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, result);
+                T bean = GsonUtil.jsonToBean(result, clazz);
+                callback.onSuccess(bean);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                // TODO log error detail
+                LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, volleyError.toString());
+                callback.onError(volleyError.getMessage());
+            }
+
+        };
     }
 }

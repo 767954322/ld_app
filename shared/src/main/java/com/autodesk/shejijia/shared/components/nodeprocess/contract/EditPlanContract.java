@@ -34,6 +34,8 @@ public interface EditPlanContract {
          * @param newDate
          */
         void onTaskDateChange(Task task, Date oldDate, Date newDate);
+
+        void onCommitSuccess();
     }
 
     interface Presenter extends BasePresenter {

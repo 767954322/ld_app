@@ -1,9 +1,13 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
+import android.os.Bundle;
+
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 
@@ -16,7 +20,9 @@ import java.util.List;
  */
 
 public class EditPlanPresenter implements EditPlanContract.Presenter {
+    private final static String LOG_TAG_EDIT_PLAN = "edit_plan";
     private final static String REQUEST_TAG_FETCH_PLAN = "fetch_plan";
+    private final static String REQUEST_TAG_UPDATE_PLAN = "update_plan";
     private EditPlanContract.View mView;
     private EditState mEditState;
     private ProjectRepository mProjectRepository;
@@ -88,7 +94,21 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
 
     @Override
     public void commitPlan() {
-        //TODO
+        Bundle requestParams = new Bundle();
+        requestParams.putString("operation", "edit"); // TODO Get operation
+        requestParams.putSerializable("body", mPlan);
+        mProjectRepository.updatePlan(mProjectId, requestParams, REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
+            @Override
+            public void onSuccess(Project data) {
+                LogUtils.d(LOG_TAG_EDIT_PLAN, "update plan success ");
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                LogUtils.e(LOG_TAG_EDIT_PLAN, "update plan fail " + errorMsg);
+            }
+        });
+
     }
 
     @Override

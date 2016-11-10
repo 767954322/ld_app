@@ -44,4 +44,7 @@ public class ConstructionConstants {
     //登入用户的类型:member_type
     public static final String  INSPECTOR_TYPE = "inspector"; //监理
     public static final String CLIENTMANAGER_TYPE = "clientmanager"; //客户经理
+
+    //Log tag
+    public static final String  LOG_TAG_REQUEST = "network_request"; //监理
 }

@@ -80,6 +80,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         } else {
             supportFinishAfterTransition();
         }
+
         return true;
     }
 

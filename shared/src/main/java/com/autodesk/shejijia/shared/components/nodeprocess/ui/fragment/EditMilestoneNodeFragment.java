@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -54,11 +55,13 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     protected void initData() {
+        showLoading();
         mPresenter.fetchPlan();
     }
 
     @Override
     public void showTasks(List<Task> tasks) {
+        hideLoading();
         mCalendarWidget.setVisibility(View.VISIBLE);
         mMileStoneDecorator.setData(tasks);
         mMileStoneDayFormator.setData(tasks);
@@ -110,6 +113,11 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
+    public void onCommitSuccess() {
+
+    }
+
+    @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         mPresenter.updateTask(date.getDate());
     }
@@ -123,14 +131,18 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     }
 
+    private Dialog mProgessDialog;
+
     @Override
     public void showLoading() {
-
+//        mProgessDialog = ProgressDialog.show(getActivity(), null, "Loading...");
     }
 
     @Override
     public void hideLoading() {
-
+        if (mProgessDialog != null && mProgessDialog.isShowing()) {
+            mProgessDialog.cancel();
+        }
     }
 
     private void initCalendarView() {

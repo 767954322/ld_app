@@ -36,6 +36,8 @@ public interface ProjectDataSource {
 
     void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<PlanInfo> callback);
 
+    void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
+
     /*
     * 星标项目
     * */
