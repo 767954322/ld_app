@@ -237,7 +237,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public Object getGroup(int groupPosition) {
-        return mRecommendSCFDList.size() > 0 ? null : mRecommendSCFDList.get(groupPosition);
+        return mRecommendSCFDList.size() <= 0 ? null : mRecommendSCFDList.get(groupPosition);
     }
 
     @Override
