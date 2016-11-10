@@ -33,6 +33,7 @@ import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayo
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -99,9 +100,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 //          展示二级品类全部信息
             case R.id.all_material_btn:
 
-                if (dynamicPopWindowReuse != null) {
+                if (SingleClickUtils.isFastDoubleClickShort()){
 
-                    dynamicPopWindowReuse.showPopupWindow(all_material_btn);
+                    if (dynamicPopWindowReuse != null) {
+
+                        dynamicPopWindowReuse.showPopupWindow(all_material_btn);
+                    }
                 }
                 break;
             //将总集合数据返回给清单页面
