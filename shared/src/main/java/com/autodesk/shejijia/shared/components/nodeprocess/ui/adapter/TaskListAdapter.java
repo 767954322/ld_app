@@ -102,19 +102,19 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
             } else if (category.equalsIgnoreCase("inspection")) { //验收类
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.check_accept);
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_checkaccept);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
             } else if (category.equalsIgnoreCase("construction")) { //施工类
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.construction);
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_construction);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
             } else if (category.equalsIgnoreCase("materialMeasuring")) { //主材测量
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.material);
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_material);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
             } else if (category.equalsIgnoreCase("materialInstallation")) { //主材安装
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.material);
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_material);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
             }

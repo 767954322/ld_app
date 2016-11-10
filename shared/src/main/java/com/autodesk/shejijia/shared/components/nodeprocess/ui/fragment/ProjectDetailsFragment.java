@@ -1,8 +1,11 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,12 +17,18 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.TaskListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
+
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/20/16.
@@ -31,6 +40,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
+    private PDTaskListAdapter mTaskListAdapter;
 
     public ProjectDetailsFragment() {
     }
@@ -83,7 +93,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
-                if (memberType.equals("clientmanager")) {
+             /*   if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mTaskListView.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -93,12 +103,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_work_open);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     mWorkStateView.setCompoundDrawables(null, drawable, null, null);
+                    mWorkStateView.setCompoundDrawablePadding(ScreenUtil.dip2px(20));
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mTaskListView.setVisibility(View.GONE);
                 }
-                break;
+                break;*/
             case "INPROGRESS":
-                if (memberType.equals("clientmanager")) {
+              /*  if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mTaskListView.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -108,15 +119,22 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_work_inprogress);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     mWorkStateView.setCompoundDrawables(null, drawable, null, null);
+                    mWorkStateView.setCompoundDrawablePadding(ScreenUtil.dip2px(20));
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mTaskListView.setVisibility(View.GONE);
                 }
-                break;
+                break;*/
             case "COMPLETION":
                 mTaskListView.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
                 mCreatePlanBtn.setVisibility(View.GONE);
-                // TODO: 11/9/16 显示项目的任务列表
+                //init recyclerView
+                mTaskListView.setLayoutManager(new LinearLayoutManager(mContext));
+                mTaskListView.setHasFixedSize(true);
+                mTaskListView.setItemAnimator(new DefaultItemAnimator());
+                //init adapter
+                mTaskListAdapter = new PDTaskListAdapter(projectInfo.getPlan().getTasks(), R.layout.listitem_projectdetails_task_list_view, mContext, null);
+                mTaskListView.setAdapter(mTaskListAdapter);
                 break;
             default:
                 break;
@@ -143,4 +161,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
