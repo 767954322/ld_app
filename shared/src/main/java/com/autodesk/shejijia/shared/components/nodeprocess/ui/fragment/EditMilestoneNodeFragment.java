@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.content.DialogInterface;
+import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -147,6 +148,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     }
 
+    private Dialog mProgessDialog;
+
     @Override
     public void showLoading() {
         if (mProgressDialog == null) {
@@ -159,8 +162,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
+        if (mProgessDialog != null && mProgessDialog.isShowing()) {
+            mProgessDialog.cancel();
         }
     }
 
