@@ -69,10 +69,10 @@ public class DynamicAddView extends LinearLayout {
         TextView textView;
         BtnStatusBean btnStatusBean;
         LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParamsButton.leftMargin = width /50;
-        layoutParamsButton.rightMargin = width /50;
-        layoutParamsButton.topMargin = width /50;
-        layoutParamsButton.bottomMargin = width /50;
+        layoutParamsButton.leftMargin = width / 50;
+        layoutParamsButton.rightMargin = width / 50;
+        layoutParamsButton.topMargin = width / 50;
+        layoutParamsButton.bottomMargin = width / 50;
 
         textViews = new TextView[count];
         for (int i = 0; i < count; i++) {
@@ -85,8 +85,8 @@ public class DynamicAddView extends LinearLayout {
             textView.setText(arrStringTotal[i]);
             textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
             textView.setGravity(Gravity.CENTER);
-            textView.setMinWidth(width /6);
-            textView.setPadding(width /25, 0, width /25, 0);
+            textView.setMinWidth(width / 6);
+            textView.setPadding(width / 25, 0, width / 25, 0);
             textView.setBackgroundResource(R.drawable.material_add_bg);
             textView.setLayoutParams(layoutParamsButton);
             textViews[i].setOnClickListener(new View.OnClickListener() {
@@ -114,8 +114,8 @@ public class DynamicAddView extends LinearLayout {
 
     /**
      * 外界动态改变按钮选中状态
-     * */
-    public void setButtonCheckedStatus(BtnStatusBean btnStatusBean){
+     */
+    public void setButtonCheckedStatus(BtnStatusBean btnStatusBean) {
 
         changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
         for (int i = 0; i < textViews.length; i++) {
@@ -152,8 +152,8 @@ public class DynamicAddView extends LinearLayout {
         /**
          * 接口回调，方便调用数据；
          * Callback method to be invoked when current item clicked
-         *
-         *  BtnStatusBean the index of clicked button tag
+         * <p>
+         * BtnStatusBean the index of clicked button tag
          */
         void onButtonClicked(BtnStatusBean btnStatusBean);
     }

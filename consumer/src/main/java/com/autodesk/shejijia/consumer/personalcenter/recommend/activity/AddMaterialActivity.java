@@ -8,10 +8,13 @@ import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -65,7 +68,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private HorizontalScrollView two_level_category;
     private PullListView show_brand_listView;
     private MaterialCategoryBean materialCategoryBean;
-    private Button all_material_btn;
+    private TextView all_material_btn;
     private Handler getAdapterDataHandler;//获取返回数据handler
     private List<RecommendBrandsBean> getAdapterResultList;
     private DynamicAddViewContainer dynamicAddViewContainer;
@@ -80,7 +83,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private List<CheckedInformationBean> totalList = new ArrayList<>();//清单与主材的交互集合
     private List<CheckedInformationBean> totalListRaplace;//总集合替身
     private CheckedInformationBean checkedInformationBean;
-    private LinearLayout add_for_listing;
+    private RelativeLayout add_for_listing;
+    private LinearLayout rl_btn;
     private List<BtnStatusBean> listTag;
     private List<BtnStatusBean> backListTag;//返回的标志位集合
     private BtnStatusBean[] btnStatusBeanList;//记录最后一次，该品类下的选中的二级品类信息，
@@ -97,17 +101,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     public void onClick(View v) {
 
         switch (v.getId()) {
-//          展示二级品类全部信息
-            case R.id.all_material_btn:
-
-                if (SingleClickUtils.isFastDoubleClickShort()){
-
-                    if (dynamicPopWindowReuse != null) {
-
-                        dynamicPopWindowReuse.showPopupWindow(all_material_btn);
-                    }
-                }
-                break;
             //将总集合数据返回给清单页面
             case R.id.add_for_listing:
 
@@ -137,16 +130,16 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         two_level_category = (HorizontalScrollView) findViewById(R.id.two_level_category);
         one_level_category = (HorizontalScrollView) findViewById(R.id.one_level_category);
         show_brand_listView = (PullListView) findViewById(R.id.show_brand_listView);
-        all_material_btn = (Button) findViewById(R.id.all_material_btn);
         remain_brand_count = (TextView) findViewById(R.id.remain_brand_count);
         mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_to_refresh_layout);
-        add_for_listing = (LinearLayout) findViewById(R.id.add_for_listing);
+        add_for_listing = (RelativeLayout) findViewById(R.id.add_for_listing);
+        rl_btn = (LinearLayout) findViewById(R.id.rl_btn);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        all_material_btn.setOnClickListener(this);
+//        all_material_btn.setOnClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         add_for_listing.setOnClickListener(this);
     }
@@ -288,17 +281,17 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         }
                         if (justRefreshOrLoadMore == 2) {
                             listBrands.clear();
-                            if (getRecommendBrandsBean.getBrands() != null){
+                            if (getRecommendBrandsBean.getBrands() != null) {
 
                                 addDatas(getRecommendBrandsBean.getBrands());
                                 restartDatasForAdapter(null, getRecommendBrandsBean.getBrands());
-                            }else {
+                            } else {
                                 restartDatasForAdapter(null, listBrands);
                             }
                         }
                         if (justRefreshOrLoadMore == 3) {
                             mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                            if (getRecommendBrandsBean.getBrands() != null){
+                            if (getRecommendBrandsBean.getBrands() != null) {
 
                                 changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
                             }
@@ -442,6 +435,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         dynamicPopWindowReuse = dynamicPopWindows[0];
         //一二级品类信息展示之后在获取,店铺,品牌信息
         getStore();
+        addAllWindowBtn();
     }
 
     /**
@@ -672,7 +666,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 }
             }
         }
-        String remainBrandCount = "还可添加" + canChooseBrandsCount + "个品牌";
+        String remainBrandCount = UIUtils.getString(R.string.add) + canChooseBrandsCount + UIUtils.getString(R.string.brand);
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(remainBrandCount);
         spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.BLUE), 4, 5, spannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
         remain_brand_count.setText(spannableStringBuilder);
@@ -852,6 +846,41 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             totalList.add(checkedInformationBean);
         }
         currentSubCategoryName = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
+    }
+
+    /**
+     * 加入全部按钮
+     */
+    public void addAllWindowBtn() {
+
+        int width  = this.getWindowManager().getDefaultDisplay().getWidth();;
+        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParamsButton.topMargin = width / 50;
+        layoutParamsButton.bottomMargin = width / 50;
+        all_material_btn = new TextView(this);
+        all_material_btn.setText(UIUtils.getString(R.string.my_bid_all));
+        all_material_btn.setMinWidth(width / 6);
+        all_material_btn.setGravity(Gravity.CENTER);
+        all_material_btn.setPadding(width / 25, 0, width / 25, 0);
+        all_material_btn.setTextColor(UIUtils.getColor(R.color.text_item_name));
+        all_material_btn.setBackgroundResource(R.drawable.material_add_bg);
+        all_material_btn.setLayoutParams(layoutParamsButton);
+        all_material_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!SingleClickUtils.isFastDoubleClickMoreShort()) {
+
+                    if (dynamicPopWindowReuse != null) {
+
+                        dynamicPopWindowReuse.showPopupWindow(all_material_btn);
+                    }
+                }
+            }
+        });
+        rl_btn.addView(all_material_btn);
+        rl_btn.invalidate();
+
     }
 
     /**

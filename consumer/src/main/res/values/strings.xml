@@ -8,6 +8,7 @@
     <string name="six">6</string>
     <string name="brand">个品牌</string>
     <string name="add">还可添加</string>
+    <string name="add_brands_for_list">添加至清单</string>
 
 
     <string name="send_single_number">派单人数： </string>

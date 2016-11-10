@@ -47,28 +47,18 @@
 
         </HorizontalScrollView>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rl_btn"
             android:layout_width="@dimen/size_100"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-            >
 
-            <Button
-                android:id="@+id/all_material_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="6dp"
-                android:background="#f1f2f7"
-                android:text="全部" />
+        </LinearLayout>
 
-        </RelativeLayout>
 
     </RelativeLayout>
     <!--line-->
@@ -142,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_marginLeft="@dimen/font_14"
                     android:text="还可添加5个品牌"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_18"
@@ -151,24 +141,23 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/add_for_listing"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/size_115"
                 android:layout_height="match_parent"
                 android:background="#0084FF">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/size_20"
-                    android:text="添加至清单"
+                    android:layout_centerInParent="true"
+                    android:text="@string/add_brands_for_list"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_16"
 
                     />
 
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
