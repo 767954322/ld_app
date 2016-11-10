@@ -28,8 +28,9 @@
                 android:layout_height="@dimen/size_25"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:maxLines="1"
+                android:maxEms="7"
                 android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/bg_40"
                 android:textSize="@dimen/font_16"
                 android:visibility="visible" />

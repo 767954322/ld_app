@@ -568,30 +568,32 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         if (prj_price == null || prj_price.equals("")) {
             tvCustomerHomePrice.setText(getString(R.string.nodescription_price));
         } else {
-            tvCustomerHomePrice.setText(prj_price+"万元");
+            tvCustomerHomePrice.setText(prj_price + "万元");
         }
 
-
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
+
+        //室
         String room_type = caseDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
         }
 
+        //厅
         String bedroom = caseDetailBean.getBedroom();
         if (livingRoom.containsKey(bedroom)) {
-            tvCustomerHomeLivingRoom.setText(livingRoom.get(room_type));
-        }else {
+            tvCustomerHomeLivingRoom.setText(livingRoom.get(bedroom));
+        } else {
             tvCustomerHomeLivingRoom.setText(bedroom);
         }
+
+        //卫
         String restroom = caseDetailBean.getRestroom();
-        if (toilet.containsKey(room_type)) {
+        if (toilet.containsKey(restroom)) {
             tvCustomerHomeToilet.setText(toilet.get(restroom));
-        }else {
+        } else {
             tvCustomerHomeToilet.setText(restroom);
         }
-
-
 
         String project_style = caseDetailBean.getProject_style();
         if (style.containsKey(project_style)) {
@@ -606,7 +608,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         if (designer_info.getNick_name() != null) {
             ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         } else {
-            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
+            ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         }
 
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
