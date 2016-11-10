@@ -42,7 +42,9 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
 
@@ -363,113 +365,85 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
         if (resultCode == RESULT_OK) {
-            if (null != data) {
-                switch (requestCode) {
-                    case 21: // 品牌变更．
-                        RecommendSCFDBean mRecommendSCFDBean = (RecommendSCFDBean) data.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
-                        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
-                            if (recommendSCFDBean.getSub_category_3d_id().equals(mRecommendSCFDBean.getSub_category_3d_id())) {
-                                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                mRecommendSCFDList.remove(recommendSCFDBean);
-                                mRecommendSCFDList.add(post, mRecommendSCFDBean);
-                                break;
-                            }
-                        }
-                        mRecommendExpandableAdapter.notifyDataSetChanged();
+            switch (requestCode) {
+                case 21: // 品牌变更．
+                    changeBrand(data);
+                    break;
+                case 22:// 添加品牌．
+                    addBrands(data);
+                    break;
+                case 23:// 定位二级品类．
+                    int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+                    mExpandListView.setSelection(intExtra);
+                    break;
+                case 24: // 添加主材．
+                    addMaterialRecommendSCFD(data);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
-                        break;
+    private void changeBrand(Intent intent) {
+        RecommendSCFDBean mRecommendSCFDBean = (RecommendSCFDBean) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+            if (recommendSCFDBean.getSub_category_3d_id().equals(mRecommendSCFDBean.getSub_category_3d_id())) {
+                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                mRecommendSCFDList.remove(recommendSCFDBean);
+                mRecommendSCFDList.add(post, mRecommendSCFDBean);
+                break;
+            }
+        }
+        mRecommendExpandableAdapter.notifyDataSetChanged();
 
-                    case 22:// 添加品牌．
-                        List<RecommendBrandsBean> brandAddList = (List<RecommendBrandsBean>) data.getSerializableExtra(JsonConstants.RECOMMENDBRANDBEAN);//接
-                        String sub_category_3d_id = data.getStringExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID);
-                        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
-                            if (recommendSCFDBean.getSub_category_3d_id().equals(sub_category_3d_id)) {
-                                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                mRecommendSCFDList.remove(recommendSCFDBean);
-                                recommendSCFDBean.getBrands().addAll(brandAddList);
-                                mRecommendSCFDList.add(post, recommendSCFDBean);
-                                break;
-                            }
-                        }
-                        mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
 
-                        break;
+    private void addBrands(Intent intent) {
+        List<RecommendBrandsBean> brandAddList = (List<RecommendBrandsBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDBEAN);//接
+        String sub_category_3d_id = intent.getStringExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID);
+        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+            if (recommendSCFDBean.getSub_category_3d_id().equals(sub_category_3d_id)) {
+                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                mRecommendSCFDList.remove(recommendSCFDBean);
+                recommendSCFDBean.getBrands().addAll(brandAddList);
+                mRecommendSCFDList.add(post, recommendSCFDBean);
+                break;
+            }
+        }
+        mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
 
-                    case 23:// 定位二级品类．
-                        int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
-                        mExpandListView.setSelection(intExtra);
-                        break;
-
-
-                    case 24: // 添加主材．
-                        Bundle bundle = data.getExtras();
-                        List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
-                        if (null == checkedInformationBeanList || checkedInformationBeanList.size() <= 0) {
-                            mRecommendSCFDList.clear();
-                            mLlEmptyContentView.setVisibility(View.VISIBLE);
-                            mRecommendExpandableAdapter.notifyDataSetChanged();
-                            break;
-                        }
-
-                        ArrayList<RecommendSCFDBean> recommendSCFDListTemp = new ArrayList<>();
-                        for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
-                            // [1]获取主材,对比之．
-                            // [2]对比主材及品牌
-                            //   [2.1]已有主材，在集合中添加．
-                            //   [2.2]未有主材，新建主材项．
-                            MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = checkedInformationBean.getSubCategoryBean();
-                            String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
-                            if (mRecommendSCFDList.size() <= 0) {
-                                // 新增二级品类．
-                                recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-                            } else {
-                                //遍历品类
-                                boolean isSameCategoty = false;
-                                for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
-                                    String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
-                                    // 已有二级品类．
-                                    if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
-                                        /**
-                                         * 原有二级品类，动态添加品牌，
-                                         * 即原有二级品类集合发生改变，先移除相应的二级品类，然后增加新的二级品类元素．
-                                         */
-                                        List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                        int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                        mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
-                                    }
-                                }
-                                for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
-                                    String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
-                                    // 已有二级品类．
-                                    if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
-                                        isSameCategoty = true;
-                                        break;
-                                    } else {
-                                        // 新增二级品类．
-                                        isSameCategoty = false;
-                                    }
-                                }
-                                if (!isSameCategoty){
-                                    recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-                                }
-                            }
-                        }
-                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
-                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
-                            mLlEmptyContentView.setVisibility(View.GONE);
-                        }
-
-                        // todo．
-                        mRecommendExpandableAdapter.notifyDataSetChanged();
-                        for (int i = 0; i < mRecommendSCFDList.size(); i++) {
-                            mExpandListView.expandGroup(i);
-                        }
-                        break;
-                    default:
-                        break;
+    private void addMaterialRecommendSCFD(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+        Iterator<CheckedInformationBean> iter = checkedInformationBeanList.iterator();
+        while (iter.hasNext()) {
+            CheckedInformationBean cb = iter.next();
+            MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = cb.getSubCategoryBean();
+            String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
+            List<RecommendBrandsBean> checkedBrandsInformationBean = cb.getCheckedBrandsInformationBean();
+            Iterator<RecommendSCFDBean> listIterator = mRecommendSCFDList.iterator();
+            while (listIterator.hasNext()) {
+                RecommendSCFDBean b = listIterator.next();
+                if (b.getSub_category_3d_id().equals(material_sub_category_3d_id1)) {
+                    b.setBrands(checkedBrandsInformationBean);
+                    iter.remove();
                 }
             }
         }
+        for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
+            mRecommendSCFDList.add(getMaterialRecommendSCFDBean(checkedInformationBean));
+        }
+        mLlEmptyContentView.setVisibility(mRecommendSCFDList.size() > 0 ? View.GONE : View.VISIBLE);
+        mRecommendExpandableAdapter.notifyDataSetChanged();
+        for (int i = 0; i < mRecommendSCFDList.size(); i++) {
+            mExpandListView.expandGroup(i);
+        }
+
     }
 }
