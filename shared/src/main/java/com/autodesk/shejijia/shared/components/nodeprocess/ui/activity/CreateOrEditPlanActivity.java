@@ -75,35 +75,29 @@ public class CreateOrEditPlanActivity extends BaseActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        if (getSupportFragmentManager().popBackStackImmediate()) {
-            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
-        } else {
-            supportFinishAfterTransition();
-        }
-
+        onBackPressed();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().popBackStackImmediate()) {
-            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
-        } else {
+        if (mPresenter.getEditState() == EditPlanPresenter.EditState.EDIT_MILESTONE) {
             supportFinishAfterTransition();
+        } else {
+            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
         }
     }
 
     private void updateEditState(EditPlanPresenter.EditState newState) {
-        mPresenter.updateEditState(newState);
         if (newState.equals(EditPlanPresenter.EditState.EDIT_MILESTONE)) {
             mProgressBar.setProgress(50);
             mActionBtn.setText(R.string.edit_plan_next_step);
-            switchToFragment(FRAGMENT_TAG_EDIT_MILESTONE);
         } else {
             mProgressBar.setProgress(100);
             mActionBtn.setText(R.string.edit_plan_complete);
-            switchToFragment(FRAGMENT_TAG_EDIT_TASKNODE);
         }
+        switchToFragment(getFragmentTag(newState));
+        mPresenter.updateEditState(newState);
     }
 
     private void switchToFragment(String tag) {
@@ -115,12 +109,20 @@ public class CreateOrEditPlanActivity extends BaseActivity {
                 fragment = new EditMilestoneNodeFragment();
             } else {
                 fragment = new EditTaskNodeFragment();
-                fragmentTransaction.addToBackStack(null);
             }
             ((EditPlanContract.View) fragment).bindPresenter(mPresenter);
         }
         mPresenter.bindView((EditPlanContract.View) fragment);
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.replace(R.id.container, fragment, tag);
         fragmentTransaction.commit();
     }
+
+    private String getFragmentTag(EditPlanPresenter.EditState editState) {
+        if (editState == EditPlanPresenter.EditState.EDIT_MILESTONE) {
+            return FRAGMENT_TAG_EDIT_MILESTONE;
+        } else {
+            return FRAGMENT_TAG_EDIT_TASKNODE;
+        }
+    }
+
 }

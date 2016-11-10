@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ca
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.OnDateSelectedListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
@@ -37,6 +39,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     private MileStoneDayFormatter mMileStoneDayFormator;
 
     private EditPlanContract.Presenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -114,7 +117,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void onCommitSuccess() {
-
+        getActivity().finish();
     }
 
     @Override
@@ -131,17 +134,20 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     }
 
-    private Dialog mProgessDialog;
-
     @Override
     public void showLoading() {
-//        mProgessDialog = ProgressDialog.show(getActivity(), null, "Loading...");
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.loading));
+        }
+
+        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        if (mProgessDialog != null && mProgessDialog.isShowing()) {
-            mProgessDialog.cancel();
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
         }
     }
 

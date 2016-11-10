@@ -101,6 +101,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             @Override
             public void onSuccess(Project data) {
                 LogUtils.d(LOG_TAG_EDIT_PLAN, "update plan success ");
+                mView.onCommitSuccess();
             }
 
             @Override
