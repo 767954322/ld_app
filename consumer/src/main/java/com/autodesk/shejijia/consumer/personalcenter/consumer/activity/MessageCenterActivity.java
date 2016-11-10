@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -18,19 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.widget.SwipePullListView;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.MessageCenterAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -108,6 +110,24 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
         mListView.setAdapter(messageCenterAdapter);
         mPullToRefreshLayout.autoRefresh();
+        markThreadAsRead(ConsumerApplication.thread_id);
+    }
+
+
+
+    private void markThreadAsRead(String inThreadId) {
+        MPChatHttpManager.getInstance().markThreadAsRead(mMemberEntity.getAcs_member_id(),inThreadId, new OkStringRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+
+            @Override
+            public void onResponse(String s) {
+                Log.d("MessageCenterActivity", s+"");
+                Log.d("MessageCenterActivity", s+"");
+            }
+        });
     }
 
     @Override
