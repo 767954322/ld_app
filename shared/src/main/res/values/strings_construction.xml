@@ -92,4 +92,8 @@
     <!--项目详情里文字-->
     <string name="work_ready">等待开工交底中</string>
     <string name="work_inProgress">开工交底中</string>
+
+    <!--项目信息页面文字-->
+    <string name="project_info_title">项目信息</string>
+    <string name="project_info_zxing">监理人员扫码 进入施工阶段</string>
 </resources>

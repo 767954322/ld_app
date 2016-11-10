@@ -89,7 +89,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
-        LogUtils.e("memberType+projectStatus" + "--" + memberType + "---" + projectInfo.getPlan().getStatus());
+        LogUtils.e("projectId+memberType+projectStatus" + "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
@@ -151,8 +151,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
         int itemId = item.getItemId();
         if (itemId == R.id.project_toolbar_info) {
-            ToastUtils.showShort(mContext, "projectInfo");
-            // TODO: 11/1/16  跳转到项目信息页面
+            ProjectInfoFragment projectInfoFragment = ProjectInfoFragment.newInstance(null);
+            projectInfoFragment.show(getFragmentManager(),"tag");
 
         } else if (itemId == R.id.project_toolbar_message) {
             ToastUtils.showShort(mContext, "projectMessage");
