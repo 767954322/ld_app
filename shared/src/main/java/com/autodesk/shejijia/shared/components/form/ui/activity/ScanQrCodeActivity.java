@@ -9,11 +9,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.google.zxing.Result;
+
+import java.util.List;
 
 /**
  * Created by t_aij on 16/10/25.
@@ -56,14 +61,41 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
-
-            FormRepository.getInstance().getProjectTaskId(params, null, new ResponseCallback<Project>() {
+            params.putBoolean("task_data",true);
+            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
                 @Override
-                public void onSuccess(Project data) {
-                    Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
-                    intent.putExtra("projectBean", data);
+                public void onSuccess(ProjectInfo data) {
+                    PlanInfo planInfo = data.getPlan();
+                    List<Task> taskList = planInfo.getTasks();
+                    String milestone = planInfo.getMilestone();
+                    Member role = null;
+                    for (Task task : taskList) {
+                        if (milestone.equals(task.getTaskId())) {  //confirm a task
+                            if ("inspectorInspection".equals(task.getCategory())) {   //confirm a inspector
+                                List<Member> members = data.getMembers();
+                                for (Member member : members) {
+                                    if ("member".equals(member.getRole())) {
+                                        role = member;
+                                        break;
+                                    }
+                                }
+
+                                Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
+                                intent.putExtra("task", task);
+                                intent.putExtra("building", data.getBuilding());
+                                intent.putExtra("member", role);
+                                startActivity(intent);
+                                finish();
+                                return;
+                            }
+                            break;
+                        }
+                    }
+
+                    Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
+                    intent.putExtra("error","当前没有监理需要验收的项目");
                     startActivity(intent);
-                    finish();
+
                 }
 
                 @Override
@@ -73,7 +105,6 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                     startActivity(intent);
                 }
             });
-
 
         } else {
             Intent intent = new Intent(this,ScanQrDialogActivity.class);

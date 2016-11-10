@@ -18,11 +18,11 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickListener, ProjectIdCodeContract.View {
 
-    private EditText mProjectId;
+    private EditText mProjectIdEt;
     private ProjectIdCodePresenter mPresenter;
-    private Button mConfirm;
+    private Button mConfirmBtn;
     private Toolbar mToolbar;
-    private TextView mToolbarTitle;
+    private TextView mToolbarTitleTv;
 
     @Override
     protected int getLayoutResId() {
@@ -32,10 +32,10 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
-        mToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        mToolbarTitleTv = (TextView) findViewById(R.id.tv_toolbar_title);
 
-        mProjectId = (EditText) findViewById(R.id.et_project_id);
-        mConfirm = (Button) findViewById(R.id.btn_confirm);
+        mProjectIdEt = (EditText) findViewById(R.id.et_project_id);
+        mConfirmBtn = (Button) findViewById(R.id.btn_confirm);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initListener() {
-        mConfirm.setOnClickListener(this);
+        mConfirmBtn.setOnClickListener(this);
     }
 
     @Override
@@ -64,10 +64,12 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.scan_code) {
+        if (id == R.id.scan_code) {
             mPresenter.enterCode();
-        } else if(id == android.R.id.home) {
-            ToastUtils.showShort(this,"this is home,暂时未确定,以后再添加");
+            return true;
+        } else if (id == android.R.id.home) {
+            ToastUtils.showShort(this, "this is home,暂时未确定,以后再添加");
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -75,7 +77,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void setToolbar() {
-        mToolbarTitle.setVisibility(View.GONE);
+        mToolbarTitleTv.setVisibility(View.GONE);
         mToolbar.setTitle("输入编码");
         mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
         setSupportActionBar(mToolbar);
@@ -83,7 +85,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public String getProjectId() {
-        return mProjectId.getText().toString().trim();
+        return mProjectIdEt.getText().toString().trim();
     }
 
     @Override
@@ -94,12 +96,12 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void showNetError(String msg) {
-        ToastUtils.showShort(this,msg);
+        ToastUtils.showShort(this, msg);
     }
 
     @Override
     public void showError(String msg) {
-        ToastUtils.showShort(this,msg);
+        ToastUtils.showShort(this, msg);
     }
 
     @Override

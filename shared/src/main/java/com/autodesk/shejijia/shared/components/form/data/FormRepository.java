@@ -32,7 +32,8 @@ import java.util.Map;
 
 public class FormRepository implements FormDataSource {
 
-    private Project mProject;
+    private Project mProject;  //包含task id的项目详情
+    private ProjectInfo mProjectInfo;  //包含task data的项目详情
     private static HashMap<String,String> templateID2Path;
     private List<ContainedForm> mFormList;
     private String projectID;
@@ -200,5 +201,33 @@ public class FormRepository implements FormDataSource {
             callback.onSuccess(mProject);
         }
     }
+
+    /**
+     * 获取到包含task详情的项目
+     * @param requestParams
+     * @param requestTag
+     * @param callback
+     */
+    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+        if(null == mProjectInfo) {
+            ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+                @Override
+                public void onSuccess(ProjectInfo data) {
+                    callback.onSuccess(data);
+                }
+
+                @Override
+                public void onError(String errorMsg) {
+                    callback.onError(errorMsg);
+                }
+            });
+
+        } else {
+            callback.onSuccess(mProjectInfo);
+        }
+    }
+
+
+
 
 }

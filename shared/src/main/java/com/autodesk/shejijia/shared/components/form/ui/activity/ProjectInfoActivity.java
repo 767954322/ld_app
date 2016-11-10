@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Building;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ProjectInfoPresenter;
@@ -19,14 +21,16 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  */
 public class ProjectInfoActivity extends BaseActivity implements ProjectInfoContract.View, View.OnClickListener {
 
-    private TextView mUsername;
-    private TextView mTelephone;
-    private TextView mAddress;
-    private TextView mCommunity;
+    private TextView mUsernameTv;
+    private TextView mTelephoneTv;
+    private TextView mAddressTv;
+    private TextView mCommunityTv;
     private ProjectInfoPresenter mPresenter;
-    private Project mProjectBean;
     private Toolbar mToolbar;
-    private TextView mToolbarTitle;
+    private TextView mToolbarTitleTv;
+    private Task mTask;
+    private Member mMember;
+    private Building mBuilding;
 
     @Override
     protected int getLayoutResId() {
@@ -36,22 +40,24 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     @Override
     protected void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
-        mToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        mToolbarTitleTv = (TextView) findViewById(R.id.tv_toolbar_title);
         //获取到页面的内容控件
-        mUsername = (TextView) findViewById(R.id.tv_username);
-        mTelephone = (TextView) findViewById(R.id.tv_telephone);
-        mAddress = (TextView) findViewById(R.id.tv_address);
-        mCommunity = (TextView) findViewById(R.id.tv_community);
+        mUsernameTv = (TextView) findViewById(R.id.tv_username);
+        mTelephoneTv = (TextView) findViewById(R.id.tv_telephone);
+        mAddressTv = (TextView) findViewById(R.id.tv_address);
+        mCommunityTv = (TextView) findViewById(R.id.tv_community);
 
     }
 
     @Override
     protected void initExtraBundle() {
         Intent intent = getIntent();
-        mProjectBean = (Project) intent.getSerializableExtra("projectBean");
+        mTask = (Task) intent.getSerializableExtra("task");
+        mMember = (Member) intent.getSerializableExtra("member");
+        mBuilding = (Building) intent.getSerializableExtra("building");
 
         mPresenter = new ProjectInfoPresenter(this);
-        mPresenter.setCustomer(mProjectBean);
+//        mPresenter.setCustomer(mProjectBean);
     }
 
     @Override
@@ -70,28 +76,41 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mToolbar.setTitle("设计家");
         mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
         mToolbar.setNavigationIcon(R.drawable.ic_close);
-        mToolbarTitle.setVisibility(View.GONE);
+        mToolbarTitleTv.setVisibility(View.GONE);
         setSupportActionBar(mToolbar);
+
+        mUsernameTv.setText(UIUtils.getString(R.string.form_username) + mMember.getProfile().getName());
+        mTelephoneTv.setText(UIUtils.getString(R.string.form_telephone) + mMember.getProfile().getMobile());
+//        String provinceName = building.getProvinceName();
+//        String cityName = building.getCityName();
+//        if(cityName.contains(provinceName)) {
+//            mView.setAddress(cityName + building.getDistrictName() + building.getDistrict() + "号");
+//        } else {
+//            mView.setAddress(provinceName + cityName + building.getDistrictName());
+//        }
+//        mView.setCommunity(building.getCommunityName());
+        String address = mBuilding.getCityName() + mBuilding.getDistrictName() + mBuilding.getDistrict();
+        mAddressTv.setText(UIUtils.getString(R.string.form_address) + address);
+        mCommunityTv.setText(UIUtils.getString(R.string.form_community) + mBuilding.getCommunityName());
     }
 
-    @Override
-    public void setUsername(String username) {
-        mUsername.setText(UIUtils.getString(R.string.form_username) + username);
+    public void setUsername(String usernameTv) {
+        mUsernameTv.setText(UIUtils.getString(R.string.form_username) + usernameTv);
     }
 
     @Override
     public void setTelephone(String telephone) {
-        mTelephone.setText(UIUtils.getString(R.string.form_telephone)+ telephone);
+        mTelephoneTv.setText(UIUtils.getString(R.string.form_telephone)+ telephone);
     }
 
     @Override
     public void setAddress(String address) {
-        mAddress.setText(UIUtils.getString(R.string.form_address) + address);
+        mAddressTv.setText(UIUtils.getString(R.string.form_address) + address);
     }
 
     @Override
     public void setCommunity(String community) {
-        mCommunity.setText(UIUtils.getString(R.string.form_community) + community);
+        mCommunityTv.setText(UIUtils.getString(R.string.form_community) + community);
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface ProjectInfoContract {
     interface View extends BaseView {
         void setToolbar();   //设置bar的显示
 
-        void setUsername(String username);
+        void setUsername(String usernameTv);
         void setTelephone(String telephone);
         void setAddress(String address);
         void setCommunity(String community);
