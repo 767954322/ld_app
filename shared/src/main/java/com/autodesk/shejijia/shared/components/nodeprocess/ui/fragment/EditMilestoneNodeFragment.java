@@ -104,6 +104,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void showActiveTask(Task task) {
+        //TODO disable some dates according to active task
         mMileStoneActiveDecorator.setActiveTask(task);
         mCalendarWidget.invalidateDecorators();
     }
@@ -117,7 +118,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void onCommitSuccess() {
-        getActivity().finish();
+        //TODO Do refactor
+//        getActivity().finish();
     }
 
     @Override

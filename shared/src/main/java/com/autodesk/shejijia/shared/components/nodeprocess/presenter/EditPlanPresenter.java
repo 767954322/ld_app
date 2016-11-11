@@ -75,8 +75,16 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                     if (mActiveTask != null) {
                         // Update active task date
                         Date oldDate = DateUtil.iso8601ToDate(mActiveTask.getPlanningTime().getStart());
-                        if(oldDate != null) {
-                            updateTaskDate(mActiveTask, selectedDate);
+                        if (oldDate != null) {
+                            String selectedDateString = DateUtil.dateToIso8601(selectedDate);
+                            updateTaskDate(mActiveTask, selectedDateString);
+                            if (DateUtil.compareDate(selectedDateString, mPlan.getStart()) < 0) {
+                                mPlan.setStart(selectedDateString);
+                            }
+                            if (DateUtil.compareDate(selectedDateString, mPlan.getCompletion()) > 0) {
+                                mPlan.setCompletion(selectedDateString);
+                            }
+
                             mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
                         }
                     }
@@ -163,8 +171,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         return null;
     }
 
-    private void updateTaskDate(Task task, Date newDate) {
-        String dateString = DateUtil.dateToIso8601(newDate);
+    private void updateTaskDate(Task task, String dateString) {
         task.getPlanningTime().setStart(dateString);
     }
 }

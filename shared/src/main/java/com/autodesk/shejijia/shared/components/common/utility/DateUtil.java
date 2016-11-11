@@ -299,14 +299,8 @@ public class DateUtil {
      * @return Date
      */
     public static final Date iso8601ToDate(String dateStr) {
-        Date date = null;
-        try {
-            Instant instant = Instant.parse(dateStr);
-            date = instant.toDate();
-        } catch (IllegalArgumentException e) {
-            LogUtils.e(TAG, "e = "+ e);
-        }
-        return date;
+        Instant instant = iso8601ToInstant(dateStr);
+        return instant.toDate();
     }
 
     /**
@@ -317,6 +311,42 @@ public class DateUtil {
     public static final String dateToIso8601(Date date) {
         Instant instant = new Instant(date.getTime());
         return instantToIso8601(instant);
+    }
+
+    /**
+     * Compare date
+     * @param date1 Date
+     * @param date2String iso 8601 format string
+     * @return negative value if this is less, 0 if equal, or positive value if greater
+     */
+    public static int compareDate(@Nullable Date date1, @Nullable String date2String) {
+        Instant instant1 = new Instant(date1.getTime());
+        Instant instant2 = iso8601ToInstant(date2String);
+        return instant1.compareTo(instant2);
+    }
+
+    /**
+     * Compare date
+     * @param date1String iso 8601 format string
+     * @param date2String iso 8601 format string
+     * @return negative value if this is less, 0 if equal, or positive value if greater
+     */
+    public static int compareDate(@Nullable String date1String, @Nullable String date2String) {
+        Instant instant1 = iso8601ToInstant(date1String);
+        Instant instant2 = iso8601ToInstant(date2String);
+        return instant1.compareTo(instant2);
+    }
+
+    /**
+     * Compare date
+     * @param date1
+     * @param date2
+     * @return negative value if this is less, 0 if equal, or positive value if greater
+     */
+    public static int compareDate(@Nullable Date date1, @Nullable Date date2) {
+        Instant instant1 = new Instant(date1.getTime());
+        Instant instant2 = new Instant(date2.getTime());
+        return instant1.compareTo(instant2);
     }
 
     /**
