@@ -1,19 +1,19 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.OnDateSelectedListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
@@ -39,7 +39,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     private MileStoneDayFormatter mMileStoneDayFormator;
 
     private EditPlanContract.Presenter mPresenter;
-    private ProgressDialog mProgressDialog;
+    private ConProgressDialog mProgressDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -131,13 +131,24 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void showError(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 
     @Override
     public void showLoading() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog = new ConProgressDialog(getActivity());
             mProgressDialog.setMessage(getString(R.string.loading));
         }
 

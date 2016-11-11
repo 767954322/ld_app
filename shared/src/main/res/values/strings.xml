@@ -7,6 +7,7 @@
     <string name="sure_deny">否</string>
     <string name="successful">成功</string>
     <string name="failure">失败</string>
+    <string name="alert_dialog__default_title">提示</string>
 
     <!--Qr-->
     <string name="scanner_text">将二维码放入框内,即可自动扫描</string>

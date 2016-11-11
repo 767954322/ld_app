@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +87,17 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showError(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

@@ -2,6 +2,8 @@
 <resources>
     <color name="colorPrimary">@color/con_blue</color>
     <color name="colorPrimaryDark">@color/con_blue</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">@color/con_blue</color>
+    <color name="alert_dialog_title">@color/font_black</color>
+    <color name="alert_dialog_message">@color/font_gray</color>
 
 </resources>

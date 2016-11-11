@@ -23,6 +23,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     private final static String LOG_TAG_EDIT_PLAN = "edit_plan";
     private final static String REQUEST_TAG_FETCH_PLAN = "fetch_plan";
     private final static String REQUEST_TAG_UPDATE_PLAN = "update_plan";
+
     private EditPlanContract.View mView;
     private EditState mEditState;
     private ProjectRepository mProjectRepository;
@@ -107,6 +108,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             @Override
             public void onError(String errorMsg) {
                 LogUtils.e(LOG_TAG_EDIT_PLAN, "update plan fail " + errorMsg);
+                mView.showError("Update plan fail!\n " + errorMsg); // TODO update string
             }
         });
 
