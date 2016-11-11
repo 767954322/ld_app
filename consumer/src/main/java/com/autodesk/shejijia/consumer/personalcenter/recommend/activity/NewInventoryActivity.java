@@ -233,12 +233,14 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 /**
                  * 详细地址
                  */
-                boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
-                if (!mMatchesDetailAddress) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
-                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+                if (!StringUtils.isEmpty(mDetailAddress)){
+                    boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
+                    if (!mMatchesDetailAddress) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
+                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
 
-                    return;
+                        return;
+                    }
                 }
 
                 /**
@@ -248,7 +250,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
                 break;
         }
-
     }
 
     private void newInvertoryList(String acs_member_id) {
@@ -312,9 +313,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         if (StringUtils.isEmpty(mCommunityName)) {
             return true;
         }
-        if (StringUtils.isEmpty(mDetailAddress)) {
+       /* if (StringUtils.isEmpty(mDetailAddress)) {
             return true;
-        }
+        }*/
 
         if (StringUtils.isEmpty(mProjectName)) {
             return true;
@@ -408,8 +409,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mCurrentCity = designerProjectsBean.getCity_name();
             mCurrentDistrict = designerProjectsBean.getDistrict_name();
 
-            mEtProjectAddress.setText(mCurrentProvince + mCurrentCity + UIUtils.getNoStringIfEmpty(mCurrentDistrict));
-
+            mEtProjectAddress.setText(mCurrentProvince + mCurrentCity +
+                    UIUtils.getNoStringIfEmpty(mCurrentDistrict));
+            mEtCommunityName.setText(designerProjectsBean.getCommunity_name());
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
         } else {
             mTvProjectName.setText("创建新的项目");

@@ -123,13 +123,13 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         String dimension = recommendBrandsBean.getDimension();
         String remarks = recommendBrandsBean.getRemarks();
 
-        mViewHolder.etBrandNum.setText(amountAndUnit);
+        mViewHolder.etBrandNum.setText(UIUtils.getNoStringIfEmpty(amountAndUnit));
         mViewHolder.etBrandNum.setTag(groupPosition * 100 + childPosition * 10 + 1);
 
-        mViewHolder.etBranDimension.setText(dimension);
+        mViewHolder.etBranDimension.setText(UIUtils.getNoStringIfEmpty(dimension));
         mViewHolder.etBranDimension.setTag(groupPosition * 100 + childPosition * 10 + 2);
 
-        mViewHolder.etBranRemarks.setText(remarks);
+        mViewHolder.etBranRemarks.setText(UIUtils.getNoStringIfEmpty(remarks));
         mViewHolder.etBranRemarks.setTag(groupPosition * 100 + childPosition * 10 + 3);
 
         if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 1)) {
