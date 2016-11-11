@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.ViewGroupCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +22,7 @@ import com.autodesk.shejijia.shared.R;
 
 public class ProjectInfoFragment extends DialogFragment {
 
+    private ImageButton mCloseBtn;
     private TextView mUserName;
     private TextView mUserAddress;
     private TextView mRoomArea;
@@ -36,6 +35,12 @@ public class ProjectInfoFragment extends DialogFragment {
         return projectInfoFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE,0);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class ProjectInfoFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
+        initEvent();
         updateViews();
     }
 
@@ -61,6 +67,7 @@ public class ProjectInfoFragment extends DialogFragment {
     }
 
     private void initView(View view) {
+        mCloseBtn = (ImageButton)view.findViewById(R.id.imgBtn_close);
         mUserName = (TextView) view.findViewById(R.id.tv_user_name);
         mUserAddress = (TextView) view.findViewById(R.id.tv_user_address);
         mRoomArea = (TextView) view.findViewById(R.id.tv_room_area);
@@ -68,12 +75,21 @@ public class ProjectInfoFragment extends DialogFragment {
         mQRCodeImg = (ImageView) view.findViewById(R.id.img_qr_code);
     }
 
+    private void initEvent(){
+        mCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+    }
+
     private void updateViews() {
         if (getArguments() != null) {
-            mUserName.setText(getArguments().getString("user_name", " "));
-            mUserAddress.setText(getArguments().getString("user_address", " "));
-            mRoomArea.setText(getArguments().getString("room_area", " "));
-            mRoomType.setText(getArguments().getString("room_type", " "));
+            mUserName.setText(getArguments().getString("userName", " "));
+            mUserAddress.setText(getArguments().getString("userAddress", " "));
+            mRoomArea.setText(getArguments().getString("roomArea", " "));
+            mRoomType.setText(getArguments().getString("roomType", " "));
         }
     }
 

@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import android.os.Bundle;
+
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
@@ -14,13 +16,21 @@ public interface ProjectDetailsContract {
     interface View extends BaseView {
 
         void updateProjectDetailsView(String memberType, ProjectInfo projectInfo);
+
+        void showProjectInfoDialog(Bundle projectInfoBundle);
+
+        void cancelProjectInfoDialog(); //没有获取项目详情的情况下，是无法显示项目消息的对话框的
     }
 
     interface Presenter extends BasePresenter {
 
-        void initRequestParams(long projectId, boolean isHasTaskData);
+        void initRequestParams(long projectId, boolean isHasTaskData);  //初始化获取项目详情的请求参数
 
-        void getProjectDetails();
+        void getProjectDetails(); //获取项目详情
+
+        void getProjectInformation(); //获取项目信息
+
+        void navigateToMessageCenter();//跳转消息中心
 
     }
 }

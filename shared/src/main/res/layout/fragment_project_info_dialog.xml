@@ -46,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_third2"
-            android:paddingStart="@dimen/spacing_padding_third2"
+            android:paddingEnd="@dimen/spacing_padding_double"
+            android:paddingStart="@dimen/spacing_padding_double"
             android:textColor="@color/white"
             android:textSize="@dimen/font_15"
             tools:text="业主姓名" />
@@ -63,8 +63,8 @@
             android:ellipsize="end"
             android:gravity="start"
             android:maxLines="2"
-            android:paddingEnd="@dimen/spacing_padding_third2"
-            android:paddingStart="@dimen/spacing_padding_third2"
+            android:paddingEnd="@dimen/spacing_padding_double"
+            android:paddingStart="@dimen/spacing_padding_double"
             android:textColor="@color/white"
             android:textSize="@dimen/font_15"
             tools:text="地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息" />
@@ -79,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_third2"
-            android:paddingStart="@dimen/spacing_padding_third2"
+            android:paddingEnd="@dimen/spacing_padding_double"
+            android:paddingStart="@dimen/spacing_padding_double"
             android:textColor="@color/white"
             android:textSize="@dimen/font_15"
             tools:text="130 m2" />
@@ -94,8 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_third2"
-            android:paddingStart="@dimen/spacing_padding_third2"
+            android:paddingEnd="@dimen/spacing_padding_double"
+            android:paddingStart="@dimen/spacing_padding_double"
             android:textColor="@color/white"
             android:textSize="@dimen/font_15"
             tools:text="两厅一室" />
@@ -136,6 +136,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_default_head" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_large" />
     </LinearLayout>
 
 </LinearLayout>

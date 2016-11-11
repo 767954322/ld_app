@@ -90,4 +90,5 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

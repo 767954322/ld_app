@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +68,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(mContext, this);
         if (getArguments().getLong("projectId") != 0) {
+            LogUtils.e("projectDetails_projectId ", getArguments().getLong("projectId") + "");
             mProjectDetailsPresenter.initRequestParams(getArguments().getLong("projectId"), true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -89,7 +91,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
-        LogUtils.e("projectId+memberType+projectStatus" + "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
+        LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
@@ -142,6 +144,18 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
+    public void showProjectInfoDialog(Bundle projectInfoBundle) {
+        ProjectInfoFragment projectInfoFragment = ProjectInfoFragment.newInstance(projectInfoBundle);
+        projectInfoFragment.show(getFragmentManager(), "project_info");
+    }
+
+    @Override
+    public void cancelProjectInfoDialog() {
+        // TODO: 11/11/16 其他更加友好的提示方式 
+        ToastUtils.showShort(mContext, "you couldn't get right project information");
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
     }
@@ -151,16 +165,14 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
         int itemId = item.getItemId();
         if (itemId == R.id.project_toolbar_info) {
-            ProjectInfoFragment projectInfoFragment = ProjectInfoFragment.newInstance(null);
-            projectInfoFragment.show(getFragmentManager(),"tag");
-
+            mProjectDetailsPresenter.getProjectInformation();
+            return true;
         } else if (itemId == R.id.project_toolbar_message) {
-            ToastUtils.showShort(mContext, "projectMessage");
-            // TODO: 11/1/16  跳转到消息中心页面
+            mProjectDetailsPresenter.navigateToMessageCenter();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
