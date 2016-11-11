@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -83,6 +84,7 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
 
     @Override
     public void onClick(View v) {
+        CustomProgress.show(this, "", false, null);
         String revokeCause = mEditCause.getText().toString().trim();
         if (TextUtils.isEmpty(revokeCause)) {
             Toast.makeText(this, "填写内容不能为空", Toast.LENGTH_SHORT).show();
@@ -102,11 +104,13 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
         MPServerHttpManager.getInstance().revokeRecommend(id, object1, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ToastUtil.showCustomToast(RevokeCauseActivity.this, "退回失败");
+                CustomProgress.cancelDialog();
+                Toast.makeText(RevokeCauseActivity.this, "退回失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject object) {
+                CustomProgress.cancelDialog();
                 onResponseSuccess();
             }
         });

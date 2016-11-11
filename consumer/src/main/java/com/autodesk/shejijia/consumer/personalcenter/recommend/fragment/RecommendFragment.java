@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendDetailsActivity;
@@ -150,18 +151,18 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
 
     @Override
     public void onRevokeSuccessFul() {
-        ToastUtil.showCustomToast(getActivity(), "操作成功");
         mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onRevokeFailer() {
-        ToastUtil.showCustomToast(getActivity(), "操作失败");
+        Toast.makeText(activity, "删除失败", Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 用于刷新
+     *
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
