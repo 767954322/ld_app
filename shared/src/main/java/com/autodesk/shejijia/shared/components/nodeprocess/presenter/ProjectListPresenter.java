@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -15,7 +16,7 @@ import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.TaskDetailsActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskDetailsFragment;
 
 import org.json.JSONObject;
 
@@ -31,14 +32,16 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private Context mContext;
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
+    private FragmentManager fragmentManager;
     private int mOffset = 0;
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
     private List<ProjectInfo> mProjectList;
 
-    public ProjectListPresenter(Context context, ProjectListContract.View projectListsView) {
+    public ProjectListPresenter(Context context,FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
+        this.fragmentManager = fragmentManager;
         this.mProjectListView = projectListsView;
         mProjectRepository = ProjectRepository.getInstance();
     }
@@ -139,9 +142,11 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
-        Intent intent = new Intent(mContext, TaskDetailsActivity.class);
-        intent.putExtra("taskId", taskIdLists.get(position).getTaskId());
-        mContext.startActivity(intent);
+        Bundle taskInfoBundle = new Bundle();
+        taskInfoBundle.putSerializable("taskInfo",taskIdLists.get(position));
+        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
+        taskDetailsFragment.setArguments(taskInfoBundle);
+        taskDetailsFragment.show(fragmentManager,"task_details");
     }
 
     @Override

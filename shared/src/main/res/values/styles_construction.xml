@@ -15,4 +15,10 @@
         <item name="android:textColorSecondary">@color/white</item>
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
+
+    <style name="CustomAlertDialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

@@ -18,7 +18,7 @@
     <string name="popup_clear_cache_confirm">确定</string>
 
     <!-- 节点详情添加备注提示语 -->
-    <string name="editText_hint_text">添加品牌等信息</string>
+    <string name="editText_hint_text">添加备注</string>
 
     <!-- 个人中心里的文本 -->
     <string name="personal_center_my_project">全部项目</string>

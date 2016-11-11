@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/node_details_oval_white_shape"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_top_status"
+        android:layout_width="match_parent"
+        android:padding="@dimen/spacing_padding_third"
+        android:background="@drawable/node_details_oval_gray_shape"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_task_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_large"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:text="隐秘工程验收"/>
+
+        <TextView
+            android:id="@+id/tv_task_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_large"
+            tools:text="未验收"/>
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_weight="1"
+        android:id="@+id/sclVi_middle_info"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:padding="@dimen/spacing_padding_double"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcy_task_person_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_task_date"
+                android:layout_margin="@dimen/spacing_margin_micro"
+                android:drawableStart="@drawable/date"
+                android:gravity="center_vertical"
+                android:drawablePadding="@dimen/spacing_padding_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/font_normal"
+                tools:text="2016年8月25日"/>
+
+            <TextView
+                android:id="@+id/tv_task_address"
+                android:layout_margin="@dimen/spacing_margin_micro"
+                android:drawableStart="@drawable/location"
+                android:gravity="center_vertical"
+                android:drawablePadding="@dimen/spacing_padding_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/font_normal"
+                tools:text="浦东新区浦电路399号2号楼502室"/>
+
+            <TextView
+                android:id="@+id/tv_task_phone"
+                android:layout_margin="@dimen/spacing_margin_micro"
+                android:drawableStart="@drawable/company"
+                android:gravity="center_vertical"
+                android:drawablePadding="@dimen/spacing_padding_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/font_normal"
+                tools:text="监理公司名称监理 18072842343"/>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/node_details_oval_gray_shape"
+                android:padding="@dimen/spacing_padding_double"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edt_task_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/gray"
+                    android:maxLines="7"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/font_normal"
+                    android:hint="@string/editText_hint_text"/>
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:showDividers="beginning|middle"
+        android:divider="@drawable/linearlayout_divider_hor_shape"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_navigate_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_large"
+            android:padding="@dimen/spacing_padding_double"
+            android:gravity="center"
+            tools:text="隐秘工程验收表格"/>
+
+        <TextView
+            android:id="@+id/tv_navigate_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_large"
+            android:padding="@dimen/spacing_padding_double"
+            android:gravity="center"
+            tools:text="修改预约时间"/>
+    </LinearLayout>
+
+</LinearLayout>

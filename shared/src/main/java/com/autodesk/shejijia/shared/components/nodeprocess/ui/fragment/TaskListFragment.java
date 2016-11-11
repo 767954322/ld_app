@@ -62,7 +62,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
 
     @Override
     protected void initData() {
-        mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
+        mProjectListPresenter = new ProjectListPresenter(getActivity(), getFragmentManager(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
         mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);

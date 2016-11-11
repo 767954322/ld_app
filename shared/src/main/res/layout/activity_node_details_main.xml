@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/popUpWindow_bg"
     android:gravity="center">
 
 
@@ -19,7 +18,6 @@
 
         <include
             android:id="@+id/inClu_top"
-            layout="@layout/activity_node_details_content_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
