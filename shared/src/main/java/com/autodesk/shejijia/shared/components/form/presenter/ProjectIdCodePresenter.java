@@ -15,6 +15,7 @@ import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,45 +45,35 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
 
         final Bundle params = new Bundle();
         params.putLong("pid", pid);
-
-//        FormRepository.getInstance().getProjectTaskId(params, "", new ResponseCallback<Project>() {
-//            @Override
-//            public void onSuccess(Project data) {
-//                Plan plan = data.getPlan();
-//                String milestone = plan.getMilestone();
-//                params.putString("tid",milestone);
-//
-//
-//                Intent intent = new Intent(mContext,ProjectInfoActivity.class);
-//                intent.putExtra("projectBean",data);
-//                mContext.startActivity(intent);
-//                mView.dismiss();
-//            }
-//
-//            @Override
-//            public void onError(String errorMsg) {
-//                mView.showNetError(errorMsg);
-//            }
-//        });
         params.putBoolean("task_data",true);
+
         FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 PlanInfo planInfo = data.getPlan();
                 List<Task> taskList = planInfo.getTasks();
                 String milestone = planInfo.getMilestone();
-                Member role = null;
                 for (Task task : taskList) {
-                    if (milestone.equals(task.getTaskId())) {
-                        if ("inspectorInspection".equals(task.getCategory())) {
-                            List<Member> members = data.getMembers();
-                            for (Member member : members) {
+                    //根据监理进来:1,修改;2,查看
+                    if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                        String status = task.getStatus();
+                        Member role = null;
+                        List<String> statusList = new ArrayList<>();
+                        statusList.add("INPROGRESS");
+                        statusList.add("DELAYED");
+                        statusList.add("REINSPECTION_INPROGRESS");  // modify
+                        statusList.add("REJECTED");
+                        statusList.add("QUALIFIED");
+                        statusList.add("REINSPECTION");
+                        statusList.add("RECTIFICATION");
+                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
+                        if(statusList.contains(status)) {
+                            for (Member member : data.getMembers()) {
                                 if ("member".equals(member.getRole())) {
                                     role = member;
                                     break;
                                 }
                             }
-
                             Intent intent = new Intent(mContext, ProjectInfoActivity.class);
                             intent.putExtra("task", task);
                             intent.putExtra("building", data.getBuilding());
@@ -92,8 +83,9 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                             mView.dismiss();
                             return;
                         }
-                        break;
+
                     }
+
                 }
 
                 mView.showError("当前没有监理需要验收的项目");

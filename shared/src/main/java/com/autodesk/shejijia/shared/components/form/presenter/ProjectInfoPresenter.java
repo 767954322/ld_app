@@ -1,13 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
-import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Building;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Profile;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by t_aij on 16/10/21.
@@ -22,38 +15,38 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     }
 
     @Override
-    public void setCustomer(Project projectBean) {
-        List<Member> members = projectBean.getMembers();
-        Iterator<Member> iterator = members.iterator();
-        while(iterator.hasNext()) {
-            Member membersBean = iterator.next();
-            if("member".equals(membersBean.getRole())) {
-                Profile profile = membersBean.getProfile();
-                mView.setUsername(profile.getName());
-                mView.setTelephone(profile.getMobile());
-                break;
-            }
-        }
-        Building building = projectBean.getBuilding();
-        String provinceName = building.getProvinceName();
-        String cityName = building.getCityName();
-        if(cityName.contains(provinceName)) {
-            mView.setAddress(cityName + building.getDistrictName() + building.getDistrict() + "号");
-        } else {
-            mView.setAddress(provinceName + cityName + building.getDistrictName());
-        }
-        mView.setCommunity(building.getCommunityName());
-    }
-
-    @Override
     public void confirm() {
         // TODO: 16/10/28 根据项目信息的状态,选择进入不同的表格
-        mView.selectConfirm();
+        String status = mView.getStatus();
+        switch (status) {
+            case "INPROGRESS":  //进行中,修改
+            case "DELAYED":     //已延期,修改
+                mView.enterPrecheck(mView.getTask());
+//                mView.dismiss();
+                break;
+            case "REINSPECTION_INPROGRESS":  //复验进行中,修改
+                break;
+            case "REJECTED":   //验收拒绝,查看
+                break;
+            case "QUALIFIED":   //合格,查看
+                break;
+            case "REINSPECTION":   //复验项,查看
+                break;
+            case "RECTIFICATION":   //整改项,查看
+                break;
+            case "REINSPECTION_AND_RECTIFICATION":   //包含复验项和整改项,查看
+                break;
+            default:
+                break;
+
+        }
+
     }
 
     @Override
     public void cancel() {
         mView.selectCancel();
+        mView.dismiss();
     }
 
 }

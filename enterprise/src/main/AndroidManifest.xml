@@ -192,8 +192,7 @@
         <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckActivity"
                   android:alwaysRetainTaskState="true"
                   android:configChanges="keyboardHidden|orientation"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrDialogActivity"
                   android:theme="@style/ScanQrDialogStyle"
                   android:alwaysRetainTaskState="true"

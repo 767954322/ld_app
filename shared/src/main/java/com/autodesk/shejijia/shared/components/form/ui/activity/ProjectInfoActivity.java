@@ -57,12 +57,15 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mBuilding = (Building) intent.getSerializableExtra("building");
 
         mPresenter = new ProjectInfoPresenter(this);
-//        mPresenter.setCustomer(mProjectBean);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        mUsernameTv.setText(UIUtils.getString(R.string.form_username) + mMember.getProfile().getName());
+        mTelephoneTv.setText(UIUtils.getString(R.string.form_telephone) + mMember.getProfile().getMobile());
+        String address = mBuilding.getCityName() + mBuilding.getDistrictName() + mBuilding.getDistrict();
+        mAddressTv.setText(UIUtils.getString(R.string.form_address) + address);
+        mCommunityTv.setText(UIUtils.getString(R.string.form_community) + mBuilding.getCommunityName());
     }
 
     @Override
@@ -77,53 +80,35 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
         mToolbar.setNavigationIcon(R.drawable.ic_close);
         mToolbarTitleTv.setVisibility(View.GONE);
+
         setSupportActionBar(mToolbar);
-
-        mUsernameTv.setText(UIUtils.getString(R.string.form_username) + mMember.getProfile().getName());
-        mTelephoneTv.setText(UIUtils.getString(R.string.form_telephone) + mMember.getProfile().getMobile());
-//        String provinceName = building.getProvinceName();
-//        String cityName = building.getCityName();
-//        if(cityName.contains(provinceName)) {
-//            mView.setAddress(cityName + building.getDistrictName() + building.getDistrict() + "号");
-//        } else {
-//            mView.setAddress(provinceName + cityName + building.getDistrictName());
-//        }
-//        mView.setCommunity(building.getCommunityName());
-        String address = mBuilding.getCityName() + mBuilding.getDistrictName() + mBuilding.getDistrict();
-        mAddressTv.setText(UIUtils.getString(R.string.form_address) + address);
-        mCommunityTv.setText(UIUtils.getString(R.string.form_community) + mBuilding.getCommunityName());
-    }
-
-    public void setUsername(String usernameTv) {
-        mUsernameTv.setText(UIUtils.getString(R.string.form_username) + usernameTv);
-    }
-
-    @Override
-    public void setTelephone(String telephone) {
-        mTelephoneTv.setText(UIUtils.getString(R.string.form_telephone)+ telephone);
-    }
-
-    @Override
-    public void setAddress(String address) {
-        mAddressTv.setText(UIUtils.getString(R.string.form_address) + address);
-    }
-
-    @Override
-    public void setCommunity(String community) {
-        mCommunityTv.setText(UIUtils.getString(R.string.form_community) + community);
-    }
-
-    @Override
-    public void selectConfirm() {
-        // TODO: 16/10/21 判断状态,选择进入的表格?
-        Intent intent = new Intent(this,PrecheckActivity.class);
-        startActivity(intent);
     }
 
 
     @Override
     public void selectCancel() {
         startActivity(new Intent(this,ProjectIdCodeActivity.class));
+    }
+
+    @Override
+    public String getStatus() {
+        return mTask.getStatus();
+    }
+
+    @Override
+    public Task getTask() {
+        return mTask;
+    }
+
+    @Override
+    public void enterPrecheck(Task task) {
+        Intent intent = new Intent(this,PrecheckActivity.class);
+        intent.putExtra("task",task);
+        startActivity(intent);
+    }
+
+    @Override
+    public void dismiss() {
         finish();
     }
 
@@ -143,6 +128,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
             mPresenter.cancel();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

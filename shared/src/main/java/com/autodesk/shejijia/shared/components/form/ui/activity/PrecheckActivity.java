@@ -9,8 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
+import com.autodesk.shejijia.shared.components.form.presenter.PrecheckPresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
@@ -25,6 +27,8 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private LinearLayout mAdditionalLayout;
     private Button mSelectBtn;
     private Toolbar mToolbar;
+    private Task mTask;
+    private PrecheckPresenter mPresenter;
 
     @Override
     protected int getLayoutResId() {
@@ -33,8 +37,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        //Toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
         //验收条件的按钮
         mOkBtn = (RadioButton) findViewById(R.id.btn_ok);
         mNoBtn = (RadioButton) findViewById(R.id.btn_no);
@@ -49,6 +51,10 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initExtraBundle() {
         // TODO: 16/10/27  获取到的task信息
+        mTask = (Task) getIntent().getSerializableExtra("task");
+
+        mPresenter = new PrecheckPresenter(this);
+        mPresenter.showForm(mTask);
     }
 
     @Override
@@ -59,7 +65,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initListener() {
         // TODO: 16/10/27  设置监听事件
-//        mLeft.setOnClickListener(this);
         mOkBtn.setOnClickListener(this);
         mNoBtn.setOnClickListener(this);
         mSelectBtn.setOnClickListener(this);
@@ -86,18 +91,11 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            finish();
+//            finish();
+            ToastUtils.showShort(this,"back");
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void setToolbarTitle(String title) {
-        mToolbar.setTitle(title);
-        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.black));
-        mToolbar.setNavigationIcon(R.drawable.back_ico);
-        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -118,6 +116,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
 
