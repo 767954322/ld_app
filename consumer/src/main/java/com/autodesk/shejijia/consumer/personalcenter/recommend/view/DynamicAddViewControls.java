@@ -1,20 +1,15 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.WheelView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 
@@ -94,7 +89,6 @@ public class DynamicAddViewControls extends LinearLayout {
         TextView textView;
         BtnStatusBean btnStatusBean;
         LayoutParams layoutParamsButton = new LayoutParams((int) (186 * ADAPTER_COUNT), (int) (68 * ADAPTER_COUNT));
-        ToastUtil.showCustomToast(context, "" + width / 8);
         layoutParamsButton.weight = 1;
         layoutParamsButton.leftMargin = (int) (32 * ADAPTER_COUNT);
         layoutParamsButton.rightMargin = (int) (32 * ADAPTER_COUNT);
