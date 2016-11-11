@@ -113,6 +113,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
 
             case R.id.rl_personal_b_collect:    /// 消息中心.
                 Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+                intent_messagecenter.putExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE, Constant.MessageCenterActivityKey.SYSTEM_MSG);
                 startActivity(intent_messagecenter);
                 break;
 
