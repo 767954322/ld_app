@@ -1,7 +1,11 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
@@ -9,9 +13,11 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendLogicImpl;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RevokeCauseActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 
@@ -23,6 +29,7 @@ import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
+import de.greenrobot.event.EventBus;
 
 /**
  * @User: 蜡笔小新
@@ -152,4 +159,27 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     public void onRevokeFailer() {
         ToastUtil.showCustomToast(getActivity(), "操作失败");
     }
+
+    /**
+     * 用于刷新
+     * @param event
+     */
+    public void onEventMainThread(RefreshEvent event) {
+        mListView.clearFocus();
+        mListView.setSelection(0);
+        mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

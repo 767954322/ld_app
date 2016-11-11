@@ -95,7 +95,7 @@ public class RecommendDetailsBean implements IModel {
         this.city_name = city_name;
     }
 
-    public Object getRemark() {
+    public String getRemark() {
         return remark;
     }
 

@@ -3,10 +3,13 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,8 +17,10 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.FragmentTabAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.fragment.RecommendFragment;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -23,6 +28,8 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @User: 蜡笔小新
@@ -121,4 +128,6 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
     public void onLoadFailer() {
         CustomProgress.cancelDialog();
     }
+
+
 }

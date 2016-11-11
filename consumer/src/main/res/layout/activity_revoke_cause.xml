@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_navigation_header"/>
+
+    <EditText
+        android:id="@+id/edit_revoke_cause"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="请输入您要撤销的原因！"
+        android:maxLength="200"
+        android:padding="16dp"
+        android:textSize="16sp"/>
+
+    <include layout="@layout/line_view"/>
+
+    <TextView
+        android:id="@+id/tv_edit_length"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:paddingRight="16dp"
+        android:text="0/200"
+        android:textColor="@color/font_gray"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btn_revoke_make_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginLeft="@dimen/size_15"
+        android:layout_marginRight="@dimen/size_15"
+        android:layout_marginTop="@dimen/size_40"
+        android:background="@drawable/bg_common_btn_gray"
+        android:focusable="false"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/bg_ff"
+        android:textSize="16sp"/>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -24,6 +26,7 @@ import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
+import de.greenrobot.event.EventBus;
 
 /**
  * @User: 蜡笔小新
@@ -137,5 +140,30 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     @Override
     public void onRevokeFailer() {
         Toast.makeText(this, "退回失败", Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * 用于刷新
+     *
+     * @param event
+     */
+    public void onEventMainThread(RefreshEvent event) {
+        mListView.clearFocus();
+        mListView.setSelection(0);
+        mRecommendLogic.onLoadRecommendListData(false, 0, LIMIT, 0);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -145,7 +145,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
-        android:paddingRight="16dp">
+        android:paddingRight="16dp"
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -181,6 +182,37 @@
                 android:textSize="@dimen/font_12"/>
         </LinearLayout>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlt_revoke_cause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/size_16"
+        android:paddingRight="@dimen/size_15"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:background="#dedede"/>
+
+        <TextView
+            android:id="@+id/tv_revoke_cause"
+            style="@style/item_text_style"
+            android:layout_marginTop="10dp"
+            android:text="退回原因："
+            android:textColor="@color/font_gray"/>
+
+        <TextView
+            android:id="@+id/tv_revoke_cause_details"
+            style="@style/item_text_style"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/tv_revoke_cause"
+            android:lineSpacingMultiplier="1.2"
+            android:text="女娲点击我的按就的空间很大我几号考完我打到我家很卡的挖坑机"
+            android:textColor="@color/font_gray"/>
     </RelativeLayout>
 
     <include layout="@layout/line_view"/>
