@@ -76,13 +76,21 @@ public class FormFeedBack {
 
                 if("audio".equals(valueMap.get("type"))){
                     audio.setPicture_url((String) valueMap.get("value"));
-                    audio.setFileId((String) valueMap.get("id"));
+                    if(valueMap.get("id") == null){
+                        audio.setFileId("");
+                    }else {
+                        audio.setFileId(valueMap.get("id").toString());
+                    }
                 }
 
                 if("image".equals(valueMap.get("type"))){
                     FormFile image = new FormFile();
                     image.setPicture_url((String) valueMap.get("value"));
-                    image.setFileId((String) valueMap.get("id"));
+                    if(valueMap.get("id") == null){
+                        image.setFileId("");
+                    }else {
+                        image.setFileId(valueMap.get("id").toString());
+                    }
                     images.add(image);
                 }
             }
