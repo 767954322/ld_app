@@ -13,6 +13,7 @@
         android:cacheColorHint="#00000000"
         android:divider="@null"
         android:fadingEdge="none"
+        android:transcriptMode="normal"
         android:listSelector="@android:color/transparent"
         android:scrollingCache="false">
     </com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView>

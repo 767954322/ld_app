@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="recommend_apartments">　<!--推荐空间列表-->
+        <item>选择空间</item>
         <item>客厅及厨房</item>
         <item>客厅及厨房二</item>
         <item>客厅</item>

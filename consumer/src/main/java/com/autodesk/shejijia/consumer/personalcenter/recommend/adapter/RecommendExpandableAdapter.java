@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -22,7 +24,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -92,9 +93,9 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             setOnTouchListenerForEditText(mViewHolder.etBranDimension, R.id.et_brand_dimension);
             setOnTouchListenerForEditText(mViewHolder.etBranRemarks, R.id.et_brand_remarks);
 
-            mViewHolder.mTextWatcherNum = new ExpandListTextWatcher(0);
-            mViewHolder.mTextWatcherDimension = new ExpandListTextWatcher(1);
-            mViewHolder.mTextWatcherRemarks = new ExpandListTextWatcher(2);
+            mViewHolder.mTextWatcherNum = new ExpandListTextWatcher(0, mViewHolder.etBrandNum);
+            mViewHolder.mTextWatcherDimension = new ExpandListTextWatcher(1, mViewHolder.etBranDimension);
+            mViewHolder.mTextWatcherRemarks = new ExpandListTextWatcher(2, mViewHolder.etBranRemarks);
 
             mViewHolder.etBrandNum.addTextChangedListener(mViewHolder.mTextWatcherNum);
             mViewHolder.etBranDimension.addTextChangedListener(mViewHolder.mTextWatcherDimension);
@@ -166,6 +167,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         mViewHolder.spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                hideSoftKeywords(mViewHolder.spinnerApartment);
                 String currentApartmentName = apartmentList.get(position);
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(currentApartmentName);
             }
@@ -278,8 +280,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 //            iv.setImageResource(R.drawable.btn_browser);
 //        }
         List<RecommendBrandsBean> rb = mRecommendSCFDList.get(groupPosition).getBrands();
-        viewGroupHolder.rlRecommendFooter.setVisibility(rb != null && rb.size() > 0?View.GONE:View.VISIBLE);
-        viewGroupHolder.rlMaterialPrompt.setVisibility(rb != null && rb.size() > 0?View.GONE:View.VISIBLE);
+        viewGroupHolder.rlRecommendFooter.setVisibility(rb != null && rb.size() > 0 ? View.GONE : View.VISIBLE);
+        viewGroupHolder.rlMaterialPrompt.setVisibility(rb != null && rb.size() > 0 ? View.GONE : View.VISIBLE);
 
         viewGroupHolder.tvCategoryName.setText(mRecommendSCFDList.get(groupPosition).getSub_category_3d_name());
 //        OnClickListener(viewGroupHolder.tvBrandAdd, Constant.FragmentEnum.ZERO,groupPosition);
@@ -381,11 +383,12 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             }
         });
     }
+
     static class ViewGroupHolder {
         TextView tvCategoryName;
         RelativeLayout rlRecommendFooter;
-        RelativeLayout  rlGroupTopId;
-        RelativeLayout  rlMaterialPrompt;
+        RelativeLayout rlGroupTopId;
+        RelativeLayout rlMaterialPrompt;
         TextView tvBrandAdd;
         TextView tvCategoryDelete;
     }
@@ -415,14 +418,15 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mTextWatcherRemarks.updatePosition(groupPosition, position);
         }
     }
-    private void OnClickListener(TextView textView,final int type,final int groupPosition){
+
+    private void OnClickListener(TextView textView, final int type, final int groupPosition) {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null== null){
+                if (null == null) {
                     return;
                 }
-                switch (type){
+                switch (type) {
                     case Constant.FragmentEnum.ZERO:
                         mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(groupPosition));
                         break;
@@ -440,9 +444,12 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         private int ChildPosition;
         private int parentPosition;
         private int type;
+        EditText mEditText;
 
-        public ExpandListTextWatcher(int type) {
+        public ExpandListTextWatcher(int type, EditText editText) {
             this.type = type;
+            mEditText = editText;
+
         }
 
         public void updatePosition(int groupPosition, int position) {
@@ -464,20 +471,38 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 return;
             }
             if (type == 0) {
-//                if (!isValidAmountAndUnit(s.toString())) {
-//                    showAlertView(UIUtils.getString(R.string.recommend_form_number));
-//                } else {
-//                    mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
-//                }
-                mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+                if (!isValidAmountAndUnit(s.toString())) {
+                    showAlertView(UIUtils.getString(R.string.recommend_form_number));
+                    hideSoftKeywords(mEditText);
+                    mEditText.setText("");
+                } else {
+                    mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+                }
             } else if (type == 1) {
-                mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setDimension(s.toString());
+                if (!isValidDimension(s.toString())) {
+                    showAlertView(UIUtils.getString(R.string.recommend_form_dimension));
+                    mEditText.setText(s.toString().substring(0, 32));
+                    hideSoftKeywords(mEditText);
+                } else {
+                    mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setDimension(s.toString());
+                }
             } else if (type == 2) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setRemarks(s.toString());
             } else {
             }
         }
     }
+
+    boolean isValidDimension(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return true;
+        }
+        if (text.length() > 32) {
+            return false;
+        }
+        return true;
+    }
+
 
     // 检验数量（1-9999 + 2个汉字）．
     private boolean isValidAmountAndUnit(String text) {
@@ -499,8 +524,14 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 content, null, null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, null).show();
     }
 
-    private static final String ALL_NUM = "^([1-9][0-9]{1,3})$";// 是否为合法数量（1-9999 + 2个汉字）．
-    private static final String NUM_AND_CHINESE = "^([1-9][0-9]{1,3})[\u4e00-\u9fa5]{1,2}$";// （1-9999 + 2个汉字）．
+    // 强制隐藏软件盘．
+    private void hideSoftKeywords(TextView editText) {
+        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    private static final String ALL_NUM = "^[0-9]{1,4}+(.[0-9]{1,2})?$";// 是否为合法数量（1-9999 ）．
+    private static final String NUM_AND_CHINESE = "^([0-9]{1,4}+(.[0-9]{1,2})?)[\u4e00-\u9fa5]{1,2}$";// （1-9999 + 2个汉字）．
 
 //    public void setCallBackListener(CallBack callBack) {
 //        this.callBack = callBack;
