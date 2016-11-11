@@ -259,16 +259,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         }
     }
 
-
+    /**
+     *空实现  不能删除
+     */
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//       if(v.getId() == R.id.group_top_id){
-//           MyToast.show(this,"0000");
-//        }else{
-//           MyToast.show(this,"11111");
-//       }
-
-//        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mRecommendSCFDList, groupPosition);
         return true;
     }
 
