@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40">
 
-        <HorizontalScrollView
+        <com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicScrollView
             android:id="@+id/two_level_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
             android:scrollbars="none">
 
 
-        </HorizontalScrollView>
+        </com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicScrollView>
 
         <LinearLayout
             android:id="@+id/rl_btn"

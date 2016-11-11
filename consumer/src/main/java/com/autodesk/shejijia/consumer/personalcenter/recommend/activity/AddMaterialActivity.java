@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -31,9 +33,9 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInfor
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewContainer;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicPopWindow;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicScrollView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
@@ -55,7 +57,7 @@ import java.util.List;
  * @brief 添加主材页面 .
  */
 
-public class AddMaterialActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener {
+public class AddMaterialActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, DynamicScrollView.MyScrollViewListener {
 
 
     private DynamicAddView[] dynamicAddViews;//二级控件集合
@@ -65,7 +67,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private DynamicPopWindow dynamicPopWindowReuse;//多窗口复用
     private int countArrItem = 0;//对应不同二级品类和窗口
     private HorizontalScrollView one_level_category;
-    private HorizontalScrollView two_level_category;
+    private DynamicScrollView two_level_category;
     private PullListView show_brand_listView;
     private MaterialCategoryBean materialCategoryBean;
     private TextView all_material_btn;
@@ -96,6 +98,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private String currentCheckedTwoCategoryId;
     private String currentSubCategoryName = "";//当前正被点击到的二级品类的名字
     private String currentStoreIdTotal;
+    private WindowManager windowManager;
+    private int currentDistance = 0;//当前item所在的位置
+    private int currentClickItemLocation = 0;//当前点击的位置
+
 
     @Override
     public void onClick(View v) {
@@ -127,19 +133,22 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         setTitleForNavbar(UIUtils.getString(R.string.add_material));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.store_show_title));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.tx_ef));
-        two_level_category = (HorizontalScrollView) findViewById(R.id.two_level_category);
+        two_level_category = (DynamicScrollView) findViewById(R.id.two_level_category);
         one_level_category = (HorizontalScrollView) findViewById(R.id.one_level_category);
         show_brand_listView = (PullListView) findViewById(R.id.show_brand_listView);
         remain_brand_count = (TextView) findViewById(R.id.remain_brand_count);
         mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_to_refresh_layout);
         add_for_listing = (RelativeLayout) findViewById(R.id.add_for_listing);
         rl_btn = (LinearLayout) findViewById(R.id.rl_btn);
+        windowManager = (WindowManager) this
+                .getSystemService(Context.WINDOW_SERVICE);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 //        all_material_btn.setOnClickListener(this);
+        two_level_category.setMyScrollViewListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         add_for_listing.setOnClickListener(this);
     }
@@ -170,7 +179,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         brandsBeanAndTag = (CheckedInformationBean) msg.obj;
                         backListTag = brandsBeanAndTag.getList();
                         updataCategoryTag();
-                        ToastUtil.showCustomToast(AddMaterialActivity.this, "" + brandsBeanAndTag.getRecommendBrandsBean().getBrand_name());
                         putCheckedBrandsAddList(brandsBeanAndTag.getRecommendBrandsBean());
 
                         break;
@@ -188,10 +196,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 }
 
                 showBrandRemainCount();
-
             }
         };
-
     }
 
     @Override
@@ -296,7 +302,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                                 changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
                             }
                         }
-
                     }
                 });
     }
@@ -427,11 +432,22 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         }
                     }
                 }
+
+                @Override
+                public void onGetCurrentClickLocation(int x,int y,int xForRight,int width,BtnStatusBean btnStatusBean) {
+                    currentClickItemLocation = x;
+                    int totalCount = dynamicAddViews[countArrItem].getItemCount();
+                    two_level_category.useCurrentDistanceScroll(x,currentDistance,xForRight,width,totalCount,btnStatusBean.getCountOffset());
+
+
+                }
             });
 
             showAllTwoCategory(materialCategoryBean.getCategories_3d().get(i).getSub_category(), i);
         }
         two_level_category.addView(dynamicAddViews[0]);
+        int height = this.getWindowManager().getDefaultDisplay().getHeight();
+        two_level_category.setAdapterForItem(height);
         dynamicPopWindowReuse = dynamicPopWindows[0];
         //一二级品类信息展示之后在获取,店铺,品牌信息
         getStore();
@@ -450,6 +466,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onButtonOnClick(BtnStatusBean btnStatusBean) {
                 dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBean);
+                int[] viewLocation = dynamicAddViews[countArrItem].getLocationNumber(btnStatusBean.getCountOffset());
+                int length = dynamicAddViews[countArrItem].getItemCount();
+                two_level_category.useCurrentDistanceScroll(viewLocation[0],currentDistance,viewLocation[2],viewLocation[4],length,btnStatusBean.getCountOffset());
                 //复用
                 adapterCategoryAll(btnStatusBean);
                 for (int i = 0; i < oneArr.length; i++) {
@@ -530,7 +549,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     list = listTag;
                 }
             }
-            addBrandShowAdapter.changeListTag(list, datas);
+            if (datas != null) {
+
+                addBrandShowAdapter.changeListTag(list, datas);
+            }
         } else {
             addBrandShowAdapter.changeListTag(list, datas);
         }
@@ -598,11 +620,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
             restartDatasForAdapter(listFirstTag, listBrands);
             addBrandShowAdapter.notifyDataSetChanged();
-            ToastUtil.showCustomToast(AddMaterialActivity.this, "fuyong");
         } else {
             //从未获取过该品类的品牌信息
             getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
-            ToastUtil.showCustomToast(AddMaterialActivity.this, "xin");
         }
         showBrandRemainCount();
     }
@@ -633,7 +653,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         listTag.add(btnStatusBean);
                         listHaned.add(list.get(i));
                     }
-                    ToastUtil.showCustomToast(AddMaterialActivity.this, list.size() + "---------" + listTag.size());
                 }
             }
             addDatas(list);
@@ -698,7 +717,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     List<RecommendBrandsBean> checkedBrandsInformationBean = totalList.get(i).getCheckedBrandsInformationBean();
                     checkedBrandsInformationBean.add(brandsBean);
 
-                    ToastUtil.showCustomToast(AddMaterialActivity.this, "" + checkedBrandsInformationBean.size());
                 }
             }
         }
@@ -720,7 +738,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     if (subBrandsName.equals(listUnCheckedName)) {
 
                         totalList.get(i).getCheckedBrandsInformationBean().remove(k);
-                        ToastUtil.showCustomToast(AddMaterialActivity.this, "" + totalList.get(i).getCheckedBrandsInformationBean().size());
                     }
                 }
             }
@@ -740,7 +757,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 totalListRaplace.add(totalList.get(i));
             }
         }
-        ToastUtil.showCustomToast(AddMaterialActivity.this, "" + totalList.size());
     }
 
     /**
@@ -784,9 +800,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                             if (brandsName.equals(sendBrandsName)) {
                                 btnStatusBean.setSingleClickOrDoubleBtnCount(1);
                             }
-
                         }
-
                     }
                 }
             }
@@ -853,7 +867,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      */
     public void addAllWindowBtn() {
 
-        int width  = this.getWindowManager().getDefaultDisplay().getWidth();;
+        int width = this.getWindowManager().getDefaultDisplay().getWidth();
         LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParamsButton.topMargin = width / 50;
         layoutParamsButton.bottomMargin = width / 50;
@@ -898,5 +912,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
         justRefreshOrLoadMore = 3;
         getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
+    }
+
+    @Override
+    public void onScrollChange(DynamicScrollView scrollView, int x, int y, int oldx, int oldy) {
+
+        currentDistance = x;
+
     }
 }

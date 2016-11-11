@@ -32,6 +32,7 @@ public class DynamicAddView extends LinearLayout {
     private TextView[] textViews;
     private int height;//该控件宽度
     private int width;//该控件高度
+    private int[] locationArr = new int[5];//item位置坐标，分别时左，上，右，下，宽度
 
     private class T {
     }
@@ -93,7 +94,15 @@ public class DynamicAddView extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
-                    onButtonClickedListener.onButtonClicked(btnStatusBean);
+                    if (onButtonClickedListener != null){
+
+                        onButtonClickedListener.onButtonClicked(btnStatusBean);
+                        int x = (int) v.getX();
+                        int y = (int) v.getY();
+                        int xForRight = v.getRight();
+                        int width = v.getWidth();
+                        onButtonClickedListener.onGetCurrentClickLocation(x,y,xForRight,width,btnStatusBean);
+                    }
                     changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
                     for (int i = 0; i < textViews.length; i++) {
 
@@ -111,6 +120,31 @@ public class DynamicAddView extends LinearLayout {
         invalidate();
 
     }
+
+    /**
+     * 外界获取该控件内部item的位置
+     * */
+    public int[] getLocationNumber(int item){
+
+        View v = textViews[item];
+        int x = (int) v.getX();
+        int y = (int) v.getY();
+        int xForRight = v.getRight();
+        int width = v.getWidth();
+        locationArr[0] = x;
+        locationArr[2] = xForRight;
+        locationArr[4] = width;
+
+        return locationArr;
+    }
+    /**
+     * 外界获取该控件的item数量
+     * */
+    public int getItemCount(){
+
+        return textViews.length;
+    }
+
 
     /**
      * 外界动态改变按钮选中状态
@@ -156,6 +190,7 @@ public class DynamicAddView extends LinearLayout {
          * BtnStatusBean the index of clicked button tag
          */
         void onButtonClicked(BtnStatusBean btnStatusBean);
+        void onGetCurrentClickLocation(int x,int y,int xForRight,int width,BtnStatusBean btnStatusBean);
     }
 
     public void setListener(OnButtonClickedListener onButtonClickedListener) {

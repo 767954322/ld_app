@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.uielements.scrollview;
 
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicScrollView;
+
 /**
  * @author yaoxuehua .
  * @version 1.0 .
