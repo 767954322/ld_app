@@ -18,7 +18,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -26,8 +25,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qy.appframe.common.ResultSubscriber;
-import com.qy.appframe.model.IModel;
 
 import org.json.JSONObject;
 
@@ -147,7 +144,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
         tvAssetId.setText("清单编号：" + item.getProject_number() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
-        tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
+        tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + UIUtils.getNoStringIfEmpty(item.getDistrict_name()));
         tvRecoItemDetailsAddress.setText(item.getCommunity_address());
         tvCreateDate.setText(item.getDate_submitted());
         String scfd = item.getScfd();

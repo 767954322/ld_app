@@ -9,10 +9,10 @@
     >
 
     <RelativeLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/tv_brand_name"
@@ -34,12 +34,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/tv_num"
@@ -69,11 +69,11 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             style="@style/item_text_style"
@@ -84,16 +84,18 @@
             style="@style/style_edit_text"
             android:layout_width="@dimen/size_160"
             android:layout_height="@dimen/size_30"
+            android:ellipsize="end"
             android:hint="请填写规格"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <LinearLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             style="@style/item_text_style"
@@ -110,11 +112,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             style="@style/item_text_style"
@@ -130,12 +132,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             style="@style/item_text_style"

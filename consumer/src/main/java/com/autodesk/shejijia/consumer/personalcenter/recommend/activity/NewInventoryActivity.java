@@ -364,7 +364,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 Log.d("NewInventoryActivity", jsonObject.toString());
                 MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
                 Integer flag = entity.getCheck_flag();
-                if (flag==0) {
+                if (flag == 0) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_member_account_not_exit),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
                     return;
@@ -400,10 +400,18 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtMemberAccount.setText(designerProjectsBean.getConsumer_zid());
             mEtCustomerName.setText(designerProjectsBean.getConsumer_name());
             mEtPhoneNumber.setText(designerProjectsBean.getConsumer_mobile());
-            mEtProjectAddress.setText(designerProjectsBean.getProvince_name() + designerProjectsBean.getCity_name() + designerProjectsBean.getDistrict_name());
-            mEtCommunityName.setText(designerProjectsBean.getCommunity_name());
+
+            mCurrentProvinceCode = designerProjectsBean.getProvince();
+            mCurrentCityCode = designerProjectsBean.getCity();
+            mCurrentDistrictCode = designerProjectsBean.getDistrict();
+            mCurrentProvince = designerProjectsBean.getProvince_name();
+            mCurrentCity = designerProjectsBean.getCity_name();
+            mCurrentDistrict = designerProjectsBean.getDistrict_name();
+
+            mEtProjectAddress.setText(mCurrentProvince + mCurrentCity + UIUtils.getNoStringIfEmpty(mCurrentDistrict));
+
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
-        }else {
+        } else {
             mTvProjectName.setText("创建新的项目");
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");

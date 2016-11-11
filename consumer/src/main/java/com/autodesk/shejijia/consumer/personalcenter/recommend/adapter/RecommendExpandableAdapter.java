@@ -34,6 +34,10 @@ import java.util.List;
 
 public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
 
+
+    private static final String ALL_NUM = "^[0-9]{1,4}+(.[0-9]{1,2})?$";// 是否为合法数量（1-9999 ）．
+    private static final String NUM_AND_CHINESE = "^([0-9]{1,4}+(.[0-9]{1,2})?)[\u4e00-\u9fa5]{1,2}$";// （1-9999 + 2个汉字）．
+
     private ViewGroupHolder viewGroupHolder;
     private ViewHolder mViewHolder;
     private LayoutInflater inflater;
@@ -169,7 +173,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 String currentApartmentName = apartmentList.get(position);
-                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(currentApartmentName);
+                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(UIUtils.getNoStringIfEmpty(currentApartmentName));
             }
         });
 
@@ -493,7 +497,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
     }
 
-    boolean isValidDimension(String text) {
+    private boolean isValidDimension(String text) {
         if (StringUtils.isEmpty(text)) {
             return true;
         }
@@ -529,9 +533,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
-
-    private static final String ALL_NUM = "^[0-9]{1,4}+(.[0-9]{1,2})?$";// 是否为合法数量（1-9999 ）．
-    private static final String NUM_AND_CHINESE = "^([0-9]{1,4}+(.[0-9]{1,2})?)[\u4e00-\u9fa5]{1,2}$";// （1-9999 + 2个汉字）．
 
 //    public void setCallBackListener(CallBack callBack) {
 //        this.callBack = callBack;
