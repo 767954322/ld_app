@@ -46,5 +46,5 @@ public class ConstructionConstants {
     public static final String CLIENTMANAGER_TYPE = "clientmanager"; //客户经理
 
     //Log tag
-    public static final String  LOG_TAG_REQUEST = "network_request"; //监理
+    public static final String  LOG_TAG_REQUEST = "network_request";
 }
