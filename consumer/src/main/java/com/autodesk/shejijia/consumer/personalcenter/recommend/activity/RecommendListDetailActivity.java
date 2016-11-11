@@ -66,7 +66,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     //    private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
-    private List<RecommendSCFDBean> mRecommendSCFDListEditTag = new ArrayList<>();
     private TextView mTvNavTitle;
     private String mRecommendScfdTag = "";
 
@@ -289,13 +288,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 处理退出，未保存逻辑
      */
     private void onBackEvent() {
-        boolean isNotEdited = false;
-        if (mRecommendSCFDList != null && mRecommendSCFDList.size() > 0) {
-            isNotEdited = (!StringUtils.isEmpty(mRecommendSCFDListEditTag))
-                    && mRecommendScfdTag.equals(mRecommendSCFDList.toString());
-        }
+        boolean isNotEdited = mRecommendScfdTag.equals(mRecommendSCFDList.toString());
+        // [1]初次创建，没有内容，不算修改．
+        // [2]删除主材，没有内容，修改了．
+        // [3]空白清单，添加主材后，这两个值不相同，并且tag为null, 需要另外给tag赋值, 让其走保存操作．
+        if (isNotEdited || StringUtils.isEmpty(mRecommendScfdTag)) {
 
-        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0 || isNotEdited) {
             finish();
         } else {
             new AlertView("", "当前清单还未发送，是否保存？",
@@ -351,9 +349,19 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 if (position != AlertView.CANCELPOSITION) {
                     mRecommendSCFDList.remove(groupPosition);
                     mRecommendExpandableAdapter.notifyDataSetChanged();
+                    setSendButtonState();
+                    setEmptyContentView();
                 }
             }
         }).show();
+    }
+
+    private void setEmptyContentView() {
+        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0) {
+            mLlEmptyContentView.setVisibility(View.VISIBLE);
+        } else {
+            mLlEmptyContentView.setVisibility(View.GONE);
+        }
     }
 
     private void setTitle(RecommendDetailsBean recommendListDetailBean) {
@@ -463,6 +471,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         }
         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
             mRecommendSCFDList.add(getMaterialRecommendSCFDBean(checkedInformationBean));
+            mRecommendScfdTag = "have_data";
         }
         mLlEmptyContentView.setVisibility(mRecommendSCFDList.size() > 0 ? View.GONE : View.VISIBLE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
