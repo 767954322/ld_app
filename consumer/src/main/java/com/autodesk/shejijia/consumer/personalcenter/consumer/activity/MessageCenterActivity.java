@@ -266,7 +266,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     //获取消息数据
     public void getMessageData(final String state) {
 
-        MPServerHttpManager.getInstance().getNewsMessageCenterMessages(mMemberEntity.getMember_id(), designer_id, needs_id, message_type, offset, limit, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().getNewsMessageCenterMessages(mMemberEntity.getAcs_member_id(), designer_id, needs_id, message_type, offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("LOG_NET", "失败 ！");
