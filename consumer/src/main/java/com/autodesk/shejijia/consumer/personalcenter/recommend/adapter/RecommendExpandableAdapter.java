@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -21,6 +22,8 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
@@ -29,6 +32,7 @@ import java.util.List;
 
 public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
 
+    private ViewGroupHolder viewGroupHolder;
     private ViewHolder mViewHolder;
     private LayoutInflater inflater;
     private List<RecommendSCFDBean> mRecommendSCFDList;
@@ -251,13 +255,20 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
+    public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         View view = null;
         if (convertView != null) {
             view = convertView;
         } else {
             view = createGroupView();
+            viewGroupHolder = new ViewGroupHolder();
+            viewGroupHolder.tvCategoryName = (TextView) view.findViewById(R.id.tv_category_name);
+            viewGroupHolder.tvBrandAdd = (TextView) view.findViewById(R.id.tv_create_brand);
+            viewGroupHolder.tvCategoryDelete = (TextView) view.findViewById(R.id.tv_delete_brand);
+            viewGroupHolder.rlRecommendFooter = (RelativeLayout) view.findViewById(R.id.rl_recommend_footer);
+            viewGroupHolder.rlGroupTopId = (RelativeLayout) view.findViewById(R.id.group_top_id);
+            viewGroupHolder.rlMaterialPrompt = (RelativeLayout) view.findViewById(R.id.material_prompt);
         }
         // isExpanded 判断是否展开．
 //        if (isExpanded) {
@@ -265,9 +276,37 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 //        } else {
 //            iv.setImageResource(R.drawable.btn_browser);
 //        }
+        List<RecommendBrandsBean> rb = mRecommendSCFDList.get(groupPosition).getBrands();
+        viewGroupHolder.rlRecommendFooter.setVisibility(rb != null && rb.size() > 0?View.GONE:View.VISIBLE);
+        viewGroupHolder.rlMaterialPrompt.setVisibility(rb != null && rb.size() > 0?View.GONE:View.VISIBLE);
 
-        TextView text = (TextView) view.findViewById(R.id.tv_category_name);
-        text.setText(mRecommendSCFDList.get(groupPosition).getSub_category_3d_name());
+        viewGroupHolder.tvCategoryName.setText(mRecommendSCFDList.get(groupPosition).getSub_category_3d_name());
+//        OnClickListener(viewGroupHolder.tvBrandAdd, Constant.FragmentEnum.ZERO,groupPosition);
+        viewGroupHolder.tvBrandAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(groupPosition));
+                }
+            }
+        });
+        viewGroupHolder.rlGroupTopId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    ViewCategoryActivity.jumpTo(mActivity, mRecommendSCFDList, groupPosition);
+                }
+            }
+        });
+//        OnClickListener(viewGroupHolder.tvBrandAdd, Constant.FragmentEnum.ONE,groupPosition);
+        viewGroupHolder.tvCategoryDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onSubCategoryDeleteListener(groupPosition);
+                }
+            }
+        });
         return view;
     }
 
@@ -341,6 +380,14 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             }
         });
     }
+    static class ViewGroupHolder {
+        TextView tvCategoryName;
+        RelativeLayout rlRecommendFooter;
+        RelativeLayout  rlGroupTopId;
+        RelativeLayout  rlMaterialPrompt;
+        TextView tvBrandAdd;
+        TextView tvCategoryDelete;
+    }
 
     static class ViewHolder {
         EditText etBrandNum;
@@ -366,6 +413,24 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mTextWatcherDimension.updatePosition(groupPosition, position);
             mTextWatcherRemarks.updatePosition(groupPosition, position);
         }
+    }
+    private void OnClickListener(TextView textView,final int type,final int groupPosition){
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null== null){
+                    return;
+                }
+                switch (type){
+                    case Constant.FragmentEnum.ZERO:
+                        mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(groupPosition));
+                        break;
+                    case Constant.FragmentEnum.ONE:
+                        mBrandChangListener.onSubCategoryDeleteListener(groupPosition);
+                        break;
+                }
+            }
+        });
     }
 
     class ExpandListTextWatcher implements TextWatcher {

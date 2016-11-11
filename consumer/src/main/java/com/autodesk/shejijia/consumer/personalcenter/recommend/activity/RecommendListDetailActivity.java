@@ -24,6 +24,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -261,7 +262,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mRecommendSCFDList, groupPosition);
+//       if(v.getId() == R.id.group_top_id){
+//           MyToast.show(this,"0000");
+//        }else{
+//           MyToast.show(this,"11111");
+//       }
+
+//        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mRecommendSCFDList, groupPosition);
         return true;
     }
 

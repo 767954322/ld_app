@@ -441,6 +441,7 @@
     <string name="have_received_customer_down_payment_end">已接收客户发送的设计尾款</string>
     <string name="waiting_uploading_final_version_design_deliverables">等待上传最终版的设计交付物</string>
     <string name="wait_uploading_final_version_design_deliverables">已上传最终版的设计交付物</string>
+    <string name="material_prompt">当前主材项为空，请添加品牌</string>
 
     <!-- SeekDesignerDetailActivity -->
     <string name="work">作品：</string>
