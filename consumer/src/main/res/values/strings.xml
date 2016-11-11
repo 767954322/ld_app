@@ -993,4 +993,9 @@
     <string name="title_activity_add_brand">AddBrandActivity</string>
 
 
+    <!--推荐清单表单校验提示-->
+    <string name="recommend_form_number">请输入数字和汉字</string>
+    <string name="recommend_form_dimension">不得超过32个字符</string>
+
+
 </resources>

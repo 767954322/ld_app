@@ -24,6 +24,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChang
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
@@ -463,6 +464,11 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 return;
             }
             if (type == 0) {
+//                if (!isValidAmountAndUnit(s.toString())) {
+//                    showAlertView(UIUtils.getString(R.string.recommend_form_number));
+//                } else {
+//                    mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+//                }
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
             } else if (type == 1) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setDimension(s.toString());
@@ -472,6 +478,29 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             }
         }
     }
+
+    // 检验数量（1-9999 + 2个汉字）．
+    private boolean isValidAmountAndUnit(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return true;
+        }
+
+        boolean isAllNum = text.matches(ALL_NUM);
+        boolean isNumAndChines = text.matches(NUM_AND_CHINESE);
+        if (isAllNum || isNumAndChines) {
+            return true;
+        }
+        return false;
+    }
+
+    //打开AlertView对话框
+    private void showAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip),
+                content, null, null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, null).show();
+    }
+
+    private static final String ALL_NUM = "^([1-9][0-9]{1,3})$";// 是否为合法数量（1-9999 + 2个汉字）．
+    private static final String NUM_AND_CHINESE = "^([1-9][0-9]{1,3})[\u4e00-\u9fa5]{1,2}$";// （1-9999 + 2个汉字）．
 
 //    public void setCallBackListener(CallBack callBack) {
 //        this.callBack = callBack;
