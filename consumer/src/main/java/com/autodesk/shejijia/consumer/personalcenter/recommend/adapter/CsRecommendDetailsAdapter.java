@@ -46,7 +46,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         holder.setOnClickListener(R.id.tv_category_name, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DetailsViewCategoryActivity.jumpTo((Activity) mContext, mScfd, holder.getPosition());
+                DetailsViewCategoryActivity.jumpTo((Activity) mContext, mScfd, holder.getPosition(), "CsRecommendDetailsActivity");
             }
         });
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);

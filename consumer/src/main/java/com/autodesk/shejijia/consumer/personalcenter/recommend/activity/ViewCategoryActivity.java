@@ -44,7 +44,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     private String mScfd;
     private int mPosition;
     private ViewCategoryAdater mAdater;
-    public static String LOCATION;
+    public static String LOCATION="location";
 
     @Override
     protected int getLayoutResId() {

@@ -32,19 +32,19 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private String mLocalClassName;
 
-    public static void jumpTo(Activity context, String scfd, int position) {
+    public static void jumpTo(Activity context, String scfd, int position, String className) {
         Intent intent = new Intent(context, DetailsViewCategoryActivity.class);
         intent.putExtra("scfd", scfd);
         intent.putExtra("position", position);
-        intent.putExtra("context", context.getLocalClassName());
-        context.startActivityForResult(intent, 23);
+        intent.putExtra("className", className);
+        context.startActivityForResult(intent, 25);
     }
 
     private RecyclerView mRcv_category_view;
     private String mScfd;
     private int mPosition;
     private ViewCategoryAdater mAdater;
-    public static String LOCATION;
+    public static String LOCATION = "location";
 
     @Override
     protected int getLayoutResId() {
@@ -70,8 +70,7 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
         super.initExtraBundle();
         mScfd = getIntent().getStringExtra("scfd");
         mPosition = getIntent().getIntExtra("position", 0);
-        mLocalClassName = getIntent().getStringExtra("context");
-        Log.d("mLocalClassName", mLocalClassName);
+        mLocalClassName = getIntent().getStringExtra("className");
     }
 
     @Override
@@ -97,7 +96,9 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
 //            List<RecommendBrandsBean> brands = mRecommendSCFDList.get(i).getBrands();
 //            selection += brands.size() + 1;
 //        }
-        Intent intent = new Intent(DetailsViewCategoryActivity.this, CsRecommendDetailsActivity.class);
+        Intent intent = new Intent(DetailsViewCategoryActivity.this,
+                mLocalClassName.equals("DcRecommendDetailsActivity") ?
+                        DcRecommendDetailsActivity.class : CsRecommendDetailsActivity.class);
         intent.putExtra(LOCATION, position);
         setResult(RESULT_OK, intent);
         finish();
