@@ -229,6 +229,24 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         getConsumerInfoData(member_id);
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        MessageUtils.getMsgConsumerInfoData(new MessageUtils.UnMessageCallBack() {
+            @Override
+            public void unCOuntMsgCallBack(int msgUnCount) {
+                if (msgUnCount>0){
+                    tv_unread_message_count.setVisibility(View.VISIBLE);
+                    tv_unread_message_count.setText(msgUnCount+"");
+                }else {
+                    tv_unread_message_count.setVisibility(View.GONE);
+                }
+
+            }
+        });
+    }
+
     /// 静态常量.
     private static final int MORE_LOGOUT = 0;
 

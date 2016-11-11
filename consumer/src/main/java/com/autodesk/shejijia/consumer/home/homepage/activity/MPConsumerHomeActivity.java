@@ -33,6 +33,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
+import com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.MessageUtils;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
@@ -45,7 +46,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -61,7 +61,6 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
-import com.nostra13.universalimageloader.utils.L;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -227,7 +226,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             designer_main_radio_group.check(index);
         }
-
+        MessageUtils.getMsgConsumerInfoData(this);
     }
 
 
