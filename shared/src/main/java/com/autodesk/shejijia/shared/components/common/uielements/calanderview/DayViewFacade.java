@@ -76,7 +76,7 @@ public class DayViewFacade {
     }
 
     public void setDaysActivated(boolean daysActivated) {
-        this.daysActivated = daysDisabled;
+        this.daysActivated = daysActivated;
         this.isDecorated = true;
     }
 

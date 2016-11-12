@@ -16,6 +16,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -48,6 +49,8 @@ class DayView extends CheckedTextView {
     public DayView(Context context, CalendarDay day) {
         super(context);
 
+        setDay(day);
+
         fadeTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         setSelectionColor(this.selectionColor);
@@ -57,8 +60,6 @@ class DayView extends CheckedTextView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             setTextAlignment(TEXT_ALIGNMENT_CENTER);
         }
-
-        setDay(day);
     }
 
     public void setDay(CalendarDay date) {
@@ -169,6 +170,7 @@ class DayView extends CheckedTextView {
             customBackground.setBounds(tempRect);
             customBackground.setState(getDrawableState());
             customBackground.draw(canvas);
+            Log.i("Wenhui", "customBackground != null");
         }
 
         mCircleDrawable.setBounds(tempRect);
@@ -179,9 +181,11 @@ class DayView extends CheckedTextView {
     private void regenerateBackground() {
         if (selectionDrawable != null) {
             setBackgroundDrawable(selectionDrawable);
+            Log.i("Wenhui", "regenerateBackground selectionDrawable " + getLabel());
         } else {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);
             setBackgroundDrawable(mCircleDrawable);
+            Log.i("Wenhui", "regenerateBackground mCircleDrawable" + getLabel());
         }
     }
 

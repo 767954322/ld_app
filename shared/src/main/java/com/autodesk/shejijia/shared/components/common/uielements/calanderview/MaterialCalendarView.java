@@ -27,6 +27,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.fo
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.MonthArrayTitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.TitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.WeekDayFormatter;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1156,6 +1157,7 @@ public class MaterialCalendarView extends ViewGroup {
             }
             break;
             case SELECTION_MODE_RANGE: {
+                LogUtils.v("Wenhui", "" + adapter.getSelectedDates().size());
                 adapter.setDateSelected(date, nowSelected);
                 if (adapter.getSelectedDates().size() > 2) {
                     adapter.clearSelections();

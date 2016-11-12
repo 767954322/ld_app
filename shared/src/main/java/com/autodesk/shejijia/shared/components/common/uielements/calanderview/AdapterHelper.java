@@ -84,6 +84,10 @@ public class AdapterHelper<V extends CalendarPagerView> {
         return selectionEnabled;
     }
 
+    public Integer getSelectionColor() {
+        return color;
+    }
+
     public void setSelectionColor(int color) {
         this.color = color;
     }

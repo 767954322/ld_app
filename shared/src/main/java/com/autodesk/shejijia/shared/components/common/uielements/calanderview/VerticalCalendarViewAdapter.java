@@ -31,8 +31,8 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     public void setRangeDates(CalendarDay min, CalendarDay max) {
         mAdapterHelper.setRangeDates(min, max);
-        notifyDataSetChanged();
         mAdapterHelper.invalidateSelectedDates();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,6 +66,10 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
             monthContainer.addView(monthView);
             monthView.setContentDescription(mcv.getCalendarContentDescription());
             monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
+            if (mAdapterHelper.getSelectionColor() != null) {
+                monthView.setSelectionColor(mAdapterHelper.getSelectionColor());
+            }
+
             monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
             monthView.setMinimumDate(mAdapterHelper.getMininumDate());
             monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
@@ -99,6 +103,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     public void setSelectionColor(int color) {
         mAdapterHelper.setSelectionColor(color);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -113,6 +118,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     public void setDecorators(List<DayViewDecorator> decorators) {
         mAdapterHelper.setDecorators(decorators);
+        notifyDataSetChanged();
     }
 
     public void invalidateDecorators() {
@@ -142,6 +148,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     public void setDateSelected(CalendarDay day, boolean selected) {
         mAdapterHelper.setDateSelected(day, selected);
+        notifyDataSetChanged();
     }
 
     @Override

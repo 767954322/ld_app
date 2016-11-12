@@ -10,6 +10,7 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -120,6 +121,10 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             }
         });
 
+    }
+
+    public void editTaskNode(Task task) {
+        ((EditTaskNodeFragment) mView).showBottomSheet(getMileStoneNodes(), task);
     }
 
     @Override
