@@ -130,15 +130,14 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             jsonRequest.put("completion", planJsonObject.get("completion"));
             jsonRequest.put("tasks", planJsonObject.get("tasks"));
             jsonRequest.put("project_id", pid);
+
+            ConstructionHttpManager.getInstance().updatePlan(pid, jsonRequest, requestParams, requestTag,
+                    getDefaultCallback(callback, Project.class));
         } catch (JSONException e) {
             e.printStackTrace();
             // TODO Optimize error hint
             callback.onError("Date format error");
-            return;
         }
-
-        ConstructionHttpManager.getInstance().updatePlan(pid, jsonRequest, requestParams, requestTag,
-                getDefaultCallback(callback, Project.class));
     }
 
 
