@@ -1157,7 +1157,6 @@ public class MaterialCalendarView extends ViewGroup {
             }
             break;
             case SELECTION_MODE_RANGE: {
-                LogUtils.v("Wenhui", "" + adapter.getSelectedDates().size());
                 adapter.setDateSelected(date, nowSelected);
                 if (adapter.getSelectedDates().size() > 2) {
                     adapter.clearSelections();

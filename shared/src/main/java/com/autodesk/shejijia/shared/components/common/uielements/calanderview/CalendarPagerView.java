@@ -198,7 +198,6 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void setSelectedDates(Collection<CalendarDay> dates) {
         for (DayView dayView : dayViews) {
             CalendarDay day = dayView.getDate();
-            Log.i("Wenhui",  dayView.getLabel() + "=" + (dates != null && dates.contains(day)));
             dayView.setChecked(dates != null && dates.contains(day));
         }
         postInvalidate();

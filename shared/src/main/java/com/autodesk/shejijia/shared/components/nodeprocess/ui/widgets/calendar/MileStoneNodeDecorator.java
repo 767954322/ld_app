@@ -41,7 +41,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-//        view.addSpan(new ForegroundColorSpan(Color.BLACK));
+        view.addSpan(new ForegroundColorSpan(Color.BLACK));
 //        view.setSelectionDrawable(drawable);
         view.setDaysActivated(true);
     }

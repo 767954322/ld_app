@@ -170,7 +170,6 @@ class DayView extends CheckedTextView {
             customBackground.setBounds(tempRect);
             customBackground.setState(getDrawableState());
             customBackground.draw(canvas);
-            Log.i("Wenhui", "customBackground != null");
         }
 
         mCircleDrawable.setBounds(tempRect);
@@ -181,11 +180,9 @@ class DayView extends CheckedTextView {
     private void regenerateBackground() {
         if (selectionDrawable != null) {
             setBackgroundDrawable(selectionDrawable);
-            Log.i("Wenhui", "regenerateBackground selectionDrawable " + getLabel());
         } else {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);
             setBackgroundDrawable(mCircleDrawable);
-            Log.i("Wenhui", "regenerateBackground mCircleDrawable" + getLabel());
         }
     }
 
