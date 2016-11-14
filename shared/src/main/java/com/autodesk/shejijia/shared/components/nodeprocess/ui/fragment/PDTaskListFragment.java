@@ -1,22 +1,35 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.PDTaskListContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.PDTaskListPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
+
+import java.util.List;
 
 /**
  * Created by t_xuz on 11/14/16.
  * 项目详情页面下的task列表
  */
 
-public class PDTaskListFragment extends BaseConstructionFragment {
+public class PDTaskListFragment extends BaseConstructionFragment implements PDTaskListContract.View, PDTaskListAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
+    private PDTaskListContract.Presenter mPDTaskListPresenter;
+    private PDTaskListAdapter mTaskListAdapter;
 
-    public static PDTaskListFragment newInstance(){
-        return new PDTaskListFragment();
+    public static PDTaskListFragment newInstance(Bundle taskBundle) {
+        PDTaskListFragment pdTaskListFragment = new PDTaskListFragment();
+        pdTaskListFragment.setArguments(taskBundle);
+        return pdTaskListFragment;
     }
 
     @Override
@@ -27,10 +40,31 @@ public class PDTaskListFragment extends BaseConstructionFragment {
     @Override
     protected void initView() {
         mTaskListView = (RecyclerView) rootView.findViewById(R.id.rcy_task_list);
+        //init recyclerView
+        mTaskListView.setLayoutManager(new LinearLayoutManager(mContext));
+        mTaskListView.setHasFixedSize(true);
+        mTaskListView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     protected void initData() {
+        mPDTaskListPresenter = new PDTaskListPresenter(this);
+        if (getArguments() != null) {
+            PlanInfo planInfo = (PlanInfo) getArguments().getSerializable("plan_info");
+            if (planInfo != null) {
+                List<Task> taskList = planInfo.getTasks();
+                initViewData(taskList);
+            }
+        }
+    }
 
+    private void initViewData(List<Task> taskList) {
+        mTaskListAdapter = new PDTaskListAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
+        mTaskListView.setAdapter(mTaskListAdapter);
+    }
+
+    @Override
+    public void onTaskClick(List<Task> taskList, int position) {
+        mPDTaskListPresenter.navigateToTaskDetail(getFragmentManager(), taskList, position);
     }
 }

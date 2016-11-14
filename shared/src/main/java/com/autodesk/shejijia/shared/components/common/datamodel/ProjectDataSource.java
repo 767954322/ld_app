@@ -26,12 +26,12 @@ public interface ProjectDataSource {
     /*
     * 获取项目详情－－含任务详情列表
     * */
-    void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
+    void getProjectInfo(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
 
     /*
     * 获取项目详情－－含任务id列表
     * */
-    void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
+    void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
 
 
     void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);

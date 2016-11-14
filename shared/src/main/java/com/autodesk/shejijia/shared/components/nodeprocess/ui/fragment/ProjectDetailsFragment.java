@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,24 +28,28 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDFragmentPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.TaskListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, PDTaskListAdapter.TaskListItemClickListener {
-    private final static int REQUEST_CODE_EDIT_PLAN = 0;
 
-    private RecyclerView mTaskListView;
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View {
+
+    private static final int TASK_FRAGMENT_SIZE = 6;
+    private ViewPager mContentViewPager;
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
-    private PDTaskListAdapter mTaskListAdapter;
+    private PDFragmentPagerAdapter mFragmentPagerAdapter;
 
     public ProjectDetailsFragment() {
     }
@@ -60,7 +65,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     protected void initView() {
-        mTaskListView = (RecyclerView) rootView.findViewById(R.id.rcy_task_list);
+        mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.button_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
 
@@ -95,12 +100,24 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
         LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
+
+        //get data
+        Bundle taskListBundle = new Bundle();
+        // TODO: 11/14/16 get active project
+        taskListBundle.putSerializable("task_info",projectInfo.getPlan());
+        List<BaseFragment> fragmentList = new ArrayList<>();
+        for (int i = 0; i < TASK_FRAGMENT_SIZE; i++) {
+            fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
+        }
+        mFragmentPagerAdapter = new PDFragmentPagerAdapter(getFragmentManager(), fragmentList);
+        mContentViewPager.setAdapter(mFragmentPagerAdapter);
+
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
-                if (memberType.equals("clientmanager")) {
+           /*     if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
-                    mTaskListView.setVisibility(View.GONE);
+                    mContentViewPager.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
                 } else {
                     mWorkStateView.setVisibility(View.VISIBLE);
@@ -110,13 +127,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mWorkStateView.setCompoundDrawables(null, drawable, null, null);
                     mWorkStateView.setCompoundDrawablePadding(ScreenUtil.dip2px(20));
                     mCreatePlanBtn.setVisibility(View.GONE);
-                    mTaskListView.setVisibility(View.GONE);
+                    mContentViewPager.setVisibility(View.GONE);
                 }
-                break;
+                break;*/
             case "INPROGRESS":
-                if (memberType.equals("clientmanager")) {
+             /*   if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
-                    mTaskListView.setVisibility(View.GONE);
+                    mContentViewPager.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
                 } else {
                     mWorkStateView.setVisibility(View.VISIBLE);
@@ -126,20 +143,14 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mWorkStateView.setCompoundDrawables(null, drawable, null, null);
                     mWorkStateView.setCompoundDrawablePadding(ScreenUtil.dip2px(20));
                     mCreatePlanBtn.setVisibility(View.GONE);
-                    mTaskListView.setVisibility(View.GONE);
+                    mContentViewPager.setVisibility(View.GONE);
                 }
-                break;
+                break;*/
             case "COMPLETION":
-               /* mTaskListView.setVisibility(View.VISIBLE);
+           /*     mContentViewPager.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
                 mCreatePlanBtn.setVisibility(View.GONE);
-                //init recyclerView
-                mTaskListView.setLayoutManager(new LinearLayoutManager(mContext));
-                mTaskListView.setHasFixedSize(true);
-                mTaskListView.setItemAnimator(new DefaultItemAnimator());
-                //init adapter
-                mTaskListAdapter = new PDTaskListAdapter(projectInfo.getPlan().getTasks(), R.layout.listitem_projectdetails_task_list_view, mContext, this);
-                mTaskListView.setAdapter(mTaskListAdapter);*/
+                */
                 break;
             default:
                 break;
@@ -156,11 +167,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void cancelProjectInfoDialog() {
         // TODO: 11/11/16 其他更加友好的提示方式 
         ToastUtils.showShort(mContext, "you couldn't get right project information");
-    }
-
-    @Override
-    public void onTaskClick(List<Task> taskList, int position) {
-        mProjectDetailsPresenter.navigateToTaskDetail(getFragmentManager(), taskList, position);
     }
 
     @Override

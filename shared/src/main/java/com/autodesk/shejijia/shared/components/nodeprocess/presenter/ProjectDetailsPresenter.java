@@ -2,20 +2,13 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskDetailsFragment;
-
-import java.util.List;
 
 /**
  * Created by t_xuz on 10/31/16.
@@ -52,7 +45,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     private void getProjectDetailsData(Bundle requestParams) {
-        mProjectRepository.getProjectTaskData(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
+        mProjectRepository.getProjectInfo(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 mProjectDetailsView.hideLoading();
@@ -69,7 +62,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
 
     @Override
     public void getProjectInformation() {
-        ProjectInfo projectInfo = mProjectRepository.getProjectInfoByCache();
+        ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         if (projectInfo != null) {
             Bundle projectInfoBundle = new Bundle();
             projectInfoBundle.putLong("projectId", projectInfo.getProjectId());
@@ -90,12 +83,4 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         //// TODO: 11/11/16 跳转消息中心逻辑
     }
 
-    @Override
-    public void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position) {
-        Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo", taskList.get(position));
-        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
-        taskDetailsFragment.setArguments(taskInfoBundle);
-        taskDetailsFragment.show(fragmentManager, "task_details");
-    }
 }

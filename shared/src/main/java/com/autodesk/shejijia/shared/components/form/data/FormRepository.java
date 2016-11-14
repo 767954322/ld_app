@@ -128,7 +128,7 @@ public class FormRepository implements FormDataSource {
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", projectId);
         requestParamsBundle.putBoolean("task_data",true);
-        ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParamsBundle, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
+        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParamsBundle, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo projectInfo) {
 
@@ -189,7 +189,7 @@ public class FormRepository implements FormDataSource {
      */
     public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
         if(null == mProject) {
-            ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, new ResponseCallback<Project>() {
+            ProjectRemoteDataSource.getInstance().getProject(requestParams, requestTag, new ResponseCallback<Project>() {
                 @Override
                 public void onSuccess(Project data) {
                     callback.onSuccess(data);
@@ -214,7 +214,7 @@ public class FormRepository implements FormDataSource {
      */
     public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
         if(null == mProjectInfo) {
-            ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+            ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     callback.onSuccess(data);

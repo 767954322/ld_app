@@ -26,7 +26,7 @@
         <item name="android:windowTitleStyle">@style/AlertWindowTitleStyle</item>
     </style>
 
-    <style name="Construction.AlertDialogStyle.Translucent" parent="@style/Construction.AlertDialogStyle">
+    <style name="Construction.AlertDialogStyle.Translucent" parent="Theme.AppCompat.Dialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

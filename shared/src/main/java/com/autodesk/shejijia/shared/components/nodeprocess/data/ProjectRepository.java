@@ -60,9 +60,9 @@ public final class ProjectRepository implements ProjectDataSource {
 
 
     @Override
-    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+    public void getProjectInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
 
-        ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 mProjectInfo = data;
@@ -78,8 +78,8 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
-        ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, callback);
+    public void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
+        ProjectRemoteDataSource.getInstance().getProject(requestParams, requestTag, callback);
     }
 
     @Override
@@ -108,7 +108,7 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().updateProjectLikes(requestParams, requestTag, jsonRequest, callback);
     }
 
-    public ProjectInfo getProjectInfoByCache() {
+    public ProjectInfo getActiveProject() {
         return mProjectInfo;
     }
 

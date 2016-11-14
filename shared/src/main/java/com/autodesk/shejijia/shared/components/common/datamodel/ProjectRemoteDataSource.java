@@ -63,7 +63,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectTaskData(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+    public void getProjectInfo(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
         ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -81,7 +81,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
+    public void getProject(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
         ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override

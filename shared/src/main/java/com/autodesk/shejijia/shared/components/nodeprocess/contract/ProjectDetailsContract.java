@@ -35,8 +35,5 @@ public interface ProjectDetailsContract {
         void getProjectInformation(); //获取项目信息
 
         void navigateToMessageCenter();//跳转消息中心
-
-        void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position); //跳转节点详情对话框
-
     }
 }
