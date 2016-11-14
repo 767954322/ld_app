@@ -25,7 +25,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -179,7 +178,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         }
                     }).show();
                 } else {
-                    new AlertView("", "当前清单已保存成功",
+                    new AlertView("提示", "当前清单已保存成功",
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                         @Override
                         public void onItemClick(Object object, int position) {
@@ -251,7 +250,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                new AlertView("", "您确定要把这份清单发送给客户吗？",
+                new AlertView("提示", "您确定要把这份清单发送给客户吗？",
                         "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object object, int position) {
@@ -303,7 +302,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
             finish();
         } else {
-            new AlertView("", "当前清单还未发送，是否保存？",
+            new AlertView("提示", "当前清单还未发送，是否保存？",
                     "否", null, new String[]{"是"}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object object, int position) {
@@ -335,7 +334,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public void onBrandDeleteListener(final int currentParentPosition, final int childPosition) {
-        new AlertView("", String.format("您确定删除%s吗？", mRecommendSCFDList.get(currentParentPosition).getBrands().get(childPosition).getBrand_name()),
+        new AlertView("提示", "您确定要删除当前品牌吗？",
                 "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
@@ -349,7 +348,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public void onSubCategoryDeleteListener(final int groupPosition) {
-        new AlertView("", "您确定删除主材项吗？",
+        new AlertView("提示", "您确定删除主材项吗？",
                 "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {

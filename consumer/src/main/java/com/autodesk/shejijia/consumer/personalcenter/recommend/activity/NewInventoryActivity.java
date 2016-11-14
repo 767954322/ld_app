@@ -61,6 +61,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private AlertView mBackAlertView;
     private String acs_member_id;
+    private boolean isEditable = false;
 
 
     @Override
@@ -180,69 +181,69 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 String mProjectAddress = mEtProjectAddress.getText().toString();
                 String mCommunityName = mEtCommunityName.getText().toString();
                 String mDetailAddress = mEtDetailAddress.getText().toString();
+                if (isEditable) {
+                    /**
+                     * 会员正则校验
+                     */
+                    boolean mMatchesPhone = mMemberAccount.matches(RegexUtil.PHONE_REGEX);
+                    boolean mMatchesMail = mMemberAccount.matches(RegexUtil.EMAIL_REGEX);
+                    boolean mMatchesAccountNumber = mMemberAccount.matches(RegexUtil.ACCOUNT_NUMBER_REGEX);
 
-                /**
-                 * 会员正则校验
-                 */
-                boolean mMatchesPhone = mMemberAccount.matches(RegexUtil.PHONE_REGEX);
-                boolean mMatchesMail = mMemberAccount.matches(RegexUtil.EMAIL_REGEX);
-                boolean mMatchesAccountNumber = mMemberAccount.matches(RegexUtil.ACCOUNT_NUMBER_REGEX);
-
-                if (!(mMatchesPhone || mMatchesMail || mMatchesAccountNumber)) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_account_number),
-                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                    return;
-                }
-
-                /**
-                 * 客户姓名正则校验
-                 */
-                boolean mMatchesName = mCustomerName.matches(RegexUtil.NAME_REGEX);
-                if (!mMatchesName) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_name),
-                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                    return;
-                }
-
-                /**
-                 *手机号码正则校验
-                 */
-
-                boolean mMatchesPhoneNumber = mPhoneNumber.matches(RegexUtil.PHONE_REGEX);
-                if (!mMatchesPhoneNumber) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_phone_number),
-                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                    return;
-                }
-
-
-                /**
-                 * 小区名称
-                 */
-                boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
-                if (!mMatchesCommunityName) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
-                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                    return;
-                }
-
-                /**
-                 * 详细地址
-                 */
-                if (!StringUtils.isEmpty(mDetailAddress)){
-                    boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
-                    if (!mMatchesDetailAddress) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
+                    if (!(mMatchesPhone || mMatchesMail || mMatchesAccountNumber)) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_account_number),
                                 null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
 
                         return;
                     }
-                }
 
+                    /**
+                     * 客户姓名正则校验
+                     */
+                    boolean mMatchesName = mCustomerName.matches(RegexUtil.NAME_REGEX);
+                    if (!mMatchesName) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_name),
+                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                        return;
+                    }
+
+                    /**
+                     *手机号码正则校验
+                     */
+
+                    boolean mMatchesPhoneNumber = mPhoneNumber.matches(RegexUtil.PHONE_REGEX);
+                    if (!mMatchesPhoneNumber) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_phone_number),
+                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                        return;
+                    }
+
+
+                    /**
+                     * 小区名称
+                     */
+                    boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
+                    if (!mMatchesCommunityName) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
+                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                        return;
+                    }
+
+                    /**
+                     * 详细地址
+                     */
+                    if (!StringUtils.isEmpty(mDetailAddress)) {
+                        boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
+                        if (!mMatchesDetailAddress) {
+                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
+                                    null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                            return;
+                        }
+                    }
+                }
                 /**
                  * 判断是否为会员帐号
                  */
@@ -397,6 +398,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
 
         if (!StringUtils.isEmpty(designerProjectsBean)) {
+            isEditable = false;
+            setEditTextEnable(isEditable);
+
             mTvProjectName.setText(designerProjectsBean.getCommunity_name());
             mEtMemberAccount.setText(designerProjectsBean.getConsumer_zid());
             mEtCustomerName.setText(designerProjectsBean.getConsumer_name());
@@ -414,6 +418,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtCommunityName.setText(designerProjectsBean.getCommunity_name());
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
         } else {
+            isEditable = true;
+            setEditTextEnable(isEditable);
             mTvProjectName.setText("创建新的项目");
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");
@@ -422,7 +428,18 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtCommunityName.setText("");
             mEtDetailAddress.setText("");
         }
+    }
 
+    /**
+     * 设置EditText是否可以编辑
+     */
+    private void setEditTextEnable(boolean isEditable) {
+        mEtMemberAccount.setEnabled(isEditable);
+        mEtCustomerName.setEnabled(isEditable);
+        mEtPhoneNumber.setEnabled(isEditable);
+        mEtProjectAddress.setEnabled(isEditable);
+        mEtCommunityName.setEnabled(isEditable);
+        mEtDetailAddress.setEnabled(isEditable);
     }
 
     /**
