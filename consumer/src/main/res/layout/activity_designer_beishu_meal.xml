@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
                     android:background="@null"
-                    android:hint="@string/consume_phone_hint"
+                    android:hint="@string/mobile"
                     android:inputType="phone"
                     android:maxLength="11"
                     android:singleLine="true"
