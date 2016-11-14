@@ -38,6 +38,8 @@ import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
+import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -163,6 +165,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+        add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
+        add_for_listing.setClickable(false);
+        CustomProgress.showDefaultProgress(AddMaterialActivity.this);
         getCategoryInformation();
         getAdapterResultList = new ArrayList<>();
         getAdapterDataHandler = new Handler() {
@@ -180,6 +185,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         backListTag = brandsBeanAndTag.getList();
                         updataCategoryTag();
                         putCheckedBrandsAddList(brandsBeanAndTag.getRecommendBrandsBean());
+                        isCanAddForLIst();//检验总集合中是否有选中数据
 
                         break;
                     //取消选中的品牌
@@ -189,6 +195,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         backListTag = brandsBeanAndTag.getList();
                         updataCategoryTag();
                         WipeCheckedBrandsAddList(brandsBeanAndTag.getRecommendBrandsBean());
+                        isCanAddForLIst();//检验总集合中是否有选中数据
                         break;
                     default:
 
@@ -224,6 +231,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 Bundle bundle = data.getExtras();
                 List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get("list");
                 //将返回的数据再次筛选显示
+                CustomProgress.showDefaultProgress(AddMaterialActivity.this);
                 firstGetBrandsInformation(forResultStoreList);
                 break;
             default:
@@ -240,6 +248,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -250,6 +259,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 listChecked = new ArrayList<>();//默认建立该品类下的品牌集合
                 //将清单传来的数据整合到总集合，并增加默认集合
                 setTotalListForListData();
+                isCanAddForLIst();//检验总集合中是否有选中数据
                 showOneCategory();
                 //默认可选择品牌数量
                 showBrandRemainCount();
@@ -269,6 +279,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 mall_number, offset, limit, new OKResponseCallback() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        CustomProgress.cancelDialog();
 
                     }
 
@@ -314,6 +325,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         MPServerHttpManager.getInstance().getStores(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -420,6 +432,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                 @Override
                 public void onButtonClicked(BtnStatusBean btnStatusBean) {
+                    CustomProgress.showDefaultProgress(AddMaterialActivity.this);
                     if (dynamicPopWindows[countArrItem] != null) {
                         dynamicPopWindows[countArrItem].setButtonCheckedStatus(btnStatusBean);
                     }
@@ -434,10 +447,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 }
 
                 @Override
-                public void onGetCurrentClickLocation(int x,int y,int xForRight,int width,BtnStatusBean btnStatusBean) {
+                public void onGetCurrentClickLocation(int x, int y, int xForRight, int width, BtnStatusBean btnStatusBean) {
                     currentClickItemLocation = x;
                     int totalCount = dynamicAddViews[countArrItem].getItemCount();
-                    two_level_category.useCurrentDistanceScroll(x,currentDistance,xForRight,width,totalCount,btnStatusBean.getCountOffset());
+                    two_level_category.useCurrentDistanceScroll(x, currentDistance, xForRight, width, totalCount, btnStatusBean.getCountOffset());
 
 
                 }
@@ -468,7 +481,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBean);
                 int[] viewLocation = dynamicAddViews[countArrItem].getLocationNumber(btnStatusBean.getCountOffset());
                 int length = dynamicAddViews[countArrItem].getItemCount();
-                two_level_category.useCurrentDistanceScroll(viewLocation[0],currentDistance,viewLocation[2],viewLocation[4],length,btnStatusBean.getCountOffset());
+                two_level_category.useCurrentDistanceScroll(viewLocation[0], currentDistance, viewLocation[2], viewLocation[4], length, btnStatusBean.getCountOffset());
                 //复用
                 adapterCategoryAll(btnStatusBean);
                 for (int i = 0; i < oneArr.length; i++) {
@@ -519,6 +532,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
         }
+        CustomProgress.cancelDialog();
     }
 
     /**
@@ -547,6 +561,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     }
                     upDataTotalListTag(datas);
                     list = listTag;
+                    showBrandRemainCount();
                 }
             }
             if (datas != null) {
@@ -557,6 +572,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.changeListTag(list, datas);
         }
         addBrandShowAdapter.notifyDataSetChanged();
+        CustomProgress.cancelDialog();
     }
 
     /**
@@ -898,6 +914,30 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     }
 
     /**
+     * 检验是否可添加至清单
+     */
+    public void isCanAddForLIst() {
+        boolean isCanShow = false;
+        for (int i = 0; i < totalList.size(); i++) {
+            List<RecommendBrandsBean> recommendBrandsBeenList = totalList.get(i).getCheckedBrandsInformationBean();
+            if (recommendBrandsBeenList.size() > 0) {
+                isCanShow = true;
+                break;
+            } else {
+                isCanShow = false;
+            }
+        }
+        if (isCanShow) {
+
+            add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.my_project_title_pointer_color));
+            add_for_listing.setClickable(true);
+        } else {
+            add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
+            add_for_listing.setClickable(false);
+        }
+    }
+
+    /**
      * 刷新,加载
      */
     @Override
@@ -911,6 +951,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
 
         justRefreshOrLoadMore = 3;
+        CustomProgress.showDefaultProgress(AddMaterialActivity.this);
         getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
     }
 

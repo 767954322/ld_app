@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewControls;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -88,6 +89,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
         super.initData(savedInstanceState);
 
 //        dynamicCreateStoreLine();
+        CustomProgress.showDefaultProgress(StoreActivity.this);
         getStore();
 
     }
@@ -100,11 +102,13 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
         MPServerHttpManager.getInstance().getStores(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
+                CustomProgress.cancelDialog();
                 storeInformationBean = GsonUtil.jsonToBean(jsonObject.toString(), StoreInformationBean.class);
                 getStoreNameAndAdd(storeInformationBean.getStore_list());
             }

@@ -155,7 +155,6 @@ public class DynamicPopWindow extends PopupWindow {
                         }
 
                         dismiss();
-//                        backgroundAlpha(1.0F);
                     }
                 });
             } else {
