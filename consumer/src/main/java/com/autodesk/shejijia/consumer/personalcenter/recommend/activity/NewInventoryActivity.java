@@ -200,9 +200,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                     /**
                      * 客户姓名正则校验
                      */
-                    boolean mMatchesName = mCustomerName.matches(RegexUtil.NICK_NAME_REGEX);
+                    boolean mMatchesName = mCustomerName.matches("^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{1,21}$");
                     if (!mMatchesName) {
-                        new AlertView(UIUtils.getString(R.string.tip), "姓名应为2-20个中文、英文、数字字符",
+                        new AlertView(UIUtils.getString(R.string.tip), "客户姓名应为2-22个中文、英文、数字字符",
                                 null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
 
                         return;
