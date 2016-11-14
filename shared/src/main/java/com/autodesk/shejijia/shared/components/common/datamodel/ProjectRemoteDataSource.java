@@ -15,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpMa
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
