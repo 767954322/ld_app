@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.form.contract;
 
+import android.widget.LinearLayout;
+
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
@@ -12,9 +14,12 @@ public interface PrecheckContract {
     interface View extends BaseView{
 
         void setToolbarTitle(String title);
-        //显示必要条件
+        //添加必要条件
+        LinearLayout getNecessaryLayout();
         //显示辅助条件
+        LinearLayout getAdditionalLayout();
         //显示按钮
+//        void showMenu
 
 
     }

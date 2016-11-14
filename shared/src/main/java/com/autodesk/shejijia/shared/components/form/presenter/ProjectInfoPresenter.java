@@ -25,6 +25,8 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 //                mView.dismiss();
                 break;
             case "REINSPECTION_INPROGRESS":  //复验进行中,修改
+            case "REINSPECTION_DELAYED":
+
                 break;
             case "REJECTED":   //验收拒绝,查看
                 break;

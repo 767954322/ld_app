@@ -53,21 +53,21 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
             public void onSuccess(ProjectInfo data) {
                 PlanInfo planInfo = data.getPlan();
                 List<Task> taskList = planInfo.getTasks();
-                MileStone milestone = planInfo.getMilestone();
                 for (Task task : taskList) {
-                    //根据监理进来:1,修改;2,查看
+                    //根据监理进来:1,修改;
                     if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
                         String status = task.getStatus();
                         Member role = null;
                         List<String> statusList = new ArrayList<>();
-                        statusList.add("INPROGRESS");
-                        statusList.add("DELAYED");
-                        statusList.add("REINSPECTION_INPROGRESS");  // modify
-                        statusList.add("REJECTED");
-                        statusList.add("QUALIFIED");
-                        statusList.add("REINSPECTION");
-                        statusList.add("RECTIFICATION");
-                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
+                        statusList.add("INPROGRESS");  //验收进行中
+                        statusList.add("DELAYED");     //验收延期
+                        statusList.add("REINSPECTION_INPROGRESS");   //复验进行中
+                        statusList.add("REINSPECTION_DELAYED");    // 复验延期
+//                        statusList.add("REJECTED");
+//                        statusList.add("QUALIFIED");
+//                        statusList.add("REINSPECTION");
+//                        statusList.add("RECTIFICATION");
+//                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
                         if(statusList.contains(status)) {
                             for (Member member : data.getMembers()) {
                                 if ("member".equals(member.getRole())) {

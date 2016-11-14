@@ -53,7 +53,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         // TODO: 16/10/27  获取到的task信息
         mTask = (Task) getIntent().getSerializableExtra("task");
 
-        mPresenter = new PrecheckPresenter(this);
+        mPresenter = new PrecheckPresenter(this,this);
         mPresenter.showForm(mTask);
     }
 
@@ -122,6 +122,16 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public void setToolbarTitle(String title) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public LinearLayout getNecessaryLayout() {
+        return mNecessaryLayout;
+    }
+
+    @Override
+    public LinearLayout getAdditionalLayout() {
+            return mAdditionalLayout;
     }
 }
 

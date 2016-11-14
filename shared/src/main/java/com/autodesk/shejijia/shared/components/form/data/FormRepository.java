@@ -82,6 +82,8 @@ public class FormRepository implements FormDataSource {
                     callBack.onError(errorMsg);
                 }
             },fIds);
+        } else {
+            callBack.onSuccess(mFormList);
         }
     }
 
