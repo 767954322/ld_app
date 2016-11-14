@@ -53,7 +53,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callback);
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
     }
@@ -71,7 +71,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callback);
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
     }
@@ -90,7 +90,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callback);
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
     }
@@ -114,7 +114,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callback);
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
     }
@@ -155,7 +155,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callback);
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
         });

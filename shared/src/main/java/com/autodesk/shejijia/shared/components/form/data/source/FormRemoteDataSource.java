@@ -40,7 +40,7 @@ public class FormRemoteDataSource implements FormDataSource {
         FormServerHttpManager.getInstance().getFormItemDetails(fid, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callBack);
+                callBack.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
@@ -54,7 +54,7 @@ public class FormRemoteDataSource implements FormDataSource {
         FormServerHttpManager.getInstance().updateForms(forms, bundle, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseErrorUtil.checkVolleyError(volleyError,callBack);
+                callBack.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
             @Override
