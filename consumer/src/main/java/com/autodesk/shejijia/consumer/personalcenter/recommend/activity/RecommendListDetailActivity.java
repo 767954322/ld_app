@@ -268,6 +268,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      */
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        ViewCategoryActivity.jumpTo(mActivity, mRecommendSCFDList, groupPosition);
         return true;
     }
 
@@ -339,8 +340,14 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
-                    mRecommendSCFDList.get(currentParentPosition).getBrands().remove(childPosition);
+                    List<RecommendBrandsBean> rb = mRecommendSCFDList.get(currentParentPosition).getBrands();
+                    rb.remove(childPosition);
+                    if(rb == null || rb.size() <= 0){
+                        mRecommendSCFDList.remove(currentParentPosition);
+                    }
                     mRecommendExpandableAdapter.notifyDataSetChanged();
+                    setSendButtonState();
+                    setEmptyContentView();
                 }
             }
         }).show();

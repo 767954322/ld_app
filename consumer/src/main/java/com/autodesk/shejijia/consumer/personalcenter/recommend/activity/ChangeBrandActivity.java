@@ -107,10 +107,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
                     if(recommendBrandsBean.getCode().equals(brandCode)){
                         int post = brandsBeen.indexOf(recommendBrandsBean);
                         mRecommendSCFDBean.getBrands().remove(recommendBrandsBean);
-                        recommendBrandsBean.setMalls(selectRecommendBrandsBean.getMalls());
-                        recommendBrandsBean.setName(selectRecommendBrandsBean.getBrand_name());
-                        recommendBrandsBean.setBrand_name(selectRecommendBrandsBean.getBrand_name());
-                        brandsBeen.add(post,recommendBrandsBean);
+                        brandsBeen.add(post,selectRecommendBrandsBean);
                         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, mRecommendSCFDBean);
                         break;
                     }

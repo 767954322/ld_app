@@ -30,21 +30,5 @@
             android:layout_marginRight="16dp"
             android:src="@drawable/icon_unfold_normal"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/material_prompt"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:visibility="visible"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/material_prompt"
-            android:textColor="@color/gray"/>
-    </RelativeLayout>
     <include layout="@layout/line_view"/>
-    <include layout="@layout/item_recommend_button_footer"></include>
-
 </LinearLayout>
