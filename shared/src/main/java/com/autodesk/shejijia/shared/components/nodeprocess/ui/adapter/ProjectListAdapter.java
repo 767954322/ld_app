@@ -8,11 +8,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.viewholder.ProjectListVH;
 
 import java.util.List;
 
@@ -118,6 +120,31 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 mProjectListItemListener.onStarLabelClick(projectLists, true, position);
             }
         });
+    }
+
+
+    private static class ProjectListVH extends RecyclerView.ViewHolder {
+        private LinearLayout mProjectItem;
+        private LinearLayout mProjectDetails;
+
+        private RecyclerView mTaskListView; //任务列表
+        private TextView mProjectName; //项目名 project/name
+        private TextView mProjectStatus; //项目状态 plan/status
+
+        private View mViewLine; //分割线
+        private Button mStarLabel; //星标按钮
+
+        ProjectListVH(View itemView) {
+            super(itemView);
+
+            mProjectItem = (LinearLayout) itemView.findViewById(R.id.lv_project_item);
+            mProjectDetails = (LinearLayout) itemView.findViewById(R.id.lv_project_details);
+            mTaskListView = (RecyclerView) itemView.findViewById(R.id.rcy_task_list);
+            mProjectName = (TextView) itemView.findViewById(R.id.tv_project_name);
+            mProjectStatus = (TextView) itemView.findViewById(R.id.tv_project_status);
+            mViewLine = itemView.findViewById(R.id.view_taskItem_line);
+            mStarLabel = (Button) itemView.findViewById(R.id.btn_star_label);
+        }
     }
 
 

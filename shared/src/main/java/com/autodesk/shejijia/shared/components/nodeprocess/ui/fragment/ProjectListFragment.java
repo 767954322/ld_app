@@ -38,15 +38,15 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  * 首页-项目列表
  */
-public class TaskListFragment extends BaseConstructionFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
+public class ProjectListFragment extends BaseConstructionFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
 
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
     private PopupWindow mScreenPopup;
 
-    public static TaskListFragment newInstance() {
-        return new TaskListFragment();
+    public static ProjectListFragment newInstance() {
+        return new ProjectListFragment();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
 
     @Override
     protected void initData() {
-        mProjectListPresenter = new ProjectListPresenter(getActivity(), getFragmentManager(), this);
+        mProjectListPresenter = new ProjectListPresenter(getActivity(), mContext.getSupportFragmentManager(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
         mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);

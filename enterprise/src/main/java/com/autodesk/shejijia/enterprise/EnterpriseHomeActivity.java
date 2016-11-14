@@ -27,7 +27,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
@@ -96,9 +96,9 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
             case R.id.tv_toolbar_title:
                 // TODO: 10/25/16  get date from calendar and set data to taskListFragment
                 ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
-                TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_TASK);
-                if (taskListFragment != null) {
-                    taskListFragment.refreshProjectListByDate("2016-10-25");
+                ProjectListFragment projectListFragment = (ProjectListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_TASK);
+                if (projectListFragment != null) {
+                    projectListFragment.refreshProjectListByDate("2016-10-25");
                 }
                 break;
             default:
@@ -192,7 +192,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         Fragment fragment = null;
         switch (tag) {
             case FRAGMENT_TAG_TASK:
-                fragment = TaskListFragment.newInstance();
+                fragment = ProjectListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_ISSUE:
                 fragment = IssueListFragment.newInstance();

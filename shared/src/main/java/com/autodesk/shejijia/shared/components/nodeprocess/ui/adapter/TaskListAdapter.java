@@ -8,10 +8,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.viewholder.TaskListVH;
 
 import java.util.List;
 
@@ -130,4 +131,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
     }
 
+    private static class TaskListVH extends RecyclerView.ViewHolder {
+        private TextView mTaskName;
+        private TextView mTaskStatus;
+        private LinearLayout mTaskDetails;
+
+        TaskListVH(View itemView) {
+            super(itemView);
+
+            mTaskName = (TextView) itemView.findViewById(R.id.tv_task_name);
+            mTaskStatus = (TextView) itemView.findViewById(R.id.tv_task_status);
+            mTaskDetails = (LinearLayout) itemView.findViewById(R.id.ll_task_details);
+        }
+    }
 }

@@ -111,7 +111,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 }
                 break;
             case "INPROGRESS":
-              /*  if (memberType.equals("clientmanager")) {
+                if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mTaskListView.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -125,7 +125,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mTaskListView.setVisibility(View.GONE);
                 }
-                break;*/
+                break;
             case "COMPLETION":
                /* mTaskListView.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
