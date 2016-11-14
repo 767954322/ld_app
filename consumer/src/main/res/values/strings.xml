@@ -679,8 +679,8 @@
     <string name="personal_new_inventory">新建清单</string>
     <string name="new_inventory_select_project">选择项目&#160;:&#160;</string>
     <string name="new_inventory_please_select_project">请选择项目</string>
-    <string name="new_inventory_member_account">会员帐号&#160;:&#160;</string>
-    <string name="new_inventory_please_input_member_account">请输入手机/邮箱/会员卡号</string>
+    <string name="new_inventory_member_account">会员账户&#160;:&#160;</string>
+    <string name="new_inventory_please_input_member_account">请输入手机号</string>
     <string name="new_inventory_name">客户姓名&#160;:&#160;</string>
     <string name="new_inventory_please_input_name">请输入客户姓名</string>
     <string name="new_inventory_phone_number">手机号码&#160;:&#160;</string>

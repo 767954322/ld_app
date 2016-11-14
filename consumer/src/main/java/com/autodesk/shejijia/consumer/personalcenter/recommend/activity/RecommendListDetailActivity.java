@@ -22,6 +22,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCa
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
@@ -47,6 +48,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
 
@@ -170,6 +173,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         @Override
                         public void onItemClick(Object object, int position) {
                             if (position != AlertView.CANCELPOSITION) {
+                                EventBus.getDefault().post(new RefreshEvent());
                                 finish();
                             }
                         }
@@ -180,6 +184,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         @Override
                         public void onItemClick(Object object, int position) {
                             if (position != AlertView.CANCELPOSITION) {
+                                EventBus.getDefault().post(new RefreshEvent());
                                 finish();
                             }
                         }
@@ -260,7 +265,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     /**
-     *空实现  不能删除
+     * 空实现  不能删除
      */
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {

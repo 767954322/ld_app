@@ -28,7 +28,6 @@
                 android:id="@+id/tv_brand_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="马可波罗"
                 android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/text_size_15"
                 android:textStyle="bold"/>
@@ -64,7 +63,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="LFH88955"
                         android:textColor="@color/bg_66"
                         android:textSize="@dimen/text_size_12"/>
                 </LinearLayout>
@@ -84,7 +82,6 @@
                         android:id="@+id/tv_brand_dimension"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="L900*W800*H12"
                         android:textColor="@color/bg_66"
                         android:textSize="@dimen/text_size_12"/>
                 </LinearLayout>
@@ -99,14 +96,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥36000"
                     android:textColor="@color/color_blue_0084ff"
                     android:textSize="@dimen/text_size_15"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" x5片"
                     android:textColor="@color/mybid_text_color_normal"
                     android:textSize="@dimen/text_size_15"/>
             </LinearLayout>
@@ -125,8 +120,7 @@
 
         <TextView
             android:id="@+id/tv_brand_apartment"
-            style="@style/item_text_style"
-            android:text="卫生间"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout
@@ -140,8 +134,7 @@
 
         <TextView
             android:id="@+id/tv_brand_remarks"
-            style="@style/item_text_style"
-            android:text="质地细腻与澳洲国石优博瑰丽"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout
@@ -158,8 +151,7 @@
         <TextView
             android:id="@+id/tv_brand_mall_name"
             style="@style/item_text_style"
-            android:lineSpacingMultiplier="1.2"
-            android:text="质地细腻与澳洲国石优博瑰丽质地细腻与澳洲国石优博瑰丽"/>
+            android:lineSpacingMultiplier="1.2"/>
 
     </LinearLayout>
 

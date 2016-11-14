@@ -113,6 +113,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
             mListView.setHasLoadMore(false);
         } else {
             mListView.setHasLoadMore(true);
+            mListView.setNoLoadMoreHideView(true);
         }
         if (items != null && items.size() > 0) {
             if (offset == 0) {

@@ -136,17 +136,18 @@ public class UIUtils {
     /**
      * 在主线程执行runnable
      */
-    /** public static boolean post(Runnable runnable) {
-        return getHandler().post(runnable);
-    }
-
-    public static void runInMainThread(Runnable runnable) {
-        if (isRunInMainThread()) {
-            runnable.run();
-        } else {
-            post(runnable);
-        }
-    }
+    /**
+     * public static boolean post(Runnable runnable) {
+     * return getHandler().post(runnable);
+     * }
+     * <p>
+     * public static void runInMainThread(Runnable runnable) {
+     * if (isRunInMainThread()) {
+     * runnable.run();
+     * } else {
+     * post(runnable);
+     * }
+     * }
      */
 
     public static void showInfoDialog(Context context, String message) {
@@ -396,7 +397,7 @@ public class UIUtils {
     }
 
     public static String getNoStringIfEmpty(String some) {
-        return TextUtils.isEmpty(some) || "none".equals(some) || StringUtils.isEmpty(some) ? "" : some;
+        return TextUtils.isEmpty(some) || "none".equals(some) || StringUtils.isEmpty(some) || "null".equals(some) ? "" : some;
     }
 
     public static ProgressDialog createDialog(Context context, int type, String message) {

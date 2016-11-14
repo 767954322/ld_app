@@ -103,6 +103,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
             mListView.setHasLoadMore(false);
         } else {
             mListView.setHasLoadMore(true);
+            mListView.setNoLoadMoreHideView(true);
         }
         if (items != null && items.size() > 0) {
             if (offset == 0) {
