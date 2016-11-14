@@ -32,7 +32,7 @@
                 android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_new_inventory_project_name"
                 android:layout_width="@dimen/size_0"
                 android:layout_height="match_parent"

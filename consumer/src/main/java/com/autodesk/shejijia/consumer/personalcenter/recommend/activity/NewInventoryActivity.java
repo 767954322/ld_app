@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -45,7 +46,7 @@ import org.json.JSONObject;
 
 public class NewInventoryActivity extends NavigationBarActivity implements View.OnClickListener, TextWatcher, OnItemClickListener {
 
-    private EditText mTvProjectName;
+    private TextView mTvProjectName;
     private EditText mEtMemberAccount;
     private EditText mEtCustomerName;
     private EditText mEtPhoneNumber;
@@ -73,7 +74,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     protected void initView() {
         super.initView();
         setTitleForNavbar(UIUtils.getString(R.string.personal_new_inventory));
-        mTvProjectName = (EditText) findViewById(R.id.et_new_inventory_project_name);
+        mTvProjectName = (TextView) findViewById(R.id.et_new_inventory_project_name);
         mEtMemberAccount = (EditText) findViewById(R.id.et_new_inventory_member_account);
         mEtCustomerName = (EditText) findViewById(R.id.et_new_inventory_name);
         mEtPhoneNumber = (EditText) findViewById(R.id.et_new_inventory_phone_number);
