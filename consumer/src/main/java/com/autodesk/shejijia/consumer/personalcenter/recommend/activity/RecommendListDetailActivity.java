@@ -342,7 +342,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 if (position != AlertView.CANCELPOSITION) {
                     List<RecommendBrandsBean> rb = mRecommendSCFDList.get(currentParentPosition).getBrands();
                     rb.remove(childPosition);
-                    if(rb == null || rb.size() <= 0){
+                    if (rb == null || rb.size() <= 0) {
                         mRecommendSCFDList.remove(currentParentPosition);
                     }
                     mRecommendExpandableAdapter.notifyDataSetChanged();
@@ -467,6 +467,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private void addMaterialRecommendSCFD(Intent intent) {
         Bundle bundle = intent.getExtras();
         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+        if (null == checkedInformationBeanList || checkedInformationBeanList.size() <= 0) {
+            mRecommendSCFDList.clear();
+        }
         Iterator<CheckedInformationBean> iter = checkedInformationBeanList.iterator();
         while (iter.hasNext()) {
             CheckedInformationBean cb = iter.next();
