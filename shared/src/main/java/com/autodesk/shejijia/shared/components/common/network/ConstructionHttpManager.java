@@ -158,13 +158,13 @@ public class ConstructionHttpManager {
 
  	public void getPlanByProjectId(@NonNull String pid, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/plan";
-        getData(requestTag, requestUrl, callback);
+        get(requestTag, requestUrl, callback);
     }
 
     public void updatePlan(String pid, JSONObject jsonRequest, Bundle requestParams, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/plan?";
         requestUrl = UrlUtils.buildUrl(requestUrl, requestParams);
-        putData(requestTag, requestUrl, jsonRequest, callback);
+        put(requestTag, requestUrl, jsonRequest, callback);
     }
 
     /*
@@ -193,7 +193,7 @@ public class ConstructionHttpManager {
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
-    private void getData(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
+    private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -206,7 +206,7 @@ public class ConstructionHttpManager {
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
-    private void putData(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
+    private void put(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
         LogUtils.v(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
         LogUtils.v(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, requestUrl, jsonRequest, callback) {
