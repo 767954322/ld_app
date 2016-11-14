@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="buttonStyle">@style/Construction.Button</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/Construction.AlertDialogStyle</item>
     </style>
 
     <style name="pop_bottom_animation">

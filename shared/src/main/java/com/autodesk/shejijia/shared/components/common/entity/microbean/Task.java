@@ -113,11 +113,12 @@ public class Task implements Serializable{
     }
 
     public boolean isMilestone() {
-        return milestone;
+        return milestone || isMilestone;
     }
 
     public void setMilestone(boolean milestone) {
         this.milestone = milestone;
+        this.isMilestone = milestone;
     }
 
     public String getDocType() {

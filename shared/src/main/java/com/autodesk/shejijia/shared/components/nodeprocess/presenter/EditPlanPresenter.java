@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -53,18 +54,15 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             return;
         }
 
-        mProjectRepository.getPlanByProjectId(mProjectId, REQUEST_TAG_FETCH_PLAN, new ResponseCallback<PlanInfo>() {
-            @Override
-            public void onSuccess(PlanInfo data) {
-                mPlan = data;
-                mView.showTasks(filterTasks());
-            }
+        ProjectInfo projectInfo = mProjectRepository.getProjectInfoByCache();
+        if (projectInfo == null) {
+            mView.showError("No active project"); // TODO update string
+        } else {
+            mPlan = projectInfo.getPlan();
 
-            @Override
-            public void onError(String errorMsg) {
-
-            }
-        });
+            List<Task> tasks = filterTasks();
+            mView.showTasks(tasks);
+        }
     }
 
     @Override
@@ -90,7 +88,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                         }
                     }
                 } else {
-                    if (mActiveTask ==null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
+                    if (mActiveTask == null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
                         // Update active task
                         mActiveTask = newActiveTask;
                         mView.showActiveTask(mActiveTask);
