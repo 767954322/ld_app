@@ -56,7 +56,7 @@ public class TaskDetailsFragment extends DialogFragment implements TaskDetailsCo
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Construction_AlertDialogStyle_Translucent);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_task_details_dialog, null);
 
         initView(view);

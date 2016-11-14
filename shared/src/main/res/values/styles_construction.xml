@@ -16,7 +16,17 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="CustomAlertDialog" parent="android:Theme.Dialog">
+    <style name="AlertWindowTitleStyle" parent="RtlOverlay.DialogWindowTitle.AppCompat">
+        <item name="android:textColor">@color/alert_dialog_title</item>
+    </style>
+
+    <style name="Construction.AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/alert_dialog_message</item>
+        <item name="android:windowTitleStyle">@style/AlertWindowTitleStyle</item>
+    </style>
+
+    <style name="Construction.AlertDialogStyle.Translucent" parent="@style/Construction.AlertDialogStyle">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

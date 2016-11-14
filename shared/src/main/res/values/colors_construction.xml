@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- alert dialog style color-->
+    <color name="alert_dialog_title">@color/font_black</color>
+    <color name="alert_dialog_message">@color/font_gray</color>
 
     <color name="main_bottom_textView_normal">#999999</color>
     <color name="main_bottom_textView_pressed">#5AB5EE</color>

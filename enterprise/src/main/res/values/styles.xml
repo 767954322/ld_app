@@ -16,15 +16,4 @@
         <item name="android:windowExitAnimation">@anim/popup_bottom_exit</item>
     </style>
 
-    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/alert_dialog_message</item>
-        <item name="android:windowTitleStyle">@style/AlertWindowTitleStyle</item>
-    </style>
-
-    <style name="AlertWindowTitleStyle" parent="RtlOverlay.DialogWindowTitle.AppCompat">
-        <item name="android:textColor">@color/alert_dialog_title</item>
-    </style>
-
-
 </resources>

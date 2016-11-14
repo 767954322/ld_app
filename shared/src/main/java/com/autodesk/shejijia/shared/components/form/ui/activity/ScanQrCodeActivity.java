@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -67,10 +68,10 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                 public void onSuccess(ProjectInfo data) {
                     PlanInfo planInfo = data.getPlan();
                     List<Task> taskList = planInfo.getTasks();
-                    String milestone = planInfo.getMilestone();
+                    MileStone milestone = planInfo.getMilestone();
                     Member role = null;
                     for (Task task : taskList) {
-                        if (milestone.equals(task.getTaskId())) {  //confirm a task
+                        if (milestone.getMilestoneId().equals(task.getTaskId())) {  //confirm a task
                             if ("inspectorInspection".equals(task.getCategory())) {   //confirm a inspector
                                 List<Member> members = data.getMembers();
                                 for (Member member : members) {

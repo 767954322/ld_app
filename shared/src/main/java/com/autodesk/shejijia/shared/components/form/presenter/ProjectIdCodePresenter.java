@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -52,7 +53,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
             public void onSuccess(ProjectInfo data) {
                 PlanInfo planInfo = data.getPlan();
                 List<Task> taskList = planInfo.getTasks();
-                String milestone = planInfo.getMilestone();
+                MileStone milestone = planInfo.getMilestone();
                 for (Task task : taskList) {
                     //根据监理进来:1,修改;2,查看
                     if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
