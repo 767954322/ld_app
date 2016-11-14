@@ -52,7 +52,6 @@ import java.util.Date;
 public class ExistMeasureOrderActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
 
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_exist_measure_order;
@@ -279,20 +278,22 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
         int size = mList.size();
         for (int i = 0; i < size; i++) {
-            String wk_template_id = mList.get(i).getWk_template_id();
-            if (wk_template_id != null && Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id)) {
-                if (mList.get(i).getContract() == null) {
-                    dList.add(mList.get(i));
-                } else {
-                    mList.get(i).setContract("null");
-                    dList.add(mList.get(i));
-                }
+//            String wk_template_id = mList.get(i).getWk_template_id();
+//            if (wk_template_id != null && Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id)) {
+            if (mList.get(i).getContract() == null) {
+                dList.add(mList.get(i));
+            } else {
+                mList.get(i).setContract("null");
+                dList.add(mList.get(i));
             }
+//            }
         }
         // 设置悬浮头部VIEW
         if (dList != null) {
             adapter = new PinnedHeaderExpandableAdapter(dList, ExistMeasureOrderActivity.this, explistview);
             explistview.setAdapter(adapter);
+        } else {
+            new AlertView(null, UIUtils.getString(R.string.not_have_send_measure), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this, AlertView.Style.Alert, ExistMeasureOrderActivity.this).setOnDismissListener(this).show();
         }
         // 设置单个分组展开
         explistview.setOnGroupClickListener(new GroupClickListener());
