@@ -35,7 +35,7 @@ import java.util.List;
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View {
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, PDTaskListAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
     private Button mCreatePlanBtn;
@@ -95,7 +95,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
-             /*   if (memberType.equals("clientmanager")) {
+                if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mTaskListView.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -109,7 +109,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mTaskListView.setVisibility(View.GONE);
                 }
-                break;*/
+                break;
             case "INPROGRESS":
               /*  if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 }
                 break;*/
             case "COMPLETION":
-                mTaskListView.setVisibility(View.VISIBLE);
+               /* mTaskListView.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
                 mCreatePlanBtn.setVisibility(View.GONE);
                 //init recyclerView
@@ -135,8 +135,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 mTaskListView.setHasFixedSize(true);
                 mTaskListView.setItemAnimator(new DefaultItemAnimator());
                 //init adapter
-                mTaskListAdapter = new PDTaskListAdapter(projectInfo.getPlan().getTasks(), R.layout.listitem_projectdetails_task_list_view, mContext, null);
-                mTaskListView.setAdapter(mTaskListAdapter);
+                mTaskListAdapter = new PDTaskListAdapter(projectInfo.getPlan().getTasks(), R.layout.listitem_projectdetails_task_list_view, mContext, this);
+                mTaskListView.setAdapter(mTaskListAdapter);*/
                 break;
             default:
                 break;
@@ -153,6 +153,11 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void cancelProjectInfoDialog() {
         // TODO: 11/11/16 其他更加友好的提示方式 
         ToastUtils.showShort(mContext, "you couldn't get right project information");
+    }
+
+    @Override
+    public void onTaskClick(List<Task> taskList, int position) {
+        mProjectDetailsPresenter.navigateToTaskDetail(getFragmentManager(), taskList, position);
     }
 
     @Override

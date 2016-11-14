@@ -10,7 +10,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -91,7 +93,7 @@ public class TaskDetailsFragment extends DialogFragment implements TaskDetailsCo
                     mTaskStatus.setText(taskInfo.getStatus());
                 }
                 if (!TextUtils.isEmpty(taskInfo.getDescription())) {
-                    mTaskAddress.setText("taskInfo.getDescription()mTaskAddressmTaskAddressmTaskAddress");
+                    mTaskAddress.setText("");
                 }
             }
         }

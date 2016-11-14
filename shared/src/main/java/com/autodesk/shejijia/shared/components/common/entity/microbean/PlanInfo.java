@@ -13,7 +13,7 @@ import java.util.List;
 public class PlanInfo implements Serializable {
 
     private String status;
-    private String milestone;
+    private MileStone milestone;
     private String start;
     private String completion;
     private List<Task> tasks;
@@ -30,11 +30,11 @@ public class PlanInfo implements Serializable {
         this.status = status;
     }
 
-    public String getMilestone() {
+    public MileStone getMilestone() {
         return milestone;
     }
 
-    public void setMilestone(String milestone) {
+    public void setMilestone(MileStone milestone) {
         this.milestone = milestone;
     }
 

@@ -166,7 +166,7 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    interface TaskListItemClickListener {
+    public interface TaskListItemClickListener {
         //节点详情
         void onTaskClick(List<Task> taskList, int position);
     }
