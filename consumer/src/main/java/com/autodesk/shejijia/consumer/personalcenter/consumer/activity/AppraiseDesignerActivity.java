@@ -147,6 +147,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
      * 取消编辑或者保存评价执行的操作
      */
     private void abandonAppraiseDesigner() {
+        mEditEvaluationContent.clearFocus();
         mAppraiseDesignerAlertView.show();
     }
 
