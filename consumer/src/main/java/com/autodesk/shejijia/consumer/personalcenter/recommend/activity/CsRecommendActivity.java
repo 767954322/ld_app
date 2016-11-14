@@ -151,8 +151,8 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
-        mListView.clearFocus();
-        mListView.setSelection(0);
+/*        mListView.clearFocus();
+        mListView.setSelection(0);*/
         mRecommendLogic.onLoadRecommendListData(false, 0, LIMIT, 0);
     }
 
