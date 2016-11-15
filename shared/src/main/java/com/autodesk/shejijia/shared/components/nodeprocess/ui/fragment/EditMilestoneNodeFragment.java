@@ -108,6 +108,11 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         //TODO disable some dates according to active task
         mMileStoneActiveDecorator.setActiveTask(task);
         mCalendarWidget.invalidateDecorators();
+        Date selectedDate = null;
+        if (task != null) {
+            selectedDate = DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
+        }
+        mCalendarWidget.setSelectedDate(selectedDate);
     }
 
     @Override
@@ -125,12 +130,12 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        List<CalendarDay> selectedDays = mCalendarWidget.getSelectedDates();
-        List<Date> selectedDates = new ArrayList<Date>();
-        for (CalendarDay day: selectedDays) {
-            selectedDates.add(day.getDate());
+        if (selected) {
+            List<Date> selectedDates = new ArrayList<>();
+            selectedDates.add(date.getDate());
+            mPresenter.updateTask(selectedDates);
         }
-        mPresenter.updateTask(selectedDates);
+
     }
 
     @Override

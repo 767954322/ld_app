@@ -187,7 +187,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onErrorResponse(VolleyError volleyError) {
                 // TODO log error detail
                 LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, volleyError.toString());
-                MPNetworkUtils.logError("Wenhui",volleyError, true);
+                MPNetworkUtils.logError(ConstructionConstants.LOG_TAG_REQUEST, volleyError, true);
                 callback.onError(volleyError.getMessage());
             }
 

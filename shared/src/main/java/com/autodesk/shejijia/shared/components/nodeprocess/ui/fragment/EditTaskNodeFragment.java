@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -42,6 +43,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     private BottomSheetDialog mBottomSheetDialog;
     private MaterialCalendarView mCalendarView;
+
+    private ConProgressDialog mProgressDialog;
 
     @Override
     public void showTasks(List<Task> tasks) {
@@ -120,12 +123,19 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.loading));
+        }
 
+        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
     }
 
     private void initBottomSheetDialog() {

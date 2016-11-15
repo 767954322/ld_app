@@ -115,9 +115,9 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                     if (mActiveTask == null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
                         // Update active task
                         mActiveTask = newActiveTask;
-                        mView.showActiveTask(mActiveTask);
                     }
                 }
+                mView.showActiveTask(mActiveTask);
                 break;
             default:
                 if (mActiveTask != null) {
@@ -136,16 +136,19 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         Bundle requestParams = new Bundle();
         requestParams.putString("operation", "edit"); // TODO Get operation
         requestParams.putSerializable("body", mPlan);
+        mView.showLoading();
         mProjectRepository.updatePlan(mProjectId, requestParams, REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
             @Override
             public void onSuccess(Project data) {
                 LogUtils.d(LOG_TAG_EDIT_PLAN, "update plan success ");
+                mView.hideLoading();
                 mView.onCommitSuccess();
             }
 
             @Override
             public void onError(String errorMsg) {
                 LogUtils.e(LOG_TAG_EDIT_PLAN, "update plan fail " + errorMsg);
+                mView.hideLoading();
                 mView.showError("Update plan fail!\n " + errorMsg); // TODO update string
             }
         });
