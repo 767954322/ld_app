@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -19,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.google.zxing.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,29 +68,40 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                 public void onSuccess(ProjectInfo data) {
                     PlanInfo planInfo = data.getPlan();
                     List<Task> taskList = planInfo.getTasks();
-                    MileStone milestone = planInfo.getMilestone();
-                    Member role = null;
                     for (Task task : taskList) {
-                        if (milestone.getMilestoneId().equals(task.getTaskId())) {  //confirm a task
-                            if ("inspectorInspection".equals(task.getCategory())) {   //confirm a inspector
-                                List<Member> members = data.getMembers();
-                                for (Member member : members) {
+                        //根据监理进来:1,修改;
+                        if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                            String status = task.getStatus();
+                            Member role = null;
+                            List<String> statusList = new ArrayList<>();
+                            statusList.add("INPROGRESS");  //验收进行中
+                            statusList.add("DELAYED");     //验收延期
+                            statusList.add("REINSPECTION_INPROGRESS");   //复验进行中
+                            statusList.add("REINSPECTION_DELAYED");    // 复验延期
+//                        statusList.add("REJECTED");
+//                        statusList.add("QUALIFIED");
+//                        statusList.add("REINSPECTION");
+//                        statusList.add("RECTIFICATION");
+//                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
+                            if(statusList.contains(status)) {
+                                for (Member member : data.getMembers()) {
                                     if ("member".equals(member.getRole())) {
                                         role = member;
                                         break;
                                     }
                                 }
-
                                 Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
                                 intent.putExtra("task", task);
                                 intent.putExtra("building", data.getBuilding());
                                 intent.putExtra("member", role);
                                 startActivity(intent);
+
                                 finish();
                                 return;
                             }
-                            break;
+
                         }
+
                     }
 
                     Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
