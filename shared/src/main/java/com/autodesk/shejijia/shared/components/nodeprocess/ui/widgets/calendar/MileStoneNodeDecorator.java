@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -42,6 +43,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
     @Override
     public void decorate(DayViewFacade view) {
         view.addSpan(new ForegroundColorSpan(Color.BLACK));
+        view.addSpan(new RelativeSizeSpan(0.8f));
 //        view.setSelectionDrawable(drawable);
         view.setDaysActivated(true);
     }

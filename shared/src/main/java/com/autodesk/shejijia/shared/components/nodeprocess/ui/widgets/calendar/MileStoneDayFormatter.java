@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
@@ -29,7 +30,12 @@ public class MileStoneDayFormatter implements DayFormatter {
         if (task == null) {
             return DayFormatter.DEFAULT.format(day);
         } else {
-            return task.getName();
+            String taskName = task.getName();
+            if (!TextUtils.isEmpty(taskName) && taskName.length() > 3) {
+                int middleIndex =  Math.round(taskName.length() / 2f);
+                return taskName.substring(0, middleIndex) + "\n" + taskName.substring(middleIndex);
+            }
+            return taskName;
         }
     }
 
