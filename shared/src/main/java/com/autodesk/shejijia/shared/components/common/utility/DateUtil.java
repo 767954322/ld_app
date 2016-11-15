@@ -355,9 +355,19 @@ public class DateUtil {
      * @param days
      * @return iso 8601 format string
      */
-    public static String iso8601PlusDays(String iso8601DateStr, int days) {
+    public static String iso8601PlusDays(@NonNull String iso8601DateStr, @NonNull int days) {
         Instant instant = iso8601ToInstant(iso8601DateStr);
         return instantToIso8601(plusDays(instant, days));
+    }
+
+    public static Date plusDays(@NonNull Date date, @NonNull int days) {
+        Instant instant = new Instant(date.getTime());
+        return plusDays(instant, days).toDate();
+    }
+
+    public static Date getDateEndTime(@NonNull Date date) {
+        DateTime dateTime = new DateTime(date.getTime()).withTime(23, 59, 59, 0);
+        return dateTime.toDate();
     }
 
     private static final Instant iso8601ToInstant(String dateStr) {

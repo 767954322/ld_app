@@ -87,6 +87,7 @@ public final class ProjectRepository implements ProjectDataSource {
     @Override
     public void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
         ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, callback);
+        //TODO notify active project is dirty
     }
 
     @Override

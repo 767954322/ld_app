@@ -22,16 +22,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:text="Test"
             tools:text="Test"/>
 
         <TextView
+            android:id="@+id/tv_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:text="Close"
-            tools:text="Close"/>
+            android:text="@string/sure"
+            tools:text="确定"/>
 
     </RelativeLayout>
 

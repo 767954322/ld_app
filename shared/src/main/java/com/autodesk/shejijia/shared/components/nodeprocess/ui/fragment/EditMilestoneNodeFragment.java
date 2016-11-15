@@ -22,6 +22,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.M
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,12 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        mPresenter.updateTask(date.getDate());
+        List<CalendarDay> selectedDays = mCalendarWidget.getSelectedDates();
+        List<Date> selectedDates = new ArrayList<Date>();
+        for (CalendarDay day: selectedDays) {
+            selectedDates.add(day.getDate());
+        }
+        mPresenter.updateTask(selectedDates);
     }
 
     @Override

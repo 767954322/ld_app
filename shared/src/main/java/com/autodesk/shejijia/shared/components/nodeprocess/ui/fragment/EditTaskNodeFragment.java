@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
@@ -18,16 +17,14 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -42,6 +39,9 @@ import java.util.List;
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.View {
     private EditPlanContract.Presenter mPresenter;
     private TaskNodeAdapter mAdapter;
+
+    private BottomSheetDialog mBottomSheetDialog;
+    private MaterialCalendarView mCalendarView;
 
     @Override
     public void showTasks(List<Task> tasks) {
@@ -90,6 +90,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         });
         recyclerView.setAdapter(mAdapter);
 
+        initBottomSheetDialog();
     }
 
     @Override
@@ -127,56 +128,97 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     }
 
-    public void showBottomSheet(List<Task> tasks, Task task) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(),
+    private void initBottomSheetDialog() {
+        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
                 R.style.BottomSheetDialogTheme_Calendar);
+    }
+
+    public void showBottomSheet(List<Task> milstoneTasks, Task task) {
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet_edit_task_node, null);
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
+        mBottomSheetDialog.setContentView(view);
 
-        View parent = (View) view.getParent();
-        final BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
+        mCalendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
+
+        // Set formatter
+        MileStoneDayFormatter mileStoneDayFormatter = new MileStoneDayFormatter();
+        mileStoneDayFormatter.setData(milstoneTasks);
+        mCalendarView.setDayFormatter(mileStoneDayFormatter);
+
+        // Set decorators
+        mCalendarView.removeDecorators();
+        MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator(getActivity());
+        DateSelectorDecorator selectorDecorator = new DateSelectorDecorator(getActivity());
+        mileStoneDecorator.setData(milstoneTasks);
+        mCalendarView.addDecorators(selectorDecorator,
+                mileStoneDecorator);
+
+        // set date limit
+        Date startDate = DateUtil.iso8601ToDate(milstoneTasks.get(0).getPlanningTime().getStart());
+        Date endDate = DateUtil.iso8601ToDate(milstoneTasks.get(milstoneTasks.size() - 1).getPlanningTime().getCompletion());
+
+        int limitMonthOffset = 6;
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+        // TODO optimize date format fail case
+        calendar.setTime(startDate == null ? today : startDate);
+        calendar.add(Calendar.MONTH, -limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        Date minDate = calendar.getTime();
+
+        // TODO optimize date format fail case
+        calendar.setTime(endDate == null ? today : endDate);
+        calendar.add(Calendar.MONTH, limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date maxDate = calendar.getTime();
+
+        mCalendarView.state()
+                .edit()
+                .setMinimumDate(minDate)
+                .setMaximumDate(maxDate)
+                .commit();
+
+        Date taskStartDay = DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
+        Date taskEndDay = DateUtil.iso8601ToDate(task.getPlanningTime().getCompletion());
+        mCalendarView.setCurrentDate(taskStartDay == null ? today : taskStartDay);
+
+        if (DateUtil.isSameDay(taskStartDay, taskEndDay)) {
+            mCalendarView.setSelectedDate(taskStartDay);
+        } else if (taskStartDay != null){
+            mCalendarView.setSelectedRange(taskStartDay, taskEndDay);
+        }
+
+
+        TextView taskNameView = (TextView) view.findViewById(R.id.tv_task_name);
+        taskNameView.setText(task.getName());
+
+        TextView actionBtn = (TextView) view.findViewById(R.id.tv_action);
+        actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            public void onClick(View v) {
+                hideBottomSheetDialog();
+                List<CalendarDay> selectedDays = mCalendarView.getSelectedDates();
+                List<Date> selectedDates = new ArrayList<Date>();
+                for (CalendarDay day: selectedDays) {
+                    selectedDates.add(day.getDate());
                 }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                mPresenter.updateTask(selectedDates);
             }
         });
 
-        MaterialCalendarView calendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
-        MileStoneDayFormatter mileStoneDayFormator = new MileStoneDayFormatter();
-        MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator(getActivity());
-        DateSelectorDecorator mSelectorDecorator = new DateSelectorDecorator(getActivity());
-        mileStoneDayFormator.setData(tasks);
-        mileStoneDecorator.setData(tasks);
+        View parent = (View) view.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        behavior.setHideable(false);
 
-        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
-//        calendarView.setWeekDayFormatter(new WeekDayFormatter(getContext()));
-        calendarView.setDayFormatter(mileStoneDayFormator);
-//        calendarView.addDecorators(mileStoneDecorator);
-        calendarView.addDecorator(mSelectorDecorator);
-        calendarView.addDecorator(mileStoneDecorator);
-//        calendarView.setOnDateChangedListener(this);
-        calendarView.setVisibility(View.VISIBLE);
-        calendarView.invalidateDecorators();
-//        calendarView.setSelectedDate(new Date());
+        mBottomSheetDialog.show();
+    }
 
-//        Calendar instance1 = Calendar.getInstance();
-//        instance1.set(instance1.get(Calendar.YEAR), Calendar.OCTOBER, 1);
-//
-//        Calendar instance2 = Calendar.getInstance();
-//        instance2.set(instance2.get(Calendar.YEAR), Calendar.DECEMBER, 31);
-//        calendarView.state()
-//                .edit()
-//                .setMinimumDate(instance1.getTime())
-//                .setMaximumDate(instance2.getTime())
-//                .commit();
+    private void hideBottomSheetDialog() {
+        if (mBottomSheetDialog != null && mBottomSheetDialog.isShowing()) {
+            mBottomSheetDialog.cancel();
+        }
+
     }
 
     private static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
@@ -252,7 +294,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             Date startDate = DateUtil.iso8601ToDate(time.getStart());
             Date endDate = DateUtil.iso8601ToDate(time.getCompletion());
             StringBuilder dateStingBuilder = new StringBuilder("");
-            if (startDate != null && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
+            if (startDate != null && (task.isMilestone() || (endDate != null && DateUtil.isSameDay(startDate, endDate)))) {
                 dateStingBuilder.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
             } else {
                 dateStingBuilder.append(startDate == null ? "NA" : DateUtil.getStringDateByFormat(startDate, "M.d"))
@@ -262,8 +304,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return dateStingBuilder.toString();
         }
 
-        public static interface IViewHolderClick {
-            public void onTaskClick(Task task);
+        public interface IViewHolderClick {
+            void onTaskClick(Task task);
         }
 
     }

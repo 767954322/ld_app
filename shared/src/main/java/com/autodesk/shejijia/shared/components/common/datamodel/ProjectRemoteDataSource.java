@@ -15,7 +15,9 @@ import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpMa
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,14 +128,14 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         JSONObject jsonRequest = new JSONObject();
         try {
             JSONObject planJsonObject = GsonUtil.beanToJSONObject(plan);
+            jsonRequest.put("project_id", pid);
             jsonRequest.put("plan_id", planJsonObject.get("plan_id"));
             jsonRequest.put("start", planJsonObject.get("start"));
             jsonRequest.put("completion", planJsonObject.get("completion"));
             jsonRequest.put("tasks", planJsonObject.get("tasks"));
-            jsonRequest.put("project_id", pid);
 
             ConstructionHttpManager.getInstance().updatePlan(pid, jsonRequest, requestParams, requestTag,
-                    getDefaultCallback(callback, Project.class));
+                    getDefaultCallback(callback, null));
         } catch (JSONException e) {
             e.printStackTrace();
             // TODO Optimize error hint
@@ -168,14 +170,24 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onResponse(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, result);
-                T bean = GsonUtil.jsonToBean(result, clazz);
-                callback.onSuccess(bean);
+                if (clazz == null) {
+                    callback.onSuccess(null);
+                } else {
+                    try {
+                        T bean = GsonUtil.jsonToBean(result, clazz);
+                        callback.onSuccess(bean);
+                    } catch (JsonSyntaxException exception) {
+                        LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, "e=" + exception);
+                        callback.onError("JsonSyntaxException");
+                    }
+                }
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 // TODO log error detail
                 LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, volleyError.toString());
+                MPNetworkUtils.logError("Wenhui",volleyError, true);
                 callback.onError(volleyError.getMessage());
             }
 

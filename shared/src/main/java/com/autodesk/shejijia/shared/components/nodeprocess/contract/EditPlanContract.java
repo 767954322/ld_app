@@ -47,9 +47,9 @@ public interface EditPlanContract {
 
         /**
          * Update active task to the selected date
-         * @param selectedDate  selected date
+         * @param selectedDates  selected dates
          */
-        void updateTask(Date selectedDate);
+        void updateTask(List<Date> selectedDates);
 
         /**
          * commit edited plan

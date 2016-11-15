@@ -27,6 +27,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.fo
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.MonthArrayTitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.TitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.WeekDayFormatter;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.lang.annotation.Retention;
@@ -589,6 +590,23 @@ public class MaterialCalendarView extends ViewGroup {
             setDateSelected(date, true);
         }
     }
+
+    /**
+     * @param firstDay Dates to set as selected. Null to clear selection
+     */
+    public void setSelectedRange(@Nullable Date firstDay, Date lastDay) {
+        clearSelection();
+        if (firstDay != null && lastDay!= null) {
+            CalendarDay calendarFistDay = CalendarDay.from(firstDay);
+            CalendarDay calendarLastDay = CalendarDay.from(lastDay);
+            if (calendarFistDay.isAfter(calendarLastDay)) {
+                dispatchOnRangeSelected(calendarLastDay, calendarFistDay);
+            } else {
+                dispatchOnRangeSelected(calendarFistDay, calendarLastDay);
+            }
+        }
+    }
+
 
     /**
      * @param calendar a Calendar to change. Passing null does nothing

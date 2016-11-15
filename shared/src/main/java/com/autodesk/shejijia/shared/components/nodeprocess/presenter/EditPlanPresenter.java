@@ -14,6 +14,9 @@ import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepositor
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -66,25 +69,46 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     }
 
     @Override
-    public void updateTask(Date selectedDate) {
+    public void updateTask(List<Date> selectedDates) {
+        if (selectedDates.size() < 1) {
+            return;
+        }
+
+        Collections.sort(selectedDates, new Comparator<Date>() {
+            @Override
+            public int compare(Date lhs, Date rhs) {
+                return DateUtil.compareDate(lhs, rhs);
+            }
+        });
+
+        Date startDate = selectedDates.get(0);
+        Date endDate;
+        if (selectedDates.size() == 1) {
+            endDate = DateUtil.getDateEndTime(startDate);
+        } else {
+            endDate = selectedDates.get(selectedDates.size() - 1);
+        }
+
         switch (mEditState) {
             case EDIT_MILESTONE:
-                Task newActiveTask = getMileStoneNode(selectedDate);
+                Task newActiveTask = getMileStoneNode(startDate);
                 if (newActiveTask == null) {
                     if (mActiveTask != null) {
                         // Update active task date
                         Date oldDate = DateUtil.iso8601ToDate(mActiveTask.getPlanningTime().getStart());
                         if (oldDate != null) {
-                            String selectedDateString = DateUtil.dateToIso8601(selectedDate);
-                            updateTaskDate(mActiveTask, selectedDateString);
-                            if (DateUtil.compareDate(selectedDateString, mPlan.getStart()) < 0) {
-                                mPlan.setStart(selectedDateString);
+                            String startDateString = DateUtil.dateToIso8601(startDate);
+                            String endDateString = DateUtil.dateToIso8601(endDate);
+                            updateTaskDate(mActiveTask, startDateString, endDateString);
+                            sortTasks();
+                            if (DateUtil.compareDate(startDateString, mPlan.getStart()) < 0) {
+                                mPlan.setStart(startDateString);
                             }
-                            if (DateUtil.compareDate(selectedDateString, mPlan.getCompletion()) > 0) {
-                                mPlan.setCompletion(selectedDateString);
+                            if (DateUtil.compareDate(endDateString, mPlan.getCompletion()) > 0) {
+                                mPlan.setCompletion(endDateString);
                             }
 
-                            mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
+                            mView.onTaskDateChange(mActiveTask, oldDate, startDate);
                         }
                     }
                 } else {
@@ -96,6 +120,13 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                 }
                 break;
             default:
+                if (mActiveTask != null) {
+                    String startDateString = DateUtil.dateToIso8601(startDate);
+                    String endDateString = DateUtil.dateToIso8601(endDate);
+                    updateTaskDate(mActiveTask, startDateString, endDateString);
+                    sortTasks();
+                    mView.showTasks(filterTasks());
+                }
                 break;
         }
     }
@@ -122,6 +153,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     }
 
     public void editTaskNode(Task task) {
+        mActiveTask = task;
         ((EditTaskNodeFragment) mView).showBottomSheet(getMileStoneNodes(), task);
     }
 
@@ -174,7 +206,18 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         return null;
     }
 
-    private void updateTaskDate(Task task, String dateString) {
-        task.getPlanningTime().setStart(dateString);
+    private void updateTaskDate(Task task, String startDate, String endDate) {
+        task.getPlanningTime().setStart(startDate);
+        task.getPlanningTime().setCompletion(endDate);
+    }
+
+    private void sortTasks() {
+        List<Task> tasks = mPlan.getTasks();
+        Collections.sort(tasks, new Comparator<Task>() {
+            @Override
+            public int compare(Task lhs, Task rhs) {
+                return DateUtil.compareDate(lhs.getPlanningTime().getStart(), rhs.getPlanningTime().getStart());
+            }
+        });
     }
 }
