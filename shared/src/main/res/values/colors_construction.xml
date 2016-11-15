@@ -24,6 +24,7 @@
     <color name="con_orange">#EA6339</color>
     <color name="con_red">#FF432F</color>
     <color name="gray_light">#c8c8c8</color>
+    <color name="con_white">#FFFFFF</color>
 
     <!-- font colors-->
     <color name="con_font_gray">#939393</color>

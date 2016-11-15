@@ -240,5 +240,7 @@
     <color name="form_text_bar_write">#ffffff</color>
     <color name="project_id_title">#333333</color>
     <color name="project_id_write">#999999</color>
+    <color name="font_title">#333333</color>
+    <color name="font_subtitle">#666666</color>
 
 </resources>

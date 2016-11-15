@@ -1,16 +1,18 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.presenter.PrecheckPresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -25,8 +27,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private RadioButton mNoBtn;
     private LinearLayout mNecessaryLayout;
     private LinearLayout mAdditionalLayout;
-    private Button mSelectBtn;
-    private Toolbar mToolbar;
+    private Button mOptionBtn;
     private Task mTask;
     private PrecheckPresenter mPresenter;
 
@@ -45,12 +46,11 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         //辅助条件
         mAdditionalLayout = (LinearLayout) findViewById(R.id.ll_additional);
         //确定按钮
-        mSelectBtn = (Button) findViewById(R.id.btn_select);
+        mOptionBtn = (Button) findViewById(R.id.btn_option);
     }
 
     @Override
     protected void initExtraBundle() {
-        // TODO: 16/10/27  获取到的task信息
         mTask = (Task) getIntent().getSerializableExtra("task");
 
         mPresenter = new PrecheckPresenter(this,this);
@@ -64,35 +64,29 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initListener() {
-        // TODO: 16/10/27  设置监听事件
         mOkBtn.setOnClickListener(this);
         mNoBtn.setOnClickListener(this);
-        mSelectBtn.setOnClickListener(this);
+        mOptionBtn.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
-        //合格与不合格的标识,0为初始化,1为合格,2为不合格
         int i = v.getId();
+
         if (i == R.id.btn_ok) {// TODO: 16/10/27 点击合格的按钮
-
+            mPresenter.showOkBtn();
         } else if (i == R.id.btn_no) {// TODO: 16/10/27 点击不合格的按钮
-
-
-        } else if (i == R.id.btn_select) {// TODO: 16/10/27  点击验收的按钮
-
-
-        } else {
-
+            mPresenter.showNoBtn();
+        } else if (i == R.id.btn_option) {// TODO: 16/10/27  点击验收的按钮
+            mPresenter.clickOptionBtn();
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-//            finish();
-            ToastUtils.showShort(this,"back");
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -120,19 +114,61 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void setToolbarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(null != actionBar) {
+            actionBar.setTitle(title);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
-    public LinearLayout getNecessaryLayout() {
-        return mNecessaryLayout;
+    public void addNecessaryView(TextView view) {
+        if(null != mNecessaryLayout) {
+            mNecessaryLayout.addView(view);
+        }
     }
 
     @Override
-    public LinearLayout getAdditionalLayout() {
-            return mAdditionalLayout;
+    public void addAdditionalLayout(View view) {
+        if(null != mAdditionalLayout) {
+            mAdditionalLayout.addView(view);
+        }
     }
+
+    @Override
+    public void showQualifiedBtn() {
+        if(null != mOptionBtn && null != mOkBtn) {
+            mOptionBtn.setVisibility(View.VISIBLE);
+            mOptionBtn.setText("同意,可进行质量验收");
+            mOptionBtn.setBackgroundResource(R.drawable.ic_big_button_blue);
+
+            mOkBtn.setTextColor(UIUtils.getColor(R.color.con_white));
+            mNoBtn.setTextColor(UIUtils.getColor(R.color.form_btn_bg_grey));
+        }
+    }
+
+    @Override
+    public void showUnqualifiedBtn() {
+        if(null != mOptionBtn && null != mNoBtn) {
+            mOptionBtn.setVisibility(View.VISIBLE);
+            mOptionBtn.setText("不同意验收");
+            mOptionBtn.setBackgroundResource(R.drawable.ic_big_button_orange);
+
+            mNoBtn.setTextColor(UIUtils.getColor(R.color.con_white));
+            mOkBtn.setTextColor(UIUtils.getColor(R.color.form_btn_bg_grey));
+        }
+    }
+
+    @Override
+    public void enterQualified() {
+        ToastUtils.showShort(this,"合格");
+    }
+
+    @Override
+    public void enterUnqualified() {
+        ToastUtils.showShort(this,"不合格");
+    }
+
 }
 
 

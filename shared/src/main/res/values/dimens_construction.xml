@@ -50,4 +50,10 @@
 
     <!--Normal button min height-->
     <dimen name="button_min_height">48dp</dimen>
+
+    <!--form-->
+    <dimen name="precheck_spacing_padding_7.5">7.5dp</dimen>
+    <dimen name="precheck_font_15">15sp</dimen>
+    <dimen name="precheck_additional_height">57.5dp</dimen>
+    <dimen name="spacing_plain_table_cell">12.5dp</dimen>
 </resources>
