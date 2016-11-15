@@ -9,10 +9,6 @@
     android:background="@color/form_background_grey"
     tools:context=".components.form.ui.activity.ProjectIdCodeActivity">
 
-    <include android:layout_width="match_parent"
-             android:layout_height="?attr/actionBarSize"
-             layout="@layout/toolbar_home_topbar_view"/>
-
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_15"

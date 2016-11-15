@@ -2,7 +2,7 @@ package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -26,8 +26,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     private TextView mAddressTv;
     private TextView mCommunityTv;
     private ProjectInfoPresenter mPresenter;
-    private Toolbar mToolbar;
-    private TextView mToolbarTitleTv;
     private Task mTask;
     private Member mMember;
     private Building mBuilding;
@@ -39,8 +37,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     protected void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
-        mToolbarTitleTv = (TextView) findViewById(R.id.tv_toolbar_title);
         //获取到页面的内容控件
         mUsernameTv = (TextView) findViewById(R.id.tv_username);
         mTelephoneTv = (TextView) findViewById(R.id.tv_telephone);
@@ -76,18 +72,17 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public void setToolbar() {
-        mToolbar.setTitle("设计家");
-        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
-        mToolbar.setNavigationIcon(R.drawable.ic_close);
-        mToolbarTitleTv.setVisibility(View.GONE);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("设计家");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setSupportActionBar(mToolbar);
     }
 
 
     @Override
     public void selectCancel() {
-        startActivity(new Intent(this,ProjectIdCodeActivity.class));
+        startActivity(new Intent(this,ScanQrCodeActivity.class));
     }
 
     @Override

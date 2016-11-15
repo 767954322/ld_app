@@ -1,17 +1,15 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ProjectIdCodePresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -21,8 +19,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     private EditText mProjectIdEt;
     private ProjectIdCodePresenter mPresenter;
     private Button mConfirmBtn;
-    private Toolbar mToolbar;
-    private TextView mToolbarTitleTv;
 
     @Override
     protected int getLayoutResId() {
@@ -31,8 +27,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
-        mToolbarTitleTv = (TextView) findViewById(R.id.tv_toolbar_title);
 
         mProjectIdEt = (EditText) findViewById(R.id.et_project_id);
         mConfirmBtn = (Button) findViewById(R.id.btn_confirm);
@@ -50,7 +44,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_confirm) {// TODO: 16/10/18 根据登入状态,项目编码一步
+        if (v.getId() == R.id.btn_confirm) {
             mPresenter.confirmProject();
         }
     }
@@ -77,10 +71,9 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void setToolbar() {
-        mToolbarTitleTv.setVisibility(View.GONE);
-        mToolbar.setTitle("输入编码");
-        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
-        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("输入编码");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_navigation);
     }
 
     @Override

@@ -21,12 +21,9 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
         switch (status) {
             case "INPROGRESS":  //进行中,修改
             case "DELAYED":     //已延期,修改
-                mView.enterPrecheck(mView.getTask());
-//                mView.dismiss();
-                break;
             case "REINSPECTION_INPROGRESS":  //复验进行中,修改
-            case "REINSPECTION_DELAYED":
-
+            case "REINSPECTION_DELAYED":    //已延期
+                mView.enterPrecheck(mView.getTask());
                 break;
             case "REJECTED":   //验收拒绝,查看
                 break;
