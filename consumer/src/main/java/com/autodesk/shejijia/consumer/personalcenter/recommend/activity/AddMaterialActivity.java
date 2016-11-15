@@ -456,7 +456,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 public void onGetCurrentClickLocation(int x, int y, int xForRight, int width, BtnStatusBean btnStatusBean) {
                     currentClickItemLocation = x;
                     int totalCount = dynamicAddViews[countArrItem].getItemCount();
-                    two_level_category.useCurrentDistanceScroll(x, currentDistance, xForRight, width, totalCount, btnStatusBean.getCountOffset());
+                    two_level_category.useCurrentDistanceScroll(x, currentDistance, two_level_category.getHeight(), two_level_category.getChildAt(0).getMeasuredWidth(), totalCount, btnStatusBean.getCountOffset());
 
 
                 }
@@ -487,7 +487,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBean);
                 int[] viewLocation = dynamicAddViews[countArrItem].getLocationNumber(btnStatusBean.getCountOffset());
                 int length = dynamicAddViews[countArrItem].getItemCount();
-                two_level_category.useCurrentDistanceScroll(viewLocation[0], currentDistance, viewLocation[2], viewLocation[4], length, btnStatusBean.getCountOffset());
+                two_level_category.useCurrentDistanceScroll(viewLocation[0], currentDistance, two_level_category.getHeight(), two_level_category.getChildAt(0).getMeasuredWidth(), length, btnStatusBean.getCountOffset());
                 //复用
                 adapterCategoryAll(btnStatusBean);
                 for (int i = 0; i < oneArr.length; i++) {

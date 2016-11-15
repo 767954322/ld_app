@@ -48,51 +48,45 @@ public class DynamicScrollView extends HorizontalScrollView {
         }
 
     }
+
     /**
      * 设置适配
-     * */
-    public void setAdapterForItem(int height){
+     */
+    public void setAdapterForItem(int height) {
 
         ADAPTER_COUNT = (double) height / NO_CHANGE_HEIGHT;
-        onePx = (int) (onePx *ADAPTER_COUNT);
+        onePx = (int) (onePx * ADAPTER_COUNT);
     }
 
 
     /**
      * 根据当前距离，进行滑动
      */
-    public void useCurrentDistanceScroll(int x, int currentDistance, int xForRight, int width, int totalCount, int currentClickItem) {
+    public void useCurrentDistanceScroll(int x, int currentDistance, int scrollHeight, int scrollAtOneHeight, int totalCount, int currentClickItem) {
 
         if (currentDistance == 0) {
 
+            //第一次进入滑动
             scrollBy(x - onePx, 0);
         } else {
 
+            //从第二次开始滑动记录
             if (x > currentItemLocation) {
 
+                //向右滑动
                 scrollBy(x - currentDistance - onePx, 0);
-                currentItemLocation = x - onePx;
             } else {
-                if (isLastItem) {
 
-                    int distance = x - backLocation;
-                    scrollBy(x - currentItemLocation - onePx - distance, 0);
-                    currentItemLocation = x - onePx;
+                //向做滑动
+                scrollBy(x - currentItemLocation - onePx, 0);
+                //判断是否到底
+                if (scrollAtOneHeight - x < scrollHeight) {
+
+
                 } else {
-
-                    scrollBy(x - currentItemLocation - onePx, 0);
                     currentItemLocation = x - onePx;
-                    if (currentClickItem < totalCount - 2) {
-
-                        backLocation = currentItemLocation;
-                    }
                 }
             }
-        }
-        if (currentClickItem == totalCount - 1) {
-            isLastItem = false;
-        } else {
-            isLastItem = false;
         }
 
     }
