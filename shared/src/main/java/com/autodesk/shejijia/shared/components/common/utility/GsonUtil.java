@@ -36,9 +36,14 @@ public class GsonUtil {
         return userInfo;
     }
 
-    public static <T> JSONObject beanToJSONObject(T bean) throws JSONException{
+    public static <T> JSONObject beanToJSONObject(T bean) throws JSONException {
         Gson gson = new Gson();
         String jsonString = gson.toJson(bean);
         return new JSONObject(jsonString);
+    }
+
+    public static <T> String beanToString(T bean) {
+        Gson gson = new Gson();
+        return gson.toJson(bean);
     }
 }

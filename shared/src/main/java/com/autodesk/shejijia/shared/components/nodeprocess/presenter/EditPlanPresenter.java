@@ -8,6 +8,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -61,7 +62,8 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         if (projectInfo == null) {
             mView.showError("No active project"); // TODO update string
         } else {
-            mPlan = projectInfo.getPlan();
+            // TODO copy plan
+            mPlan = copyPlan(projectInfo.getPlan());
 
             List<Task> tasks = filterTasks();
             mView.showTasks(tasks);
@@ -176,6 +178,11 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     public static enum EditState {
         EDIT_MILESTONE,
         EDIT_TASK_NODE,
+    }
+
+    private PlanInfo copyPlan(PlanInfo planInfo) {
+        String jsonString = GsonUtil.beanToString(planInfo);
+        return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
     }
 
     private List<Task> filterTasks() {
