@@ -22,6 +22,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ca
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
@@ -112,6 +113,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     protected void initData() {
+        mPresenter = new EditTaskNodePresenter(getActivity().getIntent().getStringExtra("pid"));
+        mPresenter.bindView(this);
         mPresenter.fetchPlan();
     }
 

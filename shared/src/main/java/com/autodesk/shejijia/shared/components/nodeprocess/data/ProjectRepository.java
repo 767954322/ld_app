@@ -67,6 +67,7 @@ public final class ProjectRepository implements ProjectDataSource {
             @Override
             public void onSuccess(ProjectInfo data) {
                 mProjectInfo = data;
+                mEditingPlan = null;
                 callback.onSuccess(data);
             }
 

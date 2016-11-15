@@ -52,7 +52,6 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     @Override
     public void bindView(EditPlanContract.TaskNodeView view) {
         mView = view;
-        mView.bindPresenter(this);
         mActiveTask = null;
     }
 

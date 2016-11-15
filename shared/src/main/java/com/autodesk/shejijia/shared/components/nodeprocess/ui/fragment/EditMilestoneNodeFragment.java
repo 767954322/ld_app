@@ -15,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ma
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.OnDateSelectedListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditMilestonePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
@@ -59,6 +60,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     protected void initData() {
+        mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra("pid"));
+        mPresenter.bindView(this);
         showLoading();
         mPresenter.fetchPlan();
     }
@@ -173,7 +176,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mSelectorDecorator = new DateSelectorDecorator(getActivity());
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
         mCalendarWidget.addDecorators(mSelectorDecorator,
-                mMileStoneActiveDecorator,
+//                mMileStoneActiveDecorator,
                 mMileStoneDecorator);
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));

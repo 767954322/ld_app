@@ -104,12 +104,8 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         if (fragment == null) {
             if (FRAGMENT_TAG_EDIT_MILESTONE.equals(tag)) {
                 fragment = new EditMilestoneNodeFragment();
-                EditMilestonePresenter presenter = new EditMilestonePresenter(getIntent().getStringExtra("pid"));
-                presenter.bindView((EditPlanContract.MileStoneView) fragment);
             } else {
                 fragment = new EditTaskNodeFragment();
-                EditTaskNodePresenter presenter = new EditTaskNodePresenter(getIntent().getStringExtra("pid"));
-                presenter.bindView((EditPlanContract.TaskNodeView) fragment);
             }
         }
         fragmentTransaction.replace(R.id.container, fragment, tag);
