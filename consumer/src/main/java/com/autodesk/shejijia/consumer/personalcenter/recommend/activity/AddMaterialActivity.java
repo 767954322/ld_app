@@ -636,10 +636,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         if (isHavedBrandsList) {
             listBrands.clear();//清空之前的数据
             //将集合中的数据填入需要的集合，
-            for (int i = 0; i < haveDCheckedBrandsList.size(); i++) {
-                //根据当前的店铺id筛选已经有的品牌
-                getStoreBrandsList(haveDCheckedBrandsList);
-            }
+            //根据当前的店铺id筛选已经有的品牌
+            getStoreBrandsList(haveDCheckedBrandsList);
             restartDatasForAdapter(listFirstTag, listBrands);
             addBrandShowAdapter.notifyDataSetChanged();
         } else {
@@ -928,15 +926,23 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
             List<RecommendMallsBean> malls = haveDCheckedBrandsList.get(i).getMalls();
             String storeId;
+            boolean isAdd = false;
             for (int j = 0; j < malls.size(); j++) {
 
                 storeId = malls.get(j).getMall_number();
-                for (int h=0;h<storeIdArr.length;h++){
+                for (int h = 0; h < storeIdArr.length; h++) {
 
-                    if (storeId.equals(storeIdArr[h])){
+                    if (storeId.equals(storeIdArr[h])) {
 
-                        listBrands.get(i);
+                        isAdd = true;
+                        listBrands.add(haveDCheckedBrandsList.get(i));
+                        break;
+                    } else {
+                        isAdd = false;
                     }
+                }
+                if (isAdd) {
+                    break;
                 }
 
             }
