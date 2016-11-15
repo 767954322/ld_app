@@ -1,11 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.AttributeSet;
-
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
@@ -17,55 +13,53 @@ import java.util.List;
  */
 
 public interface EditPlanContract {
-    interface View extends BaseView {
-        void showTasks(List<Task> tasks);
-        void bindPresenter(Presenter presenter);
 
-        /**
-         * Show active task
-         * @param task
-         */
+    interface MileStoneView extends BaseView {
+        void bindPresenter(MileStonePresenter presenter);
+
+        void showTasks(List<Task> tasks);
+
         void showActiveTask(Task task);
 
-        /**
-         * Task date change
-         * @param task
-         * @param oldDate
-         * @param newDate
-         */
         void onTaskDateChange(Task task, Date oldDate, Date newDate);
-
-        void onCommitSuccess();
     }
 
-    interface Presenter extends BasePresenter {
-        void bindView(View view);
-        /**
-         * fetch exist plan
-         */
+    interface MileStonePresenter extends BasePresenter {
+
+        void bindView(MileStoneView view);
+
         void fetchPlan();
 
-        /**
-         * Update active task to the selected date
-         * @param selectedDates  selected dates
-         */
+        void updateTask(Date selectedDate);
+    }
+
+    interface TaskNodeView extends BaseView {
+
+        void bindPresenter(TaskNodePresenter presenter);
+
+        void showTasks(List<Task> tasks);
+
+        void showBottomSheet(List<Task> milestones, Task task);
+
+        void showUpLoading();
+
+        void hideUpLoading();
+
+        void onCommitSuccess();
+
+        void onCommitError(String error);
+    }
+
+    interface TaskNodePresenter extends BasePresenter {
+
+        void fetchPlan();
+
+        void bindView(TaskNodeView view);
+
+        void editTaskNode(Task task);
+
         void updateTask(List<Date> selectedDates);
 
-        /**
-         * commit edited plan
-         */
         void commitPlan();
-
-        /**
-         * Update edit state
-         * @param newState
-         */
-        void updateEditState(EditPlanPresenter.EditState newState);
-
-        /**
-         * Get current edit state
-         * @return
-         */
-        EditPlanPresenter.EditState getEditState();
     }
 }

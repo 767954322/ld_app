@@ -10,7 +10,8 @@ import android.widget.ProgressBar;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditMilestonePresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -23,8 +24,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     private final static String FRAGMENT_TAG_EDIT_MILESTONE = "edit_milestone";
     private final static String FRAGMENT_TAG_EDIT_TASKNODE = "edit_task_node";
 
-    private EditPlanContract.Presenter mPresenter;
-
+    private EditState mEditState;
     private ProgressBar mProgressBar;
     private Button mActionBtn;
 
@@ -41,12 +41,13 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         mActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mPresenter.getEditState()) {
+                switch (mEditState) {
                     case EDIT_MILESTONE:
-                        updateEditState(EditPlanPresenter.EditState.EDIT_TASK_NODE);
+                        updateEditState(EditState.EDIT_TASK_NODE);
                         break;
                     case EDIT_TASK_NODE:
-                        mPresenter.commitPlan();
+                        EditTaskNodeFragment fragment = (EditTaskNodeFragment) getFragment(FRAGMENT_TAG_EDIT_TASKNODE);
+                        fragment.getPresenter().commitPlan();
                         break;
                     default:
                         break;
@@ -57,19 +58,15 @@ public class CreateOrEditPlanActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mPresenter = new EditPlanPresenter(getIntent().getStringExtra("pid"));
         if (savedInstanceState == null) {
-            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
-        } else {
-            // TODO save and restore data when activity is destroyed in background
-            mPresenter.updateEditState(EditPlanPresenter.EditState.values()[savedInstanceState.getInt("state")]);
+            updateEditState(EditState.EDIT_MILESTONE);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("state", mPresenter.getEditState().ordinal());
+        outState.putInt("state", mEditState.ordinal());
         // TODO presenter save data
     }
 
@@ -81,23 +78,23 @@ public class CreateOrEditPlanActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mPresenter.getEditState() == EditPlanPresenter.EditState.EDIT_MILESTONE) {
+        if (mEditState == EditState.EDIT_MILESTONE) {
             supportFinishAfterTransition();
         } else {
-            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
+            updateEditState(EditState.EDIT_MILESTONE);
         }
     }
 
-    private void updateEditState(EditPlanPresenter.EditState newState) {
-        if (newState.equals(EditPlanPresenter.EditState.EDIT_MILESTONE)) {
+    private void updateEditState(EditState newState) {
+        if (newState.equals(EditState.EDIT_MILESTONE)) {
             mProgressBar.setProgress(50);
             mActionBtn.setText(R.string.edit_plan_next_step);
         } else {
             mProgressBar.setProgress(100);
             mActionBtn.setText(R.string.edit_plan_complete);
         }
+        mEditState = newState;
         switchToFragment(getFragmentTag(newState));
-        mPresenter.updateEditState(newState);
     }
 
     private void switchToFragment(String tag) {
@@ -107,22 +104,33 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         if (fragment == null) {
             if (FRAGMENT_TAG_EDIT_MILESTONE.equals(tag)) {
                 fragment = new EditMilestoneNodeFragment();
+                EditMilestonePresenter presenter = new EditMilestonePresenter(getIntent().getStringExtra("pid"));
+                presenter.bindView((EditPlanContract.MileStoneView) fragment);
             } else {
                 fragment = new EditTaskNodeFragment();
+                EditTaskNodePresenter presenter = new EditTaskNodePresenter(getIntent().getStringExtra("pid"));
+                presenter.bindView((EditPlanContract.TaskNodeView) fragment);
             }
-            ((EditPlanContract.View) fragment).bindPresenter(mPresenter);
         }
-        mPresenter.bindView((EditPlanContract.View) fragment);
         fragmentTransaction.replace(R.id.container, fragment, tag);
         fragmentTransaction.commit();
     }
 
-    private String getFragmentTag(EditPlanPresenter.EditState editState) {
-        if (editState == EditPlanPresenter.EditState.EDIT_MILESTONE) {
+    private String getFragmentTag(EditState editState) {
+        if (editState == EditState.EDIT_MILESTONE) {
             return FRAGMENT_TAG_EDIT_MILESTONE;
         } else {
             return FRAGMENT_TAG_EDIT_TASKNODE;
         }
     }
 
+    private Fragment getFragment(String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        return fragmentManager.findFragmentByTag(tag);
+    }
+
+    public static enum EditState {
+        EDIT_MILESTONE,
+        EDIT_TASK_NODE,
+    }
 }

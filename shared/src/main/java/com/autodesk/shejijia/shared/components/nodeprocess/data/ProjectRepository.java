@@ -9,8 +9,10 @@ import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
 import org.json.JSONObject;
 
@@ -22,6 +24,7 @@ public final class ProjectRepository implements ProjectDataSource {
 
     private ProjectList mProjectList;
     private ProjectInfo mProjectInfo;
+    private PlanInfo mEditingPlan;
 
     private ProjectRepository() {
     }
@@ -97,5 +100,18 @@ public final class ProjectRepository implements ProjectDataSource {
 
     public ProjectInfo getProjectInfoByCache() {
         return mProjectInfo;
+    }
+
+    public PlanInfo getEditingPlan() {
+        if ((mEditingPlan == null || mEditingPlan.getPlanId() != mProjectInfo.getPlan().getPlanId())
+                && mProjectInfo != null ) {
+            mEditingPlan = copyPlan(mProjectInfo.getPlan());
+        }
+        return mEditingPlan;
+    }
+
+    private PlanInfo copyPlan(PlanInfo planInfo) {
+        String jsonString = GsonUtil.beanToString(planInfo);
+        return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
     }
 }

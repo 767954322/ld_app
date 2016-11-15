@@ -31,7 +31,7 @@ import java.util.List;
  * Created by wenhulin on 11/2/16.
  */
 
-public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.View, OnDateSelectedListener {
+public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.MileStoneView, OnDateSelectedListener {
 
     private MaterialCalendarView mCalendarWidget;
     private MileStoneNodeDecorator mMileStoneDecorator;
@@ -39,7 +39,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     private ActiveMileStoneDecorator mMileStoneActiveDecorator;
     private MileStoneDayFormatter mMileStoneDayFormator;
 
-    private EditPlanContract.Presenter mPresenter;
+    private EditPlanContract.MileStonePresenter mPresenter;
     private ConProgressDialog mProgressDialog;
 
     @Override
@@ -61,6 +61,11 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     protected void initData() {
         showLoading();
         mPresenter.fetchPlan();
+    }
+
+    @Override
+    public void bindPresenter(EditPlanContract.MileStonePresenter presenter) {
+        mPresenter = presenter;
     }
 
     @Override
@@ -99,11 +104,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
-    public void bindPresenter(EditPlanContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void showActiveTask(Task task) {
         //TODO disable some dates according to active task
         mMileStoneActiveDecorator.setActiveTask(task);
@@ -123,19 +123,10 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
-    public void onCommitSuccess() {
-        //TODO Do refactor
-//        getActivity().finish();
-    }
-
-    @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         if (selected) {
-            List<Date> selectedDates = new ArrayList<>();
-            selectedDates.add(date.getDate());
-            mPresenter.updateTask(selectedDates);
+            mPresenter.updateTask(date.getDate());
         }
-
     }
 
     @Override

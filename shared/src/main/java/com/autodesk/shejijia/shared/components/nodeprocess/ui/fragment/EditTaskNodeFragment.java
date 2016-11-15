@@ -22,7 +22,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ca
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
@@ -37,8 +36,8 @@ import java.util.List;
  * Created by wenhulin on 11/3/16.
  */
 
-public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.View {
-    private EditPlanContract.Presenter mPresenter;
+public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
+    private EditPlanContract.TaskNodePresenter mPresenter;
     private TaskNodeAdapter mAdapter;
 
     private BottomSheetDialog mBottomSheetDialog;
@@ -52,23 +51,38 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
-    public void bindPresenter(EditPlanContract.Presenter presenter) {
+    public void bindPresenter(EditPlanContract.TaskNodePresenter presenter) {
         mPresenter = presenter;
     }
 
-    @Override
-    public void showActiveTask(Task task) {
-        // TODO
-    }
-
-    @Override
-    public void onTaskDateChange(Task task, Date oldDate, Date newDate) {
-        // TODO
+    public EditPlanContract.TaskNodePresenter getPresenter() {
+        return mPresenter;
     }
 
     @Override
     public void onCommitSuccess() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onCommitError(String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(error);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+            }
+        });
+        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.commitPlan();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -88,7 +102,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mAdapter = new TaskNodeAdapter(getActivity(), new TaskNodeAdapter.IViewHolderClick() {
             @Override
             public void onTaskClick(Task task) {
-                ((EditPlanPresenter)mPresenter).editTaskNode(task);
+                mPresenter.editTaskNode(task);
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -123,26 +137,13 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.loading));
-        }
-
-        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
     }
 
-    private void initBottomSheetDialog() {
-        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
-                R.style.BottomSheetDialogTheme_Calendar);
-    }
-
+    @Override
     public void showBottomSheet(List<Task> milstoneTasks, Task task) {
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet_edit_task_node, null);
         mBottomSheetDialog.setContentView(view);
@@ -224,11 +225,32 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mBottomSheetDialog.show();
     }
 
+    @Override
+    public void showUpLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.autonym_uploading));
+        }
+
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideUpLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
+    }
+
+    private void initBottomSheetDialog() {
+        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
+                R.style.BottomSheetDialogTheme_Calendar);
+    }
+
     private void hideBottomSheetDialog() {
         if (mBottomSheetDialog != null && mBottomSheetDialog.isShowing()) {
             mBottomSheetDialog.cancel();
         }
-
     }
 
     private static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
