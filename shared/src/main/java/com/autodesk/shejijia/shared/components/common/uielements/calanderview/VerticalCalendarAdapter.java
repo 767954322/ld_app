@@ -1,11 +1,10 @@
 package com.autodesk.shejijia.shared.components.common.uielements.calanderview;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -17,14 +16,14 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import java.util.List;
 
 /**
- * Created by wenhulin on 10/24/16.
+ * Created by wenhulin on 11/15/16.
  */
 
-public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter{
+public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalendarAdapter.ViewHoder> implements IAdapter{
     private AdapterHelper mAdapterHelper;
     private MaterialCalendarView mcv;
 
-    VerticalCalendarViewAdapter(MaterialCalendarView mcv) {
+    VerticalCalendarAdapter(MaterialCalendarView mcv) {
         this.mcv = mcv;
         mAdapterHelper = new AdapterHelper<MonthView>(mcv);
     }
@@ -35,14 +34,48 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getCount() {
-        return mAdapterHelper.getCount();
+    public CalendarDay getItem(int position) {
+        return mAdapterHelper.getItem(position);
     }
 
     @Override
-    public CalendarDay getItem(int position) {
-        return mAdapterHelper.getItem(position);
+    public ViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
+        ViewGroup monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
+        MonthView monthView = new MonthView(mcv, CalendarDay.today(), mcv.getFirstDayOfWeek(), false);
+        monthView.setId(R.id.mcv_month_view);
+        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(parent.getWidth(),
+                mcv.getResources().getDimensionPixelSize(R.dimen.month_view_height));
+        monthView.setLayoutParams(layoutParams);
+        monthContainer.addView(monthView);
+        monthView.setContentDescription(mcv.getCalendarContentDescription());
+        return new ViewHoder(monthContainer);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHoder holder, int position) {
+        CalendarDay calendarDay = getItem(position);
+        holder.monthView.reuse(calendarDay, mcv.getFirstDayOfWeek());
+        holder.monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
+        if (mAdapterHelper.getSelectionColor() != null) {
+            holder.monthView.setSelectionColor(mAdapterHelper.getSelectionColor());
+        }
+
+        holder.monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
+        holder.monthView.setMinimumDate(mAdapterHelper.getMininumDate());
+        holder.monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
+        holder.monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
+        holder.monthView.setShowWeekDays(false);
+        holder.monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
+        holder.monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
+        holder.monthView.setSelectedDates(mAdapterHelper.getSelectedDates());
+        holder.monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
+
+        holder.titleView.setText(DateUtil.getStringDateByFormat(calendarDay.getDate(), "yyyy")
+                + mcv.getContext().getString(R.string.year)
+                + DateUtil.getStringDateByFormat(calendarDay.getDate(), "M")
+                + mcv.getContext().getString(R.string.month));
     }
 
     @Override
@@ -51,54 +84,8 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewGroup monthContainer;
-        MonthView monthView;
-        CalendarDay calendarDay = getItem(position);
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
-            monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
-            monthView = new MonthView(mcv, getItem(position), mcv.getFirstDayOfWeek(), false);
-            monthView.setId(R.id.mcv_month_view);
-            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(parent.getWidth(),
-                    mcv.getResources().getDimensionPixelSize(R.dimen.month_view_height));
-            monthView.setLayoutParams(layoutParams);
-            monthContainer.addView(monthView);
-            monthView.setContentDescription(mcv.getCalendarContentDescription());
-            monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
-            if (mAdapterHelper.getSelectionColor() != null) {
-                monthView.setSelectionColor(mAdapterHelper.getSelectionColor());
-            }
-
-            monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
-            monthView.setMinimumDate(mAdapterHelper.getMininumDate());
-            monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
-            monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
-            monthView.setShowWeekDays(false);
-            monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
-            monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
-        } else {
-            monthContainer = (ViewGroup) convertView;
-            monthView = (MonthView) monthContainer.findViewById(R.id.mcv_month_view);
-            monthView.reuse(getItem(position), mcv.getFirstDayOfWeek());
-        }
-
-        // TODO do more optimize
-        TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
-        textView.setText(DateUtil.getStringDateByFormat(calendarDay.getDate(), "yyyy")
-                + mcv.getContext().getString(R.string.year)
-                + DateUtil.getStringDateByFormat(calendarDay.getDate(), "M")
-                + mcv.getContext().getString(R.string.month));
-
-        monthView.setSelectedDates(mAdapterHelper.getSelectedDates());
-        monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
-
-        return monthContainer;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
+    public int getItemCount() {
+        return mAdapterHelper.getCount();
     }
 
     public void setSelectionColor(int color) {
@@ -182,5 +169,18 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
     public List<CalendarDay> getSelectedDates() {
         return mAdapterHelper.getSelectedDates();
     }
+
+
+    static class ViewHoder extends RecyclerView.ViewHolder {
+        public MonthView monthView;
+        public TextView titleView;
+
+        public ViewHoder(View itemView) {
+            super(itemView);
+            monthView = (MonthView) itemView.findViewById(R.id.mcv_month_view);
+            titleView = (TextView) itemView.findViewById(R.id.item_title);
+        }
+    }
+
 
 }

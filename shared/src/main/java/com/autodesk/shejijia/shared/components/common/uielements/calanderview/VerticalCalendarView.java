@@ -2,10 +2,11 @@ package com.autodesk.shejijia.shared.components.common.uielements.calanderview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.TitleFormatter;
@@ -16,8 +17,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.fo
 
 public class VerticalCalendarView extends MaterialCalendarView {
 
-    private VerticalCalendarViewAdapter mListAdapter;
-    private ListView mListView;
+    private VerticalCalendarAdapter mListAdapter;
+    private RecyclerView mListView;
+    LinearLayoutManager mLayoutManager;
 
     public VerticalCalendarView(Context context) {
         super(context);
@@ -29,13 +31,13 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
     @Override
     protected void initView() {
-        mListView = new ListView(getContext());
+        mListView = new RecyclerView(getContext());
     }
 
     @Override
     protected IAdapter createAdapter() {
         if (mListAdapter == null) {
-            mListAdapter = new VerticalCalendarViewAdapter(this);
+            mListAdapter = new VerticalCalendarAdapter(this);
         }
         return mListAdapter;
     }
@@ -62,8 +64,10 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
         mListView.setId(R.id.mcv_list);
         mListView.setAdapter(mListAdapter);
-        mListView.setDivider(null);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mListView.setLayoutManager(mLayoutManager);
         container.addView(mListView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
         addView(container, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
     }
 
@@ -180,7 +184,7 @@ public class VerticalCalendarView extends MaterialCalendarView {
             return;
         }
         int index = mListAdapter.getIndexForDay(day);
-        mListView.setSelection(index);
+        mLayoutManager.scrollToPositionWithOffset(index, 0);
     }
 
     @Override
