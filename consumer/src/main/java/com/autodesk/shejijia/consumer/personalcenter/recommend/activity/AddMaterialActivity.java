@@ -28,6 +28,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddView;
@@ -103,6 +104,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private WindowManager windowManager;
     private int currentDistance = 0;//当前item所在的位置
     private int currentClickItemLocation = 0;//当前点击的位置
+    private String[] storeIdArr;
 
 
     @Override
@@ -311,6 +313,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                             if (getRecommendBrandsBean.getBrands() != null) {
 
                                 changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
+                            } else {
+                                CustomProgress.cancelDialog();
                             }
                         }
                     }
@@ -345,9 +349,11 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     public void firstGetBrandsInformation(List<StoreInformationBean.StoreListBean> store_list) {
 
         String storeId;
+        storeIdArr = new String[store_list.size()];
         for (int i = 0; i < store_list.size(); i++) {
 
             storeId = store_list.get(i).getMall_number();
+            storeIdArr[i] = storeId;
             if (i == 0) {
                 currentStoreIdTotal = storeId;
             } else {
@@ -631,8 +637,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             listBrands.clear();//清空之前的数据
             //将集合中的数据填入需要的集合，
             for (int i = 0; i < haveDCheckedBrandsList.size(); i++) {
-
-                listBrands.add(haveDCheckedBrandsList.get(i));
+                //根据当前的店铺id筛选已经有的品牌
+                getStoreBrandsList(haveDCheckedBrandsList);
             }
             restartDatasForAdapter(listFirstTag, listBrands);
             addBrandShowAdapter.notifyDataSetChanged();
@@ -911,6 +917,30 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         rl_btn.addView(all_material_btn);
         rl_btn.invalidate();
 
+    }
+
+    /**
+     * 筛选当前店铺选择品牌，
+     */
+    public void getStoreBrandsList(List<RecommendBrandsBean> haveDCheckedBrandsList) {
+
+        for (int i = 0; i < haveDCheckedBrandsList.size(); i++) {
+
+            List<RecommendMallsBean> malls = haveDCheckedBrandsList.get(i).getMalls();
+            String storeId;
+            for (int j = 0; j < malls.size(); j++) {
+
+                storeId = malls.get(j).getMall_number();
+                for (int h=0;h<storeIdArr.length;h++){
+
+                    if (storeId.equals(storeIdArr[h])){
+
+                        listBrands.get(i);
+                    }
+                }
+
+            }
+        }
     }
 
     /**
