@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
@@ -18,7 +19,7 @@ public interface EditPlanContract {
 
         void showTasks(List<Task> tasks);
 
-        void showActiveTask(Task task);
+        void showActiveTask(PlanInfo planInfo, Task task);
 
         void onTaskDateChange(Task task, Date oldDate, Date newDate);
     }

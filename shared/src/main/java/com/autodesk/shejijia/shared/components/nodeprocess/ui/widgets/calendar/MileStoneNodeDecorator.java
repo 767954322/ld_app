@@ -26,12 +26,9 @@ import java.util.Map;
  */
 
 public class MileStoneNodeDecorator implements DayViewDecorator {
-    private final Drawable drawable;
     private Map<String, Task> dateTaskMap = new HashMap<>();
 
     public MileStoneNodeDecorator(Activity context) {
-        //noinspection deprecation
-        drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
     }
 
     @Override
@@ -44,7 +41,6 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
     public void decorate(DayViewFacade view) {
         view.addSpan(new ForegroundColorSpan(Color.BLACK));
         view.addSpan(new RelativeSizeSpan(0.8f));
-//        view.setSelectionDrawable(drawable);
         view.setDaysActivated(true);
     }
 

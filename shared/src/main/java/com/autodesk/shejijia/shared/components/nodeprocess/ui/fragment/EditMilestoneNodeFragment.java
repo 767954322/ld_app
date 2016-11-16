@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
@@ -102,9 +103,9 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
-    public void showActiveTask(Task task) {
+    public void showActiveTask(PlanInfo plan, Task task) {
         //TODO disable some dates according to active task
-        mMileStoneActiveDecorator.setActiveTask(task);
+        mMileStoneActiveDecorator.setActiveTask(plan, task);
         mCalendarWidget.invalidateDecorators();
         Date selectedDate = null;
         if (task != null) {
@@ -171,7 +172,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mSelectorDecorator = new DateSelectorDecorator(getActivity());
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
         mCalendarWidget.addDecorators(mSelectorDecorator,
-//                mMileStoneActiveDecorator,
+                mMileStoneActiveDecorator,
                 mMileStoneDecorator);
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));

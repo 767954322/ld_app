@@ -77,7 +77,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
                 mActiveTask = newActiveTask;
             }
         }
-        mView.showActiveTask(mActiveTask);
+        mView.showActiveTask(mPlan, mActiveTask);
     }
 
     private List<Task> getMileStoneNodes() {
