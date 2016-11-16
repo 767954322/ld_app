@@ -58,7 +58,7 @@
 
             <TextView
                 style="@style/item_text_style"
-                android:text="@string/name_space"/>
+                android:text="@string/demand_project_name"/>
 
             <TextView
                 android:id="@+id/tv_reco_consumer_name"
