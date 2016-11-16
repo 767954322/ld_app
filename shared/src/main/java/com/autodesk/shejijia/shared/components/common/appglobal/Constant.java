@@ -132,6 +132,7 @@ public class Constant {
         public static final String BUNDLE_ACTION_NODE_ID = "WORK_ACTION_NODE_ID";
         public static final String BUNDLE_DESIGNER_ID = "DESIGNER_ID";
         public static final String TEMPDATE_ID = "tempdate_id";
+        public static final String BRANDCODE = "brandCode";
 
 //        public static final String BUNDLE_DESIGNER_ID = "DESIGNER_ID";
 //        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";

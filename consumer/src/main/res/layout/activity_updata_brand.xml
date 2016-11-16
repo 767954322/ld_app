@@ -29,8 +29,7 @@
         android:layout_height="@dimen/size_42"
         android:layout_centerVertical ="true"
         android:layout_alignParentRight="true"
-        android:background="@color/gray"
-        android:enabled="false"
+        android:background="@color/bg_0084ff"
         android:text="@string/determine"
         android:textColor="@color/white"
         android:textSize="@dimen/font_20"/>

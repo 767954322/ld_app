@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ChanageBr
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -60,7 +61,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDBean = (RecommendSCFDBean) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
-        brandCode = (String) intent.getSerializableExtra("brandCode");
+        brandCode = (String) intent.getSerializableExtra(Constant.BundleKey.BRANDCODE);
     }
 
     @Override
@@ -71,9 +72,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         updataBrandListview.setAdapter(updataBrandAdapter);
         setNavigationBar();
         getBrands(0,100);
-//        mPullToRefreshLayout.autoRefresh();
     }
-
 
     @Override
     protected void initListener() {
@@ -91,10 +90,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
         selectRecommendBrandsBean = brandsBeanList.get(position);
-        changeFinsh.setEnabled(true);
-        changeFinsh.setBackground(this.getResources().getDrawable(R.color.bg_0084ff));
     }
 
     @Override
@@ -131,6 +127,8 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
             return;
         }
         filterBrand(Brands);
+        setItemChecked();
+
 
     }
 
@@ -138,13 +136,12 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     public void onErrorResponse(VolleyError volleyError) {
         MPNetworkUtils.logError(TAG, volleyError);
     }
-
     private void filterBrand(List<RecommendBrandsBean> brandsBeans) {
         for (RecommendBrandsBean brandsBean : mRecommendSCFDBean.getBrands()) {
             Iterator<RecommendBrandsBean> iter = brandsBeans.iterator();
             while(iter.hasNext()){
                 RecommendBrandsBean b = iter.next();
-                if(b.getCode().equals(brandsBean.getCode())){
+                if(b.getCode().equals(brandsBean.getCode()) && !b.getCode().equals(brandCode)){
                     iter.remove();
                 }
             }
@@ -153,22 +150,27 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         updataBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
-
+    private void setItemChecked(){
+        for(RecommendBrandsBean rb:brandsBeanList){
+           if(rb.getCode().equals(brandCode)){
+               int index = brandsBeanList.indexOf(rb);
+               updataBrandListview.setItemChecked(index, true);
+               selectRecommendBrandsBean = rb;
+               break;
+           }
+        }
+    }
     private void setNavigationBar() {
         setTitleForNavbar(mRecommendSCFDBean.getSub_category_3d_name());
     }
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-//        isRefresh = true;
-//        getBrands(0, 30);
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-//        isRefresh = false;
-//        getBrands(updataBrandListview.getCount(), 30);
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 }

@@ -326,7 +326,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, String brandCode) {
         Intent intent = new Intent(mActivity, ChangeBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
-        intent.putExtra("brandCode", brandCode);
+        intent.putExtra(Constant.BundleKey.BRANDCODE, brandCode);
         mActivity.startActivityForResult(intent, 21);
     }
 
