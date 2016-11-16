@@ -334,7 +334,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
 //                String designPriceCode;
 //                for (int i = 0; i <relate_information_list.size(); i++){
-//                    String costStringName = relate_information_list.get(i).getBrand_name();
+//                    String costStringName = relate_information_list.get(i).getName();
 ////                    String costStringUnit = relate_information_list.get(i).getDescription();
 ////                    String costString = costStringName + costStringUnit;
 //                    if (costStringName.equals(strProjectCost)){

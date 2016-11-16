@@ -8,12 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,7 +37,6 @@ import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
-import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -753,8 +750,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                 for (int k = 0; k < totalList.get(i).getCheckedBrandsInformationBean().size(); k++) {
 
-                    String subBrandsName = totalList.get(i).getCheckedBrandsInformationBean().get(k).getBrand_name();
-                    String listUnCheckedName = listUnChecked.getBrand_name();
+                    String subBrandsName = totalList.get(i).getCheckedBrandsInformationBean().get(k).getName();
+                    String listUnCheckedName = listUnChecked.getName();
                     if (subBrandsName.equals(listUnCheckedName)) {
 
                         totalList.get(i).getCheckedBrandsInformationBean().remove(k);
@@ -813,10 +810,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     BtnStatusBean btnStatusBean;
 
                     for (int k = 0; k < datas.size(); k++) {
-                        brandsName = havedBrandsInformationBeanList.get(k).getBrand_name();
+                        brandsName = havedBrandsInformationBeanList.get(k).getName();
                         btnStatusBean = listTagForTotal.get(k);
                         for (int h = 0; h < listInformationSendList.size(); h++) {
-                            sendBrandsName = listInformationSendList.get(h).getBrand_name();
+                            sendBrandsName = listInformationSendList.get(h).getName();
                             if (brandsName.equals(sendBrandsName)) {
                                 btnStatusBean.setSingleClickOrDoubleBtnCount(1);
                             }

@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -24,7 +23,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -155,7 +153,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
         mViewHolder.tvBrandMallName.setText(mallName.substring(0, mallName.length() - 1));
         // 品牌名称．
-        mViewHolder.tvBrandName.setText(recommendBrandsBean.getBrand_name());
+        mViewHolder.tvBrandName.setText(recommendBrandsBean.getName());
         // 空间．
         String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
         final List<String> apartmentList = Arrays.asList(apartmentArray);

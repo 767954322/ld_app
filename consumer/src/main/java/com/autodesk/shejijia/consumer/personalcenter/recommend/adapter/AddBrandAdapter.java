@@ -8,9 +8,7 @@ import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.view.View;
 import android.widget.CheckedTextView;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
@@ -58,7 +56,7 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(final CommonViewHolder holder, RecommendBrandsBean recommendBrandsBean) {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
-        String brandName = recommendBrandsBean.getBrand_name();
+        String brandName = recommendBrandsBean.getName();
         sb.append(TextUtils.isEmpty(brandName) ? "\n" : brandName + "\n");
         for (RecommendMallsBean mallsBean : mallsBeans) {
             if (TextUtils.isEmpty(mallsBean.getMall_name())) {

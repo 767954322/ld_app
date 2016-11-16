@@ -33,9 +33,11 @@ public class StoreLocationActivity extends NavigationBarActivity {
     private List<MallAddressEntity.MallAddressesBean> mStoreLocations = new ArrayList<>();
     private CommonAdapter mAdapter;
     private ListView mMallListView;
+    private String mBrand_id;
 
     public static void jumpTo(Context context, String brand_id) {
         Intent intent = new Intent(context, StoreLocationActivity.class);
+        intent.putExtra("brand_id", brand_id);
         context.startActivity(intent);
     }
 
@@ -59,6 +61,12 @@ public class StoreLocationActivity extends NavigationBarActivity {
         getMallsLocation();
     }
 
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        mBrand_id = getIntent().getStringExtra("brand_id");
+    }
+
     private void getMallsLocation() {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -76,6 +84,6 @@ public class StoreLocationActivity extends NavigationBarActivity {
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().getMallsLocation("0", callback);
+        MPServerHttpManager.getInstance().getMallsLocation(mBrand_id, callback);
     }
 }

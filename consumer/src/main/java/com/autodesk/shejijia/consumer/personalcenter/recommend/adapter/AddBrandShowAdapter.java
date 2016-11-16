@@ -12,7 +12,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
 
         if (brandsBean != null){
 
-            holder.setText(R.id.brand_name, brandsBean.getBrand_name());
+            holder.setText(R.id.brand_name, brandsBean.getName());
         }
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {

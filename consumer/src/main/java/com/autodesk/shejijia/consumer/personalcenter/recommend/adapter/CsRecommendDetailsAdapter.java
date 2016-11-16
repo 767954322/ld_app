@@ -14,7 +14,6 @@ import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DetailsViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.StoreLocationActivity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -30,7 +29,7 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> implements View.OnClickListener {
+public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> {
     private LayoutInflater mInflater;
     private String mScfd;
 
@@ -65,7 +64,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         }
     }
 
-    private void updateView2ItemData(boolean isFrom3D, View mItemView, RecommendBrandsBean bean) {
+    private void updateView2ItemData(boolean isFrom3D, View mItemView, final RecommendBrandsBean bean) {
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
         TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
         tvBrandNum.setText(bean.getAmountAndUnit());
@@ -76,12 +75,17 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         }
         TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
         storeLocation.setVisibility(View.VISIBLE);
-        storeLocation.setOnClickListener(this);
+        storeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StoreLocationActivity.jumpTo(mContext, bean.getCode());
+            }
+        });
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
-        tvBrandName.setText(bean.getBrand_name());
+        tvBrandName.setText(bean.getName());
         tvBrandDimension.setText(bean.getDimension());
         tvBrandApartment.setText(StringUtils.isEmpty(bean.getApartment()) ? "" : bean.getApartment());
         tvBrandRemarks.setText(bean.getRemarks());
@@ -90,14 +94,5 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
             mallName.append(mallsBean.getMall_name() + "、");
         }
         tvBrandMallName.setText(mallName.substring(0, mallName.length() - 1));
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_store_location:
-                StoreLocationActivity.jumpTo(mContext, "0");
-                break;
-        }
     }
 }

@@ -32,7 +32,7 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(CommonViewHolder holder, RecommendBrandsBean recommendBrandsBean) {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
-        String brandName = recommendBrandsBean.getBrand_name();
+        String brandName = recommendBrandsBean.getName();
         sb.append(TextUtils.isEmpty(brandName)?"\n":brandName+"\n");
         for(RecommendMallsBean mallsBean:mallsBeans){
             if(TextUtils.isEmpty(mallsBean.getMall_name())){
