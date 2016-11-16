@@ -23,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ma
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
@@ -217,8 +218,11 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mCalendarView.removeDecorators();
         MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator(getActivity());
         DateSelectorDecorator selectorDecorator = new DateSelectorDecorator(getActivity());
+        ActiveMileStoneDecorator activeMileStoneDecorator = new ActiveMileStoneDecorator(getActivity());
+        activeMileStoneDecorator.setActiveTask(milstoneTasks, task);
         mileStoneDecorator.setData(milstoneTasks);
         mCalendarView.addDecorators(selectorDecorator,
+                activeMileStoneDecorator,
                 mileStoneDecorator);
 
         // set date limit
