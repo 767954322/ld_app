@@ -11,7 +11,7 @@
     android:layout_marginRight="@dimen/spacing_margin_double"
     android:paddingLeft="@dimen/spacing_padding_normal"
     android:paddingRight="@dimen/spacing_padding_normal"
-    android:background="@color/gray_light">
+    android:background="@drawable/bg_item_edit_task_node">
 
     <TextView
         android:id="@+id/tv_node_name"
@@ -19,7 +19,7 @@
         android:layout_weight="7"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/font_black"
+        android:textColor="@color/item_edit_task_node_name"
         android:textSize="@dimen/font_large"
         tools:text="塑窗测量"/>
 

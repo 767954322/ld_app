@@ -53,7 +53,7 @@ public class ActiveMileStoneDecorator implements DayViewDecorator {
             mEnableDaysEnd = null;
             return;
         }
-        
+
         setActiveTask(plan.getTasks(), task);
     }
 

@@ -21,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDial
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
@@ -197,7 +198,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             public void onClick(View v) {
                 hideBottomSheetDialog();
                 List<CalendarDay> selectedDays = mCalendarView.getSelectedDates();
-                List<Date> selectedDates = new ArrayList<Date>();
+                List<Date> selectedDates = new ArrayList<>();
                 for (CalendarDay day: selectedDays) {
                     selectedDates.add(day.getDate());
                 }
@@ -309,6 +310,16 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             holder.itemView.setTag(task);
             holder.mTvNodeName.setText(task.getName());
             holder.mTvNodeTime.setText(getDateString(task));
+
+            if (task.getStatus().equalsIgnoreCase(TaskStatusTypeEnum.TASK_STATUS_RESOLVED.getTaskStatus())) {
+                holder.itemView.setEnabled(false);
+                holder.mTvNodeName.setEnabled(false);
+                holder.mTvNodeTime.setEnabled(false);
+            } else {
+                holder.itemView.setEnabled(true);
+                holder.mTvNodeName.setEnabled(true);
+                holder.mTvNodeTime.setEnabled(true);
+            }
         }
 
         @Override
@@ -346,7 +357,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return dateStingBuilder.toString();
         }
 
-        public interface ItemClickListener {
+        interface ItemClickListener {
             void onTaskClick(Task task);
         }
 

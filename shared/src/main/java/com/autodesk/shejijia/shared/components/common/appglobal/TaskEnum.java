@@ -27,7 +27,7 @@ public class TaskEnum {
 
         public static TemplateId getEnum(String value) {
             for (TemplateId templateId: values()) {
-                if (value.equals(templateId.getValue())) {
+                if (value.equalsIgnoreCase(templateId.getValue())) {
                     return templateId;
                 }
             }
@@ -56,7 +56,7 @@ public class TaskEnum {
 
         public static Category getEnum(String value) {
             for (Category category: values()) {
-                if (value.equals(category.getValue())) {
+                if (value.equalsIgnoreCase(category.getValue())) {
                     return category;
                 }
             }
