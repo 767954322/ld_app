@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -17,9 +18,12 @@ public interface PDTaskListContract {
 
     interface View extends BaseView {
 
+        void refreshTaskListView(List<Task> taskList);
     }
 
     interface Presenter extends BasePresenter {
+
+        void handleTaskList(Bundle taskBundle); //处理getArguments里的数据
 
         void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position); //跳转节点详情对话框
 

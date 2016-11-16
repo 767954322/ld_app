@@ -1,30 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProjectProgressbar
+        android:paddingTop="@dimen/spacing_padding_normal"
+        android:id="@+id/project_progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/con_blue" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/con_blue"
+        android:padding="@dimen/spacing_padding_normal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="@dimen/spacing_padding_micro"
+            android:drawableStart="@drawable/ic_project_setting"
+            android:enabled="true"
+            android:gravity="center"
+            android:padding="@dimen/spacing_padding_normal"
+            android:text="@string/project_edit_plan"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_15" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/button_create_plan"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/create_plan" />
+        android:text="@string/create_plan"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/img_work_state"
-        android:visibility="gone"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="@dimen/font_normal" />
+        android:gravity="center"
+        android:textSize="@dimen/font_normal"
+        android:visibility="gone" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_task_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v4.view.ViewPager>
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -31,6 +33,9 @@ import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDeta
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDFragmentPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.TaskListAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressState;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProjectProgressbar;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -46,6 +51,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     private static final int TASK_FRAGMENT_SIZE = 6;
     private ViewPager mContentViewPager;
+    private ProjectProgressbar mProgressbar;
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
@@ -66,6 +72,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initView() {
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
+        mProgressbar = (ProjectProgressbar) rootView.findViewById(R.id.project_progressBar);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.button_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
 
@@ -98,19 +105,39 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
-        LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
+    public void updateProgressbarView() {
 
-        //get data
-        Bundle taskListBundle = new Bundle();
-        // TODO: 11/14/16 get active project
-        taskListBundle.putSerializable("task_info",projectInfo.getPlan());
-        List<BaseFragment> fragmentList = new ArrayList<>();
-        for (int i = 0; i < TASK_FRAGMENT_SIZE; i++) {
-            fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
-        }
+    }
+
+    @Override
+    public void updateViewpagerView(List<BaseFragment> fragmentList) {
         mFragmentPagerAdapter = new PDFragmentPagerAdapter(getFragmentManager(), fragmentList);
         mContentViewPager.setAdapter(mFragmentPagerAdapter);
+    }
+
+    @Override
+    public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
+        LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
+        // TODO: 11/16/16 两部分，一部分是progressbar里的数据处理及progressbar的显示 ，另一部分
+        // TODO: 11/16/16 是viewpager里每个fragment里的数据处理及viewpager的显示 
+        //set progressbar data
+        List<ProgressState> list = new ArrayList<>();
+        String[] statusArray = mContext.getResources().getStringArray(R.array.project_progressbar_state);
+        list.add(new ProgressState("complete",statusArray[0]));
+        list.add(new ProgressState("complete",statusArray[1]));
+        list.add(new ProgressState("in_process",statusArray[2]));
+        list.add(new ProgressState("un_open",statusArray[3]));
+        list.add(new ProgressState("un_open",statusArray[4]));
+        list.add(new ProgressState("un_open",statusArray[5]));
+        ProgressbarAdapter progressbarAdapter = new ProgressbarAdapter(mContext,R.layout.listitem_project_progressbar,list);
+        mProgressbar.setAdapter(progressbarAdapter);
+
+        mProjectDetailsPresenter.handleViewpagerData(projectInfo.getPlan(),TASK_FRAGMENT_SIZE);
+
+
+
+
+
 
         switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":

@@ -99,6 +99,7 @@
     <!--项目详情里文字-->
     <string name="work_ready">等待开工交底中</string>
     <string name="work_inProgress">开工交底中</string>
+    <string name="project_edit_plan">编辑施工计划</string>
 
     <!--项目信息页面文字-->
     <string name="project_info_title">项目信息</string>

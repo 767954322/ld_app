@@ -50,4 +50,9 @@
     <color name="task_status_light_blue">#AAB9C3</color>
     <color name="task_status_yellow">#FFB22F</color>
 
+    <!-- project progressbar colors-->
+    <color name="progressbar_white">#ffffff</color>
+    <color name="progressbar_center_select">#7aaada</color>
+    <color name="progressbar_around_select">#5490ce</color>
+    <color name="progressbar_black">#1d4f82</color>
 </resources>

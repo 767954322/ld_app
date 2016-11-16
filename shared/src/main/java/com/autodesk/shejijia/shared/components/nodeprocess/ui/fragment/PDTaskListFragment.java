@@ -49,16 +49,11 @@ public class PDTaskListFragment extends BaseConstructionFragment implements PDTa
     @Override
     protected void initData() {
         mPDTaskListPresenter = new PDTaskListPresenter(this);
-        if (getArguments() != null) {
-            PlanInfo planInfo = (PlanInfo) getArguments().getSerializable("plan_info");
-            if (planInfo != null) {
-                List<Task> taskList = planInfo.getTasks();
-                initViewData(taskList);
-            }
-        }
+        mPDTaskListPresenter.handleTaskList(getArguments());
     }
 
-    private void initViewData(List<Task> taskList) {
+    @Override
+    public void refreshTaskListView(List<Task> taskList) {
         mTaskListAdapter = new PDTaskListAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
         mTaskListView.setAdapter(mTaskListAdapter);
     }

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/spacing_padding_double"
     android:layout_marginStart="@dimen/spacing_padding_double"
-    android:layout_marginTop="@dimen/spacing_padding_double"
+    android:layout_marginBottom="@dimen/spacing_padding_normal"
+    android:layout_marginTop="@dimen/spacing_padding_normal"
     android:background="@color/white">
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"

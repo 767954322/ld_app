@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -21,6 +23,10 @@ public interface ProjectDetailsContract {
 
         void updateProjectDetailsView(String memberType, ProjectInfo projectInfo);
 
+        void updateProgressbarView(); //顶部自定义progressbar的ui更新
+
+        void updateViewpagerView(List<BaseFragment> fragmentList); //底部的viewpager的ui更新
+
         void showProjectInfoDialog(Bundle projectInfoBundle);
 
         void cancelProjectInfoDialog(); //没有获取项目详情的情况下，是无法显示项目消息的对话框的
@@ -31,6 +37,10 @@ public interface ProjectDetailsContract {
         void initRequestParams(long projectId, boolean isHasTaskData);  //初始化获取项目详情的请求参数
 
         void getProjectDetails(); //获取项目详情
+
+        void handleProgressbarData();//处理进度条里的数据源
+
+        void handleViewpagerData(PlanInfo planInfo,int pageCount);//处理viewpager里的数据源
 
         void getProjectInformation(); //获取项目信息
 

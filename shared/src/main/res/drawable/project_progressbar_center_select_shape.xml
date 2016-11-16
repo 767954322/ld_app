@@ -2,12 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
 
-    <corners android:radius="@dimen/textview_corners_normal" />
-    <solid android:color="@color/progressbar_white_transparent" />
+    <solid android:color="@color/progressbar_center_select" />
     <padding
-        android:bottom="@dimen/spacing_padding_normal"
-        android:left="@dimen/spacing_padding_normal"
-        android:right="@dimen/spacing_padding_normal"
-        android:top="@dimen/spacing_padding_normal" />
+        android:bottom="@dimen/spacing_padding_nano"
+        android:left="@dimen/spacing_padding_nano"
+        android:right="@dimen/spacing_padding_nano"
+        android:top="@dimen/spacing_padding_nano" />
 
 </shape>

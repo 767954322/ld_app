@@ -2,13 +2,23 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.bean.TaskListBean;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.PDTaskListFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/31/16.
@@ -61,6 +71,41 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
+    public void handleProgressbarData() {
+
+    }
+
+    @Override
+    public void handleViewpagerData(PlanInfo planInfo, int pageCount) {
+        List<Task> taskList = planInfo.getTasks();
+        if (taskList != null) {
+            List<Integer> taskIndexList = new ArrayList<>();
+            for (int index = 0; index < taskList.size(); index++) {
+                if (taskList.get(index).isMilestone()) {
+                    taskIndexList.add(index);
+                }
+            }
+            handleTaskIndex(taskList, taskIndexList);
+        } else {
+            mProjectDetailsView.showNetError("get project data error");
+        }
+    }
+
+    private void handleTaskIndex(List<Task> taskList, List<Integer> taskIndexList) {
+        List<BaseFragment> fragmentList = new ArrayList<>();
+        int index = 0;
+        for (int i = 0; i < taskIndexList.size(); i++) {
+            int value = taskIndexList.get(i);
+            List<Task> childTaskList = taskList.subList(index, value + 1);
+            index = value + 1;
+            Bundle taskListBundle = new Bundle();
+            taskListBundle.putSerializable("task_list", new TaskListBean(childTaskList));
+            fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
+        }
+        mProjectDetailsView.updateViewpagerView(fragmentList);
+    }
+
+    @Override
     public void getProjectInformation() {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         if (projectInfo != null) {
@@ -83,4 +128,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         //// TODO: 11/11/16 跳转消息中心逻辑
     }
 
+    private void handleTaskListData() {
+
+    }
 }
