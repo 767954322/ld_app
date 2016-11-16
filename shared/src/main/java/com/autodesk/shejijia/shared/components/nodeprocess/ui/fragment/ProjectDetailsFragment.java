@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -36,6 +37,7 @@ import java.util.List;
  * 项目详情
  */
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, PDTaskListAdapter.TaskListItemClickListener {
+    private final static int REQUEST_CODE_EDIT_PLAN = 0;
 
     private RecyclerView mTaskListView;
     private Button mCreatePlanBtn;
@@ -84,7 +86,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
                 intent.putExtra("pid", String.valueOf(getArguments().getLong("projectId")));
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_EDIT_PLAN);
             }
         });
     }
@@ -180,4 +182,19 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_EDIT_PLAN:
+                if (requestCode == Activity.RESULT_OK) {
+                    //TODO refresh project
+                    mProjectDetailsPresenter.getProjectDetails();
+                } else {
+                    // TODO update button text
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

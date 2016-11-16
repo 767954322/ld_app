@@ -62,6 +62,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void onCommitSuccess() {
+        getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }
 
