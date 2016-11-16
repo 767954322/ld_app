@@ -51,7 +51,21 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {
 
-            storeName = storeName + brandsBean.getMalls().get(i).getMall_name() + ",";
+            if (i == 0 && brandsBean.getMalls().size() == 1){
+
+                storeName = brandsBean.getMalls().get(i).getMall_name();
+            }
+
+            if (i > 0 && i < brandsBean.getMalls().size() - 1){
+
+                storeName = storeName + brandsBean.getMalls().get(i).getMall_name() + "、";
+            }
+
+            if (i == brandsBean.getMalls().size() - 1 && brandsBean.getMalls().size() != 1){
+
+                storeName = storeName + brandsBean.getMalls().get(i).getMall_name();
+            }
+
         }
 
         holder.setText(R.id.store_show, storeName);
