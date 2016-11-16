@@ -935,6 +935,7 @@
     <!--WithdrawalRecordActivity -->
     <string name="remark">备注：</string>
     <string name="in_the_processing">处理中</string>
+    <string name="in_the_processing2">提现申请成功</string>
     <string name="handle_successful">提现成功</string>
     <string name="handle_failure">提现失败</string>
     <string name="untreated">未处理</string>

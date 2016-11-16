@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.WithdrawaRecoldBean;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.WithdrawaRecoldBean;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.Tra
             case 0:
                 // DP-6086 fix 处理中 to DP-6200
                 ((ViewHolder) holder).tv_withdrawal_recold_money.setText("-" + amount + "元"); //　提现申请成功
-                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing));
+                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing2));
                 break;
             case 1:
                 ((ViewHolder) holder).tv_withdrawal_recold_money.setText(amount + "元"); //　提现成功
