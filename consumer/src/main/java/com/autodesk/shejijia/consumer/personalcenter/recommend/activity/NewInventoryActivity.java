@@ -315,9 +315,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         if (StringUtils.isEmpty(mCommunityName)) {
             return true;
         }
-       /* if (StringUtils.isEmpty(mDetailAddress)) {
+       if (StringUtils.isEmpty(mDetailAddress)) {
             return true;
-        }*/
+        }
 
         if (StringUtils.isEmpty(mProjectName)) {
             return true;
@@ -400,7 +400,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
         if (!StringUtils.isEmpty(designerProjectsBean)) {
             isEditable = false;
-            setEditTextEnable(isEditable);
+            setEditTextEnable(isEditable,StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
 
             mTvProjectName.setText(designerProjectsBean.getCommunity_name());
             mEtMemberAccount.setText(designerProjectsBean.getConsumer_zid());
@@ -420,7 +420,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
         } else {
             isEditable = true;
-            setEditTextEnable(isEditable);
+            setEditTextEnable(isEditable,true);
             mTvProjectName.setText("创建新的项目");
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");
@@ -434,13 +434,13 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     /**
      * 设置EditText是否可以编辑
      */
-    private void setEditTextEnable(boolean isEditable) {
+    private void setEditTextEnable(boolean isEditable,boolean isEditableForAddr) {
         mEtMemberAccount.setEnabled(isEditable);
         mEtCustomerName.setEnabled(isEditable);
         mEtPhoneNumber.setEnabled(isEditable);
         mEtProjectAddress.setEnabled(isEditable);
         mEtCommunityName.setEnabled(isEditable);
-        mEtDetailAddress.setEnabled(isEditable);
+        mEtDetailAddress.setEnabled(isEditableForAddr);//详情地址在没有带入数据时，暂时可以编辑
     }
 
     /**

@@ -271,6 +271,7 @@
             android:layout_marginLeft="@dimen/size_15"
             android:layout_marginRight="@dimen/size_15"
             android:focusable="false"
+            android:enabled="false"
             android:layout_marginTop="@dimen/size_60"
             android:background="@drawable/bg_common_btn_gray"
             android:text="@string/new_inventory_next"
