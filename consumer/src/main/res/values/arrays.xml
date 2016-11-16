@@ -2,8 +2,8 @@
 <resources>
     <string-array name="recommend_apartments">　<!--推荐空间列表-->
         <item>选择空间</item>
-        <item>客厅及厨房</item>
-        <item>客厅及厨房二</item>
+        <item>客厅及餐厅</item>
+        <item>客厅及餐厅二</item>
         <item>客厅</item>
         <item>餐厅</item>
         <item>主卧</item>
@@ -17,6 +17,7 @@
         <item>主卫</item>
         <item>次卫一</item>
         <item>次卫二</item>
+        <item>次卫三</item>
         <item>厨房</item>
         <item>阳台</item>
         <item>设备间</item>
