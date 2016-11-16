@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -24,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -32,7 +32,6 @@ import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -175,83 +174,87 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
                 break;
             case R.id.btn_new_inventory_next:
-                String mProjectName = mTvProjectName.getText().toString();
-                String mMemberAccount = mEtMemberAccount.getText().toString();
-                String mCustomerName = mEtCustomerName.getText().toString();
-                String mPhoneNumber = mEtPhoneNumber.getText().toString();
-                String mProjectAddress = mEtProjectAddress.getText().toString();
-                String mCommunityName = mEtCommunityName.getText().toString();
-                String mDetailAddress = mEtDetailAddress.getText().toString();
-                if (isEditable) {
-                    /**
-                     * 会员正则校验
-                     */
-                    boolean mMatchesPhone = mMemberAccount.matches(RegexUtil.PHONE_REGEX);
-                    boolean mMatchesMail = mMemberAccount.matches(RegexUtil.EMAIL_REGEX);
-                    boolean mMatchesAccountNumber = mMemberAccount.matches(RegexUtil.ACCOUNT_NUMBER_REGEX);
-
-                    if (!(mMatchesPhone || mMatchesMail || mMatchesAccountNumber)) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_account_number),
-                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                        return;
-                    }
-
-                    /**
-                     * 客户姓名正则校验
-                     */
-                    boolean mMatchesName = mCustomerName.matches("^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{1,21}$");
-                    if (!mMatchesName) {
-                        new AlertView(UIUtils.getString(R.string.tip), "客户姓名应为2-22个中文、英文、数字字符",
-                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                        return;
-                    }
-
-                    /**
-                     *手机号码正则校验
-                     */
-
-                    boolean mMatchesPhoneNumber = mPhoneNumber.matches(RegexUtil.PHONE_REGEX);
-                    if (!mMatchesPhoneNumber) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_phone_number),
-                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                        return;
-                    }
-
-
-                    /**
-                     * 小区名称
-                     */
-                    boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
-                    if (!mMatchesCommunityName) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
-                                null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                        return;
-                    }
-
-                    /**
-                     * 详细地址
-                     */
-                    if (!StringUtils.isEmpty(mDetailAddress)) {
-                        boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
-                        if (!mMatchesDetailAddress) {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
-                                    null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
-
-                            return;
-                        }
-                    }
-                }
-                /**
-                 * 判断是否为会员帐号
-                 */
-                getMemberAccountList(mMemberAccount);
-
+                click();
                 break;
         }
+    }
+
+    private void click() {
+        if (SingleClickUtils.isFastDoubleClick()) {
+            return;
+        }
+        String mMemberAccount = mEtMemberAccount.getText().toString();
+        String mCustomerName = mEtCustomerName.getText().toString();
+        String mPhoneNumber = mEtPhoneNumber.getText().toString();
+        String mCommunityName = mEtCommunityName.getText().toString();
+        String mDetailAddress = mEtDetailAddress.getText().toString();
+        if (isEditable) {
+            /**
+             * 会员正则校验
+             */
+            boolean mMatchesPhone = mMemberAccount.matches(RegexUtil.PHONE_REGEX);
+            boolean mMatchesMail = mMemberAccount.matches(RegexUtil.EMAIL_REGEX);
+            boolean mMatchesAccountNumber = mMemberAccount.matches(RegexUtil.ACCOUNT_NUMBER_REGEX);
+
+            if (!(mMatchesPhone || mMatchesMail || mMatchesAccountNumber)) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_account_number),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                return;
+            }
+
+            /**
+             * 客户姓名正则校验
+             */
+            boolean mMatchesName = mCustomerName.matches("^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{1,21}$");
+            if (!mMatchesName) {
+                new AlertView(UIUtils.getString(R.string.tip), "客户姓名应为2-22个中文、英文、数字字符",
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                return;
+            }
+
+            /**
+             *手机号码正则校验
+             */
+
+            boolean mMatchesPhoneNumber = mPhoneNumber.matches(RegexUtil.PHONE_REGEX);
+            if (!mMatchesPhoneNumber) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_phone_number),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                return;
+            }
+
+
+            /**
+             * 小区名称
+             */
+            boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
+            if (!mMatchesCommunityName) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                return;
+            }
+
+            /**
+             * 详细地址
+             */
+            if (!StringUtils.isEmpty(mDetailAddress)) {
+                boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
+                if (!mMatchesDetailAddress) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                    return;
+                }
+            }
+        }
+        /**
+         * 判断是否为会员帐号
+         */
+        getMemberAccountList(mMemberAccount);
     }
 
     private void newInvertoryList(String acs_member_id) {
@@ -315,7 +318,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         if (StringUtils.isEmpty(mCommunityName)) {
             return true;
         }
-       if (StringUtils.isEmpty(mDetailAddress)) {
+        if (StringUtils.isEmpty(mDetailAddress)) {
             return true;
         }
 
@@ -367,7 +370,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 Log.d("NewInventoryActivity", jsonObject.toString());
                 MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
                 Integer flag = entity.getCheck_flag();
-                if (flag == 0) {
+                if (flag == 0 && isEditable) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_member_account_not_exit),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
                     return;
@@ -400,7 +403,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
         if (!StringUtils.isEmpty(designerProjectsBean)) {
             isEditable = false;
-            setEditTextEnable(isEditable,StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
+            setEditTextEnable(isEditable, StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
 
             mTvProjectName.setText(designerProjectsBean.getCommunity_name());
             mEtMemberAccount.setText(designerProjectsBean.getConsumer_zid());
@@ -420,7 +423,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
         } else {
             isEditable = true;
-            setEditTextEnable(isEditable,true);
+            setEditTextEnable(isEditable, true);
             mTvProjectName.setText("创建新的项目");
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");
@@ -434,7 +437,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     /**
      * 设置EditText是否可以编辑
      */
-    private void setEditTextEnable(boolean isEditable,boolean isEditableForAddr) {
+    private void setEditTextEnable(boolean isEditable, boolean isEditableForAddr) {
         mEtMemberAccount.setEnabled(isEditable);
         mEtCustomerName.setEnabled(isEditable);
         mEtPhoneNumber.setEnabled(isEditable);
