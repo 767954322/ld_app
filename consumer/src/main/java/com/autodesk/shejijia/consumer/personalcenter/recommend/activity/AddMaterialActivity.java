@@ -280,7 +280,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         CustomProgress.cancelDialog();
-
                     }
 
                     @Override
@@ -318,7 +317,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     }
                 });
     }
-
     /**
      * 获取店铺
      */
@@ -338,7 +336,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 firstGetBrandsInformation(store_list);
             }
         });
-
     }
 
     /**
@@ -380,10 +377,14 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         currentCheckedOneCategoryId = materialCategoryBean.getCategories_3d().get(0).getCategory_3d_id();
         btnStatusBeanList = new BtnStatusBean[oneArr.length];
         //默认需要添加的第一个未点击的二级品类保存
-        BtnStatusBean btnStatusBeanDefault = new BtnStatusBean();
-        btnStatusBeanDefault.setCountOffset(0);
-        btnStatusBeanDefault.setSingleClickOrDoubleBtnCount(1);
-        btnStatusBeanList[0] = btnStatusBeanDefault;
+        BtnStatusBean btnStatusBeanDefault;
+        for (int i = 0;i<oneArr.length;i++){
+
+            btnStatusBeanDefault = new BtnStatusBean();
+            btnStatusBeanDefault.setCountOffset(0);
+            btnStatusBeanDefault.setSingleClickOrDoubleBtnCount(1);
+            btnStatusBeanList[i] = btnStatusBeanDefault;
+        }
         dynamicAddViewContainer = new DynamicAddViewContainer(this, one_level_category.getHeight());
         dynamicAddViewContainer.setListener(new DynamicAddViewContainer.OnButtonClickedListener() {
             @Override
@@ -408,6 +409,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         if (btnStatusBeanList[i] != null) {
 
                             adapterCategoryAll(btnStatusBeanList[i]);
+                            dynamicPopWindows[countArrItem].setButtonCheckedStatus(btnStatusBeanList[i]);
+                            dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBeanList[i]);
+
                         }
                     }
                 }
@@ -455,8 +459,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     currentClickItemLocation = x;
                     int totalCount = dynamicAddViews[countArrItem].getItemCount();
                     two_level_category.useCurrentDistanceScroll(x, currentDistance, two_level_category.getHeight(), two_level_category.getChildAt(0).getMeasuredWidth(), totalCount, btnStatusBean.getCountOffset());
-
-
                 }
             });
 
