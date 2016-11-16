@@ -66,6 +66,17 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     private void convertDesignerDataUI(CommonViewHolder holder, RecommendDetailsBean item) {
         String status = item.getSent_status();
         String revoke_state = item.getStatus();
+        //TODO RED HOT LOGIC
+       String consumer_has_remind = item.getConsumer_info_remind();
+        String designer_has_remind = item.getDesigner_info_remind();
+        TextView tv_revoke_cause = holder.getView(R.id.tv_revoke_cause);
+        TextView tv_revoke_cause_details = holder.getView(R.id.tv_revoke_cause_details);
+        boolean chasRemind = !TextUtils.isEmpty(consumer_has_remind)&&consumer_has_remind.equals("1");
+        boolean dhasRemind = !TextUtils.isEmpty(designer_has_remind)&& designer_has_remind.equals("1");
+        holder.setVisible(R.id.tv_remind_red, (isDesiner ? dhasRemind : chasRemind));
+        int color = UIUtils.getColor((isDesiner ? dhasRemind : chasRemind) ? R.color.mybid_text_color_normal : R.color.font_gray);
+        tv_revoke_cause.setTextColor(color);
+        tv_revoke_cause_details.setTextColor(color);
         if (!TextUtils.isEmpty(revoke_state)) {
             //设计师　消费者退回的项目不应该被置灰　可以
             notifyUISetChanged(holder, revoke_state.equals("canceled") || revoke_state.equals("refused"));
@@ -100,7 +111,6 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         );
         holder.setVisible(R.id.ll_revoke_view, !hasRevoke);
         holder.setVisible(R.id.rlt_revoke_cause, hasRevoke);
-
     }
 
     //撤销成功之后全部置灰

@@ -16,8 +16,10 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.DcRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -30,6 +32,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @User: 蜡笔小新
@@ -120,6 +124,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void getRecommendDetails() {
+        CustomProgress.show(this, "", false, null);
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity == null) {
             return;
@@ -128,6 +133,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 Log.d("CsRecommendActivity", jsonObject.toString());
                 mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsBean.class);
                 updateView2Api(mEntity);
@@ -135,6 +141,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 Log.d("CsRecommendActivity", volleyError.toString());
                 MPNetworkUtils.logError(TAG, volleyError);
             }
@@ -168,5 +175,20 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
             mListview.setSelection(intExtra + 1);
         }
+    }
+
+    /**
+     * 返回测试刷新
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventBus.getDefault().post(new RefreshEvent());
+    }
+
+    @Override
+    protected void leftNavButtonClicked(View view) {
+        super.leftNavButtonClicked(view);
+        EventBus.getDefault().post(new RefreshEvent());
     }
 }

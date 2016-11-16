@@ -10,38 +10,38 @@ import java.util.List;
 
 public class MallAddressEntity {
 
-    private List<MallAddressesBean> mall_addresses;
+    private List<MallAddressesBean> juran_storefront_info;
 
-    public List<MallAddressesBean> getMall_addresses() {
-        return mall_addresses;
+    public List<MallAddressesBean> getJuran_storefront_info() {
+        return juran_storefront_info;
     }
 
-    public void setMall_addresses(List<MallAddressesBean> mall_addresses) {
-        this.mall_addresses = mall_addresses;
+    public void setJuran_storefront_info(List<MallAddressesBean> juran_storefront_info) {
+        this.juran_storefront_info = juran_storefront_info;
     }
 
     public static class MallAddressesBean {
-        private String store_address;
-        private String mall_address;
+        private String storefront_address;
+        private String detailed_address;
         private String business_hours;
-        private String route_line;
-        private String mall_phone;
-        private String store_name;
+        private String ride_route;
+        private String booth_phone;
+        private String storefront_name;
 
-        public String getStore_address() {
-            return store_address;
+        public String getStorefront_address() {
+            return storefront_address;
         }
 
-        public void setStore_address(String store_address) {
-            this.store_address = store_address;
+        public void setStorefront_address(String storefront_address) {
+            this.storefront_address = storefront_address;
         }
 
-        public String getMall_address() {
-            return mall_address;
+        public String getDetailed_address() {
+            return detailed_address;
         }
 
-        public void setMall_address(String mall_address) {
-            this.mall_address = mall_address;
+        public void setDetailed_address(String detailed_address) {
+            this.detailed_address = detailed_address;
         }
 
         public String getBusiness_hours() {
@@ -52,28 +52,28 @@ public class MallAddressEntity {
             this.business_hours = business_hours;
         }
 
-        public String getRoute_line() {
-            return route_line;
+        public String getRide_route() {
+            return ride_route;
         }
 
-        public void setRoute_line(String route_line) {
-            this.route_line = route_line;
+        public void setRide_route(String ride_route) {
+            this.ride_route = ride_route;
         }
 
-        public String getMall_phone() {
-            return mall_phone;
+        public String getBooth_phone() {
+            return booth_phone;
         }
 
-        public void setMall_phone(String mall_phone) {
-            this.mall_phone = mall_phone;
+        public void setBooth_phone(String booth_phone) {
+            this.booth_phone = booth_phone;
         }
 
-        public String getStore_name() {
-            return store_name;
+        public String getStorefront_name() {
+            return storefront_name;
         }
 
-        public void setStore_name(String store_name) {
-            this.store_name = store_name;
+        public void setStorefront_name(String storefront_name) {
+            this.storefront_name = storefront_name;
         }
     }
 }

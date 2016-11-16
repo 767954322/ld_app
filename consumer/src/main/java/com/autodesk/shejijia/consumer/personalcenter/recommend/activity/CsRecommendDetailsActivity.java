@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
@@ -13,6 +14,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.CsRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -27,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @User: 蜡笔小新
@@ -125,6 +129,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
                 .fromJson(mScfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
+            brands.clear();
             brands.addAll(brand_lst);
         }
         mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details, mScfd);
@@ -137,5 +142,20 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
             int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
             mListview.setSelection(intExtra);
         }
+    }
+
+    /**
+     * 返回测试刷新
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventBus.getDefault().post(new RefreshEvent());
+    }
+
+    @Override
+    protected void leftNavButtonClicked(View view) {
+        super.leftNavButtonClicked(view);
+        EventBus.getDefault().post(new RefreshEvent());
     }
 }

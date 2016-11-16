@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.StoreLocationAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MallAddressEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -68,12 +69,14 @@ public class StoreLocationActivity extends NavigationBarActivity {
     }
 
     private void getMallsLocation() {
+        CustomProgress.show(this, "", false, null);
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 MallAddressEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MallAddressEntity.class);
-                List<MallAddressEntity.MallAddressesBean> addresses = entity.getMall_addresses();
+                List<MallAddressEntity.MallAddressesBean> addresses = entity.getJuran_storefront_info();
                 if (addresses != null && addresses.size() > 0)
                     mStoreLocations.addAll(addresses);
                 mAdapter.notifyDataSetChanged();
@@ -81,6 +84,7 @@ public class StoreLocationActivity extends NavigationBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };

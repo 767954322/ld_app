@@ -104,7 +104,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
 
     @Override
     public void loadMore() {
-        OFFSET += mRecommends.size();
+        OFFSET = mRecommends.size();
         mRecommendLogic.onLoadRecommendListData(true, OFFSET, LIMIT, mStatus);
     }
 
@@ -167,9 +167,8 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
-        mListView.clearFocus();
-        mListView.setSelection(0);
-        mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+        OFFSET = mRecommends.size();
+        mRecommendLogic.onLoadRecommendListData(true, 0, OFFSET, mStatus);
     }
 
     @Override

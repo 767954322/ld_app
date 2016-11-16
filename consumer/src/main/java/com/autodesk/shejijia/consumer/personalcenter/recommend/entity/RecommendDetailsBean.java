@@ -78,6 +78,24 @@ public class RecommendDetailsBean implements IModel {
     private String source;
     private int effective_time;
     private String consumer_zid;
+    private String consumer_info_remind;
+    private String designer_info_remind;
+
+    public String getConsumer_info_remind() {
+        return consumer_info_remind;
+    }
+
+    public void setConsumer_info_remind(String consumer_info_remind) {
+        this.consumer_info_remind = consumer_info_remind;
+    }
+
+    public String getDesigner_info_remind() {
+        return designer_info_remind;
+    }
+
+    public void setDesigner_info_remind(String designer_info_remind) {
+        this.designer_info_remind = designer_info_remind;
+    }
 
     public int getAsset_id() {
         return asset_id;

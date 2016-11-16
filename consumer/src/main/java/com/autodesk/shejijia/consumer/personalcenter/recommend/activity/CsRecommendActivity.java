@@ -14,6 +14,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -94,7 +95,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
 
     @Override
     public void loadMore() {
-        OFFSET += mRecommends.size();
+        OFFSET                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              = mRecommends.size();
         mRecommendLogic.onLoadRecommendListData(false, OFFSET, LIMIT, 0);
     }
 
@@ -151,9 +152,9 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
-/*        mListView.clearFocus();
-        mListView.setSelection(0);*/
-        mRecommendLogic.onLoadRecommendListData(false, 0, LIMIT, 0);
+        OFFSET = mRecommends.size();
+        ToastUtil.showCustomToast(this, "OFFSET："+OFFSET);
+        mRecommendLogic.onLoadRecommendListData(false, 0, OFFSET, 0);
     }
 
     @Override
