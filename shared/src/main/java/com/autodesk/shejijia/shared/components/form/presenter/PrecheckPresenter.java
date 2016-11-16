@@ -102,7 +102,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     }
 
     private void addAdditionalLayout(CheckItem checkItem) {
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.item_plain_table_cell, null);
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.view_plain_table_cell, null);
         TextView standardTv = (TextView) view.findViewById(R.id.tv_title);
         final TextView resultTv = (TextView) view.findViewById(R.id.tv_result);
         standardTv.setText(checkItem.getStandard());

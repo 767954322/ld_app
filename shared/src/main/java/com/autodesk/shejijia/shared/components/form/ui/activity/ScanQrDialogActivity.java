@@ -17,9 +17,6 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
 
     private TextView mTitle;
     private TextView mContent;
-    private String mFormat;
-    private String mError;
-
 
     @Override
     protected int getLayoutResId() {
@@ -35,8 +32,8 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        mFormat = intent.getStringExtra("format");
-        mError = intent.getStringExtra("error");
+        String mFormat = intent.getStringExtra("format");
+        String mError = intent.getStringExtra("error");
 
         mTitle.setText("提示");
         mContent.setText(mError == null ? mFormat : mError);
@@ -45,16 +42,12 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initListener() {
         findViewById(R.id.btn_submit).setOnClickListener(this);
-        findViewById(R.id.btn_cancel).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (R.id.btn_submit == id) {
-            startActivity(new Intent(this, ProjectIdCodeActivity.class));
-            finish();
-        } else if (R.id.btn_cancel == id) {
             finish();
         }
     }

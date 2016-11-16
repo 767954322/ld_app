@@ -105,7 +105,7 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                     }
 
                     Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
-                    intent.putExtra("error","当前没有监理需要验收的项目");
+                    intent.putExtra("error","当前没有需要验收的项目");
                     startActivity(intent);
 
                 }
@@ -120,8 +120,9 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
         } else {
             Intent intent = new Intent(this,ScanQrDialogActivity.class);
-            intent.putExtra("format","二维码格式不正确,是否跳到输入编码?");
+            intent.putExtra("format","二维码格式不正确,请再次扫码");
             startActivity(intent);
+
         }
 
 
@@ -130,6 +131,5 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
     }
 }
