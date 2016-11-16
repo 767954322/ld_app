@@ -93,8 +93,8 @@ public class CreateOrEditPlanActivity extends BaseActivity {
             mProgressBar.setProgress(100);
             mActionBtn.setText(R.string.edit_plan_complete);
         }
-        mEditState = newState;
         switchToFragment(getFragmentTag(newState));
+        mEditState = newState;
     }
 
     private void switchToFragment(String tag) {

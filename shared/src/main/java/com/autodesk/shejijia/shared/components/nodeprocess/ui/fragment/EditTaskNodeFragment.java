@@ -51,11 +51,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mAdapter.setData(tasks);
     }
 
-    @Override
-    public void bindPresenter(EditPlanContract.TaskNodePresenter presenter) {
-        mPresenter = presenter;
-    }
-
     public EditPlanContract.TaskNodePresenter getPresenter() {
         return mPresenter;
     }
@@ -101,7 +96,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new TaskNodeAdapter(getActivity(), new TaskNodeAdapter.IViewHolderClick() {
+        mAdapter = new TaskNodeAdapter(getActivity(), new TaskNodeAdapter.ItemClickListener() {
             @Override
             public void onTaskClick(Task task) {
                 mPresenter.editTaskNode(task);
@@ -151,8 +146,66 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     public void showBottomSheet(List<Task> milstoneTasks, Task task) {
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet_edit_task_node, null);
         mBottomSheetDialog.setContentView(view);
-
         mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
+
+        setupBottomSheetHeader(view, task);
+        setupCalendarView(milstoneTasks, task);
+
+        View parent = (View) view.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        behavior.setHideable(false);
+
+        mBottomSheetDialog.show();
+    }
+
+    @Override
+    public void showUpLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.autonym_uploading));
+        }
+
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideUpLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
+    }
+
+    private void initBottomSheetDialog() {
+        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
+                R.style.BottomSheetDialogTheme_Calendar);
+    }
+
+    private void hideBottomSheetDialog() {
+        if (mBottomSheetDialog != null && mBottomSheetDialog.isShowing()) {
+            mBottomSheetDialog.cancel();
+        }
+    }
+
+    private void setupBottomSheetHeader(View parentView, Task task) {
+        TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
+        taskNameView.setText(task.getName());
+
+        TextView actionBtn = (TextView) parentView.findViewById(R.id.tv_action);
+        actionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBottomSheetDialog();
+                List<CalendarDay> selectedDays = mCalendarView.getSelectedDates();
+                List<Date> selectedDates = new ArrayList<Date>();
+                for (CalendarDay day: selectedDays) {
+                    selectedDates.add(day.getDate());
+                }
+                mPresenter.updateTask(selectedDates);
+            }
+        });
+    }
+
+    private void setupCalendarView(List<Task> milstoneTasks, Task task) {
         mCalendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
 
         // Set formatter
@@ -198,62 +251,11 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         Date taskEndDay = DateUtil.iso8601ToDate(task.getPlanningTime().getCompletion());
         mCalendarView.setCurrentDate(taskStartDay == null ? today : taskStartDay);
 
+        // set selected days
         if (DateUtil.isSameDay(taskStartDay, taskEndDay)) {
             mCalendarView.setSelectedDate(taskStartDay);
         } else if (taskStartDay != null){
             mCalendarView.setSelectedRange(taskStartDay, taskEndDay);
-        }
-
-
-        TextView taskNameView = (TextView) view.findViewById(R.id.tv_task_name);
-        taskNameView.setText(task.getName());
-
-        TextView actionBtn = (TextView) view.findViewById(R.id.tv_action);
-        actionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideBottomSheetDialog();
-                List<CalendarDay> selectedDays = mCalendarView.getSelectedDates();
-                List<Date> selectedDates = new ArrayList<Date>();
-                for (CalendarDay day: selectedDays) {
-                    selectedDates.add(day.getDate());
-                }
-                mPresenter.updateTask(selectedDates);
-            }
-        });
-
-        View parent = (View) view.getParent();
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        behavior.setHideable(false);
-
-        mBottomSheetDialog.show();
-    }
-
-    @Override
-    public void showUpLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.autonym_uploading));
-        }
-
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideUpLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
-    }
-
-    private void initBottomSheetDialog() {
-        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
-                R.style.BottomSheetDialogTheme_Calendar);
-    }
-
-    private void hideBottomSheetDialog() {
-        if (mBottomSheetDialog != null && mBottomSheetDialog.isShowing()) {
-            mBottomSheetDialog.cancel();
         }
     }
 
@@ -264,9 +266,9 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         private Activity mActivity;
         private List<Task> mTasks = new ArrayList<>();
 
-        private IViewHolderClick mClickListener;
+        private ItemClickListener mClickListener;
 
-        TaskNodeAdapter(Activity activity, IViewHolderClick clickListener) {
+        TaskNodeAdapter(Activity activity, ItemClickListener clickListener) {
             mActivity = activity;
             mClickListener = clickListener;
         }
@@ -340,7 +342,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return dateStingBuilder.toString();
         }
 
-        public interface IViewHolderClick {
+        public interface ItemClickListener {
             void onTaskClick(Task task);
         }
 

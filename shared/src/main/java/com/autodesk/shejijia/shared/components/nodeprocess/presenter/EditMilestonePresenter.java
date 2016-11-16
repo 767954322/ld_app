@@ -29,20 +29,18 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
     @Override
     public void bindView(EditPlanContract.MileStoneView view) {
         mView = view;
-        mView.bindPresenter(this);
     }
 
     @Override
     public void fetchPlan() {
-        // TODO check project id
+        // TODO check project id ??
         PlanInfo editingPlan = ProjectRepository.getInstance().getEditingPlan();
         if (editingPlan == null) {
             mView.showError("No active project"); // TODO update string
-            return;
+        } else {
+            mPlan = editingPlan;
+            mView.showTasks(getMileStoneNodes());
         }
-
-        mPlan = editingPlan;
-        mView.showTasks(getMileStoneNodes());
     }
 
     @Override

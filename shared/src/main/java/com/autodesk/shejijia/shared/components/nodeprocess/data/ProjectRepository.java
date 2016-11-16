@@ -104,10 +104,12 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     public PlanInfo getEditingPlan() {
-        if ((mEditingPlan == null || mEditingPlan.getPlanId() != mProjectInfo.getPlan().getPlanId())
-                && mProjectInfo != null ) {
+        if (mProjectInfo == null) {
+            mEditingPlan = null;
+        } else if (mEditingPlan == null || mEditingPlan.getPlanId() != mProjectInfo.getPlan().getPlanId()) {
             mEditingPlan = copyPlan(mProjectInfo.getPlan());
         }
+
         return mEditingPlan;
     }
 

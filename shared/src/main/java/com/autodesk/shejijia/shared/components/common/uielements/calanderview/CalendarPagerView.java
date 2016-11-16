@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.calanderview;
 
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;

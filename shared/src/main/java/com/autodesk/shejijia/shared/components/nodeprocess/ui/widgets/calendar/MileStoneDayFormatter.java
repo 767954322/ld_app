@@ -34,8 +34,9 @@ public class MileStoneDayFormatter implements DayFormatter {
             if (!TextUtils.isEmpty(taskName) && taskName.length() > 3) {
                 int middleIndex =  Math.round(taskName.length() / 2f);
                 return taskName.substring(0, middleIndex) + "\n" + taskName.substring(middleIndex);
+            } else {
+                return taskName;
             }
-            return taskName;
         }
     }
 

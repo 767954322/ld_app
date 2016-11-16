@@ -15,7 +15,6 @@ import java.util.List;
 public interface EditPlanContract {
 
     interface MileStoneView extends BaseView {
-        void bindPresenter(MileStonePresenter presenter);
 
         void showTasks(List<Task> tasks);
 
@@ -34,8 +33,6 @@ public interface EditPlanContract {
     }
 
     interface TaskNodeView extends BaseView {
-
-        void bindPresenter(TaskNodePresenter presenter);
 
         void showTasks(List<Task> tasks);
 

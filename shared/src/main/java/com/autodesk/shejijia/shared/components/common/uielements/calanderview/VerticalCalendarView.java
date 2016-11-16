@@ -19,7 +19,7 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
     private VerticalCalendarAdapter mListAdapter;
     private RecyclerView mListView;
-    LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
     public VerticalCalendarView(Context context) {
         super(context);

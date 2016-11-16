@@ -41,12 +41,11 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         PlanInfo editingPlan = ProjectRepository.getInstance().getEditingPlan();
         if (editingPlan == null) {
             mView.showError("No active project"); // TODO update string
-            return;
+        } else {
+            mPlan = editingPlan;
+            sortTasks();
+            mView.showTasks(mPlan.getTasks());
         }
-
-        mPlan = editingPlan;
-        sortTasks();
-        mView.showTasks(mPlan.getTasks());
     }
 
     @Override

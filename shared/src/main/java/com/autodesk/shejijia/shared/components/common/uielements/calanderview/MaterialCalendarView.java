@@ -27,8 +27,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.fo
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.MonthArrayTitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.TitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.WeekDayFormatter;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -592,17 +590,18 @@ public class MaterialCalendarView extends ViewGroup {
     }
 
     /**
-     * @param firstDay Dates to set as selected. Null to clear selection
+     * @param date1 a Date to set as selected
+     * @param date2 a Date to set as selected
      */
-    public void setSelectedRange(@Nullable Date firstDay, Date lastDay) {
+    public void setSelectedRange(@NonNull Date date1, @NonNull Date date2) {
         clearSelection();
-        if (firstDay != null && lastDay!= null) {
-            CalendarDay calendarFistDay = CalendarDay.from(firstDay);
-            CalendarDay calendarLastDay = CalendarDay.from(lastDay);
-            if (calendarFistDay.isAfter(calendarLastDay)) {
-                dispatchOnRangeSelected(calendarLastDay, calendarFistDay);
+        if (date1 != null && date2 != null) {
+            CalendarDay calendarDay1 = CalendarDay.from(date1);
+            CalendarDay calendarDay2 = CalendarDay.from(date2);
+            if (calendarDay1.isAfter(calendarDay2)) {
+                dispatchOnRangeSelected(calendarDay2, calendarDay1);
             } else {
-                dispatchOnRangeSelected(calendarFistDay, calendarLastDay);
+                dispatchOnRangeSelected(calendarDay1, calendarDay2);
             }
         }
     }

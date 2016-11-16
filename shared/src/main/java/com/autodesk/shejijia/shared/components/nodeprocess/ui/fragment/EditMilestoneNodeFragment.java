@@ -67,11 +67,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
-    public void bindPresenter(EditPlanContract.MileStonePresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void showTasks(List<Task> tasks) {
         hideLoading();
         mCalendarWidget.setVisibility(View.VISIBLE);
