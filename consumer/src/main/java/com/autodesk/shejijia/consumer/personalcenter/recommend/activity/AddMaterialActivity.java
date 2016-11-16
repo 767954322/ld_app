@@ -159,6 +159,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDList = (List<RecommendSCFDBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        setTitleForNavbar(intent.getStringExtra(JsonConstants.JSON_PROJECT_NAME));
     }
 
     @Override

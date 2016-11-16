@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -71,6 +72,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private TextView mTvNavTitle;
     private String mRecommendScfdTag = "";
+    private String projectName;
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -135,6 +137,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 String jsonString = jsonObject.toString();
                 Log.d("RecommendListDetailAc", jsonString);
                 RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
+                projectName = recommendListDetailBean.getCommunity_name();
                 updateUI(recommendListDetailBean);
             }
 
@@ -278,6 +281,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         //TODO @xuehua.yao
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
+        intent.putExtra(JsonConstants.JSON_PROJECT_NAME,projectName);
         startActivityForResult(intent, 24);
     }
 

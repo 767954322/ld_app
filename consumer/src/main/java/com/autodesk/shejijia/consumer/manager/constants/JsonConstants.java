@@ -228,6 +228,9 @@ public class JsonConstants {
     public static final String JSON_NEW_INVENTORY_PROVINCE = "province";
     public static final String JSON_NEW_INVENTORY_PROVINCE_NAME = "province_name";
 
+    //清单列表
+    public static final String JSON_PROJECT_NAME = "project_name";
+
 
 
 
