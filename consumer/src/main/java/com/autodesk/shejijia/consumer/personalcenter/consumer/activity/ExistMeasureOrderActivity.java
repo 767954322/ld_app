@@ -278,15 +278,15 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
         int size = mList.size();
         for (int i = 0; i < size; i++) {
-//            String wk_template_id = mList.get(i).getWk_template_id();
-//            if (wk_template_id != null && Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id)) {
-            if (mList.get(i).getContract() == null) {
-                dList.add(mList.get(i));
-            } else {
-                mList.get(i).setContract("null");
-                dList.add(mList.get(i));
+            String wk_template_id = mList.get(i).getWk_template_id();
+            if (wk_template_id != null && (Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id) || Constant.NumKey.CERTIFIED_FAILED.equals(wk_template_id))) {
+                if (mList.get(i).getContract() == null) {
+                    dList.add(mList.get(i));
+                } else {
+                    mList.get(i).setContract("null");
+                    dList.add(mList.get(i));
+                }
             }
-//            }
         }
         // 设置悬浮头部VIEW
         if (dList != null) {
