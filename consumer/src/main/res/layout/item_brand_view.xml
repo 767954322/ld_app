@@ -80,12 +80,12 @@
 
         <TextView
             style="@style/item_text_style"
+            android:layout_gravity="top"
             android:text="备注："/>
 
         <TextView
             android:id="@+id/tv_brand_remarks"
-            style="@style/item_text_style"
-            android:singleLine="true"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout

@@ -67,12 +67,12 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         String status = item.getSent_status();
         String revoke_state = item.getStatus();
         //TODO RED HOT LOGIC
-       String consumer_has_remind = item.getConsumer_info_remind();
+        String consumer_has_remind = item.getConsumer_info_remind();
         String designer_has_remind = item.getDesigner_info_remind();
         TextView tv_revoke_cause = holder.getView(R.id.tv_revoke_cause);
         TextView tv_revoke_cause_details = holder.getView(R.id.tv_revoke_cause_details);
-        boolean chasRemind = !TextUtils.isEmpty(consumer_has_remind)&&consumer_has_remind.equals("1");
-        boolean dhasRemind = !TextUtils.isEmpty(designer_has_remind)&& designer_has_remind.equals("1");
+        boolean chasRemind = !TextUtils.isEmpty(consumer_has_remind) && consumer_has_remind.equals("1");
+        boolean dhasRemind = !TextUtils.isEmpty(designer_has_remind) && designer_has_remind.equals("1");
         holder.setVisible(R.id.tv_remind_red, (isDesiner ? dhasRemind : chasRemind));
         int color = UIUtils.getColor((isDesiner ? dhasRemind : chasRemind) ? R.color.mybid_text_color_normal : R.color.font_gray);
         tv_revoke_cause.setTextColor(color);
@@ -125,8 +125,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
 
     @Override
     public void onItemDeteleOnClick(String text, final RecommendDetailsBean item) {
-        Log.d("onClick", "删除");
-        new AlertView(null, "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
+        new AlertView(UIUtils.getString(R.string.tip), "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != -1)
@@ -154,6 +153,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     }
 
     @Override
+    @Deprecated
     public void onItemReturnOnClick(String text, final RecommendDetailsBean item) {
         //设计师撤销和消费者退回
         Log.d("onClick", "退回");
