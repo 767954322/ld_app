@@ -345,10 +345,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 CustomProgress.cancelDialog();
                 Log.d("NewInventoryActivity", jsonObject.toString());
                 NewInventoryEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), NewInventoryEntity.class);
-                String asset_id = entity.getAsset_id();
-                RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
-                finish();
-
+                showAlertView(entity);
             }
 
             @Override
@@ -359,6 +356,19 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
             }
         });
+    }
+    private void showAlertView(final NewInventoryEntity entity){
+        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_succ),
+                null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    String asset_id = entity.getAsset_id();
+                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
+                    finish();
+                }
+            }
+        }).show();
     }
 
     private void getMemberAccountList(String member_account) {
