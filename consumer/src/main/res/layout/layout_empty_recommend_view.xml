@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="＂添加主材＂"
-            android:textColor="@color/color_blue_0084ff"
+            android:textColor="@color/mybid_text_color_light"
             android:textSize="18sp"/>
 
         <TextView
