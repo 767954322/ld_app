@@ -67,10 +67,9 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
 
     private void updateView2ItemData(boolean isFrom3D, View mItemView, RecommendBrandsBean bean) {
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
-        if (isFrom3D) {
-            TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
-            tvBrandNum.setText(bean.getAmountAndUnit());
-        } else {
+        TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
+        tvBrandNum.setText(bean.getAmountAndUnit());
+        if (!isFrom3D) {
             ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
             if (mBrandLogo != null && !TextUtils.isEmpty(bean.getLogo_url()))
                 ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
@@ -84,7 +83,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
         tvBrandName.setText(bean.getBrand_name());
         tvBrandDimension.setText(bean.getDimension());
-        tvBrandApartment.setText(bean.getApartment());
+        tvBrandApartment.setText(StringUtils.isEmpty(bean.getApartment()) ? "" : bean.getApartment());
         tvBrandRemarks.setText(bean.getRemarks());
         StringBuffer mallName = new StringBuffer();
         for (RecommendMallsBean mallsBean : bean.getMalls()) {

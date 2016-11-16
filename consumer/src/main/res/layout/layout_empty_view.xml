@@ -7,7 +7,7 @@
     android:background="@color/bg_eef1f4"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <ImageView
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="＂新建清单＂"
-            android:textColor="@color/color_blue_0084ff"
+            android:textColor="@color/half_black"
             android:textSize="18sp"/>
 
         <TextView

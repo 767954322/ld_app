@@ -65,8 +65,9 @@ public class StoreLocationActivity extends NavigationBarActivity {
             public void onResponse(JSONObject jsonObject) {
                 Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 MallAddressEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MallAddressEntity.class);
-                List<MallAddressEntity.MallAddressesBean> addresses = entity.getMallAddresses();
-                mStoreLocations.addAll(addresses);
+                List<MallAddressEntity.MallAddressesBean> addresses = entity.getMall_addresses();
+                if (addresses != null && addresses.size() > 0)
+                    mStoreLocations.addAll(addresses);
                 mAdapter.notifyDataSetChanged();
             }
 

@@ -111,6 +111,11 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getRecommendDetails();
     }
 
@@ -135,8 +140,6 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             }
         };
         MPServerHttpManager.getInstance().getRecommendDetails(design_id, mAsset_id, callback);
-//        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
-//        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
     }
 
     private void updateView2Api(RecommendDetailsBean item) {
@@ -154,9 +157,9 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.clear();
             brands.addAll(brand_lst);
-            mAdapter = new DcRecommendDetailsAdapter(this, brands, R.layout.item_recommend_details_brand, scfd);
-            mListview.setAdapter(mAdapter);
         }
+        mAdapter = new DcRecommendDetailsAdapter(this, brands, R.layout.item_recommend_details_brand, scfd);
+        mListview.setAdapter(mAdapter);
     }
 
     @Override

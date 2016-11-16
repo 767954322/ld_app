@@ -85,6 +85,11 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getRecommendDetails();
     }
 
@@ -121,9 +126,9 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.addAll(brand_lst);
-            mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details, mScfd);
-            mListview.setAdapter(mAdapter);
         }
+        mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details, mScfd);
+        mListview.setAdapter(mAdapter);
     }
 
     @Override

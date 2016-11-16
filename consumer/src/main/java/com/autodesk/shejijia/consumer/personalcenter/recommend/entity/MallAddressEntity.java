@@ -10,14 +10,14 @@ import java.util.List;
 
 public class MallAddressEntity {
 
-    private List<MallAddressesBean> mallAddresses;
+    private List<MallAddressesBean> mall_addresses;
 
-    public List<MallAddressesBean> getMallAddresses() {
-        return mallAddresses;
+    public List<MallAddressesBean> getMall_addresses() {
+        return mall_addresses;
     }
 
-    public void setMallAddresses(List<MallAddressesBean> mallAddresses) {
-        this.mallAddresses = mallAddresses;
+    public void setMall_addresses(List<MallAddressesBean> mall_addresses) {
+        this.mall_addresses = mall_addresses;
     }
 
     public static class MallAddressesBean {
