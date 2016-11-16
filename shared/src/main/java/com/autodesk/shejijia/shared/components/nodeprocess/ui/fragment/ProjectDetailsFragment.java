@@ -195,6 +195,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
 }
