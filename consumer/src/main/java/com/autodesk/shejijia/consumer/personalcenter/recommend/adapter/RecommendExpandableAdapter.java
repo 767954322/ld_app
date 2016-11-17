@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
@@ -24,7 +23,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -171,9 +169,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         String apartment = recommendBrandsBean.getApartment();
         for (int i = 0; i < apartmentList.size(); i++) {
             if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(i))) {
-                if (i!=0){
-                    mViewHolder.spinnerApartment.setTextColor(Color.BLACK);
-                }
                 mViewHolder.spinnerApartment.setText(apartment);
             }
         }
@@ -185,7 +180,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 String currentApartmentName = apartmentList.get(position);
-
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(UIUtils.getNoStringIfEmpty(currentApartmentName));
             }
         });
@@ -367,12 +361,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     static class ViewGroupHolder {
-        TextView tvCategoryName;
-//        RelativeLayout rlRecommendFooter;
-//        RelativeLayout rlGroupTopId;
-//        RelativeLayout rlMaterialPrompt;
-//        TextView tvBrandAdd;
-//        TextView tvCategoryDelete;
     }
 
     static class ViewHolder {
@@ -399,25 +387,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mTextWatcherDimension.updatePosition(groupPosition, position);
             mTextWatcherRemarks.updatePosition(groupPosition, position);
         }
-    }
-
-    private void OnClickListener(TextView textView, final int type, final int groupPosition) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null == null) {
-                    return;
-                }
-                switch (type) {
-                    case Constant.FragmentEnum.ZERO:
-                        mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(groupPosition));
-                        break;
-                    case Constant.FragmentEnum.ONE:
-                        mBrandChangListener.onSubCategoryDeleteListener(groupPosition);
-                        break;
-                }
-            }
-        });
     }
 
     class ExpandListTextWatcher implements TextWatcher {

@@ -1,12 +1,10 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -194,7 +192,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
                     break;
                 case R.id.tv_edit_btn:
                     //消费者编辑
-                    RecommendListDetailActivity.actionStartActivity(mContext, mItem.getAsset_id() + "");
+                    RecommendListDetailActivity.actionStartActivity(mContext, mItem.getAsset_id() + "", mItem.getBrand_count_limit());
                     break;
             }
         }

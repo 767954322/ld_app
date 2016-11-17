@@ -72,9 +72,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private String mRecommendScfdTag = "";
     private String projectName;
 
-    public static void actionStartActivity(Context context, String asset_id) {
+    public static void actionStartActivity(Context context, String asset_id, int brand_count_limit) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
         intent.putExtra("asset_id", asset_id);
+        intent.putExtra("brand_count_limit", brand_count_limit);
         context.startActivity(intent);
     }
 

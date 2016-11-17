@@ -367,7 +367,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
                     String asset_id = entity.getAsset_id();
-                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
+                    int brand_count_limit = entity.getBrand_count_limit();
+                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id,brand_count_limit);
                     finish();
                 }
             }

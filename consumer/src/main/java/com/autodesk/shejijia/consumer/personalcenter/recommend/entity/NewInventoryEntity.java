@@ -15,6 +15,16 @@ public class NewInventoryEntity implements Serializable {
 
     private String asset_id;
     private RecommendSCFDBean scfd;
+    /**
+     * scfd : null
+     * asset_id : 1633425
+     * brand_count_limit : null
+     * project_number : TJ161117633425
+     */
+
+    private int brand_count_limit;
+    private String project_number;
+
 
     public String getAsset_id() {
         return asset_id;
@@ -30,5 +40,21 @@ public class NewInventoryEntity implements Serializable {
 
     public void setScfd(RecommendSCFDBean scfd) {
         this.scfd = scfd;
+    }
+
+    public int getBrand_count_limit() {
+        return brand_count_limit;
+    }
+
+    public void setBrand_count_limit(int brand_count_limit) {
+        this.brand_count_limit = brand_count_limit;
+    }
+
+    public String getProject_number() {
+        return project_number;
+    }
+
+    public void setProject_number(String project_number) {
+        this.project_number = project_number;
     }
 }
