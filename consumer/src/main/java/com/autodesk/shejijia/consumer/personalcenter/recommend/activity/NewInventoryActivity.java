@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -32,6 +33,7 @@ import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -287,7 +289,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
+        CustomProgress.show(this, null, false, null);
         getNewInventoryList(jsonObject, designer_id);
     }
 
@@ -357,7 +359,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             }
         });
     }
-    private void showAlertView(final NewInventoryEntity entity){
+
+    private void showAlertView(final NewInventoryEntity entity) {
         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_succ),
                 null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, new OnItemClickListener() {
             @Override

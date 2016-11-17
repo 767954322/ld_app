@@ -167,10 +167,9 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
-        if (event != null) {
-            OFFSET = mRecommends.size();
+        OFFSET = mRecommends.size();
+        if (mRecommendLogic != null)
             mRecommendLogic.onLoadRecommendListData(true, 0, OFFSET, mStatus);
-        }
     }
 
     @Override

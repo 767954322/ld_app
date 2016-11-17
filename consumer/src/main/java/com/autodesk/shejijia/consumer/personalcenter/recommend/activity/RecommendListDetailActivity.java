@@ -302,7 +302,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         // [2]删除主材，没有内容，修改了．
         // [3]空白清单，添加主材后，这两个值不相同，并且tag为null, 需要另外给tag赋值, 让其走保存操作．
         if (isNotEdited || StringUtils.isEmpty(mRecommendScfdTag)) {
-
+            EventBus.getDefault().post(new RefreshEvent());
             finish();
         } else {
             new AlertView("提示", "当前清单还未发送，是否保存？",

@@ -152,10 +152,9 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
      * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
-        if (event != null) {
-            OFFSET = mRecommends.size();
+        OFFSET = mRecommends.size();
+        if (mRecommendLogic != null)
             mRecommendLogic.onLoadRecommendListData(false, 0, OFFSET, 0);
-        }
     }
 
     @Override
