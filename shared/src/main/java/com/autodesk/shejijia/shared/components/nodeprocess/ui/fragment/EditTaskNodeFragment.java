@@ -249,7 +249,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showBottomSheet(List<Task> milstoneTasks, Task task) {
-        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet_edit_task_node, null);
+        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_edit_task_date_dialog, null);
         mBottomSheetDialog.setContentView(view);
         mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
 

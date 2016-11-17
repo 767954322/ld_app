@@ -1,11 +1,9 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.EditTaskNodeAdapter;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by wenhulin on 11/17/16.
@@ -42,6 +32,20 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
         setupHeader(view);
         setupListView();
         return view;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(getActivity(),
+                R.style.BottomSheetDialogTheme_Calendar);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // TODO disable hideable if necessary
+//        View bottomSheet = getDialog().findViewById(android.support.design.R.id.design_bottom_sheet);
+//        BottomSheetBehavior.from(bottomSheet).setHideable(false);
     }
 
     private void setupHeader(View parentView) {
@@ -65,6 +69,12 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
             @Override
             public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view  = LayoutInflater.from(getContext()).inflate(R.layout.item_add_task, parent, false);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 return new TaskViewHolder(view);
             }
 
