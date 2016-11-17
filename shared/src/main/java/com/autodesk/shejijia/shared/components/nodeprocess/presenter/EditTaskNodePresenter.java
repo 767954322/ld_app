@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.TaskEnum;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -61,6 +62,33 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     }
 
     @Override
+    public void filterTasks(TaskFilterType filterType) {
+        List<Task> filteredTasks = new ArrayList<>();
+        switch (filterType) {
+            case CONSTRUCTION_TASKS:
+                for (Task task: mPlan.getTasks()) {
+                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue())) {
+                        filteredTasks.add(task);
+                    }
+                }
+                break;
+            case MATERIAL_TASKS:
+                for (Task task: mPlan.getTasks()) {
+                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
+                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue())) {
+                        filteredTasks.add(task);
+                    }
+                }
+                break;
+            default:
+                filteredTasks.addAll(mPlan.getTasks());
+                break;
+        }
+
+        mView.showTasks(filteredTasks);
+    }
+
+    @Override
     public void updateTask(List<Date> selectedDates) {
         if (selectedDates.size() < 1) {
             return;
@@ -110,11 +138,6 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
             }
         });
 
-    }
-
-    private PlanInfo copyPlan(PlanInfo planInfo) {
-        String jsonString = GsonUtil.beanToString(planInfo);
-        return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
     }
 
     private List<Task> getMileStoneNodes() {

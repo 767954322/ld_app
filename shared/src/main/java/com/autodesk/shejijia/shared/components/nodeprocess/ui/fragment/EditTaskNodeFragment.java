@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ma
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract.TaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
@@ -35,12 +39,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
+
 /**
  * Created by wenhulin on 11/3/16.
  */
 
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
-    private EditPlanContract.TaskNodePresenter mPresenter;
+    private TaskNodePresenter mPresenter;
     private TaskNodeAdapter mAdapter;
 
     private BottomSheetDialog mBottomSheetDialog;
@@ -95,6 +101,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         if (actionBar != null) {
             actionBar.setTitle(R.string.edit_plan_title_second_step);
         }
+        setHasOptionsMenu(true);
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,6 +121,31 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mPresenter = new EditTaskNodePresenter(getActivity().getIntent().getStringExtra("pid"));
         mPresenter.bindView(this);
         mPresenter.fetchPlan();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.edit_task_node, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.menu_add_task) {
+            return true;
+        } else if (i == R.id.menu_filter_task_all) {
+            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.ALL_TASKS);
+            return true;
+        } else if (i == R.id.menu_filter_task_construction) {
+            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.CONSTRUCTION_TASKS);
+            return true;
+        } else if (i == R.id.menu_filter_task_material) {
+            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.MATERIAL_TASKS);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -279,9 +311,69 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         }
 
         void setData(List<Task> tasks) {
-            mTasks.clear();
-            mTasks.addAll(tasks);
-            notifyItemRangeChanged(0, mTasks.size());
+//            mTasks.clear();
+//            mTasks.addAll(tasks);
+//            notifyItemRangeChanged(0, mTasks.size());
+//            notifyDataSetChanged();
+            animateTo(tasks);
+        }
+
+        void animateTo(List<Task> models) {
+            applyAndAnimateRemovals(models);
+            applyAndAnimateAdditions(models);
+            applyAndAnimateMovedItems(models);
+        }
+
+        private void applyAndAnimateRemovals(List<Task> newTasks) {
+            for (int i = mTasks.size() - 1; i >= 0; i--) {
+                final Task task = mTasks.get(i);
+                if (!newTasks.contains(task)) {
+                    removeItem(i);
+                }
+            }
+        }
+
+        private void applyAndAnimateAdditions(List<Task> newTasks) {
+            for (int i = 0, count = newTasks.size(); i < count; i++) {
+                final Task task = newTasks.get(i);
+                if (!mTasks.contains(task)) {
+                    addItem(i, task);
+                }
+            }
+        }
+
+        private void applyAndAnimateMovedItems(List<Task> newTasks) {
+            for (int toPosition = newTasks.size() - 1; toPosition >= 0; toPosition--) {
+                final Task task = newTasks.get(toPosition);
+                final int fromPosition = mTasks.indexOf(task);
+                if (fromPosition >= 0) {
+                    if (fromPosition != toPosition) {
+                        moveItem(fromPosition, toPosition);
+                    }
+                    updateItem(toPosition);
+                }
+            }
+        }
+
+        Task removeItem(int position) {
+            final Task task = mTasks.remove(position);
+            notifyItemRemoved(position);
+            return task;
+        }
+
+        void addItem(int position, Task model) {
+            mTasks.add(position, model);
+            notifyItemInserted(position);
+        }
+
+        void moveItem(int fromPosition, int toPosition) {
+            final Task task = mTasks.remove(fromPosition);
+            mTasks.add(toPosition, task);
+            notifyItemMoved(fromPosition, toPosition);
+        }
+
+        void updateItem(int position) {
+            notifyItemChanged(position);
         }
 
         @Override

@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
@@ -50,14 +49,22 @@ public interface EditPlanContract {
 
     interface TaskNodePresenter extends BasePresenter {
 
-        void fetchPlan();
-
         void bindView(TaskNodeView view);
 
+        void fetchPlan();
+
         void editTaskNode(Task task);
+
+        void filterTasks(TaskFilterType filterType);
 
         void updateTask(List<Date> selectedDates);
 
         void commitPlan();
+
+        enum TaskFilterType {
+            ALL_TASKS,
+            CONSTRUCTION_TASKS,
+            MATERIAL_TASKS
+        }
     }
 }
