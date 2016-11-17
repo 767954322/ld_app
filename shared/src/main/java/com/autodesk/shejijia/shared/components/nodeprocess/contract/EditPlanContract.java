@@ -47,6 +47,8 @@ public interface EditPlanContract {
         void onCommitError(String error);
 
         void updateFilterIcon(int icon);
+
+        void showAddTaskDialog();
     }
 
     interface TaskNodePresenter extends BasePresenter {
@@ -62,6 +64,8 @@ public interface EditPlanContract {
         void updateTask(List<Date> selectedDates);
 
         void deleteTasks(List<Task> tasks);
+
+        void startAddTask();
 
         void commitPlan();
 

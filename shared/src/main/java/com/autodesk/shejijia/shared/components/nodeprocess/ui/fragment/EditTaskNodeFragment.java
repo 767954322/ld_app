@@ -15,20 +15,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract.TaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.EditTaskNodeAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.AddTaskDialogFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
@@ -48,7 +47,7 @@ import java.util.List;
 
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
     private TaskNodePresenter mPresenter;
-    private TaskNodeAdapter mAdapter;
+    private EditTaskNodeAdapter mAdapter;
 
     private BottomSheetDialog mBottomSheetDialog;
     private MaterialCalendarView mCalendarView;
@@ -110,7 +109,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new TaskNodeAdapter(getActivity(), new TaskNodeAdapter.ItemClickListener() {
+        mAdapter = new EditTaskNodeAdapter(getActivity(), new EditTaskNodeAdapter.ItemClickListener() {
             @Override
             public void onTaskClick(Task task) {
                 mPresenter.editTaskNode(task);
@@ -156,6 +155,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
         if (i == R.id.menu_add_task) {
+            mPresenter.startAddTask();
             return true;
         } else if (i == R.id.menu_filter_task_all) {
             mPresenter.onFilterTypeChange(TaskNodePresenter.TaskFilterType.ALL_TASKS);
@@ -211,6 +211,12 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
                 item.setIcon(icon);
             }
         }
+    }
+
+    @Override
+    public void showAddTaskDialog() {
+        AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment();
+        addTaskDialogFragment.show(getFragmentManager(), "ADD_TASK");
     }
 
     @Override
@@ -359,227 +365,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         } else if (taskStartDay != null){
             mCalendarView.setSelectedRange(taskStartDay, taskEndDay);
         }
-    }
-
-    private static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
-        private final static int VIEW_TYPE_MILESTONE_NODE = 0;
-        private final static int VIEW_TYPE_TASK_NODE = 1;
-
-        private Activity mActivity;
-        private List<Task> mTasks = new ArrayList<>();
-        private List<Task> mSelectedTasks = new ArrayList<>();
-
-        private boolean mIsInActionMode = false;
-
-        private ItemClickListener mClickListener;
-
-        TaskNodeAdapter(Activity activity, ItemClickListener clickListener) {
-            mActivity = activity;
-            mClickListener = clickListener;
-        }
-
-        void setIsActionMode(boolean isActionMode) {
-            mIsInActionMode = isActionMode;
-            if (!mIsInActionMode) {
-                mSelectedTasks.clear();
-                notifyItemRangeChanged(0, mTasks.size());
-            }
-        }
-
-        List<Task> getSelectedTasks() {
-            return mSelectedTasks;
-        }
-
-        void setData(List<Task> tasks) {
-//            mTasks.clear();
-//            mTasks.addAll(tasks);
-//            notifyItemRangeChanged(0, mTasks.size());
-//            notifyDataSetChanged();
-            animateTo(tasks);
-        }
-
-        private void animateTo(List<Task> models) {
-            applyAndAnimateRemovals(models);
-            applyAndAnimateAdditions(models);
-            applyAndAnimateMovedItems(models);
-        }
-
-        private void applyAndAnimateRemovals(List<Task> newTasks) {
-            for (int i = mTasks.size() - 1; i >= 0; i--) {
-                final Task task = mTasks.get(i);
-                if (!newTasks.contains(task)) {
-                    removeItem(i);
-                }
-            }
-        }
-
-        private void applyAndAnimateAdditions(List<Task> newTasks) {
-            for (int i = 0, count = newTasks.size(); i < count; i++) {
-                final Task task = newTasks.get(i);
-                if (!mTasks.contains(task)) {
-                    addItem(i, task);
-                }
-            }
-        }
-
-        private void applyAndAnimateMovedItems(List<Task> newTasks) {
-            for (int toPosition = newTasks.size() - 1; toPosition >= 0; toPosition--) {
-                final Task task = newTasks.get(toPosition);
-                final int fromPosition = mTasks.indexOf(task);
-                if (fromPosition >= 0) {
-                    if (fromPosition != toPosition) {
-                        moveItem(fromPosition, toPosition);
-                    }
-                    updateItem(toPosition);
-                }
-            }
-        }
-
-        Task removeItem(int position) {
-            final Task task = mTasks.remove(position);
-            notifyItemRemoved(position);
-            return task;
-        }
-
-        void addItem(int position, Task model) {
-            mTasks.add(position, model);
-            notifyItemInserted(position);
-        }
-
-        void moveItem(int fromPosition, int toPosition) {
-            final Task task = mTasks.remove(fromPosition);
-            mTasks.add(toPosition, task);
-            notifyItemMoved(fromPosition, toPosition);
-        }
-
-        void updateItem(int position) {
-            notifyItemChanged(position);
-        }
-
-        @Override
-        public TaskNodeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            final View view;
-            if (viewType == VIEW_TYPE_MILESTONE_NODE) {
-                view = LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_milestone_node, parent, false);
-            } else {
-                view = LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_task_node, parent, false);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mClickListener != null) {
-                            int position = (int) view.getTag();
-                            Task task = mTasks.get(position);
-                            if (mIsInActionMode) {
-                                if (mSelectedTasks.contains(task)) {
-                                    mSelectedTasks.remove(task);
-                                } else {
-                                    mSelectedTasks.add(task);
-                                }
-                                notifyItemChanged(position);
-                                mClickListener.onSelectedTaskCountChanged(mSelectedTasks.size());
-                            } else {
-                                mClickListener.onTaskClick(task);
-                            }
-                        }
-                    }
-                });
-
-                view.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        boolean handled = false;
-                        if (mClickListener != null) {
-                            int position = (int) view.getTag();
-                            Task task = mTasks.get(position);
-                            handled = mClickListener.onTaskLongClick(task);
-                            if(handled) {
-                                mSelectedTasks.add(task);
-                                mClickListener.onSelectedTaskCountChanged(1);
-                                notifyItemChanged(position);
-                            }
-                        }
-                        return handled;
-                    }
-                });
-            }
-
-            return new TaskNodeViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(TaskNodeViewHolder holder, int position) {
-            Task task = mTasks.get(position);
-            holder.itemView.setTag(position);
-            holder.mTvNodeName.setText(task.getName());
-            holder.mTvNodeTime.setText(getDateString(task));
-
-            holder.itemView.setSelected(mSelectedTasks.contains(task));
-
-            if (task.getStatus().equalsIgnoreCase(TaskStatusTypeEnum.TASK_STATUS_RESOLVED.getTaskStatus())) {
-                // TODO optimize diable state
-                holder.itemView.setEnabled(false);
-                holder.mTvNodeName.setEnabled(false);
-                holder.mTvNodeTime.setEnabled(false);
-            } else {
-                holder.itemView.setEnabled(true);
-                holder.mTvNodeName.setEnabled(true);
-                holder.mTvNodeTime.setEnabled(true);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return mTasks.size();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            Task task = mTasks.get(position);
-            if (task.isMilestone()) {
-                return VIEW_TYPE_MILESTONE_NODE;
-            } else {
-                return VIEW_TYPE_TASK_NODE;
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return super.getItemId(position);
-        }
-
-        private String getDateString(Task task) {
-            Time time = task.getPlanningTime();
-            Date startDate = DateUtil.iso8601ToDate(time.getStart());
-            Date endDate = DateUtil.iso8601ToDate(time.getCompletion());
-            StringBuilder dateStingBuilder = new StringBuilder("");
-            if (startDate != null && (task.isMilestone() || (endDate != null && DateUtil.isSameDay(startDate, endDate)))) {
-                dateStingBuilder.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
-            } else {
-                dateStingBuilder.append(startDate == null ? "NA" : DateUtil.getStringDateByFormat(startDate, "M.d"))
-                        .append("-")
-                        .append(endDate == null ? "NA" : DateUtil.getStringDateByFormat(endDate, "M.d"));
-            }
-            return dateStingBuilder.toString();
-        }
-
-        interface ItemClickListener {
-            void onTaskClick(Task task);
-            boolean onTaskLongClick(Task task);
-            void onSelectedTaskCountChanged(int count);
-        }
-
-    }
-
-    private static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
-        final TextView mTvNodeName;
-        final TextView mTvNodeTime;
-
-        TaskNodeViewHolder(View itemView) {
-            super(itemView);
-            mTvNodeName = (TextView) itemView.findViewById(R.id.tv_node_name);
-            mTvNodeTime = (TextView) itemView.findViewById(R.id.tv_node_time);
-        }
-
     }
 
 }

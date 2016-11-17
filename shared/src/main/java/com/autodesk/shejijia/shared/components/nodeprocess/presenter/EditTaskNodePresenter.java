@@ -108,6 +108,11 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     }
 
     @Override
+    public void startAddTask() {
+        mView.showAddTaskDialog();
+    }
+
+    @Override
     public void commitPlan() {
         Bundle requestParams = new Bundle();
         requestParams.putString("operation", "edit"); // TODO Get operation
