@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="240dp"
-                android:background="#ffffff"
-                android:gravity="center_vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="240dp"
+    android:background="#ffffff"
+    android:gravity="center_vertical">
+
+
+    <ImageView
+        android:id="@+id/image_quanjing"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/home_page_icon"
+        android:visibility="visible" />
+
+    <TextView
+
+        android:id="@+id/tv_no_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+        android:text="暂无图片"
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/image_3d_photo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="@dimen/size_5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:gravity="center"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
-    <ImageView
-        android:visibility="invisible"
-        android:id="@+id/image_quanjing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/roaming_figure"/>
+
 </RelativeLayout>
 
