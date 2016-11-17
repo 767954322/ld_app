@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/activity_new_inventory"
@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/common_navbar"
-            layout="@layout/view_navigation_header" />
+            layout="@layout/view_navigation_header"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,25 +30,25 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_select_project"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <TextView
                 android:id="@+id/et_new_inventory_project_name"
                 android:layout_width="@dimen/size_0"
                 android:layout_height="match_parent"
-                android:editable="false"
-                android:background="@color/no_color"
                 android:layout_weight="1"
+                android:background="@color/no_color"
+                android:editable="false"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_select_project"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_unfold_normal" />
+                android:src="@drawable/icon_unfold_normal"/>
         </LinearLayout>
 
         <View
@@ -70,7 +70,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_member_account"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_member_account"
@@ -82,7 +82,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_member_account"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
         </LinearLayout>
 
         <View
@@ -104,7 +104,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_name"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_name"
@@ -114,8 +114,9 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_name"
+                android:singleLine="true"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
         </LinearLayout>
 
         <View
@@ -137,7 +138,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_phone_number"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_phone_number"
@@ -145,12 +146,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/no_color"
-                android:inputType="phone"
-                android:maxLength="11"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_phone_number"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
         </LinearLayout>
 
         <View
@@ -172,7 +173,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_project_address"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_project_address"
@@ -180,17 +181,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/no_color"
-                android:gravity="center_vertical"
                 android:editable="false"
+                android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_project_address"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_unfold_normal" />
+                android:src="@drawable/icon_unfold_normal"/>
         </LinearLayout>
 
         <View
@@ -212,7 +213,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_community_name"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_community_name"
@@ -223,7 +224,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_community_name"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
         </LinearLayout>
 
         <View
@@ -245,7 +246,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/new_inventory_detailed_address"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
             <EditText
                 android:id="@+id/et_new_inventory_detailed_address"
@@ -256,7 +257,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_detailed_address"
                 android:textColor="@color/text_item_name"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
         </LinearLayout>
 
         <View
@@ -270,13 +271,13 @@
             android:layout_height="@dimen/size_40"
             android:layout_marginLeft="@dimen/size_15"
             android:layout_marginRight="@dimen/size_15"
-            android:focusable="false"
-            android:enabled="false"
             android:layout_marginTop="@dimen/size_60"
             android:background="@drawable/bg_common_btn_gray"
+            android:enabled="false"
+            android:focusable="false"
             android:text="@string/new_inventory_next"
             android:textColor="@color/bg_ff"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

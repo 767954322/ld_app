@@ -318,9 +318,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         if (StringUtils.isEmpty(mCommunityName)) {
             return true;
         }
-        if (StringUtils.isEmpty(mDetailAddress)) {
-            return true;
-        }
+//        if (StringUtils.isEmpty(mDetailAddress)) {
+//            return true;
+//        }
 
         if (StringUtils.isEmpty(mProjectName)) {
             return true;

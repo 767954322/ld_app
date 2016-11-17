@@ -108,7 +108,8 @@
             android:layout_gravity="start|center_vertical"
             android:textSize="@dimen/font_15"
             app:ms_dropdown_height="wrap_content"
-            app:ms_dropdown_max_height="@dimen/size_200"/>
+            app:ms_dropdown_max_height="@dimen/size_200"
+            />
     </LinearLayout>
 
     <LinearLayout
