@@ -30,7 +30,7 @@
 
     <!-- toolBar menu text-->
     <string name="menu_search">搜索</string>
-    <string name="menu_screen">筛选</string>
+    <string name="menu_filter">筛选</string>
     <string name="menu_project_info">项目信息</string>
     <string name="menu_project_message">消息中心</string>
     <string name="toolbar_task_title">今日任务</string>
@@ -80,6 +80,11 @@
     <string name="edit_plan_complete">完成</string>
     <string name="edit_plan_title_first_step">第一步: 调整验收节点时间</string>
     <string name="edit_plan_title_second_step">第二步: 调整子节点时间</string>
+    <string name="menu_add_task">添加小节点</string>
+    <string name="menu_task_filter_all">显示全部子节点</string>
+    <string name="menu_task_filter_construction">只看施工节点</string>
+    <string name="menu_task_filter_material">只看材料节点</string>
+
 
     <!--角色名称-->
     <string name="designer">设计师</string>
