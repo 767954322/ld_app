@@ -235,6 +235,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 break;
 
             case R.id.btn_measure_form_accept: /// 同意量房 .
+                tv_measure_form_designer_liangfangfeit.clearFocus();
                 agreeMeasureHouse(needs_id);
                 break;
 
