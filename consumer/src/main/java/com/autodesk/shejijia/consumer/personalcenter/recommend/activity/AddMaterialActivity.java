@@ -75,7 +75,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private List<RecommendBrandsBean> getAdapterResultList;
     private DynamicAddViewContainer dynamicAddViewContainer;
     private List<RecommendBrandsBean> listChecked;
-    ;//选中品牌的集合
+    //选中品牌的集合
     private int brandCount = 0;//可添加品牌的数量
     private TextView remain_brand_count;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -206,7 +206,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
         };
     }
-
+/**
+ * 进入店铺选择
+ * */
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
@@ -230,8 +232,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             case 101:
                 Bundle bundle = data.getExtras();
                 List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get("list");
-                //将返回的数据再次筛选显示
                 CustomProgress.showDefaultProgress(AddMaterialActivity.this);
+                //将返回的数据再次筛选显示
                 firstGetBrandsInformation(forResultStoreList);
                 break;
             default:
@@ -287,6 +289,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                         RecommendSCFDBean getRecommendBrandsBean = GsonUtil.jsonToBean(jsonObject.toString(), RecommendSCFDBean.class);
 
+                        //第一次初始化的获得的品牌
                         if (justRefreshOrLoadMore == 1) {
                             listBrands.clear();
                             if (getRecommendBrandsBean.getBrands() != null) {
@@ -295,6 +298,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                             }
                             showBrandsList(listBrands);
                         }
+                        //初始化后,再次获取数据新建,或复用已经拥有的数据
                         if (justRefreshOrLoadMore == 2) {
                             listBrands.clear();
                             if (getRecommendBrandsBean.getBrands() != null) {
@@ -305,6 +309,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                                 restartDatasForAdapter(null, listBrands);
                             }
                         }
+                        //加载更多时,展示数据
                         if (justRefreshOrLoadMore == 3) {
                             mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                             if (getRecommendBrandsBean.getBrands() != null) {
@@ -365,7 +370,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      */
     public void showOneCategory() {
 
+        //多个二级自定义控件集
         dynamicAddViews = new DynamicAddView[materialCategoryBean.getCategories_3d().size()];
+        //多个二级展示全部那控件集
         dynamicPopWindows = new DynamicPopWindow[materialCategoryBean.getCategories_3d().size()];
         showTwoCategory();
         oneArr = new String[materialCategoryBean.getCategories_3d().size()];
@@ -378,6 +385,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         btnStatusBeanList = new BtnStatusBean[oneArr.length];
         //默认需要添加的第一个未点击的二级品类保存
         BtnStatusBean btnStatusBeanDefault;
+        //默认每个二级品类选中第一个
         for (int i = 0;i<oneArr.length;i++){
 
             btnStatusBeanDefault = new BtnStatusBean();
@@ -766,6 +774,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
     /**
      * 删除清单中，品牌为空的元素
+     * 暂时先不用
      */
     public void deleteTotalEmptyDataItem() {
 
