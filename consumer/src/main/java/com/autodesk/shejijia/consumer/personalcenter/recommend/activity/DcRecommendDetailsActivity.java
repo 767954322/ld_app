@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     private List<RecommendSCFDBean> brands = new ArrayList<>();
     private RecommendDetailsBean mEntity;
     private boolean mCanceled;
+    private TextView tvVillageName;
 
     public static void jumpTo(Context context, String asset_id, boolean canceled) {
         Intent intent = new Intent(context, DcRecommendDetailsActivity.class);
@@ -75,6 +77,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
         mListview.addHeaderView(rootView);
         ivRecoWfsico = (ImageView) rootView.findViewById(R.id.iv_reco_wfsico);
         tvRecommendName = (TextView) rootView.findViewById(R.id.tv_recommend_name);
+        tvVillageName = (TextView) rootView.findViewById(R.id.tv_reco_village_name);
         tvAssetId = (TextView) rootView.findViewById(R.id.tv_asset_id);
         tvRecoConsumerName = (TextView) rootView.findViewById(R.id.tv_reco_consumer_name);
         tvRecoConsumerMobile = (TextView) rootView.findViewById(R.id.tv_reco_consumer_mobile);
@@ -150,7 +153,10 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void updateView2Api(RecommendDetailsBean item) {
-        tvRecommendName.setText(item.getCommunity_name());
+        if (!TextUtils.isEmpty(item.getCommunity_name())) {
+            tvRecommendName.setText(UIUtils.substring(item.getCommunity_name(), 4));
+            tvVillageName.setText(item.getCommunity_name());
+        }
         tvAssetId.setText("清单编号：" + item.getProject_number() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());

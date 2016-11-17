@@ -90,6 +90,22 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:text="@string/demand_village_name"/>
+
+            <TextView
+                android:id="@+id/tv_reco_village_name"
+                style="@style/item_text_style"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="@dimen/size_16"
+            android:paddingRight="@dimen/size_16">
+
+            <TextView
+                style="@style/item_text_style"
                 android:text="@string/demand_project_address"/>
 
             <TextView
