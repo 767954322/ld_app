@@ -415,10 +415,11 @@ public class MaterialSpinner extends TextView {
   }
 
   private void animateArrow(boolean shouldRotateUp) {
-    int start = shouldRotateUp ? 0 : 10000;
-    int end = shouldRotateUp ? 10000 : 0;
-    ObjectAnimator animator = ObjectAnimator.ofInt(arrowDrawable, "level", start, end);
-    animator.start();
+    //fixme arrow no rotation
+//    int start = shouldRotateUp ? 0 : 10000;
+//    int end = shouldRotateUp ? 10000 : 0;
+//    ObjectAnimator animator = ObjectAnimator.ofInt(arrowDrawable, "level", start, end);
+//    animator.start();
   }
 
   /**
