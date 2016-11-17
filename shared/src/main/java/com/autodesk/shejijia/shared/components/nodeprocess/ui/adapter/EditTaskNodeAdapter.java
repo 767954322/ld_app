@@ -176,14 +176,9 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
         holder.itemView.setSelected(mSelectedTasks.contains(task));
 
         if (task.getStatus().equalsIgnoreCase(TaskStatusTypeEnum.TASK_STATUS_RESOLVED.getTaskStatus())) {
-            // TODO optimize diable state
             holder.itemView.setEnabled(false);
-            holder.mTvNodeName.setEnabled(false);
-            holder.mTvNodeTime.setEnabled(false);
         } else {
             holder.itemView.setEnabled(true);
-            holder.mTvNodeName.setEnabled(true);
-            holder.mTvNodeTime.setEnabled(true);
         }
     }
 

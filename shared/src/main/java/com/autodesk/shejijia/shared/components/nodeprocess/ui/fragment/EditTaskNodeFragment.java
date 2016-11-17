@@ -77,6 +77,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             if (i == R.id.menu_delete_task) {
                 List<Task> selectedTasks = mAdapter.getSelectedTasks();
                 mPresenter.deleteTasks(selectedTasks);
+                mode.finish();
                 return true;
             } else {
                 return false;

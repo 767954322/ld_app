@@ -11,7 +11,7 @@
     android:layout_marginRight="@dimen/spacing_margin_double"
     android:paddingLeft="@dimen/spacing_padding_normal"
     android:paddingRight="@dimen/spacing_padding_normal"
-    android:elevation="2dp"
+    android:elevation="0dp"
     android:background="@drawable/bg_item_edit_task_node">
 
     <TextView
@@ -22,6 +22,7 @@
         android:layout_gravity="center_vertical"
         android:textColor="@color/item_edit_task_node_name"
         android:textSize="@dimen/font_large"
+        android:duplicateParentState="true"
         tools:text="塑窗测量"/>
 
     <TextView
@@ -32,6 +33,7 @@
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_normal"
+        android:duplicateParentState="true"
         tools:text="10.21"/>
 
 </LinearLayout>

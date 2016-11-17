@@ -9,7 +9,7 @@
     android:layout_marginBottom="@dimen/spacing_margin_micro"
     android:layout_marginLeft="@dimen/spacing_margin_double"
     android:layout_marginRight="@dimen/spacing_margin_double"
-    android:elevation="2dp"
+    android:elevation="1dp"
     android:background="@drawable/bg_item_edit_task_node"
     android:gravity="center"
     tools:text="Text"

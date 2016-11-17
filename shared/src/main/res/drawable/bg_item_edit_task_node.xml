@@ -11,21 +11,21 @@
     <item android:state_pressed="true" >
         <shape>
             <corners android:radius="4dp" />
-            <solid android:color="@color/blue"/>
+            <solid android:color="@color/plan_bg_highlight"/>
         </shape>
     </item>
 
     <item android:state_selected="true" >
         <shape>
             <corners android:radius="4dp" />
-            <solid android:color="@color/blue"/>
+            <solid android:color="@color/plan_bg_highlight"/>
         </shape>
     </item>
 
     <item>
         <shape>
             <corners android:radius="4dp" />
-            <solid android:color="@android:color/darker_gray"/>
+            <solid android:color="@color/plan_bg_normal_item_task"/>
         </shape>
     </item>
 </selector>
