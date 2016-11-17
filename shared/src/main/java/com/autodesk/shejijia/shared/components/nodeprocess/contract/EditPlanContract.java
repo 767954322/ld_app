@@ -45,6 +45,8 @@ public interface EditPlanContract {
         void onCommitSuccess();
 
         void onCommitError(String error);
+
+        void updateFilterIcon(int icon);
     }
 
     interface TaskNodePresenter extends BasePresenter {

@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.TaskEnum;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
@@ -64,6 +65,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     @Override
     public void filterTasks(TaskFilterType filterType) {
         List<Task> filteredTasks = new ArrayList<>();
+        int filterIcon;
         switch (filterType) {
             case CONSTRUCTION_TASKS:
                 for (Task task: mPlan.getTasks()) {
@@ -71,6 +73,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
                         filteredTasks.add(task);
                     }
                 }
+                filterIcon = R.drawable.ic_menu_filtered;
                 break;
             case MATERIAL_TASKS:
                 for (Task task: mPlan.getTasks()) {
@@ -79,12 +82,15 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
                         filteredTasks.add(task);
                     }
                 }
+                filterIcon = R.drawable.ic_menu_filtered;
                 break;
             default:
                 filteredTasks.addAll(mPlan.getTasks());
+                filterIcon = R.drawable.ic_menu_filter;
                 break;
         }
 
+        mView.updateFilterIcon(filterIcon);
         mView.showTasks(filteredTasks);
     }
 

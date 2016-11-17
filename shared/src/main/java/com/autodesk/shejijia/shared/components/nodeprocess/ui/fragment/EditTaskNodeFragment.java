@@ -54,6 +54,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     private ConProgressDialog mProgressDialog;
 
+    private Menu mMenu;
+
     @Override
     public void showTasks(List<Task> tasks) {
         mAdapter.setData(tasks);
@@ -88,6 +90,16 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void updateFilterIcon(int icon) {
+        if (mMenu != null) {
+            MenuItem item = mMenu.findItem(R.id.menu_filter);
+            if (item != null) {
+                item.setIcon(icon);
+            }
+        }
     }
 
     @Override
@@ -127,6 +139,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.edit_task_node, menu);
+        mMenu = menu;
     }
 
     @Override
