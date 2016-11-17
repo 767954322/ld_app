@@ -176,12 +176,12 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
                 break;
             case R.id.btn_new_inventory_next:
-                click();
+                nextClick();
                 break;
         }
     }
 
-    private void click() {
+    private void nextClick() {
         if (SingleClickUtils.isFastDoubleClick()) {
             return;
         }
@@ -252,11 +252,15 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                     return;
                 }
             }
+            /**
+             * 判断是否为会员帐号
+             */
+            getMemberAccountList(mMemberAccount);
+        } else {
+            newInvertoryList(acs_member_id);
         }
-        /**
-         * 判断是否为会员帐号
-         */
-        getMemberAccountList(mMemberAccount);
+
+
     }
 
     private void newInvertoryList(String acs_member_id) {
@@ -368,7 +372,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (position != AlertView.CANCELPOSITION) {
                     String asset_id = entity.getAsset_id();
                     int brand_count_limit = entity.getBrand_count_limit();
-                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id,brand_count_limit);
+                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id, brand_count_limit);
                     finish();
                 }
             }
@@ -412,6 +416,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         }
     }
 
+    // 从已有项目中获取的数据．
     private void updateNotify(SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {
 
 
@@ -430,6 +435,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mCurrentProvince = designerProjectsBean.getProvince_name();
             mCurrentCity = designerProjectsBean.getCity_name();
             mCurrentDistrict = designerProjectsBean.getDistrict_name();
+
+            acs_member_id = designerProjectsBean.getConsumer_id();
 
             mEtProjectAddress.setText(mCurrentProvince + mCurrentCity +
                     UIUtils.getNoStringIfEmpty(mCurrentDistrict));
