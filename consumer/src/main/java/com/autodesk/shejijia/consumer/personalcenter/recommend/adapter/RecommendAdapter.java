@@ -64,8 +64,8 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     }
 
     private void convertDesignerDataUI(CommonViewHolder holder, RecommendDetailsBean item) {
-        String status = item.getSent_status();
-        String revoke_state = item.getStatus();
+        String sent_status = item.getSent_status();
+        String status = item.getStatus(); //小状态
         //TODO RED HOT LOGIC
         String consumer_has_remind = item.getConsumer_info_remind();
         String designer_has_remind = item.getDesigner_info_remind();
@@ -77,15 +77,15 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         int color = UIUtils.getColor((isDesiner ? dhasRemind : chasRemind) ? R.color.mybid_text_color_normal : R.color.font_gray);
         tv_revoke_cause.setTextColor(color);
         tv_revoke_cause_details.setTextColor(color);
-        if (!TextUtils.isEmpty(revoke_state)) {
+        if (!TextUtils.isEmpty(status)) {
             //设计师　消费者退回的项目不应该被置灰　可以
-            notifyUISetChanged(holder, revoke_state.equals("canceled") || revoke_state.equals("refused"));
-            if (!TextUtils.isEmpty(status)) {
-                boolean unsent = status.equals("unsent");
+            notifyUISetChanged(holder, status.equals("canceled") || status.equals("refused"));
+            if (!TextUtils.isEmpty(sent_status)) {
+                boolean unsent = sent_status.equals("unsent");
                 holder.setVisible(R.id.iv_reco_wfsico, isDesiner ? unsent : false);
             }
             //如果是canceled那么就是显示撤销原因：othe如果不是退回原因下边回隐藏
-            holder.setText(R.id.tv_revoke_cause, revoke_state.equals("canceled") ? "撤销原因：" : "退回原因：");
+            holder.setText(R.id.tv_revoke_cause, status.equals("canceled") ? "撤销原因：" : "退回原因：");
         }
         holder.setText(R.id.tv_revoke_cause_details, item.getRemark());
         if (!TextUtils.isEmpty(status)) {
