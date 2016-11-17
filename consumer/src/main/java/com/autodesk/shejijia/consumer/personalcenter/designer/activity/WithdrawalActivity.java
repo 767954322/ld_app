@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -129,7 +128,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     return;
                 }
                 //增加银行的名称的判断
-                if (!bank_name_var.matches(RegexUtil.ADDRESS_REGEX)) {
+                if (!TextUtils.isEmpty(bank_name_var)&&!bank_name_var.matches(RegexUtil.ADDRESS_REGEX)) {
                     openAlertView("支行名称只能包含2-32位字符");
 //                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     return;
