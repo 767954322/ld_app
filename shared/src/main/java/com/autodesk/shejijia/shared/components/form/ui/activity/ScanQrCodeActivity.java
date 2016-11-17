@@ -128,8 +128,4 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 }

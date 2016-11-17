@@ -36,7 +36,7 @@
                              android:background="@drawable/btn_precheck_bg_selector"
                              android:button="@null"
                              android:gravity="center"
-                             android:text="@string/buhege"
+                             android:text="@string/unqualified"
                              android:textColor="@color/form_btn_bg_grey"
                              android:textSize="@dimen/textsize_14"/>
 
@@ -46,7 +46,7 @@
                              android:background="@drawable/btn_precheck_bg_selector"
                              android:button="@null"
                              android:gravity="center"
-                             android:text="@string/hege"
+                             android:text="@string/qualified"
                              android:textColor="@color/form_btn_bg_grey"
                              android:textSize="@dimen/textsize_14"/>
 

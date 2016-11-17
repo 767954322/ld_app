@@ -25,20 +25,15 @@
                   android:textColor="@color/con_white"
                   android:visibility="gone"/>
 
-        <ImageButton android:id="@+id/imgBtn_option"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_alignParentEnd="true"
-                     android:layout_centerVertical="true"
-                     android:background="@drawable/ic_next"/>
-
         <TextView android:id="@+id/tv_result"
                   android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
+                  android:layout_height="match_parent"
                   android:layout_centerVertical="true"
-                  android:layout_marginEnd="@dimen/spacing_plain_table_cell"
-                  android:layout_toStartOf="@id/imgBtn_option"
+                  android:layout_alignParentEnd="true"
                   android:textColor="@color/font_subtitle"
+                  android:drawableEnd="@drawable/ic_next"
+                  android:gravity="center_vertical"
+                  android:drawablePadding="@dimen/spacing_plain_table_cell"
                   android:textSize="@dimen/precheck_font_15"/>
 
         <TextView android:id="@+id/tv_count"
