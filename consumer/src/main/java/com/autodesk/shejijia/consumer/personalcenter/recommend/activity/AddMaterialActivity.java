@@ -234,6 +234,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get("list");
                 CustomProgress.showDefaultProgress(AddMaterialActivity.this);
                 //将返回的数据再次筛选显示
+                justRefreshOrLoadMore = 2;
                 firstGetBrandsInformation(forResultStoreList);
                 break;
             default:
@@ -316,9 +317,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                                 changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
                             } else {
-                                CustomProgress.cancelDialog();
                             }
                         }
+                        CustomProgress.cancelDialog();
                     }
                 });
     }
@@ -546,7 +547,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
         }
-        CustomProgress.cancelDialog();
     }
 
     /**
@@ -586,7 +586,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.changeListTag(list, datas);
         }
         addBrandShowAdapter.notifyDataSetChanged();
-        CustomProgress.cancelDialog();
     }
 
     /**
