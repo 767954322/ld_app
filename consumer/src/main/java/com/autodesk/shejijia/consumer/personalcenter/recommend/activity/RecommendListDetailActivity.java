@@ -27,7 +27,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeader
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -281,7 +280,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         //TODO @xuehua.yao
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
-        intent.putExtra(JsonConstants.JSON_PROJECT_NAME,projectName);
+        intent.putExtra(JsonConstants.JSON_PROJECT_NAME, projectName);
         startActivityForResult(intent, 24);
     }
 
@@ -474,18 +473,44 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         if (null == checkedInformationBeanList || checkedInformationBeanList.size() <= 0) {
             mRecommendSCFDList.clear();
         }
-        Iterator<CheckedInformationBean> iter = checkedInformationBeanList.iterator();
-        while (iter.hasNext()) {
-            CheckedInformationBean cb = iter.next();
-            MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = cb.getSubCategoryBean();
+
+        // [1]mRecomendSCFDList 已有的sub_3d_id, checkedInfomationBeanList有sub_3d_id．　不做操作
+        // [1.1] mRecommendSCFDList已有品牌集合．checkInfomationBeanList已有品牌集合　．　不做操作
+        // [1.2] mRecommendSCFDList已有品牌集合　checkInfomationBeanList没有品牌集合．　移除品牌操作
+        // [1.3]mRecommendSCFDList没有有品牌集合　checkInfomationBeanList有品牌集合．　添加品牌操作
+
+        // [2]mRecomendSCFDList 没有的sub_3d_id, checkedInfomationBeanList有sub_3d_id．　添加主材操作
+        // [3]mRecomendSCFDList 已有的sub_3d_id, checkedInfomationBeanList没有sub_3d_id．移除主材操作
+
+        // [1]移除mRecommendSCFDList中checkedInformationBeanList取消的的主材项目．
+        Iterator<RecommendSCFDBean> recommendSCFDBeanIterator = mRecommendSCFDList.iterator();
+        while (recommendSCFDBeanIterator.hasNext()) {
+            RecommendSCFDBean next = recommendSCFDBeanIterator.next();
+            Iterator<CheckedInformationBean> iterator = checkedInformationBeanList.iterator();
+            while (iterator.hasNext()) {
+                CheckedInformationBean next1 = iterator.next();
+                String sub_category_3d_id = next.getSub_category_3d_id();
+                String sub_category_3d_id1 = next1.getSubCategoryBean().getSub_category_3d_id();
+                if (!sub_category_3d_id.equals(sub_category_3d_id1)) {
+                    recommendSCFDBeanIterator.remove();
+                }
+            }
+        }
+
+        // [2]移除checkedInformationBeanList中与mRecommendSCFDList中数据重复的数据．
+        Iterator<CheckedInformationBean> checkedInformationBeanIterator = checkedInformationBeanList.iterator();
+        while (checkedInformationBeanIterator.hasNext()) {
+            CheckedInformationBean checkedInformationBean = checkedInformationBeanIterator.next();
+            MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = checkedInformationBean.getSubCategoryBean();
             String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
-            List<RecommendBrandsBean> checkedBrandsInformationBean = cb.getCheckedBrandsInformationBean();
+            List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
             Iterator<RecommendSCFDBean> listIterator = mRecommendSCFDList.iterator();
             while (listIterator.hasNext()) {
-                RecommendSCFDBean b = listIterator.next();
-                if (b.getSub_category_3d_id().equals(material_sub_category_3d_id1)) {
-                    b.setBrands(checkedBrandsInformationBean);
-                    iter.remove();
+                RecommendSCFDBean scfdBean = listIterator.next();
+                // 相同主材．
+                if (scfdBean.getSub_category_3d_id().equals(material_sub_category_3d_id1)) {
+                    scfdBean.setBrands(checkedBrandsInformationBean);
+                    checkedInformationBeanIterator.remove();
                 }
             }
         }
