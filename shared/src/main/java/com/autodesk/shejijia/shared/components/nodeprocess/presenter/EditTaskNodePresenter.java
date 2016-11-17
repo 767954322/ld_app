@@ -9,7 +9,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -120,6 +119,15 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         updateTaskDate(mActiveTask, startDateString, endDateString);
         sortTasks();
         mView.showTasks(mPlan.getTasks());
+    }
+
+    @Override
+    public void deleteTasks(List<Task> tasks) {
+        List<Task> allTasks = mPlan.getTasks();
+        for (Task task : tasks) {
+            allTasks.remove(task);
+        }
+        mView.showTasks(allTasks);
     }
 
     @Override

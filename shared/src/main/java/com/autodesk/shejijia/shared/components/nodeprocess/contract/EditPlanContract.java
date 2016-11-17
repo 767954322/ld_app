@@ -61,6 +61,8 @@ public interface EditPlanContract {
 
         void updateTask(List<Date> selectedDates);
 
+        void deleteTasks(List<Task> tasks);
+
         void commitPlan();
 
         enum TaskFilterType {

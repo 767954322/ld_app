@@ -7,6 +7,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,51 +56,43 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     private ConProgressDialog mProgressDialog;
 
     private Menu mMenu;
+    private ActionMode mActionMode;
 
-    @Override
-    public void showTasks(List<Task> tasks) {
-        mAdapter.setData(tasks);
-    }
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.edit_task_node_cab, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            int i = item.getItemId();
+            if (i == R.id.menu_delete_task) {
+                List<Task> selectedTasks = mAdapter.getSelectedTasks();
+                mPresenter.deleteTasks(selectedTasks);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            mAdapter.setIsActionMode(false);
+        }
+    };
 
     public EditPlanContract.TaskNodePresenter getPresenter() {
         return mPresenter;
-    }
-
-    @Override
-    public void onCommitSuccess() {
-        getActivity().setResult(Activity.RESULT_OK);
-        getActivity().finish();
-    }
-
-    @Override
-    public void onCommitError(String error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.alert_dialog__default_title);
-        builder.setMessage(error);
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing
-            }
-        });
-        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mPresenter.commitPlan();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    @Override
-    public void updateFilterIcon(int icon) {
-        if (mMenu != null) {
-            MenuItem item = mMenu.findItem(R.id.menu_filter);
-            if (item != null) {
-                item.setIcon(icon);
-            }
-        }
     }
 
     @Override
@@ -121,6 +114,23 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             @Override
             public void onTaskClick(Task task) {
                 mPresenter.editTaskNode(task);
+            }
+
+            @Override
+            public boolean onTaskLongClick(Task task) {
+                if (mActionMode != null) {
+                    return false;
+                }
+
+                // Start the CAB using the ActionMode.Callback defined above
+                mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                mAdapter.setIsActionMode(true);
+                return true;
+            }
+
+            @Override
+            public void onSelectedTaskCountChanged(int count) {
+                mActionMode.setTitle(String.format(getString(R.string.cab_title_delete_task), count));
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -158,6 +168,48 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void showTasks(List<Task> tasks) {
+        mAdapter.setData(tasks);
+    }
+
+    @Override
+    public void onCommitSuccess() {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
+    }
+
+    @Override
+    public void onCommitError(String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(error);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+            }
+        });
+        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.commitPlan();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void updateFilterIcon(int icon) {
+        if (mMenu != null) {
+            MenuItem item = mMenu.findItem(R.id.menu_filter);
+            if (item != null) {
+                item.setIcon(icon);
+            }
         }
     }
 
@@ -315,12 +367,27 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         private Activity mActivity;
         private List<Task> mTasks = new ArrayList<>();
+        private List<Task> mSelectedTasks = new ArrayList<>();
+
+        private boolean mIsInActionMode = false;
 
         private ItemClickListener mClickListener;
 
         TaskNodeAdapter(Activity activity, ItemClickListener clickListener) {
             mActivity = activity;
             mClickListener = clickListener;
+        }
+
+        void setIsActionMode(boolean isActionMode) {
+            mIsInActionMode = isActionMode;
+            if (!mIsInActionMode) {
+                mSelectedTasks.clear();
+                notifyItemRangeChanged(0, mTasks.size());
+            }
+        }
+
+        List<Task> getSelectedTasks() {
+            return mSelectedTasks;
         }
 
         void setData(List<Task> tasks) {
@@ -331,7 +398,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             animateTo(tasks);
         }
 
-        void animateTo(List<Task> models) {
+        private void animateTo(List<Task> models) {
             applyAndAnimateRemovals(models);
             applyAndAnimateAdditions(models);
             applyAndAnimateMovedItems(models);
@@ -400,8 +467,38 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
                     @Override
                     public void onClick(View v) {
                         if (mClickListener != null) {
-                            mClickListener.onTaskClick((Task) view.getTag());
+                            int position = (int) view.getTag();
+                            Task task = mTasks.get(position);
+                            if (mIsInActionMode) {
+                                if (mSelectedTasks.contains(task)) {
+                                    mSelectedTasks.remove(task);
+                                } else {
+                                    mSelectedTasks.add(task);
+                                }
+                                notifyItemChanged(position);
+                                mClickListener.onSelectedTaskCountChanged(mSelectedTasks.size());
+                            } else {
+                                mClickListener.onTaskClick(task);
+                            }
                         }
+                    }
+                });
+
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        boolean handled = false;
+                        if (mClickListener != null) {
+                            int position = (int) view.getTag();
+                            Task task = mTasks.get(position);
+                            handled = mClickListener.onTaskLongClick(task);
+                            if(handled) {
+                                mSelectedTasks.add(task);
+                                mClickListener.onSelectedTaskCountChanged(1);
+                                notifyItemChanged(position);
+                            }
+                        }
+                        return handled;
                     }
                 });
             }
@@ -412,11 +509,14 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         @Override
         public void onBindViewHolder(TaskNodeViewHolder holder, int position) {
             Task task = mTasks.get(position);
-            holder.itemView.setTag(task);
+            holder.itemView.setTag(position);
             holder.mTvNodeName.setText(task.getName());
             holder.mTvNodeTime.setText(getDateString(task));
 
+            holder.itemView.setSelected(mSelectedTasks.contains(task));
+
             if (task.getStatus().equalsIgnoreCase(TaskStatusTypeEnum.TASK_STATUS_RESOLVED.getTaskStatus())) {
+                // TODO optimize diable state
                 holder.itemView.setEnabled(false);
                 holder.mTvNodeName.setEnabled(false);
                 holder.mTvNodeTime.setEnabled(false);
@@ -464,6 +564,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         interface ItemClickListener {
             void onTaskClick(Task task);
+            boolean onTaskLongClick(Task task);
+            void onSelectedTaskCountChanged(int count);
         }
 
     }
