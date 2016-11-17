@@ -57,7 +57,7 @@ public interface EditPlanContract {
 
         void editTaskNode(Task task);
 
-        void filterTasks(TaskFilterType filterType);
+        void onFilterTypeChange(TaskFilterType filterType);
 
         void updateTask(List<Date> selectedDates);
 

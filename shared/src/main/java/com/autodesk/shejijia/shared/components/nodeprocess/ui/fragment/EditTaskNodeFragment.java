@@ -158,13 +158,13 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         if (i == R.id.menu_add_task) {
             return true;
         } else if (i == R.id.menu_filter_task_all) {
-            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.ALL_TASKS);
+            mPresenter.onFilterTypeChange(TaskNodePresenter.TaskFilterType.ALL_TASKS);
             return true;
         } else if (i == R.id.menu_filter_task_construction) {
-            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.CONSTRUCTION_TASKS);
+            mPresenter.onFilterTypeChange(TaskNodePresenter.TaskFilterType.CONSTRUCTION_TASKS);
             return true;
         } else if (i == R.id.menu_filter_task_material) {
-            mPresenter.filterTasks(TaskNodePresenter.TaskFilterType.MATERIAL_TASKS);
+            mPresenter.onFilterTypeChange(TaskNodePresenter.TaskFilterType.MATERIAL_TASKS);
             return true;
         } else {
             return super.onOptionsItemSelected(item);

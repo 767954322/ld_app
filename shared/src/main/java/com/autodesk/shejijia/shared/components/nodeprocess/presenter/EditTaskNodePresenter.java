@@ -33,6 +33,8 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     private PlanInfo mPlan;
     private Task mActiveTask;
 
+    private TaskFilterType mFilterType = TaskFilterType.ALL_TASKS;
+
     public EditTaskNodePresenter(String projectId) {
         mProjectId = projectId;
     }
@@ -45,7 +47,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         } else {
             mPlan = editingPlan;
             sortTasks();
-            mView.showTasks(mPlan.getTasks());
+            showTasks(mPlan.getTasks());
         }
     }
 
@@ -62,35 +64,10 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     }
 
     @Override
-    public void filterTasks(TaskFilterType filterType) {
-        List<Task> filteredTasks = new ArrayList<>();
-        int filterIcon;
-        switch (filterType) {
-            case CONSTRUCTION_TASKS:
-                for (Task task: mPlan.getTasks()) {
-                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue())) {
-                        filteredTasks.add(task);
-                    }
-                }
-                filterIcon = R.drawable.ic_menu_filtered;
-                break;
-            case MATERIAL_TASKS:
-                for (Task task: mPlan.getTasks()) {
-                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
-                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue())) {
-                        filteredTasks.add(task);
-                    }
-                }
-                filterIcon = R.drawable.ic_menu_filtered;
-                break;
-            default:
-                filteredTasks.addAll(mPlan.getTasks());
-                filterIcon = R.drawable.ic_menu_filter;
-                break;
-        }
-
-        mView.updateFilterIcon(filterIcon);
-        mView.showTasks(filteredTasks);
+    public void onFilterTypeChange(TaskFilterType filterType) {
+        mFilterType = filterType;
+        mView.updateFilterIcon(getFilterIcon());
+        showTasks(filterTasks(mPlan.getTasks()));
     }
 
     @Override
@@ -118,7 +95,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         String endDateString = DateUtil.dateToIso8601(endDate);
         updateTaskDate(mActiveTask, startDateString, endDateString);
         sortTasks();
-        mView.showTasks(mPlan.getTasks());
+        showTasks(mPlan.getTasks());
     }
 
     @Override
@@ -127,7 +104,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         for (Task task : tasks) {
             allTasks.remove(task);
         }
-        mView.showTasks(allTasks);
+        showTasks(allTasks);
     }
 
     @Override
@@ -152,6 +129,50 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
             }
         });
 
+    }
+
+    private void showTasks(List<Task> tasks) {
+        mView.showTasks(filterTasks(tasks));
+    }
+
+    private List<Task> filterTasks(List<Task> tasks) {
+        List<Task> filteredTasks = new ArrayList<>();
+        switch (mFilterType) {
+            case CONSTRUCTION_TASKS:
+                for (Task task: tasks) {
+                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue())) {
+                        filteredTasks.add(task);
+                    }
+                }
+                break;
+            case MATERIAL_TASKS:
+                for (Task task: tasks) {
+                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
+                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue())) {
+                        filteredTasks.add(task);
+                    }
+                }
+                break;
+            default:
+                filteredTasks.addAll(tasks);
+                break;
+        }
+
+        return filteredTasks;
+    }
+
+    private int getFilterIcon() {
+        int filterIcon;
+        switch (mFilterType) {
+            case CONSTRUCTION_TASKS:
+            case MATERIAL_TASKS:
+                filterIcon = R.drawable.ic_menu_filtered;
+                break;
+            default:
+                filterIcon = R.drawable.ic_menu_filter;
+                break;
+        }
+        return filterIcon;
     }
 
     private List<Task> getMileStoneNodes() {
