@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -94,7 +93,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        setImageForNavButton(ButtonType.SECONDARY, R.drawable.details);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.push_to_chat_button);
         setImageForNavButton(ButtonType.RIGHT, R.drawable.show_more);
 
         if (footerView == null) {
