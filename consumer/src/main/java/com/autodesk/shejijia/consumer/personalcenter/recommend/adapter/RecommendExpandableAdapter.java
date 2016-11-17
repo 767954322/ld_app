@@ -21,6 +21,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendM
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ApartmentConvertUtils;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -113,11 +114,11 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         } else {
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
         }
-        if(mRecommendSCFDList.get(groupPosition).getBrands().size() < 6){
+        if (mRecommendSCFDList.get(groupPosition).getBrands().size() < 6) {
             mViewHolder.tvBrandAdd.setEnabled(true);
             mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
             mViewHolder.tvBrandAdd.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
-        }else{
+        } else {
             mViewHolder.tvBrandAdd.setEnabled(false);
             mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             mViewHolder.tvBrandAdd.setTextColor(UIUtils.getColor(R.color.comment_gray));
@@ -168,9 +169,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         mViewHolder.spinnerApartment.setItems(apartmentList);
         String apartment = recommendBrandsBean.getApartment();
         for (int i = 0; i < apartmentList.size(); i++) {
-            if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(i))) {
-                mViewHolder.spinnerApartment.setText(apartment);
-            }
+            String apartMentName = ApartmentConvertUtils.getApartmentNameFromId(mActivity, apartment);
+            mViewHolder.spinnerApartment.setText(StringUtils.isEmpty(apartMentName) ? "选择空间" : apartMentName);
         }
 
         final int currentParentPosition = groupPosition;
@@ -180,7 +180,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 String currentApartmentName = apartmentList.get(position);
-                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(UIUtils.getNoStringIfEmpty(currentApartmentName));
+                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(ApartmentConvertUtils.getApartmentIdFromName(mActivity, UIUtils.getNoStringIfEmpty(currentApartmentName)));
             }
         });
 
@@ -284,7 +284,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 //        } else {
 //            iv.setImageResource(R.drawable.btn_browser);
 //        }
-        TextView text = (TextView)view.findViewById(R.id.tv_category_name);
+        TextView text = (TextView) view.findViewById(R.id.tv_category_name);
         text.setText(mRecommendSCFDList.get(groupPosition).getSub_category_3d_name());
         return view;
     }

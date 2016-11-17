@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DetailsV
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ApartmentConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -79,7 +80,10 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
         tvBrandName.setText(bean.getName());
         tvBrandDimension.setText(bean.getDimension());
-        tvBrandApartment.setText(UIUtils.getNoStringIfEmpty(bean.getApartment()));
+
+        String apartMentName = ApartmentConvertUtils.getApartmentNameFromId((Activity) mContext, bean.getApartment());
+        tvBrandApartment.setText(apartMentName);
+
         tvBrandRemarks.setText(bean.getRemarks());
         StringBuffer mallName = new StringBuffer();
         for (RecommendMallsBean mallsBean : bean.getMalls()) {

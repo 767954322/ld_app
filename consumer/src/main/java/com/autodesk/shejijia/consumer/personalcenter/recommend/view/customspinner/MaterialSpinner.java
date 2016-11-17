@@ -78,7 +78,7 @@ public class MaterialSpinner extends TextView {
     try {
       backgroundColor = ta.getColor(R.styleable.MaterialSpinner_ms_background_color, Color.WHITE);
       textColor = ta.getColor(R.styleable.MaterialSpinner_ms_text_color, defaultColor);
-      arrowColor = ta.getColor(R.styleable.MaterialSpinner_ms_arrow_tint, textColor);
+      arrowColor = ta.getColor(R.styleable.MaterialSpinner_ms_arrow_tint, defaultColor);
       hideArrow = ta.getBoolean(R.styleable.MaterialSpinner_ms_hide_arrow, false);
       popupWindowMaxHeight = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_max_height, 0);
       popupWindowHeight = ta.getLayoutDimension(R.styleable.MaterialSpinner_ms_dropdown_height,

@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/tv_num"
             style="@style/item_text_style"
-            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_4"
             android:text="数量："/>
 
         <EditText
@@ -107,6 +107,7 @@
             android:layout_height="@dimen/size_30"
             android:layout_gravity="start|center_vertical"
             android:textSize="@dimen/font_15"
+            app:ms_text_color="@color/black"
             app:ms_dropdown_height="wrap_content"
             app:ms_dropdown_max_height="@dimen/size_200"
             />
@@ -121,6 +122,7 @@
 
         <TextView
             style="@style/item_text_style"
+            android:layout_gravity="start|top"
             android:text="备注："/>
 
         <EditText
