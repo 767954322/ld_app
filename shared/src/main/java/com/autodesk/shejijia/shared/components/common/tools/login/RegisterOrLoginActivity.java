@@ -71,6 +71,12 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         mTvFinishWebView.setVisibility(View.GONE);
         mLlWebViewBackup.setOnClickListener(this);
         mTvFinishWebView.setOnClickListener(this);
+        mWebView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
     }
 
     @Override
