@@ -80,7 +80,7 @@ public class OrderCommonBean implements Serializable {
         private String type;
         private String address;
         private String credentials;
-        private String elite;
+        private EliteEntity elite;
         private String pkg;
         private String after_bidding_status;
         private String audit_desc;
@@ -205,11 +205,11 @@ public class OrderCommonBean implements Serializable {
             this.credentials = credentials;
         }
 
-        public String getElite() {
+        public EliteEntity getElite() {
             return elite;
         }
 
-        public void setElite(String elite) {
+        public void setElite(EliteEntity elite) {
             this.elite = elite;
         }
 
