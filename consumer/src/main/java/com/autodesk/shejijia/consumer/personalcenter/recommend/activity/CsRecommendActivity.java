@@ -153,7 +153,6 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
      */
     public void onEventMainThread(RefreshEvent event) {
         OFFSET = mRecommends.size();
-        ToastUtil.showCustomToast(this, "OFFSET："+OFFSET);
         mRecommendLogic.onLoadRecommendListData(false, 0, OFFSET, 0);
     }
 

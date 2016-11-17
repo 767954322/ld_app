@@ -7,7 +7,7 @@
     android:background="@color/bg_eef1f4"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <ImageView
         android:layout_width="match_parent"
