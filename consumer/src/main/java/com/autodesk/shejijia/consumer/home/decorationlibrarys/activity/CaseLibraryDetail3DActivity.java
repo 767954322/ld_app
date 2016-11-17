@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -70,6 +73,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
+    private LinearLayout guide_dots;
     private String case_id;
     private Case3DDetailBean case3DDetailBean;
     private ArrayList<Case3DDetailBean> case3DDetailList;
@@ -90,6 +94,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private Map<String, String> roomHall;
     private Map<String, String> style;
     private LinearLayout ll_fenxiang_up;
+
+    private List<View> viewList;
     private LinearLayout rlThumbUp;
     private TextView tvheadThumbUp;
     private LinearLayout ll_fenxiang_down;
@@ -104,6 +110,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String mMemberType;
     private boolean isMemberLike;
     private ImageView ivThumbUp;
+    private ViewPager viewPage;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
 
@@ -115,7 +122,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String mHs_uid;
     private String mNickName;
     private ImageView mIvCertification;
-    private boolean isfromGuanZhu=false;
+    private boolean isfromGuanZhu = false;
+    private ArrayList<String> mImageListsManYou;
 
 
     @Override
@@ -133,6 +141,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
         ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
+
 
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
@@ -158,9 +167,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text_3d, null);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
+
+        View viewpage = LayoutInflater.from(this).inflate(R.layout.viewpager_item, null);
+        viewPage = (ViewPager) viewpage.findViewById(R.id.viewPage);
+        guide_dots = (LinearLayout) viewpage.findViewById(R.id.guide_dots);
+
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead, null, false);
         caseLibraryNew.addHeaderView(viewText, null, false);
+        caseLibraryNew.addFooterView(viewpage, null, false);
+
         case3DDetailList = new ArrayList<>();
         showOrHideChatBtn();
     }
@@ -203,7 +219,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState){
+        switch (scrollState) {
             case SCROLL_STATE_IDLE:
                 TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
                 rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
@@ -302,7 +318,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                         }
                     }
                 } else {
-                    isfromGuanZhu=true;
+                    isfromGuanZhu = true;
                     LoginUtils.doLogin(this);
                 }
                 break;
@@ -569,7 +585,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath() + Constant.CaseLibraryDetail.JPG;
         firstCaseLibraryImageUrl = thumbnailMainPath;
         if (thumbnailMainPath != null) {
-            ImageUtils.displayIconImage(thumbnailMainPath, mdesignerAvater);
+            ImageUtils.displaySixImage(thumbnailMainPath, mdesignerAvater);
         }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
@@ -583,7 +599,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (introduction != null) {
             mCaseLibraryText.setText("\u3000\u3000" + introduction);
         } else {
-            mCaseLibraryText.setText("\u3000\u3000"+getString(R.string.noinfo));
+            mCaseLibraryText.setText("\u3000\u3000" + getString(R.string.noinfo));
         }
 
         tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
@@ -602,7 +618,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         }
 
         tvThumbUp.setText(getString(R.string.thumbUp) + case3DDetailBean.getFavorite_count() + "");
-        tvheadThumbUp.setText(getString(R.string.thumbUp)+ case3DDetailBean.getFavorite_count() + "");
+        tvheadThumbUp.setText(getString(R.string.thumbUp) + case3DDetailBean.getFavorite_count() + "");
 
         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
         if (designer_info.getNick_name() != null) {
@@ -646,11 +662,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             } else if (type.equalsIgnoreCase("4")) {
                 String cover = imageBeanLists.get(i).getCover();
                 String coverAndLink;
-                if (cover!=null){
-                     coverAndLink = cover+"HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+                if (cover != null) {
+                    coverAndLink = cover + "HD.jpg" + "COVERANDLINK" + imageBeanLists.get(i).getLink();
 
-                }else {
-                    coverAndLink ="HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+                } else {
+                    coverAndLink = "HD.jpg" + "COVERANDLINK" + imageBeanLists.get(i).getLink();
                 }
                 imageListsManYou.add(coverAndLink);
 
@@ -691,9 +707,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case3DDetailImageListBeanManYou.setLocal(true);
         }
         detailImageListBeanList.add(case3DDetailImageListBeanManYou);
-
+        mImageListsManYou = imageListsManYou;
+        initPager();
         return detailImageListBeanList;
     }
+
 
     /**
      * 关注或者取消关注设计师
@@ -775,10 +793,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     protected void onRestart() {
         super.onRestart();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (isfromGuanZhu&&null!=memberEntity){
+        if (isfromGuanZhu && null != memberEntity) {
             getCase3DDetailData(case_id);
-        }else {
-            isfromGuanZhu=false;
+        } else {
+            isfromGuanZhu = false;
         }
 
 
@@ -797,13 +815,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-            //    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-//                rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-//                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-//                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
-//                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
@@ -844,4 +855,150 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             this.startActivity(intent);
         }
     }
+
+
+
+
+    /**
+     * 初始化点
+     *
+     * @return
+     */
+    private View initDot() {
+        return LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_dot, null);
+    }
+
+
+    /**
+     * 初始化所有的点
+     *
+     * @param count
+     */
+    private void initDots(int count) {
+        for (int j = 0; j < count; j++) {
+            guide_dots.addView(initDot());
+        }
+        guide_dots.getChildAt(0).setSelected(true);
+    }
+
+    /**
+     * 初始化单个图片的
+     *
+     * @param url
+     * @return
+     */
+    private View initView(String url) {
+        String drawabel = "drawable://" + R.drawable.default_3d_details;
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_guide, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.iguide_img);
+        ImageView image_quanjing = (ImageView) view.findViewById(R.id.image_quanjing);
+        if (url.equals(drawabel))
+            image_quanjing.setVisibility(View.GONE);
+        ImageUtils.loadFileImage(imageView, url);
+        return view;
+    }
+
+
+    public String initImage(String url) {
+        if (url.equals("drawable")) {
+            return "drawable://" + R.drawable.default_3d_details;
+        } else if (url.contains("COVERANDLINK")) {
+            String cover = url.substring(0, url.indexOf("COVERANDLINK"));
+            if (!cover.equals("HD.jpg")) {
+                return cover;
+            } else {
+                return "drawable://" + R.drawable.images_3d;
+            }
+        } else {
+            return "drawable://" + R.drawable.images_3d;
+        }
+    }
+
+
+    private void initPager() {
+        viewList = new ArrayList<View>();
+        for (int i = 0; i < mImageListsManYou.size(); i++) {
+            viewList.add(initView(initImage(mImageListsManYou.get(i))));
+        }
+        initDots(mImageListsManYou.size());
+        viewPage.setAdapter(new ViewPagerAdapter(viewList));
+
+        viewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int arg0) {
+                // TODO Auto-generated method
+                for (int i = 0; i < guide_dots.getChildCount(); i++) {
+                    if (i == arg0) {
+                        guide_dots.getChildAt(i).setSelected(true);
+                    } else {
+                        guide_dots.getChildAt(i).setSelected(false);
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+
+
+    class ViewPagerAdapter extends PagerAdapter {
+        private List<View> data;
+
+
+        public ViewPagerAdapter(List<View> data) {
+            super();
+            this.data = data;
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return data.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            // TODO Auto-generated method stub
+            return arg0 == arg1;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+            // TODO Auto-generated method stub
+            View view = data.get(position);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newUrl = mImageListsManYou.get(position);
+                    if (!newUrl.equals("drawable")) {
+                    String link = newUrl.substring(newUrl.indexOf("COVERANDLINK") + 12);
+                    Intent intent = new Intent(CaseLibraryDetail3DActivity.this, CaseLibraryRoamingWebView.class);
+                    intent.putExtra("roaming", link);
+                    CaseLibraryDetail3DActivity.this.startActivity(intent);
+                }
+                }
+            });
+            container.addView(data.get(position));
+            return data.get(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(data.get(position));
+        }
+
+    }
+
+
 }

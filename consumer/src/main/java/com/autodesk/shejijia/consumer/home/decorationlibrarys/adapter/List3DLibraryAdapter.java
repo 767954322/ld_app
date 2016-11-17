@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,20 +80,20 @@ public class List3DLibraryAdapter extends BaseAdapter {
         if (mImageLists.get(position).getImageList() !=null && mImageLists.get(position).getImageList().size()>0){
             String type = mImageLists.get(position).getType();
             if (type.equals("4")){
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mContext){
-                    @Override
-                    public boolean canScrollHorizontally() {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                };
-                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                myViewHolder.mTypeDetailsList.setLayoutManager(linearLayoutManager);
-                myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
+//                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mContext){
+//                    @Override
+//                    public boolean canScrollHorizontally() {
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public boolean canScrollVertically() {
+//                        return false;
+//                    }
+//                };
+//                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//                myViewHolder.mTypeDetailsList.setLayoutManager(linearLayoutManager);
+//                myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
 
             }else {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext){
