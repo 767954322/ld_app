@@ -126,8 +126,6 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         if (Brands == null) {
             return;
         }
-        changeFinsh.setEnabled(Brands.size() > 1 ? true : false);
-        changeFinsh.setBackground(this.getResources().getDrawable(Brands.size() > 1 ? R.color.bg_0084ff : R.color.gray));
         filterBrand(Brands);
         setItemChecked();
 

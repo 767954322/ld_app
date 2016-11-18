@@ -288,7 +288,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
         intent.putExtra(JsonConstants.JSON_PROJECT_NAME, projectName);
-        intent.putExtra("brand_count_limit", mBrandCountLimit);
+        intent.putExtra(JsonConstants.BRAND_COUNT_LIMIT, mBrandCountLimit);
         startActivityForResult(intent, 24);
     }
 
@@ -341,7 +341,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onBrandAddListener(RecommendSCFDBean recommendSCFDBean) {
         Intent intent = new Intent(mActivity, AddBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
-        intent.putExtra("brand_count_limit", mBrandCountLimit);
+        intent.putExtra(JsonConstants.BRAND_COUNT_LIMIT, mBrandCountLimit);
         startActivityForResult(intent, 22);
     }
 

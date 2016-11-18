@@ -80,6 +80,8 @@ public class JsonConstants {
     public static final String JSON_DEMAND_LIST_LIMIT = "limit";
     public static final String JSON_DEMAND_LIST_SORT_BY = "sort_by";
     public static final String JSON_DEMAND_LIST_SORT_ORDER = "sort_order";
+    public static final String BRAND_COUNT_LIMIT = "brand_count_limit";
+
 
     /// D2.5 Get My Fitment List .
     public static final String JSON_MY_FITMENT_OFFSET = "offset";
