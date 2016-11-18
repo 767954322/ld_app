@@ -87,6 +87,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private CheckedInformationBean checkedInformationBean;
     private RelativeLayout add_for_listing;
     private LinearLayout rl_btn;
+    private LinearLayout layout_empty_recommend_view;//空品牌时，展现提示
+    private LinearLayout ll_please_click_right;
+    private TextView tv_empty_title;
     private List<BtnStatusBean> listTag;
     private List<BtnStatusBean> backListTag;//返回的标志位集合
     private BtnStatusBean[] btnStatusBeanList;//记录最后一次，该品类下的选中的二级品类信息，
@@ -141,6 +144,11 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_to_refresh_layout);
         add_for_listing = (RelativeLayout) findViewById(R.id.add_for_listing);
         rl_btn = (LinearLayout) findViewById(R.id.rl_btn);
+        layout_empty_recommend_view = (LinearLayout) findViewById(R.id.empty_view);
+        ll_please_click_right = (LinearLayout) findViewById(R.id.ll_please_click_right);
+        ll_please_click_right.setVisibility(View.GONE);
+        tv_empty_title = (TextView) findViewById(R.id.tv_empty_title);
+
         windowManager = (WindowManager) this
                 .getSystemService(Context.WINDOW_SERVICE);
     }
@@ -165,6 +173,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+        tv_empty_title.setText("没有可添加的品牌");
         add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
         add_for_listing.setClickable(false);
         CustomProgress.showDefaultProgress(AddMaterialActivity.this);
@@ -206,9 +215,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
         };
     }
-/**
- * 进入店铺选择
- * */
+
+    /**
+     * 进入店铺选择
+     */
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
@@ -323,6 +333,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     }
                 });
     }
+
     /**
      * 获取店铺
      */
@@ -387,7 +398,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         //默认需要添加的第一个未点击的二级品类保存
         BtnStatusBean btnStatusBeanDefault;
         //默认每个二级品类选中第一个
-        for (int i = 0;i<oneArr.length;i++){
+        for (int i = 0; i < oneArr.length; i++) {
 
             btnStatusBeanDefault = new BtnStatusBean();
             btnStatusBeanDefault.setCountOffset(0);
@@ -547,6 +558,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
         }
+        //背景显示
+        setEmptyBg(list);
     }
 
     /**
@@ -580,9 +593,11 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
             if (datas != null) {
 
+                setEmptyBg(datas);
                 addBrandShowAdapter.changeListTag(list, datas);
             }
         } else {
+            setEmptyBg(datas);
             addBrandShowAdapter.changeListTag(list, datas);
         }
         addBrandShowAdapter.notifyDataSetChanged();
@@ -901,7 +916,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         layoutParamsButton.bottomMargin = width / 50;
         all_material_btn = new TextView(this);
         all_material_btn.setText(UIUtils.getString(R.string.my_bid_all));
-        all_material_btn.setMinWidth(width / 6);
+        all_material_btn.setMinWidth(width / 5);
         all_material_btn.setGravity(Gravity.CENTER);
         all_material_btn.setPadding(width / 25, 0, width / 25, 0);
         all_material_btn.setTextColor(UIUtils.getColor(R.color.text_item_name));
@@ -978,6 +993,19 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         } else {
             add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
             add_for_listing.setClickable(false);
+        }
+    }
+
+    /**
+     * 没有品牌时,显示空白页面
+     */
+    public void setEmptyBg(List<RecommendBrandsBean> list) {
+
+        if (list != null && list.size() > 0) {
+
+            layout_empty_recommend_view.setVisibility(View.GONE);
+        } else {
+            layout_empty_recommend_view.setVisibility(View.VISIBLE);
         }
     }
 

@@ -80,7 +80,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0"
             android:layout_weight="1"
@@ -103,7 +103,9 @@
             </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
 
 
-        </LinearLayout>
+            <include layout="@layout/layout_empty_recommend_view"/>
+
+        </RelativeLayout>
         <!--line-->
         <LinearLayout
             android:layout_width="match_parent"

@@ -7,7 +7,8 @@
     android:background="@color/bg_eef1f4"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="gone"
+    >
 
     <ImageView
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:textSize="16sp"/>
 
     <LinearLayout
+        android:id="@+id/ll_please_click_right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -32,22 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请点击右上角"
-            android:textColor="@color/mybid_text_color_light"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/tv_empty_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="＂添加主材＂"
-            android:textColor="@color/mybid_text_color_light"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="按钮"
+            android:text="请点击右上角＂添加主材＂按钮"
             android:textColor="@color/mybid_text_color_light"
             android:textSize="16sp"/>
     </LinearLayout>
