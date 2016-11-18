@@ -28,7 +28,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
@@ -164,11 +163,10 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         // 品牌名称．
         mViewHolder.tvBrandName.setText(recommendBrandsBean.getName());
         // 空间．
-        String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
-        final List<String> apartmentList = Arrays.asList(apartmentArray);
-        mViewHolder.spinnerApartment.setItems(apartmentList);
+        final String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
+        mViewHolder.spinnerApartment.setItems(apartmentArray);
         String apartment = recommendBrandsBean.getApartment();
-        for (int i = 0; i < apartmentList.size(); i++) {
+        for (int i = 0; i < apartmentArray.length; i++) {
             String apartMentName = ApartmentConvertUtils.getApartmentNameFromId(mActivity, apartment);
             mViewHolder.spinnerApartment.setText(StringUtils.isEmpty(apartMentName) ? "请选择" : apartMentName);
         }
@@ -179,7 +177,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
-                String currentApartmentName = apartmentList.get(position);
+                String currentApartmentName = apartmentArray[position];
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(ApartmentConvertUtils.getApartmentIdFromName(mActivity, UIUtils.getNoStringIfEmpty(currentApartmentName)));
             }
         });
