@@ -113,7 +113,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         } else {
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
         }
-        if (mRecommendSCFDList.get(groupPosition).getBrands().size() < mRecommendSCFDList.get(groupPosition).getBrand_count_limit()) {
+        if (mRecommendSCFDList.get(groupPosition).getBrands().size() <6/* mRecommendSCFDList.get(groupPosition).getBrand_count_limit()*/) {
             mViewHolder.tvBrandAdd.setEnabled(true);
             mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
             mViewHolder.tvBrandAdd.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
