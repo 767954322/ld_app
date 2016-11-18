@@ -111,7 +111,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, mRecommendSCFDList, mExpandListView);
         mExpandListView.setAdapter(mRecommendExpandableAdapter);
-
+        setEmptyListDefaultButtn();
         getRecommendDraftDetail();
     }
 
