@@ -24,7 +24,6 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.M
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -63,13 +62,11 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     protected void initData() {
         mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra("pid"));
         mPresenter.bindView(this);
-        showLoading();
         mPresenter.fetchPlan();
     }
 
     @Override
     public void showTasks(List<Task> tasks) {
-        hideLoading();
         mCalendarWidget.setVisibility(View.VISIBLE);
         mMileStoneDecorator.setData(tasks);
         mMileStoneDayFormator.setData(tasks);

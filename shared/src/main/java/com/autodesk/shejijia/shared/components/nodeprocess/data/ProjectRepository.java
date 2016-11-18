@@ -9,7 +9,6 @@ import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -84,14 +83,24 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<PlanInfo> callback) {
+    public void getPlanByProjectId(String pid, String requestTag, final @NonNull ResponseCallback<ProjectInfo> callback) {
         ProjectRemoteDataSource.getInstance().getPlanByProjectId(pid, requestTag, callback);
     }
 
     @Override
-    public void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
-        ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, callback);
-        //TODO notify active project is dirty
+    public void updatePlan(String pid, Bundle requestParams, String requestTag, final @NonNull ResponseCallback<Project> callback) {
+        ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, new ResponseCallback<Project>() {
+            @Override
+            public void onSuccess(Project data) {
+                mEditingPlan = null;
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                callback.onError(errorMsg);
+            }
+        });
     }
 
     @Override
@@ -103,14 +112,24 @@ public final class ProjectRepository implements ProjectDataSource {
         return mProjectInfo;
     }
 
-    public PlanInfo getEditingPlan() {
-        if (mProjectInfo == null) {
-            mEditingPlan = null;
-        } else if (mEditingPlan == null || mEditingPlan.getPlanId() != mProjectInfo.getPlan().getPlanId()) {
-            mEditingPlan = copyPlan(mProjectInfo.getPlan());
-        }
+    public void getEditingPlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo> callback) {
+        if (mEditingPlan == null || !mEditingPlan.getProjectId().equalsIgnoreCase(pid)) {
+            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo>() {
+                @Override
+                public void onSuccess(ProjectInfo data) {
+                    mEditingPlan = data.getPlan();
+                    mEditingPlan.setProjectId(String.valueOf(data.getProjectId()));
+                    callback.onSuccess(mEditingPlan);
+                }
 
-        return mEditingPlan;
+                @Override
+                public void onError(String errorMsg) {
+                    callback.onError(errorMsg);
+                }
+            });
+        } else {
+            callback.onSuccess(mEditingPlan);
+        }
     }
 
     private PlanInfo copyPlan(PlanInfo planInfo) {

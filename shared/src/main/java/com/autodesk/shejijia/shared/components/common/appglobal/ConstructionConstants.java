@@ -32,6 +32,8 @@ public class ConstructionConstants {
     public static final String PROJECT_LIST_BY_DATE = "projectLists_by_date"; //根据日期查询列表的标记
     public static final String PROJECT_LIST_BY_STATUS = "projectLists_by_status"; //根据状态查询列表的标记
     public static final String PROJECT_LIST_BY_LIKE = "projectLists_by_like"; //根据是否星标查询列表的标记
+    public  static final String REQUEST_TAG_FETCH_PLAN = "project_list";
+    public final static String REQUEST_TAG_UPDATE_PLAN = "update_plan";
 
     //项目列表查询的状态
     public static final String PROJECT_STATUS_COMPLETE = "COMPLETED";//已完成

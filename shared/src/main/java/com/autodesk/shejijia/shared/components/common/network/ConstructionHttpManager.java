@@ -107,32 +107,6 @@ public class ConstructionHttpManager {
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
-
-    /*
-    * 获取 plan 详情的接口,里面包括项目列表里的任务列表
-    * requestUrl 查询的请求url
-    * token 当前登陆用户的access token
-    * callback 请求回调接口
-    * */
-    public void getPlanDetails(final long pid,
-                               final String token,
-                               OkJsonRequest.OKResponseCallback callback) {
-        String url = ConstructionConstants.BASE_URL + "/projects"
-                + "/" + pid
-                + "/plan";
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", token);
-                return header;
-            }
-        };
-        NetRequestManager.getInstance().addRequest(okRequest);
-    }
-
     /*
     * 获取项目详情的接口
     * requestUrl 查询的请求url

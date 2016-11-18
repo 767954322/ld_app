@@ -292,6 +292,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         }
     }
 
+
+
     private void setupBottomSheetHeader(View parentView, Task task) {
         TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
         taskNameView.setText(task.getName());

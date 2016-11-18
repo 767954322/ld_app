@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.TaskEnum;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
@@ -25,7 +26,6 @@ import java.util.List;
 
 public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter {
     private final static String LOG_TAG_EDIT_PLAN = "edit_plan";
-    private final static String REQUEST_TAG_UPDATE_PLAN = "update_plan";
 
     private EditPlanContract.TaskNodeView mView;
 
@@ -41,14 +41,20 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
 
     @Override
     public void fetchPlan() {
-        PlanInfo editingPlan = ProjectRepository.getInstance().getEditingPlan();
-        if (editingPlan == null) {
-            mView.showError("No active project"); // TODO update string
-        } else {
-            mPlan = editingPlan;
-            sortTasks();
-            showTasks(mPlan.getTasks());
-        }
+        ProjectRepository.getInstance().getEditingPlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
+                new ResponseCallback<PlanInfo>() {
+            @Override
+            public void onSuccess(PlanInfo data) {
+                mPlan = data;
+                sortTasks();
+                showTasks(mPlan.getTasks());
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                mView.showError(errorMsg);
+            }
+        });
     }
 
     @Override
@@ -118,7 +124,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         requestParams.putString("operation", "edit"); // TODO Get operation
         requestParams.putSerializable("body", mPlan);
         mView.showUpLoading();
-        ProjectRepository.getInstance().updatePlan(mProjectId, requestParams, REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
+        ProjectRepository.getInstance().updatePlan(mProjectId, requestParams, ConstructionConstants.REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
             @Override
             public void onSuccess(Project data) {
                 LogUtils.d(LOG_TAG_EDIT_PLAN, "update plan success ");

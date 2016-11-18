@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -33,14 +35,22 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
 
     @Override
     public void fetchPlan() {
-        // TODO check project id ??
-        PlanInfo editingPlan = ProjectRepository.getInstance().getEditingPlan();
-        if (editingPlan == null) {
-            mView.showError("No active project"); // TODO update string
-        } else {
-            mPlan = editingPlan;
-            mView.showTasks(getMileStoneNodes());
-        }
+        mView.showLoading();
+        ProjectRepository.getInstance().getEditingPlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
+                new ResponseCallback<PlanInfo>() {
+            @Override
+            public void onSuccess(PlanInfo data) {
+                mView.hideLoading();
+                mPlan = data;
+                mView.showTasks(getMileStoneNodes());
+            }
+
+            @Override
+            public void onError(String errorMsg) {
+                mView.hideLoading();
+                mView.showError(errorMsg);
+            }
+        });
     }
 
     @Override

@@ -1,13 +1,20 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
 
+import android.support.annotation.NonNull;
+
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * @author he.liu .
@@ -26,6 +33,26 @@ public class GsonUtil {
         Gson gson = new Gson();
         return gson.fromJson(json, clazz);
     }
+
+    public static <T, V> T jsonToBean(@NonNull String json, @NonNull Class<T> clazz,
+                                      @NonNull Class<V> multiTypeClazz, @NonNull TypeAdapter<V> typeAdapter) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(multiTypeClazz, typeAdapter)
+                .create();
+
+        return gson.fromJson(json, clazz);
+    }
+
+    public static <T> T jsonToBean(@NonNull String json, @NonNull Class<T> clazz,
+                                      @NonNull List<Class<?>> multiTypeList, List<TypeAdapter<?>> typeAdapterList) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        for (int i=0; i<multiTypeList.size(); i++) {
+            gsonBuilder.registerTypeAdapter(multiTypeList.get(i), typeAdapterList.get(i));
+        }
+        
+        return gsonBuilder.create().fromJson(json, clazz);
+    }
+
 
     public static String jsonToString(org.json.JSONObject jsonObject) {
         try {

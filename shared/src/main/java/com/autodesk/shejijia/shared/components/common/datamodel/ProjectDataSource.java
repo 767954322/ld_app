@@ -34,7 +34,7 @@ public interface ProjectDataSource {
     void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
 
 
-    void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<PlanInfo> callback);
+    void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
 
     void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
 

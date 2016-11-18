@@ -9,6 +9,7 @@ import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
@@ -18,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.TypeAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,27 +100,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, @NonNull final ResponseCallback<PlanInfo> callback) {
-        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, jsonObject.toString());
-                try {
-                    JSONObject planJsonObject = jsonObject.getJSONObject("plan");
-                    String result = planJsonObject.toString();
-                    PlanInfo plan = GsonUtil.jsonToBean(result, PlanInfo.class);
-                    callback.onSuccess(plan);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callback.onError("Data format error");
-                }
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
-            }
-        });
+    public void getPlanByProjectId(String pid, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag,
+                getDefaultCallback(callback, ProjectInfo.class, MileStone.class, new MileStone.MileStoneTypeAdapter()));
     }
 
     @Override
@@ -163,7 +147,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         });
     }
 
-    private <T> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz) {
+    private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz,
+                                        final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
         return new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -174,9 +159,15 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                     callback.onSuccess(null);
                 } else {
                     try {
-                        T bean = GsonUtil.jsonToBean(result, clazz);
+                        T bean;
+                        if (multiTypeClazz != null && typeAdapter != null) {
+                            bean = GsonUtil.jsonToBean(result, clazz, multiTypeClazz, typeAdapter);
+                        } else {
+                            bean = GsonUtil.jsonToBean(result, clazz);
+                        }
                         callback.onSuccess(bean);
                     } catch (JsonSyntaxException exception) {
+                        exception.printStackTrace();
                         LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, "e=" + exception);
                         callback.onError("JsonSyntaxException");
                     }
@@ -192,5 +183,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             }
 
         };
+    }
+
+    private <T> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz) {
+        return getDefaultCallback(callback, clazz, null, null);
     }
 }
