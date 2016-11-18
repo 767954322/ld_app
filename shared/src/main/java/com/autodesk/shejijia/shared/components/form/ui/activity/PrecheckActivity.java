@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.presenter.PrecheckPresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -28,7 +30,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private LinearLayout mNecessaryLayout;
     private LinearLayout mAdditionalLayout;
     private Button mOptionBtn;
-    private Task mTask;
     private PrecheckPresenter mPresenter;
 
     @Override
@@ -51,10 +52,10 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initExtraBundle() {
-        mTask = (Task) getIntent().getSerializableExtra("task");
+        Task task = (Task) getIntent().getSerializableExtra("task");
 
         mPresenter = new PrecheckPresenter(this,this);
-        mPresenter.showForm(mTask);
+        mPresenter.showForm(task);
     }
 
     @Override
@@ -160,13 +161,17 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void enterQualified() {
-        ToastUtils.showShort(this,"合格");
+    public void enterQualified(Task task) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
+        Intent intent = new Intent(this, FormListActivity.class);
+        intent.putExtra("task",task);
+        startActivity(intent);
     }
 
     @Override
-    public void enterUnqualified() {
-        ToastUtils.showShort(this,"不合格");
+    public void enterUnqualified(ContainedForm form) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
+        ToastUtils.showShort(this,"另外再开启一个activity来处理验收条件不合格的情况");
     }
 
 }

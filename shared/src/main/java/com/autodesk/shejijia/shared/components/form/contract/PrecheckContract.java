@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.form.contract;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
@@ -23,9 +24,9 @@ public interface PrecheckContract {
         void showUnqualifiedBtn();
 
         //合格的进入
-        void enterQualified();
+        void enterQualified(Task task);
         //不合格的进入
-        void enterUnqualified();
+        void enterUnqualified(ContainedForm form);
 
 
     }

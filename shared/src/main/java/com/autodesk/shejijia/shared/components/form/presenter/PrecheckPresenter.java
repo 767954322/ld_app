@@ -36,6 +36,8 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     private Context mContext;
     private int index;  //index表示合格不合格按钮初始化状态,1表示不合格;2表示合格
     private boolean flag;   //flag表示是否加载辅助条件第一个,false表示不是,true表示是
+    private ContainedForm mForm;
+    private Task mTask;
 
     public PrecheckPresenter(Context context, PrecheckContract.View view) {
         mContext = context;
@@ -45,6 +47,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     @Override
     public void showForm(Task task) {
         mView.setToolbarTitle(task.getName());
+        mTask = task;
 
         List<Form> formList = task.getForms();
         for (Form form : formList) {
@@ -59,6 +62,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                         for (ContainedForm form : (List<ContainedForm>) data) {   //可以同时获取多张form
                             String category = form.getCategory();
                             if ("precheck".equals(category)) {   //预检的from
+                                mForm = form;
                                 findPrecheckForm(form);
                                 return; //data中只有一份表单是预检的,所以加载到之后,不需要在循环
                             }
@@ -128,18 +132,14 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
             @Override
             public void onClick(View v) {
                 resultTv.setText(UIUtils.getString(R.string.yes));
-                if (null != popupWindow) {
-                    popupWindow.dismiss();
-                }
+                popupWindow.dismiss();
             }
         });
         noTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resultTv.setText(UIUtils.getString(R.string.no));
-                if (null != popupWindow) {
-                    popupWindow.dismiss();
-                }
+                popupWindow.dismiss();
             }
         });
 
@@ -154,15 +154,11 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
         resultTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != popupWindow) {
-                    popupWindow.showAsDropDown(v, -y1, -v1);
-                }
-
-
+                popupWindow.showAsDropDown(v, -y1, -v1);
             }
         });
 
-        if(!flag) {
+        if (!flag) {
             flag = true;
         } else {
             View lineView = new View(mContext);
@@ -195,9 +191,9 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     @Override
     public void clickOptionBtn() {
         if (1 == index) {
-            mView.enterUnqualified();
+            mView.enterUnqualified(mForm);
         } else if (2 == index) {
-            mView.enterQualified();
+            mView.enterQualified(mTask);
         }
     }
 }

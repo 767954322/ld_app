@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.shared.components.form.common.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by t_panya on 16/11/1.
  */
 
-public class FormFile {
+public class FormFile implements Serializable {
     private String fileId;
     private String fileType;
     private String fileName;
