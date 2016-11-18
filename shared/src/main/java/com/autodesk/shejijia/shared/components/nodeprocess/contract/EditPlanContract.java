@@ -5,6 +5,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,11 @@ public interface EditPlanContract {
 
         void updateFilterIcon(int icon);
 
-        void showAddTaskDialog();
+        void showAddIcon(boolean show);
+
+        void showAddTaskDialog(ArrayList<Task> deletedTasks);
+
+        void scrollToTask(Task task);
     }
 
     interface TaskNodePresenter extends BasePresenter {
@@ -65,9 +70,13 @@ public interface EditPlanContract {
 
         void deleteTasks(List<Task> tasks);
 
+        void addTask(Task task);
+
         void startAddTask();
 
         void commitPlan();
+
+        boolean shouldShowAddIcon();
 
         enum TaskFilterType {
             ALL_TASKS,

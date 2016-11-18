@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDial
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract.TaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
@@ -46,7 +48,12 @@ import java.util.List;
  */
 
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
+    private final static String FRAGMENT_TAG_ADD_TASK = "add_task";
+    private final static int REQUEST_CODE_ADD_TASK = 99;
+
     private TaskNodePresenter mPresenter;
+
+    private RecyclerView mRecyclerView;
     private EditTaskNodeAdapter mAdapter;
 
     private BottomSheetDialog mBottomSheetDialog;
@@ -108,8 +115,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         }
         setHasOptionsMenu(true);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new EditTaskNodeAdapter(getActivity(), new EditTaskNodeAdapter.ItemClickListener() {
             @Override
             public void onTaskClick(Task task) {
@@ -133,7 +140,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
                 mActionMode.setTitle(String.format(getString(R.string.cab_title_delete_task), count));
             }
         });
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         initBottomSheetDialog();
     }
@@ -153,6 +160,12 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        showAddIcon(mPresenter.shouldShowAddIcon());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
         if (i == R.id.menu_add_task) {
@@ -169,6 +182,21 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_ADD_TASK:
+                if (resultCode ==  Activity.RESULT_OK) {
+                    Task task = (Task) data.getSerializableExtra("task");
+                    mPresenter.addTask(task);
+                    ToastUtils.showShort(getActivity(), task.getName());
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -215,9 +243,29 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
-    public void showAddTaskDialog() {
-        AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment();
-        addTaskDialogFragment.show(getFragmentManager(), "ADD_TASK");
+    public void showAddIcon(boolean show) {
+        if (mMenu != null) {
+            MenuItem item = mMenu.findItem(R.id.menu_add_task);
+            if (item != null) {
+                item.setVisible(show);
+            }
+        }
+    }
+
+    @Override
+    public void showAddTaskDialog(ArrayList<Task> deletedTasks) {
+        AddTaskDialogFragment addTaskDialogFragment = AddTaskDialogFragment.newInstance(deletedTasks);
+        addTaskDialogFragment.setTargetFragment(this, REQUEST_CODE_ADD_TASK);
+        addTaskDialogFragment.show(getFragmentManager(), FRAGMENT_TAG_ADD_TASK);
+    }
+
+    @Override
+    public void scrollToTask(Task task) {
+        int position = mAdapter.getItemPosition(task);
+        if (position != -1) {
+            // TODO optimize animation
+            mRecyclerView.scrollToPosition(position);
+        }
     }
 
     @Override

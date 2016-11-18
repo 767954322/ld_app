@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -14,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wenhulin on 11/17/16.
@@ -22,6 +29,23 @@ import com.autodesk.shejijia.shared.R;
 public class AddTaskDialogFragment extends BottomSheetDialogFragment {
 
     private RecyclerView mRecyclerView;
+
+    private ArrayList<Task> mTasks = new ArrayList<>();
+
+    public static AddTaskDialogFragment newInstance(ArrayList<Task> tasks) {
+        AddTaskDialogFragment fragment = new AddTaskDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("tasks", tasks);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTasks.clear();
+        mTasks.addAll((ArrayList<Task>) getArguments().getSerializable("tasks"));
+    }
 
     @Nullable
     @Override
@@ -56,7 +80,8 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
         actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO callback
+                getTargetFragment().onActivityResult(getTargetRequestCode(),
+                        Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });
@@ -72,7 +97,12 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Task task = (Task) v.getTag();
+                        Intent intent = new Intent();
+                        intent.putExtra("task", task);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),
+                                Activity.RESULT_OK, intent);
+                        dismiss();
                     }
                 });
                 return new TaskViewHolder(view);
@@ -80,12 +110,18 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
 
             @Override
             public void onBindViewHolder(TaskViewHolder holder, int position) {
-                holder.mTvNodeName.setText("节点" + position);
+                Task task = getItem(position);
+                holder.mTvNodeName.setText(task.getName());
+                holder.itemView.setTag(task);
             }
 
             @Override
             public int getItemCount() {
-                return 5;
+                return mTasks.size();
+            }
+
+            private Task getItem(int position) {
+                return mTasks.get(position);
             }
         });
     }

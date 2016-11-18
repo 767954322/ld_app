@@ -22,5 +22,6 @@
     <item android:id="@+id/menu_add_task"
         android:title="@string/menu_title_add_task"
         android:icon="@drawable/ic_menu_add"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
 </menu>

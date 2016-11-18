@@ -21,7 +21,9 @@ public enum TaskStatusTypeEnum {
     TASK_STATUS_REINSPECT_RESERVING("reinspectReserving"),      //复验待预约
     TASK_STATUS_REINSPECT_RESERVED("reinspectReserved"),        //复验已预约
     TASK_STATUS_REINSPECT_INPROGRESS("reinspectInProgress"),    //复验进行中
-    TASK_STATUS_REINSPECT_DELAY("reinspectDelayed");            //复验延期
+    TASK_STATUS_REINSPECT_DELAY("reinspectDelayed"),           //复验延期
+    TASK_STATUS_DELETED("DELETED");            //已删除
+
 
     private String status;
     TaskStatusTypeEnum(String status) {

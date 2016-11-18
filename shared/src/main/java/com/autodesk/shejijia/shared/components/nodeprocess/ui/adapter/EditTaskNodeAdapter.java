@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -200,6 +199,10 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
     @Override
     public long getItemId(int position) {
         return super.getItemId(position);
+    }
+
+    public int getItemPosition(Task task) {
+        return mTasks.indexOf(task);
     }
 
     private String getDateString(Task task) {

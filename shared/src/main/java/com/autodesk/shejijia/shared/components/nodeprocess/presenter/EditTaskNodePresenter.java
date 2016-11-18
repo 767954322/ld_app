@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 
@@ -32,6 +33,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     private String mProjectId;
     private PlanInfo mPlan;
     private Task mActiveTask;
+    private ArrayList<Task> mDeletedTasks = new ArrayList<>();
 
     private TaskFilterType mFilterType = TaskFilterType.ALL_TASKS;
 
@@ -43,18 +45,21 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     public void fetchPlan() {
         ProjectRepository.getInstance().getEditingPlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
                 new ResponseCallback<PlanInfo>() {
-            @Override
-            public void onSuccess(PlanInfo data) {
-                mPlan = data;
-                sortTasks();
-                showTasks(mPlan.getTasks());
-            }
+                    @Override
+                    public void onSuccess(PlanInfo data) {
+                        mPlan = data;
+                        mDeletedTasks.clear();
+                        mDeletedTasks.addAll(mPlan.getDeletedTasks());
+                        sortTasks();
+                        showTasks(mPlan.getTasks());
+                        updateAddIcon();
+                    }
 
-            @Override
-            public void onError(String errorMsg) {
-                mView.showError(errorMsg);
-            }
-        });
+                    @Override
+                    public void onError(String errorMsg) {
+                        mView.showError(errorMsg);
+                    }
+                });
     }
 
     @Override
@@ -73,7 +78,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     public void onFilterTypeChange(TaskFilterType filterType) {
         mFilterType = filterType;
         mView.updateFilterIcon(getFilterIcon());
-        showTasks(filterTasks(mPlan.getTasks()));
+        showTasks(mPlan.getTasks());
     }
 
     @Override
@@ -108,14 +113,45 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     public void deleteTasks(List<Task> tasks) {
         List<Task> allTasks = mPlan.getTasks();
         for (Task task : tasks) {
-            allTasks.remove(task);
+            mDeletedTasks.add(task);
+            task.setStatus(TaskStatusTypeEnum.TASK_STATUS_DELETED.getTaskStatus());
         }
         showTasks(allTasks);
+        updateAddIcon();
+    }
+
+    @Override
+    public void addTask(Task toAddTask) {
+        toAddTask.setStatus(TaskStatusTypeEnum.TASK_STATUS_OPEN.getTaskStatus());
+
+        for (Task deletedTask : mDeletedTasks) {
+            if (deletedTask.getTaskId().equalsIgnoreCase(toAddTask.getTaskId())) {
+                mDeletedTasks.remove(deletedTask);
+                break;
+            }
+        }
+
+
+        List<Task> allTasks = mPlan.getTasks();
+        for (Task task : allTasks) {
+            if (task.getTaskId().equalsIgnoreCase(toAddTask.getTaskId())) {
+                task.setStatus(TaskStatusTypeEnum.TASK_STATUS_OPEN.getTaskStatus());
+                toAddTask = task;
+                break;
+            }
+        }
+
+        mFilterType = TaskFilterType.ALL_TASKS;
+        sortTasks();
+        showTasks(mPlan.getTasks());
+        updateAddIcon();
+        mView.scrollToTask(toAddTask);
+        mView.updateFilterIcon(getFilterIcon());
     }
 
     @Override
     public void startAddTask() {
-        mView.showAddTaskDialog();
+        mView.showAddTaskDialog(mDeletedTasks);
     }
 
     @Override
@@ -142,34 +178,79 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
 
     }
 
-    private void showTasks(List<Task> tasks) {
-        mView.showTasks(filterTasks(tasks));
+    @Override
+    public boolean shouldShowAddIcon() {
+        return mDeletedTasks.size() > 0;
     }
 
-    private List<Task> filterTasks(List<Task> tasks) {
+    private void showTasks(List<Task> tasks) {
+        List<TaskFilter> includeTaskFilters = new ArrayList<>();
+        List<TaskFilter> excludeTaskFilters = new ArrayList<>();
+
+        includeTaskFilters.add(new CategoryFilter(mFilterType));
+        excludeTaskFilters.add(new StatusFilter(TaskStatusTypeEnum.TASK_STATUS_DELETED));
+
+        List<Task> filteredTasks = filterTasks(tasks, includeTaskFilters, excludeTaskFilters);
+        mView.showTasks(filteredTasks);
+    }
+
+    private List<Task> filterTasks(List<Task> tasks, List<TaskFilter> includeTaskFilters, List<TaskFilter> excludeTaskFilters) {
         List<Task> filteredTasks = new ArrayList<>();
-        switch (mFilterType) {
-            case CONSTRUCTION_TASKS:
-                for (Task task: tasks) {
-                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue())) {
-                        filteredTasks.add(task);
-                    }
-                }
-                break;
-            case MATERIAL_TASKS:
-                for (Task task: tasks) {
-                    if (task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
-                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue())) {
-                        filteredTasks.add(task);
-                    }
-                }
-                break;
-            default:
-                filteredTasks.addAll(tasks);
-                break;
+
+        for (Task task : tasks) {
+            boolean filterResult = true;
+            for (TaskFilter filter : includeTaskFilters) {
+                filterResult &= filter.filter(task);
+            }
+
+            for (TaskFilter filter : excludeTaskFilters) {
+                filterResult &= !filter.filter(task);
+            }
+
+            if (filterResult) {
+                filteredTasks.add(task);
+            }
         }
 
         return filteredTasks;
+    }
+
+    interface TaskFilter {
+        boolean filter(Task task);
+    }
+
+    private static class StatusFilter implements TaskFilter {
+        private TaskStatusTypeEnum mFilterType;
+
+        StatusFilter(TaskStatusTypeEnum filterType) {
+            mFilterType = filterType;
+        }
+
+        @Override
+        public boolean filter(Task task) {
+            return task.getStatus().equalsIgnoreCase(mFilterType.getTaskStatus());
+        }
+    }
+
+    private static class CategoryFilter implements TaskFilter {
+        private TaskFilterType mFilterType;
+
+        CategoryFilter(TaskFilterType filterType) {
+            mFilterType = filterType;
+        }
+
+        @Override
+        public boolean filter(Task task) {
+            switch (mFilterType) {
+                case CONSTRUCTION_TASKS:
+                    return task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue());
+                case MATERIAL_TASKS:
+                    return task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
+                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue());
+                default:
+                    return true;
+            }
+        }
     }
 
     private int getFilterIcon() {
@@ -186,9 +267,13 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         return filterIcon;
     }
 
+    private void updateAddIcon() {
+        mView.showAddIcon(shouldShowAddIcon());
+    }
+
     private List<Task> getMileStoneNodes() {
         List<Task> filteredTasks = new ArrayList<>();
-        for (Task task: mPlan.getTasks()) {
+        for (Task task : mPlan.getTasks()) {
             if (task.isMilestone()) {
                 filteredTasks.add(task);
             }

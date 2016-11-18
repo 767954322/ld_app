@@ -17,6 +17,8 @@ public class PlanInfo implements Serializable {
     private String start;
     private String completion;
     private List<Task> tasks;
+    @SerializedName("delete_tasks")
+    private List<Task> deletedTasks;
     @SerializedName("plan_template_id")
     private String planTemplateId;
     @SerializedName("plan_id")
@@ -69,6 +71,14 @@ public class PlanInfo implements Serializable {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<Task> getDeletedTasks() {
+        return deletedTasks;
+    }
+
+    public void setDeletedTasks(List<Task> mDeletedTasks) {
+        this.deletedTasks = mDeletedTasks;
     }
 
     public String getPlanTemplateId() {
