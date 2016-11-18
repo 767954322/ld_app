@@ -39,6 +39,7 @@ public class DynamicPopWindow extends PopupWindow {
     private int width;//该控件高度
     private static double NO_CHANGE_HEIGHT = 1187.00d;
     private static double ADAPTER_COUNT = 1.00d;
+    public boolean currentStatus = false;//当前开闭的状态
 
     public DynamicPopWindow(Activity context) {
         super(context);
@@ -221,9 +222,11 @@ public class DynamicPopWindow extends PopupWindow {
      */
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
+            currentStatus = true;
             this.showAsDropDown(parent, parent.getLayoutParams().width / 2, width /50);
 //            backgroundAlpha(0.5F);
         } else {
+            currentStatus = false;
             this.dismiss();
 //            backgroundAlpha(1.0F);
         }

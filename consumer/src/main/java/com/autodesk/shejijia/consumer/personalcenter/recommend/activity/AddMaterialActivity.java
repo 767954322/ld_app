@@ -33,6 +33,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddVi
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewContainer;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicPopWindow;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicScrollView;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.BitmapTextView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -48,8 +49,6 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.autodesk.shejijia.consumer.manager.constants.JsonConstants.BRAND_COUNT_LIMIT;
 
 /**
  * @author yaoxuehua .
@@ -72,7 +71,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private DynamicScrollView two_level_category;
     private PullListView show_brand_listView;
     private MaterialCategoryBean materialCategoryBean;
-    private TextView all_material_btn;
+    private BitmapTextView all_material_btn;
     private Handler getAdapterDataHandler;//获取返回数据handler
     private List<RecommendBrandsBean> getAdapterResultList;
     private DynamicAddViewContainer dynamicAddViewContainer;
@@ -922,10 +921,11 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParamsButton.topMargin = width / 50;
         layoutParamsButton.bottomMargin = width / 50;
-        all_material_btn = new TextView(this);
+        all_material_btn = new BitmapTextView(this,null);
         all_material_btn.setText(UIUtils.getString(R.string.my_bid_all));
+        all_material_btn.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+        all_material_btn.setBitmapAndSize(R.drawable.three,"全部");
         all_material_btn.setMinWidth(width / 5);
-        all_material_btn.setGravity(Gravity.CENTER);
         all_material_btn.setPadding(width / 25, 0, width / 25, 0);
         all_material_btn.setTextColor(UIUtils.getColor(R.color.text_item_name));
         all_material_btn.setBackgroundResource(R.drawable.material_add_bg);
@@ -939,6 +939,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     if (dynamicPopWindowReuse != null) {
 
                         dynamicPopWindowReuse.showPopupWindow(all_material_btn);
+                    }
+                    //改变小三角
+                    if (dynamicPopWindowReuse.currentStatus){
+                        all_material_btn.changeBitmap(all_material_btn.BITMAP_TOP);
+                    }else {
+                        all_material_btn.changeBitmap(all_material_btn.BITMAP_DOWN);
                     }
                 }
             }
