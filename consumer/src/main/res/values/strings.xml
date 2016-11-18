@@ -980,6 +980,7 @@
     <string name="hint_edit_input_yusuan">请选择装修预算</string>
     <string name="hint_edit_input_address">请选择项目地址</string>
     <string name="hint_edit_input_xiaoqu">请输入小区名称(选填)</string>
+    <string name="select">请选择</string>
 
     <!-- 合同提示語 -->
 

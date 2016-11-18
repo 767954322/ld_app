@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
 
@@ -29,7 +30,6 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
       LayoutInflater inflater = LayoutInflater.from(context);
       convertView = inflater.inflate(R.layout.ms_list_item, parent, false);
       textView = (TextView) convertView.findViewById(R.id.tv_tinted_spinner);
-      textView.setTextColor(textColor);
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         Configuration config = context.getResources().getConfiguration();
         if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
@@ -40,6 +40,9 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
     } else {
       textView = ((ViewHolder) convertView.getTag()).textView;
     }
+    int ss = context.getResources().getColor(R.color.bg_66);
+    String select = getItem(position).toString();
+    textView.setTextColor(select.equals(UIUtils.getString(R.string.select))?ss:textColor);
     textView.setText(getItem(position).toString());
     return convertView;
   }

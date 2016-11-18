@@ -2,8 +2,12 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,6 +32,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
@@ -163,22 +170,20 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         // 品牌名称．
         mViewHolder.tvBrandName.setText(recommendBrandsBean.getName());
         // 空间．
-        final String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
-        mViewHolder.spinnerApartment.setItems(apartmentArray);
-        String apartment = recommendBrandsBean.getApartment();
-        for (int i = 0; i < apartmentArray.length; i++) {
-            String apartMentName = ApartmentConvertUtils.getApartmentNameFromId(mActivity, apartment);
-            mViewHolder.spinnerApartment.setText(StringUtils.isEmpty(apartMentName) ? "请选择" : apartMentName);
-        }
+        String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
 
+        final List<String> apartmentList = Arrays.asList(apartmentArray);
+        mViewHolder.spinnerApartment.setItems(apartmentList);
+        mViewHolder.spinnerApartment.setSelectedIndex(StringUtils.isEmpty(recommendBrandsBean.getApartment())?0:Integer.valueOf(recommendBrandsBean.getApartment()));
         final int currentParentPosition = groupPosition;
         final int currentChildPosition = childPosition;
         mViewHolder.spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
-                String currentApartmentName = apartmentArray[position];
-                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(ApartmentConvertUtils.getApartmentIdFromName(mActivity, UIUtils.getNoStringIfEmpty(currentApartmentName)));
+                boolean falg = mViewHolder.spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
+                mViewHolder.spinnerApartment.setTextColor(falg?mActivity.getResources().getColor(R.color.bg_66):Color.BLACK);
+                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(position < 10?"0"+position:position+"");
             }
         });
 
@@ -220,8 +225,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         });
         return view;
     }
-
-
     public void setBrandChangListener(BrandChangListener brandChangListener) {
         mBrandChangListener = brandChangListener;
     }
