@@ -71,6 +71,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private TextView mTvNavTitle;
     private String mRecommendScfdTag = "";
     private String projectName;
+    private int mBrandCountLimit;
 
     public static void actionStartActivity(Context context, String asset_id, int brand_count_limit) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -98,6 +99,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.initExtraBundle();
         Intent intent = getIntent();
         mAsset_id = intent.getStringExtra("asset_id");
+        mBrandCountLimit = intent.getIntExtra("brand_count_limit", 0);
     }
 
     @Override
@@ -281,6 +283,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
         intent.putExtra(JsonConstants.JSON_PROJECT_NAME, projectName);
+        intent.putExtra("brand_count_limit", mBrandCountLimit);
         startActivityForResult(intent, 24);
     }
 
@@ -333,6 +336,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onBrandAddListener(RecommendSCFDBean recommendSCFDBean) {
         Intent intent = new Intent(mActivity, AddBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
+        intent.putExtra("brand_count_limit", mBrandCountLimit);
         startActivityForResult(intent, 22);
     }
 
