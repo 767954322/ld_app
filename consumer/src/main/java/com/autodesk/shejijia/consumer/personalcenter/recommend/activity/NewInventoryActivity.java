@@ -366,7 +366,10 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 CustomProgress.cancelDialog();
                 Log.d("NewInventoryActivity", jsonObject.toString());
                 NewInventoryEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), NewInventoryEntity.class);
-                showAlertView(entity);
+                String asset_id = entity.getAsset_id();
+                RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
+                finish();
+//                showAlertView(entity);
             }
 
             @Override
