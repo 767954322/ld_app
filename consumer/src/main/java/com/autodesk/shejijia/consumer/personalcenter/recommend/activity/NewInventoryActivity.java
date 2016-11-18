@@ -64,6 +64,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private AlertView mBackAlertView;
     private String acs_member_id;
     private boolean isEditable = false;
+    private int mDesign_project_id;
+    private int mMain_project_id;
 
 
     @Override
@@ -257,10 +259,20 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
              */
             getMemberAccountList(mMemberAccount);
         } else {
+            /**
+             * 详细地址
+             */
+            if (!StringUtils.isEmpty(mDetailAddress)) {
+                boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
+                if (!mMatchesDetailAddress) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
+                    return;
+                }
+            }
             newInvertoryList(acs_member_id);
         }
-
-
     }
 
     private void newInvertoryList(String acs_member_id) {
@@ -273,14 +285,17 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         try {
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, acs_member_id);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGN_PROJECT_ID, mDesign_project_id);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MAIN_PROJECT_ID, mMain_project_id);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
 
-            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "123456789");
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "");
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
@@ -437,6 +452,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mCurrentDistrict = designerProjectsBean.getDistrict_name();
 
             acs_member_id = designerProjectsBean.getConsumer_id();
+            mDesign_project_id = designerProjectsBean.getDesign_project_id();
+            mMain_project_id = designerProjectsBean.getMain_project_id();
 
             mEtProjectAddress.setText(mCurrentProvince + mCurrentCity +
                     UIUtils.getNoStringIfEmpty(mCurrentDistrict));

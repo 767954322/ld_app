@@ -47,10 +47,19 @@ public class SelectProjectEntity implements Serializable {
         private String city;
         private String province_name;
         private int design_project_id;
+        private int main_project_id;
         private String district_name;
         private String province;
         private String district;
         private String consumer_zid;
+
+        public int getMain_project_id() {
+            return main_project_id;
+        }
+
+        public void setMain_project_id(int main_project_id) {
+            this.main_project_id = main_project_id;
+        }
 
         public String getCity_name() {
             return city_name;
