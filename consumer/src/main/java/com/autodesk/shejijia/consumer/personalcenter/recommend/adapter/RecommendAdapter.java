@@ -192,7 +192,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
                     break;
                 case R.id.tv_edit_btn:
                     //消费者编辑
-                    RecommendListDetailActivity.actionStartActivity(mContext, mItem.getAsset_id() + "", mItem.getBrand_count_limit());
+                    RecommendListDetailActivity.actionStartActivity(mContext, mItem.getAsset_id() + "");
                     break;
             }
         }

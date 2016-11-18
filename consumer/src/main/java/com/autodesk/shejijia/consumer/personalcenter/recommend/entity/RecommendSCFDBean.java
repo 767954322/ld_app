@@ -23,8 +23,19 @@ public class RecommendSCFDBean implements Serializable {
     private String sub_category_o2o_name;
     private String sub_category_online_id;
     private String sub_category_online_name;
+
+    private int brand_count_limit;
+
     private List<RecommendBrandsBean> brands; // 推荐品牌．
     private String source;
+
+    public int getBrand_count_limit() {
+        return brand_count_limit;
+    }
+
+    public void setBrand_count_limit(int brand_count_limit) {
+        this.brand_count_limit = brand_count_limit;
+    }
 
     public String getSource() {
         return source;

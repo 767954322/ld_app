@@ -73,10 +73,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private String projectName;
     private int mBrandCountLimit;
 
-    public static void actionStartActivity(Context context, String asset_id, int brand_count_limit) {
+    public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
         intent.putExtra("asset_id", asset_id);
-        intent.putExtra("brand_count_limit", brand_count_limit);
         context.startActivity(intent);
     }
 
@@ -99,7 +98,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.initExtraBundle();
         Intent intent = getIntent();
         mAsset_id = intent.getStringExtra("asset_id");
-        mBrandCountLimit = intent.getIntExtra("brand_count_limit", 0);
     }
 
     @Override
@@ -110,6 +108,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         mRecommendSCFDList = new ArrayList<>();
         mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
                 mExpandListView, false));
+
         mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, mRecommendSCFDList, mExpandListView);
         mExpandListView.setAdapter(mRecommendExpandableAdapter);
 
@@ -139,6 +138,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 Log.d("RecommendListDetailAc", jsonString);
                 RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
                 projectName = recommendListDetailBean.getCommunity_name();
+                mBrandCountLimit = recommendListDetailBean.getBrand_count_limit();
+
                 updateUI(recommendListDetailBean);
             }
 
@@ -221,6 +222,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             setEmptyListDefaultButtn();
             return;
+        }
+
+        for (RecommendSCFDBean recommendSCFDBean: recommendscfd){
+            recommendSCFDBean.setBrand_count_limit(mBrandCountLimit);
         }
         setSendButtn();
         mRecommendScfdTag = recommendscfd.toString();

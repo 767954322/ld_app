@@ -99,7 +99,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-        RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getAsset_id() + "", mEntity.getBrand_count_limit());
+        RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getAsset_id() + "");
     }
 
     @Override

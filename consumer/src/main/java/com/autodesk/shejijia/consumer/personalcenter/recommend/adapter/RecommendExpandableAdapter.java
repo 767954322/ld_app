@@ -114,7 +114,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         } else {
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
         }
-        if (mRecommendSCFDList.get(groupPosition).getBrands().size() < 6) {
+        if (mRecommendSCFDList.get(groupPosition).getBrands().size() < mRecommendSCFDList.get(groupPosition).getBrand_count_limit()) {
             mViewHolder.tvBrandAdd.setEnabled(true);
             mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
             mViewHolder.tvBrandAdd.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
@@ -170,7 +170,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         String apartment = recommendBrandsBean.getApartment();
         for (int i = 0; i < apartmentList.size(); i++) {
             String apartMentName = ApartmentConvertUtils.getApartmentNameFromId(mActivity, apartment);
-            mViewHolder.spinnerApartment.setText(StringUtils.isEmpty(apartMentName) ? "选择空间" : apartMentName);
+            mViewHolder.spinnerApartment.setText(StringUtils.isEmpty(apartMentName) ? "请选择" : apartMentName);
         }
 
         final int currentParentPosition = groupPosition;

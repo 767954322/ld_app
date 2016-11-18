@@ -19,12 +19,12 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
-import java.util.Iterator;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -71,7 +71,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         updataBrandAdapter = new ChanageBrandAdapter(this, brandsBeanList, R.layout.select_check_textview);
         updataBrandListview.setAdapter(updataBrandAdapter);
         setNavigationBar();
-        getBrands(0,100);
+        getBrands(0, 100);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     private void getBrands(int offset, int limit) {
         MPServerHttpManager.getInstance().getCategoryBrandsInformation(mRecommendSCFDBean.getCategory_3d_id(),
                 mRecommendSCFDBean.getCategory_3d_name(), mRecommendSCFDBean.getSub_category_3d_id(),
-                mRecommendSCFDBean.getSub_category_3d_name(), "",  offset, limit, this);
+                mRecommendSCFDBean.getSub_category_3d_name(), "", offset, limit, this);
     }
 
     @Override
@@ -99,11 +99,11 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
             case R.id.change_finsh:
                 List<RecommendBrandsBean> brandsBeen = mRecommendSCFDBean.getBrands();
                 Intent intent = new Intent();
-                for(RecommendBrandsBean recommendBrandsBean: brandsBeen){
-                    if(recommendBrandsBean.getCode().equals(brandCode)){
+                for (RecommendBrandsBean recommendBrandsBean : brandsBeen) {
+                    if (recommendBrandsBean.getCode().equals(brandCode)) {
                         int post = brandsBeen.indexOf(recommendBrandsBean);
                         mRecommendSCFDBean.getBrands().remove(recommendBrandsBean);
-                        brandsBeen.add(post,selectRecommendBrandsBean);
+                        brandsBeen.add(post, selectRecommendBrandsBean);
                         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, mRecommendSCFDBean);
                         break;
                     }
@@ -123,11 +123,11 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         RecommendSCFDBean recommendSCFDBean = GsonUtil.jsonToBean(jsonString, RecommendSCFDBean.class);
         brandsBeanList.clear();//接口有问题，待修改
         List<RecommendBrandsBean> Brands = recommendSCFDBean.getBrands();
-        if(Brands == null){
+        if (Brands == null) {
             return;
         }
-        changeFinsh.setEnabled(Brands.size() > 1?true:false);
-        changeFinsh.setBackground(this.getResources().getDrawable(Brands.size() > 1?R.color.bg_0084ff:R.color.gray));
+        changeFinsh.setEnabled(Brands.size() > 1 ? true : false);
+        changeFinsh.setBackground(this.getResources().getDrawable(Brands.size() > 1 ? R.color.bg_0084ff : R.color.gray));
         filterBrand(Brands);
         setItemChecked();
 
@@ -138,12 +138,13 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     public void onErrorResponse(VolleyError volleyError) {
         MPNetworkUtils.logError(TAG, volleyError);
     }
+
     private void filterBrand(List<RecommendBrandsBean> brandsBeans) {
         for (RecommendBrandsBean brandsBean : mRecommendSCFDBean.getBrands()) {
             Iterator<RecommendBrandsBean> iter = brandsBeans.iterator();
-            while(iter.hasNext()){
+            while (iter.hasNext()) {
                 RecommendBrandsBean b = iter.next();
-                if(b.getCode().equals(brandsBean.getCode()) && !b.getCode().equals(brandCode)){
+                if (b.getCode().equals(brandsBean.getCode()) && !b.getCode().equals(brandCode)) {
                     iter.remove();
                 }
             }
@@ -152,16 +153,18 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         updataBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
-    private void setItemChecked(){
-        for(RecommendBrandsBean rb:brandsBeanList){
-           if(rb.getCode().equals(brandCode)){
-               int index = brandsBeanList.indexOf(rb);
-               updataBrandListview.setItemChecked(index, true);
-               selectRecommendBrandsBean = rb;
-               break;
-           }
+
+    private void setItemChecked() {
+        for (RecommendBrandsBean rb : brandsBeanList) {
+            if (rb.getCode().equals(brandCode)) {
+                int index = brandsBeanList.indexOf(rb);
+                updataBrandListview.setItemChecked(index, true);
+                selectRecommendBrandsBean = rb;
+                break;
+            }
         }
     }
+
     private void setNavigationBar() {
         setTitleForNavbar(mRecommendSCFDBean.getSub_category_3d_name());
     }
