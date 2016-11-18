@@ -4,8 +4,6 @@ package com.autodesk.shejijia.shared.components.common.utility;
 import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -49,7 +47,7 @@ public class GsonUtil {
         for (int i=0; i<multiTypeList.size(); i++) {
             gsonBuilder.registerTypeAdapter(multiTypeList.get(i), typeAdapterList.get(i));
         }
-        
+
         return gsonBuilder.create().fromJson(json, clazz);
     }
 

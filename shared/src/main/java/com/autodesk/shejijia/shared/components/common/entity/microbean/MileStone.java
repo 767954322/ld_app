@@ -1,13 +1,8 @@
 package com.autodesk.shejijia.shared.components.common.entity.microbean;
 
-import android.widget.Switch;
-
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.internal.bind.ObjectTypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
