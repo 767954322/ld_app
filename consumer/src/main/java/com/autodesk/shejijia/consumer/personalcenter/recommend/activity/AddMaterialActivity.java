@@ -49,6 +49,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.autodesk.shejijia.consumer.manager.constants.JsonConstants.BRAND_COUNT_LIMIT;
+
 /**
  * @author yaoxuehua .
  * @version v1.0 .
@@ -167,6 +169,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDList = (List<RecommendSCFDBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        brandCount = intent.getIntExtra(JsonConstants.BRAND_COUNT_LIMIT,6);
         setTitleForNavbar(intent.getStringExtra(JsonConstants.JSON_PROJECT_NAME));
     }
 
@@ -554,7 +557,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         }
         upDataTotalListTag(list);
         if (addBrandShowAdapter == null) {
-            addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this, list, R.layout.add_brand_item, getAdapterDataHandler, listTagFor);
+            addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this, list, R.layout.add_brand_item, getAdapterDataHandler, listTagFor,brandCount);
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
         }
@@ -710,7 +713,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     public void showBrandRemainCount() {
 
         //当前还可以选择的品牌数量
-        int canChooseBrandsCount = 6;
+        int canChooseBrandsCount = brandCount;
         //获取当前选中的品类的品牌集合中选中了多少
         for (int i = 0; i < totalList.size(); i++) {
             String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
@@ -729,7 +732,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         }
         String remainBrandCount = UIUtils.getString(R.string.add) + canChooseBrandsCount + UIUtils.getString(R.string.brand);
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(remainBrandCount);
-        spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.BLUE), 4, 5, spannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (canChooseBrandsCount < 10){
+
+            spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.BLUE), 4, 5, spannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else {
+            spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.BLUE), 4, 6, spannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         remain_brand_count.setText(spannableStringBuilder);
     }
 

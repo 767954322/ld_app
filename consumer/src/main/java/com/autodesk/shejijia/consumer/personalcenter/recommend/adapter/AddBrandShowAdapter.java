@@ -29,14 +29,16 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
     private int layoutId;
     private Handler handler;
     private List<BtnStatusBean> list;
+    private int brandCount = 6;
 
-    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler, List<BtnStatusBean> list) {
+    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler, List<BtnStatusBean> list,int brandCount) {
         super(context, datas, layoutId);
         this.handler = handler;
         this.context = context;
         this.datas = datas;
         this.layoutId = layoutId;
         this.list = list;
+        this.brandCount = brandCount;
     }
 
     @Override
@@ -118,7 +120,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
                 }
             }
 
-            if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 2 && countNumber <= 5) {
+            if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 2 && countNumber <= brandCount - 1) {
 
                 message.what = 1;
                 v.findViewById(R.id.checked_img).setBackgroundResource(R.drawable.brand_checked);
