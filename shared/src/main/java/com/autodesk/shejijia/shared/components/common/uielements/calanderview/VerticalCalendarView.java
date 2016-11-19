@@ -65,7 +65,6 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
         mListView.setId(R.id.mcv_list);
         mListView.setAdapter(mListAdapter);
-        //noinspection deprecation
         mListView.setLayoutManager(mLayoutManager);
         container.addView(mListView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 

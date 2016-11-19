@@ -169,9 +169,9 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
-        DateSelectorDecorator mSelectorDecorator = new DateSelectorDecorator(getActivity());
+        DateSelectorDecorator selectorDecorator = new DateSelectorDecorator(getActivity());
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator();
-        mCalendarWidget.addDecorators(mSelectorDecorator,
+        mCalendarWidget.addDecorators(selectorDecorator,
                 mMileStoneActiveDecorator,
                 mMileStoneDecorator);
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);

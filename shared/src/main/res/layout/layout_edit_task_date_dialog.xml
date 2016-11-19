@@ -34,6 +34,8 @@
             android:minHeight="36dp"
             android:minWidth="48dp"
             android:layout_alignParentRight="true"
+            android:textColor="@color/colorPrimary"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
             android:textStyle="bold"
             android:text="@string/sure"

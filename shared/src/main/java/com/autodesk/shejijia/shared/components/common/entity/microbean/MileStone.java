@@ -13,10 +13,12 @@ import java.io.Serializable;
  */
 
 public class MileStone implements Serializable {
+    private final static String FIELD_MILESTONE_ID = "milestone_id";
+    private final static String FIELD_MILESTONE_NAME = "milestone_name";
 
-    @SerializedName("milestone_id")
+    @SerializedName(FIELD_MILESTONE_ID)
     private String milestoneId;
-    @SerializedName("milestone_name")
+    @SerializedName(FIELD_MILESTONE_NAME)
     private String milestoneName;
 
     public String getMilestoneId() {
@@ -45,10 +47,10 @@ public class MileStone implements Serializable {
                     reader.beginObject();
                     while (reader.hasNext()) {
                         switch (reader.nextName()) {
-                            case "milestone_id":
+                            case FIELD_MILESTONE_ID:
                                 mileStone.setMilestoneId(reader.nextString());
                                 break;
-                            case "milestone_name":
+                            case FIELD_MILESTONE_NAME:
                                 mileStone.setMilestoneName(reader.nextString());
                                 break;
                             default:
@@ -75,8 +77,8 @@ public class MileStone implements Serializable {
                 writer.nullValue();
             } else {
                 writer.beginObject();
-                writer.name("milestone_id").value(rated.getMilestoneId());
-                writer.name("milestone_name").value(rated.getMilestoneName());
+                writer.name(FIELD_MILESTONE_ID).value(rated.getMilestoneId());
+                writer.name(FIELD_MILESTONE_NAME).value(rated.getMilestoneName());
                 writer.endObject();
             }
         }
