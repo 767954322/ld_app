@@ -1,13 +1,9 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.res.TypedArrayUtils;
 
-import com.autodesk.shejijia.shared.components.common.appglobal.TaskEnum;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
@@ -15,24 +11,21 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Da
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
 import com.autodesk.shejijia.shared.components.common.utility.CollectionUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 /**
- * Created by wenhulin on 10/21/16.
+ * @author wenhulin
+ * @since 11/3/16
  */
 
 public class ActiveMileStoneDecorator implements DayViewDecorator {
     private Date mEnableDaysStart;
     private Date mEnableDaysEnd;
-    private Context mContext;
 
-
-    public ActiveMileStoneDecorator(Activity context) {
-        mContext = context;
+    public ActiveMileStoneDecorator() {
     }
 
     @Override
@@ -48,12 +41,6 @@ public class ActiveMileStoneDecorator implements DayViewDecorator {
     }
 
     public void setActiveTask(@NonNull PlanInfo plan, @Nullable Task task) {
-        if (plan == null) {
-            mEnableDaysStart = null;
-            mEnableDaysEnd = null;
-            return;
-        }
-
         setActiveTask(plan.getTasks(), task);
     }
 
@@ -64,30 +51,24 @@ public class ActiveMileStoneDecorator implements DayViewDecorator {
             return;
         }
 
-
-        switch (TaskEnum.TemplateId.getEnum(task.getTaskTemplateId())) {
-            case KAI_GONG_JIAO_DI:
-                mEnableDaysStart = null;
-                mEnableDaysEnd = null;
-                break;
-            case JUNGONG_YANSHOU:
-                mEnableDaysStart = null;
-                mEnableDaysEnd = null;
-                break;
-            default:
-                mEnableDaysStart = getStartDate(tasks);
-                mEnableDaysEnd = getEndDate(tasks);
-                break;
+        String taskTemplateId = task.getTaskTemplateId();
+        if (ConstructionConstants.TaskTemplateId.KAI_GONG_JIAO_DI.equalsIgnoreCase(taskTemplateId)
+                || ConstructionConstants.TaskTemplateId.JUNGONG_YANSHOU.equalsIgnoreCase(taskTemplateId)) {
+            mEnableDaysStart = null;
+            mEnableDaysEnd = null;
+        } else {
+            mEnableDaysStart = getStartDate(tasks);
+            mEnableDaysEnd = getEndDate(tasks);
         }
     }
 
     private Date getStartDate(List<Task> tasks) {
-        Task task = getTaskByTemplateId(tasks, TaskEnum.TemplateId.KAI_GONG_JIAO_DI.getValue());
+        Task task = getTaskByTemplateId(tasks, ConstructionConstants.TaskTemplateId.KAI_GONG_JIAO_DI);
         return task == null ? null : DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
     }
 
     private Date getEndDate(List<Task> tasks) {
-        Task task = getTaskByTemplateId(tasks, TaskEnum.TemplateId.JUNGONG_YANSHOU.getValue());
+        Task task = getTaskByTemplateId(tasks, ConstructionConstants.TaskTemplateId.JUNGONG_YANSHOU);
         return task == null ? null : DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
     }
 

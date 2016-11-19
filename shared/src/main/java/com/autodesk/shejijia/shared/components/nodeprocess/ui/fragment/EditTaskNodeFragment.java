@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
@@ -44,7 +46,8 @@ import java.util.List;
 
 
 /**
- * Created by wenhulin on 11/3/16.
+ * @author wenhulin
+ * @since 11/3/16
  */
 
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
@@ -147,7 +150,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     protected void initData() {
-        mPresenter = new EditTaskNodePresenter(getActivity().getIntent().getStringExtra("pid"));
+        mPresenter = new EditTaskNodePresenter(getActivity().getIntent().getStringExtra(ConstructionConstants.BundleKey.PROJECT_ID));
         mPresenter.bindView(this);
         mPresenter.fetchPlan();
     }
@@ -314,6 +317,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showBottomSheet(List<Task> milstoneTasks, Task task) {
+        @SuppressLint("InflateParams")
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_edit_task_date_dialog, null);
         mBottomSheetDialog.setContentView(view);
         mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
@@ -389,7 +393,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mCalendarView.removeDecorators();
         MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator(getActivity());
         DateSelectorDecorator selectorDecorator = new DateSelectorDecorator(getActivity());
-        ActiveMileStoneDecorator activeMileStoneDecorator = new ActiveMileStoneDecorator(getActivity());
+        ActiveMileStoneDecorator activeMileStoneDecorator = new ActiveMileStoneDecorator();
         activeMileStoneDecorator.setActiveTask(milstoneTasks, task);
         mileStoneDecorator.setData(milstoneTasks);
         mCalendarView.addDecorators(selectorDecorator,

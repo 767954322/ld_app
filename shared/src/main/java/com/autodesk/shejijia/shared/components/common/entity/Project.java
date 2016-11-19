@@ -35,7 +35,6 @@ public class Project implements Serializable{
     @SerializedName("design_id")
     private String designId;
 
-
     public List<Like> getLikes() {
         return likes;
     }

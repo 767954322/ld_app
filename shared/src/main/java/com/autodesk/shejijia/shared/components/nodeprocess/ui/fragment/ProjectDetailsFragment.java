@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -85,7 +86,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
-                intent.putExtra("pid", String.valueOf(getArguments().getLong("projectId")));
+                intent.putExtra(ConstructionConstants.BundleKey.PROJECT_ID, String.valueOf(getArguments().getLong("projectId")));
                 startActivityForResult(intent, REQUEST_CODE_EDIT_PLAN);
             }
         });

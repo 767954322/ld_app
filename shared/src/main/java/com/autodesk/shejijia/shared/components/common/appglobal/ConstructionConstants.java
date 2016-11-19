@@ -49,4 +49,37 @@ public class ConstructionConstants {
 
     //Log tag
     public static final String  LOG_TAG_REQUEST = "network_request";
+
+    //Bundle key
+    public static class BundleKey {
+        public static final String  PROJECT_ID = "project_id";
+    }
+
+    public static class TaskTemplateId {
+        public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底
+        public static final String YINBIGONGCHENG_YANSHOU = "yinbigongcheng_yanshou";//隐蔽工程验收
+        public static final String BI_SHUI_SHI_YAN = "bi_shui_shi_yan";//闭水实验
+        public static final String ZHONGQI_YANSHOU = "zhongqi_yanshou";//中期验收
+        public static final String JICHU_WANGONG_YANSHOU = "jichu_wangong_yanshou";//基础完工验收
+        public static final String JUNGONG_YANSHOU = "jungong_yanshou";//竣工验收
+    }
+
+    public static class TaskCategory {
+        public static final String TIME_LINE = "timeline";//开工交底
+        public static final String INSPECTOR_INSPECTION = "inspectorInspection";//监理验收
+        public static final String CLIENT_MANAGER_INSPECTION = "clientmanagerInspection";//客户经理验收
+        public static final String CONSTRUCTION = "construction";//中期验收
+        public static final String MATERIAL_MEASURING = "materialMeasuring";//主材测量
+        public static final String MATERIAL_INSTALLATION = "materialInstallation";//主材安装
+    }
+
+    public static class MemberType {
+        public static final String ADMIN = "admin";//系统管理员
+        public static final String CLIENT_MANAGER = "clientmanager";//客户经理
+        public static final String FORMAN = "foreman";//班长
+        public static final String INSPECTOR = "inspector";//监理
+        public static final String MATERIAL_STAFF = "materialstaff";//材料员
+        public static final String DESIGNER = "designer";//设计师
+        public static final String MEMBER = "member";//消费者
+    }
 }

@@ -2,12 +2,14 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
@@ -28,15 +30,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 /**
- * Created by wenhulin on 11/2/16.
+ * @author wenhulin
+ * @since 11/2/16
  */
 
 public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.MileStoneView, OnDateSelectedListener {
 
     private MaterialCalendarView mCalendarWidget;
     private MileStoneNodeDecorator mMileStoneDecorator;
-    private DateSelectorDecorator mSelectorDecorator;
     private ActiveMileStoneDecorator mMileStoneActiveDecorator;
     private MileStoneDayFormatter mMileStoneDayFormator;
 
@@ -60,7 +63,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     protected void initData() {
-        mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra("pid"));
+        mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra(ConstructionConstants.BundleKey.PROJECT_ID));
         mPresenter.bindView(this);
         mPresenter.fetchPlan();
     }
@@ -100,7 +103,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
-    public void showActiveTask(PlanInfo plan, Task task) {
+    public void showActiveTask(@NonNull PlanInfo plan, @Nullable Task task) {
         //TODO disable some dates according to active task
         mMileStoneActiveDecorator.setActiveTask(plan, task);
         mCalendarWidget.invalidateDecorators();
@@ -166,8 +169,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
-        mSelectorDecorator = new DateSelectorDecorator(getActivity());
-        mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
+        DateSelectorDecorator mSelectorDecorator = new DateSelectorDecorator(getActivity());
+        mMileStoneActiveDecorator = new ActiveMileStoneDecorator();
         mCalendarWidget.addDecorators(mSelectorDecorator,
                 mMileStoneActiveDecorator,
                 mMileStoneDecorator);

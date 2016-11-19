@@ -5,7 +5,6 @@ import android.os.Handler;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.appglobal.TaskEnum;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -23,8 +22,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
- * Created by wenhulin on 11/3/16.
+ * @author wenhulin
+ * @since 11/3/16
  */
 
 public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter {
@@ -263,10 +264,10 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         public boolean filter(Task task) {
             switch (mFilterType) {
                 case CONSTRUCTION_TASKS:
-                    return task.getCategory().equalsIgnoreCase(TaskEnum.Category.CONSTRUCTION.getValue());
+                    return task.getCategory().equalsIgnoreCase(ConstructionConstants.TaskCategory.CONSTRUCTION);
                 case MATERIAL_TASKS:
-                    return task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_MEASURING.getValue())
-                            || task.getCategory().equalsIgnoreCase(TaskEnum.Category.MATERIAL_INSTALLATION.getValue());
+                    return task.getCategory().equalsIgnoreCase(ConstructionConstants.TaskCategory.MATERIAL_MEASURING)
+                            || task.getCategory().equalsIgnoreCase(ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION);
                 default:
                     return true;
             }
