@@ -24,7 +24,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     private final static String FRAGMENT_TAG_EDIT_MILESTONE = "edit_milestone";
     private final static String FRAGMENT_TAG_EDIT_TASKNODE = "edit_task_node";
 
-    private EditState mEditState;
+    private EditState mEditState = EditState.EDIT_MILESTONE;
     private ProgressBar mProgressBar;
     private Button mActionBtn;
 
@@ -60,6 +60,8 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             updateEditState(EditState.EDIT_MILESTONE);
+        } else {
+            mEditState = EditState.values()[savedInstanceState.getInt("state")];
         }
     }
 

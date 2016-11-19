@@ -25,6 +25,7 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
     private final static int VIEW_TYPE_TASK_NODE = 1;
 
     private Activity mActivity;
+    
     private List<Task> mTasks = new ArrayList<>();
     private List<Task> mSelectedTasks = new ArrayList<>();
 
@@ -90,24 +91,24 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
         }
     }
 
-    Task removeItem(int position) {
+    private Task removeItem(int position) {
         final Task task = mTasks.remove(position);
         notifyItemRemoved(position);
         return task;
     }
 
-    void addItem(int position, Task model) {
+    private void addItem(int position, Task model) {
         mTasks.add(position, model);
         notifyItemInserted(position);
     }
 
-    void moveItem(int fromPosition, int toPosition) {
+    private void moveItem(int fromPosition, int toPosition) {
         final Task task = mTasks.remove(fromPosition);
         mTasks.add(toPosition, task);
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    void updateItem(int position) {
+    private void updateItem(int position) {
         notifyItemChanged(position);
     }
 
@@ -224,7 +225,7 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
         void onSelectedTaskCountChanged(int count);
     }
 
-    public static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
+    static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
         final TextView mTvNodeName;
         final TextView mTvNodeTime;
 
