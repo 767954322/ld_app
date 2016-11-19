@@ -54,6 +54,8 @@ public interface EditPlanContract {
         void showAddTaskDialog(ArrayList<Task> deletedTasks);
 
         void scrollToTask(Task task);
+
+        boolean scrollToPosition(int position);
     }
 
     interface TaskNodePresenter extends BasePresenter {

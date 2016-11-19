@@ -256,17 +256,33 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     public void showAddTaskDialog(ArrayList<Task> deletedTasks) {
         AddTaskDialogFragment addTaskDialogFragment = AddTaskDialogFragment.newInstance(deletedTasks);
         addTaskDialogFragment.setTargetFragment(this, REQUEST_CODE_ADD_TASK);
-        addTaskDialogFragment.show(getFragmentManager(), FRAGMENT_TAG_ADD_TASK);
+        addTaskDialogFragment.show(getChildFragmentManager(), FRAGMENT_TAG_ADD_TASK);
     }
 
     @Override
     public void scrollToTask(Task task) {
         int position = mAdapter.getItemPosition(task);
         if (position != -1) {
-            // TODO optimize animation
             mRecyclerView.scrollToPosition(position);
         }
     }
+
+    @Override
+    public boolean scrollToPosition(int position) {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        int firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+        if (position < 0) {
+            position = 0;
+        }
+
+        if (position >= firstPosition && position < lastPosition) {
+            return false;
+        } else {
+            linearLayoutManager.scrollToPositionWithOffset(position, 0);
+            return true;
+        }
+     }
 
     @Override
     public void showNetError(String msg) {

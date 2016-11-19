@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wenhulin on 11/3/16.
@@ -135,18 +137,36 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         List<Task> allTasks = mPlan.getTasks();
         for (Task task : allTasks) {
             if (task.getTaskId().equalsIgnoreCase(toAddTask.getTaskId())) {
-                task.setStatus(TaskStatusTypeEnum.TASK_STATUS_OPEN.getTaskStatus());
+                task.setStatus(TaskStatusTypeEnum.TASK_STATUS_OPEN.getTaskStatus().toUpperCase(Locale.getDefault()));
                 toAddTask = task;
                 break;
             }
         }
 
         mFilterType = TaskFilterType.ALL_TASKS;
-        sortTasks();
-        showTasks(mPlan.getTasks());
-        updateAddIcon();
-        mView.scrollToTask(toAddTask);
         mView.updateFilterIcon(getFilterIcon());
+        updateAddIcon();
+        sortTasks();
+
+
+        List<TaskFilter> includeTaskFilters = new ArrayList<>();
+        List<TaskFilter> excludeTaskFilters = new ArrayList<>();
+
+        includeTaskFilters.add(new CategoryFilter(mFilterType));
+        excludeTaskFilters.add(new StatusFilter(TaskStatusTypeEnum.TASK_STATUS_DELETED));
+
+        final List<Task> filteredTasks = filterTasks(mPlan.getTasks(), includeTaskFilters, excludeTaskFilters);
+
+        if (mView.scrollToPosition(filteredTasks.indexOf(toAddTask) - 1)) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mView.showTasks(filteredTasks);
+                }
+            });
+        } else {
+            mView.showTasks(filteredTasks);
+        }
     }
 
     @Override

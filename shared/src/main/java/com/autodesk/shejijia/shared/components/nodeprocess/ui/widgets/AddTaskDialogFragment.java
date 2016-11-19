@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +72,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void setupHeader(View parentView) {
+        // TODO update layout files
         TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
         taskNameView.setText("选择新增节点");
 
@@ -80,8 +80,11 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
         actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTargetFragment().onActivityResult(getTargetRequestCode(),
-                        Activity.RESULT_CANCELED, getActivity().getIntent());
+                if (getTargetFragment() != null) {
+                    getTargetFragment().onActivityResult(getTargetRequestCode(),
+                            Activity.RESULT_CANCELED, getActivity().getIntent());
+                }
+
                 dismiss();
             }
         });
