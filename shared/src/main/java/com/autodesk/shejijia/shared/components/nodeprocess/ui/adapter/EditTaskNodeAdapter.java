@@ -50,10 +50,6 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
     }
 
     public void setData(List<Task> tasks) {
-//            mTasks.clear();
-//            mTasks.addAll(tasks);
-//            notifyItemRangeChanged(0, mTasks.size());
-//            notifyDataSetChanged();
         animateTo(tasks);
     }
 

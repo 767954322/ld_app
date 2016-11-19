@@ -9,10 +9,16 @@
 
     <!--Edit plan-->
     <color name="plan_bg_highlight">#D4E4F4</color>
-    <color name="calender_day_bg_activated">#E5E5E5</color>
+    <color name="plan_bg_disable">@color/gray_light</color>
+    <color name="plan_bg_normal">#F0F0F0</color>
     <color name="plan_font_normal">#464B4E</color>
     <color name="plan_font_disable">#c8c8c8</color>
-    <color name="plan_bg_normal_item_task">#F0F0F0</color>
+
+    //Calendar View
+    <color name="calendar_day_bg_highlight">#D4E4F4</color>
+    <color name="calendar_day_bg_disable">@color/gray_light</color>
+    <color name="calendar_day_bg_normal">@android:color/transparent</color>
+    <color name="calendar_day_bg_activated">#E5E5E5</color>
 
     <color name="rectangle_gray">#999999</color>
     <color name="ripple_material_dark">#c8c8c8</color>

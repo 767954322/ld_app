@@ -25,7 +25,7 @@
             android:layout_alignParentLeft="true"
             android:gravity="center"
             android:textStyle="bold"
-            tools:text="Test"/>
+            android:text="@string/edit_plan_select_new_task"/>
 
         <TextView
             android:id="@+id/tv_action"
@@ -36,8 +36,8 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="@string/sure"
-            tools:text="确定"/>
+            android:text="@string/cancel"
+            tools:text="取消"/>
 
     </RelativeLayout>
 

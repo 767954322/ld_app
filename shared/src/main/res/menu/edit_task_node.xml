@@ -15,7 +15,7 @@
                 android:title="@string/menu__title_task_filter_construction"/>
             <item
                 android:id="@+id/menu_filter_task_material"
-                android:title="@string/menu_titile_task_filter_material"/>
+                android:title="@string/menu_title_task_filter_material"/>
         </menu>
     </item>
 

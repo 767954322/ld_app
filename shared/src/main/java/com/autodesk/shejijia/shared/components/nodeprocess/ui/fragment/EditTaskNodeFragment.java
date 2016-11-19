@@ -140,7 +140,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
             @Override
             public void onSelectedTaskCountChanged(int count) {
-                mActionMode.setTitle(String.format(getString(R.string.cab_title_delete_task), count));
+                mActionMode.setTitle(String.format(getString(R.string.edit_plan_cab_title_delete_task), count));
             }
         });
         mRecyclerView.setAdapter(mAdapter);

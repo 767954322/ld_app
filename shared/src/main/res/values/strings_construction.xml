@@ -80,12 +80,13 @@
     <string name="edit_plan_complete">完成</string>
     <string name="edit_plan_title_first_step">第一步: 调整验收节点时间</string>
     <string name="edit_plan_title_second_step">第二步: 调整子节点时间</string>
+    <string name="edit_plan_select_new_task">选择新增节点</string>
+    <string name="edit_plan_cab_title_delete_task">已选择%1$d个节点</string>
     <string name="menu_title_add_task">添加节点</string>
     <string name="menu_title_task_filter_all">显示全部子节点</string>
     <string name="menu__title_task_filter_construction">只看施工节点</string>
-    <string name="menu_titile_task_filter_material">只看材料节点</string>
+    <string name="menu_title_task_filter_material">只看材料节点</string>
     <string name="menu_title_delete_task">删除节点</string>
-    <string name="cab_title_delete_task">已选择%1$d个节点</string>
 
     <!--角色名称-->
     <string name="designer">设计师</string>

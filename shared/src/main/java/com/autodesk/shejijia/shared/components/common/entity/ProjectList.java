@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

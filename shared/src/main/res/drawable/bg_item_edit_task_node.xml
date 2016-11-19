@@ -4,7 +4,7 @@
     <item android:state_enabled="false" >
         <shape>
             <corners android:radius="4dp" />
-            <solid android:color="@color/gray_light"/>
+            <solid android:color="@color/plan_bg_disable"/>
         </shape>
     </item>
 
@@ -25,7 +25,7 @@
     <item>
         <shape>
             <corners android:radius="4dp" />
-            <solid android:color="@color/plan_bg_normal_item_task"/>
+            <solid android:color="@color/plan_bg_normal"/>
         </shape>
     </item>
 </selector>

@@ -66,16 +66,9 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // TODO disable hideable if necessary
-//        View bottomSheet = getDialog().findViewById(android.support.design.R.id.design_bottom_sheet);
-//        BottomSheetBehavior.from(bottomSheet).setHideable(false);
     }
 
     private void setupHeader(View parentView) {
-        // TODO update layout files
-        TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
-        taskNameView.setText("选择新增节点");
-
         TextView actionBtn = (TextView) parentView.findViewById(R.id.tv_action);
         actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
