@@ -37,7 +37,7 @@ public interface EditPlanContract {
 
         void showTasks(List<Task> tasks);
 
-        void showBottomSheet(List<Task> milestones, Task task);
+        void showPickDayDialog(List<Task> milestones, Task task);
 
         void showUpLoading();
 

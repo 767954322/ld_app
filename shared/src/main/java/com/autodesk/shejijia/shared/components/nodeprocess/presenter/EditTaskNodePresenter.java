@@ -74,7 +74,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     @Override
     public void editTaskNode(Task task) {
         mActiveTask = task;
-        mView.showBottomSheet(getMileStoneNodes(), task);
+        mView.showPickDayDialog(getMileStoneNodes(), task);
     }
 
     @Override

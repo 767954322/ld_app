@@ -316,14 +316,14 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
-    public void showBottomSheet(List<Task> milstoneTasks, Task task) {
+    public void showPickDayDialog(List<Task> milestones, Task task) {
         @SuppressLint("InflateParams")
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_edit_task_date_dialog, null);
         mBottomSheetDialog.setContentView(view);
         mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
 
         setupBottomSheetHeader(view, task);
-        setupCalendarView(milstoneTasks, task);
+        setupCalendarView(milestones, task);
 
         View parent = (View) view.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
@@ -359,8 +359,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             mBottomSheetDialog.cancel();
         }
     }
-
-
 
     private void setupBottomSheetHeader(View parentView, Task task) {
         TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
