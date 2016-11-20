@@ -23,7 +23,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanCont
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract.TaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.EditTaskNodeAdapter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.PickDateDialogFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
@@ -49,9 +49,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     private RecyclerView mRecyclerView;
     private EditTaskNodeAdapter mAdapter;
-
-//    private BottomSheetDialog mBottomSheetDialog;
-//    private MaterialCalendarView mCalendarView;
 
     private ConProgressDialog mProgressDialog;
 
@@ -135,8 +132,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-
-//        initBottomSheetDialog();
     }
 
     @Override
@@ -190,7 +185,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
                 break;
             case ConstructionConstants.REQUEST_CODE_PICK_DATE_RANGE:
                 if (resultCode ==  Activity.RESULT_OK) {
-                    List<Date> selectedDates = (List<Date>) data.getSerializableExtra(PickDateDialogFragment.BUNDLE_KEY_SELECTED_RANGE);
+                    ArrayList<Date> selectedDates = (ArrayList<Date>) data.getSerializableExtra(PickDateDialogFragment.BUNDLE_KEY_SELECTED_RANGE);
                     mPresenter.updateTask(selectedDates);
                 }
             default:
@@ -312,90 +307,25 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     public void showPickDayDialog(List<Task> milestones, Task task) {
-//        @SuppressLint("InflateParams")
-//        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_edit_task_date_dialog, null);
-//        mBottomSheetDialog.setContentView(view);
-//        mCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
-//
-//        setupBottomSheetHeader(view, task);
-//        setupCalendarView(milestones, task);
-//
-//        View parent = (View) view.getParent();
-//        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-//        behavior.setHideable(false);
-//
-//        mBottomSheetDialog.show();
-
-        setupCalendarView(milestones, task);
-    }
-
-    @Override
-    public void showUpLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.autonym_uploading));
-        }
-
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideUpLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
-    }
-
-//    private void initBottomSheetDialog() {
-//        mBottomSheetDialog = new BottomSheetDialog(getActivity(),
-//                R.style.BottomSheetDialogTheme_Calendar);
-//    }
-
-//    private void hideBottomSheetDialog() {
-//        if (mBottomSheetDialog != null && mBottomSheetDialog.isShowing()) {
-//            mBottomSheetDialog.cancel();
-//        }
-//    }
-
-//    private void setupBottomSheetHeader(View parentView, Task task) {
-//        TextView taskNameView = (TextView) parentView.findViewById(R.id.tv_task_name);
-//        taskNameView.setText(task.getName());
-//
-//        TextView actionBtn = (TextView) parentView.findViewById(R.id.tv_action);
-//        actionBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                hideBottomSheetDialog();
-//                List<CalendarDay> selectedDays = mCalendarView.getSelectedDates();
-//                List<Date> selectedDates = new ArrayList<>();
-//                for (CalendarDay day: selectedDays) {
-//                    selectedDates.add(day.getDate());
-//                }
-//                mPresenter.updateTask(selectedDates);
-//            }
-//        });
-//    }
-
-    private void setupCalendarView(List<Task> milstoneTasks, Task task) {
         PickDateDialogFragment.Builder builder = new PickDateDialogFragment.Builder(task.getName());
         builder.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
 
         // Set formatter
         MileStoneDayFormatter mileStoneDayFormatter = new MileStoneDayFormatter();
-        mileStoneDayFormatter.setData(milstoneTasks);
+        mileStoneDayFormatter.setData(milestones);
         builder.setDayFormatter(mileStoneDayFormatter);
 
         // Set decorators
-        MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator(getActivity());
+        MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator();
         ActiveMileStoneDecorator activeMileStoneDecorator = new ActiveMileStoneDecorator();
-        activeMileStoneDecorator.setActiveTask(milstoneTasks, task);
-        mileStoneDecorator.setData(milstoneTasks);
+        activeMileStoneDecorator.setActiveTask(milestones, task);
+        mileStoneDecorator.setData(milestones);
         builder.addDecorators(activeMileStoneDecorator,
                 mileStoneDecorator);
 
         // set date limit
-        Date startDate = DateUtil.iso8601ToDate(milstoneTasks.get(0).getPlanningTime().getStart());
-        Date endDate = DateUtil.iso8601ToDate(milstoneTasks.get(milstoneTasks.size() - 1).getPlanningTime().getCompletion());
+        Date startDate = DateUtil.iso8601ToDate(milestones.get(0).getPlanningTime().getStart());
+        Date endDate = DateUtil.iso8601ToDate(milestones.get(milestones.size() - 1).getPlanningTime().getCompletion());
 
         int limitMonthOffset = 6;
         Calendar calendar = Calendar.getInstance();
@@ -428,5 +358,22 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         PickDateDialogFragment pickDateDialogFragment = builder.create();
         pickDateDialogFragment.show(getChildFragmentManager(), FRAGMENT_TAG_PICK_DATE);
+    }
+
+    @Override
+    public void showUpLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.autonym_uploading));
+        }
+
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideUpLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
     }
 }

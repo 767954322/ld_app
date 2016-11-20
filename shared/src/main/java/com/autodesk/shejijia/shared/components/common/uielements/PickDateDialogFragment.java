@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets;
+package com.autodesk.shejijia.shared.components.common.uielements;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,8 +28,8 @@ import java.util.List;
 
 /**
  * Custom pick date dialog, support single and range mode.
- * if start this fragment from activity, activity must implements callback interface
- * if start this fragment from fragment, callback will in fragment.onActivityResult
+ * if start this fragment from an activity, activity must implements callback interface
+ * if start this fragment from a fragment, callback will in fragment.onActivityResult
  * Please refer usage in {@link com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment}
  *
  * @author wenhulin

@@ -2,20 +2,15 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 
-import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.DayFormatter;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +23,7 @@ import java.util.Map;
 public class MileStoneNodeDecorator implements DayViewDecorator {
     private Map<String, Task> dateTaskMap = new HashMap<>();
 
-    public MileStoneNodeDecorator(Activity context) {
+    public MileStoneNodeDecorator() {
     }
 
     @Override
@@ -62,5 +57,4 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
         String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd");
         this.dateTaskMap.put(dateString, task);
     }
-
 }

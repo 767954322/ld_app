@@ -82,7 +82,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
                 }
             }
         } else {
-            if (mActiveTask == null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
+            if (mActiveTask == null || !newActiveTask.getTaskId().equalsIgnoreCase(mActiveTask.getTaskId())) {
                 // Update active task
                 mActiveTask = newActiveTask;
             }

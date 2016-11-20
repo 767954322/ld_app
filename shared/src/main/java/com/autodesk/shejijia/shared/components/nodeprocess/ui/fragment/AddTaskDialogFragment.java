@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -49,7 +50,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_task_dialog, null);
+        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_task_dialog, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         setupHeader(view);
@@ -57,6 +58,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
         return view;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new BottomSheetDialog(getActivity(),
