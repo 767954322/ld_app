@@ -190,10 +190,10 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
     }
 
     public static class Builder {
-        Bundle bundle = new Bundle();
+        Bundle mBundle = new Bundle();
 
         public Builder(@NonNull String title) {
-            bundle.putString(BUNDLE_KEY_TITLE, title);
+            mBundle.putString(BUNDLE_KEY_TITLE, title);
         }
 
         public Builder setSelectionMode(@MaterialCalendarView.SelectionMode int mode) {
@@ -201,45 +201,45 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
                     && mode != MaterialCalendarView.SELECTION_MODE_RANGE) {
                 throw new RuntimeException("Not supported selection mode!");
             }
-            bundle.putInt(BUNDLE_KEY_SELECTION_MODE, mode);
+            mBundle.putInt(BUNDLE_KEY_SELECTION_MODE, mode);
             return this;
         }
 
         public Builder setDayFormatter(@NonNull DayFormatter formatter) {
-            bundle.putSerializable(BUNDLE_KEY_FORMATTER, formatter);
+            mBundle.putSerializable(BUNDLE_KEY_FORMATTER, formatter);
             return this;
         }
 
         public Builder addDecorators(DayViewDecorator... decorators) {
-            bundle.putSerializable(BUNDLE_KEY_DECORATIORS, decorators);
+            mBundle.putSerializable(BUNDLE_KEY_DECORATIORS, decorators);
             return this;
         }
 
         public Builder setDateLimit(@NonNull Date minDate, @NonNull Date maxDate) {
-            bundle.putSerializable(BUNDLE_KEY_MIN_DATE, minDate);
-            bundle.putSerializable(BUNDLE_KEY_MAX_DATE, maxDate);
+            mBundle.putSerializable(BUNDLE_KEY_MIN_DATE, minDate);
+            mBundle.putSerializable(BUNDLE_KEY_MAX_DATE, maxDate);
             return this;
         }
 
         public Builder setCurrentDate(@Nullable Date date) {
-            bundle.putSerializable(BUNDLE_KEY_CUR_DATE, date);
+            mBundle.putSerializable(BUNDLE_KEY_CUR_DATE, date);
             return this;
         }
 
         public Builder setSelectedDate(@Nullable Date date) {
-            bundle.putSerializable(BUNDLE_KEY_SELECTED_DATE, date);
+            mBundle.putSerializable(BUNDLE_KEY_SELECTED_DATE, date);
             return this;
         }
 
         public Builder setSelectedRange(@NonNull Date startDate, @NonNull Date endDate) {
-            bundle.putSerializable(BUNDLE_KEY_SELECTED_RANGE_START, startDate);
-            bundle.putSerializable(BUNDLE_KEY_SELECTED_RANGE_END, endDate);
+            mBundle.putSerializable(BUNDLE_KEY_SELECTED_RANGE_START, startDate);
+            mBundle.putSerializable(BUNDLE_KEY_SELECTED_RANGE_END, endDate);
             return this;
         }
 
         public PickDateDialogFragment create() {
             PickDateDialogFragment pickDateDialogFragment = new PickDateDialogFragment();
-            pickDateDialogFragment.setArguments(bundle);
+            pickDateDialogFragment.setArguments(mBundle);
             return pickDateDialogFragment;
         }
 
