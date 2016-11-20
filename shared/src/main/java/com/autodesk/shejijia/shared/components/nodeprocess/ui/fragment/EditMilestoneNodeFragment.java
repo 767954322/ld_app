@@ -20,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditMilestonePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
@@ -63,7 +62,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     protected void initData() {
-        mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra(ConstructionConstants.BundleKey.PROJECT_ID));
+        mPresenter = new EditMilestonePresenter(getActivity().getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID));
         mPresenter.bindView(this);
         mPresenter.fetchPlan();
     }
@@ -169,10 +168,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
-        DateSelectorDecorator selectorDecorator = new DateSelectorDecorator(getActivity());
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator();
-        mCalendarWidget.addDecorators(selectorDecorator,
-                mMileStoneActiveDecorator,
+        mCalendarWidget.addDecorators(mMileStoneActiveDecorator,
                 mMileStoneDecorator);
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));

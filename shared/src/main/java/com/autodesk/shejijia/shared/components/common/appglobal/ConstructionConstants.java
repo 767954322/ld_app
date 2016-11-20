@@ -50,10 +50,13 @@ public class ConstructionConstants {
     //Log tag
     public static final String  LOG_TAG_REQUEST = "network_request";
 
+    // Request code
+    public final static int REQUEST_CODE_PICK_DATE = 0x0110;
+    public final static int REQUEST_CODE_PICK_DATE_RANGE = 0x0111;
+    public final static int REQUEST_CODE_ADD_TASK = 0x0112;
+
     //Bundle key
-    public static class BundleKey {
-        public static final String  PROJECT_ID = "project_id";
-    }
+    public static final String BUNDLE_KEY_PROJECT_ID = "project_id";
 
     public static class TaskTemplateId {
         public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底

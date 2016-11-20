@@ -1,11 +1,10 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,13 +18,14 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wenhulin on 11/17/16.
  */
 
 public class AddTaskDialogFragment extends BottomSheetDialogFragment {
+    public final static String BUNDLE_KEY_SELECTED_TASK = "selected_task";
+    private final static String BUNDLE_KEY_TASKS = "tasks";
 
     private RecyclerView mRecyclerView;
 
@@ -34,7 +34,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     public static AddTaskDialogFragment newInstance(ArrayList<Task> tasks) {
         AddTaskDialogFragment fragment = new AddTaskDialogFragment();
         Bundle args = new Bundle();
-        args.putSerializable("tasks", tasks);
+        args.putSerializable(BUNDLE_KEY_TASKS, tasks);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +43,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTasks.clear();
-        mTasks.addAll((ArrayList<Task>) getArguments().getSerializable("tasks"));
+        mTasks.addAll((ArrayList<Task>) getArguments().getSerializable(BUNDLE_KEY_TASKS));
     }
 
     @Nullable
@@ -69,7 +69,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     }
 
     private void setupHeader(View parentView) {
-        TextView actionBtn = (TextView) parentView.findViewById(R.id.tv_action);
+        TextView actionBtn = (TextView) parentView.findViewById(R.id.btn_action);
         actionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +95,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
                     public void onClick(View v) {
                         Task task = (Task) v.getTag();
                         Intent intent = new Intent();
-                        intent.putExtra("task", task);
+                        intent.putExtra(BUNDLE_KEY_SELECTED_TASK, task);
                         getTargetFragment().onActivityResult(getTargetRequestCode(),
                                 Activity.RESULT_OK, intent);
                         dismiss();

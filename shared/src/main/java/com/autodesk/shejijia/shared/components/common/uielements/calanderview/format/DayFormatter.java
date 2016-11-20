@@ -5,12 +5,13 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 /**
  * Supply labels for a given day. Default implementation is to format using a {@linkplain SimpleDateFormat}
  */
-public interface DayFormatter {
+public interface DayFormatter extends Serializable{
 
     /**
      * Format a given day into a string

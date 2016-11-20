@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by wenhulin on 11/4/16.
  */
 public class MileStoneDayFormatter implements DayFormatter {
-    private Map<String, Task> dateTaskMap = new HashMap<>();
+    private HashMap<String, Task> dateTaskMap = new HashMap<>();
 
     public MileStoneDayFormatter() {
     }

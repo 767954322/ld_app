@@ -25,7 +25,7 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
     private final static int VIEW_TYPE_TASK_NODE = 1;
 
     private Activity mActivity;
-    
+
     private List<Task> mTasks = new ArrayList<>();
     private List<Task> mSelectedTasks = new ArrayList<>();
 

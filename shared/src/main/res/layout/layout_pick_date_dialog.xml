@@ -18,7 +18,7 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/tv_task_name"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="36dp"
@@ -28,7 +28,7 @@
             tools:text="Test"/>
 
         <TextView
-            android:id="@+id/tv_action"
+            android:id="@+id/btn_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="36dp"

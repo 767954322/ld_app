@@ -184,7 +184,9 @@ public class VerticalCalendarView extends MaterialCalendarView {
             return;
         }
         int index = mListAdapter.getIndexForDay(day);
-        mLayoutManager.scrollToPositionWithOffset(index, 0);
+        if (index != 0) {
+            mLayoutManager.scrollToPositionWithOffset(index, 0);
+        }
     }
 
     @Override

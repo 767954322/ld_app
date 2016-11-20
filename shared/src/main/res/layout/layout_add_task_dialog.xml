@@ -28,7 +28,7 @@
             android:text="@string/edit_plan_select_new_task"/>
 
         <Button
-            android:id="@+id/tv_action"
+            android:id="@+id/btn_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="36dp"

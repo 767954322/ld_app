@@ -1,9 +1,11 @@
 package com.autodesk.shejijia.shared.components.common.uielements.calanderview;
 
+import java.io.Serializable;
+
 /**
  * Decorate Day views with drawables and text manipulation
  */
-public interface DayViewDecorator {
+public interface DayViewDecorator extends Serializable{
 
     /**
      * Determine if a specific day should be decorated

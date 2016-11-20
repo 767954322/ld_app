@@ -20,6 +20,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckedTextView;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.DayFormatter;
 
 import java.util.List;
@@ -35,7 +36,7 @@ class DayView extends CheckedTextView {
 
     private final int fadeTime;
     private Drawable customBackground = null;
-    private Drawable selectionDrawable;
+    private int selectionDrawableId;
     private Drawable mCircleDrawable;
     private DayFormatter formatter = DayFormatter.DEFAULT;
 
@@ -100,11 +101,12 @@ class DayView extends CheckedTextView {
     /**
      * @param drawable custom selection drawable
      */
-    public void setSelectionDrawable(Drawable drawable) {
-        if (drawable == null) {
-            this.selectionDrawable = null;
+    private void setSelectionDrawable(int drawable) {
+        if (drawable <= 0) {
+            //noinspection deprecation
+            this.selectionDrawableId = R.drawable.calendar_default_selector;
         } else {
-            this.selectionDrawable = drawable.getConstantState().newDrawable(getResources());
+            this.selectionDrawableId = drawable;
         }
         regenerateBackground();
     }
@@ -177,8 +179,9 @@ class DayView extends CheckedTextView {
     }
 
     private void regenerateBackground() {
-        if (selectionDrawable != null) {
-            setBackgroundDrawable(selectionDrawable);
+        if (selectionDrawableId > 0) {
+//            setBackgroundResource(selectionDrawableId);
+            setBackgroundDrawable(getResources().getDrawable(selectionDrawableId).getConstantState().newDrawable(getResources()));
         } else {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);
             setBackgroundDrawable(mCircleDrawable);
