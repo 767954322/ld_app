@@ -1,45 +1,32 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+
 import android.app.Activity;
 import android.content.Context;
+
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDFragmentPagerAdapter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.TaskListAdapter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressState;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarAdapter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProjectProgressbar;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +38,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     private static final int TASK_FRAGMENT_SIZE = 6;
     private ViewPager mContentViewPager;
-    private ProjectProgressbar mProgressbar;
+    private ProgressbarIndicator progressBarIndicator;
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
@@ -72,7 +59,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initView() {
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
-        mProgressbar = (ProjectProgressbar) rootView.findViewById(R.id.project_progressBar);
+        progressBarIndicator = (ProgressbarIndicator)rootView.findViewById(R.id.progressBar_indicator);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.button_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
 
@@ -113,26 +100,21 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void updateViewpagerView(List<BaseFragment> fragmentList) {
         mFragmentPagerAdapter = new PDFragmentPagerAdapter(getFragmentManager(), fragmentList);
         mContentViewPager.setAdapter(mFragmentPagerAdapter);
+
+        //progressbar indicator( must first have viewpager adapter)
+        progressBarIndicator.setupWithViewPager(mContentViewPager);
+        progressBarIndicator.setCurrentStatus(3);
+        mContentViewPager.setCurrentItem(3);
     }
 
     @Override
     public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
         LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
         // TODO: 11/16/16 两部分，一部分是progressbar里的数据处理及progressbar的显示 ，另一部分
-        // TODO: 11/16/16 是viewpager里每个fragment里的数据处理及viewpager的显示 
-        //set progressbar data
-        List<ProgressState> list = new ArrayList<>();
-        String[] statusArray = mContext.getResources().getStringArray(R.array.project_progressbar_state);
-        list.add(new ProgressState("complete",statusArray[0]));
-        list.add(new ProgressState("complete",statusArray[1]));
-        list.add(new ProgressState("in_process",statusArray[2]));
-        list.add(new ProgressState("un_open",statusArray[3]));
-        list.add(new ProgressState("un_open",statusArray[4]));
-        list.add(new ProgressState("un_open",statusArray[5]));
-        ProgressbarAdapter progressbarAdapter = new ProgressbarAdapter(mContext,R.layout.listitem_project_progressbar,list);
-        mProgressbar.setAdapter(progressbarAdapter);
+        // TODO: 11/16/16 是viewpager里每个fragment里的数据处理及viewpager的显示
 
         mProjectDetailsPresenter.handleViewpagerData(projectInfo.getPlan(),TASK_FRAGMENT_SIZE);
+
 
 
 

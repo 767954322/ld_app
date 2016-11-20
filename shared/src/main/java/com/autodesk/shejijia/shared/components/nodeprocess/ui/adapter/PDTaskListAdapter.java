@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.List;
 
@@ -61,55 +62,76 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             taskListVH.mTaskName.setText(taskLists.get(position).getName());
         }
 
-        taskListVH.mTaskDate.setText("11月8日");
+        String startDate = taskLists.get(position).getReserveTime().getStart();
+        String endDate = taskLists.get(position).getReserveTime().getCompletion();
         //节点日期
-        /*if (!TextUtils.isEmpty(taskLists.get(position).getEffectTime().getCompletion())) {
-            taskListVH.mTaskDate.setText(taskLists.get(position).getEffectTime().getCompletion());
-        }*/
+        if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
+            boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate),DateUtil.iso8601ToDate(endDate));
+            if (isSameDate) {
+                taskListVH.mTaskDate.setText(startDate);
+            }else {
+                taskListVH.mTaskDate.setText(startDate+"-"+endDate);
+            }
+        }
 
         // 当前任务节点的状态
         if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
             String status = taskLists.get(position).getStatus();
             switch (status) {
-                case "open":
+                case "OPEN":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_open));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.con_font_gray));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
+                    break;
+                case "RESERVED":
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserved));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.con_font_gray));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
+                    break;
+                case "RESERVING":
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserving));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "reserving":
-                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserving));
-                    break;
-                case "inProgress":
+                case "INPROGRESS":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_inProgress));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "delayed":
+                case "DELAYED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_delayed));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "qualified":
+                case "QUALIFIED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_qualified));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "unqualified":
+                case "UNQUALIFIED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_unqualified));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "resolved":
+                case "RESOLVED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_resolved));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_lightblue_shape));
                     break;
-                case "rejected":
+                case "REJECTED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rejected));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "reinspection":
+                case "REINSPECTION":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspection));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "rectification":
+                case "RECTIFICATION":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rectification));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "reinspecting":
+                case "REINSPECTING":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspecting));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 default:
                     taskListVH.mTaskStatus.setText(status);
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
             }
         }

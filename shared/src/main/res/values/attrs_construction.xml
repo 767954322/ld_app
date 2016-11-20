@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义progressbar indicator 属性-->
+    <declare-styleable name="ProgressbarIndicator">
+
+        <attr name="piStepCount" format="integer" />
+        <attr name="piRadius" format="dimension" />
+        <attr name="piStepLineColor" format="color" />
+        <attr name="piStepLineMargin" format="dimension" />
+        <attr name="piStepLineDoneColor" format="color" />
+        <attr name="piStepLineStrokeWidth" format="dimension" />
+        <attr name="piStepCircleStrokeWidth" format="dimension" />
+        <attr name="piStepUnOpenCircleColor" format="color" />
+        <attr name="piStepUnOpenSelectedCircleColor" format="color" />
+        <attr name="piStepInProgressCircleColor" format="color" />
+        <attr name="piStepInProgressSelectedCircleColor" format="color" />
+        <attr name="piStepCompleteCircleColor" format="color" />
+        <attr name="piStepCompleteSelectedCircleColor" format="color" />
+        <attr name="piStepTextColor" format="color" />
+        <attr name="piStepTextSize" format="dimension" />
+
+    </declare-styleable>
+
+</resources>

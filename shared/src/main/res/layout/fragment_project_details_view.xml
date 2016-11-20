@@ -4,18 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProjectProgressbar
-        android:paddingTop="@dimen/spacing_padding_normal"
-        android:id="@+id/project_progressBar"
+    <com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator
+        android:id="@+id/progressBar_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/con_blue" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/con_blue"
-        android:padding="@dimen/spacing_padding_normal">
+        android:paddingBottom="@dimen/spacing_padding_normal"
+        android:paddingEnd="@dimen/spacing_padding_normal"
+        android:paddingStart="@dimen/spacing_padding_normal">
 
         <TextView
             android:layout_width="wrap_content"

@@ -50,9 +50,17 @@
     <color name="task_status_light_blue">#AAB9C3</color>
     <color name="task_status_yellow">#FFB22F</color>
 
-    <!-- project progressbar colors-->
+    <!-- project progressbar default colors-->
     <color name="progressbar_white">#ffffff</color>
-    <color name="progressbar_center_select">#7aaada</color>
-    <color name="progressbar_around_select">#5490ce</color>
-    <color name="progressbar_black">#1d4f82</color>
+    <color name="progressbar_line_color">#ffffff</color>
+    <color name="progressbar_text_color">#ffffff</color>
+    <color name="progressbar_line_done_color">#ff00ff</color>
+    <color name="progressbar_circle_unopen_color">#ffffff</color>
+    <color name="progressbar_circle_inprogress_color">#7aaada</color>
+    <color name="progressbar_circle_complete_color">#1d4f82</color>
+    <color name="progressbar_circle_unopen_selected_color">#55d8e0e7</color>
+    <color name="progressbar_circle_inprogress_selected_color">#5490ce</color>
+    <color name="progressbar_circle_complete_selected_color">#36699e</color>
+
+
 </resources>
