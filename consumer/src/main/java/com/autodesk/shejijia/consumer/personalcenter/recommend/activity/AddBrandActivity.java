@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -20,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
@@ -41,6 +43,9 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private AppCompatButton btFinsh;
     private int mBrandCountLimit;
     private int brandsSize;
+    private LinearLayout emptyView;
+    private LinearLayout llPleaseClickRight;
+    private TextView tvEmptyTitle;
     private List<Integer> itemIds = new ArrayList<>();
     @Override
     protected int getLayoutResId() {
@@ -51,8 +56,11 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     protected void initView() {
         super.initView();
         tvNumber = (TextView)findViewById(R.id.tv_two);
+        emptyView = (LinearLayout)findViewById(R.id.empty_view);
         btFinsh = (AppCompatButton)findViewById(R.id.bt_finsh);
         addBrandListview = (PullListView)findViewById(R.id.add_brand_listview);
+        tvEmptyTitle = (TextView) findViewById(R.id.tv_empty_title);
+        llPleaseClickRight = (LinearLayout) findViewById(R.id.ll_please_click_right);
         mPullToRefreshLayout = ((PullToRefreshLayout)findViewById(R.id.refresh_addbrand_view));
     }
     @Override
@@ -68,7 +76,9 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
+        tvEmptyTitle.setText(UIUtils.getString(R.string.not_brands));
         tvNumber.setText(mBrandCountLimit-brandsSize+"");
+        llPleaseClickRight.setVisibility(View.GONE);
         setNavigationBar();
         addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,mBrandCountLimit-brandsSize,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
@@ -172,6 +182,11 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
             }
         }
         brandsBeanList.addAll(brandsBeans);
+        if(brandsBeanList.size() <= 0){
+            emptyView.setVisibility(View.VISIBLE);
+            mPullToRefreshLayout.setVisibility(View.GONE);
+            return;
+        }
         addBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }

@@ -24,7 +24,7 @@
             android:scrollbars="none" />
         <include layout="@layout/view_load_more" />
     </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
-
+    <include layout="@layout/layout_empty_recommend_view"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/mybid_item_header_height"
