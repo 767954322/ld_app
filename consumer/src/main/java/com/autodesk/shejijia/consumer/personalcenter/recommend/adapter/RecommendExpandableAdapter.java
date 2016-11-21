@@ -168,9 +168,11 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         final List<String> apartmentList = Arrays.asList(apartmentArray);
         mViewHolder.spinnerApartment.setItems(apartmentList);
-        mViewHolder.spinnerApartment.setSelectedIndex(StringUtils.isEmpty(recommendBrandsBean.getApartment()) ? 0 : Integer.valueOf(recommendBrandsBean.getApartment()));
 
-        setSpinnerTextColor(mViewHolder.spinnerApartment);
+        mViewHolder.spinnerApartment.setSelectedIndex(StringUtils.isEmpty(recommendBrandsBean.getApartment())
+                ? 0 : Integer.valueOf(recommendBrandsBean.getApartment()));
+        boolean falg = mViewHolder.spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
+        mViewHolder.spinnerApartment.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
 
         final int currentParentPosition = groupPosition;
         final int currentChildPosition = childPosition;
@@ -179,7 +181,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 onClearFocus(mViewHolder.etBrandNum, mViewHolder.etBranDimension, mViewHolder.etBranDimension);
-                setSpinnerTextColor(mViewHolder.spinnerApartment);
+                boolean falg = mViewHolder.spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
+                mViewHolder.spinnerApartment.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(position < 10 ? "0" + position : position + "");
             }
         });
@@ -231,10 +234,10 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
     }
 
-    private void setSpinnerTextColor(MaterialSpinner spinnerApartment) {
-        boolean falg = spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
-        spinnerApartment.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
-    }
+//    private void setSpinnerTextColor(MaterialSpinner spinnerApartment) {
+//        boolean falg = spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
+//        spinnerApartment.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
+//    }
 
     public void setBrandChangListener(BrandChangListener brandChangListener) {
         mBrandChangListener = brandChangListener;
@@ -440,7 +443,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 if (!isValidAmountAndUnit(s.toString())) {
                     showAlertView(UIUtils.getString(R.string.recommend_form_number));
                     hideSoftKeywords(mEditText);
-//                    mEditText.setText("");
+                    mEditText.setText("");
                 } else {
                     mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
                 }
