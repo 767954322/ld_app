@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View {
 
-    private static final int TASK_FRAGMENT_SIZE = 6;
+    private LinearLayout mProjectRootView;
     private ViewPager mContentViewPager;
     private ProgressbarIndicator progressBarIndicator;
     private Button mCreatePlanBtn;
@@ -58,6 +59,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     protected void initView() {
+        mProjectRootView = (LinearLayout)rootView.findViewById(R.id.ll_project_details);
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
         progressBarIndicator = (ProgressbarIndicator)rootView.findViewById(R.id.progressBar_indicator);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.button_create_plan);
@@ -71,6 +73,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         mProjectDetailsPresenter = new ProjectDetailsPresenter(mContext, this);
         if (getArguments().getLong("projectId") != 0) {
             LogUtils.e("projectDetails_projectId ", getArguments().getLong("projectId") + "");
+            mProjectRootView.setVisibility(View.GONE);
             mProjectDetailsPresenter.initRequestParams(getArguments().getLong("projectId"), true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -91,40 +94,25 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         });
     }
 
-    @Override
-    public void updateProgressbarView() {
-
-    }
 
     @Override
-    public void updateViewpagerView(List<BaseFragment> fragmentList) {
+    public void updateProjectDetailsView(String memberType,  List<BaseFragment> fragmentList,int currentMilestonePosition) {
+
+        mProjectRootView.setVisibility(View.VISIBLE);
         mFragmentPagerAdapter = new PDFragmentPagerAdapter(getFragmentManager(), fragmentList);
         mContentViewPager.setAdapter(mFragmentPagerAdapter);
 
         //progressbar indicator( must first have viewpager adapter)
         progressBarIndicator.setupWithViewPager(mContentViewPager);
-        progressBarIndicator.setCurrentStatus(3);
-        mContentViewPager.setCurrentItem(3);
-    }
-
-    @Override
-    public void updateProjectDetailsView(String memberType, ProjectInfo projectInfo) {
-        LogUtils.e("projectId+memberType+projectStatus", "--" + projectInfo.getProjectId() + "---" + memberType + "---" + projectInfo.getPlan().getStatus());
-        // TODO: 11/16/16 两部分，一部分是progressbar里的数据处理及progressbar的显示 ，另一部分
-        // TODO: 11/16/16 是viewpager里每个fragment里的数据处理及viewpager的显示
-
-        mProjectDetailsPresenter.handleViewpagerData(projectInfo.getPlan(),TASK_FRAGMENT_SIZE);
+        progressBarIndicator.setCurrentStatus(currentMilestonePosition);
+        mContentViewPager.setCurrentItem(currentMilestonePosition);
 
 
 
-
-
-
-
-        switch (projectInfo.getPlan().getStatus()) {
+       /* switch (projectInfo.getPlan().getStatus()) {
             case "OPEN":
             case "READY":
-           /*     if (memberType.equals("clientmanager")) {
+                if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mContentViewPager.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -138,9 +126,9 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mContentViewPager.setVisibility(View.GONE);
                 }
-                break;*/
+                break;
             case "INPROGRESS":
-             /*   if (memberType.equals("clientmanager")) {
+                if (memberType.equals("clientmanager")) {
                     mCreatePlanBtn.setVisibility(View.VISIBLE);
                     mContentViewPager.setVisibility(View.GONE);
                     mWorkStateView.setVisibility(View.GONE);
@@ -154,16 +142,15 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mCreatePlanBtn.setVisibility(View.GONE);
                     mContentViewPager.setVisibility(View.GONE);
                 }
-                break;*/
+                break;
             case "COMPLETION":
-           /*     mContentViewPager.setVisibility(View.VISIBLE);
+                mContentViewPager.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
                 mCreatePlanBtn.setVisibility(View.GONE);
-                */
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     @Override

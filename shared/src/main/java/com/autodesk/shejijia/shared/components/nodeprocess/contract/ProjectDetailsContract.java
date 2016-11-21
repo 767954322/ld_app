@@ -21,11 +21,7 @@ public interface ProjectDetailsContract {
 
     interface View extends BaseView {
 
-        void updateProjectDetailsView(String memberType, ProjectInfo projectInfo);
-
-        void updateProgressbarView(); //顶部自定义progressbar的ui更新
-
-        void updateViewpagerView(List<BaseFragment> fragmentList); //底部的viewpager的ui更新
+        void updateProjectDetailsView(String memberType, List<BaseFragment> fragmentList,int currentMilestonePosition);
 
         void showProjectInfoDialog(Bundle projectInfoBundle);
 
@@ -37,10 +33,6 @@ public interface ProjectDetailsContract {
         void initRequestParams(long projectId, boolean isHasTaskData);  //初始化获取项目详情的请求参数
 
         void getProjectDetails(); //获取项目详情
-
-        void handleProgressbarData();//处理进度条里的数据源
-
-        void handleViewpagerData(PlanInfo planInfo,int pageCount);//处理viewpager里的数据源
 
         void getProjectInformation(); //获取项目信息
 

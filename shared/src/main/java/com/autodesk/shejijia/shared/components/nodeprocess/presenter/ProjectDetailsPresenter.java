@@ -47,6 +47,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
 
     @Override
     public void getProjectDetails() {
+        mProjectDetailsView.showLoading();
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", mProjectId);
         requestParamsBundle.putBoolean("task_data", isHasTaskData);
@@ -58,8 +59,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         mProjectRepository.getProjectInfo(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo data) {
-                mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), data);
+                handleProjectInfoData(data);
             }
 
             @Override
@@ -70,40 +70,82 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         });
     }
 
-    @Override
-    public void handleProgressbarData() {
-
+    private void handleProjectInfoData(ProjectInfo projectInfo) {
+        /*handle planInfo data*/
+        int currentMilestonePosition = 0;
+        List<BaseFragment> fragmentList = null;
+        if (projectInfo.getPlan() != null) {
+            currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
+            fragmentList = handleTaskListData(projectInfo.getPlan());
+            if (fragmentList != null) {
+                mProjectDetailsView.hideLoading();
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), fragmentList, currentMilestonePosition);
+            } else {
+                mProjectDetailsView.showError("handle data error");
+            }
+        }
     }
 
-    @Override
-    public void handleViewpagerData(PlanInfo planInfo, int pageCount) {
+    private int getCurrentMilestonePosition(PlanInfo planInfo) {
+        int position = 0;
+        if (planInfo.getMilestone() != null) {
+            String milestoneId = planInfo.getMilestone().getMilestoneId();
+            List<Task> taskList = planInfo.getTasks();
+            if (taskList != null) {
+                /*get current milestone index in task list*/
+                int nowIndex = 0;
+                for (int index = 0; index < taskList.size(); index++) {
+                    if (taskList.get(index).getTaskId().equals(milestoneId)) {
+                        nowIndex = index;
+                        break;
+                    }
+                }
+                /* get milestone's index list*/
+                List<Integer> taskIndexList = new ArrayList<>();
+                for (int index = 0; index < taskList.size(); index++) {
+                    if (taskList.get(index).isMilestone()) {
+                        taskIndexList.add(index);
+                    }
+                }
+                /* get current milestone position in milestone index list*/
+                for (int i = 0; i < taskIndexList.size(); i++) {
+                    if (nowIndex == taskIndexList.get(i)) {
+                        position = i;
+                        break;
+                    }
+                }
+            }
+        }
+        return position;
+    }
+
+    private List<BaseFragment> handleTaskListData(PlanInfo planInfo) {
         List<Task> taskList = planInfo.getTasks();
         if (taskList != null) {
+            /* get milestone's index list*/
             List<Integer> taskIndexList = new ArrayList<>();
             for (int index = 0; index < taskList.size(); index++) {
                 if (taskList.get(index).isMilestone()) {
                     taskIndexList.add(index);
                 }
             }
-            handleTaskIndex(taskList, taskIndexList);
-        } else {
-            mProjectDetailsView.showNetError("get project data error");
+
+            /* get fragment list*/
+            List<BaseFragment> fragmentList = new ArrayList<>();
+            int index = 0;
+            for (int i = 0; i < taskIndexList.size(); i++) {
+                int value = taskIndexList.get(i);
+                List<Task> childTaskList = taskList.subList(index, value + 1);
+                index = value + 1;
+                Bundle taskListBundle = new Bundle();
+                taskListBundle.putSerializable("task_list", new TaskListBean(childTaskList));
+                fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
+            }
+            return fragmentList;
         }
+        return null;
     }
 
-    private void handleTaskIndex(List<Task> taskList, List<Integer> taskIndexList) {
-        List<BaseFragment> fragmentList = new ArrayList<>();
-        int index = 0;
-        for (int i = 0; i < taskIndexList.size(); i++) {
-            int value = taskIndexList.get(i);
-            List<Task> childTaskList = taskList.subList(index, value + 1);
-            index = value + 1;
-            Bundle taskListBundle = new Bundle();
-            taskListBundle.putSerializable("task_list", new TaskListBean(childTaskList));
-            fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
-        }
-        mProjectDetailsView.updateViewpagerView(fragmentList);
-    }
 
     @Override
     public void getProjectInformation() {
@@ -128,7 +170,4 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         //// TODO: 11/11/16 跳转消息中心逻辑
     }
 
-    private void handleTaskListData() {
-
-    }
 }

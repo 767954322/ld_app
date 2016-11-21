@@ -205,6 +205,10 @@ public class DateUtil {
         return getStringDateByFormat(date,"MM/dd");
     }
 
+    public static String formattedDateFromDate2(Date date) {
+        return getStringDateByFormat(date,"MM月dd日");
+    }
+
     //it is doing same as formattedTimeFromDate
     // just adding this to sync with iOS interfaces
     public static String formattedTimeFromDateForMessageCell(Date date) {

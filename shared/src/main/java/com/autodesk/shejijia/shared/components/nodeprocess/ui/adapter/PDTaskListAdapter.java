@@ -66,11 +66,12 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         String endDate = taskLists.get(position).getReserveTime().getCompletion();
         //节点日期
         if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
-            boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate),DateUtil.iso8601ToDate(endDate));
+            boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate), DateUtil.iso8601ToDate(endDate));
             if (isSameDate) {
-                taskListVH.mTaskDate.setText(startDate);
-            }else {
-                taskListVH.mTaskDate.setText(startDate+"-"+endDate);
+                taskListVH.mTaskDate.setText(DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(startDate)));
+            } else {
+                taskListVH.mTaskDate.setText(DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(startDate)) + "-"
+                        + DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(endDate)));
             }
         }
 
@@ -80,17 +81,17 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             switch (status) {
                 case "OPEN":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_open));
-                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.con_font_gray));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_gray));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
                     break;
                 case "RESERVED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserved));
-                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.con_font_gray));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_gray));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
                     break;
                 case "RESERVING":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserving));
-                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 case "INPROGRESS":

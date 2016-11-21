@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar;
 
-import android.annotation.SuppressLint;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,14 +12,16 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 
 import com.autodesk.shejijia.shared.R;
 
@@ -33,7 +35,8 @@ import java.util.List;
 public class ProgressbarIndicator extends View {
 
     private static final int DEFAULT_STEP_RADIUS = 16;   //DP
-    private static final int DEFAULT_STOKE_WIDTH = 6;  //DP
+    private static final int DEFAULT_LINE_STOKE_WIDTH = 2;  //DP
+    private static final int DEFAULT_CIRCLE_STOKE_WIDTH = 6;  //DP
     private static final int DEFAULT_STEP_COUNT = 6;  //DP
     private static final int DEFAULT_TEXT_SIZE = 15;  //SP
     private static final int DEFAULT_LINE_COLOR = R.color.progressbar_line_color;
@@ -47,9 +50,9 @@ public class ProgressbarIndicator extends View {
     private static final int DEFAULT_TEXT_COLOR = R.color.progressbar_text_color;
 
     private int radius;
-    private int stepsCount = 1;
+    private int stepsCount;
     private int currentStepPosition;
-    private int currentStatus = -1;
+    private int currentStatus;
     private int stepLineColor;
     private int stepLineDoneColor;
     private int circleUnOpenColor;
@@ -59,24 +62,22 @@ public class ProgressbarIndicator extends View {
     private int circleInProgressSelectedColor;
     private int circleCompleteSelectedColor;
     private int textColor;
-    private int strokeWidth;
-
-    private int pagerScrollState;
+    private float textSize;
+    private float strokeCircleWidth;
+    private float strokeAnimCircleWidth;
+    private float strokeLineWidth;
 
     private int centerY;
     private int startX;
     private int endX;
     private int stepDistance;
-    private float offset;
-    private int offsetPixel;
 
     private Paint linePaint;//虚线paint
     private Paint circlePaint;//未选中circle paint
     private Paint pStoke; //selected stroke circle
     private Paint textPaint;//文本
 
-    private int bitMapHeight;
-    private int bitMapWidth;
+    private int bitMapHeight, bitMapWidth;
 
     private Path mDashPath;//虚线path
     private String[] statusLists;
@@ -84,9 +85,8 @@ public class ProgressbarIndicator extends View {
     private DashPathEffect dashPathEffect = new DashPathEffect(new float[]{8, 12}, 0);
     private List<Bitmap> iconList = new ArrayList<>(3);
 
-    private boolean hasDrawn = false;
-    private boolean withViewpager;
     private OnClickListener onClickListener;
+    private ObjectAnimator checkAnimator;
 
     public ProgressbarIndicator(Context context) {
         this(context, null);
@@ -162,10 +162,10 @@ public class ProgressbarIndicator extends View {
             circleInProgressSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepInProgressSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_INPROGRESS_SELECTED_COLOR));
             circleCompleteSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepCompleteSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_COMPLETE_SELECTED_COLOR));
             textColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepTextColor, ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
-            strokeWidth = (int) attr.getDimension(R.styleable.ProgressbarIndicator_piStepCircleStrokeWidth, dip2px(context, DEFAULT_STOKE_WIDTH));
-
-            textPaint.setTextSize(attr.getDimension(R.styleable.ProgressbarIndicator_piStepTextSize, sp2px(context, DEFAULT_TEXT_SIZE)));
-            linePaint.setStrokeWidth(attr.getDimension(R.styleable.ProgressbarIndicator_piStepLineStrokeWidth, dip2px(context, DEFAULT_STOKE_WIDTH)));
+            strokeCircleWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepCircleStrokeWidth, dip2px(context, DEFAULT_CIRCLE_STOKE_WIDTH));
+            textSize = attr.getDimension(R.styleable.ProgressbarIndicator_piStepTextSize, sp2px(context, DEFAULT_TEXT_SIZE));
+            strokeLineWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepLineStrokeWidth, dip2px(context, DEFAULT_LINE_STOKE_WIDTH));
+            strokeAnimCircleWidth = strokeCircleWidth;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -207,32 +207,12 @@ public class ProgressbarIndicator extends View {
 
     public void setStepsCount(int stepsCount) {
         this.stepsCount = stepsCount;
-        hasDrawn = true;
         invalidate();
     }
 
-    public int getCurrentStepPosition() {
-        return currentStepPosition;
-    }
-
-    public void setCurrentStepPosition(int currentStepPosition) {
+    private void setCurrentStepPosition(int currentStepPosition) {
         this.currentStepPosition = currentStepPosition;
-        invalidate();
-    }
-
-    private void setPagerScrollState(int pagerScrollState) {
-        this.pagerScrollState = pagerScrollState;
-    }
-
-    private void setOffset(float offset, int position) {
-        this.offset = offset;
-        offsetPixel = Math.round(stepDistance * offset);
-        if (currentStepPosition > position) {
-            offsetPixel = offsetPixel - stepDistance;
-        } else {
-            currentStepPosition = position;
-        }
-
+//        setCheckedAnimation();
         invalidate();
     }
 
@@ -250,13 +230,18 @@ public class ProgressbarIndicator extends View {
         invalidate();
     }
 
+    private void setCheckedAnimation() {
+        checkAnimator = ObjectAnimator.ofFloat(ProgressbarIndicator.this, "strokeAnimCircleWidth", 0f, strokeCircleWidth * 1.4f, strokeCircleWidth);
+        checkAnimator.setDuration(500);
+        checkAnimator.setInterpolator(new BounceInterpolator());
+        checkAnimator.start();
+    }
+
     public void setupWithViewPager(@NonNull ViewPager viewPager) {
         final PagerAdapter pagerAdapter = viewPager.getAdapter();
         if (pagerAdapter == null) {
             throw new IllegalArgumentException("ViewPager does not have a PagerAdapter set");
         }
-
-        withViewpager = true;
 
         // 1. we'll add Steps.
         setStepsCount(pagerAdapter.getCount());
@@ -283,15 +268,15 @@ public class ProgressbarIndicator extends View {
         }
         super.onDraw(canvas);
         int pointX = startX;
-        int pointOffset;
 
         /** draw Line */
-        linePaint.setStrokeWidth(dip2px(getContext(), 2));
+        linePaint.setStrokeWidth(strokeLineWidth);
         linePaint.setColor(stepLineColor);
         mDashPath.moveTo(pointX, centerY);
         mDashPath.lineTo(getWidth() - startX, centerY);
         linePaint.setPathEffect(dashPathEffect);
         canvas.drawPath(mDashPath, linePaint);
+
 
           /*draw circles*/
         pointX = startX;
@@ -307,7 +292,6 @@ public class ProgressbarIndicator extends View {
                 circlePaint.setColor(circleUnOpenColor);
                 canvas.drawCircle(pointX, centerY, radius, circlePaint);
             }
-
 
             pointX += stepDistance;
         }
@@ -340,38 +324,18 @@ public class ProgressbarIndicator extends View {
                     pStoke.setColor(circleUnOpenSelectedColor);
                 }
                 //draw current step
-                if (offsetPixel == 0 || pagerScrollState == 0) {
-                    //set stroke default
-                    pStoke.setStrokeWidth(Math.round(strokeWidth));
-                    pStoke.setAlpha(255);
-                } else if (offsetPixel < 0) {
-                    pStoke.setStrokeWidth(Math.round(strokeWidth * offset));
-                    pStoke.setAlpha(Math.round(offset * 255f));
-                } else {
-                    //set stroke transition
-                    pStoke.setStrokeWidth(strokeWidth - Math.round(strokeWidth * offset));
-                    pStoke.setAlpha(255 - Math.round(offset * 255f));
-                }
+                pStoke.setStrokeWidth(Math.round(strokeAnimCircleWidth));
                 canvas.drawCircle(pointX, centerY, radius + dip2px(getContext(), 2), pStoke);
-            } else if (i > currentStepPosition) {
-                //draw transition
-                if (i == currentStepPosition + 1 && offsetPixel > 0 && pagerScrollState == 1) {
-                    pStoke.setColor(circleUnOpenSelectedColor);
-                    pStoke.setStrokeWidth(Math.round(strokeWidth * offset));
-                    pStoke.setAlpha(Math.round(offset * 255f));
-                    canvas.drawCircle(pointX, centerY, radius + dip2px(getContext(), 2), pStoke);
-                }
             }
             pointX += stepDistance;
         }
 
         /*draw texts*/
-        pointX = startX;
         if (statusLists != null && statusLists.length > 0) {
             for (int i = 0; i < stepsCount; i++) {
                 String status = statusLists[i];
                 textPaint.setColor(textColor);
-                textPaint.setTextSize((sp2px(getContext(), 15)));
+                textPaint.setTextSize(textSize);
                 textPaint.getTextBounds(status, 0, status.length(), textBounds);
                 int textStartX = (Math.abs(radius - textBounds.width() / 2) + radius) + stepDistance * i;
                 int textStartY = radius * 4 + (textBounds.height() / 2);
@@ -393,9 +357,6 @@ public class ProgressbarIndicator extends View {
                 yTouch = (int) event.getY(0);
                 for (int i = 0; i < stepsCount; i++) {
                     if (Math.abs(xTouch - pointX) < radius + 5 && Math.abs(yTouch - centerY) < radius + 5) {
-                      /*  if (withViewpager) {
-                            setCurrentStepPosition(i);
-                        }*/
 
                         if (onClickListener != null) {
                             onClickListener.onClick(i);
@@ -410,25 +371,23 @@ public class ProgressbarIndicator extends View {
 
 
     public static class ViewPagerOnChangeListener implements ViewPager.OnPageChangeListener {
-        private final ProgressbarIndicator stepIndicator;
+        private final ProgressbarIndicator progressbarIndicator;
 
-        public ViewPagerOnChangeListener(ProgressbarIndicator stepIndicator) {
-            this.stepIndicator = stepIndicator;
+        ViewPagerOnChangeListener(ProgressbarIndicator progressbarIndicator) {
+            this.progressbarIndicator = progressbarIndicator;
         }
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            stepIndicator.setOffset(positionOffset, position);
         }
 
         @Override
         public void onPageSelected(int position) {
-            stepIndicator.setCurrentStepPosition(position);
+            progressbarIndicator.setCurrentStepPosition(position);
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            stepIndicator.setPagerScrollState(state);
         }
 
     }
@@ -436,7 +395,7 @@ public class ProgressbarIndicator extends View {
     public static class ViewPagerOnSelectedListener implements OnClickListener {
         private final ViewPager mViewPager;
 
-        public ViewPagerOnSelectedListener(ViewPager viewPager) {
+        ViewPagerOnSelectedListener(ViewPager viewPager) {
             mViewPager = viewPager;
         }
 
@@ -444,5 +403,132 @@ public class ProgressbarIndicator extends View {
         public void onClick(int position) {
             mViewPager.setCurrentItem(position);
         }
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(superState);
+        savedState.radius = this.radius;
+        savedState.stepsCount = this.stepsCount;
+        savedState.currentStepPosition = this.currentStepPosition;
+        savedState.currentStatus = this.currentStatus;
+        savedState.stepLineColor = this.stepLineColor;
+        savedState.stepLineDoneColor = this.stepLineDoneColor;
+        savedState.circleUnOpenColor = this.circleUnOpenColor;
+        savedState.circleCompleteColor = this.circleCompleteColor;
+        savedState.circleInProgressColor = this.circleInProgressColor;
+        savedState.circleUnOpenSelectedColor = this.circleUnOpenSelectedColor;
+        savedState.circleInProgressSelectedColor = this.circleInProgressSelectedColor;
+        savedState.circleCompleteSelectedColor = this.circleCompleteSelectedColor;
+        savedState.textColor = this.textColor;
+        savedState.textSize = this.textSize;
+        savedState.strokeCircleWidth = this.strokeCircleWidth;
+        savedState.strokeLineWidth = this.strokeLineWidth;
+        return super.onSaveInstanceState();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+        SavedState savedState = (SavedState) state;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        this.radius = savedState.radius;
+        this.stepsCount = savedState.stepsCount;
+        this.currentStepPosition = savedState.currentStepPosition;
+        this.currentStatus = savedState.currentStatus;
+        this.stepLineColor = savedState.stepLineColor;
+        this.stepLineDoneColor = savedState.stepLineDoneColor;
+        this.circleUnOpenColor = savedState.circleUnOpenColor;
+        this.circleCompleteColor = savedState.circleCompleteColor;
+        this.circleInProgressColor = savedState.circleInProgressColor;
+        this.circleUnOpenSelectedColor = savedState.circleUnOpenSelectedColor;
+        this.circleInProgressSelectedColor = savedState.circleInProgressSelectedColor;
+        this.circleCompleteSelectedColor = savedState.circleCompleteSelectedColor;
+        this.textColor = savedState.textColor;
+        this.textSize = savedState.textSize;
+        this.strokeCircleWidth = savedState.strokeCircleWidth;
+        this.strokeLineWidth = savedState.strokeLineWidth;
+
+    }
+
+    static class SavedState extends BaseSavedState {
+
+        private int radius;
+        private int stepsCount;
+        private int currentStepPosition;
+        private int currentStatus;
+        private int stepLineColor;
+        private int stepLineDoneColor;
+        private int circleUnOpenColor;
+        private int circleCompleteColor;
+        private int circleInProgressColor;
+        private int circleUnOpenSelectedColor;
+        private int circleInProgressSelectedColor;
+        private int circleCompleteSelectedColor;
+        private int textColor;
+        private float textSize;
+        private float strokeCircleWidth;
+        private float strokeLineWidth;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            radius = in.readInt();
+            stepsCount = in.readInt();
+            currentStepPosition = in.readInt();
+            currentStatus = in.readInt();
+            stepLineColor = in.readInt();
+            stepLineDoneColor = in.readInt();
+            circleUnOpenColor = in.readInt();
+            circleCompleteColor = in.readInt();
+            circleInProgressColor = in.readInt();
+            circleUnOpenSelectedColor = in.readInt();
+            circleInProgressSelectedColor = in.readInt();
+            circleCompleteSelectedColor = in.readInt();
+            textColor = in.readInt();
+            textSize = in.readFloat();
+            strokeCircleWidth = in.readFloat();
+            strokeLineWidth = in.readFloat();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(radius);
+            out.writeInt(stepsCount);
+            out.writeInt(currentStepPosition);
+            out.writeInt(currentStatus);
+            out.writeInt(stepLineColor);
+            out.writeInt(stepLineDoneColor);
+            out.writeInt(circleUnOpenColor);
+            out.writeInt(circleCompleteColor);
+            out.writeInt(circleInProgressColor);
+            out.writeInt(circleUnOpenSelectedColor);
+            out.writeInt(circleInProgressSelectedColor);
+            out.writeInt(circleCompleteSelectedColor);
+            out.writeInt(textColor);
+            out.writeFloat(textSize);
+            out.writeFloat(strokeCircleWidth);
+            out.writeFloat(strokeLineWidth);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }
