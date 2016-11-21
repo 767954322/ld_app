@@ -39,6 +39,7 @@ import java.util.List;
  * 项目详情
  */
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View,View.OnClickListener {
+    private final static int REQUEST_CODE_EDIT_PLAN = 0;
 
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
@@ -187,6 +188,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
+
                 if (requestCode == Activity.RESULT_OK) {
                     //TODO refresh project
                     mProjectDetailsPresenter.getProjectDetails();
