@@ -63,9 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/line_name"
-                android:layout_marginRight="@dimen/size_15"
+                android:layout_marginRight="@dimen/size_26"
                 android:text="请输入2-10个字符"
-                android:textColor="#ffd3d3"
+                android:textColor="#ED2424"
                 android:textSize="@dimen/font_11"
                 android:visibility="gone" />
 
@@ -124,9 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/line_phone"
-                android:layout_marginRight="@dimen/size_15"
+                android:layout_marginRight="@dimen/size_26"
                 android:text="请输入正确的手机号"
-                android:textColor="#ffd3d3"
+                android:textColor="#ED2424"
                 android:textSize="@dimen/font_11"
                 android:visibility="gone" />
 
