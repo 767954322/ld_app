@@ -178,6 +178,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
+                onClearFocus(mViewHolder.etBrandNum, mViewHolder.etBranDimension, mViewHolder.etBranDimension);
                 setSpinnerTextColor(mViewHolder.spinnerApartment);
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(position < 10 ? "0" + position : position + "");
             }
@@ -220,6 +221,14 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             }
         });
         return view;
+    }
+
+    private void onClearFocus(EditText... editview) {
+        for (EditText v :editview){
+            if (v.hasFocus()){
+                v.clearFocus();
+            }
+        }
     }
 
     private void setSpinnerTextColor(MaterialSpinner spinnerApartment) {
