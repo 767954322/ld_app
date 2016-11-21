@@ -16,7 +16,7 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
@@ -36,7 +36,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     private Context mContext;
     private int index;  //index表示合格不合格按钮初始化状态,1表示不合格;2表示合格
     private boolean flag;   //flag表示是否加载辅助条件第一个,false表示不是,true表示是
-    private ContainedForm mForm;
+    private SHForm mForm;
     private Task mTask;
 
     public PrecheckPresenter(Context context, PrecheckContract.View view) {
@@ -54,12 +54,13 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
             if ("precheck".equals(form.getCategory())) {   //查找预检的表格
                 // TODO: 16/11/10 待做啊
                 String templateId = form.getFormId();
-                String[] fids = {templateId};
+                List<String> formIds = new ArrayList<>();
+                formIds.add(templateId);
                 // TODO: 16/11/11 获取数据,显示界面
                 FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
                     @Override
                     public void onSuccess(List data) {
-                        for (ContainedForm form : (List<ContainedForm>) data) {   //可以同时获取多张form
+                        for (SHForm form : (List<SHForm>) data) {   //可以同时获取多张form
                             String category = form.getCategory();
                             if ("precheck".equals(category)) {   //预检的from
                                 mForm = form;
@@ -73,14 +74,14 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                     public void onError(String errorMsg) {
                         ToastUtils.showShort((PrecheckActivity) mContext, errorMsg);
                     }
-                }, fids);
+                }, formIds);
 
                 return;
             }
         }
     }
 
-    private void findPrecheckForm(ContainedForm form) {
+    private void findPrecheckForm(SHForm form) {
         ArrayList<CheckItem> checkItems = form.getCheckItems();
         int spacing = UIUtils.getDimens(R.dimen.precheck_spacing_padding_7_5);
         int index = 0;

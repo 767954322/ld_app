@@ -14,7 +14,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.presenter.PrecheckPresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -169,7 +169,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void enterUnqualified(ContainedForm form) {
+    public void enterUnqualified(SHForm form) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
         ToastUtils.showShort(this,"另外再开启一个activity来处理验收条件不合格的情况");
     }
