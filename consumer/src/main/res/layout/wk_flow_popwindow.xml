@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:padding="5dp"
+    android:background="@drawable/back_moreinfomin"
     android:orientation="vertical">
 
 
     <RelativeLayout
         android:id="@+id/rl_village_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/font_15"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ib_village_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/font_15"
             android:src="@drawable/details" />
 
         <TextView
@@ -36,17 +35,15 @@
 
     <RelativeLayout
         android:id="@+id/rl_design_document"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/font_15"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ib_design_document"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/font_15"
             android:src="@drawable/information" />
 
         <TextView
@@ -63,10 +60,8 @@
 
     <RelativeLayout
         android:id="@+id/rl_jump_construction"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/font_15"
-        android:layout_marginTop="@dimen/font_15"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -75,7 +70,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/font_15"
             android:src="@drawable/icon_instruction" />
 
         <TextView
