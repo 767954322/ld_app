@@ -40,9 +40,9 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
     } else {
       textView = ((ViewHolder) convertView.getTag()).textView;
     }
-    int ss = context.getResources().getColor(R.color.bg_66);
+    int color = context.getResources().getColor(R.color.bg_99);
     String select = getItem(position).toString();
-    textView.setTextColor(select.equals(UIUtils.getString(R.string.select))?ss:textColor);
+    textView.setTextColor(select.equals(UIUtils.getString(R.string.select))?color:textColor);
     textView.setText(getItem(position).toString());
     return convertView;
   }

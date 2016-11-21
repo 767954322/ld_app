@@ -182,7 +182,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 boolean falg = mViewHolder.spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
-                mViewHolder.spinnerApartment.setTextColor(falg?mActivity.getResources().getColor(R.color.bg_66):Color.BLACK);
+                mViewHolder.spinnerApartment.setTextColor(falg?mActivity.getResources().getColor(R.color.bg_99):Color.BLACK);
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(position < 10?"0"+position:position+"");
             }
         });
