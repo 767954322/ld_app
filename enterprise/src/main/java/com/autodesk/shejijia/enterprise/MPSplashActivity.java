@@ -18,7 +18,7 @@ public class MPSplashActivity extends SplashActivity {
             return RegisterOrLoginActivity.class;
         } else {
            switch(memberType) {
-               case ConstructionConstants.INSPECTOR_TYPE:
+               case ConstructionConstants.MemberType.INSPECTOR:
                    return ScanQrCodeActivity.class;
                default:
                    return EnterpriseHomeActivity.class;

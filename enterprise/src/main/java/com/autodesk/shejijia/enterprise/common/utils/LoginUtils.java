@@ -48,7 +48,7 @@ public class LoginUtils {
         LogUtils.e("login--entity",entity+"");
         String memberType = entity.getMember_type();
         switch (memberType) {
-            case ConstructionConstants.INSPECTOR_TYPE:
+            case ConstructionConstants.MemberType.INSPECTOR:
                 //跳到监理界面
                 Intent inspectorIntent = new Intent(mContext, ScanQrCodeActivity.class);
                 inspectorIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
