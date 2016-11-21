@@ -93,8 +93,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        setImageForNavButton(ButtonType.SECONDARY, R.drawable.push_to_chat_button);
-        setImageForNavButton(ButtonType.RIGHT, R.drawable.show_more);
+
+        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            setImageForNavButton(ButtonType.SECONDARY, R.drawable.details);
+            setImageForNavButton(ButtonType.RIGHT, R.drawable.information);
+        } else {
+            setImageForNavButton(ButtonType.SECONDARY, R.drawable.push_to_chat_button);
+            setImageForNavButton(ButtonType.RIGHT, R.drawable.show_more);
+        }
+
 
         if (footerView == null) {
             footerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_footer, null);
@@ -156,48 +163,64 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
+        //判断是消费者，还是设计师，，从而区分消费者和设计师
+        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
+            maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+            maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+            startActivityForResult(maIntent, 10001);
+        } else {
+            if (popWindow == null)
+                popWindow = new PopWindow(this);
+            popWindow.setPopOnClickListener(new PopWindow.PopOnClickListener() {
+                @Override
+                public void onClickListener(View view) {
+                    switch (view.getId()) {
+                        case R.id.rl_village_info:
 
-        if (popWindow == null)
-            popWindow = new PopWindow(this);
-        popWindow.setPopOnClickListener(new PopWindow.PopOnClickListener() {
-            @Override
-            public void onClickListener(View view) {
-                switch (view.getId()) {
-                    case R.id.rl_village_info:
+                            Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
+                            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
+                            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
+                            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
+                            startActivity(intent);
 
-                        Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
-                        startActivity(intent);
+                            break;
+                        case R.id.rl_design_document:
 
-                        break;
-                    case R.id.rl_design_document:
+                            Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
+                            maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                            maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                            startActivityForResult(maIntent, 10001);
 
-                        Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
-                        maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                        maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                        startActivityForResult(maIntent, 10001);
-
-                        break;
-                    case R.id.rl_jump_construction:
-                        Toast.makeText(WkFlowStateActivity.this, "未开发", Toast.LENGTH_SHORT).show();
-                        break;
+                            break;
+                        case R.id.rl_jump_construction:
+                            Toast.makeText(WkFlowStateActivity.this, "未开发", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
                 }
-            }
-        });
-        popWindow.showPopupWindow(getNavigationButton(ButtonType.RIGHT));
+            });
+            popWindow.showPopupWindow(getNavigationButton(ButtonType.RIGHT));
+        }
 
     }
 
     @Override
     protected void secondaryNavButtonClicked(View view) {
         super.secondaryNavButtonClicked(view);
-        Intent intent = new Intent(WkFlowStateActivity.this, MessageCenterActivity.class);
-        intent.putExtra(Constant.MessageCenterActivityKey.NEEDS_ID, needs_id);
-        intent.putExtra(Constant.MessageCenterActivityKey.DESINER_ID, designer_id);
-        intent.putExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE, Constant.MessageCenterActivityKey.PROJECT_MSG);
-        startActivity(intent);
+        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
+            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
+            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
+            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(WkFlowStateActivity.this, MessageCenterActivity.class);
+            intent.putExtra(Constant.MessageCenterActivityKey.NEEDS_ID, needs_id);
+            intent.putExtra(Constant.MessageCenterActivityKey.DESINER_ID, designer_id);
+            intent.putExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE, Constant.MessageCenterActivityKey.PROJECT_MSG);
+            startActivity(intent);
+        }
+
     }
 
     //监听标题栏三个按钮
