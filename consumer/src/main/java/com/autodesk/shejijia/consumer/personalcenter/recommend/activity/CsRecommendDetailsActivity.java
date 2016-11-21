@@ -89,12 +89,13 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        getRecommendDetails();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getRecommendDetails();
+
     }
 
     private void getRecommendDetails() {

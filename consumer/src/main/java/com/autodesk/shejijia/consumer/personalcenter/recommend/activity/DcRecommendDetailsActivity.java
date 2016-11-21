@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -118,11 +119,6 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         getRecommendDetails();
     }
 
@@ -196,5 +192,22 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     protected void leftNavButtonClicked(View view) {
         super.leftNavButtonClicked(view);
         EventBus.getDefault().post(new RefreshEvent());
+    }
+
+
+    public void onEventMainThread(RefreshEvent event) {
+        getRecommendDetails();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
