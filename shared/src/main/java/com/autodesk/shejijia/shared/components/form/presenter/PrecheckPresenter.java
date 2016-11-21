@@ -18,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.FormFeedBack;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckActivity;
@@ -129,10 +130,14 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
 
+        final FormFeedBack formFeedBack = checkItem.getFormFeedBack();
+
+
         yesTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resultTv.setText(UIUtils.getString(R.string.yes));
+                formFeedBack.setCurrentCheckIndex(0);
                 popupWindow.dismiss();
             }
         });
@@ -140,6 +145,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
             @Override
             public void onClick(View v) {
                 resultTv.setText(UIUtils.getString(R.string.no));
+                formFeedBack.setCurrentCheckIndex(1);
                 popupWindow.dismiss();
             }
         });

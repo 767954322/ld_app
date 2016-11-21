@@ -172,6 +172,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public void enterUnqualified(SHForm form) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
         ToastUtils.showShort(this, "另外再开启一个activity来处理验收条件不合格的情况");
+//        for (CheckItem checkItem : form.getCheckItems()) {
+//            LogUtils.d("asdf",checkItem.getFormFeedBack().getCurrentCheckIndex().toString());
+//        }
     }
 
 }
