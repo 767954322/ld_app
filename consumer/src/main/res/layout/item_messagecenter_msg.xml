@@ -25,6 +25,7 @@
             android:layout_toRightOf="@+id/item_msg_checkout">
 
             <TextView
+                android:textColor="@color/comment_black"
                 android:id="@+id/tv_msg_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
                 android:layout_marginRight="@dimen/font_35"
                 android:layout_marginTop="@dimen/font_10"
                 android:text="@string/item_messagecenter_tital"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/size_16" />
 
 
         </RelativeLayout>
