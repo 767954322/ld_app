@@ -234,6 +234,17 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     }
 
     /**
+     * 标题
+     * */
+    @Override
+    protected void setTitleForNavbar(String value) {
+        super.setTitleForNavbar(value);
+        TextView titleTextView = (TextView) findViewById(com.autodesk.shejijia.shared.R.id.nav_title_textView);
+        titleTextView.setText(value);
+        titleTextView.setMaxEms(6);
+    }
+
+    /**
      * 获取店面回传回来的信息
      */
     @Override
