@@ -24,7 +24,6 @@
     <!--Common string-->
     <string name="save">保存</string>
     <string name="send">发送</string>
-    <string name="cancel">取消</string>
     <string name="tip">提示</string>
     <string name="pay">立即支付</string>
     <string name="autonym_uploading">上传中...</string>
@@ -234,21 +233,16 @@
     <string name="my_attention">我的关注</string>
 
     <!--form表单-->
-    <string name="project_info">客户资料</string>
-    <string name="form_username">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名:&#160;</string>
-    <string name="form_telephone">联系电话:&#160;</string>
-    <string name="form_address">项目地址:&#160;</string>
-    <string name="form_community">小区名称:&#160;</string>
-    <string name="inspect_precheck">验收前条件检查</string>
     <string name="unqualified">不合格</string>
     <string name="qualified">合格</string>
-    <string name="qrcode_error_tip">二维码格式错误,无法获取到项目信息</string>
-    <string name="form_submit">确定</string>
-    <string name="form_cancel">取消</string>
-    <string name="project_id">项目编码:</string>
-    <string name="write_project_id">请输入项目编号</string>
+    <string name="submit">确定</string>
+    <string name="cancel">取消</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="hint">提示</string>
+    <string name="commite">提交</string>
+    <string name="quit">放弃</string>
+
 
     <string name="previous">Go to previous</string>
     <string name="next">Go to next</string>

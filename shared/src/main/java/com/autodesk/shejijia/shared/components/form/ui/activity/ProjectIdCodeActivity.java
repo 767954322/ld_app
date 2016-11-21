@@ -1,24 +1,41 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ProjectIdCodePresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
-public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickListener, ProjectIdCodeContract.View {
+public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickListener, ProjectIdCodeContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private EditText mProjectIdEt;
     private ProjectIdCodePresenter mPresenter;
     private Button mConfirmBtn;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
+    private TextView mUserNameView;
+    private TextView mUserRoleView;
+    private ImageButton mHeadPicBtn;
+    private Toolbar mToolbar;
 
     @Override
     protected int getLayoutResId() {
@@ -27,6 +44,13 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.inspect_drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.inspect_navigation_view);
+        View headerView = mNavigationView.getHeaderView(0);
+        mUserNameView = (TextView) headerView.findViewById(R.id.tv_user_name);
+        mUserRoleView = (TextView) headerView.findViewById(R.id.tv_user_role);
+        mHeadPicBtn = (ImageButton) headerView.findViewById(R.id.imgBtn_personal_headPic);
 
         mProjectIdEt = (EditText) findViewById(R.id.et_project_id);
         mConfirmBtn = (Button) findViewById(R.id.btn_confirm);
@@ -40,12 +64,19 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initListener() {
         mConfirmBtn.setOnClickListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mHeadPicBtn.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_confirm) {
+        int id = v.getId();
+        if (id == R.id.btn_confirm) {
             mPresenter.confirmProject();
+        } else if(id == R.id.imgBtn_personal_headPic) {
+            // TODO: 16/1/21 加载出个人的头像
+            ToastUtils.showShort(this,"后面在处理加载出的图片");
         }
     }
 
@@ -62,7 +93,8 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
             mPresenter.enterCode();
             return true;
         } else if (id == android.R.id.home) {
-            ToastUtils.showShort(this, "this is home,暂时未确定,以后再添加");
+            initNavigationHeadState();
+            mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
 
@@ -70,10 +102,43 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.inspect_exit) {
+            LoginUtils.doLogout(this);
+            startActivity(new Intent(this, RegisterOrLoginActivity.class));
+            finish();
+        } else if(itemId == R.id.inspect_more) {
+            // TODO: 16/11/21  样式不定,以后再做
+            ToastUtils.showShort(this,"显示更多");
+        }
+        mDrawerLayout.closeDrawers();
+        return true;
+    }
+
+
+
+    private void initNavigationHeadState() {
+        if (!TextUtils.isEmpty(UserInfoUtils.getNikeName(this))) {
+            mUserNameView.setText(UserInfoUtils.getNikeName(this));
+            mUserRoleView.setText(getString(R.string.inspector));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public void setToolbar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("输入编码");
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_navigation);
+        mToolbar.setTitle(R.string.input_code);
+        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.con_white));
+        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -106,4 +171,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     public void hideLoading() {
 
     }
+
+
 }

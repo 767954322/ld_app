@@ -54,7 +54,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     protected void initExtraBundle() {
         Task task = (Task) getIntent().getSerializableExtra("task");
 
-        mPresenter = new PrecheckPresenter(this,this);
+        mPresenter = new PrecheckPresenter(this, this);
         mPresenter.showForm(task);
     }
 
@@ -75,18 +75,18 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int i = v.getId();
 
-        if (i == R.id.btn_ok) {// TODO: 16/10/27 点击合格的按钮
+        if (i == R.id.btn_ok) {
             mPresenter.showOkBtn();
-        } else if (i == R.id.btn_no) {// TODO: 16/10/27 点击不合格的按钮
+        } else if (i == R.id.btn_no) {
             mPresenter.showNoBtn();
-        } else if (i == R.id.btn_option) {// TODO: 16/10/27  点击验收的按钮
+        } else if (i == R.id.btn_option) {
             mPresenter.clickOptionBtn();
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
@@ -116,7 +116,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void setToolbarTitle(String title) {
         ActionBar actionBar = getSupportActionBar();
-        if(null != actionBar) {
+        if (null != actionBar) {
             actionBar.setTitle(title);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -124,23 +124,23 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void addNecessaryView(TextView view) {
-        if(null != mNecessaryLayout) {
+        if (null != mNecessaryLayout) {
             mNecessaryLayout.addView(view);
         }
     }
 
     @Override
     public void addAdditionalLayout(View view) {
-        if(null != mAdditionalLayout) {
+        if (null != mAdditionalLayout) {
             mAdditionalLayout.addView(view);
         }
     }
 
     @Override
     public void showQualifiedBtn() {
-        if(null != mOptionBtn && null != mOkBtn) {
+        if (null != mOptionBtn && null != mOkBtn) {
             mOptionBtn.setVisibility(View.VISIBLE);
-            mOptionBtn.setText("同意,可进行质量验收");
+            mOptionBtn.setText(R.string.form_inspect_agree);
             mOptionBtn.setBackgroundResource(R.drawable.ic_big_button_blue);
 
             mOkBtn.setTextColor(UIUtils.getColor(R.color.con_white));
@@ -150,9 +150,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void showUnqualifiedBtn() {
-        if(null != mOptionBtn && null != mNoBtn) {
+        if (null != mOptionBtn && null != mNoBtn) {
             mOptionBtn.setVisibility(View.VISIBLE);
-            mOptionBtn.setText("不同意验收");
+            mOptionBtn.setText(R.string.form_inspect_disagree);
             mOptionBtn.setBackgroundResource(R.drawable.ic_big_button_orange);
 
             mNoBtn.setTextColor(UIUtils.getColor(R.color.con_white));
@@ -164,14 +164,14 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public void enterQualified(Task task) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
         Intent intent = new Intent(this, FormListActivity.class);
-        intent.putExtra("task",task);
+        intent.putExtra("task", task);
         startActivity(intent);
     }
 
     @Override
     public void enterUnqualified(SHForm form) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
-        ToastUtils.showShort(this,"另外再开启一个activity来处理验收条件不合格的情况");
+        ToastUtils.showShort(this, "另外再开启一个activity来处理验收条件不合格的情况");
     }
 
 }

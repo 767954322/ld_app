@@ -73,16 +73,18 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     @Override
     public void setToolbar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("设计家");
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (null != actionBar) {
+            actionBar.setTitle(R.string.app_name);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 
 
     @Override
     public void selectCancel() {
-        startActivity(new Intent(this,ScanQrCodeActivity.class));
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
 
     @Override
@@ -97,8 +99,8 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public void enterPrecheck(Task task) {
-        Intent intent = new Intent(this,PrecheckActivity.class);
-        intent.putExtra("task",task);
+        Intent intent = new Intent(this, PrecheckActivity.class);
+        intent.putExtra("task", task);
         startActivity(intent);
     }
 
@@ -121,7 +123,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             mPresenter.cancel();
             return true;
         }

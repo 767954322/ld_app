@@ -76,7 +76,7 @@
                 android:layout_marginEnd="@dimen/size_12"
                 android:layout_weight="1"
                 android:background="@drawable/small_button_grey"
-                android:text="@string/form_cancel"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
                 style="?attr/buttonBarButtonStyle"
                 android:typeface="sans"/>
@@ -87,7 +87,7 @@
                 android:layout_marginStart="@dimen/size_12"
                 android:layout_weight="1"
                 android:background="@drawable/small_button_blue"
-                android:text="@string/form_submit"
+                android:text="@string/submit"
                 android:textColor="@color/white"
                 style="?attr/buttonBarButtonStyle"
                 android:typeface="sans"/>

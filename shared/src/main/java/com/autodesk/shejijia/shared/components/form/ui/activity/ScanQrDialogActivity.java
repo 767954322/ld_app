@@ -32,11 +32,10 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        String mFormat = intent.getStringExtra("format");
         String mError = intent.getStringExtra("error");
 
-        mTitle.setText("提示");
-        mContent.setText(mError == null ? mFormat : mError);
+        mTitle.setText(R.string.hint);
+        mContent.setText(mError);
     }
 
     @Override

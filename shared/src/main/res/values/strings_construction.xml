@@ -103,4 +103,23 @@
     <!--项目信息页面文字-->
     <string name="project_info_title">项目信息</string>
     <string name="project_info_zxing">监理人员扫码 进入施工阶段</string>
+
+    <!--form电子表格-->
+    <string name="input_code">输入编码</string>
+    <string name="inspect_show_null_error">项目编码不能为空,请重新输入</string>
+    <string name="inspect_show_no_task_error">当前没有需要验收的项目</string>
+    <string name="inspect_show_format_error">二维码格式不正确,请再次扫码</string>
+    <string name="project_id">项目编码:</string>
+    <string name="write_project_id">请输入项目编号</string>
+    <string name="project_info">客户资料</string>
+    <string name="form_username">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名:&#160;</string>
+    <string name="form_telephone">联系电话:&#160;</string>
+    <string name="form_address">项目地址:&#160;</string>
+    <string name="form_community">小区名称:&#160;</string>
+    <string name="inspect_precheck">验收前条件检查</string>
+    <string name="form_inspect_agree">同意,可进行质量验收</string>
+    <string name="form_inspect_disagree">不同意验收</string>
+    <string name="form_program_log">问题记录</string>
+
+
 </resources>

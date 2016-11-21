@@ -15,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.google.zxing.Result;
 
@@ -42,7 +43,7 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
         TextView rightText = (TextView) findViewById(R.id.nav_right_textView);
         if (rightText != null) {
             rightText.setVisibility(View.VISIBLE);
-            rightText.setText("输入编码");
+            rightText.setText(R.string.input_code);
             rightText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,15 +63,15 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
-            params.putBoolean("task_data",true);
+            params.putBoolean("task_data", true);
             FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     PlanInfo planInfo = data.getPlan();
                     List<Task> taskList = planInfo.getTasks();
                     for (Task task : taskList) {
-                        //根据监理进来:1,修改;
-                        if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                        //根据监理进来:1,修改;2,查看
+                        if ("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
                             String status = task.getStatus();
                             Member role = null;
                             List<String> statusList = new ArrayList<>();
@@ -83,7 +84,7 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 //                        statusList.add("REINSPECTION");
 //                        statusList.add("RECTIFICATION");
 //                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
-                            if(statusList.contains(status)) {
+                            if (statusList.contains(status)) {
                                 for (Member member : data.getMembers()) {
                                     if ("member".equals(member.getRole())) {
                                         role = member;
@@ -104,23 +105,23 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
                     }
 
-                    Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
-                    intent.putExtra("error","当前没有需要验收的项目");
+                    Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                    intent.putExtra("error", UIUtils.getString(R.string.inspect_show_no_task_error));
                     startActivity(intent);
 
                 }
 
                 @Override
                 public void onError(String errorMsg) {
-                    Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
-                    intent.putExtra("error",errorMsg);
+                    Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                    intent.putExtra("error", errorMsg);
                     startActivity(intent);
                 }
             });
 
         } else {
-            Intent intent = new Intent(this,ScanQrDialogActivity.class);
-            intent.putExtra("format","二维码格式不正确,请再次扫码");
+            Intent intent = new Intent(this, ScanQrDialogActivity.class);
+            intent.putExtra("error", UIUtils.getString(R.string.inspect_show_format_error));
             startActivity(intent);
 
         }

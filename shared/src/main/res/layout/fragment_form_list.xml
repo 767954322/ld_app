@@ -16,9 +16,9 @@
 
     <TextView android:layout_width="match_parent"
               android:layout_height="44dp"
-              android:text="问题记录"
+              android:text="@string/form_program_log"
               android:gravity="center_vertical"
-              android:paddingStart="16dp"
+              android:paddingStart="@dimen/spacing_padding_double"
               android:background="@color/form_background_grey"
               android:textColor="@color/form_text_title"/>
 
@@ -34,8 +34,8 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="40dp"
-                  android:paddingEnd="16dp"
-                  android:paddingStart="16dp">
+                  android:paddingEnd="@dimen/spacing_padding_double"
+                  android:paddingStart="@dimen/spacing_padding_double">
 
         <Button android:id="@+id/btn_cancel"
                 style="?attr/buttonBarButtonStyle"
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="@dimen/size_12"
                 android:layout_weight="1"
                 android:background="@drawable/small_button_grey"
-                android:text="放弃"
+                android:text="@string/quit"
                 android:textColor="@color/white"
                 android:typeface="sans"/>
 
@@ -55,7 +55,7 @@
                 android:layout_marginStart="@dimen/size_12"
                 android:layout_weight="1"
                 android:background="@drawable/small_button_blue"
-                android:text="提交"
+                android:text="@string/commite"
                 android:textColor="@color/white"
                 android:typeface="sans"/>
 

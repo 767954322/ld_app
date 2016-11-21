@@ -52,7 +52,6 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
         List<Form> formList = task.getForms();
         for (Form form : formList) {
             if ("precheck".equals(form.getCategory())) {   //查找预检的表格
-                // TODO: 16/11/10 待做啊
                 String templateId = form.getFormId();
                 List<String> formIds = new ArrayList<>();
                 formIds.add(templateId);
@@ -115,6 +114,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     }
 
     private void addAdditionalLayout(CheckItem checkItem) {
+        // TODO: 16/11/19 改用ListView展现数据
         View necessaryView = LayoutInflater.from(mContext).inflate(R.layout.view_plain_table_cell, null);
         TextView standardTv = (TextView) necessaryView.findViewById(R.id.tv_title);
         final TextView resultTv = (TextView) necessaryView.findViewById(R.id.tv_result);

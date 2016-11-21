@@ -26,16 +26,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_32">
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_cancel"-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:layout_width="64dp"-->
-            <!--android:layout_height="36dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--android:layout_toStartOf="@+id/btn_submit"-->
-            <!--android:text="@string/form_cancel"-->
-            <!--android:textColor="@color/form_btn_bg_blue"-->
-            <!--android:textSize="@dimen/textsize_14"/>-->
         <Button
             android:id="@+id/btn_submit"
             style="?android:attr/borderlessButtonStyle"
@@ -43,7 +33,7 @@
             android:layout_height="36dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="-16dp"
-            android:text="@string/form_submit"
+            android:text="@string/submit"
             android:textColor="@color/form_btn_bg_blue"
             android:textSize="@dimen/textsize_14"/>
 

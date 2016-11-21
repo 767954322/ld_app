@@ -173,6 +173,7 @@
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectIdCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity"

@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
@@ -39,14 +40,14 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
     public void confirmProject() {
         String projectId = mView.getProjectId();
         if (TextUtils.isEmpty(projectId)) {
-            mView.showError("项目编码不能为空,请重新输入");
+            mView.showError(UIUtils.getString(R.string.inspect_show_null_error));
             return;
         }
         Long pid = Long.valueOf(projectId);
 
         final Bundle params = new Bundle();
         params.putLong("pid", pid);
-        params.putBoolean("task_data",true);
+        params.putBoolean("task_data", true);
 
         FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
             @Override
@@ -55,7 +56,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                 List<Task> taskList = planInfo.getTasks();
                 for (Task task : taskList) {
                     //根据监理进来:1,修改;
-                    if("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                    if ("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
                         String status = task.getStatus();
                         Member role = null;
                         List<String> statusList = new ArrayList<>();
@@ -68,7 +69,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
 //                        statusList.add("REINSPECTION");
 //                        statusList.add("RECTIFICATION");
 //                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
-                        if(statusList.contains(status)) {
+                        if (statusList.contains(status)) {
                             for (Member member : data.getMembers()) {
                                 if ("member".equals(member.getRole())) {
                                     role = member;
@@ -89,7 +90,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
 
                 }
 
-                mView.showError("当前没有监理需要验收的项目");
+                mView.showError(UIUtils.getString(R.string.inspect_show_no_task_error));
 
             }
 
