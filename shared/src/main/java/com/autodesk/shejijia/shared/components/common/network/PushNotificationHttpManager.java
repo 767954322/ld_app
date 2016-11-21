@@ -5,8 +5,6 @@ import com.android.volley.Request;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
-import junit.framework.Assert;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +14,7 @@ import java.util.Map;
 public class PushNotificationHttpManager
 {
     public static void registerDeviceWithMarketplace(final String deviceId, OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(deviceId != null && !deviceId.isEmpty());
+//        Assert.assertTrue(deviceId != null && !deviceId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn;
         url += "/devices?";
@@ -38,7 +36,7 @@ public class PushNotificationHttpManager
 
 
     public static void unRegisterDeviceWithMarketplace(final String deviceId, OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(deviceId != null && !deviceId.isEmpty());
+//        Assert.assertTrue(deviceId != null && !deviceId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn;
         url += "/devices?";

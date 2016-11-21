@@ -79,7 +79,7 @@ public class MPChatHttpManager {
     public void retrieveMemberThreads(String memberId, boolean onlyAttachedToFile,
                                       int offset, int limit,
                                       OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
 
         String entityTypes = "ASSET,NONE";
 
@@ -108,7 +108,7 @@ public class MPChatHttpManager {
     public void retrieveMultipleMemberThreads(String recipientsIds, // comma seperated ids
                                               int offset, int limit,
                                               OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(recipientsIds != null);
+//        Assert.assertTrue(recipientsIds != null);
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members" +
@@ -165,7 +165,7 @@ public class MPChatHttpManager {
 
     public void retrieveMemberUnreadMessageCount(String memberId, boolean needAllMessages,
                                                  OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
 
         String entityTypes = "FILE";
 
@@ -188,8 +188,8 @@ public class MPChatHttpManager {
 
     public void retrieveFileUnreadMessageCount(String memberId, String fileId,
                                                OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
 
         String entityTypes = "FILE";
 
@@ -210,8 +210,8 @@ public class MPChatHttpManager {
 
     public void retrieveAllHotspotUnreadmessageCount(String memberId, String threadId,
                                                      OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -229,8 +229,8 @@ public class MPChatHttpManager {
     public void retrieveMediaMessages(String memberId, String threadId,
                                       int offset, int limit,
                                       OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -252,8 +252,8 @@ public class MPChatHttpManager {
 
     public void retrieveThreadDetails(String memberId, String threadId,
                                       OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -271,7 +271,7 @@ public class MPChatHttpManager {
 
     public void retrieveFileConversations(String fileId,
                                           OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/entity" +
@@ -315,10 +315,10 @@ public class MPChatHttpManager {
     public void sendNewThreadMessage(String memberId, String receipentId,
                                      final String messageText, final String subject,
                                      OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(receipentId != null && !receipentId.isEmpty());
-        Assert.assertTrue(messageText != null && !messageText.isEmpty());
-        Assert.assertTrue(subject != null && !subject.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(receipentId != null && !receipentId.isEmpty());
+//        Assert.assertTrue(messageText != null && !messageText.isEmpty());
+//        Assert.assertTrue(subject != null && !subject.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -346,9 +346,9 @@ public class MPChatHttpManager {
     public void replyToThread(String memberId, final String threadId,
                               final String messageText,
                               OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
-        Assert.assertTrue(messageText != null && !messageText.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(messageText != null && !messageText.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -392,8 +392,8 @@ public class MPChatHttpManager {
 
     public void markMessageAsRead(String memberId, final String msgId,
                                   OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(msgId != null && !msgId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(msgId != null && !msgId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
@@ -412,8 +412,8 @@ public class MPChatHttpManager {
     public void addConversationToFile(String fileId, final String threadId,
                                       final int xCoordinate, final int yCoordinate,
                                       OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/entity/" + fileId +
@@ -441,8 +441,8 @@ public class MPChatHttpManager {
                                  final String subject, final String threadId,
                                  final File file, final String mediaType, //AUDIO or IMAGE
                                  final ResponseHandler handler) {
-        Assert.assertTrue(!memberId.equalsIgnoreCase(recipientId));
-        Assert.assertTrue(file != null);
+//        Assert.assertTrue(!memberId.equalsIgnoreCase(recipientId));
+//        Assert.assertTrue(file != null);
 
         // first get the upload server
         getUploadServer(new OkStringRequest.OKResponseCallback() {
@@ -472,7 +472,7 @@ public class MPChatHttpManager {
                     if (threadId != null)
                         params.put("thread_id", threadId);
                     else if (recipientId != null) {
-                        Assert.assertTrue(subject != null && !subject.isEmpty());
+//                        Assert.assertTrue(subject != null && !subject.isEmpty());
                         params.put("subject", subject);
                         params.put("recipient_ids", recipientId);
                         params.put("app_id", UrlMessagesContants.appID);
@@ -521,8 +521,8 @@ public class MPChatHttpManager {
 
 
     public void addFileToAsset(String fileId, String assetId, OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
-        Assert.assertTrue(assetId != null && !assetId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(assetId != null && !assetId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/assets/" + assetId +
@@ -539,10 +539,10 @@ public class MPChatHttpManager {
 
     public void addFileToWorkflowStep(String fileId, String assetId, String workflowId,
                                       String workflowStepId, OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
-        Assert.assertTrue(assetId != null && !assetId.isEmpty());
-        Assert.assertTrue(workflowId != null && !workflowId.isEmpty());
-        Assert.assertTrue(workflowStepId != null && !workflowStepId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(assetId != null && !assetId.isEmpty());
+//        Assert.assertTrue(workflowId != null && !workflowId.isEmpty());
+//        Assert.assertTrue(workflowStepId != null && !workflowStepId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/assets/" + assetId +
@@ -631,7 +631,7 @@ public class MPChatHttpManager {
 
 
     public void downloadFileId(final String fileId, final String filePath, final ResponseHandler resHandler) {
-        Assert.assertTrue(fileId != null && !fileId.isEmpty());
+//        Assert.assertTrue(fileId != null && !fileId.isEmpty());
         getDownloadServer(new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
