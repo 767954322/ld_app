@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -36,11 +37,11 @@ import java.util.Map;
  * @file FiltrateActivity  .
  * @brief 筛选页面 .
  */
-public class FiltrateActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener {
+public class FiltrateActivity extends NavigationBarActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_filtrate;
+        return R.layout.activity_3d_filtrate;
     }
 
     @Override
@@ -49,6 +50,10 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         sGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_style);
         hGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_house);
         aGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_area);
+
+        tvReset = (TextView) findViewById(R.id.tv_reset);
+        tvOk = (TextView) findViewById(R.id.tv_ok);
+
     }
 
     @Override
@@ -63,8 +68,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
-
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+        setVisibilityForNavButton(ButtonType.RIGHT,false);
         Resources rs = this.getResources();
         setTextColorForRightNavButton(rs.getColor(R.color.bg_0084ff));
 
@@ -93,6 +98,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         sGridView.setOnItemClickListener(this);
         hGridView.setOnItemClickListener(this);
         aGridView.setOnItemClickListener(this);
+        tvOk.setOnClickListener(FiltrateActivity.this);
+        tvReset.setOnClickListener(FiltrateActivity.this);
     }
 
     @Override
@@ -112,13 +119,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         }
     }
 
-    /**
-     * 筛选
-     *
-     * @param view 要点击的完成控件
-     */
-    @Override
-    protected void rightNavButtonClicked(View view) {
+
+    protected void filtrateOK() {
 //        super.rightNavButtonClicked(view);
         Map<String, String> room = AppJsonFileReader.getRoomHall(this);
         Map<String, String> area = AppJsonFileReader.getArea(this);
@@ -127,7 +129,7 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         if (mHouseData.size() == 0 || mStyleData.size() == 0 || mAreaData.size() == 0) {
             return;
         }
-        String all = UIUtils.getString(R.string.my_bid_all);
+        String all = UIUtils.getString(R.string.my_3d_all);
         mLivingRoom = mHouseData.get(mHouseIndex);
         mLivingRoom = ConvertUtils.getKeyByValue(room, mLivingRoom);
         mLivingRoom = mLivingRoom.equals(all) ? BLANK : mLivingRoom;
@@ -186,7 +188,7 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
                 DesignerWorkTimeBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
                 allListBean = new DesignerWorkTimeBean.RelateInformationListBean();
-                allListBean.setName("全部");
+                allListBean.setName("不限");
                 allListBean.setCode("");
                 allListBean.setDescription("");
                 allListBean.setExtension("");
@@ -264,7 +266,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
     private int mStyleIndex = 0;
     private int mHouseIndex = 0;
     private int mAreaIndex = 0;
-
+    private TextView tvReset;
+    private TextView tvOk;
     /// 集合,类.
     private FiltrateAdapter mSAdapter;
     private FiltrateAdapter mHAdapter;
@@ -272,4 +275,27 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
     private List<String> mStyleData = new ArrayList<>();
     private List<String> mHouseData = new ArrayList<>();
     private List<String> mAreaData = new ArrayList<>();
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_ok:
+                filtrateOK();
+                break;
+            case R.id.tv_reset:
+                mSAdapter.setSelection(0);
+                mStyleIndex =0;
+                mSAdapter.notifyDataSetChanged();
+                mHAdapter.setSelection(0);
+                mHouseIndex = 0;
+                mHAdapter.notifyDataSetChanged();
+                mAAdapter.setSelection(0);
+                mAreaIndex = 0;
+                mAAdapter.notifyDataSetChanged();
+                break;
+            default:
+
+        }
+
+    }
 }
