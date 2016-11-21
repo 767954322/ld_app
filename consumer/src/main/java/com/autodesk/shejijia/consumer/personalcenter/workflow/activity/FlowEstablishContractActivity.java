@@ -730,9 +730,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             if (!consumerEmail.equals("")) { // 验证邮箱可以为空，不为空的时候用正则验证
                 if (!consumerEmail.matches(RegexUtil.EMAIL)) {
                     showAlertView(R.string.please_input_consumer_email_correctly);
-                    tvc_designer_email.requestFocus();
+                    tvc_consumer_email.requestFocus();
                     int location[] = new int[2];
-                    tvc_designer_email.getLocationInWindow(location);
+                    tvc_consumer_email.getLocationInWindow(location);
                     mScrollView.scrollTo(location[0],location[1]);
                     bValid = false;
                     break;
