@@ -5,4 +5,6 @@ package com.autodesk.shejijia.shared.components.form.common.entity;
  */
 
 public interface CategoryFormPresenter {
+    String formType();
+    String formCategory();
 }

@@ -13,9 +13,10 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
+import com.autodesk.shejijia.shared.components.form.common.uitity.FormFactory;
 import com.autodesk.shejijia.shared.components.form.common.uitity.JsonAssetHelper;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -35,7 +36,7 @@ public class FormRepository implements FormDataSource {
     private Project mProject;  //包含task id的项目详情
     private ProjectInfo mProjectInfo;  //包含task data的项目详情
     private static HashMap<String,String> templateID2Path;
-    private List<ContainedForm> mFormList;
+    private List<SHForm> mFormList;
     private String projectID;
     private String taskID;
     private String taskAssignee;
@@ -58,8 +59,8 @@ public class FormRepository implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, final String[] fIds) {
-        if(mFormList == null || mFormList.size() == 0){
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, final List<String> formIds) {
+            if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
             FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
                 @Override
@@ -71,7 +72,8 @@ public class FormRepository implements FormDataSource {
                         JSONObject object = FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),filePath);
                         HashMap templateMap = (HashMap) FormJsonFileUtil.jsonObj2Map(object);
 //                        HashMap templateMap = (HashMap) FormJsonFileUtil.jsonObj2Map(FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),fileName));
-                        ContainedForm form = new ContainedForm(templateMap);
+                        SHForm form = FormFactory.createCategoryForm(templateMap);
+//                        SHForm form = new SHForm(templateMap);
                         form.applyFormData(remoteMap);
                         mFormList.add(form);
                     }
@@ -81,20 +83,20 @@ public class FormRepository implements FormDataSource {
                 public void onError(String errorMsg) {
                     callBack.onError(errorMsg);
                 }
-            },fIds);
+            },formIds);
         } else {
             callBack.onSuccess(mFormList);
         }
     }
 
 
-    public void updateRemoteForms(List<ContainedForm> forms, Bundle bundle,  @NonNull final ResponseCallback callBack) {
+    public void updateRemoteForms(List<SHForm> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
         if(forms == null || forms.size() == 0){
             return;
         }
 
         List<Map> tempFormList = new ArrayList<>();
-        for(ContainedForm form : forms){
+        for(SHForm form : forms){
             tempFormList.add(form.getUpdateFormData());
         }
         FormRemoteDataSource.getInstance().updateFormDataWithData(tempFormList,bundle, new ResponseCallback() {

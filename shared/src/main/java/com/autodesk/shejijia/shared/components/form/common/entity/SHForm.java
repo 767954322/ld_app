@@ -17,34 +17,34 @@ import java.util.Map;
 
 public class SHForm implements Serializable {
 
-    private String id;
-    private Integer status;
-    private Integer version;
-    private String formInstanceId;
-    private String category;
-    private String title;
+    protected String id;
+    protected Integer status;
+    protected Integer version;
+    protected String formInstanceId;
+    protected String category;
+    protected String title;
     @SerializedName("doc_type")
-    private String docType;
+    protected String docType;
     @SerializedName("form_template_id")
-    private String formTemplateId;
+    protected String formTemplateId;
     @SerializedName("form_template_version")
-    private Integer formTemplateVersion;
+    protected Integer formTemplateVersion;
     @SerializedName("project_id")
-    private String projectId;
+    protected String projectId;
     @SerializedName("task_id")
-    private String taskId;
+    protected String taskId;
     @SerializedName("created_at")
-    private String createdAt;
+    protected String createdAt;
     @SerializedName("modified_by")
-    private String modifiedBy;
+    protected String modifiedBy;
     @SerializedName("schema_version")
-    private String schemaVersion;
+    protected String schemaVersion;
     @SerializedName("check_items_variability")
-    private Boolean checkItemsVariability;
+    protected Boolean checkItemsVariability;
     @SerializedName("check_items")
-    private ArrayList<CheckItem> checkItems;
-    private HashMap typeDict;
-    private List<String> statusOptions;
+    protected ArrayList<CheckItem> checkItems;
+    protected HashMap typeDict;
+    protected List<String> statusOptions;
 
     public HashMap getTypeDict() {
         return typeDict;
@@ -194,7 +194,7 @@ public class SHForm implements Serializable {
         init(map);
     }
 
-    private void init(HashMap map){
+    protected void init(HashMap map){
         this.formInstanceId = (String) map.get("id");
         this.formTemplateId = (String) map.get("id");
         this.title = (String) map.get("title");
@@ -238,7 +238,7 @@ public class SHForm implements Serializable {
         }
     }
 
-    private CheckItem getFormItemWithItemID(String itemID){
+    protected CheckItem getFormItemWithItemID(String itemID){
         if(checkItems == null || itemID == null){
             return null;
         }

@@ -160,6 +160,10 @@ public class CheckItem implements Serializable {
         this.acceptanceCriteria = acceptanceCriteria;
     }
 
+    public boolean isChecked(){
+        return formFeedBack.getCurrentCheckIndex() != -1;
+    }
+
     public List<Integer> getCommentConditions() {
         return commentConditions;
     }

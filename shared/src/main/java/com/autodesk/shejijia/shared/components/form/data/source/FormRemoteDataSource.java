@@ -36,8 +36,8 @@ public class FormRemoteDataSource implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, String[] fid) {
-        FormServerHttpManager.getInstance().getFormItemDetails(fid, new OkJsonArrayRequest.OKResponseCallback() {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, List<String> formIds) {
+        FormServerHttpManager.getInstance().getFormItemDetails(formIds, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 callBack.onError(ResponseErrorUtil.checkVolleyError(volleyError));

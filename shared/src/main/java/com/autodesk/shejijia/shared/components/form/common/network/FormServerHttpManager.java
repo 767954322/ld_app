@@ -39,11 +39,11 @@ public class FormServerHttpManager {
 
     /**
      * 获取表单 组成Jsononarray形式的返回值
-     * @param fid
+     * @param formIds
      * @param callback
      */
-    public void getFormItemDetails(final String[] fid, final OkJsonArrayRequest.OKResponseCallback callback){
-        String url = UrlUtils.bindFormGetUrl(fid);
+    public void getFormItemDetails(final List<String> formIds, final OkJsonArrayRequest.OKResponseCallback callback){
+        String url = UrlUtils.bindFormGetUrl(formIds);
         OkJsonArrayRequest okRequest = new OkJsonArrayRequest(url,callback){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -52,21 +52,6 @@ public class FormServerHttpManager {
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
 //                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 header.put("X-Token","587e1e6bd9c26875535868dec8e3045c");
-                return header;
-            }
-        };
-        NetRequestManager.getInstance().addRequest(okRequest);
-    }
-
-    public void getFormWithIds(final String[] fids, final OkJsonRequest.OKResponseCallback callback){
-        String url = UrlUtils.bindFormGetUrl(fids);
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET,url,null,callback){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> header = new HashMap<>();
-                header.put("Accept", "application/json");
-                header.put("Content-type", "application/json;charset=UTF-8");
-                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };
