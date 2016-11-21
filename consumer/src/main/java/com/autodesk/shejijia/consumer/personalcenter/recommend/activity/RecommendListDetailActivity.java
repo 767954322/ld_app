@@ -331,10 +331,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
 
     @Override
-    public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, String brandCode) {
+    public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, RecommendBrandsBean recommendBrandsBean) {
         Intent intent = new Intent(mActivity, ChangeBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
-        intent.putExtra(Constant.BundleKey.BRANDCODE, brandCode);
+        intent.putExtra(Constant.BundleKey.BRANDCODE, recommendBrandsBean);
         mActivity.startActivityForResult(intent, 21);
     }
 

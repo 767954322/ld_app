@@ -192,7 +192,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onClick(View v) {
                 if (null != mBrandChangListener) {
-                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentParentPosition), recommendBrandsBean.getCode());
+                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentParentPosition), recommendBrandsBean);
                 }
             }
         });

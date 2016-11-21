@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.widget;
 
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 
 /**
@@ -10,7 +11,7 @@ public interface BrandChangListener {
     /**
      * 品牌变更回调
      */
-    void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, String brandCode);
+    void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, RecommendBrandsBean recommendBrandsBean);
 
     /**
      * 品牌增加
