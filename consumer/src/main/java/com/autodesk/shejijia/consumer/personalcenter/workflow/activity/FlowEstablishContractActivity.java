@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -27,7 +28,6 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppDataFormatValidator.MPDesignFormatValidator;
@@ -63,6 +63,8 @@ import java.text.DecimalFormat;
  * @brief 全流程设计合同.
  */
 public class FlowEstablishContractActivity extends BaseWorkFlowActivity implements View.OnClickListener, OnItemClickListener, OnDismissListener {
+
+    private ScrollView mScrollView;
 
     @Override
     protected int getLayoutResId() {
@@ -113,6 +115,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         ll_contract_input_form_layout = (LinearLayout) findViewById(R.id.design_contract_content_designer);//合同表單Layout
         ll_contract_webview_layout = (LinearLayout) findViewById(R.id.design_contract_content_consumer);//web view 合同表單
 
+        mScrollView = (ScrollView) findViewById(R.id.flow_contract_subcontent_designer_sl);
         btn_designer_submit_button = (Button) findViewById(R.id.btn_send_establish_contract_designer); //設計師發送合同按鍵
         btn_consumer_submit_button = (Button) findViewById(R.id.btn_send_establish_contract);                  //消費者支付的按鍵
         tvc_consumer_name = (TextViewContent) findViewById(R.id.flow_establish_contract_consumer_name);
@@ -727,6 +730,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             if (!consumerEmail.equals("")) { // 验证邮箱可以为空，不为空的时候用正则验证
                 if (!consumerEmail.matches(RegexUtil.EMAIL)) {
                     showAlertView(R.string.please_input_consumer_email_correctly);
+                    tvc_designer_email.requestFocus();
+                    int location[] = new int[2];
+                    tvc_designer_email.getLocationInWindow(location);
+                    mScrollView.scrollTo(location[0],location[1]);
                     bValid = false;
                     break;
                 }
