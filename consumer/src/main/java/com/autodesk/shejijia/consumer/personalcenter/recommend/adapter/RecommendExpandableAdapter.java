@@ -430,14 +430,17 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (mRecommendSCFDList.size() <= 0 || null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
+            if (mRecommendSCFDList.size() <= 0 ||
+                    null == mRecommendSCFDList.get(parentPosition)
+                    || mRecommendSCFDList.get(parentPosition).getBrands() == null
+                    || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
                 return;
             }
             if (type == 0) {
                 if (!isValidAmountAndUnit(s.toString())) {
                     showAlertView(UIUtils.getString(R.string.recommend_form_number));
                     hideSoftKeywords(mEditText);
-                    mEditText.setText("");
+//                    mEditText.setText("");
                 } else {
                     mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
                 }
