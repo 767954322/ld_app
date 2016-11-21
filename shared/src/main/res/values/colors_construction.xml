@@ -14,7 +14,7 @@
     <color name="plan_font_normal">#464B4E</color>
     <color name="plan_font_disable">#c8c8c8</color>
 
-    //Calendar View
+    <!--Calendar View-->
     <color name="calendar_day_bg_highlight">#D4E4F4</color>
     <color name="calendar_day_bg_disable">@color/gray_light</color>
     <color name="calendar_day_bg_normal">@android:color/transparent</color>
