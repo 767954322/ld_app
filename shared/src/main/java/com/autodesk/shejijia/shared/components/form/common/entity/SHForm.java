@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by t_panya on 16/10/24.
  */
 
-public class ContainedForm implements Serializable {
+public class SHForm implements Serializable {
 
     private String id;
     private Integer status;
@@ -190,7 +190,7 @@ public class ContainedForm implements Serializable {
         this.checkItems = checkItems;
     }
 
-    public ContainedForm(HashMap map){
+    public SHForm(HashMap map){
         init(map);
     }
 

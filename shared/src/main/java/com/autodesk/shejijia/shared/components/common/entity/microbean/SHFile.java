@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.form.common.entity;
+package com.autodesk.shejijia.shared.components.common.entity.microbean;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by t_panya on 16/11/1.
  */
 
-public class FormFile implements Serializable {
+public class SHFile {
     private String fileId;
     private String fileType;
     private String fileName;
@@ -53,7 +53,7 @@ public class FormFile implements Serializable {
         this.size = size;
     }
 
-    public FormFile(){
+    public SHFile(){
 
     }
 }
