@@ -3,6 +3,7 @@
     android:id="@+id/ll_project_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator
@@ -21,6 +22,7 @@
         android:paddingStart="@dimen/spacing_padding_normal">
 
         <TextView
+            android:id="@+id/tv_edit_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -36,20 +38,29 @@
             android:textSize="@dimen/font_15" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button_create_plan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_plan"
-        android:visibility="gone" />
+    <RelativeLayout
+        android:id="@+id/rl_content_tip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/img_work_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/font_normal"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/btn_create_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/create_plan"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/img_work_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="@dimen/font_normal"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_task_list"

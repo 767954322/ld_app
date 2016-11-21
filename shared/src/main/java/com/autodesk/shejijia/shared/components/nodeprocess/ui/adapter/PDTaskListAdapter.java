@@ -96,34 +96,42 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     break;
                 case "INPROGRESS":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_inProgress));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 case "DELAYED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_delayed));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
                 case "QUALIFIED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_qualified));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 case "UNQUALIFIED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_unqualified));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
                 case "RESOLVED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_resolved));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_lightblue_shape));
                     break;
                 case "REJECTED":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rejected));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 case "REINSPECTION":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspection));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
                 case "RECTIFICATION":
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rectification));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 case "REINSPECTING":
@@ -132,6 +140,7 @@ public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     break;
                 default:
                     taskListVH.mTaskStatus.setText(status);
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
             }

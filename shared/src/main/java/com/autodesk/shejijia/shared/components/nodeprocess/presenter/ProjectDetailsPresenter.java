@@ -70,16 +70,39 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         });
     }
 
+    /*
+    * 判断当前角色的开工交底是否已经完成
+    * */
+    private boolean isKaiGongResolved(ProjectInfo projectInfo) {
+        if (projectInfo.getPlan() != null) {
+            List<Task> taskList = projectInfo.getPlan().getTasks();
+            List<Task> milestoneList = new ArrayList<>();
+            if (taskList != null && taskList.size() > 0) {
+                //get milestone list
+                for (int i = 0; i < taskList.size(); i++) {
+                    if (taskList.get(i).isMilestone()) {
+                        milestoneList.add(taskList.get(i));
+                    }
+                }
+                return milestoneList.get(0).getStatus().equals("RESOLVED");
+            }
+        }
+        return false;
+    }
+
+
     private void handleProjectInfoData(ProjectInfo projectInfo) {
         /*handle planInfo data*/
         int currentMilestonePosition = 0;
         List<BaseFragment> fragmentList = null;
+        boolean isKaiGongResolved = false;
         if (projectInfo.getPlan() != null) {
             currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
             fragmentList = handleTaskListData(projectInfo.getPlan());
+            isKaiGongResolved = isKaiGongResolved(projectInfo);
             if (fragmentList != null) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), fragmentList, currentMilestonePosition);
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), fragmentList, currentMilestonePosition, isKaiGongResolved);
             } else {
                 mProjectDetailsView.showError("handle data error");
             }
@@ -111,6 +134,9 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
                 for (int i = 0; i < taskIndexList.size(); i++) {
                     if (nowIndex == taskIndexList.get(i)) {
                         position = i;
+                        if (position == 0) { //如果是开工交底已完成，那么就跳到隐秘工程阶段
+                            position += 1;
+                        }
                         break;
                     }
                 }

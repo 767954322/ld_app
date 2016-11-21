@@ -21,7 +21,7 @@ public interface ProjectDetailsContract {
 
     interface View extends BaseView {
 
-        void updateProjectDetailsView(String memberType, List<BaseFragment> fragmentList,int currentMilestonePosition);
+        void updateProjectDetailsView(String memberType, List<BaseFragment> fragmentList,int currentMilestonePosition,boolean isKaiGongResolved);
 
         void showProjectInfoDialog(Bundle projectInfoBundle);
 
