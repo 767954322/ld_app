@@ -52,10 +52,8 @@
                         android:id="@+id/tv_decoration_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxEms="3"
                         android:singleLine="true"
-                        android:text="@string/no_data_nodata"
+                        android:text="@string/no_data"
                         android:textColor="@color/bg_33"
                         android:textSize="@dimen/font_16" />
 
@@ -64,8 +62,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:maxEms="4"
                         android:singleLine="true"
                         android:text="@string/consumer_decoration_name"
                         android:textColor="@color/bg_33"
@@ -85,10 +81,11 @@
             <!--项目编号-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -115,10 +112,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -145,10 +143,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -174,10 +173,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -203,10 +203,11 @@
             <LinearLayout
                 android:id="@+id/ll_issue_address"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -237,11 +238,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_10"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -274,10 +276,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -309,10 +312,11 @@
             <LinearLayout
                 android:id="@+id/ll_amend_house_type"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -339,10 +343,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -380,10 +385,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -412,10 +418,11 @@
             <LinearLayout
                 android:id="@+id/ll_amend_style"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_26"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/size_5"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -459,6 +466,7 @@
                 android:layout_marginTop="@dimen/size_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
