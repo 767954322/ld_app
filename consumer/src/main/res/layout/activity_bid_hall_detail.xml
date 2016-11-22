@@ -76,8 +76,6 @@
                         android:id="@+id/tv_bid_hall_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:singleLine="true"
                         android:textColor="@color/bg_33"
                         android:textSize="@dimen/font_15"/>
 
@@ -315,8 +313,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
 
@@ -343,8 +339,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
 
