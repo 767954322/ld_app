@@ -58,6 +58,7 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -212,8 +213,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     }
 
 
-
-
     @Override
     public void onClick(View view) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -319,15 +318,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
 
-                if (default_2d_picture_count == 1){
+                if (default_2d_picture_count == 1) {
 
                     default_ll_bg.setVisibility(View.GONE);
-                }else {
+                } else {
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
 
                 setEmptyText();//判断是评价还是其他空白页面
-
 
 
                 break;
@@ -353,10 +351,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
 
-                if (default_3d_picture_count == 1){
+                if (default_3d_picture_count == 1) {
 
                     default_ll_bg.setVisibility(View.GONE);
-                }else {
+                } else {
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
 
@@ -572,8 +570,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     }
 
 
-
-
                     if (isRefreshOrLoad2D) {
                         mDesignerPersonMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 0);//刷新
 
@@ -724,7 +720,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             mTvFollowedNum.setText(follows);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
-            setTitleForNavbar(mNickName);
+
+            String name = UIUtils.substring(mNickName, 6);
+
+            setTitleForNavbar(name);
 
             unFollowedAlertView();
 
@@ -1137,7 +1136,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
 
 
-        if (controlNumber == 1){//2Dcase
+        if (controlNumber == 1) {//2Dcase
             if (is2DFrist) {
 
                 justRefreshAndLoadMore();
@@ -1145,7 +1144,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             }
 
-        }else if (controlNumber == 2){
+        } else if (controlNumber == 2) {
 
 
             if (is3DFrist) {
@@ -1154,7 +1153,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 is3DFrist = false;
 
             }
-        }else {
+        } else {
 
             if (isAppraiseFirst) {
 
