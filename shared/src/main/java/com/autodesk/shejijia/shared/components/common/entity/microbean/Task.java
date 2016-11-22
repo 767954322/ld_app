@@ -20,6 +20,7 @@ public class Task implements Serializable{
     private List<Comment> comments;
     private List<Form> forms;
     private List<File> files;
+    private boolean milestone;
     @SerializedName("doc_type")
     private String docType;
     @SerializedName("task_id")
@@ -112,10 +113,11 @@ public class Task implements Serializable{
     }
 
     public boolean isMilestone() {
-        return isMilestone;
+        return milestone || isMilestone;
     }
 
     public void setMilestone(boolean milestone) {
+        this.milestone = milestone;
         this.isMilestone = milestone;
     }
 

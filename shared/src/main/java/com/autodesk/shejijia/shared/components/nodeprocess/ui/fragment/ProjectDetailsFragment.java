@@ -96,16 +96,15 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         mEditPlanBtn.setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
        if (v.getId()==R.id.btn_create_plan){
            Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
-           intent.putExtra("pid", String.valueOf(getArguments().getLong("projectId")));
+           intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(getArguments().getLong("projectId")));
            startActivity(intent);
        }else if (v.getId()==R.id.tv_edit_plan){
-           Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
-           intent.putExtra("pid", String.valueOf(getArguments().getLong("projectId")));
-           startActivity(intent);
+
        }
     }
 
