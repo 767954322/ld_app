@@ -146,12 +146,12 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
 
 
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        if (mLivingRoom.equals("其他")) {
+        if (mLivingRoom.equals(getString(R.string.other_filtr))) {
             filtrateContentBean.setHousingType("other");
         } else {
             filtrateContentBean.setHousingType(mLivingRoom);
         }
-        if (mStyle.equals("其他")) {
+        if (mStyle.equals(getString(R.string.other_filtr))) {
             filtrateContentBean.setStyle("other");
         } else {
             filtrateContentBean.setStyle(mStyle);

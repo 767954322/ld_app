@@ -142,7 +142,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             mStyleName = "";
             mStyleCode = "";
         }
-        if (mStyleName.equals("其他")) {
+        if (mStyleName.equals(getString(R.string.other_filtr))) {
             findDesignerBean.setStyle_names("other");
         } else {
             findDesignerBean.setStyle_names(mStyleName);

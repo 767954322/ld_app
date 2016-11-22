@@ -998,11 +998,11 @@
     <string name="please_input_render_count_correctly">请正确输入渲染图张数</string>
     <string name="please_input_project_amount_correctly">请正确输入本项目设计总额</string>
 
-    <!--店面展示-->
+
     <string name="community_name">小区名称</string>
     <string name="plan_introduce">方案介绍</string>
     <string name="store_show_title">店面</string>
-    <string name="title_activity_updata_brand">UpdataBrandActivity</string>
+    <string name="other_filtr">其他</string>
     <string name="title_activity_add_brand">AddBrandActivity</string>
     <string name="all_button_name">全部</string>
 
