@@ -106,6 +106,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private int currentDistance = 0;//当前item所在的位置
     private int currentClickItemLocation = 0;//当前点击的位置
     private String[] storeIdArr;
+    private String[] storeNameArr;
 
 
     @Override
@@ -228,6 +229,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddMaterialActivity.this, StoreActivity.class);
+                intent.putExtra("storeList",storeNameArr);
                 startActivityForResult(intent, 0);
             }
         });
@@ -375,10 +377,12 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
         String storeId;
         storeIdArr = new String[store_list.size()];
+        storeNameArr = new String[store_list.size()];
         for (int i = 0; i < store_list.size(); i++) {
 
             storeId = store_list.get(i).getMall_number();
             storeIdArr[i] = storeId;
+            storeNameArr[i] = store_list.get(i).getMall_name();
             if (i == 0) {
                 currentStoreIdTotal = storeId;
             } else {

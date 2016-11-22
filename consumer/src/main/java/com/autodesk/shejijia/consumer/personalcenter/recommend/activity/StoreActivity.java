@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -44,6 +45,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
     private List<StoreInformationBean.StoreListBean> store_list;
     private List<StoreInformationBean.StoreListBean> forResultStoreList;
     private int RESULT_OK = 101;
+    private String[] storeNameArr;
 
     @Override
     public void onClick(View v) {
@@ -85,6 +87,25 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
     }
 
     @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        Intent intent = getIntent();
+        String[] storeNameArrList = intent.getStringArrayExtra("storeList");
+        if (storeNameArrList.length > 10) {
+            storeNameArr = new String[storeNameArrList.length - 4];
+
+            for (int i = 0; i < storeNameArrList.length - 4; i++) {
+                storeNameArr[i] = storeNameArrList[i];
+            }
+        }else {
+            storeNameArr = new String[storeNameArrList.length];
+            for (int i = 0; i < storeNameArrList.length; i++) {
+                storeNameArr[i] = storeNameArrList[i];
+            }
+        }
+    }
+
+    @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
@@ -122,9 +143,9 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
     public void getStoreNameAndAdd(List<StoreInformationBean.StoreListBean> store_list) {
         forResultStoreList = new ArrayList<>();
-        arr = new String[store_list.size() + 1];
+        arr = new String[store_list.size() - 3];
         arr[0] = "全部";
-        for (int i = 0; i < store_list.size(); i++) {
+        for (int i = 0; i < store_list.size() - 4; i++) {
 
             arr[i + 1] = store_list.get(i).getMall_name();
         }
@@ -132,6 +153,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
         dynamicView = new DynamicAddViewControls(StoreActivity.this);
         dynamicView.dynamicData(arr);
         showStoreViewGroup.addView(dynamicView);
+        dynamicView.checkedStoreForData(storeNameArr);
         dynamicView.setListener(new DynamicAddViewControls.OnButtonClickedListener() {
             @Override
             public void onButtonClicked(BtnStatusBean btnStatusBean) {
@@ -139,6 +161,24 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
                 addListForResult(btnStatusBean);
             }
         });
+        addStoreForList();
+    }
+
+    /**
+     * 将已经选中的店铺加入到集合
+     */
+    public void addStoreForList() {
+
+        TextView[] textViews = dynamicView.getBtnStatustextViews();
+        for (int i = 0; i < textViews.length; i++) {
+            BtnStatusBean btnStatusBean = (BtnStatusBean) textViews[i].getTag();
+
+            if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 2) {
+
+                addListForResult(btnStatusBean);
+            }
+
+        }
     }
 
     /**
@@ -150,11 +190,9 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
             if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 2) {
 
                 forResultStoreList.clear();
-            } else if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 1) {
                 for (int i = 0; i < storeInformationBean.getStore_list().size(); i++) {
 
                     forResultStoreList.add(storeInformationBean.getStore_list().get(i));
-
                 }
             }
 
@@ -164,7 +202,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
                 forResultStoreList.clear();
             }
 
-            if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 2) {
+            if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 1) {
                 String TestForResultStoreList;
                 String TestStoreInformationBean;
                 for (int i = 0; i < forResultStoreList.size(); i++) {
@@ -175,14 +213,11 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
                         forResultStoreList.remove(i);
                     }
-
                 }
 
             } else {
 
-
                 forResultStoreList.add(storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset() - 1));
-
             }
         }
     }

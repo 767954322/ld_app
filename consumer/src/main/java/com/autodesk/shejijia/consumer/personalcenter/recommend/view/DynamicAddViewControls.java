@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import java.util.List;
 
 
 /**
@@ -35,6 +38,7 @@ public class DynamicAddViewControls extends LinearLayout {
     private int width;//该控件高度
     private static double NO_CHANGE_HEIGHT = 1187.00d;
     private static double ADAPTER_COUNT = 1.00d;
+    private BtnStatusBean[] btnStatusBeenArr;
 
 
     public DynamicAddViewControls(Activity context) {
@@ -68,6 +72,7 @@ public class DynamicAddViewControls extends LinearLayout {
         }
 
         textViews = new TextView[arr.length];
+        btnStatusBeenArr = new BtnStatusBean[arr.length];
 
         for (int i = 0; i < totalLine; i++) {
 
@@ -120,12 +125,14 @@ public class DynamicAddViewControls extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
-                        onButtonClickedListener.onButtonClicked(btnStatusBean);
+                        BtnStatusBean btnStatusBeanLast = btnStatusBean;
 
                         if (btnStatusBean.getCountOffset() == 0) {
 
-                            changeBtnStatus(btnStatusBean);
-                            justAll = true;
+                            if (btnStatusBean.getSingleClickOrDoubleBtnCount() != 2) {
+
+                                changeBtnStatus(btnStatusBean);
+                            }
                             for (int i = 1; i < textViews.length; i++) {
 
                                 BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[i].getTag();
@@ -135,14 +142,30 @@ public class DynamicAddViewControls extends LinearLayout {
                         } else {
 
                             changeBtnStatus(btnStatusBean);
+                            for (int i = 1; i < textViews.length; i++) {
+
+                                BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[i].getTag();
+                                int currentItemStatus = btnStatusBeenOne.getSingleClickOrDoubleBtnCount();
+                                if (currentItemStatus == 2) {
+                                    justAll = true;
+                                    break;
+                                } else {
+                                    justAll = false;
+                                }
+                            }
+                            BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[0].getTag();
                             if (justAll) {
 
-                                BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[0].getTag();
                                 btnStatusBeenOne.setSingleClickOrDoubleBtnCount(2);
-                                changeBtnStatus(btnStatusBeenOne);//将‘全部’按钮取消
-                                justAll = false;
+                                btnStatusBeanLast = btnStatusBean;
+                            } else {
+
+                                btnStatusBeenOne.setSingleClickOrDoubleBtnCount(1);
+                                btnStatusBeanLast = btnStatusBeenOne;
                             }
+                            changeBtnStatus(btnStatusBeenOne);//将‘全部’按钮取消
                         }
+                        onButtonClickedListener.onButtonClicked(btnStatusBeanLast);
                     }
                 });
             } else {
@@ -190,6 +213,52 @@ public class DynamicAddViewControls extends LinearLayout {
         textView.setBackgroundResource(R.drawable.store_bg_btn);
         invalidate();
     }
+
+    /**
+     * 便利数据,选中已经选中的店铺
+     */
+    public void checkedStoreForData(String[] storeArr) {
+
+        BtnStatusBean btnStatusBean;
+        if (textViews.length - 1 == storeArr.length) {
+            btnStatusBean = (BtnStatusBean) textViews[0].getTag();
+            btnStatusBean.setSingleClickOrDoubleBtnCount(1);
+            setBtnStatusDatasArr(btnStatusBean);
+            changeBtnStatus(btnStatusBean);
+            return;
+        }
+        for (int i = 0; i < textViews.length; i++) {
+            String storeName = textViews[i].getText().toString();
+            for (int j = 0; j < storeArr.length; j++) {
+
+                if (storeArr[j].equals(storeName)) {
+
+                    btnStatusBean = (BtnStatusBean) textViews[i].getTag();
+                    btnStatusBean.setSingleClickOrDoubleBtnCount(1);
+                    changeBtnStatus(btnStatusBean);
+                    setBtnStatusDatasArr(btnStatusBean);
+                }
+            }
+        }
+    }
+
+    /**
+     * 将已经传入的数据加入标志位bean数据
+     */
+    public void setBtnStatusDatasArr(BtnStatusBean btnStatus) {
+
+        int locationItem = btnStatus.getCountOffset();
+        btnStatusBeenArr[locationItem] = btnStatus;
+    }
+
+    /**
+     * 外界获取已经选中的数据状态数据
+     */
+    public TextView[] getBtnStatustextViews() {
+
+        return textViews;
+    }
+
 
     public interface OnButtonClickedListener {
         /**
