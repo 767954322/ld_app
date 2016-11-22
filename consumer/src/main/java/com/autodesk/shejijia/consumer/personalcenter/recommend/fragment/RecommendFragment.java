@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendLogicImpl;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RevokeCauseActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +65,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
         if (item != null)
-            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getStatus().equals("canceled") || item.getStatus().equals("refused"));
+            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", "canceled".equals(item.getStatus()) || "refused".equals(item.getStatus()));
     }
 
     @Override

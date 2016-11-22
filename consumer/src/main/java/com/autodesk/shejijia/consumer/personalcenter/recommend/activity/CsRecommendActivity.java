@@ -14,7 +14,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
