@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -21,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -125,8 +123,11 @@ public class MessageCenterAdapter extends BaseAdapter {
         if (null != messagesBean.getCommand() && messagesBean.getCommand().equals("COMMAND_CONSTRUCTION_MESSAGE")) {
 
             if (!TextUtils.isEmpty(body)) {
-
-                MessageCenterBodyNew messageCenterBodyNew = GsonUtil.jsonToBean(body, MessageCenterBodyNew.class);
+                String new_body = "";
+                if (body.contains("&quot;")) {
+                    new_body = body.replaceAll("&quot;", "\"");
+                }
+                MessageCenterBodyNew messageCenterBodyNew = GsonUtil.jsonToBean(new_body == null ? body : new_body, MessageCenterBodyNew.class);
                 title = messageCenterBodyNew.getDisplay_message().getSummary();
                 //标题加粗 HTML排版
                 for (int i = 0; title.contains("*"); i++) {
