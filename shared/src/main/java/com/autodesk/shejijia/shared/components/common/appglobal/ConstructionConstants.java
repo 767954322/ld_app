@@ -53,6 +53,7 @@ public class ConstructionConstants {
 
     //Bundle key
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";
+    public static final String BUNDLE_KEY_TASK_LIST = "task_list";
 
     public static class TaskTemplateId {
         public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底

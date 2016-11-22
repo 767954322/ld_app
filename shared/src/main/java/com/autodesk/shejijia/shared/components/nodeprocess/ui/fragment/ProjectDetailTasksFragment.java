@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.PDTaskListContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.PDTaskListPresenter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDTaskListAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsTasksPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsTasksAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.List;
@@ -19,11 +19,11 @@ import java.util.List;
  * 项目详情页面下的task列表
  */
 
-public class ProjectDetailTasksFragment extends BaseConstructionFragment implements PDTaskListContract.View, PDTaskListAdapter.TaskListItemClickListener {
+public class ProjectDetailTasksFragment extends BaseConstructionFragment implements PDTaskListContract.View, ProjectDetailsTasksAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
     private PDTaskListContract.Presenter mPDTaskListPresenter;
-    private PDTaskListAdapter mTaskListAdapter;
+    private ProjectDetailsTasksAdapter mTaskListAdapter;
 
     public static ProjectDetailTasksFragment newInstance(Bundle taskBundle) {
         ProjectDetailTasksFragment pdTaskListFragment = new ProjectDetailTasksFragment();
@@ -47,13 +47,13 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
 
     @Override
     protected void initData() {
-        mPDTaskListPresenter = new PDTaskListPresenter(this);
+        mPDTaskListPresenter = new ProjectDetailsTasksPresenter(this);
         mPDTaskListPresenter.handleTaskList(getArguments());
     }
 
     @Override
     public void refreshTaskListView(List<Task> taskList) {
-        mTaskListAdapter = new PDTaskListAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
+        mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
         mTaskListView.setAdapter(mTaskListAdapter);
     }
 

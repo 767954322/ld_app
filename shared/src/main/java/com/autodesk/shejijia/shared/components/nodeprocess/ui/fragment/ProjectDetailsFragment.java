@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 
 import android.app.Activity;
-import android.content.Context;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,14 +19,13 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.PDFragmentPagerAdapter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -44,12 +42,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
     private ViewPager mContentViewPager;
-    private ProgressbarIndicator progressBarIndicator;
+    private ProgressbarIndicator mProgressBarIndicator;
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private TextView mEditPlanBtn;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
-    private PDFragmentPagerAdapter mFragmentPagerAdapter;
+    private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
 
     public ProjectDetailsFragment() {
     }
@@ -68,7 +66,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         mProjectRootView = (LinearLayout) rootView.findViewById(R.id.ll_project_details);
         mContentTipView = (RelativeLayout) rootView.findViewById(R.id.rl_content_tip);
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
-        progressBarIndicator = (ProgressbarIndicator) rootView.findViewById(R.id.progressBar_indicator);
+        mProgressBarIndicator = (ProgressbarIndicator) rootView.findViewById(R.id.progressBar_indicator);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.btn_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
         mEditPlanBtn = (TextView) rootView.findViewById(R.id.tv_edit_plan);
@@ -124,12 +122,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mCreatePlanBtn.setVisibility(View.GONE);
             mWorkStateView.setVisibility(View.GONE);
 
-            mFragmentPagerAdapter = new PDFragmentPagerAdapter(getFragmentManager(), fragmentList);
+            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), fragmentList);
             mContentViewPager.setAdapter(mFragmentPagerAdapter);
 
             //progressbar indicator( must first have viewpager adapter)
-            progressBarIndicator.setupWithViewPager(mContentViewPager);
-            progressBarIndicator.setCurrentStatus(currentMilestonePosition);
+            mProgressBarIndicator.setupWithViewPager(mContentViewPager);
+            mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
             mContentViewPager.setCurrentItem(currentMilestonePosition);
         } else {
             mEditPlanBtn.setVisibility(View.GONE);

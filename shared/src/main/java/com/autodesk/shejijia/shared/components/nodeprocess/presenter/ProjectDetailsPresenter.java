@@ -2,19 +2,16 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.components.nodeprocess.bean.TaskListBean;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.PDTaskListFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailTasksFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -59,7 +56,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         mProjectRepository.getProjectInfo(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
             @Override
             public void onSuccess(ProjectInfo data) {
-                handleProjectInfoData(data);
+                handleProjectInfo(data);
             }
 
             @Override
@@ -91,15 +88,12 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
 
-    private void handleProjectInfoData(ProjectInfo projectInfo) {
+    private void handleProjectInfo(ProjectInfo projectInfo) {
         /*handle planInfo data*/
-        int currentMilestonePosition = 0;
-        List<BaseFragment> fragmentList = null;
-        boolean isKaiGongResolved = false;
         if (projectInfo.getPlan() != null) {
-            currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
-            fragmentList = handleTaskListData(projectInfo.getPlan());
-            isKaiGongResolved = isKaiGongResolved(projectInfo);
+            int currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
+            List<BaseFragment> fragmentList = handleTaskListData(projectInfo.getPlan());
+            boolean isKaiGongResolved = isKaiGongResolved(projectInfo);
             if (fragmentList != null) {
                 mProjectDetailsView.hideLoading();
                 mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), fragmentList, currentMilestonePosition, isKaiGongResolved);
@@ -164,8 +158,10 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
                 List<Task> childTaskList = taskList.subList(index, value + 1);
                 index = value + 1;
                 Bundle taskListBundle = new Bundle();
-                taskListBundle.putSerializable("task_list", new TaskListBean(childTaskList));
-                fragmentList.add(PDTaskListFragment.newInstance(taskListBundle));
+                ArrayList<Task> childTaskArrayList = new ArrayList<>();
+                childTaskArrayList.addAll(childTaskList);
+                taskListBundle.putSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST, childTaskArrayList);
+                fragmentList.add(ProjectDetailTasksFragment.newInstance(taskListBundle));
             }
             return fragmentList;
         }
