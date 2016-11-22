@@ -22,14 +22,14 @@ import java.util.List;
  * 项目详情页面里的任务列表
  */
 
-public class PDTaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Task> taskLists;
     private int resId;
     private Context mContext;
-    private PDTaskListAdapter.TaskListItemClickListener mTaskListItemClickListener;
+    private ProjectDetailsTasksAdapter.TaskListItemClickListener mTaskListItemClickListener;
 
-    public PDTaskListAdapter(List<Task> taskLists, int resId, Context mContext, PDTaskListAdapter.TaskListItemClickListener taskListItemListener) {
+    public ProjectDetailsTasksAdapter(List<Task> taskLists, int resId, Context mContext, ProjectDetailsTasksAdapter.TaskListItemClickListener taskListItemListener) {
         this.taskLists = taskLists;
         this.resId = resId;
         this.mContext = mContext;

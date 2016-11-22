@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.PDTaskListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.PDTaskListPresenter;
@@ -20,14 +19,14 @@ import java.util.List;
  * 项目详情页面下的task列表
  */
 
-public class PDTaskListFragment extends BaseConstructionFragment implements PDTaskListContract.View, PDTaskListAdapter.TaskListItemClickListener {
+public class ProjectDetailTasksFragment extends BaseConstructionFragment implements PDTaskListContract.View, PDTaskListAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
     private PDTaskListContract.Presenter mPDTaskListPresenter;
     private PDTaskListAdapter mTaskListAdapter;
 
-    public static PDTaskListFragment newInstance(Bundle taskBundle) {
-        PDTaskListFragment pdTaskListFragment = new PDTaskListFragment();
+    public static ProjectDetailTasksFragment newInstance(Bundle taskBundle) {
+        ProjectDetailTasksFragment pdTaskListFragment = new ProjectDetailTasksFragment();
         pdTaskListFragment.setArguments(taskBundle);
         return pdTaskListFragment;
     }
