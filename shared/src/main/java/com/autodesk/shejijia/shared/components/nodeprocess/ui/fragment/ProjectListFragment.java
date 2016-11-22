@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -113,6 +114,11 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         if (projectList != null && projectList.size() > 0) {
             mProjectListAdapter.appendProjectLists(projectList);
         }
+    }
+
+    @Override
+    public void refreshLikesButton(Like like, int position) {
+        mProjectListPresenter.refreshProjectList();
     }
 
     @Override

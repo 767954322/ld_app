@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
 
+import android.app.Application;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.List;
 
@@ -76,6 +83,13 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         if (projectLists != null && projectLists.size() > 0) {
+            //设置是否是星标项目
+            if (isLikeProject(projectLists.get(position))) {
+                projectVh.mStarLabel.setBackgroundResource(R.drawable.ic_project_like);
+            } else {
+                projectVh.mStarLabel.setBackgroundResource(R.drawable.ic_project_normal);
+            }
+
             projectVh.mViewLine.setVisibility(View.VISIBLE);
             //设置任务列表里的数据
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -106,11 +120,22 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         projectVh.mStarLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProjectListItemListener.onStarLabelClick(projectLists, true, position);
+                mProjectListItemListener.onStarLabelClick(projectLists, !isLikeProject(projectLists.get(position)), position);
             }
         });
     }
 
+    private boolean isLikeProject(ProjectInfo project) {
+        List<Like> likeList = project.getLikes();
+        if (likeList != null) {
+            for (Like like : likeList) {
+                if (like.getLike() && like.getUid().equals(UserInfoUtils.getUid(AdskApplication.getInstance()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private static class ProjectListVH extends RecyclerView.ViewHolder {
         private LinearLayout mProjectItem;

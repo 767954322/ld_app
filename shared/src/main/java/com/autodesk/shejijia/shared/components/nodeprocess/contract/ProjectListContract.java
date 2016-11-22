@@ -4,6 +4,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
@@ -21,6 +22,8 @@ public interface ProjectListContract {
         void refreshProjectListView(List<ProjectInfo> projectList);
 
         void addMoreProjectListView(List<ProjectInfo> projectList);
+
+        void refreshLikesButton(Like like, int position);
 
     }
 

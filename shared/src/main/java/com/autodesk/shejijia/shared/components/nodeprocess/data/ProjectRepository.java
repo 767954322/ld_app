@@ -39,23 +39,19 @@ public final class ProjectRepository implements ProjectDataSource {
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList> callback) {
 
-        if (mProjectList != null) {
-            callback.onSuccess(mProjectList);
-        } else {
+        ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new ResponseCallback<ProjectList>() {
+            @Override
+            public void onSuccess(ProjectList data) {
+                mProjectList = data;
+                callback.onSuccess(data);
+            }
 
-            ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new ResponseCallback<ProjectList>() {
-                @Override
-                public void onSuccess(ProjectList data) {
-                    mProjectList = data;
-                    callback.onSuccess(data);
-                }
+            @Override
+            public void onError(String errorMsg) {
+                callback.onError(errorMsg);
+            }
+        });
 
-                @Override
-                public void onError(String errorMsg) {
-                    callback.onError(errorMsg);
-                }
-            });
-        }
     }
 
 

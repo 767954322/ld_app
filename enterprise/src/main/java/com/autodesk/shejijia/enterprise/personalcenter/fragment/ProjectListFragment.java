@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -73,4 +74,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     }
 
+    @Override
+    public void refreshLikesButton(Like like,int position) {
+
+    }
 }

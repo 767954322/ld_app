@@ -50,4 +50,12 @@ public final class UserInfoUtils {
         }
         return null;
     }
+
+    public static String getUid(@NonNull Context context){
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getHs_uid())) {
+            return entity.getHs_uid();
+        }
+        return null;
+    }
 }

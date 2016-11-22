@@ -39,7 +39,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private String mFilterStatus;
     private List<ProjectInfo> mProjectList;
 
-    public ProjectListPresenter(Context context,FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
+    public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
         this.fragmentManager = fragmentManager;
         this.mProjectListView = projectListsView;
@@ -143,14 +143,15 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
         Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo",taskIdLists.get(position));
+        taskInfoBundle.putSerializable("taskInfo", taskIdLists.get(position));
         TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
         taskDetailsFragment.setArguments(taskInfoBundle);
-        taskDetailsFragment.show(fragmentManager,"task_details");
+        taskDetailsFragment.show(fragmentManager, "task_details");
     }
 
     @Override
     public void updateProjectLikesState(List<ProjectInfo> projectList, final boolean like, int position) {
+//        mProjectListView.showLoading();
         //init requestParams
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", projectList.get(position).getProjectId());
@@ -162,24 +163,22 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             e.printStackTrace();
         }
 
-        updateProjectLikes(requestParamsBundle, requestJson);
+        updateProjectLikes(requestParamsBundle, requestJson, position);
     }
 
-    private void updateProjectLikes(Bundle requestParamsBundle, JSONObject requestJson) {
+    private void updateProjectLikes(Bundle requestParamsBundle, JSONObject requestJson, final int likePosition) {
         mProjectRepository.updateProjectLikes(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new ResponseCallback<Like>() {
             @Override
             public void onSuccess(Like data) {
-                mProjectListView.hideLoading();
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
-                // TODO: 11/4/16 更新ui
-
+                mProjectListView.hideLoading();
+                mProjectListView.refreshLikesButton(data, likePosition);
             }
 
             @Override
             public void onError(String errorMsg) {
                 mProjectListView.hideLoading();
-                LogUtils.e("like-error", errorMsg);
-                // TODO: 11/4/16 用ui提示错误
+                mProjectListView.showError(errorMsg);
             }
         });
     }
