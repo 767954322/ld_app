@@ -37,7 +37,7 @@ import java.util.Map;
  * @file FiltrateActivity  .
  * @brief 筛选页面 .
  */
-public class FiltrateActivity extends NavigationBarActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
+public class FiltrateActivity extends NavigationBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -53,6 +53,8 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
 
         tvReset = (TextView) findViewById(R.id.tv_reset);
         tvOk = (TextView) findViewById(R.id.tv_ok);
+        tvReset.setEnabled(false);
+        tvOk.setEnabled(false);
 
     }
 
@@ -69,7 +71,7 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
-        setVisibilityForNavButton(ButtonType.RIGHT,false);
+        setVisibilityForNavButton(ButtonType.RIGHT, false);
         Resources rs = this.getResources();
         setTextColorForRightNavButton(rs.getColor(R.color.bg_0084ff));
 
@@ -144,15 +146,20 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
 
 
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        if (mLivingRoom.equals("其它")) {
+        if (mLivingRoom.equals("其他")) {
             filtrateContentBean.setHousingType("other");
         } else {
             filtrateContentBean.setHousingType(mLivingRoom);
         }
+        if (mStyle.equals("其他")) {
+            filtrateContentBean.setStyle("other");
+        } else {
+            filtrateContentBean.setStyle(mStyle);
+        }
 
 //        filtrateContentBean.setHousingType(mLivingRoom);
         filtrateContentBean.setArea(mArea);
-        filtrateContentBean.setStyle(mStyle);
+        //filtrateContentBean.setStyle(mStyle);
         filtrateContentBean.setAreaIndex(mAreaIndex);
         filtrateContentBean.setHouseIndex(mHouseIndex);
         filtrateContentBean.setStyleIndex(mStyleIndex);
@@ -201,6 +208,8 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
                 mSAdapter = new FiltrateAdapter(FiltrateActivity.this, mStyleData);
                 sGridView.setAdapter(mSAdapter);
                 setSelection(mSAdapter, mStyleIndex);
+                tvReset.setEnabled(true);
+                tvOk.setEnabled(true);
 
             }
 
@@ -278,13 +287,13 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_ok:
                 filtrateOK();
                 break;
             case R.id.tv_reset:
                 mSAdapter.setSelection(0);
-                mStyleIndex =0;
+                mStyleIndex = 0;
                 mSAdapter.notifyDataSetChanged();
                 mHAdapter.setSelection(0);
                 mHouseIndex = 0;

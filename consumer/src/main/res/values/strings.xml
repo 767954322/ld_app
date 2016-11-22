@@ -854,7 +854,7 @@
     <string name="decoration_order">我的订单</string>
 
     <!-- MyBidActivity -->
-    <string name="my_bid_all">全部</string>
+    <string name="my_bid_all">不限</string>
     <string name="my_3d_all">不限</string>
     <string name="elite_project">精选项目</string>
     <string name="average_project">竞优项目</string>

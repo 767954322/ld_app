@@ -502,7 +502,7 @@ public class MPServerHttpManager {
                                  int limit, OkJsonRequest.OKResponseCallback callback) {
         String filterURl = UrlConstants.MAIN_MEMBER + "/designers/search?" +
                 "nick_name=" + findDesignerBean.getNick_name() +
-                "&style_names=" + findDesignerBean.getStyle_names() +
+               // "&style_names=" + findDesignerBean.getStyle_names() +
                 "&start_experience=" + findDesignerBean.getStart_experience() +
                 "&end_experience=" + findDesignerBean.getEnd_experience() +
                 "&design_price_code=" + findDesignerBean.getDesign_price_code() +

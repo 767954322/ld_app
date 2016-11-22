@@ -55,6 +55,8 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         tvReset = (TextView) findViewById(R.id.tv_reset);
         tvOk = (TextView) findViewById(R.id.tv_ok);
 
+        tvOk.setEnabled(false);
+        tvReset.setEnabled(false);
     }
 
     @Override
@@ -144,15 +146,19 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
 
 
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        if (mLivingRoom.equals("其它")) {
+        if (mLivingRoom.equals("其他")) {
             filtrateContentBean.setHousingType("other");
         } else {
             filtrateContentBean.setHousingType(mLivingRoom);
         }
 
+        if (mStyle.equals("其他")) {
+            filtrateContentBean.setStyle("other");
+        } else {
+            filtrateContentBean.setStyle(mStyle);
+        }
 //        filtrateContentBean.setHousingType(mLivingRoom);
         filtrateContentBean.setArea(mArea);
-        filtrateContentBean.setStyle(mStyle);
         filtrateContentBean.setAreaIndex(mAreaIndex);
         filtrateContentBean.setHouseIndex(mHouseIndex);
         filtrateContentBean.setStyleIndex(mStyleIndex);
@@ -201,6 +207,9 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
                 mSAdapter = new Filtrate3DAdapter(Filtrate3DActivity.this, mStyleData);
                 sGridView.setAdapter(mSAdapter);
                 setSelection(mSAdapter, mStyleIndex);
+
+                tvOk.setEnabled(true);
+                tvReset.setEnabled(true);
 
             }
 
