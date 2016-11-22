@@ -147,7 +147,6 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         } else {
             findDesignerBean.setStyle_names(mStyleName);
         }
-
         findDesignerBean.setStyle(mStyleCode);
         findDesignerBean.setStart_experience(start_experience);
         findDesignerBean.setEnd_experience(end_experience);

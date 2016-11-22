@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * @author  .
+ * @author .
  * @version 1.0 .
  * @date 16-8-16
  * @file GrandMasterFragment.java  .
@@ -59,6 +61,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         bt_grand_reservation = (ImageButton) rootView.findViewById(R.id.bt_grand_reservation);
         ll_grand_selection = (ViewGroup) rootView.findViewById(R.id.ll_grand_selection);
     }
+
     @Override
     protected void initListener() {
         bt_grand_reservation.setOnClickListener(this);
@@ -69,15 +72,14 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         initGrandListData();
     }
 
-    private ViewPager getViewPager()
-    {
+    private ViewPager getViewPager() {
         return (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
     }
+
     /**
      * 获取大师列表数据
-     *
      */
-    private void initGrandListData(){
+    private void initGrandListData() {
         MPServerHttpManager.getInstance().getGrandMasterInfo(0, 10, "61", new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -215,16 +217,30 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             View view;
-            LayoutInflater layoutInflater =LayoutInflater.from(mContext);
-            switch(position) {
+            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            switch (position) {
                 case 0:
                     String default_Master = "";
-                    if(null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size()>0){
-                        default_Master = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().get(0).getPoster();
+                    if (null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size() > 0) {
+                        default_Master = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getV2_master().get(0).getPoster();
                     }
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
                     ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
-//                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye1, iv_grandmaster_pic_first);
+//                    一般情况下的普通屏幕：ldpi是120，mdpi是160，hdpi是240，xhdpi是320。
+                    DisplayMetrics dm = new DisplayMetrics();
+                    mContext.getWindowManager().getDefaultDisplay().getMetrics(dm);
+                    int densityDpi = dm.densityDpi;
+                    if (densityDpi == 120 || densityDpi == 160 || densityDpi == 240) {
+                        default_Master = default_Master + "Introduction-hdpi.png";
+                    } else if (densityDpi == 320) {
+                        default_Master = default_Master + "Introduction-xhdpi.png";
+                    } else if (densityDpi == 480) {
+                        default_Master = default_Master + "Introduction-xxhdpi.png";
+                    } else {
+//                        default_Master = default_Master + "Introduction-xxhdpi.png";
+                        default_Master = default_Master + "Introduction-hdpi.png";
+                    }
+
                     ImageUtils.displaySixImage(default_Master, iv_grandmaster_pic_first);
 
                     break;
@@ -251,7 +267,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             container.addView(view);
             return view;
         }
-    };
+    }
+
+    ;
 
     /**
      * 上传立即预约信息
