@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,7 +68,9 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
         if (hasFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
-            tvBrandNum.setText(bean.getAmountAndUnit());
+            if (!StringUtils.isEmpty(bean.getAmountAndUnit())) {
+                tvBrandNum.setText(bean.getAmountAndUnit());
+            }
         } else {
             ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
             ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
@@ -79,12 +82,16 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
         tvBrandName.setText(bean.getName());
-        tvBrandDimension.setText(bean.getDimension());
-
+        if (!StringUtils.isEmpty(bean.getDimension())) {
+            tvBrandDimension.setText(bean.getDimension());
+        }
         String apartMentName = ApartmentConvertUtils.getApartmentNameFromId((Activity) mContext, bean.getApartment());
-        tvBrandApartment.setText(apartMentName);
-
-        tvBrandRemarks.setText(bean.getRemarks());
+        if (!StringUtils.isEmpty(apartMentName)) {
+            tvBrandApartment.setText(apartMentName);
+        }
+        if (!StringUtils.isEmpty(bean.getRemarks())) {
+            tvBrandRemarks.setText(bean.getRemarks());
+        }
         StringBuffer mallName = new StringBuffer();
         for (RecommendMallsBean mallsBean : bean.getMalls()) {
             mallName.append(mallsBean.getMall_name() + "、");

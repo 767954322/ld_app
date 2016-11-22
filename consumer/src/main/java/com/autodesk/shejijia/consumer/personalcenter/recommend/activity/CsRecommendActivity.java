@@ -84,6 +84,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     protected void initView() {
         setTitleForNavbar(UIUtils.getString(R.string.recommend_listing));
         mListView = (ListViewFinal) findViewById(R.id.lv_recommend);
+        findViewById(R.id.llt_tip_create).setVisibility(View.INVISIBLE);
         mFrameLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
         mEmptyView = (LinearLayout) findViewById(R.id.empty_view);
         mAdapter = new RecommendAdapter(this, mRecommends, R.layout.item_recommend, false);

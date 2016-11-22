@@ -123,7 +123,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void getRecommendDetails() {
-        CustomProgress.show(this, "", false, null);
+        CustomProgress.showDefaultProgress(this);
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity == null) {
             return;
