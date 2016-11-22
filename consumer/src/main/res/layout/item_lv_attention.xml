@@ -43,12 +43,12 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_15"
+            android:layout_marginRight="@dimen/size_15"
             android:layout_toRightOf="@id/fl_head_icon"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:maxLength="13"
             android:text=""/>
 
         <ImageView
