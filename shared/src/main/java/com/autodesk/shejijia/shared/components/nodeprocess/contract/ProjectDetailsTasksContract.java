@@ -14,7 +14,7 @@ import java.util.List;
  * 项目详情下的任务列表对应的vp接口
  */
 
-public interface PDTaskListContract {
+public interface ProjectDetailsTasksContract {
 
     interface View extends BaseView {
 

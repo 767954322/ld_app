@@ -36,7 +36,7 @@ import java.util.List;
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View,View.OnClickListener {
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener {
     private final static int REQUEST_CODE_EDIT_PLAN = 0;
 
     private LinearLayout mProjectRootView;
@@ -77,10 +77,11 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(mContext, this);
-        if (getArguments().getLong("projectId") != 0) {
-            LogUtils.e("projectDetails_projectId ", getArguments().getLong("projectId") + "");
+        long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        if (projectId != 0) {
+            LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
-            mProjectDetailsPresenter.initRequestParams(getArguments().getLong("projectId"), true);
+            mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
             LogUtils.e("GetProjectDetails", "you should input right projectId");
@@ -97,13 +98,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void onClick(View v) {
-       if (v.getId()==R.id.btn_create_plan){
-           Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
-           intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(getArguments().getLong("projectId")));
-           startActivity(intent);
-       }else if (v.getId()==R.id.tv_edit_plan){
+        if (v.getId() == R.id.btn_create_plan) {
+            Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
+            intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID)));
+            startActivity(intent);
+        } else if (v.getId() == R.id.tv_edit_plan) {
 
-       }
+        }
     }
 
     @Override
@@ -112,9 +113,9 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         mProjectRootView.setVisibility(View.VISIBLE);
 
         if (isKaiGongResolved) {
-            if (memberType.equals("clientmanager")) {
+            if (memberType.equals(ConstructionConstants.MemberType.CLIENT_MANAGER)) {
                 mEditPlanBtn.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mEditPlanBtn.setVisibility(View.GONE);
             }
             mContentViewPager.setVisibility(View.VISIBLE);
@@ -132,7 +133,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         } else {
             mEditPlanBtn.setVisibility(View.GONE);
             mContentTipView.setVisibility(View.VISIBLE);
-            if (memberType.equals("clientmanager")) {
+            if (memberType.equals(ConstructionConstants.MemberType.CLIENT_MANAGER)) {
                 mCreatePlanBtn.setVisibility(View.VISIBLE);
                 mWorkStateView.setVisibility(View.GONE);
                 mContentViewPager.setVisibility(View.GONE);

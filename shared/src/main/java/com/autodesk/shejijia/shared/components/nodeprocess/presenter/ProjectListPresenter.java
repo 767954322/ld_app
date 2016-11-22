@@ -135,8 +135,8 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         long projectId = projectList.get(position).getProjectId();
         String projectName = projectList.get(position).getName();
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
-        intent.putExtra("projectId", projectId);
-        intent.putExtra("projectName", projectName);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectId);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_NAME, projectName);
         mContext.startActivity(intent);
     }
 

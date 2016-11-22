@@ -60,6 +60,12 @@
     <string name="task_reinspection">强制复验</string>
     <string name="task_rectification">监督整改</string>
     <string name="task_reinspecting">复验中</string>
+    <string name="task_reinspectionand_rectification">复验并整改</string>
+    <string name="task_reinspect_treserving">复验待预约</string>
+    <string name="task_reinspect_reserved">复验已预约</string>
+    <string name="task_reinspect_inprogress">复验进行中</string>
+    <string name="task_reinspect_delay">复验延期</string>
+    <string name="task_deleted">已删除</string>
 
 
     <!--Customer Calendar view-->

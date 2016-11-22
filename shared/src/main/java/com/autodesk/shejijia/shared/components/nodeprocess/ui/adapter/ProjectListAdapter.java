@@ -71,19 +71,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
-        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getStatus())) {
-            String status = projectLists.get(position).getPlan().getStatus();
-            if (status.equalsIgnoreCase("open")) {
-                projectVh.mProjectStatus.setText(mContext.getString(R.string.project_open));
-            } else if (status.equalsIgnoreCase("ready")) {
-                projectVh.mProjectStatus.setText(mContext.getString(R.string.project_ready));
-            } else if (status.equalsIgnoreCase("inProgress")) {
-                projectVh.mProjectStatus.setText(mContext.getString(R.string.project_inProgress));
-            } else if (status.equalsIgnoreCase("completion")) {
-                projectVh.mProjectStatus.setText(mContext.getString(R.string.project_completion));
-            } else {
-                projectVh.mProjectStatus.setText(status);
-            }
+        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
+            projectVh.mProjectStatus.setText(projectLists.get(position).getPlan().getMilestone().getMilestoneName());
         }
 
         if (projectLists != null && projectLists.size() > 0) {

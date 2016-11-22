@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -34,8 +35,9 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         //top bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            if (getIntent().hasExtra("projectName") && !TextUtils.isEmpty(getIntent().getStringExtra("projectName"))) {
-                actionBar.setTitle(getIntent().getStringExtra("projectName"));
+            if (getIntent().hasExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_NAME)) {
+                String projectName = getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_NAME);
+                actionBar.setTitle(projectName);
             }
         }
         //bottom bar
@@ -55,9 +57,10 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             ProjectDetailsFragment projectDetailsFragment = ProjectDetailsFragment.newInstance();
-            if (getIntent().hasExtra("projectId")) {
+            if (getIntent().hasExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID)) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("projectId", getIntent().getLongExtra("projectId", 0));
+                bundle.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,
+                        getIntent().getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, 0));
                 projectDetailsFragment.setArguments(bundle);
             }
             getSupportFragmentManager().beginTransaction()

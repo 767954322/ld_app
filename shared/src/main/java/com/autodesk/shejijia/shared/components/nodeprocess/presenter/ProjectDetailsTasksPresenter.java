@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.nodeprocess.contract.PDTaskListContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsTasksContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskDetailsFragment;
 
@@ -17,12 +17,12 @@ import java.util.List;
  *
  */
 
-public class ProjectDetailsTasksPresenter implements PDTaskListContract.Presenter{
+public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract.Presenter{
 
-    private PDTaskListContract.View mPDTaskListView;
+    private ProjectDetailsTasksContract.View mPDTaskListView;
     private ProjectRepository mProjectRepository;
 
-    public ProjectDetailsTasksPresenter(PDTaskListContract.View mPDTaskListView){
+    public ProjectDetailsTasksPresenter(ProjectDetailsTasksContract.View mPDTaskListView){
         this.mPDTaskListView = mPDTaskListView;
         mProjectRepository = ProjectRepository.getInstance();
     }

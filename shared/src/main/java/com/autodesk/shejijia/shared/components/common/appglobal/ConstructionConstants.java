@@ -44,7 +44,7 @@ public class ConstructionConstants {
     public static final String REQUEST_TAG_GET_PROJECT_DETAILS = "project_details";
 
     //Log tag
-    public static final String  LOG_TAG_REQUEST = "network_request";
+    public static final String LOG_TAG_REQUEST = "network_request";
 
     // Request code
     public final static int REQUEST_CODE_PICK_DATE = 0x0110;
@@ -53,6 +53,7 @@ public class ConstructionConstants {
 
     //Bundle key
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";
+    public static final String BUNDLE_KEY_PROJECT_NAME = "project_name";
     public static final String BUNDLE_KEY_TASK_LIST = "task_list";
 
     public static class TaskTemplateId {
@@ -82,4 +83,27 @@ public class ConstructionConstants {
         public static final String DESIGNER = "designer";//设计师
         public static final String MEMBER = "member";//消费者
     }
+
+    public static class TaskStatus {
+        public static final String OPEN = "open";//未开始
+        public static final String RESERVED = "reserved";//已预约
+        public static final String RESERVING = "reserving";//待预约
+        public static final String INPROGRESS = "inprogress";//进行中
+        public static final String DELAYED = "delayed";//已延期
+        public static final String QUALIFIED = "qualified";//合格
+        public static final String UNQUALIFIED = "unqualified";//不合格
+        public static final String RESOLVED = "resolved";//完成(或验收通过)
+        public static final String REJECTED = "rejected";//验收拒绝
+        public static final String REINSPECTION = "reinspection";//强制复验
+        public static final String RECTIFICATION = "rectification";//监督整改
+        public static final String REINSPECTING = "reinspecting";//复验中
+        public static final String REINSPECTION_AND_RECTIFICATION = "reinspectionandrectification";//复验并整改
+        public static final String REINSPECT_RESERVING = "reinspectreserving"; //复验待预约
+        public static final String REINSPECT_RESERVED = "reinspectreserved";//复验已预约
+        public static final String REINSPECT_INPROGRESS = "reinspectinprogress";//复验进行中
+        public static final String REINSPECT_DELAY = "reinspectdelayed";//复验延期
+        public static final String DELETED = "deleted";//已删除
+    }
+
+
 }

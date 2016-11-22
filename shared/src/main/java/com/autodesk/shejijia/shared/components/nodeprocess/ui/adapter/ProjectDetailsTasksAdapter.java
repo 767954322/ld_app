@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
@@ -77,65 +78,96 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
 
         // 当前任务节点的状态
         if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
-            String status = taskLists.get(position).getStatus();
+            String status = taskLists.get(position).getStatus().toLowerCase();
             switch (status) {
-                case "OPEN":
+                case ConstructionConstants.TaskStatus.OPEN:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_open));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_gray));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
                     break;
-                case "RESERVED":
+                case ConstructionConstants.TaskStatus.RESERVED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserved));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_gray));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_grey_shape));
                     break;
-                case "RESERVING":
+                case ConstructionConstants.TaskStatus.RESERVING:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reserving));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "INPROGRESS":
+                case ConstructionConstants.TaskStatus.INPROGRESS:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_inProgress));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "DELAYED":
+                case ConstructionConstants.TaskStatus.DELAYED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_delayed));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "QUALIFIED":
+                case ConstructionConstants.TaskStatus.QUALIFIED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_qualified));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "UNQUALIFIED":
+                case ConstructionConstants.TaskStatus.UNQUALIFIED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_unqualified));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "RESOLVED":
+                case ConstructionConstants.TaskStatus.RESOLVED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_resolved));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_lightblue_shape));
                     break;
-                case "REJECTED":
+                case ConstructionConstants.TaskStatus.REJECTED:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rejected));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "REINSPECTION":
+                case ConstructionConstants.TaskStatus.REINSPECTION:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspection));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_orange_shape));
                     break;
-                case "RECTIFICATION":
+                case ConstructionConstants.TaskStatus.RECTIFICATION:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_rectification));
                     taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
-                case "REINSPECTING":
+                case ConstructionConstants.TaskStatus.REINSPECTING:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspecting));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspectionand_rectification));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.REINSPECT_RESERVING:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspect_treserving));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.REINSPECT_RESERVED:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspect_reserved));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.REINSPECT_INPROGRESS:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspect_inprogress));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.REINSPECT_DELAY:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_reinspect_delay));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
+                    break;
+                case ConstructionConstants.TaskStatus.DELETED:
+                    taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_deleted));
+                    taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
                     taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_list_tv_blue_shape));
                     break;
                 default:
@@ -150,19 +182,22 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
         if (!TextUtils.isEmpty(taskLists.get(position).getCategory())) {
             String category = taskLists.get(position).getCategory();
             switch (category) {
-                case "timeline"://开工交底
+                case ConstructionConstants.TaskCategory.TIME_LINE://开工交底
                     taskListVH.mTaskIcon.setImageResource(R.drawable.default_head);
                     break;
-                case "inspection"://验收类
+                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://验收类
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_checkaccept);
                     break;
-                case "construction"://施工类
+                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION:
+
+                    break;
+                case ConstructionConstants.TaskCategory.CONSTRUCTION://施工类
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_construction);
                     break;
-                case "materialMeasuring"://主材测量
+                case ConstructionConstants.TaskCategory.MATERIAL_MEASURING://主材测量
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_material);
                     break;
-                case "materialInstallation": //主材安装
+                case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION: //主材安装
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_material);
                     break;
                 default:
