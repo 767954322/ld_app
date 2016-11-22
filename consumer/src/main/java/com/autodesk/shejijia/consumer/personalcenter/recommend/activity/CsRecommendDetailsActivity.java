@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
@@ -70,9 +71,9 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     private void setTitleBarView() {
         String community_name = getIntent().getStringExtra("community_name");
         setTitleForNavbar("清单详情");
-        if (!TextUtils.isEmpty(community_name)) {
-            setTitleForNavbar(community_name);
-        }
+//        if (!TextUtils.isEmpty(community_name)) {
+//            setTitleForNavbar(UIUtils.substring(community_name, 6));
+//        }
     }
 
     @Override

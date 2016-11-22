@@ -60,7 +60,8 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
             } else {
                 mItemView = mInflater.inflate(R.layout.item_brand_logo_view, null);
             }
-            updateView2ItemData(item.getSource().equals("1"), mItemView, bean);
+//            updateView2ItemData(item.getSource().equals("1"), mItemView, bean);
+            updateView2ItemData(true, mItemView, bean);
             llBrandView.addView(mItemView);
         }
     }
