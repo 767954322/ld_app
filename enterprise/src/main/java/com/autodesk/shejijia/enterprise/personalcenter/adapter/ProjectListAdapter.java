@@ -68,8 +68,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
 
-        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
-            projectVh.mProjectStatus.setText(projectLists.get(position).getPlan().getMilestone().getMilestoneName());
+        if (projectLists.get(position).getPlan().getMilestone() != null) {
+            if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
+                projectVh.mProjectStatus.setText(projectLists.get(position).getPlan().getMilestone().getMilestoneName());
+            }
         }
     }
 

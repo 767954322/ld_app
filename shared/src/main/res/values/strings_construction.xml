@@ -78,9 +78,7 @@
     <string name="calendar_saturday">六</string>
 
     <!--年 月 日-->
-    <string name="calendar_year">年</string>
-    <string name="calendar_month">月</string>
-    <string name="calendar_day">日</string>
+    <string name="calendar_month_day">MM月dd日</string>
 
     <!--项目列表筛选条件-->
     <string name="screen_all">全部项目</string>

@@ -206,11 +206,6 @@ public class DateUtil {
         return getStringDateByFormat(date, "MM/dd");
     }
 
-    public static String formattedDateFromDate2(Date date) {
-        return getStringDateByFormat(date, "MM" + UIUtils.getString(R.string.calendar_month)
-                + "dd" + UIUtils.getString(R.string.calendar_day));
-    }
-
     //it is doing same as formattedTimeFromDate
     // just adding this to sync with iOS interfaces
     public static String formattedTimeFromDateForMessageCell(Date date) {

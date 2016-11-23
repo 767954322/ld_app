@@ -15,8 +15,12 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
+import java.util.Date;
 import java.util.List;
+
+import static com.autodesk.shejijia.shared.components.common.utility.DateUtil.getStringDateByFormat;
 
 /**
  * Created by t_xuz on 11/10/16.
@@ -63,16 +67,18 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             taskListVH.mTaskName.setText(taskLists.get(position).getName());
         }
 
-        String startDate = taskLists.get(position).getReserveTime().getStart();
-        String endDate = taskLists.get(position).getReserveTime().getCompletion();
         //节点日期
-        if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
-            boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate), DateUtil.iso8601ToDate(endDate));
-            if (isSameDate) {
-                taskListVH.mTaskDate.setText(DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(startDate)));
-            } else {
-                taskListVH.mTaskDate.setText(DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(startDate)) + "-"
-                        + DateUtil.formattedDateFromDate2(DateUtil.iso8601ToDate(endDate)));
+        if (taskLists.get(position).getReserveTime() != null) {
+            String startDate = taskLists.get(position).getReserveTime().getStart();
+            String endDate = taskLists.get(position).getReserveTime().getCompletion();
+            if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
+                boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate), DateUtil.iso8601ToDate(endDate));
+                if (isSameDate) {
+                    taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)));
+                } else {
+                    taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)) + "-"
+                            + formattedDateFromDate(DateUtil.iso8601ToDate(endDate)));
+                }
             }
         }
 
@@ -185,11 +191,9 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
                 case ConstructionConstants.TaskCategory.TIME_LINE://开工交底
                     taskListVH.mTaskIcon.setImageResource(R.drawable.default_head);
                     break;
-                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://验收类
+                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
+                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_checkaccept);
-                    break;
-                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION:
-
                     break;
                 case ConstructionConstants.TaskCategory.CONSTRUCTION://施工类
                     taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_construction);
@@ -215,6 +219,9 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
         });
     }
 
+    private String formattedDateFromDate(Date date) {
+        return getStringDateByFormat(date, UIUtils.getString(R.string.calendar_month_day));
+    }
 
     private static class TaskListVH extends RecyclerView.ViewHolder {
         private ImageView mTaskIcon;

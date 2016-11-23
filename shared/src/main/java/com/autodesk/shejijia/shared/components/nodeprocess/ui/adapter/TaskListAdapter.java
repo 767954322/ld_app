@@ -175,13 +175,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
                     break;
-                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION:
+                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
+                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
                     drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_checkaccept);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION:
-
                     break;
                 case ConstructionConstants.TaskCategory.CONSTRUCTION:
                     drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_construction);
