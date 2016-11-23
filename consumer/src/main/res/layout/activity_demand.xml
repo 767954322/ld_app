@@ -84,6 +84,8 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
+                android:inputType="number"
+                android:digits="1234567890"
                 android:hint="@string/please_enter_your_phone"
                 android:maxLength="11"
                 android:phoneNumber="true"
