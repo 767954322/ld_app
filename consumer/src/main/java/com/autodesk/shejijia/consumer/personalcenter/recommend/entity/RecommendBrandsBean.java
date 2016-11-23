@@ -111,15 +111,15 @@ public class RecommendBrandsBean implements Serializable {
     @Override
     public String toString() {
         return "{" +
-                "\"brand_name\":'" + brand_name + '\'' +
-                ", \"name\":'" + name + '\'' +
-                ", \"dimension\":'" + dimension + '\'' +
-                ", \"remarks\":'" + remarks + '\'' +
-                ", \"code\":'" + code + '\'' +
-                ", \"source\":'" + source + '\'' +
-                ", \"apartment\":'" + apartment + '\'' +
-                ", \"logo_url\":'" + logo_url + '\'' +
-                ", \"amountAndUnit\":'" + amountAndUnit + '\'' +
+                "\"brand_name\":\"" + brand_name + '"' +
+                ", \"name\":\"" + name + '"' +
+                ", \"dimension\":\"" + dimension + '"' +
+                ", \"remarks\":\"" + remarks + '"' +
+                ", \"code\":\"" + code + '"' +
+                ", \"source\":\"" + source + '"' +
+                ", \"apartment\":\"" + apartment + '"' +
+                ", \"logo_url\":\"" + logo_url + '"' +
+                ", \"amountAndUnit\":\"" + amountAndUnit + '"' +
                 ", \"malls\":" + malls +
                 ", \"commoditys\":" + commoditys +
                 '}';
