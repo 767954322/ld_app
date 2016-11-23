@@ -484,7 +484,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
             mRecommendSCFDList.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-            mRecommendScfdTag = "have_data";
+            mRecommendScfdTag = mRecommendSCFDList.toString();
         }
         for (RecommendSCFDBean recommendSCFDBean: mRecommendSCFDList){
             recommendSCFDBean.setBrand_count_limit(mBrandCountLimit);
