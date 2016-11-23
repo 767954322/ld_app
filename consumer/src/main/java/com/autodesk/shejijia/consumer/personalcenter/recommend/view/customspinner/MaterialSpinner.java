@@ -212,7 +212,7 @@ public class MaterialSpinner extends TextView {
   }
 
   @Override public void setTextColor(int color) {
-    textColor = color;
+//    textColor = color;
     super.setTextColor(color);
   }
 

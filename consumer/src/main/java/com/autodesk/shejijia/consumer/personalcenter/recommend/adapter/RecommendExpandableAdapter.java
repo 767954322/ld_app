@@ -181,9 +181,13 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 onClearFocus(mViewHolder.etBrandNum, mViewHolder.etBranDimension, mViewHolder.etBranDimension);
-                boolean falg = mViewHolder.spinnerApartment.getText().toString().equals(UIUtils.getString(R.string.select));
-                mViewHolder.spinnerApartment.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
-                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(position < 10 ? "0" + position : position + "");
+                boolean falg =(position==0)?true:false;
+                view.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
+                String index = "";
+                if(position != 0){
+                    index = position < 10 ? "0" + position : position + "";
+                }
+                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(index);
             }
         });
 
