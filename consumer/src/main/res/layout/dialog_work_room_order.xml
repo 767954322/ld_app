@@ -102,6 +102,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:phoneNumber="true"
                 android:textSize="@dimen/font_15" />
 

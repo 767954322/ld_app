@@ -90,6 +90,8 @@
                 android:background="@color/no_color"
                 android:ems="10"
                 android:gravity="center_vertical"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:hint="@string/hint_edit_input_mobile"
                 android:maxLength="11"
                 android:phoneNumber="true"

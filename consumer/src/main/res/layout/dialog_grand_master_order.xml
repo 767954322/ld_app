@@ -103,6 +103,8 @@
                 android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
                 android:phoneNumber="true"
+                android:inputType="number"
+                android:digits="1234567890"
                 android:textSize="@dimen/font_15" />
 
             <TextView

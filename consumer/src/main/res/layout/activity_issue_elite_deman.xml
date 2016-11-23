@@ -88,12 +88,12 @@
                 android:layout_width="@dimen/size_1"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:inputType="number"
                 android:background="@color/no_color"
                 android:ems="10"
+                android:digits="1234567890"
                 android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
-                android:phoneNumber="true"
+                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
