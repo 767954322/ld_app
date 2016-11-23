@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -106,7 +107,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void updateProjectDetailsView(String memberType, List<BaseFragment> fragmentList, int currentMilestonePosition, boolean isKaiGongResolved) {
+    public void updateProjectDetailsView(String memberType, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
 
         mProjectRootView.setVisibility(View.VISIBLE);
 
@@ -121,7 +122,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mCreatePlanBtn.setVisibility(View.GONE);
             mWorkStateView.setVisibility(View.GONE);
 
-            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), fragmentList);
+            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), taskLists);
             mContentViewPager.setAdapter(mFragmentPagerAdapter);
 
             //progressbar indicator( must first have viewpager adapter)

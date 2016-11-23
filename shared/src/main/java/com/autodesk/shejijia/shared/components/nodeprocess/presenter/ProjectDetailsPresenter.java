@@ -82,7 +82,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
                     }
                 }
                 return milestoneList.get(0).getStatus()
-                        .equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVED);
+                        .equalsIgnoreCase(ConstructionConstants.TaskStatus.RESOLVED);
             }
         }
         return false;
@@ -93,11 +93,11 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         /*handle planInfo data*/
         if (projectInfo.getPlan() != null) {
             int currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
-            List<BaseFragment> fragmentList = handleTaskListData(projectInfo.getPlan());
+            List<List<Task>> taskLists = handleTaskListData(projectInfo.getPlan());
             boolean isKaiGongResolved = isKaiGongResolved(projectInfo);
-            if (fragmentList != null) {
+            if (taskLists != null) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), fragmentList, currentMilestonePosition, isKaiGongResolved);
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), taskLists, currentMilestonePosition, isKaiGongResolved);
             } else {
                 mProjectDetailsView.showError("handle data error");
             }
@@ -140,7 +140,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         return position;
     }
 
-    private List<BaseFragment> handleTaskListData(PlanInfo planInfo) {
+    private List<List<Task>> handleTaskListData(PlanInfo planInfo) {
         List<Task> taskList = planInfo.getTasks();
         if (taskList != null) {
             /* get milestone's index list*/
@@ -151,20 +151,16 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
                 }
             }
 
-            /* get fragment list*/
-            List<BaseFragment> fragmentList = new ArrayList<>();
+            /*get child task list*/
+            List<List<Task>> taskLists = new ArrayList<>();
             int index = 0;
             for (int i = 0; i < taskIndexList.size(); i++) {
                 int value = taskIndexList.get(i);
                 List<Task> childTaskList = taskList.subList(index, value + 1);
                 index = value + 1;
-                Bundle taskListBundle = new Bundle();
-                ArrayList<Task> childTaskArrayList = new ArrayList<>();
-                childTaskArrayList.addAll(childTaskList);
-                taskListBundle.putSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST, childTaskArrayList);
-                fragmentList.add(ProjectDetailTasksFragment.newInstance(taskListBundle));
+                taskLists.add(childTaskList);
             }
-            return fragmentList;
+            return taskLists;
         }
         return null;
     }

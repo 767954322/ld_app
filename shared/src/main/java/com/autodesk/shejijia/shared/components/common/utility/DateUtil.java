@@ -19,11 +19,11 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author  yangxuewu .
- * @version  v1.0 .
- * @date       2016-6-8 .
- * @file          DateUtil.java .
- * @brief       日期转换工具类 .
+ * @author yangxuewu .
+ * @version v1.0 .
+ * @date 2016-6-8 .
+ * @file DateUtil.java .
+ * @brief 日期转换工具类 .
  */
 public class DateUtil {
 
@@ -178,7 +178,8 @@ public class DateUtil {
         }
 
     }
-    public static String showDate(long lTime){
+
+    public static String showDate(long lTime) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(lTime);
         return getStringDateByFormat(lTime, "yyyy-MM-dd HH:mm");
@@ -191,22 +192,23 @@ public class DateUtil {
 
 
     public static String getStringDateByFormat(Date date, String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format,getPreferredLocale());
+        SimpleDateFormat formatter = new SimpleDateFormat(format, getPreferredLocale());
         String dateString = formatter.format(date);
         return dateString;
     }
 
 
     public static String formattedTimeFromDate(Date date) {
-        return getStringDateByFormat(date,"h:mm a");
+        return getStringDateByFormat(date, "h:mm a");
     }
 
     public static String formattedDateFromDate(Date date) {
-        return getStringDateByFormat(date,"MM/dd");
+        return getStringDateByFormat(date, "MM/dd");
     }
 
     public static String formattedDateFromDate2(Date date) {
-        return getStringDateByFormat(date,"MM月dd日");
+        return getStringDateByFormat(date, "MM" + UIUtils.getString(R.string.calendar_month)
+                + "dd" + UIUtils.getString(R.string.calendar_day));
     }
 
     //it is doing same as formattedTimeFromDate
@@ -262,8 +264,7 @@ public class DateUtil {
 
         try {
             date = dateFormat.parse(acsDate);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
 
@@ -280,25 +281,27 @@ public class DateUtil {
 
     /**
      * 将指定时间字符串转换为对应的格式
-     * @param date 时间字符串 如："2008-10-19 10:11:30"
+     *
+     * @param date       时间字符串 如："2008-10-19 10:11:30"
      * @param fromFormat 与 date 对应的字符串格式 如："yyyy-MM-dd HH:mm:ss"
-     * @param toFormat 要转换成的格式 如："yyyy年MM月dd日 HH时mm分ss秒"
-     * @return  2008年10月19日 10时11分30秒
+     * @param toFormat   要转换成的格式 如："yyyy年MM月dd日 HH时mm分ss秒"
+     * @return 2008年10月19日 10时11分30秒
      */
-    public static String dateFormat(String date, String fromFormat, String toFormat){
-        SimpleDateFormat sdf1 = new SimpleDateFormat(fromFormat) ; // 实例化模板对象
-        SimpleDateFormat sdf2 = new SimpleDateFormat(toFormat) ; // 实例化模板对象
-        Date d = null ;
-        try{
-            d = sdf1.parse(date) ; // 将给定的字符串中的日期提取出来
-        }catch(Exception e){ // 如果提供的字符串格式有错误，则进行异常处理
-            e.printStackTrace() ; // 打印异常信息
+    public static String dateFormat(String date, String fromFormat, String toFormat) {
+        SimpleDateFormat sdf1 = new SimpleDateFormat(fromFormat); // 实例化模板对象
+        SimpleDateFormat sdf2 = new SimpleDateFormat(toFormat); // 实例化模板对象
+        Date d = null;
+        try {
+            d = sdf1.parse(date); // 将给定的字符串中的日期提取出来
+        } catch (Exception e) { // 如果提供的字符串格式有错误，则进行异常处理
+            e.printStackTrace(); // 打印异常信息
         }
         return sdf2.format(d);// 将日期变为新的格式
     }
 
     /**
      * Parse iso 8601 format to date
+     *
      * @param dateStr e.g. "2016-09-01T12:00:00Z", "2016-09-01", "2016-09-01T10:15:30", "2016-09-01T00:00:00.000+08:00”
      * @return Date
      */
@@ -309,6 +312,7 @@ public class DateUtil {
 
     /**
      * Format date to iso 8601 string
+     *
      * @param date
      * @return e.g. "2016-09-01T12:00:00.000Z"
      */
@@ -319,7 +323,8 @@ public class DateUtil {
 
     /**
      * Compare date
-     * @param date1 Date
+     *
+     * @param date1       Date
      * @param date2String iso 8601 format string
      * @return negative value if this is less, 0 if equal, or positive value if greater
      */
@@ -331,6 +336,7 @@ public class DateUtil {
 
     /**
      * Compare date
+     *
      * @param date1String iso 8601 format string
      * @param date2String iso 8601 format string
      * @return negative value if this is less, 0 if equal, or positive value if greater
@@ -343,6 +349,7 @@ public class DateUtil {
 
     /**
      * Compare date
+     *
      * @param date1
      * @param date2
      * @return negative value if this is less, 0 if equal, or positive value if greater
@@ -355,6 +362,7 @@ public class DateUtil {
 
     /**
      * Plus days
+     *
      * @param iso8601DateStr
      * @param days
      * @return iso 8601 format string
@@ -393,6 +401,7 @@ public class DateUtil {
 
     /**
      * Check if is same day
+     *
      * @param date1
      * @param date2
      * @return
@@ -411,6 +420,7 @@ public class DateUtil {
 
     /**
      * Get days account between two dates
+     *
      * @param date1
      * @param date2
      * @return days account
