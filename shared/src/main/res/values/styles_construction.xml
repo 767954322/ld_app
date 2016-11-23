@@ -44,4 +44,8 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">@dimen/button_min_height</item>
     </style>
+
+    <style name="FormRecyclerStyle" parent="Theme.AppCompat.Light">
+        <item name="android:listDivider">@drawable/divider_recycler_view_shape</item>
+    </style>
 </resources>

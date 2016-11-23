@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
 
 /**
@@ -11,19 +12,18 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 
     public ProjectInfoPresenter(ProjectInfoContract.View view) {
         mView = view;
-        mView.setToolbar();
     }
 
     @Override
-    public void confirm() {
+    public void submit(Task task) {
         // TODO: 16/10/28 根据项目信息的状态,选择进入不同的表格
-        String status = mView.getStatus();
+        String status = task.getStatus();
         switch (status) {
             case "INPROGRESS":  //进行中,修改
             case "DELAYED":     //已延期,修改
             case "REINSPECTION_INPROGRESS":  //复验进行中,修改
             case "REINSPECTION_DELAYED":    //已延期
-                mView.enterPrecheck(mView.getTask());
+                mView.enterPrecheck(task);
                 break;
             case "REJECTED":   //验收拒绝,查看
                 break;
@@ -40,12 +40,6 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 
         }
 
-    }
-
-    @Override
-    public void cancel() {
-        mView.selectCancel();
-        mView.dismiss();
     }
 
 }

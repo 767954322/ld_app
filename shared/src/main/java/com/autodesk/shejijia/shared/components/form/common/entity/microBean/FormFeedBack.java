@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.SHFile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
  * Created by t_panya on 16/11/1.
  */
 
-public class FormFeedBack {
+public class FormFeedBack implements Serializable {
     private String comment;
     private SHFile audio;
     private List<SHFile> images;

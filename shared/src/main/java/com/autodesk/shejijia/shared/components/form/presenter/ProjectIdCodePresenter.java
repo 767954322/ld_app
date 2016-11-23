@@ -1,11 +1,10 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
@@ -13,10 +12,9 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
-import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
-import com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,26 +26,22 @@ import java.util.List;
 
 public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
     private ProjectIdCodeContract.View mView;
-    private Context mContext;
 
-    public ProjectIdCodePresenter(Context context, ProjectIdCodeContract.View view) {
+    public ProjectIdCodePresenter(ProjectIdCodeContract.View view) {
         mView = view;
-        mContext = context;
-        mView.setToolbar();
     }
 
 
     @Override
-    public void confirmProject() {
+    public void enterProjectInfo() {
         String projectId = mView.getProjectId();
         if (TextUtils.isEmpty(projectId)) {
             mView.showError(UIUtils.getString(R.string.inspect_show_null_error));
             return;
         }
-        Long pid = Long.valueOf(projectId);
 
         final Bundle params = new Bundle();
-        params.putLong("pid", pid);
+        params.putLong("pid", Long.valueOf(projectId));
         params.putBoolean("task_data", true);
 
         FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo, ResponseError>() {
@@ -56,20 +50,20 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                 PlanInfo planInfo = data.getPlan();
                 List<Task> taskList = planInfo.getTasks();
                 for (Task task : taskList) {
-                    //根据监理进来:1,修改;
-                    if ("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                    //根据项目的类型和状态,监理的进来:1,修改;2,查看
+                    if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equals(task.getCategory())) {
                         String status = task.getStatus();
                         Member role = null;
                         List<String> statusList = new ArrayList<>();
-                        statusList.add("INPROGRESS");  //验收进行中
-                        statusList.add("DELAYED");     //验收延期
-                        statusList.add("REINSPECTION_INPROGRESS");   //复验进行中
-                        statusList.add("REINSPECTION_DELAYED");    // 复验延期
-//                        statusList.add("REJECTED");
+                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_INPROGRESS.getTaskStatus().toUpperCase());  //以下为修改项
+                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_DELAY.getTaskStatus().toUpperCase());
+                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_INPROGRESS.getTaskStatus().toUpperCase());
+                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_DELAY.getTaskStatus().toUpperCase());
+//                        statusList.add("REJECTED");       //以下为查看项
 //                        statusList.add("QUALIFIED");
 //                        statusList.add("REINSPECTION");
 //                        statusList.add("RECTIFICATION");
-//                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
+//                        statusList.add("REINSPECTION_AND_RECTIFICATION");
                         if (statusList.contains(status)) {
                             for (Member member : data.getMembers()) {
                                 if ("member".equals(member.getRole())) {
@@ -77,13 +71,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                                     break;
                                 }
                             }
-                            Intent intent = new Intent(mContext, ProjectInfoActivity.class);
-                            intent.putExtra("task", task);
-                            intent.putExtra("building", data.getBuilding());
-                            intent.putExtra("member", role);
-                            mContext.startActivity(intent);
-
-                            mView.dismiss();
+                            mView.enterProjectInfo(task,data.getBuilding(),role);
                             return;
                         }
 
@@ -100,15 +88,6 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                 mView.showNetError(error);
             }
         });
-
-    }
-
-    @Override
-    public void enterCode() {
-        // TODO: 16/10/25 进入扫码页面
-        Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
-        mContext.startActivity(intent);
-        mView.dismiss();
 
     }
 

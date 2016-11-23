@@ -58,5 +58,7 @@
     <dimen name="precheck_font_15">15sp</dimen>
     <dimen name="precheck_additional_height">57.5dp</dimen>
     <dimen name="spacing_plain_table_cell">12.5dp</dimen>
-
+    <dimen name="spacing_form_list_top">15dp</dimen>
+    <dimen name="height_form_list_problem_log">44dp</dimen>
+    <dimen name="height_form_list_item">57.5dp</dimen>
 </resources>

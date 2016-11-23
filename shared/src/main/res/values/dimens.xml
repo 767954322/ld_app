@@ -315,7 +315,6 @@
     <dimen name="home_bottombar_radiogroup_height">55dp</dimen>
 
     <!--form表单中常用的大小-->
-    <dimen name="form_navigationbar_height">50dp</dimen>
     <dimen name="marginleft_parent">16dp</dimen>
     <dimen name="marginright_parent">16dp</dimen>
     <dimen name="button_radius_6">6dp</dimen>

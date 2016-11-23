@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
@@ -17,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.google.zxing.Result;
 
@@ -35,32 +37,12 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
         setNavigationBar();
     }
 
-    private void setNavigationBar() {
-        ImageButton imageButton = (ImageButton) findViewById(com.autodesk.shejijia.shared.R.id.nav_left_imageButton);
-        if (imageButton != null) {
-            imageButton.setVisibility(View.GONE);
-        }
-
-        TextView rightText = (TextView) findViewById(R.id.nav_right_textView);
-        if (rightText != null) {
-            rightText.setVisibility(View.VISIBLE);
-            rightText.setText(R.string.input_code);
-            rightText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
-                    finish();
-                }
-            });
-        }
-
-    }
-
     @Override
     public void handleDecode(Result result, Bitmap barcode) {
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         String projectId = result.getText();
+
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
@@ -71,23 +53,23 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                     PlanInfo planInfo = data.getPlan();
                     List<Task> taskList = planInfo.getTasks();
                     for (Task task : taskList) {
-                        //根据监理进来:1,修改;2,查看
-                        if ("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
+                        //根据项目的类型和状态,监理的进来:1,修改;2,查看
+                        if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equals(task.getCategory())) {
                             String status = task.getStatus();
                             Member role = null;
                             List<String> statusList = new ArrayList<>();
-                            statusList.add("INPROGRESS");  //验收进行中
-                            statusList.add("DELAYED");     //验收延期
-                            statusList.add("REINSPECTION_INPROGRESS");   //复验进行中
-                            statusList.add("REINSPECTION_DELAYED");    // 复验延期
-//                        statusList.add("REJECTED");
+                            statusList.add(TaskStatusTypeEnum.TASK_STATUS_INPROGRESS.getTaskStatus().toUpperCase());  //以下为修改项
+                            statusList.add(TaskStatusTypeEnum.TASK_STATUS_DELAY.getTaskStatus().toUpperCase());
+                            statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_INPROGRESS.getTaskStatus().toUpperCase());
+                            statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_DELAY.getTaskStatus().toUpperCase());
+//                        statusList.add("REJECTED");       //以下为查看项
 //                        statusList.add("QUALIFIED");
 //                        statusList.add("REINSPECTION");
 //                        statusList.add("RECTIFICATION");
-//                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
+//                        statusList.add("REINSPECTION_AND_RECTIFICATION");
                             if (statusList.contains(status)) {
                                 for (Member member : data.getMembers()) {
-                                    if ("member".equals(member.getRole())) {
+                                    if (ConstructionConstants.MemberType.MEMBER.equals(member.getRole())) {
                                         role = member;
                                         break;
                                     }
@@ -98,7 +80,6 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                                 intent.putExtra("member", role);
                                 startActivity(intent);
 
-                                finish();
                                 return;
                             }
 
@@ -127,6 +108,26 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
         }
 
+
+    }
+
+    private void setNavigationBar() {
+        ImageButton imageButton = (ImageButton) findViewById(com.autodesk.shejijia.shared.R.id.nav_left_imageButton);
+        if (imageButton != null) {
+            imageButton.setVisibility(View.GONE);
+        }
+
+        TextView rightText = (TextView) findViewById(R.id.nav_right_textView);
+        if (rightText != null) {
+            rightText.setVisibility(View.VISIBLE);
+            rightText.setText(R.string.input_code);
+            rightText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
+                }
+            });
+        }
 
     }
 

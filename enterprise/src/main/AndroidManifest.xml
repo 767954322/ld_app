@@ -173,12 +173,13 @@
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectIdCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -202,7 +203,14 @@
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.FormListActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/FormRecyclerStyle"/>
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.FormItemListActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/FormRecyclerStyle"/>
 
 
         <service

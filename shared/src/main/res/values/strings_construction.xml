@@ -131,7 +131,7 @@
     <string name="inspect_precheck">验收前条件检查</string>
     <string name="form_inspect_agree">同意,可进行质量验收</string>
     <string name="form_inspect_disagree">不同意验收</string>
-    <string name="form_program_log">问题记录</string>
+    <string name="form_problem_log">问题记录</string>
 
     <!--footer view text-->
     <string name="footer_no_more">没有更多</string>

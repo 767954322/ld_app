@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by t_panya on 16/11/1.
  */
 
-public class SHFile {
+public class SHFile implements Serializable{
     private String fileId;
     private String fileType;
     private String fileName;

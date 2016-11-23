@@ -15,8 +15,8 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class ScanQrDialogActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView mTitle;
-    private TextView mContent;
+    private TextView mTitleTv;
+    private TextView mContentTv;
 
     @Override
     protected int getLayoutResId() {
@@ -25,8 +25,8 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
-        mTitle = (TextView) findViewById(R.id.tv_title);
-        mContent = (TextView) findViewById(R.id.tv_content);
+        mTitleTv = (TextView) findViewById(R.id.tv_title);
+        mContentTv = (TextView) findViewById(R.id.tv_content);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class ScanQrDialogActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         String mError = intent.getStringExtra("error");
 
-        mTitle.setText(R.string.hint);
-        mContent.setText(mError);
+        mTitleTv.setText(R.string.hint);
+        mContentTv.setText(mError);
     }
 
     @Override
