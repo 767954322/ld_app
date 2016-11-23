@@ -117,8 +117,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void refreshLikesButton(Like like, int position) {
-        mProjectListPresenter.refreshProjectList();
+    public void refreshLikesButton(Like newLike, int likePosition) {
+        mProjectListAdapter.updateProjectState(newLike, likePosition);
     }
 
     @Override

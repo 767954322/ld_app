@@ -81,7 +81,8 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
                         milestoneList.add(taskList.get(i));
                     }
                 }
-                return milestoneList.get(0).getStatus().equals("RESOLVED");
+                return milestoneList.get(0).getStatus()
+                        .equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVED);
             }
         }
         return false;

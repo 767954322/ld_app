@@ -151,7 +151,6 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void updateProjectLikesState(List<ProjectInfo> projectList, final boolean like, int position) {
-//        mProjectListView.showLoading();
         //init requestParams
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", projectList.get(position).getProjectId());
@@ -166,13 +165,13 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         updateProjectLikes(requestParamsBundle, requestJson, position);
     }
 
-    private void updateProjectLikes(Bundle requestParamsBundle, JSONObject requestJson, final int likePosition) {
+    private void updateProjectLikes(Bundle requestParamsBundle, JSONObject requestJson, final int position) {
         mProjectRepository.updateProjectLikes(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new ResponseCallback<Like>() {
             @Override
             public void onSuccess(Like data) {
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
                 mProjectListView.hideLoading();
-                mProjectListView.refreshLikesButton(data, likePosition);
+                mProjectListView.refreshLikesButton(data, position);
             }
 
             @Override

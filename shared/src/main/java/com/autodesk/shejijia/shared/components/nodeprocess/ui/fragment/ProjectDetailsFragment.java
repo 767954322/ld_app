@@ -98,12 +98,10 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_create_plan) {
+        if (v.getId() == R.id.btn_create_plan || v.getId() == R.id.tv_edit_plan) {
             Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
             intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID)));
             startActivity(intent);
-        } else if (v.getId() == R.id.tv_edit_plan) {
-
         }
     }
 

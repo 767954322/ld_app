@@ -67,20 +67,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
-        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getStatus())) {
-            String status = projectLists.get(position).getPlan().getStatus();
-            LogUtils.e("status",status);
-            if (status.equalsIgnoreCase("open")) {
-                projectVh.mProjectStatus.setText("开工交底");
-            } else if (status.equalsIgnoreCase("ready")) {
-                projectVh.mProjectStatus.setText("排期完毕");
-            } else if (status.equalsIgnoreCase(ConstructionConstants.PROJECT_STATUS_INPROGRESS)) {
-                projectVh.mProjectStatus.setText("施工阶段");
-            } else if (status.equalsIgnoreCase(ConstructionConstants.PROJECT_STATUS_COMPLETE)) {
-                projectVh.mProjectStatus.setText("完成");
-            } else {
-                projectVh.mProjectStatus.setText(status);
-            }
+
+        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
+            projectVh.mProjectStatus.setText(projectLists.get(position).getPlan().getMilestone().getMilestoneName());
         }
     }
 
@@ -90,19 +79,19 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             public void onClick(View view) {
                 long projectId = projectLists.get(position).getProjectId();
                 Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
-                intent.putExtra("projectId", projectId);
+                intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectId);
                 mContext.startActivity(intent);
             }
         });
     }
 
-    static final class ProjectListVH extends RecyclerView.ViewHolder {
+    private static final class ProjectListVH extends RecyclerView.ViewHolder {
         private Button mStarLabel; //星标按钮
         private TextView mProjectName; //项目名 project/name
         private TextView mProjectStatus; //项目状态 plan/status
         private LinearLayout mProjectDetails;
 
-        public ProjectListVH(View itemView) {
+        ProjectListVH(View itemView) {
             super(itemView);
             mProjectName = (TextView) itemView.findViewById(R.id.tv_project_name);
             mProjectStatus = (TextView) itemView.findViewById(R.id.tv_project_status);

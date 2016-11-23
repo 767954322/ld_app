@@ -23,7 +23,7 @@ public interface ProjectListContract {
 
         void addMoreProjectListView(List<ProjectInfo> projectList);
 
-        void refreshLikesButton(Like like, int position);
+        void refreshLikesButton(Like newLike, int likePosition);
 
     }
 
