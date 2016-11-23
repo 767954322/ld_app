@@ -15,7 +15,9 @@ public class Config {
     public final static String SHARE3_PATH = null;
     public final static String API_DOMAIN = "http://alpha-api.gdfcx.net";
     // TODO  后期替换Alpha正式环境.
-    public final static String RECOMMEND_PATH = "http://alpha-api.gdfcx.net/materials-recommend-app/v1/api";
+    public final static String RECOMMEND_PATH = "http://192.168.71.86:8080/materials-recommend-app/v1/api";
+
+//    public final static String RECOMMEND_PATH = "http://alpha-api.gdfcx.net/materials-recommend-app/v1/api";
 
 
     //Construction urls
