@@ -284,7 +284,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                         return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 33: // 量房交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
+                        return (R.drawable.design_requirement);
 
                     case 41: // 支付设计首款
                     case 42: // 打开3D工具
@@ -335,7 +335,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
                 case 33: // 量房交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.im_delivery);
+                    return (R.drawable.design_requirement);
 
                 case 41: // 支付设计首款
                 case 42: // 打开3D工具
