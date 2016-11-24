@@ -1,24 +1,40 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.FormFeedBack;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
 import com.autodesk.shejijia.shared.components.form.presenter.PrecheckPresenter;
+import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_aij on 16/10/25.
@@ -29,9 +45,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private RadioButton mOkBtn;
     private RadioButton mNoBtn;
     private LinearLayout mNecessaryLayout;
-    private LinearLayout mAdditionalLayout;
+    private RecyclerView mAdditionalRv;
     private Button mOptionBtn;
     private PrecheckPresenter mPresenter;
+    private FormListAdapter mAdapter;
+    private List<String> mTitleList = new ArrayList<>();
+    private List<FormFeedBack> mFormFeedBack = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -40,20 +59,23 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
-        //验收条件的按钮
         mOkBtn = (RadioButton) findViewById(R.id.btn_ok);
         mNoBtn = (RadioButton) findViewById(R.id.btn_no);
-        //必要条件
         mNecessaryLayout = (LinearLayout) findViewById(R.id.ll_necessary);
-        //辅助条件
-        mAdditionalLayout = (LinearLayout) findViewById(R.id.ll_additional);
-        //确定按钮
+        mAdditionalRv = (RecyclerView) findViewById(R.id.rv_additional);
         mOptionBtn = (Button) findViewById(R.id.btn_option);
     }
 
     @Override
     protected void initExtraBundle() {
         Task task = (Task) getIntent().getSerializableExtra("task");
+        initToolbar(task);
+
+        mAdditionalRv.setLayoutManager(new LinearLayoutManager(this));
+        mAdditionalRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        mAdditionalRv.setItemAnimator(new DefaultItemAnimator());
+        mAdapter = new FormListAdapter(this, mTitleList);
+        mAdditionalRv.setAdapter(mAdapter);
 
         mPresenter = new PrecheckPresenter(this, this);
         mPresenter.showForm(task);
@@ -61,7 +83,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        // TODO: 16/10/27 意外终止时保存的数据
+
     }
 
     @Override
@@ -69,17 +91,29 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         mOkBtn.setOnClickListener(this);
         mNoBtn.setOnClickListener(this);
         mOptionBtn.setOnClickListener(this);
-    }
 
+        mAdapter.setOnItemClickListener(new FormListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                TextView resultTv = (TextView) view.findViewById(R.id.tv_result);
+                setResult(resultTv,mFormFeedBack.get(position));
+            }
+
+            @Override
+            public void onResultClick(TextView view) {
+                view.setText(R.string.yes);
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
 
         if (i == R.id.btn_ok) {
-            mPresenter.showOkBtn();
+            mPresenter.showQualifiedBtn();
         } else if (i == R.id.btn_no) {
-            mPresenter.showNoBtn();
+            mPresenter.showUnqualifiedBtn();
         } else if (i == R.id.btn_option) {
             mPresenter.clickOptionBtn();
         }
@@ -115,15 +149,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void setToolbarTitle(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            actionBar.setTitle(title);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @Override
     public void addNecessaryView(TextView view) {
         if (null != mNecessaryLayout) {
             mNecessaryLayout.addView(view);
@@ -131,10 +156,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void addAdditionalLayout(View view) {
-        if (null != mAdditionalLayout) {
-            mAdditionalLayout.addView(view);
-        }
+    public void addAdditionalData(Map<String,FormFeedBack> formFeedBackMap) {
+        mTitleList.clear();
+        mTitleList.addAll(formFeedBackMap.keySet());
+        mAdapter.notifyDataSetChanged();
+
+        mFormFeedBack.addAll(formFeedBackMap.values());
     }
 
     @Override
@@ -162,47 +189,59 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void enterQualified(Task task) {
-        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
+    public void enterQualified(Task task, SHPrecheckForm shPrecheckForm) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,task提供各种表单的id,后者保存了辅助条件的信息
         Intent intent = new Intent(this, FormListActivity.class);
         intent.putExtra("task", task);
         startActivity(intent);
+        finish();
+
     }
 
     @Override
-    public void enterUnqualified(SHForm form) {
-        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中
+    public void enterUnqualified(SHPrecheckForm shPrecheckForm) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,
         ToastUtils.showShort(this, "另外再开启一个activity来处理验收条件不合格的情况");
-//        for (CheckItem checkItem : form.getCheckItems()) {
-//            LogUtils.d("asdf",checkItem.getFormFeedBack().getCurrentCheckIndex().toString());
-//        }
     }
 
+    private void initToolbar(Task task) {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setTitle(task.getName());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void setResult(final TextView resultTv, final FormFeedBack formFeedBack) {
+
+        View optionView = LayoutInflater.from(this).inflate(R.layout.view_option_precheck, null);
+        TextView yesTv = (TextView) optionView.findViewById(R.id.tv_yes);
+        TextView noTv = (TextView) optionView.findViewById(R.id.tv_no);
+        int v1 = ScreenUtil.dip2px(57.5f);
+        int y1 = ScreenUtil.dip2px(16f);
+
+        final PopupWindow popupWindow = new PopupWindow(optionView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
+        popupWindow.showAsDropDown(resultTv, -y1, -v1);
+
+        yesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultTv.setText(UIUtils.getString(R.string.yes));
+                formFeedBack.setCurrentCheckIndex(0);
+                popupWindow.dismiss();
+            }
+        });
+        noTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultTv.setText(UIUtils.getString(R.string.no));
+                formFeedBack.setCurrentCheckIndex(1);
+                popupWindow.dismiss();
+            }
+        });
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
