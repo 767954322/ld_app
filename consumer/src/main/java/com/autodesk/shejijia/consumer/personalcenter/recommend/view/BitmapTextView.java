@@ -14,6 +14,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.autodesk.shejijia.consumer.R;
+
 /**
  * Created by yaoxuehua on 16-11-18.
  * 自定义实现图片旋转
@@ -31,6 +33,7 @@ public class BitmapTextView extends TextView {
     private static double ADAPTER_COUNT = 1.00d;
     public static final int BITMAP_DOWN = 1;
     public static final int BITMAP_TOP = 2;
+    private int PICTURE_DISTANCE_TEXT;
     private Activity activity;
 
     public BitmapTextView(Context context) {
@@ -42,6 +45,7 @@ public class BitmapTextView extends TextView {
         height = context.getWindowManager().getDefaultDisplay().getHeight();
         width = context.getWindowManager().getDefaultDisplay().getWidth();
         ADAPTER_COUNT = (double) height / NO_CHANGE_HEIGHT;
+
     }
 
     public void setBitmapAndSize(int drawble, String text) {
@@ -80,7 +84,7 @@ public class BitmapTextView extends TextView {
     }
     public void setBitmapCanvas(Canvas canvas, int textWidth, int textHeight) {
 
-        textWidth = (int) (30 * ADAPTER_COUNT);
+        textWidth = PICTURE_DISTANCE_TEXT;
         int bitmapWidth = lastBitmap.getWidth();
         int bitmapHeight = lastBitmap.getHeight();
         int left = textViewWidth / 2 - bitmapWidth / 2;
@@ -97,6 +101,7 @@ public class BitmapTextView extends TextView {
         super.onSizeChanged(w, h, oldw, oldh);
         this.textViewWidth = w;
         this.textViewHeight = h;
+        PICTURE_DISTANCE_TEXT = getResources().getDimensionPixelSize(R.dimen.add_category_picture_distance_text);
     }
 
     /**

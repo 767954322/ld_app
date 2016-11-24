@@ -131,6 +131,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
                 CustomProgress.cancelDialog();
                 storeInformationBean = GsonUtil.jsonToBean(jsonObject.toString(), StoreInformationBean.class);
+                List<StoreInformationBean.StoreListBean> store_list = storeInformationBean.getStore_list();
                 getStoreNameAndAdd(storeInformationBean.getStore_list());
             }
         });
@@ -143,9 +144,9 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
     public void getStoreNameAndAdd(List<StoreInformationBean.StoreListBean> store_list) {
         forResultStoreList = new ArrayList<>();
-        arr = new String[store_list.size() - 3];
+        arr = new String[store_list.size()+1];
         arr[0] = "全部";
-        for (int i = 0; i < store_list.size() - 4; i++) {
+        for (int i = 0; i < store_list.size(); i++) {
 
             arr[i + 1] = store_list.get(i).getMall_name();
         }
