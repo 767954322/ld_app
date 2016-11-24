@@ -258,11 +258,18 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         mDb = mCityDataHelper.openDataBase();
         province_name = mCityDataHelper.getProvinceName(mDb, province);
         city_name = mCityDataHelper.getCityName(mDb, city);
-        if (!TextUtils.isEmpty(district.trim())) {
-            district_name = mCityDataHelper.getDistrictName(mDb, district);
+
+        if (!TextUtils.isEmpty(district)) {
+            if (!TextUtils.isEmpty(district.trim())) {
+                district_name = mCityDataHelper.getDistrictName(mDb, district);
+            } else {
+                district_name = "";
+            }
         } else {
             district_name = "";
         }
+
+
         mDb.close();
 
         if (!TextUtils.isEmpty(avatar)) {
@@ -412,7 +419,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private void getPCDAddress() {
         if (!TextUtils.isEmpty(province_name)
                 || !TextUtils.isEmpty(city_name)) {
-            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name,UIUtils.getString(R.string.please_select_addresses));
+            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name, UIUtils.getString(R.string.please_select_addresses));
         } else {
             mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
         }
