@@ -485,7 +485,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     @Override
     protected int getRightButtonImageResourceId() {
         //default set in XML
-        return R.drawable.icon_time_normal;
+        return R.drawable.measure_house_get_need;
     }
 
     @Override
