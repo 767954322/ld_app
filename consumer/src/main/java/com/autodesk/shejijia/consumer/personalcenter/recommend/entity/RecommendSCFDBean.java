@@ -167,5 +167,12 @@ public class RecommendSCFDBean implements Serializable {
                 ", \"brands\":" + brands +
                 ", \"source\":\"" + source + '"' +
                 '}';
+
+//        return "{" +
+//                "\"sub_category_3d_id\":\"" + sub_category_3d_id + '"' +
+//                ", \"sub_category_3d_name\":\"" + sub_category_3d_name + '"' +
+//                ", \"brands\":" + brands +
+//                ", \"source\":\"" + source + '"' +
+//                '}';
     }
 }

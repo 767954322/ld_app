@@ -229,7 +229,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         LogUtils.d("RecommendListDetailActi", mRecommendScfdTag);
         mRecommendSCFDList.addAll(recommendscfd);
 
-        for (RecommendSCFDBean recommendSCFDBean: mRecommendSCFDList){
+        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
             recommendSCFDBean.setBrand_count_limit(mBrandCountLimit);
         }
 
@@ -480,13 +480,24 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private void addMaterialRecommendSCFD(Intent intent) {
         Bundle bundle = intent.getExtras();
         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+        List<RecommendSCFDBean> recommendSCFDList = new ArrayList<>();
+        recommendSCFDList.addAll(mRecommendSCFDList);
+
         mRecommendSCFDList.clear();
+
+        Log.d("RecommendListDetailActi", "recommendSCFDList:" + recommendSCFDList);
 
         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
             mRecommendSCFDList.add(getMaterialRecommendSCFDBean(checkedInformationBean));
-            mRecommendScfdTag = "have_data";
         }
-        for (RecommendSCFDBean recommendSCFDBean: mRecommendSCFDList){
+
+        if (recommendSCFDList.toString().equals(mRecommendSCFDList.toString())) {
+            mRecommendScfdTag = mRecommendSCFDList.toString();
+        } else {
+            mRecommendScfdTag = "data_modify";
+        }
+
+        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
             recommendSCFDBean.setBrand_count_limit(mBrandCountLimit);
         }
         mLlEmptyContentView.setVisibility(mRecommendSCFDList.size() > 0 ? View.GONE : View.VISIBLE);
