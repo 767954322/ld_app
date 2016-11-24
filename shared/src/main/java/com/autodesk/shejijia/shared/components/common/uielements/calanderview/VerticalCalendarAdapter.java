@@ -59,7 +59,6 @@ public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalend
         holder.monthView.reuse(calendarDay, mcv.getFirstDayOfWeek());
         holder.monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
         holder.monthView.setShowWeekDays(false);
-        holder.monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
         holder.monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
         holder.monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
 
