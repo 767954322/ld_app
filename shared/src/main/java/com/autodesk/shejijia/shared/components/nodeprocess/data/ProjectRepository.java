@@ -131,7 +131,7 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     public boolean isActivePlanEditing() {
-        return mActivePlanEditing;
+        return mActivePlan != null && mActivePlanEditing;
     }
 
     public void setActivePlanEditing(boolean activePlanEditing) {
