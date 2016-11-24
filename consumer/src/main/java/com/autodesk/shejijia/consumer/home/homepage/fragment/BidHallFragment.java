@@ -130,27 +130,29 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 try {
                     String str = GsonUtil.jsonToString(jsonObject);
                     BidHallEntity list = GsonUtil.jsonToBean(str, BidHallEntity.class);
-                    switch (state) {
-                        case 0:
-                            OFFSET = 10;
-                            mNeedsListEntities.clear();
-                            break;
-                        case 1:
-                            OFFSET += 10;
-                            break;
-                        default:
-                            break;
-                    }
-
                     if (list != null && list.getNeeds_list() != null) {
                         List<BidHallEntity.NeedsListBean> entitys = getNeedsListEntitys(list.getNeeds_list());
-                        mNeedsListEntities.addAll(entitys);
+                        switch (state) {
+                            case 0:
+                                OFFSET = 10;
+                                mNeedsListEntities.clear();
+                                mNeedsListEntities.addAll(entitys);
+                                mBidHallAdapter=new BidHallAdapter(getActivity(),mNeedsListEntities);
+                                mBidHallAdapter.notifyDataSetChanged();
+
+                                break;
+                            case 1:
+                                OFFSET += 10;
+                                mNeedsListEntities.addAll(entitys);
+                                mBidHallAdapter=new BidHallAdapter(getActivity(),mNeedsListEntities);
+                                mBidHallAdapter.notifyDataSetChanged();
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                    if (state == 0) {
-                        mNeedsListEntityArrayList.addAll(mNeedsListEntities);
-                        mFlag = false;
-                    }
-                    mBidHallAdapter.notifyDataSetChanged();
+
+                 //   mBidHallAdapter.notifyDataSetChanged();
                 } finally {
                     hideFooterView(mNeedsListEntities);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
