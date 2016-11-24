@@ -335,7 +335,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
                 case 33: // 量房交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
+                    return (com.autodesk.shejijia.shared.R.drawable.im_delivery);
 
                 case 41: // 支付设计首款
                 case 42: // 打开3D工具
@@ -420,7 +420,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                         if (ifIsDesiner) {
                             return "上传量房交付物";
                         } else {
-                            return "接受量房交付物";
+                            return "接收量房交付物";
                         }
 
                     case 41: // 支付设计首款
@@ -502,7 +502,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                     if (ifIsDesiner) {
                         return "上传量房交付物";
                     } else {
-                        return "接受量房交付物";
+                        return "接收量房交付物";
                     }
 
                 case 41: // 支付设计首款
