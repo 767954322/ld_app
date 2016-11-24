@@ -77,8 +77,8 @@
     <string name="calendar_friday">五</string>
     <string name="calendar_saturday">六</string>
 
-    <!--年 月 日-->
-    <string name="calendar_month_day">MM月dd日</string>
+    <!--format style-->
+    <string name="date_format_month_day">MM月dd日</string>
 
     <!--项目列表筛选条件-->
     <string name="screen_all">全部项目</string>
@@ -132,5 +132,13 @@
     <string name="form_inspect_agree">同意,可进行质量验收</string>
     <string name="form_inspect_disagree">不同意验收</string>
     <string name="form_program_log">问题记录</string>
+
+    <!--footer view text-->
+    <string name="footer_no_more">没有更多</string>
+    <string name="footer_error">加载失败</string>
+    <string name="footer_net_error">网络连接失败</string>
+
+    <string name="project_list_empty_message">没有进行中或待开工的项目</string>
+
 
 </resources>

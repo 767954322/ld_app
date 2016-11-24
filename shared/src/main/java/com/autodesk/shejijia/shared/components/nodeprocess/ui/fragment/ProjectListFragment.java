@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -22,6 +21,8 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
+import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
@@ -39,9 +40,11 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  * 首页-项目列表
  */
-public class ProjectListFragment extends BaseConstructionFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
+public class ProjectListFragment extends BaseConstructionFragment implements ProjectListContract.View,
+        ProjectListAdapter.ProjectListItemListener, RefreshLoadMoreListener {
 
-    private RecyclerView mProjectListView;
+    private SwipeRecyclerView mProjectListView;
+    private TextView mEmptyView;
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
     private PopupWindow mScreenPopup;
@@ -52,13 +55,12 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_task_list_view;
+        return R.layout.fragment_project_list_view;
     }
 
 
     @Override
     protected void onFirstUserVisible() {
-
     }
 
     @Override
@@ -67,16 +69,18 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
         mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);
-        mProjectListPresenter.refreshProjectList();
     }
 
     @Override
     protected void initView() {
-        mProjectListView = (RecyclerView) rootView.findViewById(R.id.rcy_task_list);
+        mProjectListView = (SwipeRecyclerView) rootView.findViewById(R.id.rcy_task_list);
+        mEmptyView = (TextView) rootView.findViewById(R.id.tv_empty_message);
         //init recyclerView
-        mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
-        mProjectListView.setHasFixedSize(true);
-        mProjectListView.setItemAnimator(new DefaultItemAnimator());
+        mProjectListView.getRecyclerView().setLayoutManager(new LinearLayoutManager(mContext));
+        mProjectListView.getRecyclerView().setHasFixedSize(true);
+        mProjectListView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mProjectListView.getSwipeRefreshLayout()
+                .setColorSchemeColors(ContextCompat.getColor(mContext, R.color.colorPrimary));
         //init recyclerView adapter
         mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectInfo>(0), R.layout.listitem_task_list_view, activity, this);
         mProjectListView.setAdapter(mProjectListAdapter);
@@ -84,13 +88,24 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         setHasOptionsMenu(true);
     }
 
-    // TODO: 10/25/16 模拟上拉刷新监听
-    private void onRefresh() {
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mProjectListView.setRefreshLoadMoreListener(this);
+        //让其自动刷新一下，会回调onRefresh()方法一次
+        mProjectListView.setRefreshing(true);
+    }
+
+    /*
+    * 筛选功能也会回调 onRefresh方法
+    * */
+    @Override
+    public void onRefresh() {
         mProjectListPresenter.refreshProjectList();
     }
 
-    // TODO: 10/25/16 模拟下拉加载更多监听
-    private void onLoadMore() {
+    @Override
+    public void onLoadMore() {
         mProjectListPresenter.loadMoreProjectList();
     }
 
@@ -105,14 +120,24 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void refreshProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
+            mProjectListView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+            mProjectListView.complete();
+            mProjectListView.scrollToPosition(0);
             mProjectListAdapter.setProjectLists(projectList);
+        } else {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mProjectListView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void addMoreProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
+            mProjectListView.complete();
             mProjectListAdapter.appendProjectLists(projectList);
+        } else {
+            mProjectListView.onNoMore(null);
         }
     }
 
@@ -178,6 +203,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
                 mProjectListPresenter.initFilterRequestParams(null, null, null);
                 mProjectListPresenter.onFilterLikeChange(null);
+                if (!mProjectListView.isRefreshing()) {
+                    mProjectListView.setRefreshing(true);
+                }
                 mScreenPopup.dismiss();
             }
         });
@@ -188,6 +216,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
                 mProjectListPresenter.initFilterRequestParams(null, null, null);
                 mProjectListPresenter.onFilterLikeChange("true");
+                if (!mProjectListView.isRefreshing()) {
+                    mProjectListView.setRefreshing(true);
+                }
                 mScreenPopup.dismiss();
             }
         });

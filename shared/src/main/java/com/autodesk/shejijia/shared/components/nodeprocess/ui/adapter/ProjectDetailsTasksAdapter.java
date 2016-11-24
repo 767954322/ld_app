@@ -220,7 +220,7 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     private String formattedDateFromDate(Date date) {
-        return getStringDateByFormat(date, UIUtils.getString(R.string.calendar_month_day));
+        return getStringDateByFormat(date, UIUtils.getString(R.string.date_format_month_day));
     }
 
     private static class TaskListVH extends RecyclerView.ViewHolder {

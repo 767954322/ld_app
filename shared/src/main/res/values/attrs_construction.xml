@@ -21,4 +21,10 @@
 
     </declare-styleable>
 
+    <!--自定义 swipeRecyclerView 属性-->
+    <declare-styleable name="SwipeRecyclerView">
+        <attr name="refreshEnable" format="boolean" />
+        <attr name="loadMoreEnable" format="boolean" />
+    </declare-styleable>
+
 </resources>

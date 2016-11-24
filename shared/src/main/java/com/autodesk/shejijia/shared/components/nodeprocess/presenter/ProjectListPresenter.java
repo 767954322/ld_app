@@ -28,16 +28,16 @@ import java.util.List;
  */
 public class ProjectListPresenter implements ProjectListContract.Presenter {
 
-    private static final int PAGE_LIMIT = 30;
+    private static final int PAGE_LIMIT = 10;
     private Context mContext;
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
     private FragmentManager fragmentManager;
     private int mOffset = 0;
+    private int mRemoteOffset = 0;
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
-    private List<ProjectInfo> mProjectList;
 
     public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
@@ -68,7 +68,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void onFilterLikeChange(String newLike) {
         this.mFilterLike = newLike;
-        refreshProjectList();
+//        refreshProjectList();
     }
 
     @Override
@@ -78,13 +78,13 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void refreshProjectList() {
-        mProjectListView.showLoading();
         mOffset = 0;
         loadProjectList(mOffset);
     }
 
     @Override
     public void loadMoreProjectList() {
+        // TODO: 11/24/16 offset得有个界限 
         mOffset++;
         loadProjectList(mOffset);
     }
@@ -112,12 +112,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
                 if (taskList.getOffset() == 0) {
-                    mProjectList = taskList.getData();
                     mProjectListView.refreshProjectListView(taskList.getData());
                 } else {
-                    mOffset = taskList.getOffset();
-                    mProjectList.addAll(taskList.getData());
-                    mProjectListView.addMoreProjectListView(mProjectList);
+                    mProjectListView.addMoreProjectListView(taskList.getData());
                 }
             }
 

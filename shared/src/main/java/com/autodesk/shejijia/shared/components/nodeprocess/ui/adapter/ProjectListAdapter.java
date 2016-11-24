@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -20,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -92,6 +96,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void initView(ProjectListVH projectVh, int position) {
 
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+            projectVh.mStarLabel.setZ(ScreenUtil.dip2px(6));
+        }
         if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
@@ -157,6 +164,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static class ProjectListVH extends RecyclerView.ViewHolder {
+        private RelativeLayout mRootView;
         private LinearLayout mProjectItem;
         private LinearLayout mProjectDetails;
 
@@ -170,6 +178,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ProjectListVH(View itemView) {
             super(itemView);
 
+            mRootView = (RelativeLayout)itemView.findViewById(R.id.fly_task_list);
             mProjectItem = (LinearLayout) itemView.findViewById(R.id.lv_project_item);
             mProjectDetails = (LinearLayout) itemView.findViewById(R.id.lv_project_details);
             mTaskListView = (RecyclerView) itemView.findViewById(R.id.rcy_task_list);
