@@ -40,7 +40,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     private RecommendSCFDBean mRecommendSCFDBean;
     private RecommendBrandsBean selectRecommendBrandsBean;
     private AppCompatButton changeFinsh;
-    private RecommendBrandsBean recommendBrandsBean;
+    private RecommendBrandsBean mRecommendBrandsBean;
 //    private String brandCode;
 
     @Override
@@ -62,7 +62,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDBean = (RecommendSCFDBean) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
-        recommendBrandsBean = (RecommendBrandsBean) intent.getSerializableExtra(Constant.BundleKey.BRANDCODE);
+        mRecommendBrandsBean = (RecommendBrandsBean) intent.getSerializableExtra(Constant.BundleKey.BRANDCODE);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         selectRecommendBrandsBean = brandsBeanList.get(position);
-        if(selectRecommendBrandsBean.getCode().equals(recommendBrandsBean.getCode())){
-            selectRecommendBrandsBean = recommendBrandsBean;
+        if(selectRecommendBrandsBean.getCode().equals(mRecommendBrandsBean.getCode())){
+            selectRecommendBrandsBean = mRecommendBrandsBean;
         }
     }
 
@@ -104,7 +104,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
                 List<RecommendBrandsBean> brandsBeen = mRecommendSCFDBean.getBrands();
                 Intent intent = new Intent();
                 for (RecommendBrandsBean recommendBrandsBean : brandsBeen) {
-                    if (recommendBrandsBean.getCode().equals(recommendBrandsBean.getCode())) {
+                    if (recommendBrandsBean.getCode().equals(mRecommendBrandsBean.getCode())) {
                         int post = brandsBeen.indexOf(recommendBrandsBean);
                         mRecommendSCFDBean.getBrands().remove(recommendBrandsBean);
                         brandsBeen.add(post, selectRecommendBrandsBean);
@@ -146,7 +146,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
             Iterator<RecommendBrandsBean> iter = brandsBeans.iterator();
             while (iter.hasNext()) {
                 RecommendBrandsBean b = iter.next();
-                if (b.getCode().equals(brandsBean.getCode()) && !b.getCode().equals(recommendBrandsBean.getCode())) {
+                if (b.getCode().equals(brandsBean.getCode()) && !b.getCode().equals(mRecommendBrandsBean.getCode())) {
                     iter.remove();
                 }
             }
@@ -158,7 +158,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
 
     private void setItemChecked() {
         for (RecommendBrandsBean rb : brandsBeanList) {
-            if (rb.getCode().equals(recommendBrandsBean.getCode())) {
+            if (rb.getCode().equals(mRecommendBrandsBean.getCode())) {
                 int index = brandsBeanList.indexOf(rb);
                 updataBrandListview.setItemChecked(index, true);
                 selectRecommendBrandsBean = rb;
