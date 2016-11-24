@@ -204,6 +204,7 @@
     <string name="consume_send_success">选TA量房成功</string>
     <!--<string name="consume_send_success">选他量房成功</string>-->
     <string name="alipay_error">支付失败！</string>
+    <string name="designer_no_real_name">设计师未通过认证</string>
 
     <!--AutonyAttestationActivity-->
     <string name="autonym_no_self_identity">本人持证正面照上传成功</string>
