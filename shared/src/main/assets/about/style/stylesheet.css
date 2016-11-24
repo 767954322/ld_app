@@ -7945,7 +7945,6 @@ blockquote cite
 
 .contract-table-blosk .header
 {
-    height: 17px;
     margin: 0% 0%;
 }
 
@@ -7953,8 +7952,7 @@ blockquote cite
 {
     font-size: 14px;
     color: #484848;
-    line-height: 14px;
-    height: 14px;
+    line-height: 20px;
 }
 
 .contract-table-blosk .tableblock
