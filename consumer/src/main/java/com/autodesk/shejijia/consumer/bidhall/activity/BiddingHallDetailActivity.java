@@ -281,7 +281,9 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         district_name = UIUtils.getNoStringIfEmpty(district_name);
         String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
-        setTitleForNavbar(community_name);
+        String nameTitle = UIUtils.substring(community_name, 6);
+        setTitleForNavbar(nameTitle);
+
         mTvProjectNeedsId.setText(needs_id);
         mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
         mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
