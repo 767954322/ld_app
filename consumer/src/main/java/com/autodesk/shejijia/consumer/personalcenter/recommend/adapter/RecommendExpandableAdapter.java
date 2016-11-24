@@ -181,10 +181,10 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 hideSoftKeywords(mViewHolder.spinnerApartment);
                 onClearFocus(mViewHolder.etBrandNum, mViewHolder.etBranDimension, mViewHolder.etBranDimension);
-                boolean falg =(position==0)?true:false;
+                boolean falg = (position == 0) ? true : false;
                 view.setTextColor(falg ? mActivity.getResources().getColor(R.color.bg_99) : Color.BLACK);
                 String index = "";
-                if(position != 0){
+                if (position != 0) {
                     index = position < 10 ? "0" + position : position + "";
                 }
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(index);
@@ -231,8 +231,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     private void onClearFocus(EditText... editview) {
-        for (EditText v :editview){
-            if (v.hasFocus()){
+        for (EditText v : editview) {
+            if (v.hasFocus()) {
                 v.clearFocus();
             }
         }
@@ -482,10 +482,10 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         if (StringUtils.isEmpty(text)) {
             return true;
         }
-
+        boolean isThanZero = StringUtils.isNumeric(text) && Float.valueOf(text) > 0;
         boolean isAllNum = text.matches(ALL_NUM);
         boolean isNumAndChines = text.matches(NUM_AND_CHINESE);
-        if (isAllNum || isNumAndChines) {
+        if (isThanZero && isAllNum || isNumAndChines) {
             return true;
         }
         return false;
