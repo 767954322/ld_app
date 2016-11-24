@@ -1,10 +1,8 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -12,7 +10,6 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.OnDateSelectedListener;
@@ -23,7 +20,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.A
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +32,7 @@ import java.util.List;
  * @since 11/2/16
  */
 
-public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.MileStoneView, OnDateSelectedListener {
+public class EditMilestoneNodeFragment extends BaseConstructionFragment implements EditPlanContract.MileStoneView, OnDateSelectedListener {
 
     private MaterialCalendarView mCalendarWidget;
     private MileStoneNodeDecorator mMileStoneDecorator;
@@ -43,7 +40,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     private MileStoneDayFormatter mMileStoneDayFormator;
 
     private EditPlanContract.MileStonePresenter mPresenter;
-    private ConProgressDialog mProgressDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -124,43 +120,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         if (selected) {
             mPresenter.updateTask(date.getDate());
-        }
-    }
-
-    @Override
-    public void showNetError(String msg) {
-    }
-
-    @Override
-    public void showError(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.alert_dialog__default_title);
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-    @Override
-    public void showLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.loading));
-        }
-
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
         }
     }
 

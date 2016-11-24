@@ -85,7 +85,6 @@
     <string name="screen_like">只看星标项目</string>
 
     <!--create or edit plan-->
-    <string name="create_plan">创建施工进度表</string>
     <string name="edit_plan_next_step">下一步</string>
     <string name="edit_plan_complete">完成</string>
     <string name="edit_plan_title_first_step">第一步: 调整验收节点时间</string>
@@ -110,6 +109,8 @@
     <string name="work_ready">等待开工交底中</string>
     <string name="work_inProgress">开工交底中</string>
     <string name="project_edit_plan">编辑施工计划</string>
+    <string name="create_plan">创建施工进度表</string>
+    <string name="continue_edit_plan">继续编辑施工进度表</string>
 
     <!--项目信息页面文字-->
     <string name="project_info_title">项目信息</string>

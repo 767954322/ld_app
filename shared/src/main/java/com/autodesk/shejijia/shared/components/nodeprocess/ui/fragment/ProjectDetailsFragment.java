@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 
 import android.app.Activity;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,12 +23,11 @@ import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -38,7 +36,7 @@ import java.util.List;
  * 项目详情
  */
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener {
-    private final static int REQUEST_CODE_EDIT_PLAN = 0;
+    private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
 
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
@@ -102,7 +100,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if (v.getId() == R.id.btn_create_plan || v.getId() == R.id.tv_edit_plan) {
             Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
             intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID)));
-            startActivity(intent);
+            intent.putExtra(ConstructionConstants.BUNDLE_KEY_PLAN_OPERATION, v.getId() == R.id.btn_create_plan ? "start" : "edit");
+            startActivityForResult(intent, REQUEST_CODE_EDIT_PLAN);
         }
     }
 
@@ -185,12 +184,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
-
                 if (requestCode == Activity.RESULT_OK) {
-                    //TODO refresh project
                     mProjectDetailsPresenter.getProjectDetails();
                 } else {
-                    // TODO update button text
+                    if (mCreatePlanBtn.getVisibility() == View.VISIBLE
+                        && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
+                        mCreatePlanBtn.setText(R.string.continue_edit_plan);
+                    }
                 }
                 break;
             default:

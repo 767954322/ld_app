@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditMilestonePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
@@ -81,6 +85,9 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (mEditState == EditState.EDIT_MILESTONE) {
+            Intent data = new Intent();
+            data.putExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, ProjectRepository.getInstance().isActivePlanEditing());
+            setResult(Activity.RESULT_CANCELED, data);
             supportFinishAfterTransition();
         } else {
             updateEditState(EditState.EDIT_MILESTONE);

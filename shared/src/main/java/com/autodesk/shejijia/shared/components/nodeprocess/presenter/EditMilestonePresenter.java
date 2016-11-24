@@ -36,7 +36,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
     @Override
     public void fetchPlan() {
         mView.showLoading();
-        ProjectRepository.getInstance().getEditingPlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
+        ProjectRepository.getInstance().getActivePlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
                 new ResponseCallback<PlanInfo>() {
             @Override
             public void onSuccess(PlanInfo data) {
@@ -79,6 +79,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
                     }
 
                     mView.onTaskDateChange(mActiveTask, oldDate, startDate);
+                    ProjectRepository.getInstance().setActivePlanEditing(true);
                 }
             }
         } else {

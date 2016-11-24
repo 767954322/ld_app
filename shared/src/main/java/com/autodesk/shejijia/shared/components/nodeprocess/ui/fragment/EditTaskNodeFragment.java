@@ -17,17 +17,17 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract.TaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditTaskNodePresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.EditTaskNodeAdapter;
-import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +41,7 @@ import java.util.List;
  * @since 11/3/16
  */
 
-public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.TaskNodeView {
+public class EditTaskNodeFragment extends BaseConstructionFragment implements EditPlanContract.TaskNodeView {
     private final static String FRAGMENT_TAG_ADD_TASK = "add_task";
     private final static String FRAGMENT_TAG_PICK_DATE = "pick_date";
 
@@ -136,7 +136,9 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
     @Override
     protected void initData() {
-        mPresenter = new EditTaskNodePresenter(getActivity().getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID));
+        String projectId = getActivity().getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        String operation = getActivity().getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PLAN_OPERATION);
+        mPresenter = new EditTaskNodePresenter(projectId, operation);
         mPresenter.bindView(this);
         mPresenter.fetchPlan();
     }
@@ -276,34 +278,6 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             return true;
         }
      }
-
-    @Override
-    public void showNetError(String msg) {
-
-    }
-
-    @Override
-    public void showError(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.alert_dialog__default_title);
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    @Override
-    public void showLoading() {
-    }
-
-    @Override
-    public void hideLoading() {
-    }
 
     @Override
     public void showPickDayDialog(List<Task> milestones, Task task) {

@@ -23,7 +23,8 @@ public final class ProjectRepository implements ProjectDataSource {
 
     private ProjectList mProjectList;
     private ProjectInfo mProjectInfo;
-    private PlanInfo mEditingPlan;
+    private PlanInfo mActivePlan;
+    private boolean mActivePlanEditing;
 
     private ProjectRepository() {
     }
@@ -62,7 +63,7 @@ public final class ProjectRepository implements ProjectDataSource {
             @Override
             public void onSuccess(ProjectInfo data) {
                 mProjectInfo = data;
-                mEditingPlan = null;
+                mActivePlan = null;
                 callback.onSuccess(data);
             }
 
@@ -88,7 +89,7 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, new ResponseCallback<Project>() {
             @Override
             public void onSuccess(Project data) {
-                mEditingPlan = null;
+                mActivePlan = null;
                 callback.onSuccess(data);
             }
 
@@ -108,14 +109,15 @@ public final class ProjectRepository implements ProjectDataSource {
         return mProjectInfo;
     }
 
-    public void getEditingPlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo> callback) {
-        if (mEditingPlan == null || !mEditingPlan.getProjectId().equalsIgnoreCase(pid)) {
+    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo> callback) {
+        if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
             getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
-                    mEditingPlan = data.getPlan();
-                    mEditingPlan.setProjectId(String.valueOf(data.getProjectId()));
-                    callback.onSuccess(mEditingPlan);
+                    mActivePlanEditing = false;
+                    mActivePlan = data.getPlan();
+                    mActivePlan.setProjectId(String.valueOf(data.getProjectId()));
+                    callback.onSuccess(mActivePlan);
                 }
 
                 @Override
@@ -124,8 +126,16 @@ public final class ProjectRepository implements ProjectDataSource {
                 }
             });
         } else {
-            callback.onSuccess(mEditingPlan);
+            callback.onSuccess(mActivePlan);
         }
+    }
+
+    public boolean isActivePlanEditing() {
+        return mActivePlanEditing;
+    }
+
+    public void setActivePlanEditing(boolean activePlanEditing) {
+        this.mActivePlanEditing = activePlanEditing;
     }
 
     private PlanInfo copyPlan(PlanInfo planInfo) {

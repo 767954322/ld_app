@@ -34,19 +34,20 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     private EditPlanContract.TaskNodeView mView;
 
     private String mProjectId;
+    private String mOperation;
     private PlanInfo mPlan;
     private Task mActiveTask;
     private ArrayList<Task> mDeletedTasks = new ArrayList<>();
 
     private TaskFilterType mFilterType = TaskFilterType.ALL_TASKS;
-
-    public EditTaskNodePresenter(String projectId) {
+    public EditTaskNodePresenter(String projectId, String operation) {
         mProjectId = projectId;
+        mOperation = operation;
     }
 
     @Override
     public void fetchPlan() {
-        ProjectRepository.getInstance().getEditingPlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
+        ProjectRepository.getInstance().getActivePlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
                 new ResponseCallback<PlanInfo>() {
                     @Override
                     public void onSuccess(PlanInfo data) {
@@ -90,6 +91,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
             return;
         }
 
+        ProjectRepository.getInstance().setActivePlanEditing(true);
         Collections.sort(selectedDates, new Comparator<Date>() {
             @Override
             public int compare(Date lhs, Date rhs) {
@@ -114,6 +116,11 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
 
     @Override
     public void deleteTasks(List<Task> tasks) {
+        if (tasks.size() < 1) {
+            return;
+        }
+
+        ProjectRepository.getInstance().setActivePlanEditing(true);
         List<Task> allTasks = mPlan.getTasks();
         for (Task task : tasks) {
             mDeletedTasks.add(task);
@@ -125,6 +132,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
 
     @Override
     public void addTask(Task toAddTask) {
+        ProjectRepository.getInstance().setActivePlanEditing(true);
         toAddTask.setStatus(TaskStatusTypeEnum.TASK_STATUS_OPEN.getTaskStatus());
 
         for (Task deletedTask : mDeletedTasks) {
@@ -178,7 +186,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     @Override
     public void commitPlan() {
         Bundle requestParams = new Bundle();
-        requestParams.putString("operation", "edit"); // TODO Get operation
+        requestParams.putString("operation", mOperation);
         requestParams.putSerializable("body", mPlan);
         mView.showUpLoading();
         ProjectRepository.getInstance().updatePlan(mProjectId, requestParams, ConstructionConstants.REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
