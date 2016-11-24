@@ -16,7 +16,6 @@ public class DayViewFacade {
 
     private Drawable backgroundDrawable = null;
     private Drawable selectionDrawable = null;
-//    private int selectionDrawable = 0;
     private final LinkedList<Span> spans = new LinkedList<>();
     private boolean daysDisabled = false;
     private boolean daysActivated = false;

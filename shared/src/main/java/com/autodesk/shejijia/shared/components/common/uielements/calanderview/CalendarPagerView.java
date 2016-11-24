@@ -209,7 +209,6 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
             dayView.setupSelection(
                     showOtherDates, day.isInRange(minDate, maxDate), isDayEnabled(day));
 
-
             Collection<CalendarDay> dates = mcv.getSelectedDates();
             dayView.setChecked(dates != null && dates.contains(day));
 
