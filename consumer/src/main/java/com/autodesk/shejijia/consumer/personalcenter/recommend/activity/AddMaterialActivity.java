@@ -684,6 +684,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
         }
         showBrandRemainCount();
+        CustomProgress.cancelDialog();
     }
 
     /**

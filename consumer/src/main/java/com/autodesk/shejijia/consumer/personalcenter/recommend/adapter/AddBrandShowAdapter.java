@@ -31,7 +31,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
     private List<BtnStatusBean> list;
     private int brandCount = 6;
 
-    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler, List<BtnStatusBean> list,int brandCount) {
+    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler, List<BtnStatusBean> list, int brandCount) {
         super(context, datas, layoutId);
         this.handler = handler;
         this.context = context;
@@ -45,24 +45,24 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
 
 
-        if (brandsBean != null){
+        if (brandsBean != null) {
 
             holder.setText(R.id.brand_name, brandsBean.getName());
         }
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {
 
-            if (i == 0 && brandsBean.getMalls().size() == 1){
+            if (i == 0 && brandsBean.getMalls().size() == 1) {
 
                 storeName = brandsBean.getMalls().get(i).getMall_name();
             }
 
-            if (i > 0 && i < brandsBean.getMalls().size() - 1){
+            if ((i > 0 && i < brandsBean.getMalls().size() - 1) || (i == 0 && i < brandsBean.getMalls().size() - 1)) {
 
                 storeName = storeName + brandsBean.getMalls().get(i).getMall_name() + "、";
             }
 
-            if (i == brandsBean.getMalls().size() - 1 && brandsBean.getMalls().size() != 1){
+            if (i == brandsBean.getMalls().size() - 1 && brandsBean.getMalls().size() != 1) {
 
                 storeName = storeName + brandsBean.getMalls().get(i).getMall_name();
             }
@@ -71,8 +71,8 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
 
         holder.setText(R.id.store_show, storeName);
         holder.setOnClickListener(R.id.checked_img, new ItemImgListener(holder, brandsBean));
-        holder.setOnClickListener(R.id.rl_item,new ItemImgListener(holder,brandsBean));
-        if (list.size() != 0){
+        holder.setOnClickListener(R.id.rl_item, new ItemImgListener(holder, brandsBean));
+        if (list.size() != 0) {
 
             BtnStatusBean btnStatusBeanCompare = list.get(holder.getPosition());
             if (btnStatusBeanCompare.getSingleClickOrDoubleBtnCount() == 2) {
