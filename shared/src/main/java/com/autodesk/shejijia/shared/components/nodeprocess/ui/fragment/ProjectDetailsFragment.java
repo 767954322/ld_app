@@ -184,7 +184,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
-                if (requestCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     mProjectDetailsPresenter.getProjectDetails();
                 } else {
                     if (mCreatePlanBtn.getVisibility() == View.VISIBLE
