@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,14 +15,14 @@ import java.util.List;
 public class RecommendBrandsBean implements Serializable {
 
     private String brand_name;      // 品牌名称．
-    private String name;
-    private String dimension;       // 规格．o
-    private String remarks;         // 备注（最大不超过150个中文字符）．
+    private String name = "";
+    private String dimension = "";       // 规格．o
+    private String remarks = "";         // 备注（最大不超过150个中文字符）．
     private String code;
     private String source;          // 来源, 是否来自3d  0：空白方案 1：3d．
-    private String apartment;       // 空间．
+    private String apartment = "";       // 空间．
     private String logo_url;
-    private String amountAndUnit;   // 数量（单位）．
+    private String amountAndUnit = "";   // 数量（单位）．
     private List<RecommendMallsBean> malls;
     private List<?> commoditys;      // sku列表．
 
@@ -113,13 +115,13 @@ public class RecommendBrandsBean implements Serializable {
         return "{" +
                 "\"brand_name\":\"" + brand_name + '"' +
                 ", \"name\":\"" + name + '"' +
-                ", \"dimension\":\"" + dimension + '"' +
-                ", \"remarks\":\"" + remarks + '"' +
+                ", \"dimension\":\"" + UIUtils.getNoStringIfEmpty(dimension) + '"' +
+                ", \"remarks\":\"" + UIUtils.getNoStringIfEmpty(remarks) + '"' +
                 ", \"code\":\"" + code + '"' +
                 ", \"source\":\"" + source + '"' +
-                ", \"apartment\":\"" + apartment + '"' +
+                ", \"apartment\":\"" + UIUtils.getNoStringIfEmpty(apartment) + '"' +
                 ", \"logo_url\":\"" + logo_url + '"' +
-                ", \"amountAndUnit\":\"" + amountAndUnit + '"' +
+                ", \"amountAndUnit\":\"" + UIUtils.getNoStringIfEmpty(amountAndUnit) + '"' +
                 ", \"malls\":" + malls +
                 ", \"commoditys\":" + commoditys +
                 '}';
