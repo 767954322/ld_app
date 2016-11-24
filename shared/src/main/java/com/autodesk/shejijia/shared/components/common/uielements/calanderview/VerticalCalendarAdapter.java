@@ -19,7 +19,7 @@ import java.util.List;
  * Created by wenhulin on 11/15/16.
  */
 
-public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalendarAdapter.ViewHoder> implements IAdapter{
+public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalendarAdapter.ViewHolder> implements IAdapter{
     private AdapterHelper mAdapterHelper;
     private MaterialCalendarView mcv;
 
@@ -39,7 +39,7 @@ public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalend
     }
 
     @Override
-    public ViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
         ViewGroup monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
@@ -50,27 +50,18 @@ public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalend
         monthView.setLayoutParams(layoutParams);
         monthContainer.addView(monthView);
         monthView.setContentDescription(mcv.getCalendarContentDescription());
-        return new ViewHoder(monthContainer);
+        return new ViewHolder(monthContainer);
     }
 
     @Override
-    public void onBindViewHolder(ViewHoder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         CalendarDay calendarDay = getItem(position);
         holder.monthView.reuse(calendarDay, mcv.getFirstDayOfWeek());
         holder.monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
-        if (mAdapterHelper.getSelectionColor() != null) {
-            holder.monthView.setSelectionColor(mAdapterHelper.getSelectionColor());
-        }
-
-        holder.monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
-        holder.monthView.setMinimumDate(mAdapterHelper.getMininumDate());
-        holder.monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
-        holder.monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
         holder.monthView.setShowWeekDays(false);
-        holder.monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
-        holder.monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
-        holder.monthView.setSelectedDates(mAdapterHelper.getSelectedDates());
+        holder.monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
         holder.monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
+        holder.monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
 
         holder.titleView.setText(DateUtil.getStringDateByFormat(calendarDay.getDate(), "yyyy")
                 + mcv.getContext().getString(R.string.year)
@@ -171,11 +162,11 @@ public class VerticalCalendarAdapter extends RecyclerView.Adapter<VerticalCalend
     }
 
 
-    static class ViewHoder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         public MonthView monthView;
         public TextView titleView;
 
-        public ViewHoder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             monthView = (MonthView) itemView.findViewById(R.id.mcv_month_view);
             titleView = (TextView) itemView.findViewById(R.id.item_title);

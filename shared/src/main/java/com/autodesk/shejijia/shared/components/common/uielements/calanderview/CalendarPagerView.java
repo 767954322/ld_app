@@ -34,6 +34,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     private CalendarDay maxDate = null;
     private int firstDayOfWeek;
 
+
     private final Collection<DayView> dayViews = new ArrayList<>();
 
     public CalendarPagerView(@NonNull MaterialCalendarView view,
@@ -207,6 +208,14 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
             CalendarDay day = dayView.getDate();
             dayView.setupSelection(
                     showOtherDates, day.isInRange(minDate, maxDate), isDayEnabled(day));
+
+
+            Collection<CalendarDay> dates = mcv.getSelectedDates();
+            dayView.setChecked(dates != null && dates.contains(day));
+
+            if (mcv.getSelectionColor() > 0) {
+                dayView.setSelectionColor(mcv.getSelectionColor());
+            }
         }
         postInvalidate();
     }

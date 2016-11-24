@@ -36,7 +36,8 @@ class DayView extends CheckedTextView {
 
     private final int fadeTime;
     private Drawable customBackground = null;
-    private int selectionDrawableId;
+    private Drawable selectionDrawable;
+    private Drawable defaultSelectionDrawable;
     private Drawable mCircleDrawable;
     private DayFormatter formatter = DayFormatter.DEFAULT;
 
@@ -60,6 +61,9 @@ class DayView extends CheckedTextView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             setTextAlignment(TEXT_ALIGNMENT_CENTER);
         }
+
+        defaultSelectionDrawable = getResources().getDrawable(R.drawable.calendar_default_selector);
+        selectionDrawable = defaultSelectionDrawable;
     }
 
     public void setDay(CalendarDay date) {
@@ -101,12 +105,11 @@ class DayView extends CheckedTextView {
     /**
      * @param drawable custom selection drawable
      */
-    private void setSelectionDrawable(int drawable) {
-        if (drawable <= 0) {
-            //noinspection deprecation
-            this.selectionDrawableId = R.drawable.calendar_default_selector;
+    private void setSelectionDrawable(Drawable drawable) {
+        if (drawable == null) {
+            this.selectionDrawable = defaultSelectionDrawable;
         } else {
-            this.selectionDrawableId = drawable;
+            this.selectionDrawable = drawable;
         }
         regenerateBackground();
     }
@@ -179,12 +182,12 @@ class DayView extends CheckedTextView {
     }
 
     private void regenerateBackground() {
-        if (selectionDrawableId > 0) {
-//            setBackgroundResource(selectionDrawableId);
-            setBackgroundDrawable(getResources().getDrawable(selectionDrawableId).getConstantState().newDrawable(getResources()));
-        } else {
+        if (selectionDrawable == null) {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);
             setBackgroundDrawable(mCircleDrawable);
+        } else {
+            setBackgroundDrawable(selectionDrawable.getConstantState().newDrawable(getResources()));
+
         }
     }
 

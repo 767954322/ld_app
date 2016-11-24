@@ -15,7 +15,8 @@ public class DayViewFacade {
     private boolean isDecorated;
 
     private Drawable backgroundDrawable = null;
-    private int selectionDrawable = 0;
+    private Drawable selectionDrawable = null;
+//    private int selectionDrawable = 0;
     private final LinkedList<Span> spans = new LinkedList<>();
     private boolean daysDisabled = false;
     private boolean daysActivated = false;
@@ -43,8 +44,8 @@ public class DayViewFacade {
      *
      * @param drawable the drawable for selection
      */
-    public void setSelectionDrawable(@NonNull int drawable) {
-        if (drawable <= 0) {
+    public void setSelectionDrawable(@NonNull Drawable drawable) {
+        if (drawable != null) {
             throw new IllegalArgumentException("Cannot be null");
         }
         selectionDrawable = drawable;
@@ -82,7 +83,7 @@ public class DayViewFacade {
 
     void reset() {
         backgroundDrawable = null;
-        selectionDrawable = 0;
+        selectionDrawable = null;
         spans.clear();
         isDecorated = false;
         daysDisabled = false;
@@ -95,7 +96,7 @@ public class DayViewFacade {
      * @param other facade to apply our data to
      */
     void applyTo(DayViewFacade other) {
-        if (selectionDrawable != 0) {
+        if (selectionDrawable != null) {
             other.setSelectionDrawable(selectionDrawable);
         }
         if (backgroundDrawable != null) {
@@ -111,7 +112,7 @@ public class DayViewFacade {
         return isDecorated;
     }
 
-    int getSelectionDrawable() {
+    Drawable getSelectionDrawable() {
         return selectionDrawable;
     }
 
