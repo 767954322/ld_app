@@ -732,11 +732,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
             }
 
-            if (!Validator.isAddressValid(location_area)) { // 项目地址，服务地址长度为２－３２个字符长度
-                showAlertView(R.string.demand_please_project_address);
-                bValid = false;
-                break;
-            }
+//            if (!Validator.isAddressValid(location_area)) { // 项目地址，服务地址长度为２－３２个字符长度
+//                showAlertView(R.string.demand_please_project_address);
+//                bValid = false;
+//                break;
+//            }
 
             if (!Validator.isAddressValid(service_area)) { // 服务地址，服务地址长度为２－３２个字符长度
                 showAlertView(R.string.demand_please_service_address);
