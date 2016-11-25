@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
@@ -160,9 +161,12 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     }
 
     protected void setupBidItemView(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-        holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());
-        holder.setText(R.id.tv_decoration_buget, biddingNeedsListEntity.getRenovation_budget());
+        // 若小区名称超过四个字后用...省略  by dongxueqiu
+        String need_name = UIUtils.substring(biddingNeedsListEntity.getNeeds_name(), 4);
+        holder.setText(R.id.tv_decoration_name, need_name);
 
+//        holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());
+        holder.setText(R.id.tv_decoration_buget, biddingNeedsListEntity.getRenovation_budget());
         holder.setText(R.id.tv_decoration_needs_id, biddingNeedsListEntity.getNeeds_id());
         holder.setText(R.id.tv_decoration_address, getProjectAddress(biddingNeedsListEntity));
         holder.setVisible(R.id.decoration_phone_container, false);
@@ -181,6 +185,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
 //        startActivity(intent);
 
         // fix ui不符合  by zhoujinlong
+
         Bundle bundle = new Bundle();
         bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
         bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, needsId);
