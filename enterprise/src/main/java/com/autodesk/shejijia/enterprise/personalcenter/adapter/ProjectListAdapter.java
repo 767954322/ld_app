@@ -2,6 +2,8 @@ package com.autodesk.shejijia.enterprise.personalcenter.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
@@ -64,6 +67,11 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void initView(ProjectListVH projectVh, int position) {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            projectVh.mStarLabel.setZ(ScreenUtil.dip2px(6));
+            projectVh.mCardView.setClipToOutline(false);
+        }
+
         if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
@@ -88,6 +96,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static final class ProjectListVH extends RecyclerView.ViewHolder {
+        private CardView mCardView;
         private Button mStarLabel; //星标按钮
         private TextView mProjectName; //项目名 project/name
         private TextView mProjectStatus; //项目状态 plan/status
@@ -95,6 +104,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         ProjectListVH(View itemView) {
             super(itemView);
+            mCardView = (CardView) itemView.findViewById(R.id.cdv_task_list);
             mProjectName = (TextView) itemView.findViewById(R.id.tv_project_name);
             mProjectStatus = (TextView) itemView.findViewById(R.id.tv_project_status);
             mStarLabel = (Button) itemView.findViewById(R.id.btn_star_label);

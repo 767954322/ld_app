@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -96,9 +97,11 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void initView(ProjectListVH projectVh, int position) {
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             projectVh.mStarLabel.setZ(ScreenUtil.dip2px(6));
+            projectVh.mCardView.setClipToOutline(false);
         }
+
         if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
             projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
@@ -164,7 +167,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static class ProjectListVH extends RecyclerView.ViewHolder {
-        private RelativeLayout mRootView;
+        private CardView mCardView;
         private LinearLayout mProjectItem;
         private LinearLayout mProjectDetails;
 
@@ -178,7 +181,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ProjectListVH(View itemView) {
             super(itemView);
 
-            mRootView = (RelativeLayout)itemView.findViewById(R.id.fly_task_list);
+            mCardView = (CardView) itemView.findViewById(R.id.cdv_task_list);
             mProjectItem = (LinearLayout) itemView.findViewById(R.id.lv_project_item);
             mProjectDetails = (LinearLayout) itemView.findViewById(R.id.lv_project_details);
             mTaskListView = (RecyclerView) itemView.findViewById(R.id.rcy_task_list);
