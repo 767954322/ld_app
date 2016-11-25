@@ -33,7 +33,7 @@
             <div id="content-block" style="background-color:#eef1f4;">
                 <div class="container-fluid" style="height:16px; margin: 0px 0%">
                     <div class="block" style=" margin-bottom: 0px !important; ">
-                        <h3 class="block-title2">住宅室内装饰设计合同</h3>
+                        <h3 class="block-title2">设计家平台室内装饰设计合同</h3>
                     </div>
                 </div>
                 <div class="container-fluid" style="">
