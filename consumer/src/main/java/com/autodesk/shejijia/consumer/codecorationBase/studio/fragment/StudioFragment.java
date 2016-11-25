@@ -20,14 +20,17 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomLis
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.uielements.AnimationUtils;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -150,7 +153,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                                 e.printStackTrace();
                             }
                         }
-
+                        CustomProgress.show(activity, "提交中...", false, null);
                         upOrderDataForService(jsonObject);
                     }
                 });
@@ -326,15 +329,17 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
-                Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+                ToastUtil.showCustomToast(activity, UIUtils.getString(R.string.work_room_commit_fail));
+//                Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                Toast.makeText(activity, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                CustomProgress.cancelDialog();
+//                Toast.makeText(activity, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                ToastUtil.showCustomToast(activity, UIUtils.getString(R.string.work_room_commit_successful));
             }
         });
 

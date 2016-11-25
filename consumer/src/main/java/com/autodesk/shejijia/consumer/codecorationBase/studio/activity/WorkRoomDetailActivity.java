@@ -32,6 +32,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomDet
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -42,6 +43,7 @@ import com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewListener
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -309,7 +311,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
                                 e.printStackTrace();
                             }
                         }
-
+                        CustomProgress.show(WorkRoomDetailActivity.this, "提交中...", false, null);
                         upOrderDataForService(jsonObject);
                     }
                 });
@@ -410,14 +412,16 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+                CustomProgress.cancelDialog();
+                ToastUtil.showCustomToast(WorkRoomDetailActivity.this, UIUtils.getString(R.string.work_room_commit_fail));
+//                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                CustomProgress.cancelDialog();
+                ToastUtil.showCustomToast(WorkRoomDetailActivity.this, UIUtils.getString(R.string.work_room_commit_successful));
+//                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -263,7 +263,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             public void onErrorResponse(VolleyError volleyError) {
 
                 CustomProgress.cancelDialog();
+                ToastUtil.showCustomToast(activity, UIUtils.getString(R.string.work_room_commit_fail));
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
+
             }
 
             @Override
