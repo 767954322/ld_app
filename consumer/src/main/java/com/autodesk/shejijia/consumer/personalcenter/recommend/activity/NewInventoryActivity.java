@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -437,9 +438,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
     // 从已有项目中获取的数据．
     private void updateNotify(SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {
-
-
-        if (!StringUtils.isEmpty(designerProjectsBean)) {
+//fix zjl 判断是否是创建空白清单 判断Consumer_id && projectid 不等于0
+//        if (!StringUtils.isEmpty(designerProjectsBean)) {
+        if (designerProjectsBean.getDesign_project_id() != 0 && !TextUtils.isEmpty(designerProjectsBean.getConsumer_id())) {
             isEditable = false;
             setEditTextEnable(isEditable, StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
 

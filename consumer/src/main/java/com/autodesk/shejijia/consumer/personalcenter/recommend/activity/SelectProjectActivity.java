@@ -102,9 +102,13 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 
                 Log.d("SelectProjectActivity", jsonObject.toString());
                 SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
-
-                designerProjects.addAll(entity.getDesignerProjects());
-                mAdapter.notifyDataSetChanged();
+                List<SelectProjectEntity.DesignerProjectsBean> projects = entity.getDesignerProjects();
+                if (projects != null && projects.size() > 0) {
+                    //fix zjl init first bean
+                    designerProjectsBean = projects.get(0);
+                    designerProjects.addAll(entity.getDesignerProjects());
+                    mAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
