@@ -106,6 +106,7 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:layout_height="match_parent"
                 android:text="@string/demand_project_address"/>
 
             <TextView
@@ -130,6 +131,7 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:layout_height="match_parent"
                 android:text="@string/address_details"/>
 
             <TextView
