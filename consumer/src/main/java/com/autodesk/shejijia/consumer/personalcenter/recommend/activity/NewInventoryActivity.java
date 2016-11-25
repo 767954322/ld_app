@@ -429,7 +429,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
-            SelectProjectEntity.DesignerProjectsBean designerProjectsBean = (SelectProjectEntity.DesignerProjectsBean) data.getSerializableExtra("mSelectList");
+            SelectProjectEntity.DesignerProjectsBean designerProjectsBean =
+                    (SelectProjectEntity.DesignerProjectsBean) data.getSerializableExtra("mSelectList");
             updateNotify(designerProjectsBean);
         }
     }
@@ -458,7 +459,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mDesign_project_id = designerProjectsBean.getDesign_project_id();
             mMain_project_id = designerProjectsBean.getMain_project_id();
 
-            mEtProjectAddress.setText(mCurrentProvince + mCurrentCity +
+            mEtProjectAddress.setText(UIUtils.getNoStringIfEmpty(mCurrentProvince) + UIUtils.getNoStringIfEmpty(mCurrentCity) +
                     UIUtils.getNoStringIfEmpty(mCurrentDistrict));
             mEtCommunityName.setText(designerProjectsBean.getCommunity_name());
             mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
