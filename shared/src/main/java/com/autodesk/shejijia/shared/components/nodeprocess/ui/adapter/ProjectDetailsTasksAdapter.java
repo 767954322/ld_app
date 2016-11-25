@@ -67,24 +67,29 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             taskListVH.mTaskName.setText(taskLists.get(position).getName());
         }
 
-        //节点日期
-        if (taskLists.get(position).getReserveTime() != null) {
-            String startDate = taskLists.get(position).getReserveTime().getStart();
-            String endDate = taskLists.get(position).getReserveTime().getCompletion();
-            if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
-                boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate), DateUtil.iso8601ToDate(endDate));
-                if (isSameDate) {
-                    taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)));
-                } else {
-                    taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)) + "-"
-                            + formattedDateFromDate(DateUtil.iso8601ToDate(endDate)));
-                }
-            }
-        }
-
         // 当前任务节点的状态
         if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
             String status = taskLists.get(position).getStatus().toLowerCase();
+            //设置节点日期
+            switch (status) {
+                case ConstructionConstants.TaskStatus.OPEN://未开始
+                case ConstructionConstants.TaskStatus.RESERVING://待预约
+                    if (taskLists.get(position).getPlanningTime() != null) {
+                        String startDate = taskLists.get(position).getPlanningTime().getStart();
+                        String endDate = taskLists.get(position).getPlanningTime().getCompletion();
+                        setTaskDate(taskListVH, startDate, endDate);
+                    }
+                    break;
+                // TODO: 11/25/16 施工节点包括哪些节点？
+                default:
+                    if (taskLists.get(position).getReserveTime() != null) {
+                        String startDate = taskLists.get(position).getReserveTime().getStart();
+                        String endDate = taskLists.get(position).getReserveTime().getCompletion();
+                        setTaskDate(taskListVH, startDate, endDate);
+                    }
+                    break;
+            }
+            //设置节点状态
             switch (status) {
                 case ConstructionConstants.TaskStatus.OPEN:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_open));
@@ -217,6 +222,18 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
                 mTaskListItemClickListener.onTaskClick(taskLists, position);
             }
         });
+    }
+
+    private void setTaskDate(TaskListVH taskListVH, String startDate, String endDate) {
+        if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
+            boolean isSameDate = DateUtil.isSameDay(DateUtil.iso8601ToDate(startDate), DateUtil.iso8601ToDate(endDate));
+            if (isSameDate) {
+                taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)));
+            } else {
+                taskListVH.mTaskDate.setText(formattedDateFromDate(DateUtil.iso8601ToDate(startDate)) + "-"
+                        + formattedDateFromDate(DateUtil.iso8601ToDate(endDate)));
+            }
+        }
     }
 
     private String formattedDateFromDate(Date date) {

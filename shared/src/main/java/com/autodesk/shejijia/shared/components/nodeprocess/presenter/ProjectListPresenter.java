@@ -33,8 +33,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
     private FragmentManager fragmentManager;
-    private int mOffset = 0;
-    private int mRemoteOffset = 0;
+    private int mOffset = 1;//why 0 and 1 is the same data
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
@@ -78,7 +77,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void refreshProjectList() {
-        mOffset = 0;
+        mOffset = 1;
         loadProjectList(mOffset);
     }
 
@@ -111,7 +110,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
-                if (taskList.getOffset() == 0) {
+                if (taskList.getOffset() == 1) {
                     mProjectListView.refreshProjectListView(taskList.getData());
                 } else {
                     mProjectListView.addMoreProjectListView(taskList.getData());
