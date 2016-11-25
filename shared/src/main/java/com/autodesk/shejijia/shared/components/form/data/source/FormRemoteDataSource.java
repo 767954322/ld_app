@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -36,7 +37,7 @@ public class FormRemoteDataSource implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, List<String> formIds) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List,ResponseError> callBack, List<String> formIds) {
         FormServerHttpManager.getInstance().getFormItemDetails(formIds, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {

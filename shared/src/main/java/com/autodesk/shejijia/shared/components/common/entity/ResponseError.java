@@ -16,10 +16,10 @@ public class ResponseError {
      */
 
     private long timestamp;
-    private int status;
+    private int status; //状态码
     private String error;
     private String exception;
-    private String message;
+    private String message; //错误信息
     private String path;
 
     public long getTimestamp() {

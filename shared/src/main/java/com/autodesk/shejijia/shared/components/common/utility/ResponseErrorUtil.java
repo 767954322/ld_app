@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 
 /**
  * Created by t_aij on 16/11/1.
@@ -14,22 +15,18 @@ public class ResponseErrorUtil {
      *
      * @param volleyError
      */
-    public static String checkVolleyError(VolleyError volleyError) {
+    public static ResponseError checkVolleyError(VolleyError volleyError) {
         NetworkResponse networkResponse = volleyError.networkResponse;
+        ResponseError responseError;
         if (null == networkResponse) {
-
-            return "网络连接失败,请查看网络连接是否正常";
+            responseError = new ResponseError();
+            responseError.setMessage("网络连接错误");
+            return responseError;
         } else {
-            // TODO: 16/11/9 后期在不断修改,后端还没完全做好
-            String errorLog;
-            try {
-                errorLog = "响应错误状态码:" + networkResponse.statusCode +
-                        " 和错误信息:" + new String(networkResponse.data);
-            } catch (Exception e) {
-                errorLog = "响应错误状态码:" + networkResponse.statusCode;
-            }
-
-            return errorLog;
+            responseError = new ResponseError();
+            responseError.setStatus(networkResponse.statusCode);
+            responseError.setMessage("错误信息:" + new String(networkResponse.data));
+            return responseError;
         }
     }
 }

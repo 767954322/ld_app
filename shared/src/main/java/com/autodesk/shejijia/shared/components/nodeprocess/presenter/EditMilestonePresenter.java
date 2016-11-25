@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -37,7 +38,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
     public void fetchPlan() {
         mView.showLoading();
         ProjectRepository.getInstance().getActivePlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
-                new ResponseCallback<PlanInfo>() {
+                new ResponseCallback<PlanInfo, ResponseError>() {
             @Override
             public void onSuccess(PlanInfo data) {
                 mView.hideLoading();
@@ -45,10 +46,11 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
                 mView.showTasks(getMileStoneNodes());
             }
 
+
             @Override
-            public void onError(String errorMsg) {
+            public void onError(ResponseError error) {
                 mView.hideLoading();
-                mView.showError(errorMsg);
+                mView.showNetError(error);
             }
         });
     }
@@ -93,7 +95,7 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
 
     private List<Task> getMileStoneNodes() {
         List<Task> filteredTasks = new ArrayList<>();
-        for (Task task: mPlan.getTasks()) {
+        for (Task task : mPlan.getTasks()) {
             if (task.isMilestone()) {
                 filteredTasks.add(task);
             }
@@ -102,10 +104,10 @@ public class EditMilestonePresenter implements EditPlanContract.MileStonePresent
     }
 
     private Task getMileStoneNode(Date date) {
-        for (Task task: mPlan.getTasks()) {
+        for (Task task : mPlan.getTasks()) {
             if (task.isMilestone()) {
                 Date startDate = DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
-                if(DateUtil.isSameDay(startDate, date)) {
+                if (DateUtil.isSameDay(startDate, date)) {
                     return task;
                 }
             }

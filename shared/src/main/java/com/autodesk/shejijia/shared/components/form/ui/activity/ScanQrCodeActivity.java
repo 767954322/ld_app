@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -64,7 +65,7 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
             params.putBoolean("task_data", true);
-            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
+            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo,ResponseError>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     PlanInfo planInfo = data.getPlan();
@@ -112,9 +113,9 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                 }
 
                 @Override
-                public void onError(String errorMsg) {
+                public void onError(ResponseError error) {
                     Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
-                    intent.putExtra("error", errorMsg);
+                    intent.putExtra("error", error.getMessage());
                     startActivity(intent);
                 }
             });

@@ -8,9 +8,11 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -30,7 +32,10 @@ import org.json.JSONObject;
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
 
+    private IConstructionApi<OkJsonRequest.OKResponseCallback> mConstructionHttpManager;
+
     private ProjectRemoteDataSource() {
+        mConstructionHttpManager = ConstructionHttpManager.getInstance();
     }
 
     private static class ProjectRemoteDataSourceHolder {
@@ -42,10 +47,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
 
-    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList> callback) {
-
-        ConstructionHttpManager.getInstance().getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
+        mConstructionHttpManager.getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -63,8 +67,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectInfo(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
-        ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
+    public void getProjectInfo(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
+        mConstructionHttpManager.getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.d("ProjectDetails--taskDetailsList", jsonObject + "");
@@ -81,9 +85,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProject(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
-        ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
-
+    public void getProject(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project, ResponseError> callback) {
+        mConstructionHttpManager.getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.d("ProjectDetails--taskIdList", jsonObject + "");
@@ -100,13 +103,13 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
-        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag,
+    public void getPlanByProjectId(String pid, String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
+        mConstructionHttpManager.getPlanByProjectId(pid, requestTag,
                 getDefaultCallback(callback, ProjectInfo.class, MileStone.class, new MileStone.MileStoneTypeAdapter()));
     }
 
     @Override
-    public void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
+    public void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project, ResponseError> callback) {
         PlanInfo plan = (PlanInfo) requestParams.getSerializable("body");
         requestParams.remove("body");
         JSONObject jsonRequest = new JSONObject();
@@ -118,18 +121,20 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             jsonRequest.put("completion", planJsonObject.get("completion"));
             jsonRequest.put("tasks", planJsonObject.get("tasks"));
 
-            ConstructionHttpManager.getInstance().updatePlan(pid, jsonRequest, requestParams, requestTag,
+            mConstructionHttpManager.updatePlan(pid, jsonRequest, requestParams, requestTag,
                     getDefaultCallback(callback, null));
         } catch (JSONException e) {
             e.printStackTrace();
             // TODO Optimize error hint
-            callback.onError("Date format error");
+            ResponseError error = new ResponseError();
+            error.setMessage("Date format error");
+            callback.onError(error);
         }
     }
 
-
-    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like> callback) {
-        ConstructionHttpManager.getInstance().putProjectLikes(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
+    @Override
+    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like, ResponseError> callback) {
+        mConstructionHttpManager.putProjectLikes(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -147,8 +152,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         });
     }
 
-    private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz,
-                                        final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
+    private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T, ResponseError> callback, final Class<T> clazz,
+                                                                       final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
         return new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -169,7 +174,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                     } catch (JsonSyntaxException exception) {
                         exception.printStackTrace();
                         LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, "e=" + exception);
-                        callback.onError("JsonSyntaxException");
+                        ResponseError error = new ResponseError();
+                        error.setMessage("JsonSyntaxException");
+                        callback.onError(error);
                     }
                 }
             }
@@ -179,13 +186,13 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 // TODO log error detail
                 LogUtils.e(ConstructionConstants.LOG_TAG_REQUEST, volleyError.toString());
                 MPNetworkUtils.logError(ConstructionConstants.LOG_TAG_REQUEST, volleyError, true);
-                callback.onError(volleyError.getMessage());
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
         };
     }
 
-    private <T> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T> callback, final Class<T> clazz) {
+    private <T> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T, ResponseError> callback, final Class<T> clazz) {
         return getDefaultCallback(callback, clazz, null, null);
     }
 }

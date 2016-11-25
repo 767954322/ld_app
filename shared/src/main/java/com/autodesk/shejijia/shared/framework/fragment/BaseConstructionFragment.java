@@ -5,16 +5,17 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.framework.BaseView;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-import com.autodesk.shejijia.shared.framework.fragment.BaseLazyFragment;
 
 /**
  * Created by t_xuz on 8/15/16.
- *
+ * 施工平台，fragment基类
  */
-public abstract class BaseConstructionFragment extends BaseLazyFragment implements BaseView{
+public abstract class BaseConstructionFragment extends BaseFragment implements BaseView {
 
     protected BaseActivity mContext;
     private ConProgressDialog mProgressDialog;
@@ -26,29 +27,18 @@ public abstract class BaseConstructionFragment extends BaseLazyFragment implemen
     }
 
     @Override
-    protected void onUserInvisible() {
-
-    }
-
-    @Override
-    protected void onFirstUserVisible() {
-
-    }
-
-    @Override
-    protected void onUserVisible() {
-
-    }
-
-    @Override
-    public void showNetError(String msg) {
+    public void showNetError(final ResponseError error) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.alert_dialog__default_title);
-        builder.setMessage(msg);
+        builder.setMessage(error.getMessage());
         builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                //token 失效，重新登录
+                if (error.getStatus() == 401) {
+                    LoginUtils.doLogout(mContext);
+                    LoginUtils.doLogin(mContext);
+                }
             }
         });
         AlertDialog dialog = builder.create();
@@ -56,10 +46,10 @@ public abstract class BaseConstructionFragment extends BaseLazyFragment implemen
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(String error) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.alert_dialog__default_title);
-        builder.setMessage(msg);
+        builder.setMessage(error);
         builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

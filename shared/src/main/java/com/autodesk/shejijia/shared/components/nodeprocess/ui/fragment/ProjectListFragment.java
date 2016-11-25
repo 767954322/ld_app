@@ -58,11 +58,6 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         return R.layout.fragment_project_list_view;
     }
 
-
-    @Override
-    protected void onFirstUserVisible() {
-    }
-
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), mContext.getSupportFragmentManager(), this);

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
@@ -109,7 +110,7 @@ public class TaskDetailsFragment extends DialogFragment implements TaskDetailsCo
     }
 
     @Override
-    public void showNetError(String msg) {
+    public void showNetError(ResponseError error) {
 
     }
 

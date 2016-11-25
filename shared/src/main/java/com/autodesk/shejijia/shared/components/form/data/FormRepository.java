@@ -7,6 +7,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -59,10 +60,10 @@ public class FormRepository implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, final List<String> formIds) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List,ResponseError> callBack, final List<String> formIds) {
             if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
-            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
+            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List,ResponseError>() {
                 @Override
                 public void onSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
@@ -80,7 +81,7 @@ public class FormRepository implements FormDataSource {
                     callBack.onSuccess(mFormList);
                 }
                 @Override
-                public void onError(String errorMsg) {
+                public void onError(ResponseError errorMsg) {
                     callBack.onError(errorMsg);
                 }
             },formIds);
@@ -106,7 +107,7 @@ public class FormRepository implements FormDataSource {
             }
 
             @Override
-            public void onError(String errorMsg) {
+            public void onError(Object errorMsg) {
                 callBack.onError(errorMsg);
             }
         });
@@ -128,7 +129,7 @@ public class FormRepository implements FormDataSource {
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", projectId);
         requestParamsBundle.putBoolean("task_data",true);
-        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParamsBundle, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
+        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParamsBundle, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo,ResponseError>() {
             @Override
             public void onSuccess(ProjectInfo projectInfo) {
 
@@ -175,7 +176,7 @@ public class FormRepository implements FormDataSource {
             }
 
             @Override
-            public void onError(String errorMsg) {
+            public void onError(ResponseError error) {
 
             }
         });
@@ -187,17 +188,17 @@ public class FormRepository implements FormDataSource {
      * @param requestTag
      * @param callback
      */
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project,ResponseError> callback) {
         if(null == mProject) {
-            ProjectRemoteDataSource.getInstance().getProject(requestParams, requestTag, new ResponseCallback<Project>() {
+            ProjectRemoteDataSource.getInstance().getProject(requestParams, requestTag, new ResponseCallback<Project,ResponseError>() {
                 @Override
                 public void onSuccess(Project data) {
                     callback.onSuccess(data);
                 }
 
                 @Override
-                public void onError(String errorMsg) {
-                    callback.onError(errorMsg);
+                public void onError(ResponseError error) {
+                    callback.onError(error);
                 }
             });
 
@@ -212,17 +213,17 @@ public class FormRepository implements FormDataSource {
      * @param requestTag
      * @param callback
      */
-    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo,ResponseError> callback) {
         if(null == mProjectInfo) {
-            ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+            ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo,ResponseError>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     callback.onSuccess(data);
                 }
 
                 @Override
-                public void onError(String errorMsg) {
-                    callback.onError(errorMsg);
+                public void onError(ResponseError error) {
+                    callback.onError(error);
                 }
             });
 

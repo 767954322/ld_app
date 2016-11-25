@@ -10,6 +10,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -57,7 +58,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                 List<String> formIds = new ArrayList<>();
                 formIds.add(templateId);
                 // TODO: 16/11/11 获取数据,显示界面
-                FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
+                FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List,ResponseError>() {
                     @Override
                     public void onSuccess(List data) {
                         for (SHForm form : (List<SHForm>) data) {   //可以同时获取多张form
@@ -71,8 +72,8 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                     }
 
                     @Override
-                    public void onError(String errorMsg) {
-                        ToastUtils.showShort((PrecheckActivity) mContext, errorMsg);
+                    public void onError(ResponseError error) {
+                        ToastUtils.showShort((PrecheckActivity) mContext, error.getMessage());
                     }
                 }, formIds);
 

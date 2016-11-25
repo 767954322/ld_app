@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.form.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import java.util.List;
@@ -13,6 +14,6 @@ import java.util.List;
 
 public interface FormDataSource {
 
-    void getRemoteFormItemDetails(@NonNull ResponseCallback<List> callBack, List<String> formIds);
+    void getRemoteFormItemDetails(@NonNull ResponseCallback<List, ResponseError> callBack, List<String> formIds);
 
 }

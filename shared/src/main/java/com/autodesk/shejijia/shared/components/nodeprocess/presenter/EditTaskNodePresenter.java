@@ -6,6 +6,7 @@ import android.os.Handler;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -47,8 +48,10 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
 
     @Override
     public void fetchPlan() {
+
         ProjectRepository.getInstance().getActivePlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
-                new ResponseCallback<PlanInfo>() {
+                new ResponseCallback<PlanInfo, ResponseError>() {{
+
                     @Override
                     public void onSuccess(PlanInfo data) {
                         mPlan = data;
@@ -60,8 +63,8 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
                     }
 
                     @Override
-                    public void onError(String errorMsg) {
-                        mView.showError(errorMsg);
+                    public void onError(ResponseError error) {
+                        mView.showNetError(error);
                     }
                 });
     }
@@ -189,7 +192,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
         requestParams.putString("operation", mOperation);
         requestParams.putSerializable("body", mPlan);
         mView.showUpLoading();
-        ProjectRepository.getInstance().updatePlan(mProjectId, requestParams, ConstructionConstants.REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project>() {
+        ProjectRepository.getInstance().updatePlan(mProjectId, requestParams, ConstructionConstants.REQUEST_TAG_UPDATE_PLAN, new ResponseCallback<Project, ResponseError>() {
             @Override
             public void onSuccess(Project data) {
                 LogUtils.d(LOG_TAG_EDIT_PLAN, "update plan success ");
@@ -198,10 +201,10 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
             }
 
             @Override
-            public void onError(String errorMsg) {
-                LogUtils.e(LOG_TAG_EDIT_PLAN, "update plan fail " + errorMsg);
+            public void onError(ResponseError error) {
+                LogUtils.e(LOG_TAG_EDIT_PLAN, "update plan fail " + error);
                 mView.hideUpLoading();
-                mView.onCommitError("Update plan fail!\n " + errorMsg); // TODO update string
+                mView.onCommitError("Update plan fail!\n " + error.getMessage()); // TODO update string
             }
         });
 

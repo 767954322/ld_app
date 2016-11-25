@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Building;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -136,7 +137,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     }
 
     @Override
-    public void showNetError(String msg) {
+    public void showNetError(ResponseError error) {
 
     }
 

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -21,27 +22,32 @@ public interface ProjectDataSource {
     /*
     ＊获取项目列表
     * */
-    void getProjectList(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectList> callback);
+    void getProjectList(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectList, ResponseError> callback);
 
     /*
     * 获取项目详情－－含任务详情列表
     * */
-    void getProjectInfo(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
+    void getProjectInfo(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback);
 
     /*
     * 获取项目详情－－含任务id列表
     * */
-    void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
+    void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project, ResponseError> callback);
 
+    /*
+    * 获取plan
+    * */
+    void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback);
 
-    void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
-
-    void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
+    /*
+    * 更新plan
+    * */
+    void updatePlan(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project, ResponseError> callback);
 
     /*
     * 星标项目
     * */
-    void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback);
+    void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like, ResponseError> callback);
 
 
 }

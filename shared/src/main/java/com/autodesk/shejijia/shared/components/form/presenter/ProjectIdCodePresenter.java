@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -49,7 +50,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
         params.putLong("pid", pid);
         params.putBoolean("task_data", true);
 
-        FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo>() {
+        FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo, ResponseError>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 PlanInfo planInfo = data.getPlan();
@@ -95,8 +96,8 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                mView.showNetError(errorMsg);
+            public void onError(ResponseError error) {
+                mView.showNetError(error);
             }
         });
 

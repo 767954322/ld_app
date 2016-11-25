@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -153,8 +154,8 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
 
     @Override
-    public void showNetError(String msg) {
-        ToastUtils.showShort(this, msg);
+    public void showNetError(ResponseError error) {
+        ToastUtils.showShort(this, error.getMessage());
     }
 
     @Override

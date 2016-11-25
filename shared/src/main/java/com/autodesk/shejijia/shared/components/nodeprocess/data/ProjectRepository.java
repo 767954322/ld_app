@@ -8,6 +8,7 @@ import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDat
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -21,7 +22,6 @@ import org.json.JSONObject;
  */
 public final class ProjectRepository implements ProjectDataSource {
 
-    private ProjectList mProjectList;
     private ProjectInfo mProjectInfo;
     private PlanInfo mActivePlan;
     private boolean mActivePlanEditing;
@@ -29,37 +29,23 @@ public final class ProjectRepository implements ProjectDataSource {
     private ProjectRepository() {
     }
 
-    private static final class NodeProcessRepositoryHolder {
+    private static final class ProjectRepositoryHolder {
         private static final ProjectRepository INSTANCE = new ProjectRepository();
     }
 
     public static ProjectRepository getInstance() {
-        return NodeProcessRepositoryHolder.INSTANCE;
+        return ProjectRepositoryHolder.INSTANCE;
     }
 
     @Override
-    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList> callback) {
-
-        ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new ResponseCallback<ProjectList>() {
-            @Override
-            public void onSuccess(ProjectList data) {
-                mProjectList = data;
-                callback.onSuccess(data);
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-                callback.onError(errorMsg);
-            }
-        });
-
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, callback);
     }
 
-
     @Override
-    public void getProjectInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
+    public void getProjectInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
 
-        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo>() {
+        ProjectRemoteDataSource.getInstance().getProjectInfo(requestParams, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 mProjectInfo = data;
@@ -68,25 +54,25 @@ public final class ProjectRepository implements ProjectDataSource {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                callback.onError(errorMsg);
+            public void onError(ResponseError error) {
+                callback.onError(error);
             }
         });
     }
 
     @Override
-    public void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
+    public void getProject(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().getProject(requestParams, requestTag, callback);
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, final @NonNull ResponseCallback<ProjectInfo> callback) {
+    public void getPlanByProjectId(String pid, String requestTag, final @NonNull ResponseCallback<ProjectInfo, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().getPlanByProjectId(pid, requestTag, callback);
     }
 
     @Override
-    public void updatePlan(String pid, Bundle requestParams, String requestTag, final @NonNull ResponseCallback<Project> callback) {
-        ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, new ResponseCallback<Project>() {
+    public void updatePlan(String pid, Bundle requestParams, String requestTag, final @NonNull ResponseCallback<Project, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().updatePlan(pid, requestParams, requestTag, new ResponseCallback<Project, ResponseError>() {
             @Override
             public void onSuccess(Project data) {
                 mActivePlan = null;
@@ -94,14 +80,14 @@ public final class ProjectRepository implements ProjectDataSource {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                callback.onError(errorMsg);
+            public void onError(ResponseError error) {
+                callback.onError(error);
             }
         });
     }
 
     @Override
-    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback) {
+    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().updateProjectLikes(requestParams, requestTag, jsonRequest, callback);
     }
 
@@ -109,9 +95,10 @@ public final class ProjectRepository implements ProjectDataSource {
         return mProjectInfo;
     }
 
-    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo> callback) {
+
+    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo, ResponseError> callback) {
         if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
-            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo>() {
+            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     mActivePlanEditing = false;
@@ -121,8 +108,8 @@ public final class ProjectRepository implements ProjectDataSource {
                 }
 
                 @Override
-                public void onError(String errorMsg) {
-                    callback.onError(errorMsg);
+                public void onError(ResponseError error) {
+                    callback.onError(error);
                 }
             });
         } else {

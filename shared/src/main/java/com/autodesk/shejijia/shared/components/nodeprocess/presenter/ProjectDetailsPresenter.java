@@ -5,9 +5,11 @@ import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -53,16 +55,16 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     private void getProjectDetailsData(Bundle requestParams) {
-        mProjectRepository.getProjectInfo(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
+        mProjectRepository.getProjectInfo(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo, ResponseError>() {
             @Override
             public void onSuccess(ProjectInfo data) {
                 handleProjectInfo(data);
             }
 
             @Override
-            public void onError(String errorMsg) {
+            public void onError(ResponseError error) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.showNetError(errorMsg);
+                mProjectDetailsView.showNetError(error);
             }
         });
     }
