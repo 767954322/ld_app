@@ -124,7 +124,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
 
     @Override
     public void onItemDeteleOnClick(String text, final RecommendDetailsBean item) {
-        new AlertView(UIUtils.getString(R.string.tip), "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
+        new AlertView(UIUtils.getString(R.string.tip), "您确定要删除此清单吗？", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != -1)
