@@ -286,7 +286,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         try {
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
-            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
