@@ -123,6 +123,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
             mProjectListView.setVisibility(View.GONE);
+            mProjectListView.complete();
         }
     }
 

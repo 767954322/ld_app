@@ -71,7 +71,7 @@ public class ConstructionConstants {
         public static final String TIME_LINE = "timeline";//开工交底
         public static final String INSPECTOR_INSPECTION = "inspectorInspection";//监理验收
         public static final String CLIENT_MANAGER_INSPECTION = "clientmanagerInspection";//客户经理验收
-        public static final String CONSTRUCTION = "construction";//中期验收
+        public static final String CONSTRUCTION = "construction";//施工节点
         public static final String MATERIAL_MEASURING = "materialMeasuring";//主材测量
         public static final String MATERIAL_INSTALLATION = "materialInstallation";//主材安装
     }

@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * Created by t_xuz on 8/16/16.
- * 与 服务端主线相关的 服务端api接口的封装类
+ * 施工平台 api 封装类
  */
 public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.OKResponseCallback> {
     private final static String LOG_TAG = "ConstructionHttpManager";

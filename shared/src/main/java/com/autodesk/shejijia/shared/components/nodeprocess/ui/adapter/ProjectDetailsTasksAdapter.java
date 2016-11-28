@@ -67,29 +67,43 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             taskListVH.mTaskName.setText(taskLists.get(position).getName());
         }
 
-        // 当前任务节点的状态
-        if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
-            String status = taskLists.get(position).getStatus().toLowerCase();
-            //设置节点日期
-            switch (status) {
-                case ConstructionConstants.TaskStatus.OPEN://未开始
-                case ConstructionConstants.TaskStatus.RESERVING://待预约
-                    if (taskLists.get(position).getPlanningTime() != null) {
-                        String startDate = taskLists.get(position).getPlanningTime().getStart();
-                        String endDate = taskLists.get(position).getPlanningTime().getCompletion();
-                        setTaskDate(taskListVH, startDate, endDate);
-                    }
-                    break;
-                // TODO: 11/25/16 施工节点包括哪些节点？
-                default:
+        //设置任务节点日期
+        if (!TextUtils.isEmpty(taskLists.get(position).getCategory())) {
+            String category = taskLists.get(position).getCategory();
+            switch (category) {
+                case ConstructionConstants.TaskCategory.CONSTRUCTION: //施工节点
                     if (taskLists.get(position).getReserveTime() != null) {
                         String startDate = taskLists.get(position).getReserveTime().getStart();
                         String endDate = taskLists.get(position).getReserveTime().getCompletion();
                         setTaskDate(taskListVH, startDate, endDate);
                     }
                     break;
+                default: //非施工节点
+                    if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
+                        String status = taskLists.get(position).getStatus();
+                        //未开始 或 待预约
+                        if (status.equalsIgnoreCase(ConstructionConstants.TaskStatus.OPEN) ||
+                                status.equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVING)) {
+                            if (taskLists.get(position).getPlanningTime() != null) {
+                                String startDate = taskLists.get(position).getPlanningTime().getStart();
+                                String endDate = taskLists.get(position).getPlanningTime().getCompletion();
+                                setTaskDate(taskListVH, startDate, endDate);
+                            }
+                        } else {
+                            if (taskLists.get(position).getReserveTime() != null) {
+                                String startDate = taskLists.get(position).getReserveTime().getStart();
+                                String endDate = taskLists.get(position).getReserveTime().getCompletion();
+                                setTaskDate(taskListVH, startDate, endDate);
+                            }
+                        }
+                    }
+                    break;
             }
-            //设置节点状态
+        }
+
+        // 当前任务节点的状态
+        if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
+            String status = taskLists.get(position).getStatus().toLowerCase();
             switch (status) {
                 case ConstructionConstants.TaskStatus.OPEN:
                     taskListVH.mTaskStatus.setText(mContext.getString(R.string.task_open));
