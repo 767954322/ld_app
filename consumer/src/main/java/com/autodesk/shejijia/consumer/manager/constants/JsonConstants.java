@@ -236,6 +236,11 @@ public class JsonConstants {
     public static final String JSON_PROJECT_NAME = "project_name";
 
 
+    //添加主材
+    public static final String JSON_STORE_NAME_INFOR_CHECK_LIST = "list";
+    public static final String JSON_STORE_NAME_INFOR_LIST = "storeList";
+    public static final String JSON_BACK_TOTAL_LIST = "totalList";
+    //店面选择展示
 
 
 }

@@ -479,7 +479,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void addMaterialRecommendSCFD(Intent intent) {
         Bundle bundle = intent.getExtras();
-        List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+        List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get(JsonConstants.JSON_BACK_TOTAL_LIST);
         List<RecommendSCFDBean> recommendSCFDList = new ArrayList<>();
         recommendSCFDList.addAll(mRecommendSCFDList);
 

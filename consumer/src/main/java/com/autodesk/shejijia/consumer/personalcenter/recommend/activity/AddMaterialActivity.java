@@ -120,7 +120,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 deleteTotalEmptyDataItem();
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("totalList", (Serializable) totalListRaplace);
+                bundle.putSerializable(JsonConstants.JSON_BACK_TOTAL_LIST, (Serializable) totalListRaplace);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -229,7 +229,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddMaterialActivity.this, StoreActivity.class);
-                intent.putExtra("storeList",storeNameArr);
+                intent.putExtra(JsonConstants.JSON_STORE_NAME_INFOR_LIST,storeNameArr);
                 startActivityForResult(intent, 0);
             }
         });
@@ -256,7 +256,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
             case 101:
                 Bundle bundle = data.getExtras();
-                List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get("list");
+                List<StoreInformationBean.StoreListBean> forResultStoreList = (List<StoreInformationBean.StoreListBean>) bundle.get(JsonConstants.JSON_STORE_NAME_INFOR_CHECK_LIST);
                 CustomProgress.showDefaultProgress(AddMaterialActivity.this);
                 //将返回的数据再次筛选显示
                 justRefreshOrLoadMore = 2;

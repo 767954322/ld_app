@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewControls;
@@ -56,7 +57,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) forResultStoreList);
+                bundle.putParcelableArrayList(JsonConstants.JSON_STORE_NAME_INFOR_CHECK_LIST, (ArrayList<? extends Parcelable>) forResultStoreList);
                 intent.putExtras(bundle);
 
                 setResult(RESULT_OK, intent);
@@ -90,7 +91,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        String[] storeNameArrList = intent.getStringArrayExtra("storeList");
+        String[] storeNameArrList = intent.getStringArrayExtra(JsonConstants.JSON_STORE_NAME_INFOR_LIST);
         if (storeNameArrList.length > 10) {
             storeNameArr = new String[storeNameArrList.length - 4];
 
