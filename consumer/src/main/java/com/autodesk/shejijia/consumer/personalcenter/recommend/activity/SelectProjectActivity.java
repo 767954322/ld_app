@@ -103,6 +103,9 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
                     designerProjectsBean = projects.get(0);
                     designerProjects.addAll(entity.getDesignerProjects());
                     mAdapter.notifyDataSetChanged();
+                } else {
+                    mSure.setClickable(false);
+                    mSure.setBackgroundResource(R.color.gray);
                 }
             }
 

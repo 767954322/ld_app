@@ -421,7 +421,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private void updateNotify(SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {
 //fix zjl 判断是否是创建空白清单 判断Consumer_id && projectid 不等于0
 //        if (!StringUtils.isEmpty(designerProjectsBean)) {
-        if (designerProjectsBean.getDesign_project_id() != 0 && !TextUtils.isEmpty(designerProjectsBean.getConsumer_id())) {
+        if (!StringUtils.isEmpty(designerProjectsBean) &&designerProjectsBean.getDesign_project_id() != 0 && !TextUtils.isEmpty(designerProjectsBean.getConsumer_id())) {
             isEditable = false;
             setEditTextEnable(isEditable, StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
 
