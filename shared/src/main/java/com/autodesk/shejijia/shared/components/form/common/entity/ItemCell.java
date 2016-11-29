@@ -41,6 +41,4 @@ public class ItemCell {
     public void setShow(boolean show) {
         isShow = show;
     }
-
-
 }
