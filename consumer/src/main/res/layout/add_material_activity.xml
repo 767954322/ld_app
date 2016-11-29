@@ -135,7 +135,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/font_14"
-                    android:text="还可添加5个品牌"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_18"
 
