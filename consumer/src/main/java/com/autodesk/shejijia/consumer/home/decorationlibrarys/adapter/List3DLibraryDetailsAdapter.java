@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,22 +75,28 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
 //                    viewVH.m3DetailsImage.setVisibility(View.VISIBLE);
 //                }
             } else {
+
 //                ImageLoader.getInstance().displayImage(imageLists.get(position), viewVH.m3DDetailsImage,);
                 ImageLoader.getInstance().loadImage(imageLists.get(position), new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
-
+                        Log.d("List3DLibraryDetailsAda", imageUri);
                     }
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                        viewVH.tv_no_image.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         viewVH.m3DDetailsImage.setImageBitmap(loadedImage);
-                        viewVH.tv_no_image.setVisibility(View.GONE);
+
+                        if (imageUri.contains("drawable:")){
+                            viewVH.tv_no_image.setVisibility(View.VISIBLE);
+                        }else {
+                            viewVH.tv_no_image.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
