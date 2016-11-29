@@ -14,9 +14,7 @@ public class Config {
     public final static String SHARE_PATH = "http://uat-api.gdfcx.net:8080/share/2dcase.html?caseid=";
     public final static String SHARE3_PATH = "http://uat-api.gdfcx.net:8080/share/3dcase.html?caseid=";
     public final static String API_DOMAIN = "http://uat-api.gdfcx.net:8080";
-    // TODO  后期替换uat正式环境.
     public final static String RECOMMEND_PATH = "http://uat-api.gdfcx.net:8080/materials-recommend-app/v1/api";
-
 
     //Construction urls
     public static final String CONSTRUCTION_MAIN_URL = "http://cp-uat-plan.homestyler.com/api/v1";
