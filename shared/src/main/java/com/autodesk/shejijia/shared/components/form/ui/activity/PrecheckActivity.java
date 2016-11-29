@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecorat
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.FormFeedBack;
 import com.autodesk.shejijia.shared.components.form.contract.PrecheckContract;
@@ -33,6 +34,7 @@ import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +51,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private Button mOptionBtn;
     private PrecheckPresenter mPresenter;
     private FormListAdapter mAdapter;
-    private List<String> mTitleList = new ArrayList<>();
+    private List<ItemCell> mItemCellList = new ArrayList<>();
     private List<FormFeedBack> mFormFeedBack = new ArrayList<>();
 
     @Override
@@ -74,7 +76,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         mAdditionalRv.setLayoutManager(new LinearLayoutManager(this));
         mAdditionalRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mAdditionalRv.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new FormListAdapter(this, mTitleList);
+        mAdapter = new FormListAdapter(this, mItemCellList);
         mAdditionalRv.setAdapter(mAdapter);
 
         mPresenter = new PrecheckPresenter(this, this);
@@ -99,11 +101,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
                 setResult(resultTv,mFormFeedBack.get(position));
             }
 
-            @Override
-            public void onResultClick(TextView view) {
-                view.setText(R.string.yes);
-            }
+//            @Override
+//            public void onResultClick(TextView view) {
+//                view.setText(R.string.yes);
+//            }
         });
+
     }
 
     @Override
@@ -157,8 +160,18 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void addAdditionalData(Map<String,FormFeedBack> formFeedBackMap) {
-        mTitleList.clear();
-        mTitleList.addAll(formFeedBackMap.keySet());
+//        mTitleList.clear();
+//        mTitleList.addAll(formFeedBackMap.keySet());
+
+        Iterator<String> iterator = formFeedBackMap.keySet().iterator();
+
+        while (iterator.hasNext()) {
+            ItemCell itemCell = new ItemCell();
+            itemCell.setTitle(iterator.next());
+            itemCell.setResult("是");
+            mItemCellList.add(itemCell);
+        }
+
         mAdapter.notifyDataSetChanged();
 
         mFormFeedBack.addAll(formFeedBackMap.values());
@@ -191,8 +204,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void enterQualified(Task task, SHPrecheckForm shPrecheckForm) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,task提供各种表单的id,后者保存了辅助条件的信息
-        Intent intent = new Intent(this, FormListActivity.class);
+        Intent intent = new Intent(this, FormActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("shPrecheckForm",shPrecheckForm);
         startActivity(intent);
         finish();
 

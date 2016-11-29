@@ -1,65 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/form_background_grey"
-              android:orientation="vertical">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/form_background_grey">
 
-    <LinearLayout android:id="@+id/ll_form_list"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/form_background_grey"
+                  android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView android:id="@+id/rv_form_list"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="@dimen/spacing_form_list_top"
+                                                android:background="@color/form_background_write"
+                                                android:orientation="vertical"
+                                                android:paddingEnd="@dimen/spacing_padding_double"
+                                                android:paddingStart="@dimen/spacing_padding_double">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView android:id="@+id/tv_problem_title"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/height_form_list_problem_log"
+                  android:gravity="center_vertical"
+                  android:paddingStart="@dimen/spacing_padding_double"
+                  android:text="@string/form_problem_log"
+                  android:textColor="@color/form_text_title"
+                  android:visibility="gone"/>
+
+
+        <LinearLayout android:id="@+id/ll_rectification_log"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/height_form_list_item"
+                      android:background="@color/con_white"
+                      android:orientation="horizontal"
+                      android:visibility="gone">
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/ll_reinspection_log"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/height_form_list_item"
+                      android:layout_marginTop="@dimen/spacing_form_list_top"
+                      android:background="@color/con_white"
+                      android:orientation="horizontal"
+                      android:visibility="gone">
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_result"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="@color/form_background_write"
-                  android:orientation="vertical">
+                  android:layout_marginTop="@dimen/spacing_form_list_top"
+                  android:background="@color/con_white"
+                  android:visibility="gone"/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="40dp"
+                      android:paddingEnd="@dimen/spacing_padding_double"
+                      android:paddingStart="@dimen/spacing_padding_double">
+
+            <Button android:id="@+id/btn_cancel"
+                    style="?attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="@dimen/size_12"
+                    android:layout_weight="1"
+                    android:background="@drawable/small_button_grey"
+                    android:text="@string/quit"
+                    android:textColor="@color/white"
+                    android:typeface="sans"/>
+
+            <Button android:id="@+id/btn_submit"
+                    style="?attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/size_12"
+                    android:layout_weight="1"
+                    android:background="@drawable/small_button_blue"
+                    android:text="@string/commite"
+                    android:textColor="@color/white"
+                    android:typeface="sans"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-    <TextView android:layout_width="match_parent"
-              android:layout_height="44dp"
-              android:text="@string/form_program_log"
-              android:gravity="center_vertical"
-              android:paddingStart="@dimen/spacing_padding_double"
-              android:background="@color/form_background_grey"
-              android:textColor="@color/form_text_title"/>
-
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-
-    </LinearLayout>
-
-
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="40dp"
-                  android:paddingEnd="@dimen/spacing_padding_double"
-                  android:paddingStart="@dimen/spacing_padding_double">
-
-        <Button android:id="@+id/btn_cancel"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginEnd="@dimen/size_12"
-                android:layout_weight="1"
-                android:background="@drawable/small_button_grey"
-                android:text="@string/quit"
-                android:textColor="@color/white"
-                android:typeface="sans"/>
-
-        <Button android:id="@+id/btn_confirm"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:background="@drawable/small_button_blue"
-                android:text="@string/commite"
-                android:textColor="@color/white"
-                android:typeface="sans"/>
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

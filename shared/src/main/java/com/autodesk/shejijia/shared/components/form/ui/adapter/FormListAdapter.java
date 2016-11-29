@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 
 import java.util.List;
 
@@ -18,12 +20,12 @@ import java.util.List;
 
 public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormListVH> {
     private Context mContext;
-    private List<String> mTitleList;
+    private List<ItemCell> mItemCells;
     private OnItemClickListener mOnItemClickListener;
 
-    public FormListAdapter(Context context, List<String> titleList) {
+    public FormListAdapter(Context context, List<ItemCell> titleList) {
         mContext = context;
-        mTitleList = titleList;
+        mItemCells = titleList;
     }
 
     @Override
@@ -34,8 +36,23 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
 
     @Override
     public void onBindViewHolder(final FormListVH holder, final int position) {
-        String title = mTitleList.get(position);
-        holder.mTitle.setText(title);
+        ItemCell itemCell = mItemCells.get(position);
+
+        holder.mTitleTv.setText(itemCell.getTitle());  //标题
+        holder.mResultTv.setText(itemCell.getResult());  //结果
+
+        if(itemCell.getReinspectionNum() == 0) {     //提醒数目
+            holder.mNotificationTv.setVisibility(View.GONE);
+        } else {
+            holder.mNotificationTv.setVisibility(View.VISIBLE);
+            holder.mNotificationTv.setText(itemCell.getReinspectionNum());
+        }
+
+        if(itemCell.isShow()) {       //错误信息
+            holder.mInformationIv.setVisibility(View.VISIBLE);
+        } else {
+            holder.mInformationIv.setVisibility(View.GONE);
+        }
 
         if (null != mOnItemClickListener) {
             holder.mTableCellLayout.setOnClickListener(new View.OnClickListener() {
@@ -46,13 +63,12 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
 
             });
 
-            mOnItemClickListener.onResultClick(holder.mResultTv);  //将结果标签抛出处理
         }
     }
 
     @Override
     public int getItemCount() {
-        return mTitleList.size();
+        return mItemCells.size();
     }
 
 
@@ -61,22 +77,24 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
     }
 
     static class FormListVH extends RecyclerView.ViewHolder {
-        private TextView mTitle;
-        private TextView mResultTv;
-        private RelativeLayout mTableCellLayout;
+        private TextView mTitleTv;  //标题
+        private TextView mResultTv; //随时跟新结果  初始化的时候就应该做出判断,是否有复验
+        private RelativeLayout mTableCellLayout;  //条目点击
+        private TextView mNotificationTv;   //通知标签   初始化的时候就应该做出判断,是复验的通知,和数量
+        private ImageView mInformationIv;    //错误详情视图   初始化的时候就应该做出判断,是否又错误信息
 
         public FormListVH(View itemView) {
             super(itemView);
             mTableCellLayout = (RelativeLayout) itemView.findViewById(R.id.rl_table_cell);
-            mTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            mTitleTv = (TextView) itemView.findViewById(R.id.tv_title);
             mResultTv = (TextView) itemView.findViewById(R.id.tv_result);
+            mNotificationTv = (TextView) itemView.findViewById(R.id.tv_notifications);
+            mInformationIv = (ImageView) itemView.findViewById(R.id.iv_information);
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
-
-        void onResultClick(TextView view);
     }
 
 }

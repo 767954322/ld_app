@@ -186,6 +186,7 @@
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckActivity"
@@ -200,13 +201,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ScanQrDialogStyle"/>
         <activity
-            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.FormListActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/FormRecyclerStyle"/>
-        <activity
-            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.FormItemListActivity"
+            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
