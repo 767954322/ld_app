@@ -41,6 +41,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     private ArrayList<Task> mDeletedTasks = new ArrayList<>();
 
     private TaskFilterType mFilterType = TaskFilterType.ALL_TASKS;
+
     public EditTaskNodePresenter(String projectId, String operation) {
         mProjectId = projectId;
         mOperation = operation;
@@ -50,7 +51,7 @@ public class EditTaskNodePresenter implements EditPlanContract.TaskNodePresenter
     public void fetchPlan() {
 
         ProjectRepository.getInstance().getActivePlan(mProjectId, ConstructionConstants.REQUEST_TAG_FETCH_PLAN,
-                new ResponseCallback<PlanInfo, ResponseError>() {{
+                new ResponseCallback<PlanInfo, ResponseError>() {
 
                     @Override
                     public void onSuccess(PlanInfo data) {

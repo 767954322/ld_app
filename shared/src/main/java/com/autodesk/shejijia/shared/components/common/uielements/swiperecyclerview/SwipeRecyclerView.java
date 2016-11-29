@@ -27,10 +27,10 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
-    private boolean isLoadMoreEnable;
-    private boolean isRefreshEnable;
-    private boolean isLoadingMore;
-    private int lastVisiblePosition = 0;
+    private boolean mIsLoadMoreEnable;
+    private boolean mIsRefreshEnable;
+    private boolean mIsLoadingMore;
+    private int mLastVisiblePosition = 0;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private DataObserver mDataObserver;
@@ -69,8 +69,8 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
             return;
         }
         try {
-            isRefreshEnable = array.getBoolean(R.styleable.SwipeRecyclerView_refreshEnable, false);
-            isLoadMoreEnable = array.getBoolean(R.styleable.SwipeRecyclerView_loadMoreEnable, false);
+            mIsRefreshEnable = array.getBoolean(R.styleable.SwipeRecyclerView_refreshEnable, false);
+            mIsLoadMoreEnable = array.getBoolean(R.styleable.SwipeRecyclerView_loadMoreEnable, false);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -93,7 +93,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
             if (mDataObserver == null) {
                 mDataObserver = new DataObserver();
             }
-            mWrapperAdapter = new WrapperAdapter(adapter, isLoadMoreEnable, mFooterView);
+            mWrapperAdapter = new WrapperAdapter(adapter, mIsLoadMoreEnable, mFooterView);
             mRecyclerView.setAdapter(mWrapperAdapter);
             adapter.registerAdapterDataObserver(mDataObserver);
             mDataObserver.onChanged();
@@ -115,7 +115,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(refreshing);
-                if (refreshing && !isLoadingMore && mListener != null) {
+                if (refreshing && !mIsLoadingMore && mListener != null) {
                     mListener.onRefresh();
                 }
             }
@@ -127,15 +127,15 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     }
 
     public boolean isLoadingMore() {
-        return isLoadingMore;
+        return mIsLoadingMore;
     }
 
     public void setLoadMoreEnable(boolean loadMoreEnable) {
-        this.isLoadMoreEnable = loadMoreEnable;
+        this.mIsLoadMoreEnable = loadMoreEnable;
     }
 
     public void setRefreshEnable(boolean refreshEnable) {
-        this.isRefreshEnable = refreshEnable;
+        this.mIsRefreshEnable = refreshEnable;
     }
 
     public RecyclerView getRecyclerView() {
@@ -164,7 +164,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     * stop load more
     * */
     public void stopLoadingMore() {
-        isLoadingMore = false;
+        mIsLoadingMore = false;
         if (mWrapperAdapter != null) {
             mWrapperAdapter.notifyItemRemoved(mWrapperAdapter.getItemCount());
         }
@@ -219,27 +219,27 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if (!isLoadMoreEnable || isLoadingMore() || isRefreshing()) {
+            if (!mIsLoadMoreEnable || isLoadingMore() || isRefreshing()) {
                 return;
             }
             mLayoutManager = mRecyclerView.getLayoutManager();
             //get lastVisiblePosition
             if (mLayoutManager instanceof LinearLayoutManager) {
-                lastVisiblePosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                mLastVisiblePosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
             } else if (mLayoutManager instanceof GridLayoutManager) {
-                lastVisiblePosition = ((GridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
+                mLastVisiblePosition = ((GridLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
             } else if (mLayoutManager instanceof StaggeredGridLayoutManager) {
                 int[] into = new int[((StaggeredGridLayoutManager) mLayoutManager).getSpanCount()];
                 ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(into);
-                lastVisiblePosition = findMax(into);
+                mLastVisiblePosition = findMax(into);
             }
 
             //set isLoading More
             int childCount = mWrapperAdapter == null ? 0 : mWrapperAdapter.getItemCount();
-            if (childCount > 1 && lastVisiblePosition == childCount - 1) {
+            if (childCount > 1 && mLastVisiblePosition == childCount - 1) {
 
                 if (mListener != null) {
-                    isLoadingMore = true;
+                    mIsLoadingMore = true;
                     mListener.onLoadMore();
                 }
             }
@@ -292,7 +292,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
             super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-            mWrapperAdapter.notifyItemRangeRemoved(fromPosition, itemCount);
+            mWrapperAdapter.notifyItemMoved(fromPosition, itemCount);
         }
 
         @Override

@@ -38,6 +38,7 @@ public abstract class BaseConstructionFragment extends BaseFragment implements B
                 if (error.getStatus() == 401) {
                     LoginUtils.doLogout(mContext);
                     LoginUtils.doLogin(mContext);
+                    mContext.finish();
                 }
             }
         });

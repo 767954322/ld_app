@@ -72,9 +72,9 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             String category = taskLists.get(position).getCategory();
             switch (category) {
                 case ConstructionConstants.TaskCategory.CONSTRUCTION: //施工节点
-                    if (taskLists.get(position).getReserveTime() != null) {
-                        String startDate = taskLists.get(position).getReserveTime().getStart();
-                        String endDate = taskLists.get(position).getReserveTime().getCompletion();
+                    if (taskLists.get(position).getPlanningTime() != null) {
+                        String startDate = taskLists.get(position).getPlanningTime().getStart();
+                        String endDate = taskLists.get(position).getPlanningTime().getCompletion();
                         setTaskDate(taskListVH, startDate, endDate);
                     }
                     break;

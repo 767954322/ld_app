@@ -19,6 +19,6 @@ public class Config {
 
 
     //Construction urls
-    public static final String CONSTRUCTION_MAIN_URL = "";
-    public static final String CONSTRUCTION_ISSUE_URL = "";
+    public static final String CONSTRUCTION_MAIN_URL = "http://cp-uat-plan.homestyler.com/api/v1";
+    public static final String CONSTRUCTION_ISSUE_URL = "http://cp-uat-issue.homestyler.com/v1";
 }
