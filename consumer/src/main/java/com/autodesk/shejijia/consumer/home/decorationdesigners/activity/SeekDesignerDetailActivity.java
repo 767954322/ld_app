@@ -225,22 +225,22 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 } else {
                     if (memberEntity != null) {
-
                         if (null != seekDesignerDetailHomeBean) {
                             member_id = memberEntity.getAcs_member_id();
                             final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
                             final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
                             int is_real_name = seekDesignerDetailHomeBean.getDesigner().getIs_real_name();
                             if (is_real_name == 2) {
+                                CustomProgress.show(this, "", false, null);
                                 MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                                     @Override
                                     public void onErrorResponse(VolleyError volleyError) {
+                                        CustomProgress.cancelDialog();
                                         MPNetworkUtils.logError(TAG, volleyError);
                                     }
-
                                     @Override
                                     public void onResponse(String s) {
-
+                                        CustomProgress.cancelDialog();
                                         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
                                         final Intent intent = new Intent(SeekDesignerDetailActivity.this, MeasureFormActivity.class);
                                         Bundle bundle = new Bundle();
