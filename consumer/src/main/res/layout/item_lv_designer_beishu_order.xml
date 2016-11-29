@@ -54,18 +54,25 @@
                 android:text="@string/consumer_decoration_name"
                 android:textColor="@color/bg_33"
                 android:textSize="@dimen/font_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="/"
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_16" />
 
-            <!--            <TextView
-                            android:id="@+id/tv_decoration_community_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:ellipsize="end"
-                            android:maxEms="4"
-                            android:singleLine="true"
-                            android:text="@string/consumer_decoration_name"
-                            android:textColor="@color/bg_33"
-                            android:textSize="@dimen/font_16" />-->
+            <TextView
+                android:id="@+id/tv_decoration_community_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxEms="4"
+                android:singleLine="true"
+                android:text="@string/consumer_decoration_name"
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_16" />
 
         </LinearLayout>
 
