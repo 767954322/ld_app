@@ -354,7 +354,7 @@ public class MPServerHttpManager {
                 "&custom_string_restroom=" + custom_string_restroom +
                 "&sort_order=desc" +
                 "&custom_string_form=" + custom_string_form;
-
+        Log.d("MPServerHttpManage3r", url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -80,7 +80,6 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
                 ImageLoader.getInstance().loadImage(imageLists.get(position), new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
-                        Log.d("List3DLibraryDetailsAda", imageUri);
                     }
 
                     @Override
