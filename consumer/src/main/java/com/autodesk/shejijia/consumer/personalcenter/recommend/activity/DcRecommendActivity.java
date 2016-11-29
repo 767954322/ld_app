@@ -71,7 +71,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
         mRightTextView.setVisibility(isDesign ? View.VISIBLE : View.INVISIBLE);
         setTitleForNavbar(UIUtils.getString(isDesign ? R.string.personal_recommend : R.string.recommend_listing));
         mRightTextView.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
-        mRightTextView.setText(R.string.recommend_detail);
+        mRightTextView.setText(R.string.personal_new_inventory);
     }
 
     @Override

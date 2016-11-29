@@ -150,8 +150,10 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
      * 用于刷新
      */
     public void onEventMainThread(RefreshEvent event) {
-        if (mRecommends.size() >= 10) {
+        if (mRecommends.size() > 10) {
             OFFSET = mRecommends.size();
+        }else {
+            OFFSET = 10;
         }
         if (mRecommendLogic != null)
             mRecommendLogic.onLoadRecommendListData(false, 0, OFFSET, 0);
