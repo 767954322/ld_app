@@ -84,8 +84,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 //        final String thread_id = decorationNeedsListBean.getBeishu_thread_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
-        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name));
-        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name));
+        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name).length() > 4 ? UIUtils.getNoDataIfEmpty(contacts_name).substring(0,3)+"..." : UIUtils.getNoDataIfEmpty(contacts_name));
+        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name).length() > 5 ? UIUtils.getNoDataIfEmpty(community_name).substring(0,4)+"..." : UIUtils.getNoDataIfEmpty(community_name));
 
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
 
