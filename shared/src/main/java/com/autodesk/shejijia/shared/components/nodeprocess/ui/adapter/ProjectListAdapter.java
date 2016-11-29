@@ -130,7 +130,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (projectLists.get(position).getPlan().getTasks() != null && projectLists.get(position).getPlan().getTasks().size() > 0) {
                 projectVh.mViewLine.setVisibility(View.VISIBLE);
                 projectVh.mTaskListView.setVisibility(View.VISIBLE);
-                projectVh.mTaskListView.setAdapter(new TaskListAdapter(projectLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view, mContext, mProjectListItemListener));
+                projectVh.mTaskListView.setAdapter(new TaskListAdapter(projectLists.get(position), R.layout.listitem_task_list_details_view, mContext, mProjectListItemListener));
             } else {//隐藏分割线,与recyclerView
                 projectVh.mViewLine.setVisibility(View.GONE);
                 projectVh.mTaskListView.setVisibility(View.GONE);
@@ -198,7 +198,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void onProjectClick(List<ProjectInfo> projectList, int position);
 
         //节点详情
-        void onTaskClick(List<Task> taskList, int position);
+        void onTaskClick(ProjectInfo projectInfo, Task task);
 
         //星标按钮监听
         void onStarLabelClick(List<ProjectInfo> projectList, boolean like, int position);

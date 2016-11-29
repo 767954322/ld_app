@@ -139,11 +139,8 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     }
 
     @Override
-    public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
-        Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo", taskIdLists.get(position));
-        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
-        taskDetailsFragment.setArguments(taskInfoBundle);
+    public void navigateToTaskDetail(ProjectInfo projectInfo, Task task) {
+        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(projectInfo, task);
         taskDetailsFragment.show(fragmentManager, "task_details");
     }
 

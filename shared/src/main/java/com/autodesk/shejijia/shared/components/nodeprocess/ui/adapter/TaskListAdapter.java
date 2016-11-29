@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 
 import java.util.List;
@@ -23,13 +24,15 @@ import java.util.List;
  */
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private ProjectInfo mProject;
     private List<Task> taskLists;
     private int resId;
     private Context mContext;
     private ProjectListAdapter.ProjectListItemListener mTaskListItemListener;
 
-    public TaskListAdapter(List<Task> taskLists, int resId, Context mContext, ProjectListAdapter.ProjectListItemListener mTaskListItemListener) {
-        this.taskLists = taskLists;
+    public TaskListAdapter(ProjectInfo projectInfo, int resId, Context mContext, ProjectListAdapter.ProjectListItemListener mTaskListItemListener) {
+        this.mProject = projectInfo;
+        this.taskLists = projectInfo.getPlan().getTasks();
         this.resId = resId;
         this.mContext = mContext;
         this.mTaskListItemListener = mTaskListItemListener;
@@ -206,7 +209,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         taskListVH.mTaskDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTaskListItemListener.onTaskClick(taskLists, position);
+                mTaskListItemListener.onTaskClick(mProject, taskLists.get(position));
             }
         });
     }

@@ -7,6 +7,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +17,8 @@ import java.util.List;
 public class ProjectInfo implements Serializable{
 
     private String description;
-    private List<Like> likes;
-    private List<Member> members;
+    private ArrayList<Like> likes;
+    private ArrayList<Member> members;
     private Building building;
     private long owner;
     private PlanInfo plan;
@@ -36,19 +37,19 @@ public class ProjectInfo implements Serializable{
     private String designId;
 
 
-    public List<Like> getLikes() {
+    public ArrayList<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Like> likes) {
+    public void setLikes(ArrayList<Like> likes) {
         this.likes = likes;
     }
 
-    public List<Member> getMembers() {
+    public ArrayList<Member> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Member> members) {
+    public void setMembers(ArrayList<Member> members) {
         this.members = members;
     }
 

@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/node_details_oval_white_shape"
+    android:layout_marginStart="@dimen/marginleft_parent"
+    android:layout_marginEnd="@dimen/marginright_parent"
+    android:shape="rectangle"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_top_status"
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/node_details_oval_gray_shape"
+        android:background="@drawable/bg_task_details_header"
         android:orientation="horizontal"
         android:padding="@dimen/spacing_padding_third">
 
@@ -19,16 +22,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             android:textStyle="bold"
             tools:text="隐秘工程验收" />
 
         <TextView
             android:id="@+id/tv_task_status"
+            android:layout_marginLeft="@dimen/spacing_margin_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             tools:text="未验收" />
     </LinearLayout>
@@ -120,23 +124,23 @@
         android:orientation="vertical"
         android:showDividers="beginning|middle">
 
-        <TextView
-            android:id="@+id/tv_navigate_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/spacing_padding_double"
-            android:textSize="@dimen/font_large"
-            tools:text="隐秘工程验收表格" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_navigate_form"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/spacing_padding_double"-->
+            <!--android:textSize="@dimen/font_large"-->
+            <!--tools:text="隐秘工程验收表格" />-->
 
-        <TextView
-            android:id="@+id/tv_navigate_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/spacing_padding_double"
-            android:textSize="@dimen/font_large"
-            tools:text="修改预约时间" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_navigate_time"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/spacing_padding_double"-->
+            <!--android:textSize="@dimen/font_large"-->
+            <!--tools:text="修改预约时间" />-->
     </LinearLayout>
 
 </LinearLayout>

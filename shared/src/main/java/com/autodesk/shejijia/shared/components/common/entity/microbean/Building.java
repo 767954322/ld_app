@@ -29,6 +29,10 @@ public class Building implements Serializable{
     @SerializedName("community_name")
     private String communityName;
 
+    public String getAddress() {
+        return cityName + district + communityName;
+    }
+
     public int getHalls() {
         return halls;
     }

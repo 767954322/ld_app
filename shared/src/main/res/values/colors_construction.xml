@@ -30,25 +30,39 @@
     <color name="activity_bg">#63000000</color>
 
 
-    <!-- basic colors -->
-    <color name="con_green">#27D34D</color>
+    <!--Primary color-->
     <color name="con_blue">#2B77C1</color>
+    <color name="con_middle_blue">#7AAAD9</color>
+    <!--Used for selected-->
+    <color name="con_light_blue">#D4E4F4</color>
+    <!--Used for task status delayed-->
     <color name="con_yellow">#FFB22F</color>
-    <color name="con_orange">#EA6339</color>
-    <color name="con_red">#FF432F</color>
-    <color name="gray_light">#c8c8c8</color>
-    <color name="con_white">#FFFFFF</color>
+    <!--Used for task status unqualified-->
+    <color name="con_red">#F3673B</color>
+    <!--Used for divider in grey background-->
+    <color name="con_light_grey">#E0E0E0</color>
+    <!--Used for background or divider in white background-->
+    <color name="con_white_snow">#F0F0F0</color>
 
     <!-- font colors-->
-    <color name="con_font_gray">#939393</color>
-    <color name="con_font_black">#323232</color>
+    <color name="con_font_black">#464B4E</color>
+    <color name="con_font_dark_grey">#7C8489</color>
+    <color name="con_font_gray">#B1BDC4</color>
+
+    <!--TODO remove later-->
     <color name="font_black">#323232</color>
 
+    <!--TODO remove later-->
+    <color name="gray_light">#E0E0E0</color>
+    <color name="con_white">#FFFFFF</color>
+    <color name="con_green">#27D34D</color>
+    <color name="con_orange">#EA6339</color>
+
     <!-- project status colors-->
-    <color name="task_status_orange">#EA6339</color>
-    <color name="task_status_blue">#2B77C1</color>
-    <color name="task_status_light_blue">#AAB9C3</color>
-    <color name="task_status_yellow">#FFB22F</color>
+    <color name="task_status_blue">@color/con_blue</color>
+    <color name="task_status_light_blue">@color/con_middle_blue</color>
+    <color name="task_status_yellow">@color/con_yellow</color>
+    <color name="task_status_orange">@color/con_red</color>
 
     <!-- project progressbar default colors-->
     <color name="progressbar_white">#ffffff</color>

@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
 import android.support.annotation.Nullable;
 
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -71,7 +72,7 @@ public interface ProjectListContract {
         /*
         * 每个item中每个任务条目点击跳转到节点详情
         * */
-        void navigateToTaskDetail(List<Task> taskLists, int position);
+        void navigateToTaskDetail(ProjectInfo projectInfo, Task task);
 
         /*
         * 星标项目

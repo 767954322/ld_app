@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.entity.microbean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ public class PlanInfo implements Serializable {
     private MileStone milestone;
     private String start;
     private String completion;
-    private List<Task> tasks;
+    private ArrayList<Task> tasks;
     @SerializedName("delete_tasks")
-    private List<Task> deletedTasks;
+    private ArrayList<Task> deletedTasks;
     @SerializedName("plan_template_id")
     private String planTemplateId;
     @SerializedName("plan_id")
@@ -65,19 +66,19 @@ public class PlanInfo implements Serializable {
         this.completion = completion;
     }
 
-    public List<Task> getTasks() {
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public List<Task> getDeletedTasks() {
+    public ArrayList<Task> getDeletedTasks() {
         return deletedTasks;
     }
 
-    public void setDeletedTasks(List<Task> mDeletedTasks) {
+    public void setDeletedTasks(ArrayList<Task> mDeletedTasks) {
         this.deletedTasks = mDeletedTasks;
     }
 

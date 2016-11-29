@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.entity.microbean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +23,8 @@ public class Member implements Serializable{
     @SerializedName("is_group")
     private boolean isGroup;
     @SerializedName("group_members")
-    private List<Member> groupMembers;
-    private List<String> allowed;
+    private ArrayList<Member> groupMembers;
+    private ArrayList<String> allowed;
 
 
     public String getRole() {
@@ -50,19 +51,19 @@ public class Member implements Serializable{
         this.group = group;
     }
 
-    public List<Member> getGroupMembers() {
+    public ArrayList<Member> getGroupMembers() {
         return groupMembers;
     }
 
-    public void setGroupMembers(List<Member> groupMembers) {
+    public void setGroupMembers(ArrayList<Member> groupMembers) {
         this.groupMembers = groupMembers;
     }
 
-    public List<String> getAllowed() {
+    public ArrayList<String> getAllowed() {
         return allowed;
     }
 
-    public void setAllowed(List<String> allowed) {
+    public void setAllowed(ArrayList<String> allowed) {
         this.allowed = allowed;
     }
 

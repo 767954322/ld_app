@@ -59,6 +59,6 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
 
     @Override
     public void onTaskClick(List<Task> taskList, int position) {
-        mPDTaskListPresenter.navigateToTaskDetail(getFragmentManager(), taskList, position);
+        mPDTaskListPresenter.navigateToTaskDetail(getChildFragmentManager(), taskList, position);
     }
 }

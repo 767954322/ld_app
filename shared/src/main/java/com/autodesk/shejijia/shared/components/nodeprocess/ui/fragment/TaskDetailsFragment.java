@@ -5,44 +5,53 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by t_xuz on 11/11/16.
  * 节点详情对话框
  */
 
-public class TaskDetailsFragment extends DialogFragment implements TaskDetailsContract.View {
+public class TaskDetailsFragment extends AppCompatDialogFragment implements TaskDetailsContract.View {
+    private static final String BUNDLE_KEY_PROJECT = "project";
+    private static final String BUNDLE_KEY_TASK = "task";
 
-    private ImageButton mCloseBtn;
-    private TextView mTaskName;
-    private TextView mTaskStatus;
-    private TextView mTaskDate;
-    private TextView mTaskAddress;
+    private ViewGroup mHeaderView;
+    private TextView mTaskNameView;
+    private TextView mTaskStatusView;
+    private TextView mTaskDateView;
+    private TextView mTaskAddressView;
+    private TextView mTaskPhoneView;
+    private TextInputEditText mCommentEditView;
     private RecyclerView mTaskMemberListView;
-    private TextView mTaskPhone;
-    private TextView mNavigateFrom;
-    private TextView mNavigateTime;
-    private TextInputEditText mEditRemark;
+    private ImageButton mCloseBtn;
+
     private TaskDetailsContract.Presenter mTaskDetailsPresenter;
 
-    public static TaskDetailsFragment newInstance(Bundle taskInfoBundle) {
+    public static TaskDetailsFragment newInstance(ProjectInfo projectInfo, Task task) {
         TaskDetailsFragment taskDetailsFragment = new TaskDetailsFragment();
-        taskDetailsFragment.setArguments(taskInfoBundle);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_KEY_PROJECT, projectInfo);
+        bundle.putSerializable(BUNDLE_KEY_TASK, task);
+        taskDetailsFragment.setArguments(bundle);
         return taskDetailsFragment;
     }
 
@@ -50,54 +59,42 @@ public class TaskDetailsFragment extends DialogFragment implements TaskDetailsCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskDetailsPresenter = new TaskDetailsPresenter(this);
+        ProjectInfo projectInfo = (ProjectInfo) getArguments().getSerializable(BUNDLE_KEY_PROJECT);
+        Task task = (Task) getArguments().getSerializable(BUNDLE_KEY_TASK);
+
+        mTaskDetailsPresenter = new TaskDetailsPresenter(this, projectInfo, task);
     }
 
-    @NonNull
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_task_details_dialog, container, false);
+        initView(view);
+        initEvent();
+        mTaskDetailsPresenter.startPresent();
+        return view;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new AppCompatDialog(getActivity(), R.style.Construction_DialogStyle_Translucent);
+    }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Construction_AlertDialogStyle_Translucent);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_task_details_dialog, null);
-
-        initView(view);
-
-        updateViewsData();
-
-        initEvent();
-
-        return builder.setView(view).create();
-
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void initView(View view) {
         mCloseBtn = (ImageButton) view.findViewById(R.id.imgBtn_close);
-        mTaskName = (TextView) view.findViewById(R.id.tv_task_name);
-        mTaskStatus = (TextView) view.findViewById(R.id.tv_task_status);
-        mTaskDate = (TextView) view.findViewById(R.id.tv_task_date);
-        mTaskAddress = (TextView) view.findViewById(R.id.tv_task_address);
+        mHeaderView = (ViewGroup) view.findViewById(R.id.ll_header);
+        mTaskNameView = (TextView) view.findViewById(R.id.tv_task_name);
+        mTaskStatusView = (TextView) view.findViewById(R.id.tv_task_status);
+        mTaskDateView = (TextView) view.findViewById(R.id.tv_task_date);
+        mTaskAddressView = (TextView) view.findViewById(R.id.tv_task_address);
         mTaskMemberListView = (RecyclerView) view.findViewById(R.id.rcy_task_person_list);
-        mTaskPhone = (TextView) view.findViewById(R.id.tv_task_phone);
-        mNavigateFrom = (TextView) view.findViewById(R.id.tv_navigate_form);
-        mNavigateTime = (TextView) view.findViewById(R.id.tv_navigate_time);
-        mEditRemark = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
-    }
-
-    private void updateViewsData() {
-        if (getArguments() != null){
-            Task taskInfo = (Task) getArguments().getSerializable("taskInfo");
-            if (taskInfo != null) {
-                if (!TextUtils.isEmpty(taskInfo.getName())) {
-                    mTaskName.setText(taskInfo.getName());
-                }
-                if (!TextUtils.isEmpty(taskInfo.getStatus())) {
-                    mTaskStatus.setText(taskInfo.getStatus());
-                }
-                if (!TextUtils.isEmpty(taskInfo.getDescription())) {
-                    mTaskAddress.setText("");
-                }
-            }
-        }
+        mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
+        mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
     }
 
     private void initEvent(){
@@ -127,5 +124,52 @@ public class TaskDetailsFragment extends DialogFragment implements TaskDetailsCo
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void showTaskName(@NonNull String taskName) {
+        mTaskNameView.setText(taskName);
+    }
+
+    @Override
+    public void showTaskStatus(@NonNull String status) {
+        mTaskStatusView.setText(TaskUtils.getDisplayStatus(status));
+        mHeaderView.getBackground().setLevel(TaskUtils.getStatusLevel(status));
+    }
+
+    @Override
+    public void showTaskMembers(@NonNull ArrayList<Member> members) {
+        // TODO
+    }
+
+    @Override
+    public void showTaskAddress(@NonNull String address) {
+        mTaskAddressView.setText(address);
+    }
+
+    @Override
+    public void showTaskTime(@NonNull String time) {
+        mTaskDateView.setText(time);
+    }
+
+    @Override
+    public void showInspectCompanyInfo(@NonNull String companyName, @NonNull String phoneNumber) {
+        mTaskPhoneView.setText(companyName + " " + phoneNumber);
+    }
+
+    // TODO refactor comments
+    @Override
+    public void showComment(@NonNull String comment) {
+        mCommentEditView.setText(comment);
+    }
+
+    @Override
+    public void editComment(@NonNull String comment) {
+        mCommentEditView.setText(comment);
+    }
+
+    @Override
+    public void showActions(@NonNull Task task) {
+        // TODO
     }
 }

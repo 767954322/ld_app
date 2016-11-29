@@ -60,7 +60,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     @Override
     protected void initData() {
-        mProjectListPresenter = new ProjectListPresenter(getActivity(), mContext.getSupportFragmentManager(), this);
+        mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
         mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);
@@ -148,8 +148,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void onTaskClick(List<Task> taskLists, int position) {
-        mProjectListPresenter.navigateToTaskDetail(taskLists, position);
+    public void onTaskClick(ProjectInfo projectInfo, Task task) {
+        mProjectListPresenter.navigateToTaskDetail(projectInfo, task);
     }
 
     @Override

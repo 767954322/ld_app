@@ -66,6 +66,7 @@
     <string name="task_reinspect_inprogress">复验进行中</string>
     <string name="task_reinspect_delay">复验延期</string>
     <string name="task_deleted">已删除</string>
+    <string name="task_status_unknow">未知</string>
 
 
     <!--Customer Calendar view-->
@@ -77,8 +78,9 @@
     <string name="calendar_friday">五</string>
     <string name="calendar_saturday">六</string>
 
-    <!--format style-->
+    <!--Date format style-->
     <string name="date_format_month_day">MM月dd日</string>
+    <string name="date_format_task_details">yyyy年MM月dd日 E</string>
 
     <!--项目列表筛选条件-->
     <string name="screen_all">全部项目</string>

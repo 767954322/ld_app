@@ -1,0 +1,144 @@
+{
+    "timeline": {},
+    "construction": {},
+    "materialMeasuring": -1,
+    "materialInstallation": 1,
+    "inspectorInspection": "",
+    "clientmanagerInspection":"",
+
+    "actions": [
+        {
+            "type": "view_form"
+        },
+        {
+            "type": "change_reserve_time"
+        },
+        {
+            "type": "fill_form"
+        },
+        {
+            "type": "mark_complete"
+        },
+        {
+            "type": "take_photo"
+        }
+    ],
+
+    "clientmanager": {
+        "materialInstallation": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "open": [
+                "change_reserve_time",
+                "fill_form"
+            ],
+            "reserving": [
+                "change_reserve_time",
+                "fill_form"
+            ],
+            "reserved": [
+                "change_reserve_time",
+                "fill_form"
+            ],
+            "inprogress": [
+                "fill_form"
+            ],
+            "resolved": [
+                "fill_form"
+            ],
+            "delayed": [
+                "fill_form"
+            ]
+        }
+    },
+    "foreman": {
+        "construction": {
+            "inprogress": [
+                "mark_complete",
+                "take_photo"
+            ],
+            "delayed": [
+                "mark_complete",
+                "take_photo"
+            ]
+        },
+        "materialMeasuring": {
+            "inprogress": [
+                "mark_complete"
+            ],
+            "delayed": [
+                "mark_complete"
+            ]
+        },
+        "materialInstallation": {
+            "open": [
+                "fill_form"
+            ],
+            "reserving": [
+                "fill_form"
+            ],
+            "reserved": [
+                "fill_form"
+            ],
+            "inprogress": [
+                "fill_form"
+            ],
+            "delayed": [
+                "fill_form"
+            ],
+            "resolved": [
+                "fill_form"
+            ],
+            "unqualified": [
+                "fill_form"
+            ]
+        },
+        "inspectorInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form"
+            ],
+            "reinspectionandrectification": [
+                "view_form"
+            ],
+            "rejected": [
+                "view_form"
+            ],
+            "reinspectreserved": [
+                "view_form"
+            ],
+            "reinspection_inprogress": [
+                "view_form"
+            ],
+            "reinspectdelayed": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "delayed": [
+                "view_form"
+            ],
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        }
+    },
+    "inspector": {},
+    "materialstaff": {},
+    "designer": {},
+    "member": {}
+}

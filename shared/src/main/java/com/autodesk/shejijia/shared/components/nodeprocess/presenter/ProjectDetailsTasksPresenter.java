@@ -38,10 +38,7 @@ public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract
 
     @Override
     public void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position) {
-        Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo", taskList.get(position));
-        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
-        taskDetailsFragment.setArguments(taskInfoBundle);
+        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(mProjectRepository.getActiveProject(), taskList.get(position));
         taskDetailsFragment.show(fragmentManager, "task_details");
     }
 }
