@@ -315,7 +315,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     private static final String DEFAULT_DISTRICT_NAME = "none";/*区的名字默认值*/
     private static String mtitle;
 
-    private static final int TEXT_SIZE = 5;//选择器的字体大小
+    private static final int TEXT_SIZE = 4;//选择器的字体大小
     private WheelView mProvinceWheelView;
     private WheelView mCityWheelView;
     private WheelView mDistrictWheelView;
