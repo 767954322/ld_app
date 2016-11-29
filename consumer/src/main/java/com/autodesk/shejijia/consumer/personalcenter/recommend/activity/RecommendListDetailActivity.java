@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -31,7 +30,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -135,7 +133,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String jsonString = jsonObject.toString();
-                Log.d("RecommendListDetailAc", jsonString);
                 RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
                 projectName = recommendListDetailBean.getCommunity_name();
                 mBrandCountLimit = recommendListDetailBean.getBrand_count_limit();
@@ -172,7 +169,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 if (isSendInterface) {
-                    new AlertView("提示", "发送推荐清单成功",
+                    new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_form_success),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                         @Override
                         public void onItemClick(Object object, int position) {
@@ -183,7 +180,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         }
                     }).show();
                 } else {
-                    new AlertView("提示", "当前清单已保存成功",
+                    new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_form_save_success),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                         @Override
                         public void onItemClick(Object object, int position) {
@@ -226,7 +223,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         setSendButtn();
         mRecommendScfdTag = recommendscfd.toString();
-        LogUtils.d("RecommendListDetailActi", mRecommendScfdTag);
         mRecommendSCFDList.addAll(recommendscfd);
 
         for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
@@ -260,8 +256,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                new AlertView("提示", "您确定要把这份清单发送给客户吗？",
-                        "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                new AlertView(UIUtils.getString(R.string.common_tip), "您确定要把这份清单发送给客户吗？",
+                        UIUtils.getString(R.string.common_cancel), null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object object, int position) {
                         if (position != AlertView.CANCELPOSITION) {
@@ -315,8 +311,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             EventBus.getDefault().post(new RefreshEvent());
             finish();
         } else {
-            new AlertView("提示", "当前清单还未发送，是否保存？",
-                    "否", null, new String[]{"是"}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+            new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_form_save),
+                    UIUtils.getString(R.string.common_no), null, new String[]{UIUtils.getString(R.string.common_right)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object object, int position) {
                     if (position != AlertView.CANCELPOSITION) {
@@ -348,8 +344,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public void onBrandDeleteListener(final int currentParentPosition, final int childPosition) {
-        new AlertView("提示", "您确定要删除当前品牌吗？",
-                "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
+        new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_brand_delete),
+                UIUtils.getString(R.string.common_cancel), null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
@@ -368,8 +364,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     public void onSubCategoryDeleteListener(final int groupPosition) {
-        new AlertView("提示", "您确定删除主材项吗？",
-                "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
+        new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_material_delete),
+                UIUtils.getString(R.string.following_cancel), null, new String[]{UIUtils.getString(R.string.sure)}, mActivity, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
@@ -392,7 +388,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void setTitle(RecommendDetailsBean recommendListDetailBean) {
         setTitleForNavbar(recommendListDetailBean.getCommunity_name());
-        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
+        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.recommend_material_add));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
@@ -484,8 +480,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         recommendSCFDList.addAll(mRecommendSCFDList);
 
         mRecommendSCFDList.clear();
-
-        Log.d("RecommendListDetailActi", "recommendSCFDList:" + recommendSCFDList);
 
         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
             mRecommendSCFDList.add(getMaterialRecommendSCFDBean(checkedInformationBean));

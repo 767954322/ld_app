@@ -1022,4 +1022,16 @@
     <string name="key_brand_mall">店面：</string>
 
     <string name="consumer_name">客户姓名：</string>
+    
+    <string name="common_tip">提示</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_right">是</string>
+    <string name="common_no">否</string>
+    <string name="recommend_form_success">发送推荐清单成功</string>
+    <string name="recommend_form_save">当前清单还未发送，是否保存？</string>
+    <string name="recommend_form_save_success">当前清单已保存成功</string>
+    <string name="recommend_material_delete">您确定删除主材项吗？</string>
+    <string name="recommend_brand_delete">您确定要删除当前品牌吗？</string>
+    <string name="recommend_material_add">添加主材</string>
+
 </resources>

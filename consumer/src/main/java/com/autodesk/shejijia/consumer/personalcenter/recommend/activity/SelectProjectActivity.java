@@ -83,7 +83,6 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // fix by liuhe．
         designerProjectsBean = designerProjects.get(position);
     }
 
@@ -100,7 +99,6 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
 
-                Log.d("SelectProjectActivity", jsonObject.toString());
                 SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
                 List<SelectProjectEntity.DesignerProjectsBean> projects = entity.getDesignerProjects();
                 if (projects != null && projects.size() > 0) {
