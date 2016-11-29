@@ -85,8 +85,8 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         holder.setText(R.id.tv_decoration_style, decoration_style_convert != null && decoration_style_convert.length() > 0?
                 decoration_style_convert:UIUtils.getString(R.string.no_select));
 
-        holder.setText(R.id.tv_decoration_name, contacts_name);
-        holder.setText(R.id.tv_decoration_community_name, "/"+community_name);
+        holder.setText(R.id.tv_decoration_name, UIUtils.getNoStringIfEmpty(contacts_name),3);
+        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoStringIfEmpty(community_name),4);
 
         holder.setText(R.id.tv_decoration_mobile, orderListEntity.getContacts_mobile());
 

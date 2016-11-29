@@ -34,8 +34,8 @@ public class CommonViewHolder {
     private Context mContext;
     private int mLayoutId;
 
-//    public CommonViewHolder(Context context, ViewGroup parent, int layoutId,
-//                            int position) {
+    public CommonViewHolder(Context context, ViewGroup parent, int layoutId,
+                            int position) {
 //        mContext = context;
 //        mLayoutId = layoutId;
 //        this.mPosition = position;
@@ -48,9 +48,11 @@ public class CommonViewHolder {
     public CommonViewHolder(Context context, View itemView, ViewGroup parent, int position)
     {
         mContext = context;
-        mConvertView = itemView;
-        mPosition = position;
-        mViews = new SparseArray<View>();
+        mLayoutId = layoutId;
+        this.mPosition = position;
+        this.mViews = new SparseArray<View>();
+        mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
+                false);
         mConvertView.setTag(this);
     }
 
@@ -109,7 +111,12 @@ public class CommonViewHolder {
         tv.setText(text);
         return this;
     }
-
+    public CommonViewHolder setText(int viewId, String text, int maxEms) {
+        TextView tv = getView(viewId);
+        tv.setMaxEms(maxEms);
+        tv.setText(text);
+        return this;
+    }
     public CommonViewHolder setTextHtml(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(Html.fromHtml(text));
