@@ -1003,8 +1003,7 @@
     <string name="plan_introduce">方案介绍</string>
     <string name="store_show_title">店面</string>
     <string name="other_filtr">其他</string>
-    <string name="title_activity_add_brand">AddBrandActivity</string>
-    <string name="all_button_name">全部</string>
+    <string name="manyoutu">漫游图</string>
 
 
     <!--推荐清单表单校验提示-->

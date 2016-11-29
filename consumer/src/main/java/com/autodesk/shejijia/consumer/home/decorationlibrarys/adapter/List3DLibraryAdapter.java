@@ -59,10 +59,12 @@ public class List3DLibraryAdapter extends BaseAdapter {
         if (mImageLists.get(position).getType().equalsIgnoreCase("0")) {
             viewHolder.mTypeName.setText("渲染图");
             viewHolder.mTypeImagePic.setImageResource(R.drawable.xuanran_icon);
-        } else if (mImageLists.get(position).getType().equalsIgnoreCase("4")) {
-            viewHolder.mTypeName.setText("漫游图");
-            viewHolder.mTypeImagePic.setImageResource(R.drawable.manyou_icon);
-        } else if (mImageLists.get(position).getType().equalsIgnoreCase("10")) {
+        }
+//        else if (mImageLists.get(position).getType().equalsIgnoreCase("4")) {
+//            viewHolder.mTypeName.setText("漫游图");
+//            viewHolder.mTypeImagePic.setImageResource(R.drawable.manyou_icon);
+//        }
+        else if (mImageLists.get(position).getType().equalsIgnoreCase("10")) {
             viewHolder.mTypeName.setText("户型图");
             viewHolder.mTypeImagePic.setImageResource(R.drawable.huxing_icon);
         }
