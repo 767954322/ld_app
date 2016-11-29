@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_ff"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_ff"
+    android:orientation="vertical">
 
     <!--&lt;!&ndash;北舒套餐标题&ndash;&gt;-->
     <!--<RelativeLayout-->
@@ -36,7 +36,8 @@
             android:id="@+id/iv_tag_ref"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_taocan"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_taocan" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,24 +51,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:ellipsize="end"
-                android:maxEms="3"
-                android:singleLine="true"
                 android:text="@string/consumer_decoration_name"
                 android:textColor="@color/bg_33"
-                android:textSize="@dimen/font_16"/>
+                android:textSize="@dimen/font_16" />
 
-            <TextView
-                android:id="@+id/tv_decoration_community_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:ellipsize="end"
-                android:maxEms="4"
-                android:singleLine="true"
-                android:text="@string/consumer_decoration_name"
-                android:textColor="@color/bg_33"
-                android:textSize="@dimen/font_16"/>
+            <!--            <TextView
+                            android:id="@+id/tv_decoration_community_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:ellipsize="end"
+                            android:maxEms="4"
+                            android:singleLine="true"
+                            android:text="@string/consumer_decoration_name"
+                            android:textColor="@color/bg_33"
+                            android:textSize="@dimen/font_16" />-->
 
         </LinearLayout>
 
@@ -78,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:layout_marginLeft="@dimen/size_10"
-        android:background="@color/bg_e4"/>
+        android:background="@color/bg_e4" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,7 +104,7 @@
                     android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/consumer_decoration_project_id"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_desinger_beishuorder_projectid"
@@ -115,7 +113,7 @@
                     android:background="@color/no_color"
                     android:text="1222544"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <!--姓名-->
@@ -133,17 +131,16 @@
                     android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/my_bid_name"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_desinger_beishuorder_contact_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
-                    android:ellipsize="end"
                     android:text="张三"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <!--项目地址-->
@@ -151,7 +148,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10">
@@ -162,18 +158,16 @@
                     android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/project_address"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_desinger_beishuorder_projectaddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:text="北京市朝阳区"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
             </LinearLayout>
 
@@ -193,7 +187,7 @@
                     android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/user_phone"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_desinger_beishuorder_phone"
@@ -202,7 +196,7 @@
                     android:background="@color/no_color"
                     android:text="15245689225"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
             </LinearLayout>
 
@@ -213,7 +207,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/size_5"
                 android:layout_marginTop="@dimen/size_5"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10">
@@ -224,17 +217,15 @@
                     android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/consume_detail_address"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_desinger_beishuorder_homeaddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:text="天畅园2单元"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
             </LinearLayout>
 
@@ -242,10 +233,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
                 android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/demand_color"/>
+                android:background="@color/demand_color" />
 
+            <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
 
-            <include layout="@layout/item_lv_decoration_beishu"></include>
+                <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
+                    android:id="@+id/ib_personal_b_photo_beishu"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon_default_avator"
+                    app:poly_vertices="0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/ib_personal_b_photo_beishu"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_designer_name_beishu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/size_10"
+                        android:layout_weight="1"
+                        android:text="@string/designer"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size_12" />
+
+                    <!--<ImageView
+                        android:id="@+id/img_decoration_beishu_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/size_10"
+                        android:src="@drawable/icon_chat_common_normal"/>-->
+                    <Button
+                        android:id="@+id/img_decoration_beishu_chat"
+                        android:layout_width="@dimen/size_80"
+                        android:layout_height="@dimen/size_25"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_btn_filtrate_pressed"
+                        android:text="@string/designer_online_communication"
+                        android:textColor="@color/bg_0084ff"
+                        android:textSize="@dimen/font_13" />
+
+                </LinearLayout>
+
+                <include layout="@layout/view_common_line"></include>
+            </RelativeLayout>
+            <!--   <include layout="@layout/item_lv_decoration_beishu"></include>-->
 
         </LinearLayout>
     </LinearLayout>
@@ -253,10 +300,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_10"
-        android:background="@color/light_blue_2"/>
+        android:background="@color/light_blue_2" />
 </LinearLayout>

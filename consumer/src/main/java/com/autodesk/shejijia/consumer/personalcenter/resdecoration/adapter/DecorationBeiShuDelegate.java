@@ -67,8 +67,11 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         String district = decorationNeedsListBean.getDistrict();
         String district_name = decorationNeedsListBean.getDistrict_name();
 
-        holder.setText(R.id.tv_decoration_beishu_name, contacts_name);
-        holder.setText(R.id.tv_decoration_community_name, "/" + community_name);
+//        holder.setText(R.id.tv_decoration_beishu_name, contacts_name);
+//        holder.setText(R.id.tv_decoration_community_name, "/" + community_name);
+
+        holder.setText(R.id.tv_decoration_beishu_name, contacts_name + "/" + community_name);
+
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_beishu_consumer_name, contacts_name);
         holder.setText(R.id.tv_decoration_beishu_phone, contacts_mobile);
@@ -77,7 +80,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         holder.setText(R.id.tv_decoration_beishu_consumer_name, UIUtils.getNoDataIfEmpty(contacts_name));
         holder.setText(R.id.tv_decoration_beishu_phone, UIUtils.getNoDataIfEmpty(contacts_mobile));
 
-        district_name = StringUtils.isEmpty(district_name)?"":district_name;
+        district_name = StringUtils.isEmpty(district_name) ? "" : district_name;
         String address = province_name + city_name + district_name;
         if (StringUtils.isEmpty(province_name)) {
             holder.setText(R.id.tv_decoration_beishu_address, UIUtils.getString(R.string.no_select));
