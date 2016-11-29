@@ -20,10 +20,7 @@ public class SelectProjectAdapter extends CommonAdapter<SelectProjectEntity.Desi
     public SelectProjectAdapter(Context context, List<SelectProjectEntity.DesignerProjectsBean> datas) {
         super(context, datas, R.layout.select_check_textview);
         this.context = context;
-
     }
-
-
 
     @Override
     public void convert(CommonViewHolder holder, SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {

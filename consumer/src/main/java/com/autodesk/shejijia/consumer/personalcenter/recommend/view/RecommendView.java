@@ -11,5 +11,5 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendB
 public interface RecommendView {
     void onLoadDataSuccess(int offset, RecommendBean entity);
 
-    void onLoadFailer();
+    void onLoadFailed();
 }

@@ -35,7 +35,6 @@ import java.util.List;
  * @file SelectProjectActivity.java  .
  * @brief 选择项目.
  */
-
 public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private SelectProjectAdapter mAdapter;
     private ListView mListView;
@@ -88,8 +87,6 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 
     /**
      * 选择项目
-     *
-     * @param designer_id
      */
     public void getSelectProjectList(final String designer_id) {
 

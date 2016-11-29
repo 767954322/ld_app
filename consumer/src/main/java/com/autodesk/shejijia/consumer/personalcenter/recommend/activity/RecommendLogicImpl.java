@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -20,7 +19,6 @@ import org.json.JSONObject;
  * @GitHub: https://github.com/meikoz
  * des:　列表页网络请求
  */
-
 public class RecommendLogicImpl {
     RecommendView mRecommendView;
 
@@ -45,7 +43,7 @@ public class RecommendLogicImpl {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                mRecommendView.onLoadFailer();
+                mRecommendView.onLoadFailed();
             }
         };
         MPServerHttpManager.getInstance().getRecommendList(isDesign, member_id, offset, limit, status, callback);

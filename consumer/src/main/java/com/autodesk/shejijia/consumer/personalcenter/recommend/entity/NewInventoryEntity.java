@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Created by xueqiudong on 16-10-26.
  */
-
 public class NewInventoryEntity implements Serializable {
 
     /**

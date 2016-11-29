@@ -32,9 +32,7 @@ public class DynamicScrollView extends HorizontalScrollView {
     }
 
     public void setMyScrollViewListener(MyScrollViewListener myScrollViewListener) {
-
         this.myScrollViewListener = myScrollViewListener;
-
     }
 
     @Override
@@ -42,18 +40,14 @@ public class DynamicScrollView extends HorizontalScrollView {
         super.onScrollChanged(x, y, oldx, oldy);
 
         if (myScrollViewListener != null) {
-
             myScrollViewListener.onScrollChange(this, x, y, oldx, oldy);
-
         }
-
     }
 
     /**
      * 设置适配
      */
     public void setAdapterForItem(int height) {
-
         ADAPTER_COUNT = (double) height / NO_CHANGE_HEIGHT;
         onePx = (int) (onePx * ADAPTER_COUNT);
     }
@@ -65,30 +59,23 @@ public class DynamicScrollView extends HorizontalScrollView {
     public void useCurrentDistanceScroll(int x, int currentDistance, int scrollHeight, int scrollAtOneHeight, int totalCount, int currentClickItem) {
 
         if (currentDistance == 0) {
-
             //第一次进入滑动
             scrollBy(x - onePx, 0);
         } else {
-
             //从第二次开始滑动记录
             if (x > currentItemLocation) {
-
                 //向右滑动
                 scrollBy(x - currentDistance - onePx, 0);
             } else {
-
                 //向做滑动
                 scrollBy(x - currentItemLocation - onePx, 0);
                 //判断是否到底
                 if (scrollAtOneHeight - x < scrollHeight) {
-
-
                 } else {
                     currentItemLocation = x - onePx;
                 }
             }
         }
-
     }
 
     /**
@@ -99,7 +86,6 @@ public class DynamicScrollView extends HorizontalScrollView {
      * @brief 自定义ScrollView的MyScrollViewListener, 方便监听ScrollView的滑动改变
      */
     public interface MyScrollViewListener {
-
         void onScrollChange(DynamicScrollView scrollView, int x, int y, int oldx, int oldy);
     }
 }

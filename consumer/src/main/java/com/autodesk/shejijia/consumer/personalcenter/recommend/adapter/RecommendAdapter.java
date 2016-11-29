@@ -32,7 +32,6 @@ import java.util.List;
  * @date: 16-10-21
  * @GitHub: https://github.com/meikoz
  */
-
 public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implements OnItemButtonClickListener {
 
     private boolean isDesiner = false;
@@ -121,7 +120,6 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         }
     }
 
-
     @Override
     public void onItemDeteleOnClick(String text, final RecommendDetailsBean item) {
         new AlertView(UIUtils.getString(R.string.tip), "您确定要删除此清单吗？", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
@@ -155,7 +153,6 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     @Deprecated
     public void onItemReturnOnClick(String text, final RecommendDetailsBean item) {
         //设计师撤销和消费者退回
-        Log.d("onClick", "退回");
         final JSONObject object1 = new JSONObject();
         try {
             object1.put("remark", "原因");

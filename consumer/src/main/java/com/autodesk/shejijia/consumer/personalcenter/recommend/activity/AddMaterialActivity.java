@@ -940,7 +940,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         all_material_btn = new BitmapTextView(this,null);
         all_material_btn.setText(UIUtils.getString(R.string.my_bid_all));
         all_material_btn.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
-        all_material_btn.setBitmapAndSize(R.drawable.three,"全部");
+        all_material_btn.setBitmapAndSize(R.drawable.three,UIUtils.getString(R.string.my_bid_all));
         all_material_btn.setMinWidth(width / 5);
         all_material_btn.setPadding(width / 25, 0, width / 25, 0);
         all_material_btn.setTextColor(UIUtils.getColor(R.color.text_item_name));

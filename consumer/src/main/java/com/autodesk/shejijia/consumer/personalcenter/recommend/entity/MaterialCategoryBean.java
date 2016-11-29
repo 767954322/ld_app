@@ -10,7 +10,6 @@ import java.util.List;
  * @file MaterialCategoryBean.java .
  * @brief 一二级品类信息BEAN.
  */
-
 public class MaterialCategoryBean implements Serializable{
 
     /**

@@ -1015,14 +1015,8 @@
     <string name="submit_successful">提交成功!</string>
     <string name="store_address">店面地址</string>
 
-    <string name="key_number_in">数量：</string>
-    <string name="key_dimension">规格：</string>
-    <string name="key_apartment">空间：</string>
-    <string name="key_remarks">备注：</string>
-    <string name="key_brand_mall">店面：</string>
-
     <string name="consumer_name">客户姓名：</string>
-    
+
     <string name="common_tip">提示</string>
     <string name="common_cancel">取消</string>
     <string name="common_right">是</string>
@@ -1033,10 +1027,12 @@
     <string name="recommend_form_save_success">当前清单已保存成功</string>
     <string name="recommend_material_delete">您确定删除主材项吗？</string>
     <string name="recommend_brand_delete">您确定要删除当前品牌吗？</string>
-    <string name="recommend_material_add">添加主材</string>
+    <string name="recommend_form_send">您确定要把这份清单发送给客户吗？</string>
 
+    <string name="recommend_material_add">添加主材</string>
     <string name="recommend_brand_name">品牌名称</string>
     <string name="recommend_brand_change">品牌变更</string>
+
     <string name="recommend_num">数量：</string>
     <string name="recommend_dimension">规格：</string>
     <string name="recommend_apartment">空间：</string>
@@ -1046,4 +1042,6 @@
     <string name="recommend_hint_num">请填写数量（单位）</string>
     <string name="recommend_hint_dimension">请填写规格</string>
     <string name="recommend_hint_remarks">请填写备注</string>
+    <string name="recommend_toast_name">客户姓名应为2-20个中文、英文、数字字符</string>
+    <string name="recommend_new_project">创建新的项目</string>
 </resources>

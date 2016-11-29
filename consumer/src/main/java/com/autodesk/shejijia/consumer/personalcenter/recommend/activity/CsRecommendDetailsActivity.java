@@ -3,8 +3,6 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -94,7 +92,6 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     private void getRecommendDetails() {

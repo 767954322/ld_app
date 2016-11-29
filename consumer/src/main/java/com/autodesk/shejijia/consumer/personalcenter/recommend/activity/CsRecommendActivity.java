@@ -128,7 +128,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     @Override
-    public void onLoadFailer() {
+    public void onLoadFailed() {
         CustomProgress.cancelDialog();
         mFrameLayout.onRefreshComplete();
         mListView.onLoadMoreComplete();
@@ -148,8 +148,6 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
 
     /**
      * 用于刷新
-     *
-     * @param event
      */
     public void onEventMainThread(RefreshEvent event) {
         OFFSET = mRecommends.size();

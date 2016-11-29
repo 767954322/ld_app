@@ -140,7 +140,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     }
 
     @Override
-    public void onLoadFailer() {
+    public void onLoadFailed() {
         mFrameLayout.onRefreshComplete();
         mListView.onLoadMoreComplete();
     }

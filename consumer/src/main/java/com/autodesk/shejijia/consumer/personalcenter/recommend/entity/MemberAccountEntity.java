@@ -19,7 +19,6 @@ public class MemberAccountEntity implements Serializable {
      * user_email : null
      * consumer_zid : null
      */
-
     private String uid;
     private String user_level;
     private String user_name;

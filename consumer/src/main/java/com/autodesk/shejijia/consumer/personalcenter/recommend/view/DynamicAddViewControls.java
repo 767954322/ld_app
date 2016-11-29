@@ -10,10 +10,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-
-import java.util.List;
 
 
 /**
@@ -24,7 +21,6 @@ import java.util.List;
  * @file StoreActivity.java .
  * @brief 动态添加view, 封装后可多页面复用  店铺 .
  */
-
 public class DynamicAddViewControls extends LinearLayout {
 
     private Activity context;

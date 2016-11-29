@@ -21,10 +21,10 @@ import java.util.List;
  * Created by luchongbin on 16-11-1.
  */
 
-public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
+public class ChangeBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     private Context context;
 
-    public ChanageBrandAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId) {
+    public ChangeBrandAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId) {
         super(context, datas, layoutId);
         this.context = context;
     }

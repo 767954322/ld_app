@@ -38,7 +38,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="@string/key_number_in"/>
+            android:text="@string/recommend_num"/>
 
         <TextView
             android:id="@+id/tv_brand_num"
@@ -53,7 +53,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="@string/key_dimension"/>
+            android:text="@string/recommend_dimension"/>
 
         <TextView
             android:id="@+id/tv_brand_dimension"
@@ -67,7 +67,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="@string/key_apartment"/>
+            android:text="@string/recommend_apartment"/>
 
         <TextView
             android:id="@+id/tv_brand_apartment"
@@ -82,7 +82,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_gravity="top"
-            android:text="@string/key_remarks"/>
+            android:text="@string/recommend_remarks"/>
 
         <TextView
             android:id="@+id/tv_brand_remarks"
@@ -98,7 +98,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="@string/key_brand_mall"/>
+            android:text="@string/recommend_mall_name"/>
 
         <TextView
             android:id="@+id/tv_brand_mall_name"

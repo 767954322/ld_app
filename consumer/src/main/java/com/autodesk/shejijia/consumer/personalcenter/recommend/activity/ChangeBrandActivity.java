@@ -11,7 +11,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ChanageBrandAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ChangeBrandAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
@@ -35,7 +35,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     private ListView updataBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
-    private ChanageBrandAdapter updataBrandAdapter;
+    private ChangeBrandAdapter updataBrandAdapter;
     private Boolean isRefresh = true;
     private RecommendSCFDBean mRecommendSCFDBean;
     private RecommendBrandsBean selectRecommendBrandsBean;
@@ -69,7 +69,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
-        updataBrandAdapter = new ChanageBrandAdapter(this, brandsBeanList, R.layout.select_check_textview);
+        updataBrandAdapter = new ChangeBrandAdapter(this, brandsBeanList, R.layout.select_check_textview);
         updataBrandListview.setAdapter(updataBrandAdapter);
         setNavigationBar();
         getBrands(0, 100);
@@ -125,7 +125,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     public void onResponse(JSONObject jsonObject) {
         String jsonString = jsonObject.toString();
         RecommendSCFDBean recommendSCFDBean = GsonUtil.jsonToBean(jsonString, RecommendSCFDBean.class);
-        brandsBeanList.clear();//接口有问题，待修改
+        brandsBeanList.clear();
         List<RecommendBrandsBean> Brands = recommendSCFDBean.getBrands();
         if (Brands == null) {
             return;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -213,7 +212,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
              */
             boolean mMatchesName = mCustomerName.matches("^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{1,19}$");
             if (!mMatchesName) {
-                new AlertView(UIUtils.getString(R.string.tip), "客户姓名应为2-20个中文、英文、数字字符",
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.recommend_toast_name),
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
 
                 return;
@@ -364,7 +363,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Log.d("NewInventoryActivity", jsonObject.toString());
                 NewInventoryEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), NewInventoryEntity.class);
                 String asset_id = entity.getAsset_id();
                 RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
@@ -375,27 +373,12 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-                Log.d("NewInventoryActivity", "失败啦");
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_fail),
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
             }
         });
     }
 
-    private void showAlertView(final NewInventoryEntity entity) {
-        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_succ),
-                null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object object, int position) {
-                if (position != AlertView.CANCELPOSITION) {
-                    String asset_id = entity.getAsset_id();
-                    int brand_count_limit = entity.getBrand_count_limit();
-                    RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
-                    finish();
-                }
-            }
-        }).show();
-    }
 
     private void getMemberAccountList(String member_account) {
 
@@ -403,7 +386,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Log.d("NewInventoryActivity", jsonObject.toString());
                 MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
                 Integer flag = entity.getCheck_flag();
                 if (flag == 0 && isEditable) {
@@ -466,7 +448,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         } else {
             isEditable = true;
             setEditTextEnable(isEditable, true);
-            mTvProjectName.setText("创建新的项目");
+            mTvProjectName.setText(UIUtils.getString(R.string.recommend_new_project));
             mEtMemberAccount.setText("");
             mEtCustomerName.setText("");
             mEtPhoneNumber.setText("");

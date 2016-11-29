@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,7 +13,6 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -69,9 +67,9 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mScfd = getIntent().getStringExtra("scfd");
-        mPosition = getIntent().getIntExtra("position", 0);
-        mLocalClassName = getIntent().getStringExtra("className");
+        mScfd = getIntent().getStringExtra(JsonConstants.RECOMMEND_SCFD);
+        mPosition = getIntent().getIntExtra(JsonConstants.LOCATION, 0);
+        mLocalClassName = getIntent().getStringExtra(JsonConstants.CLASSNAME);
     }
 
     @Override

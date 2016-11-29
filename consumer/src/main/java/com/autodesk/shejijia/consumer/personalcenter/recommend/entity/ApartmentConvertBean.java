@@ -8,7 +8,6 @@ import java.util.List;
  * @author liuhea
  *         created at 16-11-17
  */
-
 public class ApartmentConvertBean {
 
     private List<ApartmentListBean> apartment_list;
@@ -26,7 +25,6 @@ public class ApartmentConvertBean {
          * id : 01
          * name : 客厅
          */
-
         private String id;
         private String name;
 

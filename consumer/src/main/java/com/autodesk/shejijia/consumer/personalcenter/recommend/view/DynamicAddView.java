@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import java.util.List;
  * @file DynamicAddView.java .
  * @brief 动态添加按钮.====二级品类展示
  */
-
 public class DynamicAddView extends LinearLayout {
     private Activity context;
     private OnButtonClickedListener onButtonClickedListener;
@@ -94,14 +92,14 @@ public class DynamicAddView extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
-                    if (onButtonClickedListener != null){
+                    if (onButtonClickedListener != null) {
 
                         onButtonClickedListener.onButtonClicked(btnStatusBean);
                         int x = (int) v.getX();
                         int y = (int) v.getY();
                         int xForRight = v.getRight();
                         int width = v.getWidth();
-                        onButtonClickedListener.onGetCurrentClickLocation(x,y,xForRight,width,btnStatusBean);
+                        onButtonClickedListener.onGetCurrentClickLocation(x, y, xForRight, width, btnStatusBean);
                     }
                     changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
                     for (int i = 0; i < textViews.length; i++) {
@@ -123,8 +121,8 @@ public class DynamicAddView extends LinearLayout {
 
     /**
      * 外界获取该控件内部item的位置
-     * */
-    public int[] getLocationNumber(int item){
+     */
+    public int[] getLocationNumber(int item) {
 
         View v = textViews[item];
         int x = (int) v.getX();
@@ -137,10 +135,11 @@ public class DynamicAddView extends LinearLayout {
 
         return locationArr;
     }
+
     /**
      * 外界获取该控件的item数量
-     * */
-    public int getItemCount(){
+     */
+    public int getItemCount() {
 
         return textViews.length;
     }
@@ -190,7 +189,8 @@ public class DynamicAddView extends LinearLayout {
          * BtnStatusBean the index of clicked button tag
          */
         void onButtonClicked(BtnStatusBean btnStatusBean);
-        void onGetCurrentClickLocation(int x,int y,int xForRight,int width,BtnStatusBean btnStatusBean);
+
+        void onGetCurrentClickLocation(int x, int y, int xForRight, int width, BtnStatusBean btnStatusBean);
     }
 
     public void setListener(OnButtonClickedListener onButtonClickedListener) {

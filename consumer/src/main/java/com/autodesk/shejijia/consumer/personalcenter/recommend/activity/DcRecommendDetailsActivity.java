@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +46,7 @@ import de.greenrobot.event.EventBus;
 public class DcRecommendDetailsActivity extends NavigationBarActivity {
 
     private String mAsset_id;
-    private ImageView ivRecoWfsico;
+    private ImageView mIvRecoWfsico;
     private TextView tvRecommendName;
     private TextView tvAssetId;
     private TextView tvRecoConsumerName;
@@ -56,7 +54,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     private TextView tvRecoItemAddress;
     private TextView tvRecoItemDetailsAddress;
     private TextView tvCreateDate;
-    private ListView mListview;
+    private ListView mListView;
     private DcRecommendDetailsAdapter mAdapter;
     private List<RecommendSCFDBean> brands = new ArrayList<>();
     private RecommendDetailsBean mEntity;
@@ -75,9 +73,9 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
         super.initView();
         setTitleBarView();
         View rootView = LayoutInflater.from(this).inflate(R.layout.layout_recommend_details_header, null);
-        mListview = (ListView) findViewById(R.id.listview);
-        mListview.addHeaderView(rootView);
-        ivRecoWfsico = (ImageView) rootView.findViewById(R.id.iv_reco_wfsico);
+        mListView = (ListView) findViewById(R.id.listview);
+        mListView.addHeaderView(rootView);
+        mIvRecoWfsico = (ImageView) rootView.findViewById(R.id.iv_reco_wfsico);
         tvRecommendName = (TextView) rootView.findViewById(R.id.tv_recommend_name);
         tvVillageName = (TextView) rootView.findViewById(R.id.tv_reco_village_name);
         tvAssetId = (TextView) rootView.findViewById(R.id.tv_asset_id);
@@ -167,14 +165,14 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             brands.addAll(brand_lst);
         }
         mAdapter = new DcRecommendDetailsAdapter(this, brands, R.layout.item_recommend_details_brand, scfd);
-        mListview.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             int intExtra = data.getIntExtra(JsonConstants.LOCATION, 0);
-            mListview.setSelection(intExtra + 1);
+            mListView.setSelection(intExtra + 1);
         }
     }
 

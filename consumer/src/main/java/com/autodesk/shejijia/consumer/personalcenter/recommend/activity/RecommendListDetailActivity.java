@@ -61,13 +61,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
-    private String mAsset_id;
+    private String mAssetId;
     private LinearLayout mLlEmptyContentView;
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private TextView mTvNavTitle;
     private String mRecommendScfdTag = "";
-    private String projectName;
+    private String mProjectName;
     private int mBrandCountLimit;
 
     public static void actionStartActivity(Context context, String asset_id) {
@@ -94,7 +94,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        mAsset_id = intent.getStringExtra(JsonConstants.RECOMMEND_ASSET_ID);
+        mAssetId = intent.getStringExtra(JsonConstants.RECOMMEND_ASSET_ID);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 CustomProgress.cancelDialog();
                 String jsonString = jsonObject.toString();
                 RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
-                projectName = recommendListDetailBean.getCommunity_name();
+                mProjectName = recommendListDetailBean.getCommunity_name();
                 mBrandCountLimit = recommendListDetailBean.getBrand_count_limit();
 
                 updateUI(recommendListDetailBean);
@@ -145,7 +145,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
+        MPServerHttpManager.getInstance().getRecommendDraftDetail(mAssetId, callback);
     }
 
     /**
@@ -157,7 +157,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         String design_id = mMemberEntity.getAcs_member_id();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(JsonConstants.RECOMMEND_ASSET_ID, mAsset_id);
+            jsonObject.put(JsonConstants.RECOMMEND_ASSET_ID, mAssetId);
             jsonObject.put(JsonConstants.RECOMMEND_SCFD, mRecommendSCFDList.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -198,7 +198,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().saveOrSendRecommendDetail(isSendInterface, design_id, mAsset_id, jsonObject, callback);
+        MPServerHttpManager.getInstance().saveOrSendRecommendDetail(isSendInterface, design_id, mAssetId, jsonObject, callback);
     }
 
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
@@ -210,19 +210,19 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void updateItemView(String scfd) {
         // 更新适配器
-        List<RecommendSCFDBean> recommendscfd = new Gson()
+        List<RecommendSCFDBean> recommendScfd = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
 
-        if (null == recommendscfd || recommendscfd.size() <= 0) {
+        if (null == recommendScfd || recommendScfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             setEmptyListDefaultButtn();
             return;
         }
 
         setSendButtn();
-        mRecommendScfdTag = recommendscfd.toString();
-        mRecommendSCFDList.addAll(recommendscfd);
+        mRecommendScfdTag = recommendScfd.toString();
+        mRecommendSCFDList.addAll(recommendScfd);
 
         for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
             recommendSCFDBean.setBrand_count_limit(mBrandCountLimit);
@@ -255,7 +255,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                new AlertView(UIUtils.getString(R.string.common_tip), "您确定要把这份清单发送给客户吗？",
+                new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.recommend_form_send),
                         UIUtils.getString(R.string.common_cancel), null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object object, int position) {
@@ -283,7 +283,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         //TODO @xuehua.yao
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
-        intent.putExtra(JsonConstants.JSON_PROJECT_NAME, projectName);
+        intent.putExtra(JsonConstants.JSON_PROJECT_NAME, mProjectName);
         intent.putExtra(JsonConstants.BRAND_COUNT_LIMIT, mBrandCountLimit);
         startActivityForResult(intent, 24);
     }

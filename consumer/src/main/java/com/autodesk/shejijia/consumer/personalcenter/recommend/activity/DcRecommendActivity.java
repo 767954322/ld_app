@@ -119,9 +119,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     @Override
-    public void onLoadFailer() {
+    public void onLoadFailed() {
         CustomProgress.cancelDialog();
     }
-
-
 }

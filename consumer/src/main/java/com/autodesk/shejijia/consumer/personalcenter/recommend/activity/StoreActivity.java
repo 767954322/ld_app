@@ -175,10 +175,8 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
             BtnStatusBean btnStatusBean = (BtnStatusBean) textViews[i].getTag();
 
             if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 2) {
-
                 addListForResult(btnStatusBean);
             }
-
         }
     }
 
@@ -199,7 +197,6 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
         } else {
             if (forResultStoreList.size() >= arr.length - 1) {
-
                 forResultStoreList.clear();
             }
 
@@ -211,16 +208,13 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
                     TestForResultStoreList = forResultStoreList.get(i).getMall_name();
                     TestStoreInformationBean = storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset() - 1).getMall_name();
                     if (TestForResultStoreList.equals(TestStoreInformationBean)) {
-
                         forResultStoreList.remove(i);
                     }
                 }
 
             } else {
-
                 forResultStoreList.add(storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset() - 1));
             }
         }
     }
-
 }

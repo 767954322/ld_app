@@ -16,7 +16,6 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
  * @date: 16-11-17
  * @GitHub: https://github.com/meikoz
  */
-
 public class CustomDialog {
     private Context context;
     private int titleIds;
