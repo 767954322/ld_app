@@ -199,7 +199,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                 // 展开被选的group
                 explistview.expandGroup(groupPosition);
                 // 设置被选中的group置于顶端
-                // explistview.setSelectedGroup(groupPosition);
+                explistview.setSelectedGroup(groupPosition);
                 expandFlag = groupPosition;
             }
             return true;
