@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
  * @User: 蜡笔小新
@@ -82,7 +83,7 @@ public class CustomDialog {
 
         if (hasNull(mNegativeButtonText) || hasCancle) {
             mLeftTxt.setVisibility(View.VISIBLE);
-            mLeftTxt.setText(hasCancle ? "取消" : mNegativeButtonText);
+            mLeftTxt.setText(hasCancle ? UIUtils.getString(R.string.common_cancel) : mNegativeButtonText);
             mLeftTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

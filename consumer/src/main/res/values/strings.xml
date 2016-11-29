@@ -1027,6 +1027,7 @@
     <string name="common_cancel">取消</string>
     <string name="common_right">是</string>
     <string name="common_no">否</string>
+    <string name="common_delete">删除</string>
     <string name="recommend_form_success">发送推荐清单成功</string>
     <string name="recommend_form_save">当前清单还未发送，是否保存？</string>
     <string name="recommend_form_save_success">当前清单已保存成功</string>
@@ -1034,4 +1035,15 @@
     <string name="recommend_brand_delete">您确定要删除当前品牌吗？</string>
     <string name="recommend_material_add">添加主材</string>
 
+    <string name="recommend_brand_name">品牌名称</string>
+    <string name="recommend_brand_change">品牌变更</string>
+    <string name="recommend_num">数量：</string>
+    <string name="recommend_dimension">规格：</string>
+    <string name="recommend_apartment">空间：</string>
+    <string name="recommend_remarks">备注：</string>
+    <string name="recommend_mall_name">店面：</string>
+
+    <string name="recommend_hint_num">请填写数量（单位）</string>
+    <string name="recommend_hint_dimension">请填写规格</string>
+    <string name="recommend_hint_remarks">请填写备注</string>
 </resources>

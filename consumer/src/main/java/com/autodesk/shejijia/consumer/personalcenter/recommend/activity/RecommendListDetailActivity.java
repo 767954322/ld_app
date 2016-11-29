@@ -64,7 +64,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private String mAsset_id;
     private LinearLayout mLlEmptyContentView;
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
-    //    private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private TextView mTvNavTitle;
     private String mRecommendScfdTag = "";
@@ -73,7 +72,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
-        intent.putExtra("asset_id", asset_id);
+        intent.putExtra(JsonConstants.RECOMMEND_ASSET_ID, asset_id);
         context.startActivity(intent);
     }
 
@@ -95,7 +94,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        mAsset_id = intent.getStringExtra("asset_id");
+        mAsset_id = intent.getStringExtra(JsonConstants.RECOMMEND_ASSET_ID);
     }
 
     @Override
@@ -158,8 +157,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         String design_id = mMemberEntity.getAcs_member_id();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("asset_id", mAsset_id);
-            jsonObject.put("scfd", mRecommendSCFDList.toString());
+            jsonObject.put(JsonConstants.RECOMMEND_ASSET_ID, mAsset_id);
+            jsonObject.put(JsonConstants.RECOMMEND_SCFD, mRecommendSCFDList.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

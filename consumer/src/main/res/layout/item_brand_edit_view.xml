@@ -19,7 +19,7 @@
             style="@style/item_text_style"
             android:layout_gravity="left"
             android:paddingTop="14dp"
-            android:text="品牌名称"
+            android:text="@string/recommend_brand_name"
             android:textStyle="bold"/>
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="left"
             android:paddingTop="14dp"
-            android:text="品牌变更"
+            android:text="@string/recommend_brand_change"
             android:textColor="@color/search_text_color"
             />
     </RelativeLayout>
@@ -45,7 +45,7 @@
             android:id="@+id/tv_num"
             style="@style/item_text_style"
             android:layout_marginTop="@dimen/size_4"
-            android:text="数量："/>
+            android:text="@string/recommend_num"/>
 
         <EditText
             android:id="@+id/et_brand_num"
@@ -53,7 +53,7 @@
             android:layout_width="@dimen/size_160"
             android:layout_height="@dimen/size_30"
             android:layout_toRightOf="@id/tv_num"
-            android:hint="请填写数量（单位）"
+            android:hint="@string/recommend_hint_num"
             android:maxLines="1"
             />
 
@@ -63,7 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/size_5"
             android:gravity="center_vertical"
-            android:text="删除"
+            android:text="@string/common_delete"
             android:textColor="@color/search_text_color"
             />
     </RelativeLayout>
@@ -77,7 +77,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="规格："/>
+            android:text="@string/recommend_dimension"/>
 
         <EditText
             android:id="@+id/et_brand_dimension"
@@ -85,7 +85,7 @@
             android:layout_width="@dimen/size_160"
             android:layout_height="@dimen/size_30"
             android:ellipsize="end"
-            android:hint="请填写规格"
+            android:hint="@string/recommend_hint_dimension"
             android:maxLines="1"
             android:singleLine="true"/>
     </LinearLayout>
@@ -99,7 +99,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="空间："/>
+            android:text="@string/recommend_apartment"/>
 
         <com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner
             android:id="@+id/spinner_brand_apartment"
@@ -107,9 +107,9 @@
             android:layout_height="@dimen/size_30"
             android:layout_gravity="start|center_vertical"
             android:textSize="@dimen/font_15"
-            app:ms_text_color="@color/black"
             app:ms_dropdown_height="wrap_content"
             app:ms_dropdown_max_height="@dimen/size_200"
+            app:ms_text_color="@color/black"
             />
     </LinearLayout>
 
@@ -123,14 +123,14 @@
         <TextView
             style="@style/item_text_style"
             android:layout_gravity="start|top"
-            android:text="备注："/>
+            android:text="@string/recommend_remarks"/>
 
         <EditText
             android:id="@+id/et_brand_remarks"
             style="@style/style_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请填写备注"
+            android:hint="@string/recommend_hint_remarks"
             android:maxLength="200"/>
     </LinearLayout>
 
@@ -145,7 +145,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="店面："/>
+            android:text="@string/recommend_mall_name"/>
 
         <TextView
             android:id="@+id/tv_brand_mall_name"

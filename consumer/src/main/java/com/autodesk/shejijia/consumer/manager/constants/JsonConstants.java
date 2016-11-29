@@ -157,7 +157,7 @@ public class JsonConstants {
     public static final String JSON_MEASURE_FORM_USER_ID = "user_id";
     public static final String JSON_MEASURE_FORM_THREAD_ID = "thread_id";
     public static final String ASSET_ID = "asset_id";
-    public static final String MEASUREMENT="measurement_status";
+    public static final String MEASUREMENT = "measurement_status";
 
     /// 我的资产.
     public static final String WITHDRAWARE_BALANCE_ACCOUNT_USER_NAME = "account_user_name";
@@ -178,16 +178,16 @@ public class JsonConstants {
     public static final String JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE = "channel_type";
 
     /// 北舒聊天室
-    public static final String JSON_BEI_SHU_MEAL_CITY= "city";
-    public static final String JSON_BEI_SHU_MEAL_CITY_NAME= "city_name";
-    public static final String JSON_BEI_SHU_MEAL_COMMUNITY_NAME= "community_name";
-    public static final String JSON_BEI_SHU_MEAL_CONSUMER_UID= "consumer_uid";
-    public static final String JSON_BEI_SHU_MEAL_CONTACTS_MOBILE= "contacts_mobile";
-    public static final String JSON_BEI_SHU_MEAL_CONTACTS_NAME= "contacts_name";
-    public static final String JSON_BEI_SHU_MEAL_district= "district";
-    public static final String JSON_BEI_SHU_MEAL_DISTRICT_NAME= "district_name";
-    public static final String JSON_BEI_SHU_MEAL_PROVINCE= "province";
-    public static final String JSON_BEI_SHU_MEAL_PROVINCE_NAME= "province_name";
+    public static final String JSON_BEI_SHU_MEAL_CITY = "city";
+    public static final String JSON_BEI_SHU_MEAL_CITY_NAME = "city_name";
+    public static final String JSON_BEI_SHU_MEAL_COMMUNITY_NAME = "community_name";
+    public static final String JSON_BEI_SHU_MEAL_CONSUMER_UID = "consumer_uid";
+    public static final String JSON_BEI_SHU_MEAL_CONTACTS_MOBILE = "contacts_mobile";
+    public static final String JSON_BEI_SHU_MEAL_CONTACTS_NAME = "contacts_name";
+    public static final String JSON_BEI_SHU_MEAL_district = "district";
+    public static final String JSON_BEI_SHU_MEAL_DISTRICT_NAME = "district_name";
+    public static final String JSON_BEI_SHU_MEAL_PROVINCE = "province";
+    public static final String JSON_BEI_SHU_MEAL_PROVINCE_NAME = "province_name";
 
     ///套餐发送预约表单
     public static final String JSON_PACKAGES_NAME = "customer_name";
@@ -230,7 +230,7 @@ public class JsonConstants {
     public static final String JSON_NEW_INVENTORY_PROVINCE = "province";
     public static final String JSON_NEW_INVENTORY_PROVINCE_NAME = "province_name";
     public static final String JSON_NEW_INVENTORY_DESIGN_PROJECT_ID = "design_project_id";
-    public static final String JSON_NEW_INVENTORY_MAIN_PROJECT_ID  = "main_project_id";
+    public static final String JSON_NEW_INVENTORY_MAIN_PROJECT_ID = "main_project_id";
 
     //清单列表
     public static final String JSON_PROJECT_NAME = "project_name";
@@ -251,5 +251,8 @@ public class JsonConstants {
     public static final String SCFD = "scfd";
     public static final String MSG = "msg";
     public static final String BRAND_ID = "brand_id";
+    
+    public static final String RECOMMEND_ASSET_ID = "asset_id";
+    public static final String RECOMMEND_SCFD = "scfd";
 
 }
