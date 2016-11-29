@@ -145,7 +145,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
     public void getStoreNameAndAdd(List<StoreInformationBean.StoreListBean> store_list) {
         forResultStoreList = new ArrayList<>();
         arr = new String[store_list.size()+1];
-        arr[0] = "全部";
+        arr[0] = UIUtils.getString(R.string.all_button_name);
         for (int i = 0; i < store_list.size(); i++) {
 
             arr[i + 1] = store_list.get(i).getMall_name();
