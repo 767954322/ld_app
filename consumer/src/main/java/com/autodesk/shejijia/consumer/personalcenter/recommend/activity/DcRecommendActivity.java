@@ -75,11 +75,16 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
         CustomProgress.show(this, "", false, null);
         RecommendLogicImpl recommendLogic = new RecommendLogicImpl(this);
         recommendLogic.onLoadRecommendListData(isDesign, 0, 20, 0);
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         for (int i = 0; i < 3; i++) {
             mFragments.add(RecommendFragment.newInstance(isDesign, i));
         }
@@ -93,7 +98,6 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
         super.initListener();
         mRightTextView.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
