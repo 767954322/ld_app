@@ -9,6 +9,7 @@ public class Config {
     public final static boolean IS_PRODUCTION = false;
     public final static String LOGIN_PATH = "http://uat-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public final static String MEMBER_PATH = "http://uat-api.gdfcx.net:8080/member-app/v1/api";
+    public static final String MEMBER_APP_V2 = "http://uat-api.gdfcx.net:8080/member-app/v2/api";
     public final static String DESIGN_PATH = "http://uat-api.gdfcx.net:8080/design-app/v1/api";
     public final static String TRANSACTION_PATH = "http://uat-api.gdfcx.net:8080/transaction-app/v1/api";
     public final static String SHARE_PATH = "http://uat-api.gdfcx.net:8080/share/2dcase.html?caseid=";

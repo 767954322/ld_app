@@ -40,6 +40,8 @@ public final class UrlConstants {
     public static final String MP_MAIN_SHARE = Config.SHARE_PATH;
     public static final String MP_MAIN3_SHARE = Config.SHARE3_PATH;
 
+    private static final String MAIN_MEMBER_V2 = Config.MEMBER_APP_V2;
+
 
     /**
      * 我要装修中的几张图片.

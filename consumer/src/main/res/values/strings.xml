@@ -1052,4 +1052,7 @@
     <string name="recommend_hint_remarks">请填写备注</string>
     <string name="recommend_toast_name">客户姓名应为2-20个中文、英文、数字字符</string>
     <string name="recommend_new_project">创建新的项目</string>
+
+    <string name="all_button_name">全部</string>
+
 </resources>
