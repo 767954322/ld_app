@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -324,15 +325,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     }
 
 
-                    if (designBudget == null) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_design_budget));
-                        return;
-                    }
+                if (designBudget == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_design_budget));
+                    return;
+                }
 
-                    if (decorateBudget == null) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_decorate_budget));
-                        return;
-                    }
+                if (decorateBudget == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_decorate_budget));
+                    return;
+                }
 
                     if (tvc_measure_form_type.getText().toString().equals("住宅空间")){
 
@@ -495,8 +496,21 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         intent.putExtra(Constant.ConsumerMeasureFormKey.HS_UID, hs_uid);
         intent.putExtra(Constant.ConsumerMeasureFormKey.THREAD_ID, mThread_id);
         intent.putExtra(Constant.ConsumerMeasureFormKey.MEASURE, mFree);
-        startActivity(intent);
-        finish();
+        startActivityForResult(intent, 0);
+
+//        startActivity(intent);
+//        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0){
+                finish();
+            }
+        }
     }
 
     /**
@@ -604,12 +618,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 housingType = houseTypeItems.get(options1);
                 tvc_measure_form_type.setText(housingType);
-                if (housingType.equals("住宅空间")){
+                if (housingType.equals("住宅空间")) {
 
                     ll_house_type.setVisibility(View.VISIBLE);
                     ll_line.setVisibility(View.VISIBLE);
                     tvc_house_type.setHint("请选择户型");
-                }else {
+                } else {
                     ll_house_type.setVisibility(View.GONE);
                     ll_line.setVisibility(View.GONE);
                 }
@@ -774,7 +788,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 nick_name = mConsumerEssentialInfoEntity.getNick_name();
                 phone_number = mConsumerEssentialInfoEntity.getMobile_number();
                 tvc_name.setText(nick_name);//设置消费者姓名
-                if (!TextUtils.isEmpty(phone_number)){
+                if (!TextUtils.isEmpty(phone_number)) {
 
                     tvc_phone.setText(phone_number);
                 }

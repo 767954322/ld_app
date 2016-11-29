@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -289,11 +290,12 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             }
         }
         // 设置悬浮头部VIEW
-        if (dList != null) {
+        if (dList != null && dList.size() > 0) {
             adapter = new PinnedHeaderExpandableAdapter(dList, ExistMeasureOrderActivity.this, explistview);
             explistview.setAdapter(adapter);
         } else {
-            new AlertView(null, UIUtils.getString(R.string.not_have_send_measure), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this, AlertView.Style.Alert, ExistMeasureOrderActivity.this).setOnDismissListener(this).show();
+            mNoExistMeasure = new AlertView(null, UIUtils.getString(R.string.not_have_send_measure), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this, AlertView.Style.Alert, ExistMeasureOrderActivity.this).setOnDismissListener(this);
+            mNoExistMeasure.show();
         }
         // 设置单个分组展开
         explistview.setOnGroupClickListener(new GroupClickListener());
@@ -337,11 +339,15 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
     @Override
     public void onDismiss(Object o) {
+        if (o == mAgreeResponseBidSuccessAlertView || o == mAgreeResponseBidFailAlertView) {
+            setResult(RESULT_OK);
+        }
         finish();
     }
 
     @Override
     public void onItemClick(Object o, int position) {
+
     }
 
     /// 控件.
@@ -355,6 +361,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private TimePickerView pvTime;
     private AlertView mAgreeResponseBidSuccessAlertView;
     private AlertView mAgreeResponseBidFailAlertView;
+    private AlertView mNoExistMeasure;
     private PinnedHeaderExpandableListView explistview;
     private PinnedHeaderExpandableAdapter adapter;
     private String mThread_id;
