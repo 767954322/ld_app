@@ -292,7 +292,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
             super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-            mWrapperAdapter.notifyItemMoved(fromPosition, itemCount);
+            mWrapperAdapter.notifyItemMoved(fromPosition, toPosition);
         }
 
         @Override
