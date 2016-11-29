@@ -857,8 +857,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     }
 
 
-
-
     /**
      * 初始化点
      *
@@ -875,10 +873,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
      * @param count
      */
     private void initDots(int count) {
-        for (int j = 0; j < count; j++) {
-            guide_dots.addView(initDot());
+        if (count>0){
+            for (int j = 0; j < count; j++) {
+                guide_dots.addView(initDot());
+            }
+            guide_dots.getChildAt(0).setSelected(true);
         }
-        guide_dots.getChildAt(0).setSelected(true);
+
+
     }
 
     /**
@@ -891,9 +893,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         String drawabel = "drawable://" + R.drawable.default_3d_details;
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_guide, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.iguide_img);
+        TextView textView = (TextView) view.findViewById(R.id.tvzanwutupian);
         ImageView image_quanjing = (ImageView) view.findViewById(R.id.image_quanjing);
-        if (url.equals(drawabel))
+        ImageView image_max = (ImageView) view.findViewById(R.id.image_max);
+        if (url.equals(drawabel)) {
             image_quanjing.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+            image_max.setVisibility(View.VISIBLE);
+        }
+
         ImageUtils.loadFileImage(imageView, url);
         return view;
     }
@@ -920,7 +928,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         for (int i = 0; i < mImageListsManYou.size(); i++) {
             viewList.add(initView(initImage(mImageListsManYou.get(i))));
         }
-        initDots(mImageListsManYou.size());
+        if (mImageListsManYou.size()!=1){
+            initDots(mImageListsManYou.size());
+        }
+
         viewPage.setAdapter(new ViewPagerAdapter(viewList));
 
         viewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -982,11 +993,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 public void onClick(View v) {
                     String newUrl = mImageListsManYou.get(position);
                     if (!newUrl.equals("drawable")) {
-                    String link = newUrl.substring(newUrl.indexOf("COVERANDLINK") + 12);
-                    Intent intent = new Intent(CaseLibraryDetail3DActivity.this, CaseLibraryRoamingWebView.class);
-                    intent.putExtra("roaming", link);
-                    CaseLibraryDetail3DActivity.this.startActivity(intent);
-                }
+                        String link = newUrl.substring(newUrl.indexOf("COVERANDLINK") + 12);
+                        Intent intent = new Intent(CaseLibraryDetail3DActivity.this, CaseLibraryRoamingWebView.class);
+                        intent.putExtra("roaming", link);
+                        CaseLibraryDetail3DActivity.this.startActivity(intent);
+                    }
                 }
             });
             container.addView(data.get(position));
