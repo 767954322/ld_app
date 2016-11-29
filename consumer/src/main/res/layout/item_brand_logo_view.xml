@@ -116,7 +116,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="空间："/>
+            android:text="@string/key_apartment"/>
 
         <TextView
             android:id="@+id/tv_brand_apartment"
@@ -130,7 +130,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="备注："/>
+            android:text="@string/key_remarks"/>
 
         <TextView
             android:id="@+id/tv_brand_remarks"
@@ -146,7 +146,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="店面："/>
+            android:text="@string/key_brand_mall"/>
 
         <TextView
             android:id="@+id/tv_brand_mall_name"

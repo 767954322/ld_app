@@ -423,7 +423,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                     addBrands(data);
                     break;
                 case 23:// 定位二级品类．
-                    int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+                    int intExtra = data.getIntExtra(JsonConstants.LOCATION, 0);
                     mExpandListView.setSelection(intExtra);
                     break;
                 case 24: // 添加主材．

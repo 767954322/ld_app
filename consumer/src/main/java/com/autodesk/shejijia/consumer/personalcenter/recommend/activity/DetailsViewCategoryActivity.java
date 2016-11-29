@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,9 +36,9 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
 
     public static void jumpTo(Activity context, String scfd, int position, String className) {
         Intent intent = new Intent(context, DetailsViewCategoryActivity.class);
-        intent.putExtra("scfd", scfd);
-        intent.putExtra("position", position);
-        intent.putExtra("className", className);
+        intent.putExtra(JsonConstants.SCFD, scfd);
+        intent.putExtra(JsonConstants.LOCATION, position);
+        intent.putExtra(JsonConstants.CLASSNAME, className);
         context.startActivityForResult(intent, 25);
     }
 
@@ -44,7 +46,6 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
     private String mScfd;
     private int mPosition;
     private ViewCategoryAdater mAdater;
-    public static String LOCATION = "location";
 
     @Override
     protected int getLayoutResId() {
@@ -76,7 +77,7 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        setTitleForNavbar("查看品类");
+        setTitleForNavbar(UIUtils.getString(R.string.view_category));
         mRcv_category_view = (RecyclerView) findViewById(R.id.rcv_category_view);
         GridLayoutManager glm = new GridLayoutManager(this, 3);
         mRcv_category_view.setLayoutManager(glm);
@@ -91,15 +92,10 @@ public class DetailsViewCategoryActivity extends NavigationBarActivity implement
 
     @Override
     public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-//        int selection = 0;
-//        for (int i = 0; i < position; i++) {
-//            List<RecommendBrandsBean> brands = mRecommendSCFDList.get(i).getBrands();
-//            selection += brands.size() + 1;
-//        }
         Intent intent = new Intent(DetailsViewCategoryActivity.this,
-                mLocalClassName.equals("DcRecommendDetailsActivity") ?
+                mLocalClassName.equals(JsonConstants.CLASSNAME) ?
                         DcRecommendDetailsActivity.class : CsRecommendDetailsActivity.class);
-        intent.putExtra(LOCATION, position);
+        intent.putExtra(JsonConstants.LOCATION, position);
         setResult(RESULT_OK, intent);
         finish();
     }

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.CsRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -49,10 +50,11 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     private RecommendDetailsBean mEntity;
     private String mScfc;
 
+
     public static void jumpTo(Context context, String asset_id, String community_name) {
         Intent intent = new Intent(context, CsRecommendDetailsActivity.class);
-        intent.putExtra("asset_id", asset_id);
-        intent.putExtra("community_name", community_name);
+        intent.putExtra(JsonConstants.ASSET_ID, asset_id);
+        intent.putExtra(JsonConstants.COMMUNITY_NAME, community_name);
         context.startActivity(intent);
     }
 
@@ -69,17 +71,13 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void setTitleBarView() {
-        String community_name = getIntent().getStringExtra("community_name");
-        setTitleForNavbar("清单详情");
-//        if (!TextUtils.isEmpty(community_name)) {
-//            setTitleForNavbar(UIUtils.substring(community_name, 6));
-//        }
+        setTitleForNavbar(UIUtils.getString(R.string.recommend_detail));
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mAsset_id = getIntent().getStringExtra("asset_id");
+        mAsset_id = getIntent().getStringExtra(JsonConstants.ASSET_ID);
     }
 
     @Override
@@ -110,7 +108,6 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsBean.class);
                 updateView2Api(mEntity);
             }
@@ -118,7 +115,6 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-                Log.d("recommend", volleyError.toString());
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
@@ -141,7 +137,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+            int intExtra = data.getIntExtra(JsonConstants.LOCATION, 0);
             mListview.setSelection(intExtra);
         }
     }

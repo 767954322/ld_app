@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.DcRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -64,8 +65,8 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
 
     public static void jumpTo(Context context, String asset_id, boolean canceled) {
         Intent intent = new Intent(context, DcRecommendDetailsActivity.class);
-        intent.putExtra("asset_id", asset_id);
-        intent.putExtra("canceled", canceled);
+        intent.putExtra(JsonConstants.ASSET_ID, asset_id);
+        intent.putExtra(JsonConstants.CANCELED, canceled);
         context.startActivity(intent);
     }
 
@@ -93,7 +94,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void setTitleBarView() {
-        setTitleForNavbar("清单详情");
+        setTitleForNavbar(UIUtils.getString(R.string.recommend_detail));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.color_blue_0084ff));
     }
 
@@ -106,9 +107,9 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mAsset_id = getIntent().getStringExtra("asset_id");
-        mCanceled = getIntent().getBooleanExtra("canceled", false);
-        setTitleForNavButton(ButtonType.RIGHT, mCanceled ? "" : "编辑");
+        mAsset_id = getIntent().getStringExtra(JsonConstants.ASSET_ID);
+        mCanceled = getIntent().getBooleanExtra(JsonConstants.CANCELED, false);
+        setTitleForNavButton(ButtonType.RIGHT, mCanceled ? "" : UIUtils.getString(R.string.recommend_edit));
     }
 
     @Override
@@ -133,7 +134,6 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Log.d("CsRecommendActivity", jsonObject.toString());
                 mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsBean.class);
                 updateView2Api(mEntity);
             }
@@ -141,7 +141,6 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-                Log.d("CsRecommendActivity", volleyError.toString());
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
@@ -153,7 +152,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
             tvRecommendName.setText(UIUtils.substring(item.getCommunity_name(), 4));
             tvVillageName.setText(item.getCommunity_name());
         }
-        tvAssetId.setText("清单编号：" + item.getProject_number() + "");
+        tvAssetId.setText(UIUtils.getString(R.string.recommend_asset_code) + item.getProject_number() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
         tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + UIUtils.getNoStringIfEmpty(item.getDistrict_name()));
@@ -174,7 +173,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+            int intExtra = data.getIntExtra(JsonConstants.LOCATION, 0);
             mListview.setSelection(intExtra + 1);
         }
     }

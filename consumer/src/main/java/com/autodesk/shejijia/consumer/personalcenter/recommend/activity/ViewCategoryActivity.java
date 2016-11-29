@@ -16,6 +16,7 @@ import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,10 +42,8 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     }
 
     private RecyclerView mRcv_category_view;
-    private String mScfd;
     private int mPosition;
     private ViewCategoryAdater mAdater;
-    public static String LOCATION="location";
 
     @Override
     protected int getLayoutResId() {
@@ -69,7 +68,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     @Override
     protected void initView() {
         super.initView();
-        setTitleForNavbar("查看品类");
+        setTitleForNavbar(UIUtils.getString(R.string.view_category));
         mRcv_category_view = (RecyclerView) findViewById(R.id.rcv_category_view);
         GridLayoutManager glm = new GridLayoutManager(this, 3);
         mRcv_category_view.setLayoutManager(glm);
@@ -90,7 +89,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
             selection += brands.size() + 1;
         }
         Intent intent = new Intent(ViewCategoryActivity.this, RecommendListDetailActivity.class);
-        intent.putExtra(LOCATION, position == 0 ? position : selection);
+        intent.putExtra(JsonConstants.LOCATION, position == 0 ? position : selection);
         setResult(RESULT_OK, intent);
         finish();
     }

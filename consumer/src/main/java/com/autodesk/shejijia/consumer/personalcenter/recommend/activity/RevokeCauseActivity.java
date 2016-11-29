@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
@@ -15,8 +14,8 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RefreshEvent;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -46,8 +45,8 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
 
     public static void jumpTo(Context context, int assetId, String msg) {
         Intent intent = new Intent(context, RevokeCauseActivity.class);
-        intent.putExtra("assetId", assetId);
-        intent.putExtra("msg", msg);
+        intent.putExtra(JsonConstants.ASSET_ID, assetId);
+        intent.putExtra(JsonConstants.MSG, msg);
         context.startActivity(intent);
     }
 
@@ -76,10 +75,10 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mAssetId = getIntent().getIntExtra("assetId", 0);
-        mMsg = getIntent().getStringExtra("msg");
-        setTitleForNavbar(mMsg + "原因");
-        mEditCause.setHint("请输入您要" + mMsg + "的原因!");
+        mAssetId = getIntent().getIntExtra(JsonConstants.ASSET_ID, 0);
+        mMsg = getIntent().getStringExtra(JsonConstants.MSG);
+        setTitleForNavbar(mMsg + UIUtils.getString(R.string.input_case));
+        mEditCause.setHint(UIUtils.getString(R.string.please_input_hint) + mMsg + UIUtils.getString(R.string.please_input_hint_case));
     }
 
     @Override
@@ -87,7 +86,7 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
         CustomProgress.show(this, "", false, null);
         String revokeCause = mEditCause.getText().toString().trim();
         if (TextUtils.isEmpty(revokeCause)) {
-            Toast.makeText(this, "填写内容不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_empty, Toast.LENGTH_SHORT).show();
             return;
         }
         final JSONObject object1 = new JSONObject();
@@ -105,7 +104,7 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
             @Override
             public void onErrorResponse(VolleyError error) {
                 CustomProgress.cancelDialog();
-                Toast.makeText(RevokeCauseActivity.this, "退回失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RevokeCauseActivity.this, R.string.revoke_failer, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -117,7 +116,7 @@ public class RevokeCauseActivity extends NavigationBarActivity implements View.O
     }
 
     private void onResponseSuccess() {
-        new AlertView(UIUtils.getString(R.string.tip), "提交成功!", null, null, new String[]{UIUtils.getString(R.string.sure)}, RevokeCauseActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.submit_successful), null, null, new String[]{UIUtils.getString(R.string.sure)}, RevokeCauseActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != -1) {

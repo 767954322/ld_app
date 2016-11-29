@@ -10,12 +10,14 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.StoreLocationAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MallAddressEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
@@ -28,7 +30,6 @@ import java.util.List;
  * @date: 16-10-27
  * @GitHub: https://github.com/meikoz
  */
-
 public class StoreLocationActivity extends NavigationBarActivity {
 
     private List<MallAddressEntity.MallAddressesBean> mStoreLocations = new ArrayList<>();
@@ -38,7 +39,7 @@ public class StoreLocationActivity extends NavigationBarActivity {
 
     public static void jumpTo(Context context, String brand_id) {
         Intent intent = new Intent(context, StoreLocationActivity.class);
-        intent.putExtra("brand_id", brand_id);
+        intent.putExtra(JsonConstants.BRAND_ID, brand_id);
         context.startActivity(intent);
     }
 
@@ -50,7 +51,7 @@ public class StoreLocationActivity extends NavigationBarActivity {
     @Override
     protected void initView() {
         super.initView();
-        setTitleForNavbar("店面地址");
+        setTitleForNavbar(UIUtils.getString(R.string.store_address));
         mMallListView = (ListView) findViewById(R.id.lv_mall_location);
         mAdapter = new StoreLocationAdapter(this, mStoreLocations, R.layout.item_store_location);
         mMallListView.setAdapter(mAdapter);
@@ -65,7 +66,7 @@ public class StoreLocationActivity extends NavigationBarActivity {
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mBrand_id = getIntent().getStringExtra("brand_id");
+        mBrand_id = getIntent().getStringExtra(JsonConstants.BRAND_ID);
     }
 
     private void getMallsLocation() {
@@ -74,7 +75,6 @@ public class StoreLocationActivity extends NavigationBarActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 MallAddressEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MallAddressEntity.class);
                 List<MallAddressEntity.MallAddressesBean> addresses = entity.getJuran_storefront_info();
                 if (addresses != null && addresses.size() > 0)

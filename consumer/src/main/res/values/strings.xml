@@ -1002,5 +1002,24 @@
     <string name="recommend_form_number">数量应为数字和汉字组成</string>
     <string name="recommend_form_dimension">不得超过32个字符</string>
 
+    <!--我的推荐-->
+    <string name="revoke_failer">退回失败</string>
+    <string name="recommend_detail">清单详情</string>
+    <string name="recommend_edit">编辑</string>
+    <string name="recommend_asset_code">清单编号</string>
+    <string name="view_category">查看品类</string>
+    <string name="please_input_hint">请输入您要</string>
+    <string name="please_input_hint_case">的原因</string>
+    <string name="input_case">原因</string>
+    <string name="no_empty">填写内容不能为空</string>
+    <string name="submit_successful">提交成功!</string>
+    <string name="store_address">店面地址</string>
 
+    <string name="key_number_in">数量：</string>
+    <string name="key_dimension">规格：</string>
+    <string name="key_apartment">空间：</string>
+    <string name="key_remarks">备注：</string>
+    <string name="key_brand_mall">店面：</string>
+
+    <string name="consumer_name">客户姓名：</string>
 </resources>

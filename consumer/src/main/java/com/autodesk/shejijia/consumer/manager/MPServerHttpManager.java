@@ -128,7 +128,6 @@ public class MPServerHttpManager {
      */
     public void getMallsLocation(String brand_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.MAIN_RECOMMEND + "/malls/" + brand_id + "/address";
-        Log.d("recommend", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -234,9 +233,7 @@ public class MPServerHttpManager {
      * 设计师清单详情
      */
     public void getRecommendDetails(String design_id, String assetId, OkJsonRequest.OKResponseCallback callback) {
-        //materials-recommend-app/v1/api/designers/{designer_id}/recommends/{asset_id}
         String url = UrlConstants.MAIN_RECOMMEND + "/recommends/" + assetId;
-        Log.d("recommend", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -142,7 +142,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
 
     @Override
     public void onRevokeFailer() {
-        Toast.makeText(this, "退回失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.revoke_failer, Toast.LENGTH_SHORT).show();
     }
 
 

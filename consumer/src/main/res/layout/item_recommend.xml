@@ -57,7 +57,7 @@
         <TextView
             android:id="@+id/tv_item_name"
             style="@style/item_text_style"
-            android:text="客户姓名："/>
+            android:text="@string/demand_project_name"/>
 
         <TextView
             android:id="@+id/tv_reco_consumer_name"

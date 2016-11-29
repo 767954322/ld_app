@@ -38,7 +38,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="数量："/>
+            android:text="@string/key_number_in"/>
 
         <TextView
             android:id="@+id/tv_brand_num"
@@ -53,7 +53,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="规格："/>
+            android:text="@string/key_dimension"/>
 
         <TextView
             android:id="@+id/tv_brand_dimension"
@@ -67,7 +67,7 @@
 
         <TextView
             style="@style/item_text_style"
-            android:text="空间："/>
+            android:text="@string/key_apartment"/>
 
         <TextView
             android:id="@+id/tv_brand_apartment"
@@ -82,7 +82,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_gravity="top"
-            android:text="备注："/>
+            android:text="@string/key_remarks"/>
 
         <TextView
             android:id="@+id/tv_brand_remarks"
@@ -98,7 +98,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="店面："/>
+            android:text="@string/key_brand_mall"/>
 
         <TextView
             android:id="@+id/tv_brand_mall_name"

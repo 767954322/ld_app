@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.FragmentTabAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.fragment.RecommendFragment;
@@ -43,7 +44,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
 
     public static void jumpTo(Context context, boolean isDesign) {
         Intent intent = new Intent(context, DcRecommendActivity.class);
-        intent.putExtra("isDesign", isDesign);
+        intent.putExtra(JsonConstants.ISDESIGN, isDesign);
         context.startActivity(intent);
     }
 
@@ -55,7 +56,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
     @Override
     protected void initView() {
         super.initView();
-        isDesign = getIntent().getBooleanExtra("isDesign", false);
+        isDesign = getIntent().getBooleanExtra(JsonConstants.ISDESIGN, false);
         setTitleBarView();
         mTabLayout = (TabLayout) findViewById(R.id.tab_recommend_title);
         mViewPager = (ViewPager) findViewById(R.id.vpr_recommend_view);
@@ -70,7 +71,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
         mRightTextView.setVisibility(isDesign ? View.VISIBLE : View.INVISIBLE);
         setTitleForNavbar(UIUtils.getString(isDesign ? R.string.personal_recommend : R.string.recommend_listing));
         mRightTextView.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
-        mRightTextView.setText("新建清单");
+        mRightTextView.setText(R.string.recommend_detail);
     }
 
     @Override

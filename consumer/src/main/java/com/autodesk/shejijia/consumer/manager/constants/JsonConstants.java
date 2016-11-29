@@ -242,5 +242,14 @@ public class JsonConstants {
     public static final String JSON_BACK_TOTAL_LIST = "totalList";
     //店面选择展示
 
+    //推荐
+    public static final String COMMUNITY_NAME = "community_name";
+    public static final String ISDESIGN = "isDesign";
+    public static final String CANCELED = "canceled";
+    public static final String LOCATION = "location";
+    public static final String CLASSNAME = "DcRecommendDetailsActivity";
+    public static final String SCFD = "scfd";
+    public static final String MSG = "msg";
+    public static final String BRAND_ID = "brand_id";
 
 }
