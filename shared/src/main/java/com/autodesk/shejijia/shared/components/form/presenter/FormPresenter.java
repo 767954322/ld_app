@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
@@ -34,7 +35,7 @@ public class FormPresenter implements FormContract.Presenter{
         }
 
         FormRepository.getInstance().setFormList(null); //第一次显示数据,需要先置空,避免拿到内存中的其它的数据
-        FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {  //根据表单id获取具体的表单数据
+        FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List,ResponseError>() {  //根据表单id获取具体的表单数据
             @Override
             public void onSuccess(List data) {    //获取到四张表格的数据,包括文字内容
                 shInspectionFormList.addAll(data);
@@ -48,8 +49,8 @@ public class FormPresenter implements FormContract.Presenter{
             }
 
             @Override
-            public void onError(String errorMsg) {
-                mView.showNetError(errorMsg);
+            public void onError(ResponseError error) {
+
             }
         }, formIdList);
 

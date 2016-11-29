@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
@@ -78,7 +79,7 @@ public class FormActivity extends BaseActivity implements FormContract.View {
     }
 
     @Override
-    public void showNetError(String msg) {
+    public void showNetError(ResponseError error) {
         ToastUtils.showShort(this,"展示网络加载失败的界面");
     }
 

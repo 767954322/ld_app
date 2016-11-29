@@ -28,7 +28,6 @@ import java.util.List;
  */
 
 public class FormListFragment extends BaseConstructionFragment implements FormListContract.View,View.OnClickListener {
-//    private Task mTask;
     private RecyclerView mRecyclerView;
     private TextView mProblemTitleTv;
     private LinearLayout mRectificationLayout;
@@ -36,7 +35,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     private TextView mResultTv;
     private FormListPresenter mPresenter;
     private FormListAdapter mAdapter;
-    private List<String> mTitleList = new ArrayList<>();
     private FormActivity mActivity;
 
     public static FormListFragment newInstance(Bundle args) {
@@ -72,6 +70,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 //        // TODO: 16/11/25 针对预检条件的数据是否保存,需要以后在进行测试
 //        SHPrecheckForm shPrecheckForm = (SHPrecheckForm) getArguments().getSerializable("shPrecheckForm");
         ArrayList<String> formTitles = getArguments().getStringArrayList("formTitles");
+
         List<ItemCell> itemCells = new ArrayList<>();
 
         for (int i = 0; i < formTitles.size(); i++) {
