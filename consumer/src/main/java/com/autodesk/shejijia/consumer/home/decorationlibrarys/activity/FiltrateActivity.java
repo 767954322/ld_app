@@ -202,7 +202,11 @@ public class FiltrateActivity extends NavigationBarActivity implements View.OnCl
                 mStyleList.addAll(designerWorkTimeBean.getRelate_information_list());
                 mStyleList.add(0, allListBean);
                 for (int i = 0; i < mStyleList.size(); i++) {
-                    mStyleData.add(mStyleList.get(i).getName());
+                    String name = mStyleList.get(i).getName();
+                    if(name != null && name.length() > 0){
+                        mStyleData.add(mStyleList.get(i).getName());
+                    }
+
                 }
 
                 mSAdapter = new FiltrateAdapter(FiltrateActivity.this, mStyleData);
