@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEliteDemanActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DownloadImageTask;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -46,7 +46,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     protected void initView() {
         vgSelection = (ViewGroup) rootView.findViewById(R.id.vgSelection);
         vpSelection = (ViewPager) rootView.findViewById(R.id.vpSelection);
-        llBackground = (LinearLayout) rootView.findViewById(R.id.llBackground);
+        llBackground = (ImageView) rootView.findViewById(R.id.ivllBackground1);
         imReservationButton = (ImageButton) rootView.findViewById(R.id.imReservationButton);
     }
 
@@ -72,7 +72,8 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         int size = 1;
         if (pictures != null && pictures.length > 0) {
             size = pictures.length;
-            new DownloadImageTask(llBackground).execute(backgroundURL);
+            ImageUtils.loadImage(llBackground, backgroundURL);
+           // new DownloadImageTask(llBackground).execute(backgroundURL);
         }
 
         addImageViewtips(size);
@@ -169,6 +170,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
-    private LinearLayout llBackground;
+    private ImageView llBackground;
 
 }
