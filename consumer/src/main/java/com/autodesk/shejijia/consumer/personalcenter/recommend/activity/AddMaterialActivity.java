@@ -178,7 +178,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        tv_empty_title.setText(UIUtils.getString(R.string.not_brands));
+        tv_empty_title.setText(UIUtils.getString(R.string.no_brands));
         add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
         add_for_listing.setClickable(false);
         CustomProgress.showDefaultProgress(AddMaterialActivity.this);
