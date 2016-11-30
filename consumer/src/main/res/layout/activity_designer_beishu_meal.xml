@@ -111,6 +111,8 @@
                 <TextView
                     android:id="@+id/tv_consumer_address"
                     android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
                     android:background="@null"
@@ -118,6 +120,15 @@
                     android:hint="@string/consume_adress_hint"
                     android:singleLine="true"
                     android:textSize="@dimen/font_15"/>
+
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_unfold_normal" />
+
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
