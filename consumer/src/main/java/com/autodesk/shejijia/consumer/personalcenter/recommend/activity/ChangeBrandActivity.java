@@ -36,12 +36,10 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
     private ChangeBrandAdapter updataBrandAdapter;
-    private Boolean isRefresh = true;
     private RecommendSCFDBean mRecommendSCFDBean;
     private RecommendBrandsBean selectRecommendBrandsBean;
     private AppCompatButton changeFinsh;
     private RecommendBrandsBean mRecommendBrandsBean;
-//    private String brandCode;
 
     @Override
     protected int getLayoutResId() {
