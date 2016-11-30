@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
 
@@ -18,10 +19,10 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     public void submit(Task task) {
         String status = task.getStatus();
         switch (status) {
-            case "INPROGRESS":  //进行中,修改
-            case "DELAYED":     //已延期,修改
-            case "REINSPECTION_INPROGRESS":  //复验进行中,修改
-            case "REINSPECTION_DELAYED":    //已延期
+            case ConstructionConstants.TaskStatus.INPROGRESS:
+            case ConstructionConstants.TaskStatus.DELAYED:
+            case ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS:
+            case ConstructionConstants.TaskStatus.REINSPECTION_DELAYED:
                 mView.enterPrecheck(task);
                 break;
             case "REJECTED":   //验收拒绝,查看

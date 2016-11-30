@@ -18,9 +18,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Building;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
@@ -135,19 +135,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
         super.onBackPressed();
     }
 
-    private void initToolbar() {
-        mToolbar.setTitle(R.string.input_code);
-        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.con_white));
-        setSupportActionBar(mToolbar);
-    }
-
-    private void initNavigationHeadState() {
-        if (!TextUtils.isEmpty(UserInfoUtils.getNikeName(this))) {
-            mUserNameTv.setText(UserInfoUtils.getNikeName(this));
-            mUserRoleTv.setText(getString(R.string.inspector));
-        }
-    }
-
     @Override
     public String getProjectId() {
         return mProjectIdEt.getText().toString().trim();
@@ -182,5 +169,17 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    private void initToolbar() {
+        mToolbar.setTitle(R.string.input_code);
+        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.con_white));
+        setSupportActionBar(mToolbar);
+    }
+
+    private void initNavigationHeadState() {
+        if (!TextUtils.isEmpty(UserInfoUtils.getNikeName(this))) {
+            mUserNameTv.setText(UserInfoUtils.getNikeName(this));
+            mUserRoleTv.setText(getString(R.string.inspector));
+        }
+    }
 
 }

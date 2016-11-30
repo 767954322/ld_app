@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 
@@ -55,10 +54,10 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                         String status = task.getStatus();
                         Member role = null;
                         List<String> statusList = new ArrayList<>();
-                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_INPROGRESS.getTaskStatus().toUpperCase());  //以下为修改项
-                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_DELAY.getTaskStatus().toUpperCase());
-                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_INPROGRESS.getTaskStatus().toUpperCase());
-                        statusList.add(TaskStatusTypeEnum.TASK_STATUS_REINSPECT_DELAY.getTaskStatus().toUpperCase());
+                        statusList.add(ConstructionConstants.TaskStatus.INPROGRESS);  //以下为修改项
+                        statusList.add(ConstructionConstants.TaskStatus.DELAYED);
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS);
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_DELAYED);
 //                        statusList.add("REJECTED");       //以下为查看项
 //                        statusList.add("QUALIFIED");
 //                        statusList.add("REINSPECTION");
@@ -66,12 +65,12 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
 //                        statusList.add("REINSPECTION_AND_RECTIFICATION");
                         if (statusList.contains(status)) {
                             for (Member member : data.getMembers()) {
-                                if ("member".equals(member.getRole())) {
+                                if (ConstructionConstants.MemberType.MEMBER.equals(member.getRole())) {
                                     role = member;
                                     break;
                                 }
                             }
-                            mView.enterProjectInfo(task,data.getBuilding(),role);
+                            mView.enterProjectInfo(task, data.getBuilding(), role);
                             return;
                         }
 

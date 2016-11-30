@@ -52,7 +52,7 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                 List<String> formIds = new ArrayList<>();
                 formIds.add(templateId);
                 // TODO: 16/11/11 获取数据,显示界面
-                FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List,ResponseError>() {
+                FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List, ResponseError>() {
                     @Override
                     public void onSuccess(List data) {
                         for (SHForm shForm : (List<SHForm>) data) {
@@ -74,24 +74,6 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                 return;
             }
         }
-    }
-
-    private void setPrecheckForm(SHPrecheckForm form) {
-        ArrayList<CheckItem> checkItems = form.getCheckItems();
-        int spacing = UIUtils.getDimens(R.dimen.precheck_spacing_padding_7_5);
-        int index = 0;
-        Map<String,FormFeedBack> formFeedBackMap = new HashMap<>();   //将辅助条件对应到反馈上
-        for (CheckItem checkItem : checkItems) {
-            String itemCategory = checkItem.getCategory();
-            if ("必要条件".equals(itemCategory)) {      //获取子条目
-                index++;
-                addNecessaryView(index, spacing, checkItem);
-            } else if ("辅助条件".equals(itemCategory)) {
-                formFeedBackMap.put(checkItem.getTitle(),checkItem.getFormFeedBack());
-            }
-        }
-
-        mView.addAdditionalData(formFeedBackMap);
     }
 
     @Override
@@ -117,6 +99,24 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
         } else if (2 == index) {
             mView.enterQualified(mTask, mShForm);
         }
+    }
+
+    private void setPrecheckForm(SHPrecheckForm form) {
+        ArrayList<CheckItem> checkItems = form.getCheckItems();
+        int spacing = UIUtils.getDimens(R.dimen.precheck_spacing_padding_7_5);
+        int index = 0;
+        Map<String, FormFeedBack> formFeedBackMap = new HashMap<>();   //将辅助条件对应到反馈上
+        for (CheckItem checkItem : checkItems) {
+            String itemCategory = checkItem.getCategory();
+            if ("必要条件".equals(itemCategory)) {      //获取子条目
+                index++;
+                addNecessaryView(index, spacing, checkItem);
+            } else if ("辅助条件".equals(itemCategory)) {
+                formFeedBackMap.put(checkItem.getTitle(), checkItem.getFormFeedBack());
+            }
+        }
+
+        mView.addAdditionalData(formFeedBackMap);
     }
 
     private void addNecessaryView(int index, int spacing, CheckItem checkItem) {

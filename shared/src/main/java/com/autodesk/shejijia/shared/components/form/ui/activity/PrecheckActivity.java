@@ -160,15 +160,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void addAdditionalData(Map<String,FormFeedBack> formFeedBackMap) {
-//        mTitleList.clear();
-//        mTitleList.addAll(formFeedBackMap.keySet());
-
         Iterator<String> iterator = formFeedBackMap.keySet().iterator();
 
         while (iterator.hasNext()) {
             ItemCell itemCell = new ItemCell();
             itemCell.setTitle(iterator.next());
-            itemCell.setResult("是");
+            itemCell.setResult(UIUtils.getString(R.string.yes));
             mItemCellList.add(itemCell);
         }
 
