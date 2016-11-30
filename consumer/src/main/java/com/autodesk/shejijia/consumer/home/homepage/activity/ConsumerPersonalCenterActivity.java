@@ -215,6 +215,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
+            LoginUtils.doLogin(this);
             finish();
         }
     }

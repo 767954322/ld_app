@@ -393,6 +393,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                     break;
 
                 case MORE_LOGOUT:
+                    LoginUtils.doLogin(this);
                     finish();
             }
         }
