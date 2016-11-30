@@ -38,11 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_29"
                 android:layout_marginTop="@dimen/size_102"
+                android:layout_marginRight="@dimen/size_26"
                 android:layout_toRightOf="@id/work_room_name_text"
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_name"
-                android:maxEms="10"
-                android:maxLength="20"
                 android:singleLine="true"
                 android:textSize="@dimen/font_15" />
 
@@ -64,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/line_name"
                 android:layout_marginRight="@dimen/size_26"
-                android:text="@string/name_empty"
+                android:text="@string/hint_edit_input_name"
                 android:textColor="#ED2424"
                 android:textSize="@dimen/font_11"
                 android:visibility="gone" />

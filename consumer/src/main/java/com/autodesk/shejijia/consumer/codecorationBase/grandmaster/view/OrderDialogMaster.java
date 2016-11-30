@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -73,7 +75,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         init();
     }
 
-    public OrderDialogMaster(Context context, int themeResId,int header_drawble) {
+    public OrderDialogMaster(Context context, int themeResId, int header_drawble) {
         super(context, themeResId);
         this.context = context;
         this.header_drawble = header_drawble;
@@ -128,7 +130,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
 
                     if (name.getText().toString().equals("") ||
                             (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
-                            (name.getText().toString().length() > 10)) {
+                            (name.getText().toString().length() > 20)) {
 
                         line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_name.setVisibility(View.VISIBLE);
@@ -186,11 +188,8 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
 
                 String nameText = name.getText().toString();
                 String phoneNumberText = phoneNumber.getText().toString();
-
                 //name
-                if (name.getText().toString().equals("") ||
-                        (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
-                        (name.getText().toString().length() > 10)) {
+                if (TextUtils.isEmpty(nameText) || nameText.length() < 2 || nameText.length() > 20) {
 
                     line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                     write_name.setVisibility(View.VISIBLE);
