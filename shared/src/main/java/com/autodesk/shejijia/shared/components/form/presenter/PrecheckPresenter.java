@@ -51,7 +51,8 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
                 String templateId = form.getFormId();
                 List<String> formIds = new ArrayList<>();
                 formIds.add(templateId);
-                // TODO: 16/11/11 获取数据,显示界面
+
+                FormRepository.getInstance().setFormList(null);
                 FormRepository.getInstance().getRemoteFormItemDetails(new ResponseCallback<List, ResponseError>() {
                     @Override
                     public void onSuccess(List data) {

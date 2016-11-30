@@ -14,6 +14,7 @@ public interface ProjectIdCodeContract {
     interface View extends BaseView {
 
         String getProjectId();
+
         void enterProjectInfo(Task task, Building building, Member role);
 
     }

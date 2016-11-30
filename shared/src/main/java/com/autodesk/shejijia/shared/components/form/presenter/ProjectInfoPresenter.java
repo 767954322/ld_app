@@ -18,7 +18,8 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     @Override
     public void submit(Task task) {
         String status = task.getStatus();
-        switch (status) {
+
+        switch (status.toLowerCase()) {
             case ConstructionConstants.TaskStatus.INPROGRESS:
             case ConstructionConstants.TaskStatus.DELAYED:
             case ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS:

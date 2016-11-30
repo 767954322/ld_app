@@ -16,25 +16,31 @@ import java.util.Map;
 
 public interface PrecheckContract {
 
-    interface View extends BaseView{
+    interface View extends BaseView {
 
         void addNecessaryView(TextView view);
-        void addAdditionalData(Map<String,FormFeedBack> formFeedBackMap);
+
+        void addAdditionalData(Map<String, FormFeedBack> formFeedBackMap);
+
         void showQualifiedBtn();
+
         void showUnqualifiedBtn();
 
         void enterQualified(Task task, SHPrecheckForm shPrecheckForm);
+
         void enterUnqualified(SHPrecheckForm shPrecheckForm);
 
 
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
 
         void showForm(Task task);
 
         void showQualifiedBtn();
+
         void showUnqualifiedBtn();
+
         void clickOptionBtn();
     }
 

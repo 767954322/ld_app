@@ -54,10 +54,10 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                         String status = task.getStatus();
                         Member role = null;
                         List<String> statusList = new ArrayList<>();
-                        statusList.add(ConstructionConstants.TaskStatus.INPROGRESS);  //以下为修改项
-                        statusList.add(ConstructionConstants.TaskStatus.DELAYED);
-                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS);
-                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_DELAYED);
+                        statusList.add(ConstructionConstants.TaskStatus.INPROGRESS.toUpperCase());  //以下为修改项
+                        statusList.add(ConstructionConstants.TaskStatus.DELAYED.toUpperCase());
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS.toUpperCase());
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_DELAYED.toUpperCase());
 //                        statusList.add("REJECTED");       //以下为查看项
 //                        statusList.add("QUALIFIED");
 //                        statusList.add("REINSPECTION");

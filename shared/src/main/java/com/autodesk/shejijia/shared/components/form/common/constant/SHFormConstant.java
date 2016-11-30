@@ -32,4 +32,10 @@ public class SHFormConstant {
         public static final String TEMPLATE_MATERIAL_ = "";
     }
 
+    public static class FragmentTag {
+        public static final String FORM_LIST_FRAGMENT = "formListFragment";
+        public static final String FORM_SUBLIST_FRAGMENT = "formSubListFragment";
+        public static final String ITEM_LIST_FRAGMENT = "itemListFragment";
+    }
+
 }

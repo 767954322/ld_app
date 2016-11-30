@@ -98,7 +98,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onItemClick(View view, int position) {
                 TextView resultTv = (TextView) view.findViewById(R.id.tv_result);
-                setResult(resultTv,mFormFeedBack.get(position));
+                setResult(resultTv, mFormFeedBack.get(position));
             }
 
 //            @Override
@@ -159,7 +159,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void addAdditionalData(Map<String,FormFeedBack> formFeedBackMap) {
+    public void addAdditionalData(Map<String, FormFeedBack> formFeedBackMap) {
         Iterator<String> iterator = formFeedBackMap.keySet().iterator();
 
         while (iterator.hasNext()) {
@@ -203,7 +203,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,task提供各种表单的id,后者保存了辅助条件的信息
         Intent intent = new Intent(this, FormActivity.class);
         intent.putExtra("task", task);
-        intent.putExtra("shPrecheckForm",shPrecheckForm);
+        intent.putExtra("shPrecheckForm", shPrecheckForm);
         startActivity(intent);
         finish();
 

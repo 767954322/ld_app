@@ -5,13 +5,14 @@ import com.autodesk.shejijia.shared.components.form.common.entity.microBean.Chec
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by t_aij on 16/11/29.
+ * Created by t_aij on 16/11/30.
  */
 
-public interface FormSubListContract {
+public interface ItemListContract {
 
     interface View extends BaseView {
 
@@ -19,7 +20,8 @@ public interface FormSubListContract {
 
     interface Presenter extends BasePresenter {
 
-        List<ItemCell> getItemCells(List<CheckItem> checkItemList);
-
+        List<ItemCell> getItemCells(String title, ArrayList<CheckItem> checkItems);
     }
+
+
 }

@@ -1,8 +1,11 @@
 package com.autodesk.shejijia.shared.components.form.contract;
 
+import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
+
+import java.util.List;
 
 /**
  * Created by t_aij on 16/11/22.
@@ -10,18 +13,16 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 
 public interface FormListContract {
 
-    interface View extends BaseView{
-
-//        void setFormTitle(List<String> titleList);
+    interface View extends BaseView {
 
         void enterFormItem(SHInspectionForm shInspectionForm);
     }
 
 
-    interface Presenter extends BasePresenter{
-
-//        void showFormList(Task task);
+    interface Presenter extends BasePresenter {
 
         void showFormItemList(int position);
+
+        List<ItemCell> getItemCells();
     }
 }

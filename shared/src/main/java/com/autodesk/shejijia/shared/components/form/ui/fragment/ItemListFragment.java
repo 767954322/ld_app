@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,9 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
 import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
-import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
+import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
+import com.autodesk.shejijia.shared.components.form.presenter.ItemListPresenter;
+import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
@@ -19,9 +22,14 @@ import java.util.List;
  * Created by t_aij on 16/11/25.
  */
 
-public class ItemListFragment extends BaseConstructionFragment {
+public class ItemListFragment extends BaseConstructionFragment implements ItemListContract.View {
 
     private RecyclerView mRecyclerView;
+    private FormActivity mActivity;
+    private String mTitle;
+    private ItemListPresenter mPresenter;
+    private List<ItemCell> mItemCellList = new ArrayList<>();
+    private FormListAdapter mAdapter;
 
     public static ItemListFragment newInstance(Bundle args) {
         ItemListFragment itemListFragment = new ItemListFragment();
@@ -29,6 +37,11 @@ public class ItemListFragment extends BaseConstructionFragment {
         return itemListFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (FormActivity) context;
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -42,31 +55,26 @@ public class ItemListFragment extends BaseConstructionFragment {
 
     @Override
     protected void initData() {
-        List<ItemCell> list = new ArrayList<>();
+        mTitle = getArguments().getString("category");
+        SHInspectionForm shInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm"); //具体的表格
 
-        String title = getArguments().getString("category");
-        SHInspectionForm shInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
-        for (CheckItem checkItem : shInspectionForm.getCheckItems()) {
-            if(title.equals(checkItem.getCategory())) {
-//                list.add(checkItem.getTitle());
-                ItemCell itemCell = new ItemCell();
-                itemCell.setTitle(checkItem.getTitle());
-                list.add(itemCell);
-            }
-        }
+        mPresenter = new ItemListPresenter(this);
+        mItemCellList.addAll(mPresenter.getItemCells(mTitle, shInspectionForm.getCheckItems()));
 
+        mActivity.initToolbar(mTitle);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setAdapter(new FormListAdapter(mContext, list));
+        mAdapter = new FormListAdapter(mContext, mItemCellList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden) {
-            // TODO: 16/11/28 如何该界面显示
-//            LogUtils.d("asdf","itemListFragment是" + hidden);
+        if (!hidden) {
+            mActivity.initToolbar(mTitle);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

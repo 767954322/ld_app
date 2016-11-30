@@ -41,14 +41,14 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
         holder.mTitleTv.setText(itemCell.getTitle());  //标题
         holder.mResultTv.setText(itemCell.getResult());  //结果
 
-        if(itemCell.getReinspectionNum() == 0) {     //提醒数目
+        if (itemCell.getReinspectionNum() == 0) {     //提醒数目
             holder.mNotificationTv.setVisibility(View.GONE);
         } else {
             holder.mNotificationTv.setVisibility(View.VISIBLE);
             holder.mNotificationTv.setText(itemCell.getReinspectionNum());
         }
 
-        if(itemCell.isShow()) {       //错误信息
+        if (itemCell.isShow()) {       //错误信息
             holder.mInformationIv.setVisibility(View.VISIBLE);
         } else {
             holder.mInformationIv.setVisibility(View.GONE);

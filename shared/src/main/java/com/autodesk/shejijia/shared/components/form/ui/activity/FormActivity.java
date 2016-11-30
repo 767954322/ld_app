@@ -10,13 +10,12 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.contract.FormContract;
 import com.autodesk.shejijia.shared.components.form.presenter.FormPresenter;
 import com.autodesk.shejijia.shared.components.form.ui.fragment.FormListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
-import java.util.ArrayList;
 
 /**
  * Created by t_aij on 16/11/17.
@@ -25,9 +24,6 @@ import java.util.ArrayList;
 public class FormActivity extends BaseActivity implements FormContract.View {
 
     private FrameLayout mMainLayout;
-    public final String TAG_FORM_LIST_FRAGMENT = "formListFragment";
-    public final String TAG_FORM_SUBLIST_FRAGMENT = "formSubListFragment";
-    public final String TAG_FORM_ITEM_FRAGMENT = "itemListFragment";
 
     private FormPresenter mPresenter;
 
@@ -45,8 +41,9 @@ public class FormActivity extends BaseActivity implements FormContract.View {
     protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
         Task task = (Task) intent.getSerializableExtra("task");
+        // TODO: 16/11/30 验收条件的处理的表单
         SHPrecheckForm shPrecheckForm = (SHPrecheckForm) intent.getSerializableExtra("shPrecheckForm");
-        initToolbar(task);
+        initToolbar(task.getName());
 
         mPresenter = new FormPresenter(this);
         mPresenter.show(task);
@@ -56,9 +53,7 @@ public class FormActivity extends BaseActivity implements FormContract.View {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (android.R.id.home == item.getItemId()) {
-            // TODO: 16/11/28 回退在做处理
-            startActivity(new Intent(this, ScanQrCodeActivity.class));
-            finish();
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -66,21 +61,17 @@ public class FormActivity extends BaseActivity implements FormContract.View {
 
     @Override
     public void onBackPressed() {
+        // TODO: 16/11/30 回退时在做处理,弹框确认
+        if (getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT).isVisible()) {
+            startActivity(new Intent(this, ScanQrCodeActivity.class));
+            finish();
+        }
         super.onBackPressed();
-        // TODO: 16/11/28 回退再再做处理
-//        startActivity(new Intent(this, ScanQrCodeActivity.class));
-//        finish();
-    }
-
-    private void initToolbar(Task task) {
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle(task.getName());
-        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void showNetError(ResponseError error) {
-        ToastUtils.showShort(this,"展示网络加载失败的界面");
+        ToastUtils.showShort(this, "展示网络加载失败的界面");
     }
 
     @Override
@@ -99,14 +90,20 @@ public class FormActivity extends BaseActivity implements FormContract.View {
     }
 
     @Override
-    public void initFormList(ArrayList<String> titleList) {
+    public void initFormList(String title) {
         Bundle args = new Bundle();
-        args.putStringArrayList("formTitles",titleList);
+        args.putString("title", title);
         FormListFragment formListFragment = FormListFragment.newInstance(args);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_main_container, formListFragment, TAG_FORM_LIST_FRAGMENT)
+                .add(R.id.fl_main_container, formListFragment, SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT)
                 .commit();
+    }
+
+    public void initToolbar(String title) {
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle(title);
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
     public FormPresenter getPresenter() {

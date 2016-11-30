@@ -46,7 +46,7 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
             params.putBoolean("task_data", true);
-            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo,ResponseError>() {
+            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo, ResponseError>() {
                 @Override
                 public void onSuccess(ProjectInfo data) {
                     PlanInfo planInfo = data.getPlan();
@@ -57,10 +57,10 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                             String status = task.getStatus();
                             Member role = null;
                             List<String> statusList = new ArrayList<>();
-                            statusList.add(ConstructionConstants.TaskStatus.INPROGRESS);  //以下为修改项
-                            statusList.add(ConstructionConstants.TaskStatus.DELAYED);
-                            statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS);
-                            statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_DELAYED);
+                            statusList.add(ConstructionConstants.TaskStatus.INPROGRESS.toUpperCase());  //以下为修改项
+                            statusList.add(ConstructionConstants.TaskStatus.DELAYED.toUpperCase());
+                            statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS.toUpperCase());
+                            statusList.add(ConstructionConstants.TaskStatus.REINSPECTION_DELAYED.toUpperCase());
 //                        statusList.add("REJECTED");       //以下为查看项
 //                        statusList.add("QUALIFIED");
 //                        statusList.add("REINSPECTION");
