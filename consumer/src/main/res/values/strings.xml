@@ -343,7 +343,7 @@
     <string name="the_designer_rejected_quantity">WkFlowMea.设计师拒绝量房</string>
     <string name="consumer_should_agree_with_mark">WkFlowMea.消费者同意应标</string>
     <string name="phone">手机号码：</string>
-    <string name="not_have_send_measure">您还没有发送过量房资料</string>
+    <string name="not_have_send_measure">您还没有发过量房资料</string>
 
     <!--  FlowUploadDeliveryActivity -->
     <string name="data_null">暂无数据</string>
@@ -1005,6 +1005,7 @@
     <string name="other_filtr">其他</string>
     <string name="manyoutu">漫游图</string>
     <string name="name_empty">姓名不能为空</string>
+    <string name="hint_edit_input_name">请输入2-20个字符</string>
 
 
     <!--推荐清单表单校验提示-->
