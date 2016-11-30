@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_thread_list_row_rootlayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/chat_list_parent_height"
+    android:background="@color/white"
+    android:minHeight="@dimen/chat_list_parent_minheight">
+
+    <com.autodesk.shejijia.shared.components.im.widget.RoundImageViewGroup
+        android:id="@+id/head_ico"
+        android:layout_width="@dimen/size_60"
+        android:layout_height="@dimen/size_60"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/chat_list_avatar_marginleft"
+        android:background="@drawable/bg_group_chat_list_iamgeview"
+        android:paddingBottom="@dimen/spacing_padding_normal2"
+        android:paddingEnd="@dimen/spacing_padding_nano"
+        android:paddingStart="@dimen/spacing_padding_nano"
+        android:paddingTop="@dimen/spacing_padding_normal2"
+        android:scaleType="centerCrop"
+        app:gapSize="1dp"
+        app:maxSize="6"
+        app:singleImageSize="8dp" />
+
+    <TextView
+        android:id="@+id/tv_unread_message_count"
+        android:layout_width="@dimen/chat_list_unread_side"
+        android:layout_height="@dimen/chat_list_unread_side"
+        android:layout_alignRight="@id/head_ico"
+        android:layout_alignTop="@id/head_ico"
+        android:layout_marginRight="-8dp"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@drawable/circle_shape"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/chat_list_unread_fontsize"
+        android:visibility="gone"
+        tools:text="2222" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/chat_list_common_sidemargin"
+        android:layout_marginRight="@dimen/chat_list_common_sidemargin"
+        android:layout_toEndOf="@id/head_ico"
+        android:gravity="center"
+        android:minHeight="@dimen/chat_list_common_minheight"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/chat_list_common_title_fontsize"
+                tools:text="Nan/Performance " />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/chat_list_common_messagetime_fontsize"
+                tools:text="12/13" />
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_padding_micro2" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/chat_list_common_message_textcolor"
+            android:textSize="@dimen/font_15"
+            tools:text="nkg" />
+    </LinearLayout>
+
+</RelativeLayout>

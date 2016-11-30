@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
 import android.support.annotation.Nullable;
 
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -23,11 +24,14 @@ public interface ProjectListContract {
 
         void addMoreProjectListView(List<ProjectInfo> projectList);
 
-        void refreshLikesButton(Like newLike, int likePosition);
+        void refreshLikesButton(String filterLike, Like newLike, int likePosition);
+
+        void updateItemData(ProjectInfo projectInfo);
 
     }
 
     interface Presenter extends BasePresenter {
+
         /*
         * 初始化请求参数
         * */
@@ -71,11 +75,21 @@ public interface ProjectListContract {
         /*
         * 每个item中每个任务条目点击跳转到节点详情
         * */
-        void navigateToTaskDetail(List<Task> taskLists, int position);
+        void navigateToTaskDetail(ProjectInfo projectInfo, Task task);
 
         /*
         * 星标项目
         * */
         void updateProjectLikesState(List<ProjectInfo> projectList, boolean like, int position);
+
+        /*
+        * 获取未读消息或问题
+        * */
+        void getUnReadMessageIssue();
+
+        void refreshProject(@Nullable String projectId);
+
+        void refreshTask(@Nullable String projectId, @Nullable String taskId);
+
     }
 }

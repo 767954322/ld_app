@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,8 @@ import java.util.List;
  * 项目详情页面下的task列表
  */
 
-public class ProjectDetailTasksFragment extends BaseConstructionFragment implements ProjectDetailsTasksContract.View, ProjectDetailsTasksAdapter.TaskListItemClickListener {
+public class ProjectDetailTasksFragment extends BaseConstructionFragment implements ProjectDetailsTasksContract.View,
+        ProjectDetailsTasksAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
     private ProjectDetailsTasksContract.Presenter mPDTaskListPresenter;
@@ -52,13 +54,26 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
     }
 
     @Override
-    public void refreshTaskListView(List<Task> taskList) {
-        mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (getParentFragment() != null) {
+            getParentFragment().onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void refreshTaskListView(List<Task> taskList, String avatarUrl) {
+        mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, avatarUrl, R.layout.listitem_projectdetails_task_list_view, mContext, this);
         mTaskListView.setAdapter(mTaskListAdapter);
     }
 
     @Override
     public void onTaskClick(List<Task> taskList, int position) {
-        mPDTaskListPresenter.navigateToTaskDetail(getFragmentManager(), taskList, position);
+        mPDTaskListPresenter.navigateToTaskDetail(getChildFragmentManager(), taskList, position);
     }
 }

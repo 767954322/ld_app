@@ -25,10 +25,12 @@ import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
+import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
+import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.pgyersdk.update.PgyUpdateManager;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -85,6 +87,10 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         mNavigationView.setNavigationItemSelectedListener(this);
         mHeadPicBtn.setOnClickListener(this);
         toolbarTitle.setOnClickListener(this);
+        //pgy update register
+        if (BuildConfig.DEBUG) {
+            PgyUpdateManager.register(this);
+        }
     }
 
     @Override
@@ -198,7 +204,13 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 fragment = IssueListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_GROUP_CHAT:
-                fragment = GroupChatFragment.newInstance();
+                fragment = new MPThreadListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(MPThreadListFragment.ISFILEBASE, false);
+                bundle.putString(MPThreadListFragment.MEMBERID, UserInfoUtils.getAcsMemberId(this));
+                bundle.putString(MPThreadListFragment.MEMBERTYPE, UserInfoUtils.getMemberType(this));
+                bundle.putString(MPThreadListFragment.LIST_TYPE, MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST);
+                fragment.setArguments(bundle);
                 break;
             default:
                 break;

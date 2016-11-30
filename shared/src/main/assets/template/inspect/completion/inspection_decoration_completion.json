@@ -36,7 +36,7 @@
         {
             "item_id": "facing_brick_installation",
             "category": "饰面工程",
-            "title": "饰面砖安装（中期空鼓问题）",
+            "title": "1.饰面砖安装（中期空鼓问题）",
             "standard": "中期验收时存在饰面砖空鼓（含墙、地砖）,原不合格饰面砖已整改",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -76,11 +76,11 @@
         {
             "item_id": "natural_surface",
             "category": "饰面工程",
-            "title": "水性涂料涂饰",
+            "title": "2.水性涂料涂饰(一)",
             "standard": "表面自然有光泽，无流坠，无色差、无污染、无裂纹",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -116,7 +116,7 @@
         {
             "item_id": "surface_roughness_of_wall",
             "category": "饰面工程",
-            "title": "水性涂料涂饰",
+            "title": "3.水性涂料涂饰(二)",
             "standard": "阴阳角顺直/顺平，墙体表面平整、无砂纸划痕、无凹坑麻面、无起层现象",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -156,11 +156,11 @@
         {
             "item_id": "color_line",
             "category": "饰面工程",
-            "title": "水性涂料涂饰",
+            "title": "4.水性涂料涂饰(三)",
             "standard": "薄涂料分色线平直≤1mm",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -196,11 +196,11 @@
         {
             "item_id": "uniform_coating",
             "category": "饰面工程",
-            "title": "水性涂料涂饰",
+            "title": "5.水性涂料涂饰(四)",
             "standard": "厚涂料1m处正、斜视涂刷均匀",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -236,11 +236,11 @@
         {
             "item_id": "composite_coating_uniformity",
             "category": "饰面工程",
-            "title": "水性涂料涂饰",
+            "title": "6.水性涂料涂饰(五)",
             "standard": "复层涂料1m处正、斜视涂刷均匀",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -276,11 +276,11 @@
         {
             "item_id": "color_consistency",
             "category": "饰面工程",
-            "title": "溶剂型涂料涂饰",
+            "title": "7.溶剂型涂料涂饰(一)",
             "standard": "颜色一致、无刷纹、流坠、皱皮、裹棱，无漏涂、脱皮、反锈和斑迹",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -316,11 +316,11 @@
         {
             "item_id": "wood_products_smooth",
             "category": "饰面工程",
-            "title": "溶剂型涂料涂饰",
+            "title": "8.溶剂型涂料涂饰(二)",
             "standard": "木制品上下底面应进行刷漆处理，表面光滑无挡手感",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -356,11 +356,11 @@
         {
             "item_id": "doors_and_windows_clean",
             "category": "饰面工程",
-            "title": "溶剂型涂料涂饰",
+            "title": "9.溶剂型涂料涂饰(三)",
             "standard": "门窗、五金、玻璃等洁净、无污染",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -396,11 +396,11 @@
         {
             "item_id": "clear_wood",
             "category": "饰面工程",
-            "title": "溶剂型涂料涂饰",
+            "title": "10.溶剂型涂料涂饰(四)",
             "standard": "无刷纹、棕眼刮平、木纹清晰",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -436,11 +436,11 @@
         {
             "item_id": "decoration_panel_surface_clean",
             "category": "细部工程",
-            "title": "饰面板工程（属报价范围内时）",
+            "title": "11.饰面板工程（属报价范围内时）(一)",
             "standard": "饰面板表面应洁净、无污染，无明显钉眼痕迹，无裂缝及损坏现象，表皮无起层",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -476,11 +476,11 @@
         {
             "item_id": "firm_bond",
             "category": "细部工程",
-            "title": "饰面板工程（属报价范围内时）",
+            "title": "12.饰面板工程（属报价范围内时）(二)",
             "standard": "衬板与饰面板应粘结牢固，不得有起层、起鼓",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -516,11 +516,11 @@
         {
             "item_id": "splint_paste_shell_nosing_treatment",
             "category": "细部工程",
-            "title": "饰面板工程（属报价范围内时）",
+            "title": "13.饰面板工程（属报价范围内时）(三)",
             "standard": "如采用夹板粘贴，则必须做收口处理（混漆为同材质收口或实木收口；清漆则采用同材质实木收口）",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -556,11 +556,11 @@
         {
             "item_id": "tight_seam",
             "category": "细部工程",
-            "title": "饰面板工程（属报价范围内时）",
+            "title": "14.饰面板工程（属报价范围内时）(四)",
             "standard": "接缝应严密，错台错缝≤0.3mm",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -596,11 +596,11 @@
         {
             "item_id": "clean_the_surface_of_wood",
             "category": "细部工程",
-            "title": "木线条（属报价范围内时）",
+            "title": "15.木线条（属报价范围内时）(一)",
             "standard": "木线表面钉眼无凹陷、凸出，清漆工艺线条表面无污染",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -636,11 +636,11 @@
         {
             "item_id": "wood_without_fault",
             "category": "细部工程",
-            "title": "木线条（属报价范围内时）",
+            "title": "16.木线条（属报价范围内时）(二)",
             "standard": "木线条与面板间无错台、错缝，无明显收缩",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -676,11 +676,11 @@
         {
             "item_id": "seams_should_be_tight",
             "category": "细部工程",
-            "title": "木线条（属报价范围内时）",
+            "title": "17.木线条（属报价范围内时）(三)",
             "standard": "接缝应严密，无翘曲，错台错缝≤0.3mm",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -716,11 +716,11 @@
         {
             "item_id": "line_width_suitable",
             "category": "细部工程",
-            "title": "木线条（属报价范围内时）",
+            "title": "18.木线条（属报价范围内时）(四)",
             "standard": "木线表面应无劈裂、缺损，弯曲、变形，线条宽度应与框架厚度一致",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -754,13 +754,13 @@
             ]
         },
         {
-            "item_id": "clear_pattern",
+            "item_id": "clear_pattern_gypsum",
             "category": "细部工程",
-            "title": "石膏线粘贴",
+            "title": "19.石膏线粘贴",
             "standard": "拼接无错位、开裂、无翘曲及缺损现象；线条应流畅，图案应清晰",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -794,9 +794,9 @@
             ]
         },
         {
-            "item_id": "clear_pattern",
+            "item_id": "clear_pattern_postsale",
             "category": "细部工程",
-            "title": "售后提示",
+            "title": "20.售后提示",
             "standard": "冬季家中无人，房间内置一盆水，防止干燥，墙面开裂",
             "check_type": "notification_options",
             "action_visibility": false,

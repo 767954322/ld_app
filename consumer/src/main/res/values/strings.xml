@@ -467,7 +467,7 @@
 
     <string name="product_name">商品名称：</string>
     <string name="product_test">测试的商品</string>
-    <string name="not_brands">没有可添加的品牌</string>
+    <string name="no_brands">没有可添加的品牌</string>
     <string name="product_description">商品描述：</string>
     <string name="product_price">商品价格：</string>
     <string name="detailed_description_test">该测试商品的详细描述</string>

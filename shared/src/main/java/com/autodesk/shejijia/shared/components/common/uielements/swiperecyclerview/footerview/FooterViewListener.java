@@ -9,9 +9,12 @@ public interface FooterViewListener {
 
     void onNetChange(String message); //网络状态变化时
 
+    void onRefreshing(); //正在refreshing状态
+
     void onLoadingMore(); //正在loading状态
 
     void onNoMore(String message);  //没有更多数据状态
 
     void onError(String message);   //加载失败状态
+
 }

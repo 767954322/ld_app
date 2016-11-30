@@ -50,11 +50,11 @@
                         tools:text="李成成 四季雅韵28号1101室李成成 四季雅韵28号1101室李成成 四季雅韵28号1101室" />
 
                     <TextView
-                        android:id="@+id/tv_project_question"
+                        android:id="@+id/tv_project_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/project_list_tv_gray_shape"
-                        android:text="@string/has_question"
+                        android:text="@string/has_update"
                         android:textColor="@color/font_gray"
                         android:textSize="@dimen/font_small" />
                 </LinearLayout>
@@ -77,13 +77,14 @@
                         tools:text="开工交底" />
 
                     <TextView
-                        android:id="@+id/tv_project_update"
+                        android:id="@+id/tv_project_question"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/project_list_tv_gray_shape"
-                        android:text="@string/has_update"
+                        android:text="@string/has_question"
                         android:textColor="@color/font_gray"
-                        android:textSize="@dimen/font_small" />
+                        android:textSize="@dimen/font_small"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
 

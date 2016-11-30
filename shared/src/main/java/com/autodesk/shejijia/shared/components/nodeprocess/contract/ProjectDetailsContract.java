@@ -1,14 +1,10 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.List;
 
@@ -21,11 +17,13 @@ public interface ProjectDetailsContract {
 
     interface View extends BaseView {
 
-        void updateProjectDetailsView(String memberType, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved);
+        void updateProjectDetailsView(String memberType, String avatarUrl, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved);
 
         void showProjectInfoDialog(Bundle projectInfoBundle);
 
         void cancelProjectInfoDialog(); //没有获取项目详情的情况下，是无法显示项目消息的对话框的
+
+        void updateUnreadMsgCountView(int count);
     }
 
     interface Presenter extends BasePresenter {
@@ -36,6 +34,12 @@ public interface ProjectDetailsContract {
 
         void getProjectInformation(); //获取项目信息
 
-        void navigateToMessageCenter();//跳转消息中心
+        String getThreadId();
+
+        void initRefreshState(boolean isNeedRefresh);
+
+        void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread,int requestCode);//跳转消息中心
+
+        void getUnreadMsgCount(String projectIds, String requestTag);
     }
 }

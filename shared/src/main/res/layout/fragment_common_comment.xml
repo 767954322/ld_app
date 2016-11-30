@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/rl_edit_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:maxHeight="100dp"
+            android:textCursorDrawable="@null"
+            android:background="@color/white"
+            android:padding="20dp"
+            android:letterSpacing="1.2"
+            android:gravity="top|left"
+            android:textSize="16sp"
+            android:textColor="#353535"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp"
+            android:gravity="top|left"
+            android:textSize="16sp"
+            android:textColor="#353535"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_audio_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+        <LinearLayout
+            android:id="@+id/ll_record_audio_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:id="@+id/ll_record_audio_wrap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_voice_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_addvoice"
+                    android:layout_gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/tv_add_audio_record_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:text="添加语音记录"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_audio_play_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_common_comment_audio_play"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/iv_audio_play"
+                android:layout_width="@dimen/chat_room_audiocell_audioimage_width"
+                android:layout_height="@dimen/chat_room_audiocell_audioimage_height"
+                android:layout_marginLeft="@dimen/chat_room_audiocell_audioimage_sidemargin"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/audior"
+                android:background="@drawable/audio_animation_list_right"/>
+            <TextView
+                android:id="@+id/tv_audio_play_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:textColor="#D9D9D9"
+                android:textSize="14dp" />
+            <ImageView
+                android:id="@+id/iv_delete_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_delete"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--<RadioGroup-->
+        <!--android:id="@+id/radio_group_select_model"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="选择模式"-->
+            <!--android:textAppearance="?android:textAppearanceSmall" />-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_multi"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="多选"-->
+            <!--android:textAppearance="?android:textAppearanceMedium" />-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radio_avator"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="单选"-->
+            <!--android:textAppearance="?android:textAppearanceMedium" />-->
+    <!--</RadioGroup>-->
+    <!--<Button-->
+        <!--android:id="@+id/btn_go"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Go!!"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_avator"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_avator"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp" />-->
+
+    <!--</RelativeLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        />
+</LinearLayout>

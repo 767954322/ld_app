@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_issuelist_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_50">
+
+    <ImageButton
+        android:id="@+id/ibn_issuelist_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_left_listicon_item"
+        android:background="@drawable/add_issue_style" />
+
+    <TextView
+        android:id="@+id/tv_issuelist_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_left_listtitle_item"
+        android:layout_toRightOf="@+id/ibn_issuelist_item_icon"
+        android:textSize="@dimen/size_17" />
+
+    <TextView
+        android:id="@+id/tv_issuelist_item_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_left_listtitle_item"
+        android:layout_marginRight="@dimen/size_20"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0.5"
+        android:background="@color/issue_item_line"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

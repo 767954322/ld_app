@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -95,6 +96,14 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
         return new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme_Calendar);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        View bottomSheet = getDialog().findViewById(android.support.design.R.id.design_bottom_sheet);
+        BottomSheetBehavior.from(bottomSheet).setHideable(false);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -124,6 +133,10 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
 
                 if (mOnDateSelectedCallback != null) {
                     mOnDateSelectedCallback.onDateSelected(date);
+                } else if (getTargetFragment() != null) {
+                    Intent data = new Intent();
+                    data.putExtra(BUNDLE_KEY_SELECTED_DATE, date);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                 } else if (getParentFragment() != null) {
                     Intent data = new Intent();
                     data.putExtra(BUNDLE_KEY_SELECTED_DATE, date);
@@ -144,6 +157,10 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
                 if (mOnDatesSelectedCallback != null) {
                     mOnDatesSelectedCallback.onDateRangeSelected(selectedDates.get(0),
                             selectedDates.get(selectedDates.size() - 1));
+                } else if (getTargetFragment() != null) {
+                    Intent data = new Intent();
+                    data.putExtra(BUNDLE_KEY_SELECTED_RANGE, selectedDates);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                 } else if (getParentFragment() != null) {
                     Intent data = new Intent();
                     data.putExtra(BUNDLE_KEY_SELECTED_RANGE, selectedDates);

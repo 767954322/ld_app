@@ -458,6 +458,9 @@ public class Constant {
         public static final String MEMBER_TYPE = "Member-Type";
         public static final String ACS_TOKEN = "ACS-Token";
         public static final String HS_UID = "hs_uid";
+        public static final String ACCPET = "Accept";
+
+
 
         public static final String APPLICATON_JSON = "application/json";
         public static final String UTF_8 = "UTF-8";

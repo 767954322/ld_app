@@ -12,25 +12,55 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
+import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/17/16.
  * 与 project 相关的api对应的dataModel
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
+    @Override
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsg, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ResponseError responseError = ResponseErrorUtil.checkVolleyError(volleyError);
+                callback.onError(responseError);
+            }
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                List<UnreadMsg> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsg>>() {
+                        }.getType());
+                callback.onSuccess(UnreadMsgEntityList.get(0));
+            }
+        });
+    }
 
     private IConstructionApi<OkJsonRequest.OKResponseCallback> mConstructionHttpManager;
 
@@ -48,7 +78,6 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
-
         mConstructionHttpManager.getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -64,6 +93,11 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
+    }
+
+    @Override
+    public void getUserTasksByProject(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback) {
+        mConstructionHttpManager.getUserTasksByProject(pid, requestParams, requestTag, getDefaultCallback(callback, ProjectInfo.class));
     }
 
     @Override
@@ -152,6 +186,73 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         });
     }
 
+    @Override
+    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Map<String, String>, ResponseError> callback) {
+        mConstructionHttpManager.updateTaskStatus(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("PlanStatus", jsonObject.toString());
+                Map<String, String> map = new LinkedHashMap<>();
+                try {
+                    map.put("task_id", jsonObject.getString("task_id"));
+                    map.put("task_status", jsonObject.getString("task_status"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.onSuccess(map);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+            }
+        });
+    }
+
+    @Override
+    public void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMessageIssue, ResponseError> callback) {
+        mConstructionHttpManager.getUnreadMessageAndIssue(projectIds, requestTag, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("Project--unreadMessageAndIssue", jsonObject + "");
+                String result = jsonObject.toString();
+                UnreadMessageIssue messageIssue = GsonUtil.jsonToBean(result, UnreadMessageIssue.class);
+                callback.onSuccess(messageIssue);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+            }
+        });
+    }
+
+    @Override
+    public void getTask(Bundle requestParams, String requestTag, ResponseCallback<Task, ResponseError> callback) {
+        mConstructionHttpManager.getTask(requestParams, requestTag, getDefaultCallback(callback, Task.class));
+    }
+
+    @Override
+    public void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.reserveTask(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
+    @Override
+    public void submitTaskComment(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.submitTaskComment(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
+    @Override
+    public void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.confirmTask(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
+    @Override
+    public void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.uploadTaskFiles(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
     private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T, ResponseError> callback, final Class<T> clazz,
                                                                        final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
         return new OkJsonRequest.OKResponseCallback() {
@@ -160,7 +261,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onResponse(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, result);
-                if (clazz == null) {
+                if (clazz == null || clazz == Void.class) {
                     callback.onSuccess(null);
                 } else {
                     try {

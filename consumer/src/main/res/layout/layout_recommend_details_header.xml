@@ -58,10 +58,12 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:layout_height="match_parent"
                 android:text="@string/demand_project_name"/>
 
             <TextView
                 android:id="@+id/tv_reco_consumer_name"
+                android:lineSpacingMultiplier="1.1"
                 style="@style/item_text_style"/>
         </LinearLayout>
 
@@ -90,10 +92,12 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:layout_height="match_parent"
                 android:text="@string/demand_village_name"/>
 
             <TextView
                 android:id="@+id/tv_reco_village_name"
+                android:lineSpacingMultiplier="1.1"
                 style="@style/item_text_style"/>
         </LinearLayout>
 
@@ -136,6 +140,7 @@
 
             <TextView
                 android:id="@+id/tv_reco_item_details_address"
+                android:lineSpacingMultiplier="1.1"
                 style="@style/item_text_style"/>
         </LinearLayout>
 
@@ -148,6 +153,7 @@
 
             <TextView
                 style="@style/item_text_style"
+                android:layout_height="match_parent"
                 android:text="@string/consumer_decoration_buildtime"/>
 
             <TextView

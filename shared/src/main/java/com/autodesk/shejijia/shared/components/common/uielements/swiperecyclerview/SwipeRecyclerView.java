@@ -37,7 +37,6 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     private WrapperAdapter mWrapperAdapter;
     private RefreshLoadMoreListener mListener;
 
-
     public SwipeRecyclerView(Context context) {
         this(context, null);
     }
@@ -185,6 +184,13 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     }
 
     @Override
+    public void onRefreshing() {
+        if (mFooterView != null){
+            mFooterView.onRefreshing();
+        }
+    }
+
+    @Override
     public void onLoadingMore() {
         if (mFooterView != null) {
             mFooterView.onLoadingMore();
@@ -234,10 +240,8 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
                 mLastVisiblePosition = findMax(into);
             }
 
-            //set isLoading More
             int childCount = mWrapperAdapter == null ? 0 : mWrapperAdapter.getItemCount();
             if (childCount > 1 && mLastVisiblePosition == childCount - 1) {
-
                 if (mListener != null) {
                     mIsLoadingMore = true;
                     mListener.onLoadMore();

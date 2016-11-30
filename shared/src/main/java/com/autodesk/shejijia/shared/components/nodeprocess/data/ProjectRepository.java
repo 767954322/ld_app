@@ -2,7 +2,9 @@ package com.autodesk.shejijia.shared.components.nodeprocess.data;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
@@ -11,10 +13,25 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
+import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -37,10 +54,49 @@ public final class ProjectRepository implements ProjectDataSource {
         return ProjectRepositoryHolder.INSTANCE;
     }
 
+    public ProjectInfo getActiveProject() {
+        return mProjectInfo;
+    }
+
+    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo, ResponseError> callback) {
+        if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
+            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
+                @Override
+                public void onSuccess(ProjectInfo data) {
+                    mActivePlanEditing = false;
+                    mActivePlan = data.getPlan();
+                    mActivePlan.setProjectId(String.valueOf(data.getProjectId()));
+                    callback.onSuccess(mActivePlan);
+                }
+
+                @Override
+                public void onError(ResponseError error) {
+                    callback.onError(error);
+                }
+            });
+        } else {
+            callback.onSuccess(mActivePlan);
+        }
+    }
+
+    public boolean isActivePlanEditing() {
+        return mActivePlan != null && mActivePlanEditing;
+    }
+
+    public void setActivePlanEditing(boolean activePlanEditing) {
+        this.mActivePlanEditing = activePlanEditing;
+    }
+
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, callback);
     }
+
+    @Override
+    public void getUserTasksByProject(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getUserTasksByProject(pid, requestParams, requestTag, callback);
+    }
+
 
     @Override
     public void getProjectInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
@@ -91,42 +147,58 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().updateProjectLikes(requestParams, requestTag, jsonRequest, callback);
     }
 
-    public ProjectInfo getActiveProject() {
-        return mProjectInfo;
+    @Override
+    public void getTask(Bundle requestParams, String requestTag, ResponseCallback<Task, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getTask(requestParams, requestTag, callback);
     }
 
-
-    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo, ResponseError> callback) {
-        if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
-            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
-                @Override
-                public void onSuccess(ProjectInfo data) {
-                    mActivePlanEditing = false;
-                    mActivePlan = data.getPlan();
-                    mActivePlan.setProjectId(String.valueOf(data.getProjectId()));
-                    callback.onSuccess(mActivePlan);
-                }
-
-                @Override
-                public void onError(ResponseError error) {
-                    callback.onError(error);
-                }
-            });
-        } else {
-            callback.onSuccess(mActivePlan);
-        }
+    @Override
+    public void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().reserveTask(requestParams, requestTag, callback);
     }
 
-    public boolean isActivePlanEditing() {
-        return mActivePlan != null && mActivePlanEditing;
+    @Override
+    public void submitTaskComment(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().submitTaskComment(requestParams, requestTag, callback);
     }
 
-    public void setActivePlanEditing(boolean activePlanEditing) {
-        this.mActivePlanEditing = activePlanEditing;
+    @Override
+    public void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().confirmTask(requestParams, requestTag, callback);
     }
 
-    private PlanInfo copyPlan(PlanInfo planInfo) {
-        String jsonString = GsonUtil.beanToString(planInfo);
-        return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
+    @Override
+    public void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().uploadTaskFiles(requestParams, requestTag, callback);
+    }
+
+    @Override
+    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String, String>, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().updateTaskStatus(requestParams, requestTag, jsonRequest, callback);
+    }
+
+    @Override
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsg, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ResponseError responseError = ResponseErrorUtil.checkVolleyError(volleyError);
+                callback.onError(responseError);
+
+            }
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                List<UnreadMsg> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsg>>() {
+                        }.getType());
+                callback.onSuccess(UnreadMsgEntityList.get(0));
+            }
+        });
+    }
+
+    @Override
+    public void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMessageIssue, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getUnReadMessageAndIssue(projectIds, requestTag, callback);
     }
 }

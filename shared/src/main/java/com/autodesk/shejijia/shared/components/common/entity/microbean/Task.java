@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.entity.microbean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ public class Task implements Serializable{
     private String description;
     private String category;
     private String assignee;
-    private List<Comment> comments;
-    private List<Form> forms;
-    private List<File> files;
+    private ArrayList<Comment> comments;
+    private ArrayList<Form> forms;
+    private ArrayList<ConstructionFile> files;
     @SerializedName("doc_type")
     private String docType;
     @SerializedName("task_id")
@@ -34,6 +35,8 @@ public class Task implements Serializable{
     private String planId;
     @SerializedName("is_milestone")
     private boolean isMilestone;
+    @SerializedName("sort_time")
+    private Time sortTime;
     @SerializedName("planning_time")
     private Time planningTime;
     @SerializedName("effect_time")
@@ -87,27 +90,27 @@ public class Task implements Serializable{
         this.assignee = assignee;
     }
 
-    public List<Comment> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
-    public List<Form> getForms() {
+    public ArrayList<Form> getForms() {
         return forms;
     }
 
-    public void setForms(List<Form> forms) {
+    public void setForms(ArrayList<Form> forms) {
         this.forms = forms;
     }
 
-    public List<File> getFiles() {
+    public ArrayList<ConstructionFile> getFiles() {
         return files;
     }
 
-    public void setFiles(List<File> files) {
+    public void setFiles(ArrayList<ConstructionFile> files) {
         this.files = files;
     }
 
@@ -165,6 +168,14 @@ public class Task implements Serializable{
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+
+    public Time getSortTime() {
+        return sortTime;
+    }
+
+    public void setSortTime(Time sortTime) {
+        this.sortTime = sortTime;
     }
 
     public Time getPlanningTime() {

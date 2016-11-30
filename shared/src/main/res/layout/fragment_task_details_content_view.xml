@@ -4,31 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/node_details_oval_white_shape"
+    android:layout_marginStart="@dimen/marginleft_parent"
+    android:layout_marginEnd="@dimen/marginright_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_top_status"
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/node_details_oval_gray_shape"
+        android:background="@drawable/bg_task_details_header"
         android:orientation="horizontal"
-        android:padding="@dimen/spacing_padding_third">
+        android:paddingLeft="@dimen/spacing_padding_double"
+        android:paddingRight="@dimen/spacing_padding_double"
+        android:paddingTop="@dimen/spacing_padding_third"
+        android:paddingBottom="@dimen/spacing_padding_third">
 
         <TextView
             android:id="@+id/tv_task_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             android:textStyle="bold"
             tools:text="隐秘工程验收" />
 
         <TextView
             android:id="@+id/tv_task_status"
+            android:layout_marginLeft="@dimen/spacing_margin_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             tools:text="未验收" />
     </LinearLayout>
@@ -45,11 +51,12 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_padding_double">
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcy_task_person_list"
+            <LinearLayout
+                android:id="@+id/members_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_task_date"
@@ -90,53 +97,41 @@
                 android:textSize="@dimen/font_normal"
                 tools:text="监理公司名称监理 18072842343" />
 
-
-            <FrameLayout
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_task_remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_margin_micro"
+                android:padding="@dimen/spacing_padding_double"
                 android:background="@drawable/node_details_oval_gray_shape"
-                android:padding="@dimen/spacing_padding_double">
+                android:ellipsize="end"
+                android:hint="@string/editText_hint_task_comment"
+                android:maxLines="7"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/font_normal" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edt_task_remark"
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_margin_micro">
+
+                <LinearLayout
+                    android:id="@+id/photos_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:ellipsize="end"
-                    android:hint="@string/editText_hint_text"
-                    android:maxLines="7"
-                    android:textColorHint="@color/gray"
-                    android:textSize="@dimen/font_normal" />
-            </FrameLayout>
-
-
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
+        android:id="@+id/actions_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/linearlayout_divider_hor_shape"
         android:orientation="vertical"
         android:showDividers="beginning|middle">
-
-        <TextView
-            android:id="@+id/tv_navigate_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/spacing_padding_double"
-            android:textSize="@dimen/font_large"
-            tools:text="隐秘工程验收表格" />
-
-        <TextView
-            android:id="@+id/tv_navigate_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/spacing_padding_double"
-            android:textSize="@dimen/font_large"
-            tools:text="修改预约时间" />
     </LinearLayout>
 
 </LinearLayout>

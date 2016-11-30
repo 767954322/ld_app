@@ -56,6 +56,7 @@
 
         <TextView
             android:id="@+id/tv_item_name"
+            android:layout_height="match_parent"
             style="@style/item_text_style"
             android:text="@string/demand_project_name"/>
 

@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+def buildNumber = ".0"
+def gitLastCommitId = ""
+
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
@@ -9,7 +12,7 @@ android {
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0" + buildNumber
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

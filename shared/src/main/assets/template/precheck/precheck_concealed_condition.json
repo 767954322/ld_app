@@ -50,10 +50,67 @@
             ]
         },
         {
+        "item_id": "acceptance_whether_check",
+        "category": "必要条件",
+        "title": "客户同意验收",
+        "standard": "客户不同意验收",
+        "check_type": "is_checked",
+        "action_visibility": false,
+        "action_changeability": false,
+        "acceptance_criteria": [],
+        "comment_conditions": [],
+        "item_type": "",
+        "check_items": [],
+        "value": [
+                  {
+                  "type": "check_result",
+                  "value": "0"
+                  }
+                  ]
+        },
+        {
+        "item_id": "interface_wether_standard",
+        "category": "必要条件",
+        "title": "施工界面符合验收标准",
+        "standard": "施工界面不符合验收标准",
+        "check_type": "is_checked",
+        "action_visibility": false,
+        "action_changeability": false,
+        "acceptance_criteria": [],
+        "comment_conditions": [],
+        "item_type": "",
+        "check_items": [],
+        "value": [
+                  {
+                  "type": "check_result",
+                  "value": "0"
+                  }
+                  ]
+        },
+        {
+        "item_id": "monitor_whether_presence",
+        "category": "必要条件",
+        "title": "班长在场",
+        "standard": "班长不在场",
+        "check_type": "is_checked",
+        "action_visibility": false,
+        "action_changeability": false,
+        "acceptance_criteria": [],
+        "comment_conditions": [],
+        "item_type": "",
+        "check_items": [],
+        "value": [
+                  {
+                  "type": "check_result",
+                  "value": "0"
+                  }
+                  ]
+        },
+        {
             "item_id": "equipment_whether_qualification",
             "category": "必要条件",
-            "title": "试验设备是否合格",
-            "standard": "试验设备是否合格",
+            "title": "试验设备（打压机、压力表）合格",
+            "standard": "试验设备（打压机、压力表）不合格",
             "check_type": "is_checked",
             "action_visibility": false,
             "action_changeability": false,
@@ -69,86 +126,29 @@
             ]
         },
         {
-            "item_id": "acceptance_whether_check",
-            "category": "必要条件",
-            "title": "客户是否同意验收",
-            "standard": "客户是否同意验收",
-            "check_type": "is_checked",
-            "action_visibility": false,
-            "action_changeability": false,
-            "acceptance_criteria": [],
-            "comment_conditions": [],
-            "item_type": "",
-            "check_items": [],
-            "value": [
-                {
-                    "type": "check_result",
-                    "value": "0"
-                }
-            ]
-        },
-        {
-            "item_id": "monitor_whether_presence",
-            "category": "必要条件",
-            "title": "班长是否在场",
-            "standard": "班长是否在场",
-            "check_type": "is_checked",
-            "action_visibility": false,
-            "action_changeability": false,
-            "acceptance_criteria": [],
-            "comment_conditions": [],
-            "item_type": "",
-            "check_items": [],
-            "value": [
-                {
-                    "type": "check_result",
-                    "value": "0"
-                }
-            ]
-        },
-        {
-            "item_id": "interface_wether_standard",
-            "category": "必要条件",
-            "title": "施工界面是否符合验收标准",
-            "standard": "施工界面是否符合验收标准",
-            "check_type": "is_checked",
-            "action_visibility": false,
-            "action_changeability": false,
-            "acceptance_criteria": [],
-            "comment_conditions": [],
-            "item_type": "",
-            "check_items": [],
-            "value": [
-                {
-                    "type": "check_result",
-                    "value": "0"
-                }
-            ]
+        "item_id": "identify_status",
+        "category": "辅助条件",
+        "title": "确认委托人身份",
+        "standard": "确认委托人身份",
+        "check_type": "is_checked",
+        "action_visibility": false,
+        "action_changeability": false,
+        "acceptance_criteria": [],
+        "comment_conditions": [],
+        "item_type": "",
+        "check_items": [],
+        "value": [
+                  {
+                  "type": "check_result",
+                  "value": "0"
+                  }
+                  ]
         },
         {
             "item_id": "telephone_consultation",
             "category": "辅助条件",
             "title": "客户不在场时电话咨询",
             "standard": "客户不在场时电话咨询",
-            "check_type": "is_checked",
-            "action_visibility": false,
-            "action_changeability": false,
-            "acceptance_criteria": [],
-            "comment_conditions": [],
-            "item_type": "",
-            "check_items": [],
-            "value": [
-                {
-                    "type": "check_result",
-                    "value": "0"
-                }
-            ]
-        },
-        {
-            "item_id": "identify_status",
-            "category": "辅助条件",
-            "title": "确认委托人身份",
-            "standard": "确认委托人身份",
             "check_type": "is_checked",
             "action_visibility": false,
             "action_changeability": false,

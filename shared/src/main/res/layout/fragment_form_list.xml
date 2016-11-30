@@ -1,65 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/form_background_grey"
-              android:orientation="vertical">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout android:id="@+id/ll_form_list"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/form_background_grey"
+                  android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView android:id="@+id/rv_form_list"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="@dimen/spacing_form_list_top"
+                                                android:background="@color/form_background_write"
+                                                android:orientation="vertical"
+                                                android:paddingEnd="@dimen/spacing_padding_double"
+                                                android:paddingStart="@dimen/spacing_padding_double">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/con_white"
+                      android:orientation="vertical">
+
+            <TextView android:id="@+id/tv_problem_title"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/height_form_list_problem_log"
+                      android:gravity="center_vertical"
+                      android:paddingStart="@dimen/spacing_padding_double"
+                      android:background="@color/form_background_grey"
+                      android:text="@string/form_problem_log"
+                      android:textColor="@color/form_text_title"
+                      android:visibility="gone"/>
+
+            <RelativeLayout android:id="@+id/rl_reinspection_log"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:paddingBottom="22dp"
+                            android:paddingEnd="@dimen/spacing_padding_double"
+                            android:paddingStart="@dimen/spacing_padding_double"
+                            android:paddingTop="22dp"
+                            android:visibility="gone">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_centerVertical="true"
+                          android:text="强制复验项"
+                          android:textColor="@color/font_title"
+                          android:textSize="@dimen/precheck_font_15"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_alignParentEnd="true"
+                          android:layout_centerVertical="true"
+                          android:drawableEnd="@drawable/ic_next"
+                          android:drawablePadding="@dimen/spacing_plain_table_cell"
+                          android:gravity="center_vertical"
+                          android:text="待监理复验"
+                          android:textColor="@color/font_subtitle"
+                          android:textSize="@dimen/precheck_font_15"/>
+
+
+            </RelativeLayout>
+
+            <View android:id="@+id/view_line"
+                  android:layout_width="match_parent"
+                  android:background="@color/form_line_grey"
+                  android:layout_height="1px"
+                  android:layout_marginEnd="@dimen/spacing_padding_double"
+                  android:layout_marginStart="@dimen/spacing_padding_double"/>
+
+            <RelativeLayout android:id="@+id/rl_rectification_log"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:paddingBottom="22dp"
+                            android:paddingEnd="@dimen/spacing_padding_double"
+                            android:paddingStart="@dimen/spacing_padding_double"
+                            android:paddingTop="22dp"
+                            android:visibility="gone">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_centerVertical="true"
+                          android:text="监督整改项"
+                          android:textColor="@color/font_title"
+                          android:textSize="@dimen/precheck_font_15"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_alignParentEnd="true"
+                          android:layout_centerVertical="true"
+                          android:drawableEnd="@drawable/ic_next"
+                          android:drawablePadding="@dimen/spacing_plain_table_cell"
+                          android:gravity="center_vertical"
+                          android:text="待客户经理复验"
+                          android:textColor="@color/font_subtitle"
+                          android:textSize="@dimen/precheck_font_15"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/tv_result"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="@color/form_background_write"
-                  android:orientation="vertical">
+                  android:layout_marginTop="@dimen/spacing_form_list_top"
+                  android:background="@color/con_white"
+                  android:visibility="gone"/>
 
-
-    </LinearLayout>
-
-    <TextView android:layout_width="match_parent"
-              android:layout_height="44dp"
-              android:text="@string/form_program_log"
-              android:gravity="center_vertical"
-              android:paddingStart="@dimen/spacing_padding_double"
-              android:background="@color/form_background_grey"
-              android:textColor="@color/form_text_title"/>
-
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-
-    </LinearLayout>
-
-
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="40dp"
-                  android:paddingEnd="@dimen/spacing_padding_double"
-                  android:paddingStart="@dimen/spacing_padding_double">
-
-        <Button android:id="@+id/btn_cancel"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
+        <Button android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginEnd="@dimen/size_12"
-                android:layout_weight="1"
-                android:background="@drawable/small_button_grey"
-                android:text="@string/quit"
-                android:textColor="@color/white"
-                android:typeface="sans"/>
-
-        <Button android:id="@+id/btn_confirm"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="@dimen/size_12"
-                android:layout_weight="1"
-                android:background="@drawable/small_button_blue"
+                android:layout_marginEnd="@dimen/spacing_margin_double"
+                android:layout_marginStart="@dimen/spacing_margin_double"
+                android:layout_marginTop="@dimen/spacing_form_list_top"
+                android:background="@drawable/btn_form_bg_selector"
+                android:enabled="false"
                 android:text="@string/commite"
-                android:textColor="@color/white"
-                android:typeface="sans"/>
+                android:textColor="@color/white"/>
+
+        <!--<Button android:layout_width="match_parent"-->
+                <!--android:text="全选择合格"-->
+                <!--android:textColor="#f00"-->
+                <!--android:id="@+id/btn_delete"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:layout_height="56dp"/>-->
 
     </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>

@@ -1,0 +1,289 @@
+{
+    "actions": [
+        "add_reserve_time",
+        "change_reserve_time",
+        "fill_form",
+        "view_form",
+        "mark_complete",
+        "update_form",
+        "add_reinspection_time",
+        "change_reinspection_time"
+    ],
+    "clientmanager": {
+        "materialInstallation": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        },
+        "inspectorInspection": {
+            "open": [
+                "add_reserve_time"
+            ],
+            "reserving": [
+                "add_reserve_time"
+            ],
+            "reserved": [
+                "change_reserve_time"
+            ],
+            "inprogress": [
+                "fill_form"
+            ],
+            "delayed": [
+                "fill_form"
+            ],
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form",
+                "add_reinspection_time"
+            ],
+            "reinspectionandrectification": [
+                "view_form",
+                "add_reinspection_time"
+            ],
+            "rejected": [
+                "view_form",
+                "add_reinspection_time"
+            ],
+            "reinspectreserved": [
+                "view_form",
+                "change_reinspection_time"
+            ],
+            "reinspection_inprogress": [
+                "fill_form"
+            ],
+            "reinspectdelayed": [
+                "fill_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "open": [
+                "add_reserve_time",
+                "fill_form"
+            ],
+            "reserving": [
+                "add_reserve_time",
+                "fill_form"
+            ],
+            "reserved": [
+                "change_reserve_time"
+            ],
+            "inprogress": [
+                "fill_form"
+            ],
+            "resolved": [
+                "view_form"
+            ],
+            "delayed": [
+                "fill_form"
+            ],
+            "unqualified": [
+                "update_form"
+            ]
+        }
+    },
+    "foreman": {
+        "construction": {
+            "inprogress": [
+                "mark_complete"
+            ],
+            "delayed": [
+                "mark_complete"
+            ]
+        },
+        "materialMeasuring": {
+            "inprogress": [
+                "mark_complete"
+            ],
+            "delayed": [
+                "mark_complete"
+            ]
+        },
+        "materialInstallation": {
+            "open": [
+                "fill_form"
+            ],
+            "reserving": [
+                "fill_form"
+            ],
+            "reserved": [
+                "fill_form"
+            ],
+            "inprogress": [
+                "fill_form"
+            ],
+            "delayed": [
+                "fill_form"
+            ],
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "update_form"
+            ]
+        },
+        "inspectorInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form"
+            ],
+            "reinspectionandrectification": [
+                "view_form"
+            ],
+            "rejected": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        }
+    },
+    "materialstaff": {
+        "materialMeasuring": {
+            "open": [
+                "add_reserve_time"
+            ],
+            "reserving": [
+                "add_reserve_time"
+            ],
+            "reserved": [
+                "change_reserve_time"
+            ],
+            "inprogress": [
+                "change_reserve_time"
+            ]
+        },
+        "materialInstallation": {
+            "open": [
+                "add_reserve_time"
+            ],
+            "reserving": [
+                "add_reserve_time"
+            ],
+            "reserved": [
+                "change_reserve_time"
+            ],
+            "inprogress": [
+                "change_reserve_time"
+            ],
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        },
+        "inspectorInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form"
+            ],
+            "reinspectionandrectification": [
+                "view_form"
+            ],
+            "rejected": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        }
+    },
+    "designer": {
+        "materialInstallation": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        },
+        "inspectorInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form"
+            ],
+            "reinspectionandrectification": [
+                "view_form"
+            ],
+            "rejected": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        }
+    },
+    "member": {
+        "materialInstallation": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        },
+        "inspectorInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "rectification": [
+                "view_form"
+            ],
+            "reinspection": [
+                "view_form"
+            ],
+            "reinspectionandrectification": [
+                "view_form"
+            ],
+            "rejected": [
+                "view_form"
+            ]
+        },
+        "clientmanagerInspection": {
+            "resolved": [
+                "view_form"
+            ],
+            "unqualified": [
+                "view_form"
+            ]
+        }
+    }
+}

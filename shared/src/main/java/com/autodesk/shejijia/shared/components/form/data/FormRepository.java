@@ -12,12 +12,12 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.common.uitity.FormFactory;
 import com.autodesk.shejijia.shared.components.form.common.uitity.JsonAssetHelper;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
-import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -36,7 +36,7 @@ public class FormRepository implements FormDataSource {
 
     private Project mProject;  //包含task id的项目详情
     private ProjectInfo mProjectInfo;  //包含task data的项目详情
-    private static HashMap<String,String> templateID2Path;
+    private static HashMap<String, String> templateID2Path;
     private List<SHForm> mFormList;
     private String projectID;
     private String taskID;
@@ -48,14 +48,15 @@ public class FormRepository implements FormDataSource {
     private String projectAddr;
     private List<Form> taskForms;
 
-    private FormRepository(){
+    private FormRepository() {
         templateID2Path = (HashMap<String, String>) JsonAssetHelper.routerJSON2Path();
     }
 
-    private static class FormRepositoryHolder{
+    private static class FormRepositoryHolder {
         private static final FormRepository INSTANCE = new FormRepository();
     }
-    public static FormRepository getInstance(){
+
+    public static FormRepository getInstance() {
         return FormRepositoryHolder.INSTANCE;
     }
 
@@ -65,14 +66,14 @@ public class FormRepository implements FormDataSource {
             mFormList = new ArrayList<>();
             FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List,ResponseError>() {
                 @Override
-                public void onSuccess(List data){
-                    for(int i = 0 ; i < data.size() ; i++){
+                public void onSuccess(List data) {
+                    for (int i = 0; i < data.size(); i++) {
                         HashMap remoteMap = (HashMap) data.get(i);
-                        String fileName = String.format("%s.json",remoteMap.get("form_template_id"));
+                        String fileName = String.format("%s.json", remoteMap.get("form_template_id"));
                         String filePath = templateID2Path.get(fileName);
-                        JSONObject object = FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),filePath);
-                        HashMap templateMap = (HashMap) FormJsonFileUtil.jsonObj2Map(object);
-//                        HashMap templateMap = (HashMap) FormJsonFileUtil.jsonObj2Map(FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),fileName));
+                        JSONObject object = JsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(), filePath);
+                        HashMap templateMap = (HashMap) JsonFileUtil.jsonObj2Map(object);
+//                        HashMap templateMap = (HashMap) JsonFileUtil.jsonObj2Map(JsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),fileName));
                         SHForm form = FormFactory.createCategoryForm(templateMap);
 //                        SHForm form = new SHForm(templateMap);
                         form.applyFormData(remoteMap);
@@ -80,27 +81,58 @@ public class FormRepository implements FormDataSource {
                     }
                     callBack.onSuccess(mFormList);
                 }
+
                 @Override
                 public void onError(ResponseError errorMsg) {
                     callBack.onError(errorMsg);
                 }
-            },formIds);
+            }, formIds);
         } else {
             callBack.onSuccess(mFormList);
         }
     }
 
+    @Override
+    public void verifyInspector(@NonNull Long pid, @NonNull final ResponseCallback<Map, ResponseError> callBack) {
+        FormRemoteDataSource.getInstance().verifyInspector(pid, new ResponseCallback<Map, ResponseError>() {
+            @Override
+            public void onSuccess(Map data) {
+                callBack.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                callBack.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void inspectTask(@NonNull Bundle bundle, JSONObject jsonRequest, @NonNull final ResponseCallback<Map, ResponseError> callback) {
+        FormRemoteDataSource.getInstance().inspectTask(bundle,jsonRequest, new ResponseCallback<Map, ResponseError>() {
+            @Override
+            public void onSuccess(Map data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                callback.onError(error);
+            }
+        });
+    }
+
 
     public void updateRemoteForms(List<SHForm> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
-        if(forms == null || forms.size() == 0){
+        if (forms == null || forms.size() == 0) {
             return;
         }
 
         List<Map> tempFormList = new ArrayList<>();
-        for(SHForm form : forms){
+        for (SHForm form : forms) {
             tempFormList.add(form.getUpdateFormData());
         }
-        FormRemoteDataSource.getInstance().updateFormDataWithData(tempFormList,bundle, new ResponseCallback() {
+        FormRemoteDataSource.getInstance().updateFormDataWithData(tempFormList, bundle, new ResponseCallback() {
             @Override
             public void onSuccess(Object data) {
                 callBack.onSuccess(data);
@@ -120,7 +152,7 @@ public class FormRepository implements FormDataSource {
         taskForms = task.getForms();
     }
 
-    public void initInspectionTaskWithProjectID(String projectID){
+    public void initInspectionTaskWithProjectID(String projectID) {
         getProjectDetailsWithPId(Long.parseLong(projectID));
     }
 
@@ -133,34 +165,34 @@ public class FormRepository implements FormDataSource {
             @Override
             public void onSuccess(ProjectInfo projectInfo) {
 
-                for(Task task : projectInfo.getPlan().getTasks()){
-                    if("inspector".equals(task.getAssignee())
+                for (Task task : projectInfo.getPlan().getTasks()) {
+                    if ("inspector".equals(task.getAssignee())
                             && (TaskStatusTypeEnum.TASK_STATUS_INPROGRESS.getTaskStatus()
-                                        .equalsIgnoreCase(task.getStatus())
-                                ||TaskStatusTypeEnum.TASK_STATUS_DELAY.getTaskStatus()
-                                        .equalsIgnoreCase(task.getStatus())
-                                ||TaskStatusTypeEnum.TASK_STATUS_REINSPECTION.getTaskStatus()
-                                        .equalsIgnoreCase(task.getStatus())
-                                ||TaskStatusTypeEnum.TASK_STATUS_RECTIFICATION.getTaskStatus()
-                                        .equalsIgnoreCase(task.getStatus())
-                                ||TaskStatusTypeEnum.TASK_STATUS_REINSPECTION_AND_RECTIFICATION.getTaskStatus()
-                                        .equalsIgnoreCase(task.getStatus()))){
+                            .equalsIgnoreCase(task.getStatus())
+                            || TaskStatusTypeEnum.TASK_STATUS_DELAY.getTaskStatus()
+                            .equalsIgnoreCase(task.getStatus())
+                            || TaskStatusTypeEnum.TASK_STATUS_REINSPECTION.getTaskStatus()
+                            .equalsIgnoreCase(task.getStatus())
+                            || TaskStatusTypeEnum.TASK_STATUS_RECTIFICATION.getTaskStatus()
+                            .equalsIgnoreCase(task.getStatus())
+                            || TaskStatusTypeEnum.TASK_STATUS_REINSPECTION_AND_RECTIFICATION.getTaskStatus()
+                            .equalsIgnoreCase(task.getStatus()))) {
 
                         projectID = String.valueOf(projectInfo.getProjectId());
                         taskID = task.getTaskId();
                         taskAssignee = task.getAssignee();
-                        if(task.getForms() != null && task.getForms().size() != 0){
-                            for(Form formInfo : task.getForms()){
-                                if("inspection".equals(formInfo.getCategory())
-                                        || "precheck".equals(formInfo.getCategory())){
+                        if (task.getForms() != null && task.getForms().size() != 0) {
+                            for (Form formInfo : task.getForms()) {
+                                if ("inspection".equals(formInfo.getCategory())
+                                        || "precheck".equals(formInfo.getCategory())) {
                                     taskForms.add(formInfo);
                                 }
                             }
                         }
 
-                        if(projectInfo.getMembers() != null && projectInfo.getMembers().size()!= 0){
-                            for(Member member : projectInfo.getMembers()){
-                                if("member".equals(member.getRole())){
+                        if (projectInfo.getMembers() != null && projectInfo.getMembers().size() != 0) {
+                            for (Member member : projectInfo.getMembers()) {
+                                if ("member".equals(member.getRole())) {
                                     memberID = member.getUid();
                                     userName = member.getProfile().getName();
                                     userPhone = member.getProfile().getMobile();
@@ -169,8 +201,8 @@ public class FormRepository implements FormDataSource {
                             }
                         }
                         projectName = projectInfo.getName();
-                        projectAddr = String.format("%s%s%s%s",projectInfo.getBuilding().getProvince(),projectInfo.getBuilding().getCityName()
-                                                                ,projectInfo.getBuilding().getDistrictName(),projectInfo.getBuilding().getCommunityName());
+                        projectAddr = String.format("%s%s%s%s", projectInfo.getBuilding().getProvince(), projectInfo.getBuilding().getCityName()
+                                , projectInfo.getBuilding().getDistrictName(), projectInfo.getBuilding().getCommunityName());
                     }
                 }
             }
@@ -184,9 +216,6 @@ public class FormRepository implements FormDataSource {
 
     /**
      * 获取到项目的详情(不包含具体的task)
-     * @param requestParams
-     * @param requestTag
-     * @param callback
      */
     public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project,ResponseError> callback) {
         if(null == mProject) {
@@ -209,9 +238,6 @@ public class FormRepository implements FormDataSource {
 
     /**
      * 获取到包含task详情的项目
-     * @param requestParams
-     * @param requestTag
-     * @param callback
      */
     public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo,ResponseError> callback) {
         if(null == mProjectInfo) {
@@ -232,7 +258,9 @@ public class FormRepository implements FormDataSource {
         }
     }
 
-
+    public void setFormList(List<SHForm> formList) {
+        mFormList = formList;
+    }
 
 
 }

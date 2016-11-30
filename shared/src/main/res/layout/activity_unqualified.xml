@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/sc_unqualified_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <FrameLayout
+            android:id="@+id/fl_activity_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/rl_submit_success_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_submit_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_submit_success_svg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_submit_success"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/submit_success"/>
+        <Button
+            android:id="@+id/btn_submit_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/small_button_blue"
+            android:textColor="@color/white"
+            style="?attr/buttonBarButtonStyle"
+            android:typeface="sans"
+            android:text="@string/submit"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"/>
+    </RelativeLayout>
+</FrameLayout>

@@ -3,28 +3,29 @@ package com.autodesk.shejijia.shared.components.common.entity.microbean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by t_xuz on 10/19/16.
- * update 10/24
+ * update 12/02
  */
 public class Member implements Serializable{
 
     private String role;
     private String uid;
-    private boolean group;
     private Profile profile;
     @SerializedName("acs_member_id")
     private long acsMemberId;
     @SerializedName("thread_id")
     private String threadId;
+    @SerializedName("progress_thread_id")
+    private String progressThreadId;
     @SerializedName("is_group")
     private boolean isGroup;
     @SerializedName("group_members")
-    private List<Member> groupMembers;
-    private List<String> allowed;
-
+    private ArrayList<Member> groupMembers;
+    private ArrayList<String> allowed;
 
     public String getRole() {
         return role;
@@ -43,26 +44,26 @@ public class Member implements Serializable{
     }
 
     public boolean isGroup() {
-        return group;
+        return isGroup;
     }
 
     public void setGroup(boolean group) {
-        this.group = group;
+        this.isGroup = group;
     }
 
-    public List<Member> getGroupMembers() {
+    public ArrayList<Member> getGroupMembers() {
         return groupMembers;
     }
 
-    public void setGroupMembers(List<Member> groupMembers) {
+    public void setGroupMembers(ArrayList<Member> groupMembers) {
         this.groupMembers = groupMembers;
     }
 
-    public List<String> getAllowed() {
+    public ArrayList<String> getAllowed() {
         return allowed;
     }
 
-    public void setAllowed(List<String> allowed) {
+    public void setAllowed(ArrayList<String> allowed) {
         this.allowed = allowed;
     }
 
@@ -88,5 +89,13 @@ public class Member implements Serializable{
 
     public void setThreadId(String threadId) {
         this.threadId = threadId;
+    }
+
+    public String getProgressThreadId() {
+        return progressThreadId;
+    }
+
+    public void setProgressThreadId(String progressThreadId) {
+        this.progressThreadId = progressThreadId;
     }
 }

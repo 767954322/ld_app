@@ -38,7 +38,8 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     protected void initView() {
-        //获取到页面的内容控件
+        initToolbar();
+
         mUsernameTv = (TextView) findViewById(R.id.tv_username);
         mTelephoneTv = (TextView) findViewById(R.id.tv_telephone);
         mAddressTv = (TextView) findViewById(R.id.tv_address);
@@ -52,7 +53,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mTask = (Task) intent.getSerializableExtra("task");
         mMember = (Member) intent.getSerializableExtra("member");
         mBuilding = (Building) intent.getSerializableExtra("building");
-
         mPresenter = new ProjectInfoPresenter(this);
     }
 
@@ -72,33 +72,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     }
 
     @Override
-    public void setToolbar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            actionBar.setTitle(R.string.app_name);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-    }
-
-
-    @Override
-    public void selectCancel() {
-        startActivity(new Intent(this, ScanQrCodeActivity.class));
-    }
-
-    @Override
-    public String getStatus() {
-        return mTask.getStatus();
-    }
-
-    @Override
-    public Task getTask() {
-        return mTask;
-    }
-
-    @Override
     public void enterPrecheck(Task task) {
         Intent intent = new Intent(this, PrecheckActivity.class);
         intent.putExtra("task", task);
@@ -106,34 +79,22 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     }
 
     @Override
-    public void dismiss() {
-        finish();
-    }
-
-    @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btn_confirm) {
-            mPresenter.confirm();
-
+            mPresenter.submit(mTask);
         } else if (i == R.id.btn_cancel) {
-            mPresenter.cancel();
-
+            finish();
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            mPresenter.cancel();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        mPresenter.cancel();
     }
 
     @Override
@@ -153,6 +114,16 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public void hideLoading() {
+
+    }
+
+    private void initToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setTitle(R.string.app_name);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 }

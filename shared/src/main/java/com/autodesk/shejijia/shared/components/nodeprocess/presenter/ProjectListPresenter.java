@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -12,9 +14,9 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
@@ -22,6 +24,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskDetai
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,16 +34,20 @@ import java.util.List;
 public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     private static final int PAGE_LIMIT = 10;
-    private Context mContext;
+    private Activity mContext;
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
     private FragmentManager fragmentManager;
-    private int mOffset = 1;//why 0 and 1 is the same data
+    private int mOffset = 0;
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
+    private boolean mIsRefresh;
+    private int mLoadedSize = 0;//记录服务端返回的数据个数
+    private int mTotalSize;//服务器一共多少数据
+    private List<ProjectInfo> mProjectInfos;
 
-    public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
+    public ProjectListPresenter(Activity context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
         this.fragmentManager = fragmentManager;
         this.mProjectListView = projectListsView;
@@ -69,7 +76,6 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void onFilterLikeChange(String newLike) {
         this.mFilterLike = newLike;
-//        refreshProjectList();
     }
 
     @Override
@@ -79,18 +85,23 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void refreshProjectList() {
-        mOffset = 1;
+        mOffset = 0;
+        mLoadedSize = 0;
+        this.mIsRefresh = true;
         loadProjectList(mOffset);
     }
 
     @Override
     public void loadMoreProjectList() {
-        // TODO: 11/24/16 offset得有个界限 
-        mOffset++;
+        this.mIsRefresh = false;
         loadProjectList(mOffset);
     }
 
     private void loadProjectList(int offset) {
+        loadProjectListData(buildRequestParamsBundle(offset));
+    }
+
+    private Bundle buildRequestParamsBundle(int offset) {
         Bundle requestParamsBundle = new Bundle();
         if (mSelectedDate != null) {
             requestParamsBundle.putString("findDate", mSelectedDate);
@@ -103,7 +114,8 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         }
         requestParamsBundle.putInt("limit", PAGE_LIMIT);
         requestParamsBundle.putInt("offset", offset);
-        loadProjectListData(requestParamsBundle);
+
+        return requestParamsBundle;
     }
 
     private void loadProjectListData(Bundle requestParams) {
@@ -112,10 +124,28 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
-                if (taskList.getOffset() == 1) {
+                LogUtils.d("projectList", taskList + "");
+                LogUtils.d("mLoadedSize", mLoadedSize + "");
+                LogUtils.d("mOffset", mOffset + "");
+                mTotalSize = taskList.getTotal();
+                LogUtils.d("mTotalSize", mTotalSize + "");
+                if (mIsRefresh) {
                     mProjectListView.refreshProjectListView(taskList.getData());
+                    if (taskList.getData() != null && taskList.getData().size() > 0) {
+                        mProjectInfos = taskList.getData();
+                        mLoadedSize = taskList.getData().size();
+                        mOffset = mLoadedSize;
+                    } else {
+                        mLoadedSize = 0;
+                        mProjectInfos = new ArrayList<ProjectInfo>();
+                    }
                 } else {
                     mProjectListView.addMoreProjectListView(taskList.getData());
+                    if (taskList.getData() != null && taskList.getData().size() > 0) {
+                        mLoadedSize += taskList.getData().size();
+                        mOffset = mLoadedSize;
+                        mProjectInfos.addAll(taskList.getData());
+                    }
                 }
             }
 
@@ -135,15 +165,13 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectId);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_NAME, projectName);
-        mContext.startActivity(intent);
+        ((Fragment) mProjectListView).startActivityForResult(intent, ConstructionConstants.REQUEST_CODE_SHOW_PROJECT_DETAILS);
     }
 
     @Override
-    public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
-        Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo", taskIdLists.get(position));
-        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
-        taskDetailsFragment.setArguments(taskInfoBundle);
+    public void navigateToTaskDetail(ProjectInfo projectInfo, Task task) {
+        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(projectInfo, task);
+        taskDetailsFragment.setTargetFragment((Fragment) mProjectListView, ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS);
         taskDetailsFragment.show(fragmentManager, "task_details");
     }
 
@@ -169,16 +197,124 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             public void onSuccess(Like data) {
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
                 mProjectListView.hideLoading();
-                mProjectListView.refreshLikesButton(data, position);
+                mProjectListView.refreshLikesButton(mFilterLike, data, position);
             }
 
             @Override
             public void onError(ResponseError error) {
                 mProjectListView.hideLoading();
+//                mProjectListView.showNetError(error);
+            }
+        });
+    }
+
+    @Override
+    public void getUnReadMessageIssue() {
+        mProjectRepository.getUnReadMessageAndIssue(null, ConstructionConstants.REQUEST_TAG_UNREAD_MESSAGEANDISSUE, new ResponseCallback<UnreadMessageIssue, ResponseError>() {
+            @Override
+            public void onSuccess(UnreadMessageIssue data) {
+
+            }
+
+            @Override
+            public void onError(ResponseError error) {
                 mProjectListView.showNetError(error);
             }
         });
     }
 
+    @Override
+    public void refreshProject(@Nullable String projectId) {
+        if (TextUtils.isEmpty(projectId)) {
+            return;
+        }
 
+        onProjectDirty(projectId);
+    }
+
+    @Override
+    public void refreshTask(@Nullable String projectId, @Nullable String taskId) {
+        if (TextUtils.isEmpty(projectId) || TextUtils.isEmpty(taskId)) {
+            return;
+        }
+
+        onTaskDirty(projectId, taskId);
+    }
+
+    private void onProjectDirty(final String pid) {
+        int projectIndex = -1;
+        for (int index = 0; index < mProjectInfos.size(); index++) {
+            ProjectInfo projectInfo = mProjectInfos.get(index);
+            if (pid.equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
+                projectIndex = index;
+                break;
+            }
+        }
+
+        if (projectIndex == -1) {
+            LogUtils.e("Not found project " + pid);
+            return;
+        }
+
+        final int foundIndex = projectIndex;
+        mProjectListView.showLoading();
+
+        // TODO change to getUserTasksByProject, getUserTasksByProject is not work now, so here is a workaround
+        Bundle requestParamsBundle = buildRequestParamsBundle(foundIndex - 5 < 0 ? 0 : mOffset - 5);
+        mProjectRepository.getProjectList(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, new ResponseCallback<ProjectList, ResponseError>() {
+            @Override
+            public void onSuccess(ProjectList data) {
+                mProjectListView.hideLoading();
+                for (ProjectInfo projectInfo: data.getData()) {
+                    if (pid.equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
+                        mProjectInfos.remove(foundIndex );
+                        mProjectInfos.add(foundIndex, projectInfo);
+                        mProjectListView.updateItemData(projectInfo);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectListView.hideLoading();
+                mProjectListView.showError(error.getMessage());
+            }
+        });
+    }
+
+    private void onTaskDirty(String projectId, String taskId) {
+        mProjectListView.showLoading();
+        Bundle params = new Bundle();
+        params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(projectId));
+        params.putString(ConstructionConstants.BUNDLE_KEY_TASK_ID, String.valueOf(taskId));
+        mProjectRepository.getTask(params, "GET_TASK", new ResponseCallback<Task, ResponseError>() {
+            @Override
+            public void onSuccess(Task data) {
+                mProjectListView.hideLoading();
+                for (int index = 0; index < mProjectInfos.size(); index++) {
+                    ProjectInfo projectInfo = mProjectInfos.get(index);
+                    if (data.getProjectId().equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
+                        List<Task> tasks = projectInfo.getPlan().getTasks();
+                        for (int index2 = 0; index2 < tasks.size(); index2++) {
+                            Task task = tasks.get(index2);
+                            if (task.getTaskId().equalsIgnoreCase(data.getTaskId())) {
+                                tasks.remove(task);
+                                tasks.add(index2, data);
+                                mProjectListView.updateItemData(projectInfo);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectListView.hideLoading();
+                mProjectListView.showError(error.getMessage());
+            }
+        });
+    }
 }

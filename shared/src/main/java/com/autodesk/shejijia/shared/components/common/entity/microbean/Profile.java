@@ -10,11 +10,12 @@ import java.util.List;
  * version1.0 update 10/19
  * 用户简介
  */
-public class Profile implements Serializable{
+public class Profile implements Serializable {
 
     private String name;
     private String mobile;
     private String email;
+    private String avatar;
     @SerializedName("groupids")
     private List<String> groupIds;
 
@@ -24,6 +25,14 @@ public class Profile implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getMobile() {

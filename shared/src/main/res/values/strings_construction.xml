@@ -17,8 +17,18 @@
     <string name="popup_clear_cache_title">清除缓存数据</string>
     <string name="popup_clear_cache_confirm">确定</string>
 
-    <!-- 节点详情添加备注提示语 -->
-    <string name="editText_hint_text">添加备注</string>
+    <!-- 节点详情 -->
+    <string name="editText_hint_task_comment">添加品牌等信息</string>
+    <string name="upload_photo">上传照片</string>
+    <string name="add_reserve_time">录入预约时间</string>
+    <string name="modify_reserve_time">修改预约时间</string>
+    <string name="add_reinspection_time">录入复验时间</string>
+    <string name="modify_reinspection_time">修改复验时间</string>
+    <string name="fill_inspection_form">填写%1$s表</string>
+    <string name="update_inspection_form">修改%1$s表</string>
+    <string name="view_inspection_form">查看%1$s表</string>
+    <string name="material_inspection">主材验收</string>
+    <string name="mark_complete">标记完成</string>
 
     <!-- 个人中心里的文本 -->
     <string name="personal_center_my_project">全部项目</string>
@@ -33,6 +43,8 @@
     <string name="menu_filter">筛选</string>
     <string name="menu_project_info">项目信息</string>
     <string name="menu_project_message">消息中心</string>
+    <string name="menu_chat_hotspot">热点聊天</string>
+    <string name="menu_chat_home">项目详情</string>
     <string name="toolbar_task_title">今日任务</string>
     <string name="toolbar_question_title">问题列表</string>
     <string name="toolbar_groupChat_title">群聊列表</string>
@@ -55,7 +67,7 @@
     <string name="task_delayed">已延期</string>
     <string name="task_qualified">合格</string>
     <string name="task_unqualified">不合格</string>
-    <string name="task_resolved">验收通过</string>
+    <string name="task_resolved">已完成</string>
     <string name="task_rejected">验收拒绝</string>
     <string name="task_reinspection">强制复验</string>
     <string name="task_rectification">监督整改</string>
@@ -64,8 +76,9 @@
     <string name="task_reinspect_treserving">复验待预约</string>
     <string name="task_reinspect_reserved">复验已预约</string>
     <string name="task_reinspect_inprogress">复验进行中</string>
-    <string name="task_reinspect_delay">复验延期</string>
+    <string name="task_reinspect_delay">复验已延期</string>
     <string name="task_deleted">已删除</string>
+    <string name="task_status_unknow">未知</string>
 
 
     <!--Customer Calendar view-->
@@ -77,8 +90,9 @@
     <string name="calendar_friday">五</string>
     <string name="calendar_saturday">六</string>
 
-    <!--format style-->
+    <!--Date format style-->
     <string name="date_format_month_day">MM月dd日</string>
+    <string name="date_format_task_details">yyyy年MM月dd日 E</string>
 
     <!--项目列表筛选条件-->
     <string name="screen_all">全部项目</string>
@@ -114,13 +128,14 @@
 
     <!--项目信息页面文字-->
     <string name="project_info_title">项目信息</string>
-    <string name="project_info_zxing">监理人员扫码 进入施工阶段</string>
+    <string name="project_info_zxing">监理人员扫码 进入施工验收</string>
 
     <!--form电子表格-->
     <string name="input_code">输入编码</string>
     <string name="inspect_show_null_error">项目编码不能为空,请重新输入</string>
     <string name="inspect_show_no_task_error">当前没有需要验收的项目</string>
     <string name="inspect_show_format_error">二维码格式不正确,请再次扫码</string>
+    <string name="inspect_show_not_has_project">该项目不属于本监理公司</string>
     <string name="project_id">项目编码:</string>
     <string name="write_project_id">请输入项目编号</string>
     <string name="project_info">客户资料</string>
@@ -131,7 +146,21 @@
     <string name="inspect_precheck">验收前条件检查</string>
     <string name="form_inspect_agree">同意,可进行质量验收</string>
     <string name="form_inspect_disagree">不同意验收</string>
-    <string name="form_program_log">问题记录</string>
+    <string name="form_problem_log">问题记录</string>
+    <string name="form_precheck_unqualified_tint">验收条件未达标, 不予验收</string>
+    <string name="equipment_qualified">01&#160;试验设备不合格</string>
+    <string name="customer_disagree">02&#160;客户不同意验收</string>
+    <string name="monitor_absence">03&#160;班长不在场</string>
+    <string name="interface_not_standard">04&#160;施工界面不符合验收标准</string>
+    <string name="form_next_step">下一步</string>
+    <string name="submit_file">提交</string>
+    <string name="submit_cancel">放弃编辑</string>
+    <string name="submit_loading">正在提交...</string>
+    <string name="submit_success">提交成功</string>
+    <string name="tip_form_commit">提交后不可修改</string>
+    <string name="form_reinspection_log">强制复验项</string>
+    <string name="form_rectification_log">监督整改项</string>
+>>>>>>> e3c97dd49e04489f425de2fe14becec93d06def9
 
     <!--footer view text-->
     <string name="footer_no_more">没有更多</string>
@@ -139,6 +168,46 @@
     <string name="footer_net_error">网络连接失败</string>
 
     <string name="project_list_empty_message">没有进行中或待开工的项目</string>
+    <string name="groupchat_list_empty_message">还没有施工群组呢</string>
 
+    <!-- 问题追踪 -->
+    <string name="issue_tracking_list_empty_message">问题追踪界面加载失败，请重新加载</string>
+    <string name="issue_tracking_list_add_issue">添加问题</string>
+    <string name="toolbar_add_issue_tracking">完成</string>
+    <string name="add_issuelist_style">问题类型</string>
+    <string name="add_issuelist_descrip">问题描述</string>
+    <string name="add_issuelist_fllow">跟进人员</string>
+    <string name="add_issuelist_notify">通知客户</string>
+    <string name="add_issuelist_reply">明天回复</string>
+    <string name="pop_issuestyle_title">选择问题类型</string>
+    <string name="pop_issuefllow_title">选择跟进人员</string>
+    <string name="pop_issuereply_title">回复期限</string>
+    <string name="activity_issuelist_tital">问题列表</string>
+    <string name="activity_addissue_tital">添加问题</string>
+    <string name="activity_addissue_description_tital">问题描述</string>
+    <string name="Fragment_addissue_fllow_end">跟进</string>
+    <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
+    <string name="Fragment_issuelist_itemclick_toast">查看详情</string>
+    <string name="activity_add_issuetracking_succes">提交成功</string>
+    <string name="activity_add_issuetracking_error">上传失败,请重新上传</string>
+    <!-- 问题追踪职位 -->
+    <string name="issuerole_china_inspectorcompany">监理公司</string>
+    <string name="issuerole_china_inspector">监理</string>
+    <string name="issuerole_china_member">消费者</string>
+    <string name="issuerole_china_designer">设计师</string>
+    <string name="issuerole_china_foreman">班长</string>
+    <string name="issuerole_china_materialstaff">材料员</string>
+    <string name="issuerole_china_clientmanager">客户经理</string>
+    <!-- 问题追踪类型 -->
+    <string name="issuetype_china_sheji">设计问题</string>
+    <string name="issuetype_china_xuncha">巡查问题</string>
+    <string name="issuetype_china_houqi">后期安装</string>
+    <string name="issuetype_china_cailiao">材料问题</string>
+    <string name="issuetype_china_qita">其他问题</string>
+
+    <!-- 室，厅，卫 -->
+    <string name="room">室</string>
+    <string name="hall">厅</string>
+    <string name="toilet">卫</string>
 
 </resources>

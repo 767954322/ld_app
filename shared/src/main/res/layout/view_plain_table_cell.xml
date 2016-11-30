@@ -36,15 +36,6 @@
                   android:drawablePadding="@dimen/spacing_plain_table_cell"
                   android:textSize="@dimen/precheck_font_15"/>
 
-        <TextView android:id="@+id/tv_count"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_toStartOf="@+id/tv_result"
-                  android:textSize="@dimen/precheck_font_15"
-                  android:textColor="@color/form_btn_bg_blue"
-                  android:visibility="gone"/>
-
         <ImageView android:id="@+id/iv_information"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -54,6 +45,8 @@
                    android:background="@drawable/ic_information"
                    android:visibility="gone"/>
 
-
     </RelativeLayout>
+
+
+
 </FrameLayout>

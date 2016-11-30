@@ -26,7 +26,7 @@
         <item name="android:windowTitleStyle">@style/AlertWindowTitleStyle</item>
     </style>
 
-    <style name="Construction.AlertDialogStyle.Translucent" parent="Theme.AppCompat.Dialog">
+	<style name="Construction.DialogStyle.Translucent" parent="Theme.AppCompat.Dialog.MinWidth">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
@@ -43,5 +43,17 @@
         <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">@dimen/button_min_height</item>
+    </style>
+
+    <style name="FormRecyclerStyle" parent="Theme.AppCompat.Light">
+        <item name="android:listDivider">@drawable/divider_recycler_view_shape</item>
+    </style>
+
+    <style name="Construction.Button.ActionBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/spacing_padding_double</item>
+        <item name="android:textSize">@dimen/font_large</item>
     </style>
 </resources>

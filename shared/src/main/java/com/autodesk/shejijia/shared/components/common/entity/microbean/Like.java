@@ -9,13 +9,13 @@ import java.io.Serializable;
 public class Like implements Serializable{
 
     private String uid;
-    private Boolean like;
+    private boolean like;
 
-    public Boolean getLike() {
+    public boolean getLike() {
         return like;
     }
 
-    public void setLike(Boolean like) {
+    public void setLike(boolean like) {
         this.like = like;
     }
 

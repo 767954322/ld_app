@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
@@ -22,6 +23,7 @@ import com.google.zxing.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_aij on 16/10/25.
@@ -33,6 +35,107 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
     protected void initListener() {
         super.initListener();
         setNavigationBar();
+    }
+
+    @Override
+    public void handleDecode(Result result, Bitmap barcode) {
+        inactivityTimer.onActivity();
+        playBeepSoundAndVibrate();
+        final String projectId = result.getText();
+
+        if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
+
+            FormRepository.getInstance().verifyInspector(Long.valueOf(projectId), new ResponseCallback<Map, ResponseError>() {
+                @Override
+                public void onSuccess(Map data) {
+                    boolean allow_inspect = (boolean) data.get("allow_inspect");
+                    if (allow_inspect) {
+                        getTaskFromNet(projectId);
+
+                    } else {
+                        Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                        intent.putExtra("error", UIUtils.getString(R.string.inspect_show_not_has_project));
+                        startActivity(intent);
+
+                    }
+
+
+                }
+
+                @Override
+                public void onError(ResponseError error) {
+                    Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                    intent.putExtra("error", error.getMessage());
+                    startActivity(intent);
+
+                }
+            });
+
+
+        } else {
+            Intent intent = new Intent(this, ScanQrDialogActivity.class);
+            intent.putExtra("error", UIUtils.getString(R.string.inspect_show_format_error));
+            startActivity(intent);
+
+        }
+
+
+    }
+
+    private void getTaskFromNet(String projectId) {
+
+        Bundle params = new Bundle();
+        params.putLong("pid", Long.valueOf(projectId));
+        params.putBoolean("task_data", true);
+        FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo, ResponseError>() {
+            @Override
+            public void onSuccess(ProjectInfo data) {
+                PlanInfo planInfo = data.getPlan();
+                List<Task> taskList = planInfo.getTasks();
+                for (Task task : taskList) {
+                    //根据项目的类型和状态,监理的进来:1,修改;2,查看
+                    if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equals(task.getCategory())) {
+                        String status = task.getStatus();
+                        Member role = null;
+                        List<String> statusList = new ArrayList<>();
+                        statusList.add(ConstructionConstants.TaskStatus.INPROGRESS.toUpperCase());  //以下为修改项
+                        statusList.add(ConstructionConstants.TaskStatus.DELAYED.toUpperCase());
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECT_INPROGRESS.toUpperCase());
+                        statusList.add(ConstructionConstants.TaskStatus.REINSPECT_DELAY.toUpperCase());
+
+                        if (statusList.contains(status)) {
+                            for (Member member : data.getMembers()) {
+                                if (ConstructionConstants.MemberType.MEMBER.equals(member.getRole())) {
+                                    role = member;
+                                    break;
+                                }
+                            }
+                            Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
+                            intent.putExtra("task", task);
+                            intent.putExtra("building", data.getBuilding());
+                            intent.putExtra("member", role);
+                            startActivity(intent);
+
+                            return;
+                        }
+
+                    }
+
+                }
+
+                Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                intent.putExtra("error", UIUtils.getString(R.string.inspect_show_no_task_error));
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
+                intent.putExtra("error", error.getMessage());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setNavigationBar() {
@@ -49,84 +152,9 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
-                    finish();
                 }
             });
         }
-
-    }
-
-    @Override
-    public void handleDecode(Result result, Bitmap barcode) {
-        inactivityTimer.onActivity();
-        playBeepSoundAndVibrate();
-        String projectId = result.getText();
-        if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
-            Bundle params = new Bundle();
-            params.putLong("pid", Long.valueOf(projectId));
-            params.putBoolean("task_data", true);
-            FormRepository.getInstance().getProjectTaskData(params, "", new ResponseCallback<ProjectInfo,ResponseError>() {
-                @Override
-                public void onSuccess(ProjectInfo data) {
-                    PlanInfo planInfo = data.getPlan();
-                    List<Task> taskList = planInfo.getTasks();
-                    for (Task task : taskList) {
-                        //根据监理进来:1,修改;2,查看
-                        if ("inspectorInspection".equals(task.getCategory())) {   //按照任务状态来分类,现在是监理验收
-                            String status = task.getStatus();
-                            Member role = null;
-                            List<String> statusList = new ArrayList<>();
-                            statusList.add("INPROGRESS");  //验收进行中
-                            statusList.add("DELAYED");     //验收延期
-                            statusList.add("REINSPECTION_INPROGRESS");   //复验进行中
-                            statusList.add("REINSPECTION_DELAYED");    // 复验延期
-//                        statusList.add("REJECTED");
-//                        statusList.add("QUALIFIED");
-//                        statusList.add("REINSPECTION");
-//                        statusList.add("RECTIFICATION");
-//                        statusList.add("REINSPECTION_AND_RECTIFICATION");  //check
-                            if (statusList.contains(status)) {
-                                for (Member member : data.getMembers()) {
-                                    if ("member".equals(member.getRole())) {
-                                        role = member;
-                                        break;
-                                    }
-                                }
-                                Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
-                                intent.putExtra("task", task);
-                                intent.putExtra("building", data.getBuilding());
-                                intent.putExtra("member", role);
-                                startActivity(intent);
-
-                                finish();
-                                return;
-                            }
-
-                        }
-
-                    }
-
-                    Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
-                    intent.putExtra("error", UIUtils.getString(R.string.inspect_show_no_task_error));
-                    startActivity(intent);
-
-                }
-
-                @Override
-                public void onError(ResponseError error) {
-                    Intent intent = new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class);
-                    intent.putExtra("error", error.getMessage());
-                    startActivity(intent);
-                }
-            });
-
-        } else {
-            Intent intent = new Intent(this, ScanQrDialogActivity.class);
-            intent.putExtra("error", UIUtils.getString(R.string.inspect_show_format_error));
-            startActivity(intent);
-
-        }
-
 
     }
 

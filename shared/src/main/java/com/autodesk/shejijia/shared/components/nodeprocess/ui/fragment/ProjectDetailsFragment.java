@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -35,18 +37,27 @@ import java.util.List;
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener {
-    private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
 
+
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
+
+    private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
+    private final static int REQUEST_CODE_PROJECT_MESSAGE_CENTER = 0x0097;
+    //    private String threadId;
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private ViewPager mContentViewPager;
     private ProgressbarIndicator mProgressBarIndicator;
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private TextView mEditPlanBtn;
+    private TextView mMenuBadgeView;
+    private boolean mIsUnread = false;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
+    private boolean mIsRefresh;
 
     public ProjectDetailsFragment() {
     }
@@ -63,23 +74,27 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initView() {
         mProjectRootView = (LinearLayout) rootView.findViewById(R.id.ll_project_details);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         mContentTipView = (RelativeLayout) rootView.findViewById(R.id.rl_content_tip);
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
         mProgressBarIndicator = (ProgressbarIndicator) rootView.findViewById(R.id.progressBar_indicator);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.btn_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
         mEditPlanBtn = (TextView) rootView.findViewById(R.id.tv_edit_plan);
-
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat
+                .getColor(mContext, R.color.colorPrimary));
         setHasOptionsMenu(true);
     }
 
     @Override
     protected void initData() {
-        mProjectDetailsPresenter = new ProjectDetailsPresenter(mContext, this);
+        mIsRefresh = false;
+        mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
         long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
+            mProjectDetailsPresenter.getUnreadMsgCount(projectId + "", TAG);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -92,8 +107,24 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         super.initListener();
         mCreatePlanBtn.setOnClickListener(this);
         mEditPlanBtn.setOnClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onRefresh() {
+        mIsRefresh = true;
+        long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        if (projectId != 0) {
+            LogUtils.e("projectDetails_projectId ", projectId + "");
+            mProjectDetailsPresenter.initRequestParams(projectId, true);
+            mProjectDetailsPresenter.initRefreshState(true);
+            mProjectDetailsPresenter.getProjectDetails();
+        } else {
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -106,9 +137,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void updateProjectDetailsView(String memberType, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
+    public void updateProjectDetailsView(String memberType, String avatarUrl, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
 
         mProjectRootView.setVisibility(View.VISIBLE);
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
 
         if (isKaiGongResolved) {
             if (memberType.equals(ConstructionConstants.MemberType.CLIENT_MANAGER)) {
@@ -121,13 +155,16 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mCreatePlanBtn.setVisibility(View.GONE);
             mWorkStateView.setVisibility(View.GONE);
 
-            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), taskLists);
-            mContentViewPager.setAdapter(mFragmentPagerAdapter);
-
-            //progressbar indicator( must first have viewpager adapter)
-            mProgressBarIndicator.setupWithViewPager(mContentViewPager);
-            mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
-            mContentViewPager.setCurrentItem(currentMilestonePosition);
+            if (mIsRefresh || mFragmentPagerAdapter != null) {
+                mFragmentPagerAdapter.updateFragment(taskLists);
+            } else {
+                mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getChildFragmentManager(), avatarUrl, taskLists);
+                mContentViewPager.setAdapter(mFragmentPagerAdapter);
+                //progressbar indicator( must first have viewpager adapter)
+                mProgressBarIndicator.setupWithViewPager(mContentViewPager);
+                mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
+                mContentViewPager.setCurrentItem(currentMilestonePosition);
+            }
         } else {
             mEditPlanBtn.setVisibility(View.GONE);
             mContentTipView.setVisibility(View.VISIBLE);
@@ -161,8 +198,27 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
+    public void updateUnreadMsgCountView(int count) {
+        if (count != 0) {
+            mIsUnread = true;
+            mMenuBadgeView.setVisibility(View.VISIBLE);
+        }
+        mMenuBadgeView.setText(count + "");
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
+        FrameLayout frameLayout = (FrameLayout) menu.findItem(R.id.project_toolbar_message).getActionView();
+        mMenuBadgeView = (TextView) frameLayout.findViewById(R.id.menu_badge);
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuBadgeView.setVisibility(View.GONE);
+                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this, mIsUnread, REQUEST_CODE_PROJECT_MESSAGE_CENTER);
+                mIsUnread = false;
+            }
+        });
     }
 
     @Override
@@ -173,7 +229,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mProjectDetailsPresenter.getProjectInformation();
             return true;
         } else if (itemId == R.id.project_toolbar_message) {
-            mProjectDetailsPresenter.navigateToMessageCenter();
             return true;
         }
 
@@ -185,12 +240,29 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
                 if (resultCode == Activity.RESULT_OK) {
+                    mIsRefresh = true;
+                    mProjectDetailsPresenter.initRefreshState(false);
                     mProjectDetailsPresenter.getProjectDetails();
+                    long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+                    Intent intent = new Intent();
+                    intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(projectId));
+                    getActivity().setResult(Activity.RESULT_OK, intent);
                 } else {
                     if (mCreatePlanBtn.getVisibility() == View.VISIBLE
-                        && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
+                            && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
                         mCreatePlanBtn.setText(R.string.continue_edit_plan);
                     }
+                }
+                break;
+            case REQUEST_CODE_PROJECT_MESSAGE_CENTER:
+                if (resultCode == Activity.RESULT_OK) {
+                    mIsUnread = false;
+                }
+                break;
+            case ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS:
+                if (resultCode == Activity.RESULT_OK) {
+                    getActivity().setResult(Activity.RESULT_OK, data);
+                    mProjectDetailsPresenter.getProjectDetails();
                 }
                 break;
             default:
@@ -198,4 +270,5 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 break;
         }
     }
+
 }

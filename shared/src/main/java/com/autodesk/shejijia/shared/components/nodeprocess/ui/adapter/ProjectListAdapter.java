@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -13,21 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,48 +34,62 @@ import java.util.List;
  */
 public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ProjectInfo> projectLists;
-    private int resId;
+    private List<ProjectInfo> mProjectLists;
+    private int mResId;
     private Context mContext;
     private ProjectListItemListener mProjectListItemListener;
 
-    public ProjectListAdapter(List<ProjectInfo> projectLists, int resId, Context mContext, ProjectListItemListener projectListItemListener) {
-        this.resId = resId;
-        this.mContext = mContext;
-        this.projectLists = projectLists;
+    public ProjectListAdapter(List<ProjectInfo> projectLists, int resId, Context context, ProjectListItemListener projectListItemListener) {
+        this.mResId = resId;
+        this.mContext = context;
+        this.mProjectLists = projectLists;
         this.mProjectListItemListener = projectListItemListener;
     }
 
     public void setProjectLists(List<ProjectInfo> projectLists) {
-        this.projectLists = projectLists;
+        this.mProjectLists.clear();
+        this.mProjectLists.addAll(projectLists);
         notifyDataSetChanged();
     }
 
     public void appendProjectLists(List<ProjectInfo> projectLists) {
-        this.projectLists.addAll(projectLists);
+        this.mProjectLists.addAll(projectLists);
         notifyDataSetChanged();
+    }
+
+    public void updateItemData(ProjectInfo projectInfo) {
+        for (int index = 0; index < mProjectLists.size(); index++) {
+            ProjectInfo tmpProjectInfo = mProjectLists.get(index);
+            if (projectInfo.getProjectId() == tmpProjectInfo.getProjectId()) {
+                mProjectLists.remove(index);
+                mProjectLists.add(index, projectInfo);
+                notifyItemChanged(index);
+                break;
+            }
+        }
     }
 
     /*
     * 根据星标接口，获得星标更新成功后的结果，从而更新内存中的该项目对应的数据源
     * */
-    public void updateProjectState(Like newLike, int likePosition) {
-        List<Like> likeList = projectLists.get(likePosition).getLikes();
+    public void updateProjectState(String filterLike, Like newLike, int likePosition) {
+        LogUtils.e(newLike.getLike() + "  " + likePosition);
+        List<Like> likeList = mProjectLists.get(likePosition).getLikes();
         for (Like oldLike : likeList) {
             if (oldLike.getUid().equals(newLike.getUid())) {
-                if (newLike.getLike()) {//星标成功
-                    oldLike.setLike(true);
-                } else {//取消星标
-                    oldLike.setLike(false);
-                }
+                likeList.remove(oldLike);
             }
+        }
+        likeList.add(newLike);
+        if (filterLike.equalsIgnoreCase("true")) { //星标列表里，移除取消星标成功该位置的数据
+            mProjectLists.remove(likePosition);
         }
         notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
         return new ProjectListVH(view);
     }
 
@@ -92,7 +104,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return projectLists.size();
+        return mProjectLists.size();
     }
 
     private void initView(ProjectListVH projectVh, int position) {
@@ -102,18 +114,34 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             projectVh.mCardView.setClipToOutline(false);
         }
 
-        if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
-            projectVh.mProjectName.setText(projectLists.get(position).getName());
+        ProjectInfo projectInfo = mProjectLists.get(position);
+        if (!TextUtils.isEmpty(projectInfo.getName())) {
+            projectVh.mProjectName.setText(projectInfo.getName());
         }
-        if (projectLists.get(position).getPlan().getMilestone() != null) {
-            if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
-                projectVh.mProjectStatus.setText(projectLists.get(position).getPlan().getMilestone().getMilestoneName());
+        if (projectInfo.getPlan().getMilestone() != null) {
+            if (!TextUtils.isEmpty(projectInfo.getPlan().getMilestone().getMilestoneName())) {
+                String milestoneName = projectInfo.getPlan().getMilestone().getMilestoneName();
+                if (projectInfo.isXDebug()) {
+                    projectVh.mProjectStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_red));
+                    String xDebugDateString = "UT: ";
+                    if (projectInfo.getXDebugCurrentTime() == null) {
+                        xDebugDateString += "null";
+                    } else {
+                        Date xDebugDate = DateUtil.iso8601ToDate(projectInfo.getXDebugCurrentTime());
+                        xDebugDateString += DateUtil.getStringDateByFormat(xDebugDate, mContext.getString(R.string.date_format_month_day));
+                    }
+                    projectVh.mProjectStatus.setText(milestoneName + "(" + xDebugDateString + ")");
+                } else {
+                    projectVh.mProjectStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+                    projectVh.mProjectStatus.setText(milestoneName);
+                }
+
             }
         }
 
-        if (projectLists != null && projectLists.size() > 0) {
+        if (mProjectLists != null && mProjectLists.size() > 0) {
             //设置是否是星标项目
-            if (isLikeProject(projectLists.get(position))) {
+            if (isLikeProject(mProjectLists.get(position))) {
                 projectVh.mStarLabel.setBackgroundResource(R.drawable.ic_project_like);
             } else {
                 projectVh.mStarLabel.setBackgroundResource(R.drawable.ic_project_normal);
@@ -127,10 +155,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             projectVh.mTaskListView.setItemAnimator(new DefaultItemAnimator());
             projectVh.mTaskListView.setLayoutManager(layoutManager);
 
-            if (projectLists.get(position).getPlan().getTasks() != null && projectLists.get(position).getPlan().getTasks().size() > 0) {
+            if (mProjectLists.get(position).getPlan().getTasks() != null && mProjectLists.get(position).getPlan().getTasks().size() > 0) {
                 projectVh.mViewLine.setVisibility(View.VISIBLE);
                 projectVh.mTaskListView.setVisibility(View.VISIBLE);
-                projectVh.mTaskListView.setAdapter(new TaskListAdapter(projectLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view, mContext, mProjectListItemListener));
+                projectVh.mTaskListView.setAdapter(new TaskListAdapter(mProjectLists.get(position), R.layout.listitem_task_list_details_view, mContext, mProjectListItemListener));
             } else {//隐藏分割线,与recyclerView
                 projectVh.mViewLine.setVisibility(View.GONE);
                 projectVh.mTaskListView.setVisibility(View.GONE);
@@ -142,14 +170,14 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         projectVh.mProjectDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProjectListItemListener.onProjectClick(projectLists, position);
+                mProjectListItemListener.onProjectClick(mProjectLists, position);
             }
         });
 
         projectVh.mStarLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProjectListItemListener.onStarLabelClick(projectLists, !isLikeProject(projectLists.get(position)), position);
+                mProjectListItemListener.onStarLabelClick(mProjectLists, !isLikeProject(mProjectLists.get(position)), position);
             }
         });
     }
@@ -158,7 +186,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         List<Like> likeList = project.getLikes();
         if (likeList != null) {
             for (Like like : likeList) {
-                if (like.getLike() && like.getUid().equals(UserInfoUtils.getUid(AdskApplication.getInstance()))) {
+                if (like.getUid().equals(UserInfoUtils.getUid(AdskApplication.getInstance())) && like.getLike()) {
                     return true;
                 }
             }
@@ -198,7 +226,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void onProjectClick(List<ProjectInfo> projectList, int position);
 
         //节点详情
-        void onTaskClick(List<Task> taskList, int position);
+        void onTaskClick(ProjectInfo projectInfo, Task task);
 
         //星标按钮监听
         void onStarLabelClick(List<ProjectInfo> projectList, boolean like, int position);

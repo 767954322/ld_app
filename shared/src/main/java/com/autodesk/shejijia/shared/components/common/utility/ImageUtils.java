@@ -91,6 +91,9 @@ public class ImageUtils {
             .cacheInMemory(false)
             .displayer(new RoundedBitmapDisplayer(360))
             .cacheOnDisk(true)
+            .showImageOnFail(R.drawable.ic_default_head)
+            .showImageOnLoading(R.drawable.ic_default_head)
+            .showImageForEmptyUri(R.drawable.ic_default_head)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .imageScaleType(ImageScaleType.EXACTLY)
             .build();
@@ -277,6 +280,17 @@ public class ImageUtils {
 
     public static void loadFileImage(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, FileOptions);
+    }
+
+    /**
+     * 显示圆形图
+     *
+     * @param imageUrl
+     * @param imageView
+     */
+    public static void displayRoundImage(String imageUrl, ImageView imageView) {
+        if (imageView != null)
+            ImageLoader.getInstance().displayImage(imageUrl, imageView, RoundOptions);
     }
 
     /**

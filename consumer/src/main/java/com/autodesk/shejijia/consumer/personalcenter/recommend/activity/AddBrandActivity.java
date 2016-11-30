@@ -38,7 +38,6 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private List<RecommendBrandsBean> brandsBeanList;
     private RecommendSCFDBean mRecommendSCFDBean;
     private AddBrandAdapter addBrandAdapter;
-    private Boolean isRefresh = true;
     private TextView tvNumber;
     private AppCompatButton btFinsh;
     private int mBrandCountLimit;
@@ -76,14 +75,13 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
-        tvEmptyTitle.setText(UIUtils.getString(R.string.not_brands));
+        tvEmptyTitle.setText(UIUtils.getString(R.string.no_brands));
         tvNumber.setText(mBrandCountLimit-brandsSize+"");
         llPleaseClickRight.setVisibility(View.GONE);
         setNavigationBar();
         addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,mBrandCountLimit-brandsSize,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
         getBrands(0,100);
-//        mPullToRefreshLayout.autoRefresh();
     }
 
     @Override
@@ -156,15 +154,11 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-//        isRefresh = true;
-//        getBrands(0,30);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-//        isRefresh = false;
-//        getBrands(addBrandListview.getCount(),30);
     }
     private  void getBrands(int offset, int limit){
         MPServerHttpManager.getInstance().getCategoryBrandsInformation(mRecommendSCFDBean.getCategory_3d_id(),

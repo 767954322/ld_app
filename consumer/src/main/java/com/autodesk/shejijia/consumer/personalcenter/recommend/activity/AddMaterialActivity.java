@@ -107,6 +107,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private int currentClickItemLocation = 0;//当前点击的位置
     private String[] storeIdArr;
     private String[] storeNameArr;
+    private int LIMIT_COUNT = 20;
+    private int OFFSET = 0;
 
 
     @Override
@@ -176,7 +178,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        tv_empty_title.setText(UIUtils.getString(R.string.not_brands));
+        tv_empty_title.setText(UIUtils.getString(R.string.no_brands));
         add_for_listing.setBackgroundColor(UIUtils.getColor(R.color.gray));
         add_for_listing.setClickable(false);
         CustomProgress.showDefaultProgress(AddMaterialActivity.this);
@@ -391,7 +393,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
         }
         //一二级品类信息展示之后在获取品牌信息
-        getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
+        getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, OFFSET, LIMIT_COUNT);
     }
 
     /**
@@ -681,7 +683,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.notifyDataSetChanged();
         } else {
             //从未获取过该品类的品牌信息
-            getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, 0, 20);
+            getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, OFFSET, LIMIT_COUNT);
         }
         showBrandRemainCount();
         CustomProgress.cancelDialog();
@@ -1045,8 +1047,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
 
-        justRefreshOrLoadMore = 2;
-        getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
     }
 
     @Override
@@ -1054,7 +1054,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
         justRefreshOrLoadMore = 3;
         CustomProgress.showDefaultProgress(AddMaterialActivity.this);
-        getMaterialCategoryBrandsInformation("", "", "", "", "", 0, 20);
+        getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, OFFSET, LIMIT_COUNT);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class JsonAssetHelper {
         //completion
     private static final String DECORATION_COMPLETION = "inspection_decoration_completion.json";
     private static final String ELECTRIC_GAS_COMPLETION = "inspection_electric_gas_completion.json";
-    private static final String WATER_COMPLETION = "inspection_water_completion";
+    private static final String WATER_COMPLETION = "inspection_water_completion.json";
 
         //concealed work
     private static final String BASIC_LEVEL = "inspection_basic_level.json";
@@ -26,7 +26,7 @@ public class JsonAssetHelper {
         //middle
     private static final String DECORATION_MIDDLE = "inspection_decoration_middle.json";
     private static final String ELECTRIC_GAS_MIDDLE = "inspection_electric_gas_middle.json";
-    private static final String FACING_BRICK = "inspection_facing_brick.json";
+    private static final String FACING_BRICK = "inspection_brick_hollowness.json";
     private static final String WATER_MIDDLE= "inspection_water_middle.json";
 
     //material
@@ -84,7 +84,7 @@ public class JsonAssetHelper {
         //middle
     private static final String PATH_DECORATION_MIDDLE = "template/inspect/middle/inspection_decoration_middle.json";
     private static final String PATH_ELECTRIC_GAS_MIDDLE = "template/inspect/middle/inspection_electric_gas_middle.json";
-    private static final String PATH_FACING_BRICK = "template/inspect/middle/inspection_facing_brick.json";
+    private static final String PATH_FACING_BRICK = "template/inspect/middle/inspection_brick_hollowness.json";
     private static final String PATH_WATER_MIDDLE= "template/inspect/middle/inspection_water_middle.json";
 
     //material

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -94,7 +95,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                     mWebView.goBack();// 返回前一个页面
                     mTvFinishWebView.setVisibility(View.VISIBLE);
                 }
-            }else {
+            } else {
                 finish();
             }
         }
@@ -146,38 +147,64 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             try {
                 String strToken = URLDecoder.decode(token, Constant.NetBundleKey.UTF_8).substring(6);
                 MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
-                LogUtils.e("memberEntity22",entity+"");
+                LogUtils.e("memberEntity22", entity + "");
                 String member_type = entity.getMember_type();
-                if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member")
-                        || member_type.equals("clientmanager") || member_type.equals("materialstaff") || member_type.equals("foreman") || member_type.equals("inspector"))){//登陆账号为消费者或者设计师
-                    AdskApplication.getInstance().saveSignInInfo(entity);
-                    // 解决切换帐号的时候 我的项目Fragment 不刷新问题
-                    SharedPreferencesUtils.writeBoolean("islogin", true);
-//                /// 登录成功后,发送广播 .
-                    Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-                    intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-                    sendBroadcast(intent);
-                    finish();
-                }else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            new AlertView(UIUtils.getString(R.string.tip), "您的账户无法在此平台登录", null, new String[]{UIUtils.getString(R.string.sure)}, null, RegisterOrLoginActivity.this,
-                                    AlertView.Style.Alert, new OnItemClickListener() {
-                                @Override
-                                public void onItemClick(Object object, int position) {
-                                    LoginUtils.doLogout(RegisterOrLoginActivity.this);
-                                    finish();
-                                }
-                            }).show();
-                        }
-                    });
-
+                if (!TextUtils.isEmpty(member_type)) {
+                    switch (member_type) {
+                        case ConstructionConstants.MemberType.MEMBER:
+                        case ConstructionConstants.MemberType.DESIGNER:
+                            if (getPackageName().contains("consumer")){
+                                toLogin(entity,strToken);
+                            }else {
+                                rejectLogin();
+                            }
+                            break;
+                        case ConstructionConstants.MemberType.CLIENT_MANAGER:
+                        case ConstructionConstants.MemberType.FORMAN:
+                        case ConstructionConstants.MemberType.INSPECTOR:
+                        case ConstructionConstants.MemberType.MATERIAL_STAFF:
+                            if (getPackageName().contains("enterprise")){
+                                toLogin(entity,strToken);
+                            }else {
+                                rejectLogin();
+                            }
+                            break;
+                        default:
+                            rejectLogin();
+                            break;
+                    }
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void toLogin(MemberEntity entity, String strToken) {
+        AdskApplication.getInstance().saveSignInInfo(entity);
+        // 解决切换帐号的时候 我的项目Fragment 不刷新问题
+        SharedPreferencesUtils.writeBoolean("islogin", true);
+//                /// 登录成功后,发送广播 .
+        Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+        intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
+        sendBroadcast(intent);
+        finish();
+    }
+
+    private void rejectLogin(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertView(UIUtils.getString(R.string.tip), "您的账户无法在此平台登录", null, new String[]{UIUtils.getString(R.string.sure)}, null, RegisterOrLoginActivity.this,
+                        AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        LoginUtils.doLogout(RegisterOrLoginActivity.this);
+                        finish();
+                    }
+                }).show();
+            }
+        });
     }
 
 //    @Override
@@ -219,7 +246,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             super.onPageStarted(view, url, favicon);
             if (isFirst) {
                 isFirst = false;
-                if (!isFinishing()){
+                if (!isFinishing()) {
                     CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
                 }
             }

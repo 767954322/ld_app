@@ -254,45 +254,6 @@
             ]
         },
         {
-            "item_id": "take_photos_scene",
-            "category": "",
-            "title": "是否按要求拍摄现场照片并发至客户服务群。",
-            "standard": "是否按要求拍摄现场照片并发至客户服务群。",
-            "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
-            "action_type": "review_options",
-            "acceptance_criteria": [
-                0
-            ],
-            "comment_conditions": [
-                1
-            ],
-            "item_type": "check",
-            "value": [
-                {
-                    "type": "check_result",
-                    "value": "-1"
-                },
-                {
-                    "type": "action_result",
-                    "value": "-1"
-                },
-                {
-                    "type": "text",
-                    "value": ""
-                },
-                {
-                    "type": "image",
-                    "value": ""
-                },
-                {
-                    "type": "audio",
-                    "value": ""
-                }
-            ]
-        },
-        {
             "item_id": "take_photos_receipts",
             "category": "",
             "title": "是否将第三方监理《基础完工验收单据》拍照发至客户服务群。",

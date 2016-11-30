@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.form.common.constant.TaskStatusTypeEnum;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,8 +43,8 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
         mIsInActionMode = isActionMode;
         if (!mIsInActionMode) {
             mSelectedTasks.clear();
-            notifyItemRangeChanged(0, mTasks.size());
         }
+        notifyItemRangeChanged(0, mTasks.size());
     }
 
     public List<Task> getSelectedTasks() {
@@ -170,12 +171,7 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
         holder.mTvNodeTime.setText(getDateString(task));
 
         holder.itemView.setSelected(mSelectedTasks.contains(task));
-
-        if (task.getStatus().equalsIgnoreCase(TaskStatusTypeEnum.TASK_STATUS_RESOLVED.getTaskStatus())) {
-            holder.itemView.setEnabled(false);
-        } else {
-            holder.itemView.setEnabled(true);
-        }
+        holder.itemView.setEnabled(isTaskEditable(task));
     }
 
     @Override
@@ -215,6 +211,32 @@ public class EditTaskNodeAdapter extends RecyclerView.Adapter<EditTaskNodeAdapte
                     .append(endDate == null ? "NA" : DateUtil.getStringDateByFormat(endDate, "M.d"));
         }
         return dateStingBuilder.toString();
+    }
+
+    private boolean isTaskDeletable(Task task) {
+        switch (task.getStatus().toLowerCase()) {
+            case ConstructionConstants.TaskStatus.UNQUALIFIED:
+            case ConstructionConstants.TaskStatus.REINSPECTION:
+            case ConstructionConstants.TaskStatus.RECTIFICATION:
+            case ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION:
+            case ConstructionConstants.TaskStatus.REJECTED:
+            case ConstructionConstants.TaskStatus.RESERVED:
+            case ConstructionConstants.TaskStatus.REINSPECTING:
+            case ConstructionConstants.TaskStatus.REINSPECT_DELAY:
+            case ConstructionConstants.TaskStatus.RESOLVED:
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    private boolean isTaskEditable(Task task) {
+        switch (task.getStatus().toLowerCase()) {
+            case ConstructionConstants.TaskStatus.RESOLVED:
+                return false;
+            default:
+                return true;
+        }
     }
 
     public interface ItemClickListener {

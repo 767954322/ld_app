@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/member_avatar"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentTop="true"
+    android:layout_margin="@dimen/spacing_margin_micro"
+    android:background="@color/transparent"
+    android:src="@drawable/ic_default_head"
+    android:scaleType="centerCrop"
+    custom:border_width="@dimen/avatar_border_width"
+    custom:border_color="@color/avatar_border_color"/>

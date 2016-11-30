@@ -75,7 +75,12 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void refreshLikesButton(Like like,int position) {
+    public void refreshLikesButton(String filterLike, Like newLike, int likePosition) {
+
+    }
+
+    @Override
+    public void updateItemData(ProjectInfo projectInfo) {
 
     }
 }

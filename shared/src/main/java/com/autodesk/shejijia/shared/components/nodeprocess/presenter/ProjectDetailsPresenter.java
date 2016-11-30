@@ -1,20 +1,25 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailTasksFragment;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,9 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     private ProjectDetailsContract.View mProjectDetailsView;
     private ProjectRepository mProjectRepository;
     private long mProjectId;
-    private boolean isHasTaskData;
+    private String mThreadId;
+    private boolean mIsHasTaskData;
+    private boolean mIsNeedRefresh; //标记已经在项目详情页面下拉刷新时候的状态
 
     public ProjectDetailsPresenter(Context context, ProjectDetailsContract.View projectDetailsView) {
         this.mContext = context;
@@ -41,15 +48,23 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void initRequestParams(long projectId, boolean taskData) {
         this.mProjectId = projectId;
-        this.isHasTaskData = taskData;
+        this.mIsHasTaskData = taskData;
+        this.mIsNeedRefresh = false;
+    }
+
+    @Override
+    public void initRefreshState(boolean isNeedRefresh) {
+        this.mIsNeedRefresh = isNeedRefresh;
     }
 
     @Override
     public void getProjectDetails() {
-        mProjectDetailsView.showLoading();
+        if (!mIsNeedRefresh) {
+            mProjectDetailsView.showLoading();
+        }
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", mProjectId);
-        requestParamsBundle.putBoolean("task_data", isHasTaskData);
+        requestParamsBundle.putBoolean("task_data", mIsHasTaskData);
 
         getProjectDetailsData(requestParamsBundle);
     }
@@ -97,9 +112,10 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             int currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
             List<List<Task>> taskLists = handleTaskListData(projectInfo.getPlan());
             boolean isKaiGongResolved = isKaiGongResolved(projectInfo);
+            String avatarUrl = TaskUtils.getAvatarUrl(mContext, projectInfo.getMembers());
             if (taskLists != null) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), taskLists, currentMilestonePosition, isKaiGongResolved);
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), avatarUrl, taskLists, currentMilestonePosition, isKaiGongResolved);
             } else {
                 mProjectDetailsView.showError("handle data error");
             }
@@ -174,11 +190,14 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         if (projectInfo != null) {
             Bundle projectInfoBundle = new Bundle();
             projectInfoBundle.putLong("projectId", projectInfo.getProjectId());
-            projectInfoBundle.putString("userName", projectInfo.getName().split("/")[0]);
-            projectInfoBundle.putString("userAddress", projectInfo.getName().split("/")[1]);
-            projectInfoBundle.putString("roomArea", projectInfo.getBuilding().getArea() + "m2");
-            projectInfoBundle.putString("roomType", projectInfo.getBuilding().getBathrooms()
-                    + "室" + projectInfo.getBuilding().getHalls() + "厅");
+            projectInfoBundle.putString("userName", projectInfo.getName());
+            projectInfoBundle.putString("roomArea", projectInfo.getBuilding().getArea() + " m\u00B2");
+            projectInfoBundle.putString("userAddress", projectInfo.getBuilding().getCityName()
+                    + projectInfo.getBuilding().getDistrictName() + projectInfo.getBuilding().getCommunityName());
+            projectInfoBundle.putString("roomType",
+                    projectInfo.getBuilding().getRoomType() + UIUtils.getString(R.string.room)
+                            + projectInfo.getBuilding().getHalls() + UIUtils.getString(R.string.hall)
+                            + projectInfo.getBuilding().getBathrooms() + UIUtils.getString(R.string.toilet));
             mProjectDetailsView.showProjectInfoDialog(projectInfoBundle);
         } else {
             // 如果没有拿到项目详情，就无法弹出项目消息对话框
@@ -187,8 +206,36 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter() {
-        //// TODO: 11/11/16 跳转消息中心逻辑
+    public void getUnreadMsgCount(String projectIds, String requestTag) {
+        mProjectRepository.getUnreadMsgCount(projectIds, requestTag, new ResponseCallback<UnreadMsg, ResponseError>() {
+            @Override
+            public void onSuccess(UnreadMsg unreadMsgEntity) {
+                mThreadId = unreadMsgEntity.getThreadId();
+                mProjectDetailsView.updateUnreadMsgCountView(unreadMsgEntity.getCount());
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                LogUtils.e("getUnreadMsgCount error " + error == null ? "null" : error.getMessage());
+            }
+        });
     }
 
+    @Override
+    public String getThreadId() {
+        return mThreadId;
+    }
+
+    @Override
+    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread, int requestCode) {
+        ProjectInfo projectInfo = mProjectRepository.getActiveProject();
+        if (projectInfo == null) {
+            return;
+        }
+        Intent intent = new Intent(mContext, ProjectMessageCenterActivity.class);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectInfo.getProjectId());
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD, isUnread);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID, mThreadId);
+        projectDetailsFragment.startActivityForResult(intent, requestCode);
+    }
 }

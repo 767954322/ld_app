@@ -29,7 +29,7 @@
             ],
             "notification_options": [
                 "告知",
-                "不告知"
+                "未告知"
             ]
         },
     "check_items": [
@@ -199,9 +199,9 @@
             "title": "5．管道穿墙敷设",
             "standard": "不得轴向扭曲,强制校正",
             "check_type": "acceptance_options",
-            "action_visibility": true,
-            "action_changeability": true,
-            "action_type": "action_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
             "acceptance_criteria": [
                 0,
                 2
@@ -239,9 +239,9 @@
             "title": "6．水管固定安装",
             "standard": "支、吊架埋设应平整,牢固；U型卡固定时，禁止开口朝下",
             "check_type": "acceptance_options",
-            "action_visibility": true,
-            "action_changeability": true,
-            "action_type": "action_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
             "acceptance_criteria": [
                 0,
                 2
@@ -279,9 +279,9 @@
             "title": "7．金属管卡与管道",
             "standard": "采用塑料带或橡胶等隔垫",
             "check_type": "acceptance_options",
-            "action_visibility": true,
-            "action_changeability": true,
-            "action_type": "action_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
             "acceptance_criteria": [
                 0,
                 2
@@ -359,9 +359,9 @@
             "title": "9．立管垂直度",
             "standard": "每米允许偏差2mm,5米以上允许偏差不大于8mm",
             "check_type": "acceptance_options",
-            "action_visibility": true,
-            "action_changeability": true,
-            "action_type": "action_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
             "acceptance_criteria": [
                 0,
                 2
@@ -399,9 +399,9 @@
             "title": "10．冷热水给水点检查",
             "standard": "给水点熔接端正、对称、朝向一致；间距符合客户使用要求，阀门预安装位置满足使用要求，无阻挡",
             "check_type": "acceptance_options",
-            "action_visibility": true,
-            "action_changeability": true,
-            "action_type": "action_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
             "acceptance_criteria": [
                 0,
                 2
@@ -457,7 +457,7 @@
                 },
                 {
                     "type": "action_result",
-                    "value": "1"
+                    "value": "0"
                 },
                 {
                     "type": "text",

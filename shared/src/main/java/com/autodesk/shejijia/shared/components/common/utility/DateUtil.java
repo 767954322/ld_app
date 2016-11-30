@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.StaticLayout;
 import android.util.Log;
 
 import com.autodesk.shejijia.shared.R;
@@ -28,30 +29,32 @@ import java.util.concurrent.TimeUnit;
 public class DateUtil {
 
     private static String TAG = "DateUtil";
-
-    public static String getTimeMY(String dateString) {
-        // String dateString = "March 14, 2016 11:08:35";
+    //"March 14, 2016 11:08:35"
+    private static long timeStemp(String dateString){
+        long timeStemp = 0L;
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.US);
         TimeZone tz = TimeZone.getTimeZone("UTC");
         sdf.setTimeZone(tz);
-
-        String showTimeme = "";
         Date s;
         try {
             s = sdf.parse(dateString);
             sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
             String dssate = sdf.format(s);
             Date date = sdf.parse(dssate);
-            long timeStemp = date.getTime();
-            showTimeme = DateUtil.showTime(timeStemp);
-            // System.out.println(showTime);
+            timeStemp = date.getTime();
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return showTimeme;
+        return timeStemp;
+    }
+    public static String getTimeMY(String dateString) {
+        long timeStemp = timeStemp(dateString);
+        return showTime(timeStemp);
+    }
 
-
+    public static String getTimeMYD(String dateString){
+        long timeStemp = timeStemp(dateString);
+        return showDate(timeStemp);
     }
 
     public static String getStringDateByFormat(long lTime, String format) {

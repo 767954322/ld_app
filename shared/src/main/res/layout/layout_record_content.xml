@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_record_content"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <ImageButton
+        android:id="@+id/imgbtn_sound_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_audio_record"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:id="@+id/iv_sound_playing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/imgbtn_sound_record"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_play_audio"
+        android:layout_marginRight="26dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/imgbtn_sound_record"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/small_button_blue"
+        android:textColor="@color/white"
+        style="?attr/buttonBarButtonStyle"
+        android:textSize="@dimen/font_large"
+        android:text="@string/comment_alert_done"/>
+</RelativeLayout>

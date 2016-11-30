@@ -1,145 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="2">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_project_info">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/con_blue"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/spacing_margin_double"
+        android:layout_marginEnd="@dimen/spacing_margin_double"
+        android:layout_marginStart="@dimen/spacing_margin_double"
+        android:layout_marginTop="@dimen/spacing_margin_double"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_padding_double2">
+        android:weightSum="2">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_project_info_header"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_padding_normal2">
 
-            <ImageButton
-                android:id="@+id/imgBtn_close"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/imgBtn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@null"
+                    android:src="@drawable/icon_qr_cancel" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@null"
-                android:src="@drawable/icon_qr_cancel" />
-        </RelativeLayout>
+                android:gravity="center"
+                android:text="@string/project_info_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_normal" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lines="1"
+                android:paddingEnd="@dimen/spacing_padding_micro"
+                android:paddingStart="@dimen/spacing_padding_micro"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_15"
+                tools:text="业主姓名" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_tiny" />
+
+            <TextView
+                android:id="@+id/tv_user_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="2"
+                android:paddingEnd="@dimen/spacing_padding_micro"
+                android:paddingStart="@dimen/spacing_padding_micro"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_15"
+                tools:text="地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_tiny" />
 
 
-        <TextView
+            <TextView
+                android:id="@+id/tv_room_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingEnd="@dimen/spacing_padding_micro"
+                android:paddingStart="@dimen/spacing_padding_micro"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_15"
+                tools:text="130 m2" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_tiny" />
+
+            <TextView
+                android:id="@+id/tv_room_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingEnd="@dimen/spacing_padding_micro"
+                android:paddingStart="@dimen/spacing_padding_micro"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_15"
+                tools:text="两厅一室" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_small" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_project_info_bottom"
             android:gravity="center"
-            android:text="@string/project_info_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
+            android:orientation="vertical">
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_normal" />
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_normal" />
 
-        <TextView
-            android:id="@+id/tv_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_double"
-            android:paddingStart="@dimen/spacing_padding_double"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_15"
-            tools:text="业主姓名" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingEnd="@dimen/spacing_padding_third2"
+                android:paddingStart="@dimen/spacing_padding_third2"
+                android:text="@string/project_info_zxing"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_15"
+                tools:text="监理人员扫码 进入施工阶段" />
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_small" />
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_small" />
 
-        <TextView
-            android:id="@+id/tv_user_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:maxLines="2"
-            android:paddingEnd="@dimen/spacing_padding_double"
-            android:paddingStart="@dimen/spacing_padding_double"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_15"
-            tools:text="地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息地址信息" />
+            <!--why margin fu zhi,because zxing create pic has large kongbai -->
+            <ImageView
+                android:id="@+id/img_qr_code"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="-22dp"
+                android:layout_marginTop="-25dp"
+                android:scaleType="centerCrop" />
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_small" />
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_normal" />
+        </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/tv_room_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_double"
-            android:paddingStart="@dimen/spacing_padding_double"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_15"
-            tools:text="130 m2" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_small" />
-
-        <TextView
-            android:id="@+id/tv_room_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:paddingEnd="@dimen/spacing_padding_double"
-            android:paddingStart="@dimen/spacing_padding_double"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_15"
-            tools:text="两厅一室" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_small" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+</RelativeLayout>
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_huge" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingEnd="@dimen/spacing_padding_third2"
-            android:paddingStart="@dimen/spacing_padding_third2"
-            android:text="@string/project_info_zxing"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/font_15"
-            tools:text="监理人员扫码 进入施工阶段" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_small" />
-
-        <ImageView
-            android:id="@+id/img_qr_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_default_head" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_large" />
-    </LinearLayout>
-
-</LinearLayout>

@@ -48,7 +48,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
             holder.setText(R.id.tv_recommend_name, UIUtils.substring(item.getCommunity_name(), 4));
         }
         holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_number() + "");
-        holder.setText(R.id.tv_reco_consumer_name, item.getConsumer_name());
+        holder.setText(R.id.tv_reco_consumer_name, UIUtils.substring(item.getConsumer_name(), 15));
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
         String address = item.getProvince_name() + item.getCity_name() + UIUtils.getNoStringIfEmpty(item.getDistrict_name());
         holder.setText(R.id.tv_reco_item_address, UIUtils.substring(address, 14));

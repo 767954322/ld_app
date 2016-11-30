@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--点击效果-->
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <!-- android:radius 弧形的半径 -->
+            <solid android:color="@color/bg_3B85D1"/>
+            <corners android:radius="10px"/>
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <!-- android:radius 弧形的半径 -->
+            <solid android:color="@color/bg_0084ff"/>
+            <corners android:radius="10px"/>
+        </shape>
+    </item>
+</selector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@color/transparent"
+    android:insetTop="@dimen/spacing_margin_double"
+    android:insetRight="@dimen/spacing_margin_double"
+    android:insetBottom="@dimen/spacing_margin_double"
+    android:insetLeft="@dimen/spacing_margin_double">
+</inset>

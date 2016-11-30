@@ -35,7 +35,7 @@ public abstract class BaseConstructionFragment extends BaseFragment implements B
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //token 失效，重新登录
-                if (error.getStatus() == 401) {
+                if (error.getStatus() == 401 || error.getStatus() == 500) {
                     LoginUtils.doLogout(mContext);
                     LoginUtils.doLogin(mContext);
                     mContext.finish();

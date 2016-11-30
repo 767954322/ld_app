@@ -8,18 +8,18 @@
     "doc_type": "form_template",
     "check_items_variability": "false",
     "type_dict": {
-            "status": [
-                "不通过",
-                "通过"
-            ],
-            "acceptance_options": [
-                "是",
-                "否"
-            ],
-            "check_options": [
-                "描述"
-            ]
-        },
+        "status": [
+            "不通过",
+            "通过"
+        ],
+        "acceptance_options": [
+            "是",
+            "否"
+        ],
+        "check_options": [
+            "描述"
+        ]
+    },
     "check_items": [
         {
             "item_id": "wall_space_shower",
@@ -33,9 +33,7 @@
             "acceptance_criteria": [
                 0
             ],
-            "comment_conditions": [
-                
-            ],
+            "comment_conditions": [],
             "item_type": "check",
             "value": [
                 {
@@ -69,12 +67,8 @@
             "action_visibility": false,
             "action_changeability": false,
             "action_type": "review_options",
-            "acceptance_criteria": [
-                
-            ],
-            "comment_conditions": [
-                
-            ],
+            "acceptance_criteria": [],
+            "comment_conditions": [],
             "item_type": "check",
             "value": [
                 {
@@ -111,9 +105,7 @@
             "acceptance_criteria": [
                 0
             ],
-            "comment_conditions": [
-                
-            ],
+            "comment_conditions": [],
             "item_type": "check",
             "value": [
                 {
@@ -150,8 +142,45 @@
             "acceptance_criteria": [
                 0
             ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "closed_water_before_test",
+            "category": "",
+            "title": "试验前现场描述",
+            "standard": "",
+            "check_type": "check_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
             "comment_conditions": [
-                
+                0
             ],
             "item_type": "check",
             "value": [
@@ -178,82 +207,74 @@
             ]
         },
         {
-                    "item_id": "closed_water_before_test",
-                    "category": "",
-                    "title": "闭水试验前现场查看",
-                    "standard": "",
-                    "check_type": "check_options",
-                    "action_visibility": false,
-                    "action_changeability": false,
-                    "action_type": "review_options",
-                    "acceptance_criteria": [
-                                            0
-                                            ],
-                    "comment_conditions": [
-                                           0
-                                           ],
-                    "item_type": "check",
-                    "value": [
-                              {
-                              "type": "check_result",
-                              "value": "-1"
-                              },
-                              {
-                              "type": "action_result",
-                              "value": "-1"
-                              },
-                              {
-                              "type": "text",
-                              "value": ""
-                              },
-                              {
-                              "type": "image",
-                              "value": ""
-                              },
-                              {
-                              "type": "audio",
-                              "value": ""
-                              }
-                              ]
+            "item_id": "closed_water_after_test",
+            "category": "",
+            "title": "试验后现场描述",
+            "standard": "",
+            "check_type": "check_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                0
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
         },
-                    {
-                    "item_id": "closed_water_before_test",
-                    "category": "",
-                    "title": "闭水试验后现场查看",
-                    "standard": "",
-                    "check_type": "check_options",
-                    "action_visibility": false,
-                    "action_changeability": false,
-                    "action_type": "review_options",
-                    "acceptance_criteria": [
-                                            0
-                                            ],
-                    "comment_conditions": [
-                                           0
-                                           ],
-                    "item_type": "check",
-                    "value": [
-                              {
-                              "type": "check_result",
-                              "value": "-1"
-                              },
-                              {
-                              "type": "action_result",
-                              "value": "-1"
-                              },
-                              {
-                              "type": "text",
-                              "value": ""
-                              },
-                              {
-                              "type": "image",
-                              "value": ""
-                              },
-                              {
-                              "type": "audio",
-                              "value": ""
-                              }
-                              ]
-                    },
+        {
+            "item_id": "input_content",
+            "category": "",
+            "title": "验收结果说明",
+            "standard": "",
+            "check_type": "status",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "hidden",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
     ]
 }

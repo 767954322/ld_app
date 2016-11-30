@@ -9,7 +9,8 @@
     <string name="failure">失败</string>
     <string name="alert_dialog__default_title">提示</string>
     <string name="retry">重试</string>
-
+    <string name="show_historical_records">显示全部历史更新</string>
+    <string name="update_project_details">项目更新详情</string>
     <!--Qr-->
     <string name="scanner_text">将二维码放入框内,即可自动扫描</string>
     <string name="consumer_zxing_describe">请设计师扫码为您创建套餐项目</string>
@@ -247,5 +248,31 @@
     <string name="previous">Go to previous</string>
     <string name="next">Go to next</string>
     <string name="calendar">Calendar</string>
+
+    <!--photo picker-->
+    <string name="album_activity_title">图片</string>
+    <string name="action_settings">Settings</string>
+    <string name="album_empy">还没有图片</string>
+    <string name="folder_size">%1$d 张</string>
+    <string name="out_of_limit">你最多只能选择%1$d张图片</string>
+    <string name="tip_take_photo">拍摄照片</string>
+    <string name="msg_no_camera">没有系统相机</string>
+    <string name="no_image">手机还没有图片，快去拍一张吧</string>
+    <string name="img_error">图片错误</string>
+    <string name="update_count">完成(%1$d/%2$d)</string>
+    <string name="btn_submit_text">完成</string>
+    <string name="crop_activity_title">选择头像</string>
+    <string name="label_general_folder_name">所有图片</string>
+    <string name="permission_title_rationale">需要权限</string>
+    <string name="label_ok">确定</string>
+    <string name="label_cancel">取消</string>
+    <string name="permission_read_storage_rationale">需要读取外部存储权限，来加载手机图片</string>
+    <string name="permission_read_storage_denied_error_msg">权限获取失败，无法加载图片！</string>
+    <string name="permission_record_play_audio_denied_error_msg">权限获取失败,无法使用</string>
+
+    <!--common comment-->
+    <string name="comment_alert_done">确认</string>
+    <!--issuetracking-->
+    <string name="add_issuetracking_loading">正在提交，请稍后...</string>
 
 </resources>

@@ -163,7 +163,7 @@
         {
             "item_id": "appropriate_spacing",
             "category": "吊杆安装",
-            "title": "4.吊杆(四)",
+            "title": "4.吊杆(二)",
             "standard": "固定间距为900～1000㎜，如遇梁、管道等时，固定点大于规定要求，应增设吊杆固定点",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -324,7 +324,7 @@
             "item_id": "fixed_edge_keel",
             "category": "龙骨安装",
             "title": "8.沿边龙骨固定（吊顶）",
-            "standard": "水平或垂直安装的次龙骨，间距300～600㎜",
+            "standard": "用≥Φ6金属螺栓，间距为600㎜；对于轻体墙等情况，可以使用塑料胀栓或木楔+自攻钉，但应适当加密",
             "check_type": "acceptance_options",
             "action_visibility": false,
             "action_changeability": false,
@@ -1039,7 +1039,7 @@
         {
             "item_id": "plaster_leveling",
             "category": "龙骨安装",
-            "title": "26.原墙基层铲除（报价单包含此项施工时）(二)",
+            "title": "26.原顶基层铲除（报价单包含此项施工时）(二)",
             "standard": "5mm＜平整度误差≤10mm时，须使用石膏找平；平整度误差＞10mm，用石膏板找平",
             "check_type": "notification_options",
             "action_visibility": false,
@@ -1077,7 +1077,7 @@
         {
             "item_id": "construction_of_next_working_procedure",
             "category": "龙骨安装",
-            "title": "27.原墙基层铲除（报价单包含此项施工时）(三)",
+            "title": "27.原顶基层铲除（报价单包含此项施工时）(三)",
             "standard": "告知施工方待找平层干透后方可进行下道工序施工",
             "check_type": "notification_options",
             "action_visibility": false,

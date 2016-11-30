@@ -12,7 +12,7 @@ public class Building implements Serializable{
 
     private int halls;
     private int bathrooms;
-    private int area;
+    private double area;
     private String province;
     private String city;
     private String district;
@@ -28,6 +28,10 @@ public class Building implements Serializable{
     private String districtName;
     @SerializedName("community_name")
     private String communityName;
+
+    public String getAddress() {
+        return cityName + district + communityName;
+    }
 
     public int getHalls() {
         return halls;
@@ -45,11 +49,11 @@ public class Building implements Serializable{
         this.bathrooms = bathrooms;
     }
 
-    public int getArea() {
+    public double getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(double area) {
         this.area = area;
     }
 

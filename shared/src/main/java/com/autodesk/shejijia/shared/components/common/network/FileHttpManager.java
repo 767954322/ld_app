@@ -2,6 +2,8 @@ package com.autodesk.shejijia.shared.components.common.network;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.webkit.MimeTypeMap;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -9,7 +11,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
@@ -21,6 +30,7 @@ import com.squareup.okhttp.Response;
 
 import junit.framework.Assert;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,12 +40,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class FileHttpManager {
+    private static final String LOG_TAG = "FileHttpManager";
 
     public interface ResponseHandler {
         void onSuccess(String response);
@@ -86,6 +100,126 @@ public class FileHttpManager {
         });
     }
 
+    public void uploadFiles(@NonNull final ArrayList<File> files, @NonNull final ResponseCallback<ArrayList<ConstructionFile>, ResponseError> callback) {
+        getUploadUrl(new ResponseCallback<String, String>() {
+            @Override
+            public void onSuccess(String postUrl) {
+                RequestBody reqBody = buildRequestBody(files);
+                com.squareup.okhttp.Request request = buildRequest(postUrl, reqBody);
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                okHttpClient.setConnectTimeout(120, TimeUnit.SECONDS);
+                okHttpClient.setWriteTimeout(120, TimeUnit.SECONDS);
+                okHttpClient.setReadTimeout(120, TimeUnit.SECONDS);
+
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+                        LogUtils.e(LOG_TAG, "e=" + e);
+                        ResponseError error = new ResponseError();
+                        error.setMessage("Got IOException");
+                        callback.onError(error);
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            ArrayList<ConstructionFile> resultFiles = new ArrayList<>();
+
+                            String responseString = response.body().string();
+                            try {
+                                JSONObject responseJsonObject = new JSONObject(responseString);
+                                JSONArray filesJSONObject = responseJsonObject.getJSONArray("files");
+                                Type listType = new TypeToken<ArrayList<ConstructionFile>>() {
+                                }.getType();
+                                resultFiles = new Gson().fromJson(filesJSONObject.toString(), listType);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            callback.onSuccess(resultFiles);
+                        } else {
+                            LogUtils.e(LOG_TAG, "response=" + response.code());
+                            ResponseError error = new ResponseError();
+                            error.setMessage(response.message());
+                            error.setStatus(response.code());
+                            callback.onError(error);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                ResponseError responseError = new ResponseError();
+                responseError.setMessage(error);
+                callback.onError(responseError);
+            }
+        });
+
+    }
+
+    private com.squareup.okhttp.Request buildRequest(String postUrl, RequestBody reqBody) {
+        com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
+        reqBuilder.url(postUrl);
+        reqBuilder.post(reqBody);
+        Map<String, String> map = getDefaultHeaders();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            reqBuilder.addHeader(entry.getKey(), entry.getValue());
+        }
+        return reqBuilder.build();
+    }
+
+    private void getUploadUrl(final ResponseCallback<String, String> callback) {
+        getUploadServer(new OkStringRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(String response) {
+                JSONObject jObj;
+                try {
+                    jObj = new JSONObject(response);
+                    String uploadServer = jObj.optString("server");
+                    String postURL = "http://" + uploadServer + "/api/v2/files/upload";
+                    callback.onSuccess(postURL);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.onError("Data format error");
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError).getMessage());
+            }
+        });
+    }
+
+    private RequestBody buildRequestBody(ArrayList<File> files) {
+        MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        for (int i = 0; i < files.size(); i++) {
+            File file = files.get(i);
+            String type = getMimeType(file.getAbsolutePath());
+            if (type == null) {
+                continue;
+            }
+
+            RequestBody fileBody = RequestBody.create(MediaType.parse(type), file);
+            builder.addFormDataPart("file" + i, file.getName(), fileBody);
+            builder.addFormDataPart("public", "true");
+        }
+
+        return builder.build();
+    }
+
+    private static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
     public void upLoadFileByType(final File file, final String mediaType, //AUDIO or IMAGE
                                  final ResponseHandler handler) {
         Assert.assertTrue(file != null);
@@ -103,7 +237,7 @@ public class FileHttpManager {
                     JSONObject jObj = new JSONObject(response);
                     final String uploadServer = jObj.optString("server");
 
-                    String postURL = "http://" + uploadServer + "/api/v2/server/upload";
+                    String postURL = "http://" + uploadServer + "/api/v2/files/upload";
 
                     // the types are implicitly taken, we may need to revisit this again
                     String type = "image/jpg";
@@ -117,6 +251,9 @@ public class FileHttpManager {
                     HashMap<String, String> params = new HashMap<String, String>();
 
                     params.put("content_type", mediaType);
+                    params.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
+                    params.put("X-SESSION", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+                    params.put("public", "true");
                     for (Map.Entry<String, String> entry : params.entrySet())
                         builder.addFormDataPart(entry.getKey(), entry.getValue());
                     RequestBody reqBody = builder.build();
@@ -157,7 +294,7 @@ public class FileHttpManager {
             }
         });
     }
-
+    
     private void errorHandler(final ResponseHandler resHandler) {
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
@@ -257,8 +394,9 @@ public class FileHttpManager {
         Map<String, String> map = new HashMap<>();
         map.put("Content-Type", "application/x-www-form-urlencoded");
         map.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
-        if (AdskApplication.getInstance().getMemberEntity() != null)
+        if (AdskApplication.getInstance().getMemberEntity() != null){
             map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+        }
         return map;
     }
 }

@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -30,18 +31,17 @@ public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract
     public void handleTaskList(Bundle taskBundle) {
         if (taskBundle != null) {
             List<Task> taskList = (ArrayList<Task>) taskBundle.getSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST);
+            String avatarUrl = taskBundle.getString(ConstructionConstants.BUNDLE_KEY_USER_AVATAR);
             if (taskList != null) {
-                mPDTaskListView.refreshTaskListView(taskList);
+                mPDTaskListView.refreshTaskListView(taskList, avatarUrl);
             }
         }
     }
 
     @Override
     public void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position) {
-        Bundle taskInfoBundle = new Bundle();
-        taskInfoBundle.putSerializable("taskInfo", taskList.get(position));
-        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(taskInfoBundle);
-        taskDetailsFragment.setArguments(taskInfoBundle);
+        TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(mProjectRepository.getActiveProject(), taskList.get(position));
+        taskDetailsFragment.setTargetFragment((Fragment) mPDTaskListView, ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS);
         taskDetailsFragment.show(fragmentManager, "task_details");
     }
 }

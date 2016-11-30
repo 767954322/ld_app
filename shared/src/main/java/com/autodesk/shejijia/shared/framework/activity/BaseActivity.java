@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.feedback.PgyFeedbackShakeManager;
+import com.pgyersdk.views.PgyerDialog;
 
 
 /**
@@ -30,12 +34,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         setContentView(getLayoutResId());
+        registerPyg();
         LogManager.getLogger().d("ClassName", getClass().getSimpleName());
         initView();
         initExtraBundle();
         initData(savedInstanceState);
         initListener();
 
+    }
+
+    private void registerPyg(){
+        //Register pgy
+        if (BuildConfig.DEBUG) {
+            PgyCrashManager.register(this);
+            PgyerDialog.setDialogTitleBackgroundColor("#2B77C1");
+            PgyerDialog.setDialogTitleTextColor("#ffffff");
+        }
     }
 
     /**
@@ -78,5 +92,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BuildConfig.DEBUG) {
+            // custom sensitivity, defaults to 950, the smaller the number higher sensitivity.
+            PgyFeedbackShakeManager.setShakingThreshold(1000);
+            // Open as a dialog
+            PgyFeedbackShakeManager.register(BaseActivity.this);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (BuildConfig.DEBUG){
+            PgyFeedbackShakeManager.unregister();
+        }
     }
 }
