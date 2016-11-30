@@ -62,7 +62,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
     @Override
     protected void initView() {
-        mBidHallAdapter = new BidHallAdapter(getActivity(), mNeedsListEntities);
         mPullListView = (PullListView) rootView.findViewById(R.id.lv_custom_bid);
         mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view));
 
@@ -76,7 +75,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     @Override
     protected void initData() {
         registerBoradcastReceiver();
-        mPullListView.setAdapter(mBidHallAdapter);
     }
 
     @Override
@@ -136,23 +134,20 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                             case 0:
                                 OFFSET = 10;
                                 mNeedsListEntities.clear();
-                                mNeedsListEntities.addAll(entitys);
-                                mBidHallAdapter=new BidHallAdapter(getActivity(),mNeedsListEntities);
-                                mBidHallAdapter.notifyDataSetChanged();
-
                                 break;
                             case 1:
                                 OFFSET += 10;
-                                mNeedsListEntities.addAll(entitys);
-                                mBidHallAdapter=new BidHallAdapter(getActivity(),mNeedsListEntities);
-                                mBidHallAdapter.notifyDataSetChanged();
                                 break;
                             default:
                                 break;
                         }
+
+                        mNeedsListEntities.addAll(entitys);
+                        mBidHallAdapter = new BidHallAdapter(getActivity(), mNeedsListEntities);
+                        mPullListView.setAdapter(mBidHallAdapter);
+                        mBidHallAdapter.notifyDataSetChanged();
                     }
 
-                 //   mBidHallAdapter.notifyDataSetChanged();
                 } finally {
                     hideFooterView(mNeedsListEntities);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
