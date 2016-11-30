@@ -19,6 +19,7 @@ public class CheckedInformationBean implements Serializable{
     private List<BtnStatusBean> list;//选中的标记集合；
     private RecommendBrandsBean recommendBrandsBean;
     private List<RecommendBrandsBean> havedBrandsInformationBean;//已经有的展示的品牌集合
+    private int offsetForCategory;
 
 
     public List<RecommendBrandsBean> getCheckedBrandsInformationBean() {
@@ -67,5 +68,13 @@ public class CheckedInformationBean implements Serializable{
 
     public void setHavedBrandsInformationBean(List<RecommendBrandsBean> havedBrandsInformationBean) {
         this.havedBrandsInformationBean = havedBrandsInformationBean;
+    }
+
+    public int getOffsetForCategory() {
+        return offsetForCategory;
+    }
+
+    public void setOffsetForCategory(int offsetForCategory) {
+        this.offsetForCategory = offsetForCategory;
     }
 }
