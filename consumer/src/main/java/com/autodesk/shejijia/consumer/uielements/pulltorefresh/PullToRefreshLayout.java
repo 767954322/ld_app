@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.util.AttributeSet;
 import android.os.AsyncTask;
 
+import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -118,50 +119,56 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         @Override
         public void handleMessage(Message msg) {
-            // 回弹速度随下拉距离moveDeltaY增大而增大
-            MOVE_SPEED = (float) (8 + 5 * Math.tan(Math.PI / 2
-                    / getMeasuredHeight() * (pullDownY + Math.abs(pullUpY))));
-            if (!isTouch) {
-                // 正在刷新，且没有往上推的话则悬停，显示"正在刷新..."
-                if (state == REFRESHING && pullDownY <= refreshDist) {
-                    pullDownY = refreshDist;
-                    timer.cancel();
-                } else if (state == LOADING && -pullUpY <= loadmoreDist) {
-                    pullUpY = -loadmoreDist;
-                    timer.cancel();
-                }
-            }
-            if (pullDownY > 0)
-                pullDownY -= MOVE_SPEED;
-            else if (pullUpY < 0)
-                pullUpY += MOVE_SPEED;
-            if (pullDownY < 0 || Float.isNaN(pullDownY)) {
-                // 已完成回弹
-                pullDownY = 0;
-                pullView.clearAnimation();
-                // 隐藏下拉头时有可能还在刷新，只有当前状态不是正在刷新时才改变状态
-                if (state != REFRESHING && state != LOADING)
-                    changeState(INIT);
+            try {
 
-                timer.cancel();
+
+                // 回弹速度随下拉距离moveDeltaY增大而增大
+                MOVE_SPEED = (float) (8 + 5 * Math.tan(Math.PI / 2
+                        / getMeasuredHeight() * (pullDownY + Math.abs(pullUpY))));
+                if (!isTouch) {
+                    // 正在刷新，且没有往上推的话则悬停，显示"正在刷新..."
+                    if (state == REFRESHING && pullDownY <= refreshDist) {
+                        pullDownY = refreshDist;
+                        timer.cancel();
+                    } else if (state == LOADING && -pullUpY <= loadmoreDist) {
+                        pullUpY = -loadmoreDist;
+                        timer.cancel();
+                    }
+                }
+                if (pullDownY > 0)
+                    pullDownY -= MOVE_SPEED;
+                else if (pullUpY < 0)
+                    pullUpY += MOVE_SPEED;
+                if (pullDownY < 0 || Float.isNaN(pullDownY)) {
+                    // 已完成回弹
+                    pullDownY = 0;
+                    pullView.clearAnimation();
+                    // 隐藏下拉头时有可能还在刷新，只有当前状态不是正在刷新时才改变状态
+                    if (state != REFRESHING && state != LOADING)
+                        changeState(INIT);
+
+                    timer.cancel();
+                    requestLayout();
+                }
+                if (pullUpY > 0 || Float.isNaN(pullUpY)) {
+                    // 已完成回弹
+                    pullUpY = 0;
+                    pullUpView.clearAnimation();
+                    // 隐藏上拉头时有可能还在刷新，只有当前状态不是正在刷新时才改变状态
+                    if (state != REFRESHING && state != LOADING)
+                        changeState(INIT);
+                    timer.cancel();
+                    requestLayout();
+                }
+                Log.d("handle", "handle");
+                // 刷新布局,会自动调用onLayout
                 requestLayout();
+                // 没有拖拉或者回弹完成
+                if (pullDownY + Math.abs(pullUpY) == 0)
+                    timer.cancel();
+            } catch (Exception e) {
+                if (BuildConfig.DEBUG) Log.d(TAG, "e:" + e.toString() + " ");
             }
-            if (pullUpY > 0 || Float.isNaN(pullUpY)) {
-                // 已完成回弹
-                pullUpY = 0;
-                pullUpView.clearAnimation();
-                // 隐藏上拉头时有可能还在刷新，只有当前状态不是正在刷新时才改变状态
-                if (state != REFRESHING && state != LOADING)
-                    changeState(INIT);
-                timer.cancel();
-                requestLayout();
-            }
-            Log.d("handle", "handle");
-            // 刷新布局,会自动调用onLayout
-            requestLayout();
-            // 没有拖拉或者回弹完成
-            if (pullDownY + Math.abs(pullUpY) == 0)
-                timer.cancel();
         }
 
     };
@@ -171,8 +178,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
 
-        if(listener == null && timer != null)
-        {
+        if (listener == null && timer != null) {
             timer.cleanUp();
             timer = null;
             updateHandler = null;
@@ -198,7 +204,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     }
 
     private void initView(Context context) {
-       //mContext = context;
+        //mContext = context;
         timer = new MyTimer(updateHandler);
         rotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
                 context, R.anim.reverse_anim);
@@ -211,7 +217,12 @@ public class PullToRefreshLayout extends RelativeLayout {
     }
 
     private void hide() {
-        timer.schedule(5);
+        try {
+            timer.schedule(2);
+        } catch (Exception e) {
+            Log.d(TAG, "hide: e" + e.toString() + " ");
+        }
+
     }
 
     /**
@@ -261,7 +272,7 @@ public class PullToRefreshLayout extends RelativeLayout {
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void loadmoreFinish(int refreshResult) {
-        if (loadingView!=null){
+        if (loadingView != null) {
             loadingView.clearAnimation();
             loadingView.setVisibility(View.GONE);
             switch (refreshResult) {
@@ -386,40 +397,47 @@ public class PullToRefreshLayout extends RelativeLayout {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (mEvents == 0) {
-                    if (pullDownY > 0
-                            || (((Pullable) pullableView).canPullDown()
-                            && canPullDown && state != LOADING)) {
-                        // 可以下拉，正在加载时不能下拉
-                        // 对实际滑动距离做缩小，造成用力拉的感觉
-                        pullDownY = pullDownY + (ev.getY() - lastY) / radio;
-                        if (pullDownY < 0) {
-                            pullDownY = 0;
-                            canPullDown = false;
-                            canPullUp = true;
-                        }
-                        if (pullDownY > getMeasuredHeight())
-                            pullDownY = getMeasuredHeight();
-                        if (state == REFRESHING) {
-                            // 正在刷新的时候触摸移动
-                            isTouch = true;
-                        }
-                    } else if (pullUpY < 0
-                            || (((Pullable) pullableView).canPullUp() && canPullUp && state != REFRESHING)) {
-                        // 可以上拉，正在刷新时不能上拉
-                        pullUpY = pullUpY + (ev.getY() - lastY) / radio;
-                        if (pullUpY > 0) {
-                            pullUpY = 0;
-                            canPullDown = true;
-                            canPullUp = false;
-                        }
-                        if (pullUpY < -getMeasuredHeight())
-                            pullUpY = -getMeasuredHeight();
-                        if (state == LOADING) {
-                            // 正在加载的时候触摸移动
-                            isTouch = true;
-                        }
-                    } else
-                        releasePull();
+                    try {
+
+
+                        if (pullDownY > 0
+                                || (((Pullable) pullableView).canPullDown()
+                                && canPullDown && state != LOADING)) {
+                            // 可以下拉，正在加载时不能下拉
+                            // 对实际滑动距离做缩小，造成用力拉的感觉
+                            pullDownY = pullDownY + (ev.getY() - lastY) / radio;
+                            if (pullDownY < 0) {
+                                pullDownY = 0;
+                                canPullDown = false;
+                                canPullUp = true;
+                            }
+                            if (pullDownY > getMeasuredHeight())
+                                pullDownY = getMeasuredHeight();
+                            if (state == REFRESHING) {
+                                // 正在刷新的时候触摸移动
+                                isTouch = true;
+                            }
+                        } else if (pullUpY < 0
+                                || (((Pullable) pullableView).canPullUp() && canPullUp && state != REFRESHING)) {
+                            // 可以上拉，正在刷新时不能上拉
+                            pullUpY = pullUpY + (ev.getY() - lastY) / radio;
+                            if (pullUpY > 0) {
+                                pullUpY = 0;
+                                canPullDown = true;
+                                canPullUp = false;
+                            }
+                            if (pullUpY < -getMeasuredHeight())
+                                pullUpY = -getMeasuredHeight();
+                            if (state == LOADING) {
+                                // 正在加载的时候触摸移动
+                                isTouch = true;
+                            }
+                        } else
+                            releasePull();
+                    } catch (Exception e) {
+                        Log.d(TAG, "dispatchTouchEvent: e" + e.toString() + "");
+
+                    }
                 } else
                     mEvents = 0;
                 lastY = ev.getY();
@@ -633,8 +651,7 @@ public class PullToRefreshLayout extends RelativeLayout {
             if (handler != null)
                 handler = null;
 
-            if (timer != null)
-            {
+            if (timer != null) {
                 timer.cancel();
                 timer = null;
             }

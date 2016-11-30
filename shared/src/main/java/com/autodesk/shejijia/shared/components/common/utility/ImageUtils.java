@@ -58,7 +58,7 @@ public class ImageUtils {
             .showImageForEmptyUri(R.drawable.home_page_icon)
             .cacheInMemory(false)
             .cacheOnDisk(true)
-            .bitmapConfig(Bitmap.Config.RGB_565)
+            .bitmapConfig(Bitmap.Config.ALPHA_8)
             .imageScaleType(ImageScaleType.EXACTLY)
             .resetViewBeforeLoading(true)
             .build();
@@ -106,7 +106,7 @@ public class ImageUtils {
             .cacheOnDisk(true)
             .displayer(new RoundedBitmapDisplayer(20))
             .imageScaleType(ImageScaleType.EXACTLY)
-            .bitmapConfig(Bitmap.Config.RGB_565)
+            .bitmapConfig(Bitmap.Config.ALPHA_8)
             .resetViewBeforeLoading(true)
             .build();
 
@@ -214,7 +214,7 @@ public class ImageUtils {
             .cacheInMemory(false)
             .cacheOnDisk(true)
             .imageScaleType(ImageScaleType.EXACTLY)
-            .bitmapConfig(Bitmap.Config.RGB_565)
+            .bitmapConfig(Bitmap.Config.ALPHA_8)
             .resetViewBeforeLoading(true)
             .build();
     /**
