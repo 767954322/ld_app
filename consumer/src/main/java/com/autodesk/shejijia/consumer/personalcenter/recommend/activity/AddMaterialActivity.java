@@ -1049,7 +1049,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
         justRefreshOrLoadMore = 3;
         CustomProgress.showDefaultProgress(AddMaterialActivity.this);
-        getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, OFFSET, LIMIT_COUNT);
+       // getMaterialCategoryBrandsInformation(currentCheckedOneCategoryId, currentOneCategoryName, currentCheckedTwoCategoryId, currentSubCategoryName, currentStoreIdTotal, OFFSET, LIMIT_COUNT);
+        getMaterialCategoryBrandsInformation("", "", "", "", "", OFFSET, LIMIT_COUNT);
     }
 
     @Override
