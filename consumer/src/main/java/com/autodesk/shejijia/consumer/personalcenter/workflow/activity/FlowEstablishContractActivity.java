@@ -483,7 +483,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     tvc_designer_decorate_address.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (district_name == null ? "" : district_name));
                 }
 
-                designer_name = designer_detail_entity.getFirst_name();
+                designer_name = designer_detail_entity.getReal_name().getReal_name();
                 designer_mobile = designer_detail_entity.getReal_name().getMobile_number().toString();
                 designer_mail = designer_detail_entity.getEmail();
 
