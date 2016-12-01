@@ -1,46 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rcy_task_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView
-        android:id="@+id/rcy_issue_tracking_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:refreshEnable="true" />
-
-    <TextView
-        android:id="@+id/tv_empty_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawablePadding="@dimen/spacing_margin_double"
-        android:drawableTop="@drawable/ic_work_open"
-        android:text="@string/issue_tracking_list_empty_message"
-        android:textSize="@dimen/font_12"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/rl_add_issuetracking"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_45"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_0.5"
-            android:layout_alignParentTop="true"
-            android:background="@color/actionsheet_gray" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/issue_tracking_list_add_issue"
-            android:textSize="@dimen/font_15" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</android.support.v7.widget.RecyclerView>

@@ -37,7 +37,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_task_list_view;
+        return R.layout.fragment_issue_list_view;
     }
 
     @Override
