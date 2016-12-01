@@ -5,8 +5,10 @@
     android:background="@android:color/white">
 
     <TextView
-
+        android:ellipsize="end"
+        android:maxEms="300"
         android:padding="15dp"
+        android:maxLines="13"
         android:id="@+id/case_library_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
