@@ -16,7 +16,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -97,8 +96,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private String[] oneArr;
     private List<RecommendSCFDBean> mRecommendSCFDList;//清单中已经拥有的品类和品牌集合
     private StoreInformationBean storeInformationBean;//店铺信息
-    private String currentCheckedOneCategoryId;
-    private String currentOneCategoryName;//当前选中以及品类信息
+    private String currentCheckedOneCategoryId;//当前一级品类Id
+    private String currentOneCategoryName;//当前选中一级品类名字
     private String currentCheckedTwoCategoryId;
     private String currentSubCategoryName = "";//当前正被点击到的二级品类的名字
     private String currentStoreIdTotal;
@@ -283,6 +282,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 //默认加入二级品类第一次进入集合
                 listChecked = new ArrayList<>();//默认建立该品类下的品牌集合
                 //将清单传来的数据整合到总集合，并增加默认集合
+                currentOneCategoryName = materialCategoryBean.getCategories_3d().get(0).getCategory_3d_name();
+                currentCheckedOneCategoryId = materialCategoryBean.getCategories_3d().get(0).getCategory_3d_id();
                 setTotalListForListData();
                 isCanAddForLIst();//检验总集合中是否有选中数据
                 showOneCategory();
@@ -634,10 +635,14 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
         //增加已经存在的该品类下的集合
         List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
+        MaterialCategoryBean.Categories3dBean categories3dBean = new MaterialCategoryBean.Categories3dBean();//当前一级品类bean
+        categories3dBean.setCategory_3d_id(currentCheckedOneCategoryId);
+        categories3dBean.setCategory_3d_name(currentOneCategoryName);
         checkedInformationBean.setHavedBrandsInformationBean(haveDCheckedBrandsList);
         checkedInformationBean.setList(listFirstTag);
         checkedInformationBean.setSubCategoryBean(subCategoryBean);
         checkedInformationBean.setCheckedBrandsInformationBean(checkedBrandsInformationBean);
+        checkedInformationBean.setCategories3dBean(categories3dBean);
         boolean isAddToList = false;//判断是否加入总集合
         boolean isHavedBrandsList = false;//是否已经存在品牌集合
         for (int i = 0; i < totalList.size(); i++) {
@@ -886,6 +891,10 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             String categoryId = mRecommendSCFDList.get(i).getSub_category_3d_id();
             subCategoryBean.setSub_category_3d_name(categoryForListName);
             subCategoryBean.setSub_category_3d_id(categoryId);
+            //一级品类
+            MaterialCategoryBean.Categories3dBean categories3dBean = new MaterialCategoryBean.Categories3dBean();//当前一级品类bean
+            categories3dBean.setCategory_3d_id(currentCheckedOneCategoryId);
+            categories3dBean.setCategory_3d_name(currentOneCategoryName);
             for (int j = 0; j < mRecommendSCFDList.get(i).getBrands().size(); j++) {
 
                 recommendBrandsBeenList.add(mRecommendSCFDList.get(i).getBrands().get(j));
@@ -894,6 +903,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             checkedInformationBean.setSubCategoryBean(subCategoryBean);
             checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
             checkedInformationBean.setList(listFirstTag);
+            checkedInformationBean.setCategories3dBean(categories3dBean);
             totalList.add(checkedInformationBean);
         }
         boolean isHaveNumberOne = false;
@@ -916,10 +926,15 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
             //增加已经存在的该品类下的集合
             List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
+            //一级品类
+            MaterialCategoryBean.Categories3dBean categories3dBean = new MaterialCategoryBean.Categories3dBean();//当前一级品类bean
+            categories3dBean.setCategory_3d_id(currentCheckedOneCategoryId);
+            categories3dBean.setCategory_3d_name(currentOneCategoryName);
             checkedInformationBean.setHavedBrandsInformationBean(haveDCheckedBrandsList);
             checkedInformationBean.setSubCategoryBean(subCategoryBean);
             checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
             checkedInformationBean.setList(listFirstTag);
+            checkedInformationBean.setCategories3dBean(categories3dBean);
             totalList.add(checkedInformationBean);
         }
         currentSubCategoryName = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
