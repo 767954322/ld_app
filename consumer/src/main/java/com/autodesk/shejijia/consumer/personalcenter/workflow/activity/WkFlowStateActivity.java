@@ -570,7 +570,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         navTitleTextView.setMaxEms(20);
         setTitleForNavbar(contacts_name_new + "/" + community_name_new); /// 设置标题 .
 //        ibFlowChart.setEnabled(true);
-        tvCreateDate.setText(UIUtils.getString(R.string.create_date) + mBiddersEntity.getJoin_time());
+        tvCreateDate.setText(UIUtils.getString(R.string.create_date) + mBiddersEntity.getSelected_time());
         mPtrLayout.onRefreshComplete();
 
         int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
