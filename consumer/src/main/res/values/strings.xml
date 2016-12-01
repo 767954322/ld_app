@@ -343,7 +343,7 @@
     <string name="the_designer_rejected_quantity">WkFlowMea.设计师拒绝量房</string>
     <string name="consumer_should_agree_with_mark">WkFlowMea.消费者同意应标</string>
     <string name="phone">手机号码：</string>
-    <string name="not_have_send_measure">您还没有发过量房资料</string>
+    <string name="not_have_send_measure">您还没有发送过量房资料</string>
 
     <!--  FlowUploadDeliveryActivity -->
     <string name="data_null">暂无数据</string>
