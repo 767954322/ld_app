@@ -108,4 +108,13 @@ public class ConstructionConstants {
         public static final String DELETED = "deleted";//已删除
     }
 
+    public static class IssueTracking {
+
+        public static final String ISSUE_TRACKING_TYPE = "issue_tracking_type";
+        public static final String ENTERPRISE_ALL_TAG = "enterprise_all_tag";
+        public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";
+        public static final String CONSEMER_TAG = "consumer_tag";
+
+    }
+
 }

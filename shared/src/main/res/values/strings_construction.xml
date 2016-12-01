@@ -157,5 +157,8 @@
 
     <string name="project_list_empty_message">没有进行中或待开工的项目</string>
 
+    <!-- 问题追踪 -->
+    <string name="issue_tracking_list_empty_message">问题追踪界面加载失败，请重新加载</string>
+    <string name="issue_tracking_list_add_issue">添加问题</string>
 
 </resources>

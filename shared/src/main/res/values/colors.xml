@@ -249,4 +249,6 @@
     <color name="background">#fffafafa</color>
     <color name="primary_light">#C8E6C9</color>
 
+    <!-- issue color  -->
+    <color name="issue_item_line">#5e5e5e</color>
 </resources>

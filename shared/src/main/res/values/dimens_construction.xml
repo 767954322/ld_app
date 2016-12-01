@@ -63,4 +63,7 @@
     <dimen name="height_form_list_item">57.5dp</dimen>
     <dimen name="spacing_option_table_cell">22.5dp</dimen>
     <dimen name="form_option_size">55dp</dimen>
+    <!--form-->
+    <dimen name="spacing_left_listicon_item">5dp</dimen>
+    <dimen name="spacing_left_listtitle_item">15dp</dimen>
 </resources>
