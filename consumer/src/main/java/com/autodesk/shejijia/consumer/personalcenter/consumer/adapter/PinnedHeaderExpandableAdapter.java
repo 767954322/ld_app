@@ -33,11 +33,13 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
     private String living_room, room, toilet;
-    private Map<String, String> livingRoomJson;
-    private Map<String, String> roomJson;
-    private Map<String, String> toiletJson;
-    private String living_room_convert, room_convert, toilet_convert;
+    //    private Map<String, String> livingRoomJson;
+//    private Map<String, String> roomJson;
+//    private Map<String, String> toiletJson;
+    private Map<String, String> space;
+    //    private String living_room_convert, room_convert, toilet_convert;
     private String proJectAddress;
+    private String house_space;
 
 
     public PinnedHeaderExpandableAdapter(ArrayList<DecorationNeedsListBean> mList, Activity activity, PinnedHeaderExpandableListView listView) {
@@ -70,14 +72,17 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         room = mList.get(groupPosition).getRoom();
         living_room = mList.get(groupPosition).getLiving_room();
         toilet = mList.get(groupPosition).getToilet();
+        house_space = mList.get(groupPosition).getHouse_type();
 
-        roomJson = AppJsonFileReader.getRoomHall(activity);
-        toiletJson = AppJsonFileReader.getToilet(activity);
-        livingRoomJson = AppJsonFileReader.getLivingRoom(activity);
+//        roomJson = AppJsonFileReader.getRoomHall(activity);
+//        toiletJson = AppJsonFileReader.getToilet(activity);
+//        livingRoomJson = AppJsonFileReader.getLivingRoom(activity);
+        space = AppJsonFileReader.getSpace(activity);
 
-        room_convert = ConvertUtils.getConvert2CN(roomJson, room);
-        living_room_convert = ConvertUtils.getConvert2CN(livingRoomJson, living_room);
-        toilet_convert = ConvertUtils.getConvert2CN(toiletJson, toilet);
+//        room_convert = ConvertUtils.getConvert2CN(roomJson, room);
+//        living_room_convert = ConvertUtils.getConvert2CN(livingRoomJson, living_room);
+//        toilet_convert = ConvertUtils.getConvert2CN(toiletJson, toilet);
+        String house_space_convert = ConvertUtils.getConvert2CN(space, house_space);
 
         TextView tv_name = (TextView) view.findViewById(R.id.tv_child_name);
         TextView tv_phone = (TextView) view.findViewById(R.id.tv_child_phone);
@@ -90,7 +95,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
         tv_name.setText(mList.get(groupPosition).getContacts_name());
         tv_phone.setText(mList.get(groupPosition).getContacts_mobile());
-        tv_house_type.setText(room_convert + " " + living_room_convert + " " + toilet_convert);
+        tv_house_type.setText(house_space_convert);
         tv_house_area.setText(mList.get(groupPosition).getHouse_area() + "m²");
         tv_project_budget.setText(mList.get(groupPosition).getDecoration_budget());
         tv_planning_budget.setText(mList.get(groupPosition).getDesign_budget());
