@@ -9,12 +9,14 @@
         android:id="@+id/progressbar_footer_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 
     <TextView
         android:id="@+id/tv_footer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 </RelativeLayout>

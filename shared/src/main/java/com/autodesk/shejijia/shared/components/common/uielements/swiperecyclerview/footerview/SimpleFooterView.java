@@ -53,6 +53,12 @@ public class SimpleFooterView extends BaseFooterView {
     }
 
     @Override
+    public void onRefreshing() {
+        mProgressbar.setVisibility(GONE);
+        mFooterText.setVisibility(GONE);
+    }
+
+    @Override
     public void onNoMore(String message) {
         if (message == null) {
             showText(getResources().getString(R.string.footer_no_more));

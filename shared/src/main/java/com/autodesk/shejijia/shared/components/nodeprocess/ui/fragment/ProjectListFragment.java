@@ -100,11 +100,14 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void onRefresh() {
         mEmptyView.setVisibility(View.GONE);
+        mProjectListView.onRefreshing();
         mProjectListPresenter.refreshProjectList();
     }
 
     @Override
     public void onLoadMore() {
+        mEmptyView.setVisibility(View.GONE);
+        mProjectListView.onLoadingMore();
         mProjectListPresenter.loadMoreProjectList();
     }
 
@@ -135,7 +138,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             mProjectListView.complete();
             mProjectListAdapter.appendProjectLists(projectList);
         } else {
-            mProjectListView.onNoMore(null);
+            mProjectListView.onNoMore(" ");
         }
     }
 
@@ -186,6 +189,13 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        if (mProjectListView.isRefreshing()){
+            mProjectListView.complete();
+        }
+    }
 
     private void initScreenPopupWin() {
         final View contentView = LayoutInflater.from(mContext).inflate(R.layout.popup_screen_dialog, null);
@@ -212,13 +222,13 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
                 if (!mProjectListView.isRefreshing()) {
                     mProjectListView.setRefreshing(true);
                 }
-                mScreenPopup.dismiss();
                 if (!TextUtils.isEmpty(mProjectListPresenter.getScreenPopupState())
                         && mProjectListPresenter.getScreenPopupState().equals("true")) {
                     mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filtered));
                 } else {
                     mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filter));
                 }
+                mScreenPopup.dismiss();
             }
         });
         mScreenLike.setOnClickListener(new View.OnClickListener() {
@@ -230,13 +240,13 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
                 if (!mProjectListView.isRefreshing()) {
                     mProjectListView.setRefreshing(true);
                 }
-                mScreenPopup.dismiss();
                 if (!TextUtils.isEmpty(mProjectListPresenter.getScreenPopupState())
                         && mProjectListPresenter.getScreenPopupState().equals("true")) {
                     mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filtered));
                 } else {
                     mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filter));
                 }
+                mScreenPopup.dismiss();
             }
         });
         contentView.setOnKeyListener(new View.OnKeyListener() {

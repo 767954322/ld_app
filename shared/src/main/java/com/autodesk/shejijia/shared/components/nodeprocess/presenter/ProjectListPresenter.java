@@ -39,7 +39,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
-    private List<ProjectInfo> projectList;
+    private boolean mIsRefresh;
+    private int mLoadedSize = 0;//记录服务端返回的数据个数
+    private int mTotalSize;//服务器一共多少数据
 
     public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
@@ -81,13 +83,15 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void refreshProjectList() {
         mOffset = 0;
+        mLoadedSize = 0;
+        this.mIsRefresh = true;
         loadProjectList(mOffset);
     }
 
     @Override
     public void loadMoreProjectList() {
-        mOffset++;
-        loadProjectList(mOffset);
+            this.mIsRefresh = false;
+            loadProjectList(mOffset);
     }
 
     private void loadProjectList(int offset) {
@@ -112,12 +116,26 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
-                LogUtils.d("projectList",taskList+"");
-//                if (taskList.getOffset() == 1) {
+                LogUtils.d("projectList", taskList + "");
+                LogUtils.d("mLoadedSize", mLoadedSize + "");
+                LogUtils.d("mOffset", mOffset + "");
+                mTotalSize = taskList.getTotal();
+                LogUtils.d("mTotalSize", mTotalSize + "");
+                if (mIsRefresh) {
                     mProjectListView.refreshProjectListView(taskList.getData());
-                /*} else {
+                    if (taskList.getData() != null && taskList.getData().size() > 0) {
+                        mLoadedSize = taskList.getData().size();
+                        mOffset = mLoadedSize - 2;
+                    } else {
+                        mLoadedSize = 0;
+                    }
+                } else {
                     mProjectListView.addMoreProjectListView(taskList.getData());
-                }*/
+                    if (taskList.getData() != null && taskList.getData().size() > 0) {
+                        mLoadedSize += taskList.getData().size();
+                        mOffset = mLoadedSize;
+                    }
+                }
             }
 
             @Override
