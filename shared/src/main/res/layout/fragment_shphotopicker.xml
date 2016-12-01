@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_shphotopicker_rootlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autodesk.shejijia.shared.components.im.fragment.MPPhotoPickerFragment">
+
+    <GridView
+        android:id="@+id/gv_photo_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_photopicker_bottombar_container"
+        android:gravity="center"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:visibility="visible"/>
+
+
+    <ProgressBar
+        android:id="@+id/pb_progress_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="invisible"
+        android:indeterminate="true"/>
+
+    <include layout="@layout/layout_photo_picker_bottombar" />
+
+    <View
+        android:id="@+id/view_photoalbum_sapcer"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentTop="true"
+        android:background="#2A2C2B"
+        android:alpha="0.7"
+        android:visibility="gone"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_album_shader_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone">
+        <ListView
+            android:id="@+id/lv_photo_album"
+            android:layout_marginTop="150dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_photopicker_cloud_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/iv_photopicker_cloud_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="160dp"
+            android:src="@drawable/cloud_album_placeholder" />
+
+        <TextView
+            android:id="@+id/tv_photopicker_cloud_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_photopicker_cloud_placeholder"
+            android:layout_centerHorizontal="true"
+            android:lines="2"
+            android:text="@string/photopicker_cloud_placeholder_label"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_photoactivity_fullblur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="#2A2C2B"
+        android:visibility="invisible"
+        android:alpha="0.7">
+    </View>
+
+</RelativeLayout>

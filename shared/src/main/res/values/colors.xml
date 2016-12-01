@@ -244,5 +244,7 @@
     <color name="font_title">#333333</color>
     <color name="font_subtitle">#666666</color>
     <color name="form_dialog_bg_grey">#fafafa</color>
+    <color name="background">#fffafafa</color>
+    <color name="primary_light">#C8E6C9</color>
 
 </resources>
