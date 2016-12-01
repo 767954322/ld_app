@@ -284,6 +284,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         String mCustomerName = mEtCustomerName.getText().toString();
         String mCommunityName = mEtCommunityName.getText().toString();
         String mPhoneNumber = mEtPhoneNumber.getText().toString();
+        String memberAccount = mEtMemberAccount.getText().toString();
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -298,11 +299,11 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "");
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MEMBER_ACCOUNT, memberAccount);
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
-
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
 
