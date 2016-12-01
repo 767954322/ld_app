@@ -1,50 +1,63 @@
 package com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.bumptech.glide.RequestManager;
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.AlbumConfig;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.ImageSelector;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Collections;
 import java.util.List;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import io.github.lijunguan.imgselector.AlbumConfig;
-import io.github.lijunguan.imgselector.ImageSelector;
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.album.AlbumFragment;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
-
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
-
-
-/**
- * Created by lijunguan on 2016/4/11
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int NORMAL_ITEM = 0;
     public static final int CAMERA_ITEM = 1;
+    private static final String sFilePrefix = "file://";
 
     private List<ImageInfo> mData = Collections.emptyList();
 
-    private final RequestManager mRequestManager;
+//    private final RequestManager mRequestManager;
 
     private AlbumConfig mAlbumConfig;
 
     private AlbumFragment.ImageItemListener mListener;
+    private DisplayImageOptions options;
 
-    public ImageGridAdapter(RequestManager requestManager, AlbumConfig albumConfig, AlbumFragment.ImageItemListener listener) {
-        mRequestManager = checkNotNull(requestManager);
+//    public ImageGridAdapter(RequestManager requestManager, AlbumConfig albumConfig, AlbumFragment.ImageItemListener listener) {
+//        mRequestManager = checkNotNull(requestManager);
+//        mAlbumConfig = checkNotNull(albumConfig);
+//        mListener = listener;
+//        options = new DisplayImageOptions.Builder()
+//                .cacheInMemory(true)
+//                .cacheOnDisk(true)
+//                .bitmapConfig(Bitmap.Config.RGB_565)
+//                .showImageOnLoading(R.drawable.photopicker_placeholder)
+//                .build();
+//    }
+
+    public ImageGridAdapter(AlbumConfig albumConfig, AlbumFragment.ImageItemListener listener) {
         mAlbumConfig = checkNotNull(albumConfig);
         mListener = listener;
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .showImageOnLoading(R.drawable.photopicker_placeholder)
+                .build();
     }
-
 
     public void replaceData(List<ImageInfo> data) {
         mData = checkNotNull(data);
@@ -57,7 +70,8 @@ public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         int itemWidth = parent.getWidth() / mAlbumConfig.getGridColumns();
-
+        Log.d("ImageGridAdapter", "onCreateViewHolder: parent.getWidth() == " + parent.getWidth());
+        Log.d("ImageGridAdapter", "onCreateViewHolder: itemWidth == " + itemWidth);
         View rootView;
         if (viewType == NORMAL_ITEM) {
             rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_grid, parent, false);
@@ -119,12 +133,13 @@ public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mListener.onImageClick(realPositon, imageInfo, mAlbumConfig.getSelectModel());
                 }
             });
+            ImageLoader.getInstance().displayImage(sFilePrefix + imageInfo.getPath(),imgHolder.mImageView,options);
 
-            mRequestManager
-                    .load(imageInfo.getPath())
-                    .asBitmap()
-                    .placeholder(R.drawable.placeholder)
-                    .into(imgHolder.mImageView);
+//            mRequestManager
+//                    .load(imageInfo.getPath())
+//                    .asBitmap()
+////                    .placeholder(R.drawable.placeholder)
+//                    .into(imgHolder.mImageView);
 
 
         }

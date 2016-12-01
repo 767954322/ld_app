@@ -5,23 +5,20 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.previewimage.ImageContract;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseView;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
+
 import java.io.File;
 import java.util.List;
 
-import io.github.lijunguan.imgselector.album.previewimage.ImageContract;
-import io.github.lijunguan.imgselector.base.BaseView;
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
-
 /**
- * Created by lijunguan on 2016/4/19.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
  * 指定 View 和 Presenter之间的关系，统一声明便于查看和管理接口方法
  */
 public interface AlbumContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends PhotoSelectBaseView<Presenter> {
 
         void showEmptyView(@Nullable CharSequence message);
 

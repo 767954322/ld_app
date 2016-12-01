@@ -9,28 +9,21 @@
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mask_color"
+        android:background="#88000000"
         android:clickable="true"
         android:visibility="gone"/>
 
     <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <io.codetail.widget.RevealFrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            app:layout_heightPercent="80%"
-            app:layout_widthPercent="100%">
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_album_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:visibility="invisible"/>
-        </io.codetail.widget.RevealFrameLayout>
+                android:visibility="invisible"
+                app:layout_heightPercent="80%"
+                app:layout_widthPercent="100%"/>
     </android.support.percent.PercentFrameLayout>
 
 </merge>

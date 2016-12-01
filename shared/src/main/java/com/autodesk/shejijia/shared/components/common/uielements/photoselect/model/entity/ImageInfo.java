@@ -3,11 +3,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.mo
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by lijunguan on 2016/4/8
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class ImageInfo implements Parcelable {
     /**
      * 图片文件的名字
@@ -22,6 +17,10 @@ public class ImageInfo implements Parcelable {
      */
     private String mPath;
     /**
+     * url
+     */
+    private String mUrl;
+    /**
      * 图片大小
      */
     private long mSize;
@@ -35,6 +34,14 @@ public class ImageInfo implements Parcelable {
         this.mAddedTime = mAddedTime;
         this.mPath = mPath;
         this.mSize = mSize;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public void setUrl(String url) {
+        this.mUrl = url;
     }
 
     public long getSize() {
@@ -90,6 +97,7 @@ public class ImageInfo implements Parcelable {
         dest.writeString(this.mDisplayName);
         dest.writeLong(this.mAddedTime);
         dest.writeString(this.mPath);
+        dest.writeString(this.mUrl);
         dest.writeLong(this.mSize);
         dest.writeByte(isSelected ? (byte) 1 : (byte) 0);
     }
@@ -98,6 +106,7 @@ public class ImageInfo implements Parcelable {
         this.mDisplayName = in.readString();
         this.mAddedTime = in.readLong();
         this.mPath = in.readString();
+        this.mUrl = in.readString();
         this.mSize = in.readLong();
         this.isSelected = in.readByte() != 0;
     }

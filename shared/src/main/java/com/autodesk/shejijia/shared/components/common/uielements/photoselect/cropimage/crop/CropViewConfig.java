@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
-import io.github.lijunguan.imgselector.R;
+import com.autodesk.shejijia.shared.R;
 
 class CropViewConfig {
 

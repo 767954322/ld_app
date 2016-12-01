@@ -3,18 +3,16 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
-import io.github.lijunguan.imgselector.album.AlbumActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumActivity;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
+
 public class ImageSelector {
 
 
@@ -27,12 +25,8 @@ public class ImageSelector {
     public static final int REQUEST_CROP_IMAGE = 0x4096;
 
     public static final String ARG_ALBUM_CONFIG = "albumConfig";
-    /**
-     * 单选模式
-     */
-    @Deprecated
-    public static final int SINGLE_MODE = 0x0;
 
+    public static final String START_ALBUM_WITH_DATA = "start_data";
     /**
      * 头像选择模式 得到裁剪后的正方形图片
      */
@@ -42,10 +36,7 @@ public class ImageSelector {
      */
     public static final int MULTI_MODE = 0x1;
 
-
-
     private AlbumConfig mConfig;
-
 
     private static ImageSelector ourInstance = new ImageSelector();
 
@@ -59,6 +50,7 @@ public class ImageSelector {
     public void setConfig(AlbumConfig mConfig) {
         this.mConfig = mConfig;
     }
+
     private ImageSelector() {
         mConfig = new AlbumConfig();
     }
@@ -75,6 +67,12 @@ public class ImageSelector {
         return this;
     }
 
+    public ImageSelector setStartData(List<String> data){
+        checkNotNull(data);
+        mConfig.setStartData(data);
+        return this;
+    }
+
     public ImageSelector setShowCamera(boolean shown) {
         checkNotNull(shown);
         mConfig.setShownCamera(shown);
@@ -87,18 +85,25 @@ public class ImageSelector {
         return this;
     }
 
-    public ImageSelector setToolbarColor(@ColorInt int toolbarColor) {
-        checkNotNull(toolbarColor);
-        mConfig.setToolbarColor(toolbarColor);
-        return this;
-    }
-
     public void startSelect(@NonNull Activity context) {
         Intent intent = new Intent(context, AlbumActivity.class);
         intent.putExtra(ImageSelector.ARG_ALBUM_CONFIG, mConfig);
         context.startActivityForResult(intent, REQUEST_SELECT_IMAGE);
     }
 
+    public void startSelect(@NonNull Fragment fragment) {
+        Intent intent = new Intent(fragment.getActivity(), AlbumActivity.class);
+        intent.putExtra(ImageSelector.ARG_ALBUM_CONFIG, mConfig);
+        fragment.startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+    }
+
+    public void startSelectWidthData(@NonNull Fragment fragment
+                                    , ArrayList<String> data){
+        Intent intent = new Intent(fragment.getActivity(), AlbumActivity.class);
+        intent.putExtra(ImageSelector.ARG_ALBUM_CONFIG, mConfig);
+        intent.putStringArrayListExtra(START_ALBUM_WITH_DATA, data);
+        fragment.startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+    }
 
     public void startSelect(@NonNull Context context) {
         if (context instanceof Activity) {

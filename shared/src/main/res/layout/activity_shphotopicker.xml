@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_photo_picker_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/fl_photopicker_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+    <!--<Button-->
+        <!--android:id="@+id/tv_photopicker_done"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:text="完成"-->
+        <!--android:textSize="14sp"-->
+        <!--android:background="@drawable/bg_photo_picker_done"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/tv_photopicker_done"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:padding="4dp"-->
+        <!--android:text="完成"-->
+        <!--android:textSize="18sp"-->
+        <!--android:background="@drawable/bg_photo_picker_done"/>-->
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb_photo_picker_progress"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.adapter;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,38 +10,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.RequestManager;
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.album.AlbumFragment;
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
-
-/**
- * Created by lijunguan on 2016/4/13
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.FolderViewHolder> {
+    private static final String sFilePrefix = "file://";
 
     private List<AlbumFolder> mData;
 
     private int mSelectedIndex = 0;
 
-    private final RequestManager mRequestManager;
+//    private final RequestManager mRequestManager;
 
     private AlbumFragment.FolderItemListener mListener;
 
-    public FolderListAdapter(RequestManager requestManager, AlbumFragment.FolderItemListener listener) {
-        mRequestManager = checkNotNull(requestManager);
+    private DisplayImageOptions options;
+
+//    public FolderListAdapter(RequestManager requestManager, AlbumFragment.FolderItemListener listener) {
+//        mRequestManager = checkNotNull(requestManager);
+//        mListener = listener;
+//        mData = new ArrayList<>();
+//    }
+
+    public FolderListAdapter(AlbumFragment.FolderItemListener listener) {
         mListener = listener;
         mData = new ArrayList<>();
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .showImageOnLoading(R.drawable.photopicker_placeholder)
+                .build();
     }
-
 
     @Override
     public FolderListAdapter.FolderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,20 +60,21 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Fo
     @Override
     public void onBindViewHolder(final FolderListAdapter.FolderViewHolder holder, int position) {
 
-        final AlbumFolder floder = mData.get(position);
+        final AlbumFolder folder = mData.get(position);
 
-        mRequestManager
-                .load(floder.getCover().getPath())
-                .asBitmap()
-                .into(holder.mCoverView);
-        holder.mFolderName.setText(floder.getFloderName());
+//        mRequestManager
+//                .load(folder.getCover().getPath())
+//                .asBitmap()
+//                .into(holder.mCoverView);
+        ImageLoader.getInstance().displayImage(sFilePrefix + folder.getCover().getPath(),holder.mCoverView,options);
+        holder.mFolderName.setText(folder.getFloderName());
         holder.mFolderSize.setText(holder.itemView.getContext()
-                .getString(R.string.folder_size, floder.getImgInfos().size()));
+                .getString(R.string.folder_size, folder.getImgInfos().size()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onFloderItemClick(floder);
+                mListener.onFloderItemClick(folder);
                 holder.itemView.setBackgroundColor(holder.mSelectedColor);
                 mSelectedIndex = holder.getAdapterPosition();
                 notifyDataSetChanged();

@@ -2,18 +2,13 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.al
 
 import android.support.annotation.NonNull;
 
-import io.github.lijunguan.imgselector.base.BasePresenter;
-import io.github.lijunguan.imgselector.base.BaseView;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBasePresenter;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseView;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
 
-/**
- * Created by lijunguan on 2016/4/24.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
 public interface ImageContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends PhotoSelectBaseView<Presenter> {
 
         void updateIndicator();
 
@@ -22,7 +17,7 @@ public interface ImageContract {
         void showSelectedCount(int count);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends PhotoSelectBasePresenter {
 
         void selectImage(@NonNull ImageInfo imageInfo, int maxCount, int position);
 

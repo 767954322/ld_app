@@ -2,11 +2,13 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.al
 
 import android.support.annotation.NonNull;
 
-import io.github.lijunguan.imgselector.album.AlbumContract;
-import io.github.lijunguan.imgselector.model.AlbumRepository;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumContract;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.AlbumRepository;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
+
 
 /**
  * Created by lijunguan on 2016/4/24.

@@ -12,13 +12,12 @@
 
     <include layout="@layout/layout_no_image" />
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_photo_library_white_24dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/photopicker_placeholder"
         app:borderWidth="0dp"
         app:elevation="4dp"
         app:layout_anchor="@id/rv_image_grid"

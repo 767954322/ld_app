@@ -3,7 +3,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.cr
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,27 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.autodesk.shejijia.shared.BuildConfig;
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.crop.CropView;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.FileUtils;
+//import com.bumptech.glide.Glide;
+//import com.bumptech.glide.load.engine.DiskCacheStrategy;
+//import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+//import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 import java.io.File;
 import java.io.IOException;
 
-import io.github.lijunguan.imgselector.BuildConfig;
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.cropimage.crop.CropView;
-import io.github.lijunguan.imgselector.utils.FileUtils;
-import io.github.lijunguan.imgselector.utils.KLog;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
-
-/**
- * Created by lijunguan on 2016/4/26.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
 public class CropFragment extends Fragment {
 
     private Activity mContext;
@@ -115,16 +107,16 @@ public class CropFragment extends Fragment {
     }
 
     private void loadImage() {
-        Glide.with(mContext)
-                .load(mImagePath)
-                .asBitmap()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .transform(new FillViewportTransformation(
-                        Glide.get(mContext).getBitmapPool(),
-                        mCropView.getViewportWidth(),
-                        mCropView.getViewportHeight()))
-                .into(mCropView);
+//        Glide.with(mContext)
+//                .load(mImagePath)
+//                .asBitmap()
+//                .skipMemoryCache(true)
+//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                .transform(new FillViewportTransformation(
+//                        Glide.get(mContext).getBitmapPool(),
+//                        mCropView.getViewportWidth(),
+//                        mCropView.getViewportHeight()))
+//                .into(mCropView);
     }
 
     public void cropImage() {
@@ -143,7 +135,7 @@ public class CropFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
             if (BuildConfig.LOG_DEBUG) {
-                KLog.e("Error save cropImage file");
+
             }
         }
     }
@@ -152,55 +144,55 @@ public class CropFragment extends Fragment {
         void onCropCompleted(String path);
     }
 
-    static class FillViewportTransformation extends BitmapTransformation {
-
-        private final int viewportWidth;
-        private final int viewportHeight;
-
-        public FillViewportTransformation(BitmapPool bitmapPool, int viewportWidth, int viewportHeight) {
-            super(bitmapPool);
-            this.viewportWidth = viewportWidth;
-            this.viewportHeight = viewportHeight;
-        }
-
-        @Override
-        protected Bitmap transform(BitmapPool bitmapPool, Bitmap source, int outWidth, int outHeight) {
-            int sourceWidth = source.getWidth();
-            int sourceHeight = source.getHeight();
-
-            Rect target = computeTargetSize(sourceWidth, sourceHeight, viewportWidth, viewportHeight);
-
-            int targetWidth = target.width();
-            int targetHeight = target.height();
-
-            return Bitmap.createScaledBitmap(
-                    source,
-                    targetWidth,
-                    targetHeight,
-                    true);
-        }
-
-        @Override
-        public String getId() {
-            return getClass().getName();
-        }
-
-        Rect computeTargetSize(int sourceWidth, int sourceHeight, int viewportWidth, int viewportHeight) {
-
-            if (sourceWidth == viewportWidth && sourceHeight == viewportHeight) {
-                return new Rect(0, 0, viewportWidth, viewportHeight); // Fail fast for when source matches exactly on viewport
-            }
-
-            float scale;
-            if (sourceWidth * viewportHeight > viewportWidth * sourceHeight) {
-                scale = (float) viewportHeight / (float) sourceHeight;
-            } else {
-                scale = (float) viewportWidth / (float) sourceWidth;
-            }
-            final int recommendedWidth = (int) ((sourceWidth * scale) + 0.5f);
-            final int recommendedHeight = (int) ((sourceHeight * scale) + 0.5f);
-            return new Rect(0, 0, recommendedWidth, recommendedHeight);
-        }
-
-    }
+//    static class FillViewportTransformation extends BitmapTransformation {
+//
+//        private final int viewportWidth;
+//        private final int viewportHeight;
+//
+//        public FillViewportTransformation(BitmapPool bitmapPool, int viewportWidth, int viewportHeight) {
+//            super(bitmapPool);
+//            this.viewportWidth = viewportWidth;
+//            this.viewportHeight = viewportHeight;
+//        }
+//
+//        @Override
+//        protected Bitmap transform(BitmapPool bitmapPool, Bitmap source, int outWidth, int outHeight) {
+//            int sourceWidth = source.getWidth();
+//            int sourceHeight = source.getHeight();
+//
+//            Rect target = computeTargetSize(sourceWidth, sourceHeight, viewportWidth, viewportHeight);
+//
+//            int targetWidth = target.width();
+//            int targetHeight = target.height();
+//
+//            return Bitmap.createScaledBitmap(
+//                    source,
+//                    targetWidth,
+//                    targetHeight,
+//                    true);
+//        }
+//
+//        @Override
+//        public String getId() {
+//            return getClass().getName();
+//        }
+//
+//        Rect computeTargetSize(int sourceWidth, int sourceHeight, int viewportWidth, int viewportHeight) {
+//
+//            if (sourceWidth == viewportWidth && sourceHeight == viewportHeight) {
+//                return new Rect(0, 0, viewportWidth, viewportHeight); // Fail fast for when source matches exactly on viewport
+//            }
+//
+//            float scale;
+//            if (sourceWidth * viewportHeight > viewportWidth * sourceHeight) {
+//                scale = (float) viewportHeight / (float) sourceHeight;
+//            } else {
+//                scale = (float) viewportWidth / (float) sourceWidth;
+//            }
+//            final int recommendedWidth = (int) ((sourceWidth * scale) + 0.5f);
+//            final int recommendedHeight = (int) ((sourceHeight * scale) + 0.5f);
+//            return new Rect(0, 0, recommendedWidth, recommendedHeight);
+//        }
+//
+//    }
 }

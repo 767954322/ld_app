@@ -4,11 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- *
  * 图片选择器配置
  */
 public class AlbumConfig implements Parcelable {
@@ -32,9 +31,7 @@ public class AlbumConfig implements Parcelable {
      */
     private int mGridColumns;
 
-    @ColorInt
-    private int mToolbarColor = -1;
-
+    private List<String> mStartData;
 
     public int getSelectModel() {
         return mSelectModel;
@@ -68,12 +65,12 @@ public class AlbumConfig implements Parcelable {
         this.mGridColumns = mGridColumns;
     }
 
-    public int getToolbarColor() {
-        return mToolbarColor;
+    public List<String> getStartData() {
+        return mStartData;
     }
 
-    public void setToolbarColor(@ColorInt int mToolbarColor) {
-        this.mToolbarColor = mToolbarColor;
+    public void setStartData(List<String> mStartData) {
+        this.mStartData = mStartData;
     }
 
     public AlbumConfig() {
@@ -81,8 +78,8 @@ public class AlbumConfig implements Parcelable {
         mShownCamera = true;
         mSelectModel = ImageSelector.MULTI_MODE;
         mGridColumns = 3;
+        mStartData = new ArrayList<>();
     }
-
 
     @Override
     public int describeContents() {
@@ -95,7 +92,7 @@ public class AlbumConfig implements Parcelable {
         dest.writeInt(this.mMaxCount);
         dest.writeByte(mShownCamera ? (byte) 1 : (byte) 0);
         dest.writeInt(this.mGridColumns);
-        dest.writeInt(this.mToolbarColor);
+        dest.writeStringList(this.mStartData);
     }
 
     protected AlbumConfig(Parcel in) {
@@ -103,7 +100,7 @@ public class AlbumConfig implements Parcelable {
         this.mMaxCount = in.readInt();
         this.mShownCamera = in.readByte() != 0;
         this.mGridColumns = in.readInt();
-        this.mToolbarColor = in.readInt();
+        in.readStringList(mStartData);
     }
 
     public static final Creator<AlbumConfig> CREATOR = new Creator<AlbumConfig>() {

@@ -5,11 +5,6 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-/**
- * Created by lijunguan on 2016/4/8
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class AlbumFolder implements Parcelable {
     /**
      * 相册目录的路径

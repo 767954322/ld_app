@@ -70,6 +70,19 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.CropActivity"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
         <activity
             android:name=".EnterpriseHomeActivity"
             android:alwaysRetainTaskState="true"

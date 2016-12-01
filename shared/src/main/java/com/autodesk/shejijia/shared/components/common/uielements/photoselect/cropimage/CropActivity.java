@@ -5,16 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.base.BaseActivity;
-import io.github.lijunguan.imgselector.utils.ActivityUtils;
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.ActivityUtils;
 
-/**
- * Created by lijunguan on 2016/4/26.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
-public class CropActivity extends BaseActivity implements CropFragment.CropImageListener {
+public class CropActivity extends PhotoSelectBaseActivity implements CropFragment.CropImageListener {
 
     private CropFragment mCropFragment;
 
@@ -53,4 +48,5 @@ public class CropActivity extends BaseActivity implements CropFragment.CropImage
         setResult(RESULT_OK, intent);
         finish();
     }
+
 }

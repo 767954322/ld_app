@@ -5,23 +5,18 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.ImageSelector;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.CropActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.AlbumDataSource;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.AlbumRepository;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
+
 import java.io.File;
 import java.util.List;
 
-import io.github.lijunguan.imgselector.ImageSelector;
-import io.github.lijunguan.imgselector.cropimage.CropActivity;
-import io.github.lijunguan.imgselector.model.AlbumDataSource;
-import io.github.lijunguan.imgselector.model.AlbumRepository;
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
-
-/**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
 public class AlbumPresenter implements AlbumContract.Presenter {
 
     private AlbumContract.View mAlbumView;

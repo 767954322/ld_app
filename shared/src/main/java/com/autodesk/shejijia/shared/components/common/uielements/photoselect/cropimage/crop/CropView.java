@@ -36,11 +36,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkArgument;
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkArgument;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
 /**
-
+ * CropView 图片裁剪
  */
 public class CropView extends ImageView {
 

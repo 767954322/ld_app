@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.album.previewimage.ImageDetailFragment;
-import io.github.lijunguan.imgselector.base.BaseActivity;
-import io.github.lijunguan.imgselector.model.AlbumRepository;
-import io.github.lijunguan.imgselector.utils.ActivityUtils;
-import io.github.lijunguan.imgselector.utils.KLog;
+import com.autodesk.shejijia.shared.R;
+//import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.previewimage.ImageDetailFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.AlbumRepository;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.ActivityUtils;
 
 
-public class AlbumActivity extends BaseActivity {
+public class AlbumActivity extends PhotoSelectBaseActivity {
 
     public static final String TAG = AlbumActivity.class.getSimpleName();
 
@@ -29,28 +28,29 @@ public class AlbumActivity extends BaseActivity {
         initViews();
 
         AlbumFragment albumFragment;
-        ImageDetailFragment imageDetailFragment;
+//        ImageDetailFragment imageDetailFragment;
 
-        if (savedInstanceState != null) {   //内存重启时调用   解决 内存重启时可能发生的Fragment重叠异常
-            imageDetailFragment =
-                    (ImageDetailFragment) getSupportFragmentManager().findFragmentByTag(ImageDetailFragment.TAG);
-            albumFragment =
-                    (AlbumFragment) getSupportFragmentManager().findFragmentByTag(AlbumFragment.TAG);
-
-            if (imageDetailFragment != null && albumFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .hide(albumFragment)
-                        .show(imageDetailFragment)
-                        .commit();
-            }
-        } else {
+//        if (savedInstanceState != null) {   //内存重启时调用   解决 内存重启时可能发生的Fragment重叠异常
+//            imageDetailFragment =
+//                    (ImageDetailFragment) getSupportFragmentManager().findFragmentByTag(ImageDetailFragment.TAG);
+//            albumFragment =
+//                    (AlbumFragment) getSupportFragmentManager().findFragmentByTag(AlbumFragment.TAG);
+//
+//            if (imageDetailFragment != null && albumFragment != null) {
+//                getSupportFragmentManager().beginTransaction()
+//                        .hide(albumFragment)
+//                        .show(imageDetailFragment)
+//                        .commit();
+//            }
+//        }
+//        else {
             //创建AlbumFragment
 
             albumFragment = AlbumFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), albumFragment, AlbumFragment.TAG, false);
 
-        }
+//        }
         AlbumRepository albumRepository = AlbumRepository.getInstance(this);
         //创建AlbumPresenter
         mAlbumPresenter = new AlbumPresenter(
@@ -59,8 +59,12 @@ public class AlbumActivity extends BaseActivity {
                 albumFragment);
     }
 
+//    @Override
+//    protected int getLayoutResID() {
+//        return 0;
+////    }
 
-    private void initViews() {
+    protected void initViews() {
         mSubmitBtn = (Button) mToolbar.findViewById(R.id.btn_submit);
         mSubmitBtn.setEnabled(false);
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,15 +75,20 @@ public class AlbumActivity extends BaseActivity {
         });
     }
 
+//    @Override
+//    protected int initDatas(Bundle savedInstanceState) {
+//        return 0;
+//    }
+
 
     public void setSubmitBtnText(CharSequence text, boolean enabled) {
         mSubmitBtn.setText(text);
         mSubmitBtn.setEnabled(enabled);
     }
 
-    public void setToolbarTitle(CharSequence title) {
-        mToolbar.setTitle(title);
-    }
+//    public void setToolbarTitle(CharSequence title) {
+//        mToolbar.setTitle(title);
+//    }
 
     @Override
     public void onBackPressed() {
@@ -107,13 +116,11 @@ public class AlbumActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        KLog.d(TAG, "=======onDestroy========");
         mAlbumPresenter.clearCache();
     }
 
     @Override
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
-        KLog.d("=========onConfigurationChanged===========");
     }
 }

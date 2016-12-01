@@ -21,15 +21,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import io.github.lijunguan.imgselector.R;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
+import com.autodesk.shejijia.shared.R;
+
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
 
 /**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
  * 提供方法帮助Activity加载它的UI
  */
 public class ActivityUtils {

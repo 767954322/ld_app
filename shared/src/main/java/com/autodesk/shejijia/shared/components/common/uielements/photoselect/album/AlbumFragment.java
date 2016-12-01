@@ -22,40 +22,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.konifar.fab_transformation.FabTransformation;
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.AlbumConfig;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.ImageSelector;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.adapter.FolderListAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.adapter.ImageGridAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.previewimage.ImageDetailPresenter;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.widget.GridDividerDecorator;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.CropActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.CropFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.AlbumRepository;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.ActivityUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.lijunguan.imgselector.AlbumConfig;
-import io.github.lijunguan.imgselector.ImageSelector;
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.album.adapter.FolderListAdapter;
-import io.github.lijunguan.imgselector.album.adapter.ImageGridAdapter;
-import io.github.lijunguan.imgselector.album.previewimage.ImageDetailFragment;
-import io.github.lijunguan.imgselector.album.previewimage.ImageDetailPresenter;
-import io.github.lijunguan.imgselector.album.widget.GridDividerDecorator;
-import io.github.lijunguan.imgselector.base.BaseFragment;
-import io.github.lijunguan.imgselector.cropimage.CropActivity;
-import io.github.lijunguan.imgselector.cropimage.CropFragment;
-import io.github.lijunguan.imgselector.model.AlbumRepository;
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
-import io.github.lijunguan.imgselector.utils.ActivityUtils;
-import io.github.lijunguan.imgselector.utils.FileUtils;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
 
-/**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
-public class AlbumFragment extends BaseFragment
+public class AlbumFragment extends PhotoSelectBaseFragment
         implements AlbumContract.View, View.OnClickListener {
 
     public static final String TAG = AlbumFragment.class.getSimpleName();
@@ -93,7 +84,7 @@ public class AlbumFragment extends BaseFragment
      * 当前选择的相册目录下的 图片集合
      */
     private ArrayList<ImageInfo> mImages;
-    private RequestManager mRequestManager;
+//    private RequestManager mRequestManager;
 
 
     public static AlbumFragment newInstance() {
@@ -114,9 +105,11 @@ public class AlbumFragment extends BaseFragment
         //改用接口监听 而不是让Adapter持有Presenter对象，
         // 1.更符合MVP架构 2.解决当程序处于后台，系统因资源不足杀死App后，复原时会先执行Fragment的onCreate()方法
         //再执行 Activity的onCreate()方法，导致mPresenter throw NullPointerException异常
-        mRequestManager = Glide.with(this);
-        mImagesAdapter = new ImageGridAdapter(mRequestManager, mAlbumConfig, mItemListener);
-        mFolderAdapter = new FolderListAdapter(mRequestManager, mFolderItemClickListener);
+//        mRequestManager = Glide.with(this);
+//        mImagesAdapter = new ImageGridAdapter(mRequestManager, mAlbumConfig, mItemListener);
+        mImagesAdapter = new ImageGridAdapter(mAlbumConfig, mItemListener);
+//        mFolderAdapter = new FolderListAdapter(mRequestManager, mFolderItemClickListener);
+        mFolderAdapter = new FolderListAdapter(mFolderItemClickListener);
     }
 
     @Override
@@ -149,9 +142,9 @@ public class AlbumFragment extends BaseFragment
         public void onImageClick(int position, ImageInfo imageInfo, int selectModel) {
             //根据选择模式，打开不同的UI
             if (selectModel == ImageSelector.MULTI_MODE) {
-                mPresenter.previewImage(position);
+//                mPresenter.previewImage(position);
             } else if (selectModel == ImageSelector.AVATOR_MODE) {
-                mPresenter.cropImage(imageInfo);
+//                mPresenter.cropImage(imageInfo);
             }
         }
 
@@ -260,17 +253,19 @@ public class AlbumFragment extends BaseFragment
 
     @Override
     public void showFolderList() {
-        FabTransformation.with(mFab)
-                .setOverlay(mOverlay)
-                .transformTo(mRvFolderList);
+//        FabTransformation.with(mFab)
+//                .setOverlay(mOverlay)
+//                .transformTo(mRvFolderList);
+        mRvFolderList.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void hideFolderList() {
-        FabTransformation.with(mFab)
-                .setOverlay(mOverlay)
-                .transformFrom(mRvFolderList);
+//        FabTransformation.with(mFab)
+//                .setOverlay(mOverlay)
+//                .transformFrom(mRvFolderList);
+        mRvFolderList.setVisibility(View.GONE);
     }
 
     @Override
@@ -322,38 +317,40 @@ public class AlbumFragment extends BaseFragment
         }
     }
 
+    // TODO: 16/12/1 需要解决依赖问题
     @Override
     public void showImageDetailUi(int currentPosition) {
-        ImageDetailFragment fragment = (ImageDetailFragment) mContext
-                .getSupportFragmentManager()
-                .findFragmentByTag(ImageDetailFragment.TAG);
-
-        if (fragment == null) {
-            fragment = ImageDetailFragment.newInstance(mImages, currentPosition);
-            AlbumRepository albumRepository = AlbumRepository.getInstance(mContext);
-
-            new ImageDetailPresenter(
-                    albumRepository,
-                    fragment,
-                    AlbumFragment.this);
-
-            ActivityUtils.addFragmentToActivity(mContext.getSupportFragmentManager(),
-                    fragment,
-                    ImageDetailFragment.TAG,
-                    true); //将ImageDetailFragment 加入返回栈。
-        }
-        mContext.getSupportFragmentManager()
-                .beginTransaction()
-                .hide(this)
-                .show(fragment)
-                .commit();
+//        ImageDetailFragment fragment = (ImageDetailFragment) mContext
+//                .getSupportFragmentManager()
+//                .findFragmentByTag(ImageDetailFragment.TAG);
+//
+//        if (fragment == null) {
+//            fragment = ImageDetailFragment.newInstance(mImages, currentPosition);
+//            AlbumRepository albumRepository = AlbumRepository.getInstance(mContext);
+//
+//            new ImageDetailPresenter(
+//                    albumRepository,
+//                    fragment,
+//                    AlbumFragment.this);
+//
+//            ActivityUtils.addFragmentToActivity(mContext.getSupportFragmentManager(),
+//                    fragment,
+//                    ImageDetailFragment.TAG,
+//                    true); //将ImageDetailFragment 加入返回栈。
+//        }
+//        mContext.getSupportFragmentManager()
+//                .beginTransaction()
+//                .hide(this)
+//                .show(fragment)
+//                .commit();
     }
 
+    // TODO: 16/12/1 需要解决依赖问题 
     @Override
     public void showImageCropUi(@NonNull String imagePath) {
-        Intent intent = new Intent(mContext, CropActivity.class);
-        intent.putExtra(CropFragment.ARG_IMAGE_PATH, imagePath);
-        startActivityForResult(intent, ImageSelector.REQUEST_CROP_IMAGE);
+//        Intent intent = new Intent(mContext, CropActivity.class);
+//        intent.putExtra(CropFragment.ARG_IMAGE_PATH, imagePath);
+//        startActivityForResult(intent, ImageSelector.REQUEST_CROP_IMAGE);
     }
 
     @Override
@@ -413,7 +410,7 @@ public class AlbumFragment extends BaseFragment
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            mContext.setToolbarTitle(getString(R.string.album_activity_title));
+//            mContext.setToolbarTitle(getString(R.string.album_activity_title));
         }
     }
 }

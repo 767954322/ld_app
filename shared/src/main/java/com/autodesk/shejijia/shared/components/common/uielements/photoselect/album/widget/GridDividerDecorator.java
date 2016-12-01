@@ -10,11 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by lijunguan on 2016/4/11
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class GridDividerDecorator extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
     private Drawable mDivider;

@@ -2,11 +2,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.ut
 
 import android.support.annotation.Nullable;
 
-/**
- * Created by lijunguan on 2016/4/21.
- * emial: lijunguan199210@gmail.com
- * blog: https://lijunguan.github.io
- */
 public class CommonUtils {
 
     /**

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/activity_vertical_margin"
-
     android:paddingTop="8dp"
     >
 
@@ -12,14 +11,14 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/photopicker_placeholder" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/iv_cover"
         android:layout_marginTop="3dp"
-        android:background="@color/divider" />
+        android:background="#B6B6B6" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Camera"
-            android:textColor="@color/primary_text"
+            android:textColor="#212121"
             android:textSize="16sp" />
 
         <TextView
@@ -44,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="@string/folder_size"
-            android:textColor="@color/secondary_text"
+            android:textColor="#727272"
             android:textSize="13sp" />
     </LinearLayout>
 

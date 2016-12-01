@@ -5,4 +5,5 @@ package com.autodesk.shejijia.shared.components.common.uielements.commoncomment.
  */
 
 public interface OnItemClickListener {
+    void onItemClick(Object object,int id);
 }

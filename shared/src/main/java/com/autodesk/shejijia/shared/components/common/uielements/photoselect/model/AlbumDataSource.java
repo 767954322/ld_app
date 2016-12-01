@@ -4,16 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 
-import java.util.List;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
 
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
+import java.util.List;
 
 
 /**
- * Created by lijunguan on 2016/4/8
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- * <p>
  * Model 层接口
  */
 public interface AlbumDataSource {

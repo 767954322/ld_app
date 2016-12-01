@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.photoselect.mo
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -9,6 +10,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.photoselect.model.entity.ImageInfo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,22 +22,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.github.lijunguan.imgselector.R;
-import io.github.lijunguan.imgselector.model.entity.AlbumFolder;
-import io.github.lijunguan.imgselector.model.entity.ImageInfo;
-import io.github.lijunguan.imgselector.utils.KLog;
+import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
-import static io.github.lijunguan.imgselector.utils.CommonUtils.checkNotNull;
-
-
-/**
- * Created by lijunguan on 2016/4/8
- * email: lijunguan199210@gmail.com
- * blog : https://lijunguan.github.io
- */
 public class AlbumRepository implements AlbumDataSource {
 
     public static final String TAG = AlbumRepository.class.getSimpleName();
+
+    private static final String sFilePrefix = "file://";
 
     private static volatile AlbumRepository mInstance;
     /**
@@ -52,6 +49,8 @@ public class AlbumRepository implements AlbumDataSource {
 
     private CursorLoader mLoader;
 
+    private Context mContext;
+
     public static AlbumRepository getInstance(Context context) {
         if (mInstance == null) {
             synchronized (AlbumRepository.class) {
@@ -65,7 +64,7 @@ public class AlbumRepository implements AlbumDataSource {
     }
 
     public AlbumRepository(Context context) {
-
+        mContext = context;
         String[] IMAGE_PROJECTION = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DISPLAY_NAME,
@@ -132,7 +131,6 @@ public class AlbumRepository implements AlbumDataSource {
                         albumFloder.getImgInfos().add(imageInfo);
                     }
                 }
-                KLog.i(TAG, "========nLoadFinished :" + albumFolders.size());
 
                 generalAlbumFolder.setCover(generalAlbumFolder.getImgInfos().get(0));
                 callback.onInitFinish(albumFolders);
@@ -190,6 +188,112 @@ public class AlbumRepository implements AlbumDataSource {
         long addedTime = data.getLong(data.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED));
         long imageSize = data.getLong(data.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
         return new ImageInfo(imgPath, displayName, addedTime, imageSize);
+    }
+
+    public static String getThumbnailUri(int originalId, Context context, boolean conformsToFileScheme) {
+        assert (context != null);
+
+        String unmodifiedUri = getUriFromThumbnailProvider(originalId, context);
+
+        if (unmodifiedUri == null || unmodifiedUri.isEmpty())
+            unmodifiedUri = getUriFromImageProvider(originalId, context);
+
+        if (unmodifiedUri == null || unmodifiedUri.isEmpty())
+            return null;
+
+        if (conformsToFileScheme)
+            return sFilePrefix + unmodifiedUri;
+        else
+            return unmodifiedUri;
+    }
+
+    private static String getUriFromImageProvider(int originalId, Context context) {
+        String[] projection =
+                {
+                        MediaStore.Images.Media.DATA
+                };
+
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String selection = MediaStore.Images.Media._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(originalId)};
+        String orderBy = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
+
+        Cursor cursor = MediaStore.Images.Media.query(context.getContentResolver(),
+                uri, projection, selection, selectionArgs, orderBy);
+
+        try {
+            if (cursor == null)
+                return null;
+
+            if (cursor.getCount() == 0) {
+                cursor.close();
+                return null;
+            }
+
+            if (cursor.moveToFirst()) {
+                String dataUri = cursor.getString(cursor.getColumnIndex(
+                        MediaStore.Images.Media.DATA));
+
+                cursor.close();
+
+                return dataUri;
+            } else {
+                // The image does not have an image in the image table; abandon all hope
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.d("MPPhotoUtility", "Exception while querying image table: " + e.getMessage());
+
+            cursor.close();
+        }
+
+        return null;
+    }
+
+
+    private static String getUriFromThumbnailProvider(int originalId, Context context) {
+        String[] projection =
+                {
+                        MediaStore.Images.Thumbnails.DATA,
+                        MediaStore.Images.Thumbnails.HEIGHT,
+                        MediaStore.Images.Thumbnails.WIDTH
+                };
+
+        Cursor cursor = MediaStore.Images.Thumbnails.queryMiniThumbnail(context.getContentResolver(),
+                originalId, MediaStore.Images.Thumbnails.MINI_KIND, projection);
+
+        try {
+            if (cursor == null)
+                return null;
+
+            if (cursor.getCount() == 0) {
+                cursor.close();
+                return null;
+            }
+
+            if (cursor.moveToFirst()) {
+                String dataUri = cursor.getString(cursor.getColumnIndex(
+                        MediaStore.Images.Thumbnails.DATA));
+                Integer height = cursor.getInt(cursor.getColumnIndex(
+                        MediaStore.Images.Thumbnails.HEIGHT));
+                Integer width = cursor.getInt(cursor.getColumnIndex(
+                        MediaStore.Images.Thumbnails.WIDTH));
+
+                cursor.close();
+
+                if (width > 0 && height > 0)
+                    return dataUri;
+            } else {
+                // The image does not have a thumbnail in the thumbnail provider
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.d("MPPhotoUtility", "Exception while querying thumbnail table: " + e.getMessage());
+
+            cursor.close();
+        }
+
+        return null;
     }
 
     @Override
