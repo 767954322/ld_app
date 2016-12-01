@@ -28,6 +28,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtil
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -46,6 +47,8 @@ import org.json.JSONObject;
  */
 
 public class NewInventoryActivity extends NavigationBarActivity implements View.OnClickListener, TextWatcher, OnItemClickListener {
+
+    private static final String REGEX_COMMUNITY_NAME = "^[\\u4e00-\\u9fa5_a-zA-Z0-9_]{2,16}$";
 
     private TextView mTvProjectName;
     private EditText mEtMemberAccount;
@@ -234,7 +237,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             /**
              * 小区名称
              */
-            boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
+            boolean mMatchesCommunityName = mCommunityName.matches(REGEX_COMMUNITY_NAME);
             if (!mMatchesCommunityName) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
@@ -289,8 +292,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, acs_member_id);
-            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGN_PROJECT_ID, mDesign_project_id);
-            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MAIN_PROJECT_ID, mMain_project_id);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGN_PROJECT_ID, 0 == mDesign_project_id ? null : mDesign_project_id);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MAIN_PROJECT_ID, 0 == mMain_project_id ? null : mMain_project_id);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
 
@@ -373,6 +376,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
+                MPNetworkUtils.logError(TAG, volleyError);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_fail),
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
             }
@@ -388,12 +392,12 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 CustomProgress.cancelDialog();
                 MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
                 Integer flag = entity.getCheck_flag();
-                if (flag == 0 && isEditable) {
+                acs_member_id = entity.getAcs_member_id();
+                if (flag == 0 && isEditable || StringUtils.isEmpty(acs_member_id)) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_member_account_not_exit),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
                     return;
                 }
-                acs_member_id = entity.getAcs_member_id();
                 newInvertoryList(acs_member_id);
             }
 
@@ -421,7 +425,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private void updateNotify(SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {
 //fix zjl 判断是否是创建空白清单 判断Consumer_id && projectid 不等于0
 //        if (!StringUtils.isEmpty(designerProjectsBean)) {
-        if (!StringUtils.isEmpty(designerProjectsBean) &&designerProjectsBean.getDesign_project_id() != 0 && !TextUtils.isEmpty(designerProjectsBean.getConsumer_id())) {
+        if (!StringUtils.isEmpty(designerProjectsBean) && designerProjectsBean.getDesign_project_id() != 0 && !TextUtils.isEmpty(designerProjectsBean.getConsumer_id())) {
             isEditable = false;
             setEditTextEnable(isEditable, StringUtils.isEmpty(designerProjectsBean.getCommunity_address()));
 
