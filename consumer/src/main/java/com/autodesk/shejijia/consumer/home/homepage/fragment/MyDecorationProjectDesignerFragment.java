@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -49,8 +50,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
-        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
+        int high_level_audit = ConsumerApplication.high_level_audit;
+        int is_loho = ConsumerApplication.is_loho;
         setDesigneBaseFragment(high_level_audit, is_loho);
     }
 

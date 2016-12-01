@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -85,24 +86,19 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.rl_personal_clear_cache)
-        {
+        if (i == R.id.rl_personal_clear_cache) {
             mAlertView.show();
 
-        }
-        else if (i == R.id.bt_consumer_exit)
-        {
+        } else if (i == R.id.bt_consumer_exit) {
             CommonUtils.clearAppCache(this);
-
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);
-
             LoginUtils.doLogout(this);
+            ConsumerApplication.high_level_audit = 0;
+            ConsumerApplication.is_loho = 0;
             finish();
 
-        }
-        else if (i == R.id.rl_personal_b_about_designer)
-        {
+        } else if (i == R.id.rl_personal_b_about_designer) {
             CommonUtils.launchActivity(this, AboutActivity.class);
 
         }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.BuildConfig;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Filtrate3DActivity;
@@ -716,8 +717,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+                    ConsumerApplication.high_level_audit = high_level_audit;
                 }
                 is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                ConsumerApplication.is_loho = is_loho;
                 LogManager.getLogger().d("url", "high_level_audit:" + high_level_audit + "is_loho:" + is_loho);
             }
 

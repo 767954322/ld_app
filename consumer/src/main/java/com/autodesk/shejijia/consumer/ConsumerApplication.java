@@ -108,5 +108,7 @@ public class ConsumerApplication extends AdskApplication {
     private static int mMainThreadId;
     private CityDataHelper dataHelper;
     public static String thread_id = "";
+    public static int high_level_audit = 0;
+    public static int is_loho = 0;
 
 }

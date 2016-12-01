@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -10,9 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -263,6 +266,9 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.dialog.cancel();
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                int statusCode = networkResponse.statusCode;
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });
