@@ -4,7 +4,7 @@
         android:maxLevel="0" >
         <shape android:shape="rectangle">
             <solid android:color="@color/task_status_blue"/>
-            <corners android:radius="@dimen/textview_corners_normal" />
+            <corners android:radius="@dimen/textview_corners_small" />
             <padding
                 android:bottom="@dimen/spacing_padding_micro"
                 android:left="@dimen/spacing_padding_normal"
@@ -16,7 +16,7 @@
         android:maxLevel="1" >
         <shape android:shape="rectangle">
             <solid android:color="@color/task_status_light_blue"/>
-            <corners android:radius="@dimen/textview_corners_normal" />
+            <corners android:radius="@dimen/textview_corners_small" />
             <padding
                 android:bottom="@dimen/spacing_padding_micro"
                 android:left="@dimen/spacing_padding_normal"
@@ -28,7 +28,7 @@
         android:maxLevel="2" >
         <shape android:shape="rectangle">
             <solid android:color="@color/task_status_yellow"/>
-            <corners android:radius="@dimen/textview_corners_normal" />
+            <corners android:radius="@dimen/textview_corners_small" />
             <padding
                 android:bottom="@dimen/spacing_padding_micro"
                 android:left="@dimen/spacing_padding_normal"
@@ -40,7 +40,7 @@
         android:maxLevel="3" >
         <shape android:shape="rectangle">
             <solid android:color="@color/task_status_orange"/>
-            <corners android:radius="@dimen/textview_corners_normal" />
+            <corners android:radius="@dimen/textview_corners_small" />
             <padding
                 android:bottom="@dimen/spacing_padding_micro"
                 android:left="@dimen/spacing_padding_normal"
@@ -52,7 +52,7 @@
         android:maxLevel="4" >
         <shape android:shape="rectangle">
             <solid android:color="@color/task_status_grey"/>
-            <corners android:radius="@dimen/textview_corners_normal" />
+            <corners android:radius="@dimen/textview_corners_small" />
             <padding
                 android:bottom="@dimen/spacing_padding_micro"
                 android:left="@dimen/spacing_padding_normal"
