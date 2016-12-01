@@ -995,7 +995,7 @@
     <string name="please_input_consumer_name_correctly">请正确输入甲方姓名</string>
     <string name="please_input_consumer_phone_correctly">请正确输入甲方手机号</string>
     <string name="please_input_consumer_email_correctly">请正确输入甲方电子邮箱</string>
-    <string name="please_input_render_count_correctly">请正确输入渲染图张数</string>
+    <string name="please_input_render_count_correctly">请输入1-99张渲染图</string>
     <string name="please_input_project_amount_correctly">请正确输入本项目设计总额</string>
 
 
