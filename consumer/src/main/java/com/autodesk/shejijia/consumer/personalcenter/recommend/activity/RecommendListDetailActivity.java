@@ -396,10 +396,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      */
     private RecommendSCFDBean getMaterialRecommendSCFDBean(CheckedInformationBean checkedInformationBean) {
         RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+        MaterialCategoryBean.Categories3dBean categories3dBean = checkedInformationBean.getCategories3dBean();
         MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
         List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
         recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
         recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
+        recommendSCFDBean1.setCategory_3d_id(categories3dBean.getCategory_3d_id());
+        recommendSCFDBean1.setCategory_3d_name(categories3dBean.getCategory_3d_name());
         recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
         return recommendSCFDBean1;
     }
