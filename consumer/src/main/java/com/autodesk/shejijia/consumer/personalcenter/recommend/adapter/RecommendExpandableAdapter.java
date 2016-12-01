@@ -116,7 +116,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
         if (mRecommendSCFDList.get(groupPosition).getBrands().size() < mRecommendSCFDList.get(groupPosition).getBrand_count_limit()) {
             mViewHolder.tvBrandAdd.setEnabled(true);
-            mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
+            mViewHolder.tvBrandAdd.setBackgroundResource(R.drawable.recommend_btn_bag_style);
             mViewHolder.tvBrandAdd.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
         } else {
             mViewHolder.tvBrandAdd.setEnabled(false);
