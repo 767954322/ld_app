@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_margin_normal"
-                    android:background="@drawable/project_list_tv_orange_shape"
+                    android:background="@drawable/bg_task_status"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_small"

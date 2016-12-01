@@ -35,7 +35,7 @@ public class ApiManager {
      * @return false 正式环境  ;  true 测试环境
      */
     public static boolean isRunningDevelopment(String runningDevelopment) {
-        return Config.IS_PRODUCTION;
+        return !Config.IS_PRODUCTION;
     }
 
     /**

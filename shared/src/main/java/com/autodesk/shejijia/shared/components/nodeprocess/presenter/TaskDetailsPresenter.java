@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -12,7 +11,6 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsTasksAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
 import java.util.ArrayList;
@@ -48,6 +46,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.editComment("Comments"); // TODO show or edit
 
         mTaskDetailsView.showTaskMembers(new ArrayList<Member>()); // TODO get members
+
+        mTaskDetailsView.showActions(mTask);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     }
 
     private String getTaskTime() {
-        Time time = TaskUtils.getTaskTime(mTask);
+        Time time = TaskUtils.getDisplayTime(mTask);
         return DateUtil.getStringDateByFormat(DateUtil.iso8601ToDate(time.getStart()),
                 UIUtils.getString(R.string.date_format_task_details));
     }

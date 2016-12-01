@@ -99,11 +99,11 @@ public class ConstructionConstants {
         public static final String REINSPECTION = "reinspection";//强制复验
         public static final String RECTIFICATION = "rectification";//监督整改
         public static final String REINSPECTING = "reinspecting";//复验中
-        public static final String REINSPECTION_AND_RECTIFICATION = "reinspectionandrectification";//复验并整改
-        public static final String REINSPECT_RESERVING = "reinspectreserving"; //复验待预约
-        public static final String REINSPECT_RESERVED = "reinspectreserved";//复验已预约
+        public static final String REINSPECTION_AND_RECTIFICATION = "reinspection_and_rectification";//复验并整改
+        public static final String REINSPECT_RESERVING = "reinspect_reserving"; //复验待预约
+        public static final String REINSPECT_RESERVED = "reinspection_reserved";//复验已预约
         public static final String REINSPECT_INPROGRESS = "reinspection_inprogress";//复验进行中
-        public static final String REINSPECT_DELAY = "reinspectdelayed";//复验延期
+        public static final String REINSPECT_DELAY = "reinspect_delayed";//复验延期
         public static final String DELETED = "deleted";//已删除
     }
 

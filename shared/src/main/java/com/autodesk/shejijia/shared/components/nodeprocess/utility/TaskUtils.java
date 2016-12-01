@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.utility;
 
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
@@ -82,18 +81,34 @@ public class TaskUtils {
         return displayStringId;
     }
 
+    /**
+     * Return status level which will decide background color
+     * @param status
+     * @return
+     */
     public static int getStatusLevel(String status) {
         int level;
         switch (status.toLowerCase()) {
             case ConstructionConstants.TaskStatus.RESERVING:
+            case ConstructionConstants.TaskStatus.REINSPECT_RESERVING:
             case ConstructionConstants.TaskStatus.INPROGRESS:
+            case ConstructionConstants.TaskStatus.REINSPECTING:
+            case ConstructionConstants.TaskStatus.REINSPECT_INPROGRESS:
                 level = 1;
                 break;
             case ConstructionConstants.TaskStatus.DELAYED:
+            case ConstructionConstants.TaskStatus.REINSPECT_DELAY:
                 level = 2;
                 break;
             case ConstructionConstants.TaskStatus.UNQUALIFIED:
+            case ConstructionConstants.TaskStatus.REINSPECTION:
+            case ConstructionConstants.TaskStatus.REJECTED:
+            case ConstructionConstants.TaskStatus.RECTIFICATION:
+            case ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION:
                 level = 3;
+                break;
+            case ConstructionConstants.TaskStatus.RESOLVED:
+                level = 4;
                 break;
             default:
                 level = 0;
@@ -103,7 +118,12 @@ public class TaskUtils {
         return level;
     }
 
-    public static Time getTaskTime(Task task) {
+    /**
+     * Return display time for project details and task details screen
+     * @param task
+     * @return
+     */
+    public static Time getDisplayTime(Task task) {
         String category = task.getCategory();
         if (TextUtils.isEmpty(task.getCategory())) {
             return null;

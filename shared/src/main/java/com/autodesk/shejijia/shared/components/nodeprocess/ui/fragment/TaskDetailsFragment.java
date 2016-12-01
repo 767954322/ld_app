@@ -85,27 +85,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         super.onResume();
     }
 
-    private void initView(View view) {
-        mCloseBtn = (ImageButton) view.findViewById(R.id.imgBtn_close);
-        mHeaderView = (ViewGroup) view.findViewById(R.id.ll_header);
-        mTaskNameView = (TextView) view.findViewById(R.id.tv_task_name);
-        mTaskStatusView = (TextView) view.findViewById(R.id.tv_task_status);
-        mTaskDateView = (TextView) view.findViewById(R.id.tv_task_date);
-        mTaskAddressView = (TextView) view.findViewById(R.id.tv_task_address);
-        mTaskMemberListView = (RecyclerView) view.findViewById(R.id.rcy_task_person_list);
-        mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
-        mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
-    }
-
-    private void initEvent(){
-        mCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-    }
-
     @Override
     public void showNetError(ResponseError error) {
 
@@ -157,7 +136,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mTaskPhoneView.setText(companyName + " " + phoneNumber);
     }
 
-    // TODO refactor comments
     @Override
     public void showComment(@NonNull String comment) {
         mCommentEditView.setText(comment);
@@ -171,5 +149,26 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public void showActions(@NonNull Task task) {
         // TODO
+    }
+
+    private void initView(View view) {
+        mCloseBtn = (ImageButton) view.findViewById(R.id.imgBtn_close);
+        mHeaderView = (ViewGroup) view.findViewById(R.id.ll_header);
+        mTaskNameView = (TextView) view.findViewById(R.id.tv_task_name);
+        mTaskStatusView = (TextView) view.findViewById(R.id.tv_task_status);
+        mTaskDateView = (TextView) view.findViewById(R.id.tv_task_date);
+        mTaskAddressView = (TextView) view.findViewById(R.id.tv_task_address);
+        mTaskMemberListView = (RecyclerView) view.findViewById(R.id.rcy_task_person_list);
+        mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
+        mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
+    }
+
+    private void initEvent(){
+        mCloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 }

@@ -63,6 +63,7 @@
     <color name="task_status_light_blue">@color/con_middle_blue</color>
     <color name="task_status_yellow">@color/con_yellow</color>
     <color name="task_status_orange">@color/con_red</color>
+    <color name="task_status_grey">#AAB9C3</color>
 
     <!-- project progressbar default colors-->
     <color name="progressbar_white">#ffffff</color>
