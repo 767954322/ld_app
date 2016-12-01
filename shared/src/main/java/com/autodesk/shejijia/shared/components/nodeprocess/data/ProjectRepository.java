@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
@@ -128,5 +129,10 @@ public final class ProjectRepository implements ProjectDataSource {
     private PlanInfo copyPlan(PlanInfo planInfo) {
         String jsonString = GsonUtil.beanToString(planInfo);
         return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
+    }
+
+    @Override
+    public void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMessageIssue, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getUnReadMessageAndIssue(projectIds, requestTag, callback);
     }
 }

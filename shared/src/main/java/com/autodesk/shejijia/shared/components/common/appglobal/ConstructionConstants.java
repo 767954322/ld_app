@@ -34,6 +34,7 @@ public class ConstructionConstants {
     public static final String PROJECT_LIST_BY_LIKE = "projectLists_by_like"; //根据是否星标查询列表的标记
     public static final String REQUEST_TAG_FETCH_PLAN = "project_list";
     public static final String REQUEST_TAG_UPDATE_PLAN = "update_plan";
+    public static final String REQUEST_TAG_UNREAD_MESSAGEANDISSUE = "message_issue";
 
     //项目列表查询的状态
     public static final String PROJECT_STATUS_COMPLETE = "COMPLETED";//已完成
@@ -115,6 +116,15 @@ public class ConstructionConstants {
         public static final String ISSUE_LIST_TYPE_CONSUMER = "consumer_tag";//消费端查看单个问题追踪
         public static final int ADD_ISSUE_DESCRIPTION_REQUEST_CODE = 1;//添加问题追踪描述返回请求码
         public static final String ADD_ISSUE_DESCRIPTION_RESULT_KEY = "key_issuedescription";//添加问题追踪描述返回KEY
+	}
+	
+    public static class ProjectStatus {
+        public static final String ALL = "ALL";
+        public static final String COMPLETE = "COMPLETED";
+        public static final String UNCOMPLET = "UNCOMPLETED";
+        public static final String INPROGRESS = "INPROGRESS";
+        public static final String OPEN = "OPEN";
+        public static final String READY = "READY";
     }
 
 }

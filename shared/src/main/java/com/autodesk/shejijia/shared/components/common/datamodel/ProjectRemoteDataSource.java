@@ -12,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
@@ -148,6 +149,24 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
+        });
+    }
+
+    @Override
+    public void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMessageIssue, ResponseError> callback) {
+        mConstructionHttpManager.getUnreadMessageAndIssue(projectIds, requestTag, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("Project--unreadMessageAndIssue", jsonObject + "");
+                String result = jsonObject.toString();
+                UnreadMessageIssue messageIssue = GsonUtil.jsonToBean(result, UnreadMessageIssue.class);
+                callback.onSuccess(messageIssue);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+            }
         });
     }
 

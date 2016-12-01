@@ -38,4 +38,9 @@ public interface IConstructionApi<T> {
     * */
     void updatePlan(@NonNull String pid, @NonNull JSONObject jsonRequest, @NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 
+    /*
+    * 有问题有更新查询接口
+    * */
+    void getUnreadMessageAndIssue(@NonNull String projectIds, @Nullable String requestTag, @NonNull T callback);
+
 }

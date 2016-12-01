@@ -78,5 +78,11 @@ public interface ProjectListContract {
         * 星标项目
         * */
         void updateProjectLikesState(List<ProjectInfo> projectList, boolean like, int position);
+
+        /*
+        * 获取未读消息或问题
+        * */
+        void getUnReadMessageIssue();
+
     }
 }

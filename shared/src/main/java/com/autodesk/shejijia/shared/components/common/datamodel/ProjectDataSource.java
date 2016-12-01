@@ -9,6 +9,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
@@ -49,5 +50,9 @@ public interface ProjectDataSource {
     * */
     void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like, ResponseError> callback);
 
+    /*
+    * 获取有问题有更新
+    * */
+    void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMessageIssue, ResponseError> callback);
 
 }

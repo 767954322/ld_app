@@ -73,8 +73,7 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
                 break;
             case R.id.tv_logout_app:
                 LoginUtils.doLogout(mContext);
-                startActivity(new Intent(mContext, RegisterOrLoginActivity.class));
-                mContext.finish();
+                LoginUtils.doLogin(mContext);
                 break;
         }
     }

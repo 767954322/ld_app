@@ -18,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -48,6 +49,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
     private PopupWindow mScreenPopup;
+    private boolean mIsFiltered;
+    private MenuItem mMenuItem;
 
     public static ProjectListFragment newInstance() {
         return new ProjectListFragment();
@@ -63,7 +66,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
-        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.ALL);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     * */
     @Override
     public void onRefresh() {
+        mEmptyView.setVisibility(View.GONE);
         mProjectListPresenter.refreshProjectList();
     }
 
@@ -115,14 +119,12 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void refreshProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
-            mProjectListView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
             mProjectListView.complete();
             mProjectListView.scrollToPosition(0);
             mProjectListAdapter.setProjectLists(projectList);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
-            mProjectListView.setVisibility(View.GONE);
             mProjectListView.complete();
         }
     }
@@ -165,13 +167,20 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        this.mMenuItem = item;
         int itemId = item.getItemId();
         if (itemId == R.id.home_toolbar_search) {
             ToastUtils.showShort(mContext, "search");
             // TODO: 10/25/16 跳转到搜索页面
-
+            return true;
         } else if (itemId == R.id.home_toolbar_screen) {
+            if (mIsFiltered){
+                mIsFiltered = false;
+            }else {
+                mIsFiltered = true;
+            }
             initScreenPopupWin();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -187,9 +196,11 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
                 && mProjectListPresenter.getScreenPopupState().equals("true")) {
             mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
             mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
+            mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filtered));
         } else {
             mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
             mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+            mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filter));
         }
         //listener
         mScreenAll.setOnClickListener(new View.OnClickListener() {
@@ -197,12 +208,17 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             public void onClick(View v) {
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
-                mProjectListPresenter.initFilterRequestParams(null, null, null);
-                mProjectListPresenter.onFilterLikeChange(null);
+                mProjectListPresenter.onFilterLikeChange("false");
                 if (!mProjectListView.isRefreshing()) {
                     mProjectListView.setRefreshing(true);
                 }
                 mScreenPopup.dismiss();
+                if (!TextUtils.isEmpty(mProjectListPresenter.getScreenPopupState())
+                        && mProjectListPresenter.getScreenPopupState().equals("true")) {
+                    mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filtered));
+                } else {
+                    mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filter));
+                }
             }
         });
         mScreenLike.setOnClickListener(new View.OnClickListener() {
@@ -210,12 +226,17 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             public void onClick(View v) {
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
-                mProjectListPresenter.initFilterRequestParams(null, null, null);
                 mProjectListPresenter.onFilterLikeChange("true");
                 if (!mProjectListView.isRefreshing()) {
                     mProjectListView.setRefreshing(true);
                 }
                 mScreenPopup.dismiss();
+                if (!TextUtils.isEmpty(mProjectListPresenter.getScreenPopupState())
+                        && mProjectListPresenter.getScreenPopupState().equals("true")) {
+                    mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filtered));
+                } else {
+                    mMenuItem.setIcon(ContextCompat.getDrawable(mContext, R.drawable.ic_menu_filter));
+                }
             }
         });
         contentView.setOnKeyListener(new View.OnKeyListener() {

@@ -23,7 +23,9 @@ public class LoginUtils {
     * 登陆
     * */
     public static void doLogin(Context mContext) {
-        mContext.startActivity(new Intent(mContext, RegisterOrLoginActivity.class));
+        Intent intent = new Intent(mContext, RegisterOrLoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
     }
 
     /*

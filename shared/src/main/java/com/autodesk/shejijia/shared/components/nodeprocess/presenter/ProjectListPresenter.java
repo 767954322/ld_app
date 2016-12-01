@@ -12,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
@@ -34,10 +35,11 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
     private FragmentManager fragmentManager;
-    private int mOffset = 1;//why 0 and 1 is the same data
+    private int mOffset = 0;
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
     private String mFilterStatus;
+    private List<ProjectInfo> projectList;
 
     public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
@@ -78,13 +80,12 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void refreshProjectList() {
-        mOffset = 1;
+        mOffset = 0;
         loadProjectList(mOffset);
     }
 
     @Override
     public void loadMoreProjectList() {
-        // TODO: 11/24/16 offset得有个界限 
         mOffset++;
         loadProjectList(mOffset);
     }
@@ -111,11 +112,12 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
-                if (taskList.getOffset() == 1) {
+                LogUtils.d("projectList",taskList+"");
+//                if (taskList.getOffset() == 1) {
                     mProjectListView.refreshProjectListView(taskList.getData());
-                } else {
+                /*} else {
                     mProjectListView.addMoreProjectListView(taskList.getData());
-                }
+                }*/
             }
 
             @Override
@@ -176,5 +178,18 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         });
     }
 
+    @Override
+    public void getUnReadMessageIssue() {
+        mProjectRepository.getUnReadMessageAndIssue(null, ConstructionConstants.REQUEST_TAG_UNREAD_MESSAGEANDISSUE, new ResponseCallback<UnreadMessageIssue, ResponseError>() {
+            @Override
+            public void onSuccess(UnreadMessageIssue data) {
 
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectListView.showNetError(error);
+            }
+        });
+    }
 }

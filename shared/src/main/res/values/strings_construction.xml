@@ -65,7 +65,7 @@
     <string name="task_delayed">已延期</string>
     <string name="task_qualified">合格</string>
     <string name="task_unqualified">不合格</string>
-    <string name="task_resolved">验收通过</string>
+    <string name="task_resolved">已完成</string>
     <string name="task_rejected">验收拒绝</string>
     <string name="task_reinspection">强制复验</string>
     <string name="task_rectification">监督整改</string>
@@ -74,7 +74,7 @@
     <string name="task_reinspect_treserving">复验待预约</string>
     <string name="task_reinspect_reserved">复验已预约</string>
     <string name="task_reinspect_inprogress">复验进行中</string>
-    <string name="task_reinspect_delay">复验延期</string>
+    <string name="task_reinspect_delay">复验已延期</string>
     <string name="task_deleted">已删除</string>
     <string name="task_status_unknow">未知</string>
 

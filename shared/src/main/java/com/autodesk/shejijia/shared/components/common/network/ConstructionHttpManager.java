@@ -69,6 +69,12 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
         put(requestTag, requestUrl, jsonRequest, callback);
     }
 
+    @Override
+    public void getUnreadMessageAndIssue(@NonNull String projectIds, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = ConstructionConstants.BASE_URL + "projects/unread_message_and_unresolved_issue?project_ids=" + projectIds;
+        get(requestTag, requestUrl, callback);
+    }
+
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         LogUtils.d(LOG_TAG, requestUrl);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
