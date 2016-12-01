@@ -39,7 +39,7 @@ import java.util.List;
  * @date 2016/8/1 0029 17:32 .
  * @brief 关注列表 .
  */
-public class AttentionListActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener{
+public class AttentionListActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener {
 
     @Override
     protected int getLayoutResId() {
@@ -245,7 +245,7 @@ public class AttentionListActivity extends NavigationBarActivity implements Atte
                 CustomProgress.cancelDialog();
                 /// 手动移除集合中已经取消的设计师 .
                 attentionList.remove(position);
-
+                attentionListData(acs_member_id, 0, LIMIT, 1);
                 if (attentionList.size() == 0) {
                     mRlEmptyView.setVisibility(View.VISIBLE);
                 } else {
