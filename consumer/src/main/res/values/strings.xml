@@ -876,7 +876,7 @@
     <string name="designer_order_style_detail">简约</string>
     <string name="my_bid_budget_money">50万</string>
     <string name="my_bid_budget">装修预算</string>
-    <string name="my_bid_look">您已中标，请到我的订单中查看</string>
+    <string name="my_bid_look">您已中标，请到我的项目中查看</string>
     <string name="my_project_my_project">我的订单</string>
     <string name="my_project_out_bid">很抱歉您未中标，请再接再厉！</string>
     <string name="consumer_decoration_remaintime">剩余天数：</string>
