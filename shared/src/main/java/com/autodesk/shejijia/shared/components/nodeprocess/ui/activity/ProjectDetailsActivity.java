@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.issue.activity.IssueListActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -75,6 +77,10 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         if (id == R.id.tv_project_patrol) {
 
         } else if (id == R.id.tv_project_issue) {
+
+            Intent intent = new Intent(ProjectDetailsActivity.this, IssueListActivity.class);
+            intent.putExtra(ConstructionConstants.IssueTracking.ISSUE_TRACKING_TYPE, ConstructionConstants.IssueTracking.ENTERPRISE_ONE_TAG);
+            startActivity(intent);
 
         } else if (id == R.id.tv_project_session) {
 
