@@ -227,14 +227,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddMaterialActivity.this, StoreActivity.class);
-                intent.putExtra(JsonConstants.JSON_STORE_NAME_INFOR_LIST,storeNameArr);
-                startActivityForResult(intent, 0);
-            }
-        });
+        Intent intent = new Intent(AddMaterialActivity.this, StoreActivity.class);
+        intent.putExtra(JsonConstants.JSON_STORE_NAME_INFOR_LIST,storeNameArr);
+        startActivityForResult(intent, 0);
     }
 
     /**
@@ -940,9 +935,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         layoutParamsButton.topMargin = width / 50;
         layoutParamsButton.bottomMargin = width / 50;
         all_material_btn = new BitmapTextView(this,null);
-        all_material_btn.setText(UIUtils.getString(R.string.my_bid_all));
+        all_material_btn.setText(UIUtils.getString(R.string.all_button_name));
         all_material_btn.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
-        all_material_btn.setBitmapAndSize(R.drawable.three,UIUtils.getString(R.string.my_bid_all));
+        all_material_btn.setBitmapAndSize(R.drawable.three,UIUtils.getString(R.string.all_button_name));
         all_material_btn.setMinWidth(width / 5);
         all_material_btn.setPadding(width / 25, 0, width / 25, 0);
         all_material_btn.setTextColor(UIUtils.getColor(R.color.text_item_name));
