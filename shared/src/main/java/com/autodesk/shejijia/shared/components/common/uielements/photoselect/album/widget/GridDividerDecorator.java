@@ -61,20 +61,6 @@ public class GridDividerDecorator extends RecyclerView.ItemDecoration {
         }
     }
 
-//过时方法
-//    @Override
-//    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-//        int spanCount = getSpanCount(parent);
-//        if (spanCount == -1)
-//            throw new ClassCastException("Can not cast" + parent.getLayoutManager() + "to GridLayoutManager");
-//        if (isLastCloum(itemPosition, spanCount)) {
-//            //如果是最后一列则不绘制右边的Divider
-//            outRect.set(0, 0, 0, mDividerSize);
-//        } else {
-//            outRect.set(0, 0, mDividerSize, mDividerSize);
-//        }
-//    }
-//
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);

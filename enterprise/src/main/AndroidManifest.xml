@@ -80,8 +80,7 @@
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".EnterpriseHomeActivity"

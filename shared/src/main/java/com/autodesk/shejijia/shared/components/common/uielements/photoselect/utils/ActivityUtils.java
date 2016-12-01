@@ -27,9 +27,6 @@ import com.autodesk.shejijia.shared.R;
 import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
 
 
-/**
- * 提供方法帮助Activity加载它的UI
- */
 public class ActivityUtils {
 
     /**
