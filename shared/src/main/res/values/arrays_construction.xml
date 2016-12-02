@@ -10,6 +10,27 @@
         <item>基础</item>
         <item>竣工</item>
     </string-array>
-
+    <!--issue_list_style-->
+    <string-array name="issue_list_type_all_project">
+        <item>已过期</item>
+        <item>今天到期</item>
+        <item>我要跟进的问题</item>
+        <item>客户反馈</item>
+        <item>所有项目问题</item>
+        <item>已跟进</item>
+    </string-array>
+    <string-array name="issue_list_type_consumer">
+        <item>列表信息1</item>
+        <item>列表信息2</item>
+        <item>列表信息3</item>
+    </string-array>
+    <string-array name="issue_list_type_single_project">
+        <item>已过期</item>
+        <item>今天到期</item>
+        <item>我要跟进的问题</item>
+        <item>客户反馈</item>
+        <item>其他待处理问题</item>
+        <item>已跟进</item>
+    </string-array>
 
 </resources>

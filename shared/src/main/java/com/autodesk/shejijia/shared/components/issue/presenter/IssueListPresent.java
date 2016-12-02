@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
@@ -32,11 +33,11 @@ public class IssueListPresent implements IssueListContract.Presenter {
 
         mIssueTruckingType = tag;
         if (TextUtils.isEmpty(tag) || ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_ALL_PROJECTS.equals(tag)) {//总项目
-            mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "所有项目问题", "已跟进"};
+            mIssueListData = mContext.getResources().getStringArray(R.array.issue_list_type_all_project);
         } else if (ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_CONSUMER.equals(tag)) {//消费者
-            mIssueListData = new String[]{"消费者1", "消费者2", "消费者3"};
+            mIssueListData = mContext.getResources().getStringArray(R.array.issue_list_type_consumer);
         } else if (ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_SINGLE_PROJECT.equals(tag)) {//单项目
-            mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "其他待处理问题", "已跟进"};
+            mIssueListData = mContext.getResources().getStringArray(R.array.issue_list_type_single_project);
         }
         mView.onIssueListStyle(mIssueListData);
 
