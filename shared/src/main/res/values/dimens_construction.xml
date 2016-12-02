@@ -61,4 +61,6 @@
     <dimen name="spacing_form_list_top">15dp</dimen>
     <dimen name="height_form_list_problem_log">44dp</dimen>
     <dimen name="height_form_list_item">57.5dp</dimen>
+    <dimen name="spacing_option_table_cell">22.5dp</dimen>
+    <dimen name="form_option_size">55dp</dimen>
 </resources>

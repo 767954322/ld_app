@@ -1,11 +1,10 @@
 package com.autodesk.shejijia.shared.components.form.contract;
 
-import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
-import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
+import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
+import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public interface ItemListContract {
 
     interface Presenter extends BasePresenter {
 
-        List<ItemCell> getItemCells(String title, ArrayList<CheckItem> checkItems);
+        List<OptionCell> getOptionCells(String title, SHInspectionForm shInspectionForm);
     }
 
 

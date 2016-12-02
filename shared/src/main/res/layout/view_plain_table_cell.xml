@@ -45,6 +45,8 @@
                    android:background="@drawable/ic_information"
                    android:visibility="gone"/>
 
-
     </RelativeLayout>
+
+
+
 </FrameLayout>

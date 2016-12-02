@@ -6,13 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
-import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
+import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ItemListPresenter;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
-import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
+import com.autodesk.shejijia.shared.components.form.ui.adapter.ItemListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.ArrayList;
@@ -26,10 +25,10 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     private RecyclerView mRecyclerView;
     private FormActivity mActivity;
-    private String mTitle;
+    private String mCategory;
     private ItemListPresenter mPresenter;
-    private List<ItemCell> mItemCellList = new ArrayList<>();
-    private FormListAdapter mAdapter;
+    private List<OptionCell> mOptionCellList = new ArrayList<>();
+    private ItemListAdapter mAdapter;
 
     public static ItemListFragment newInstance(Bundle args) {
         ItemListFragment itemListFragment = new ItemListFragment();
@@ -55,17 +54,16 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     @Override
     protected void initData() {
-        mTitle = getArguments().getString("category");
+        mCategory = getArguments().getString("category");
         SHInspectionForm shInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm"); //具体的表格
 
         mPresenter = new ItemListPresenter(this);
-        mItemCellList.addAll(mPresenter.getItemCells(mTitle, shInspectionForm.getCheckItems()));
-
-        mActivity.initToolbar(mTitle);
+        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory,shInspectionForm));
+        mActivity.initToolbar(mCategory);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new FormListAdapter(mContext, mItemCellList);
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
+        mAdapter = new ItemListAdapter(mContext, mOptionCellList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -73,7 +71,7 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            mActivity.initToolbar(mTitle);
+            mActivity.initToolbar(mCategory);
             mAdapter.notifyDataSetChanged();
         }
     }

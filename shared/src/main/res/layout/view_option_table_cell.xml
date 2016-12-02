@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/con_white"
+              android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingBottom="25dp"
+                  android:paddingTop="@dimen/spacing_option_table_cell">
+        <TextView android:id="@+id/tv_title"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="title"
+                  android:textColor="@color/font_title"
+                  android:textSize="@dimen/textsize_15"/>
+
+        <TextView android:id="@+id/tv_information"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="40dp"
+                  android:drawablePadding="@dimen/spacing_plain_table_cell"
+                  android:drawableStart="@drawable/ic_information"
+                  android:text="@string/unqualified"
+                  android:textColor="@color/unqualified_information"
+                  android:textSize="@dimen/textsize_14"/>
+
+    </LinearLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/spacing_padding_double">
+
+        <LinearLayout android:id="@+id/ll_left"
+                      android:layout_width="@dimen/form_option_size"
+                      android:layout_height="wrap_content"
+                      android:layout_marginStart="@dimen/size_21"
+                      android:orientation="vertical">
+
+
+            <ImageButton android:id="@+id/iv_left"
+                       android:layout_width="@dimen/form_option_size"
+                       android:layout_height="@dimen/form_option_size"
+                       android:background="@drawable/option_none_bg_selector"
+                       android:clickable="true"
+                       android:contentDescription="@null"/>
+
+            <TextView android:id="@+id/tv_left"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_horizontal"
+                      android:layout_marginTop="@dimen/size_10"
+                      android:text="left"
+                      android:textColor="@color/font_subtitle"
+                      android:textSize="@dimen/textsize_14"/>
+
+        </LinearLayout>
+        <LinearLayout android:id="@+id/ll_center"
+                      android:layout_width="@dimen/form_option_size"
+                      android:layout_height="wrap_content"
+                      android:layout_centerHorizontal="true"
+                      android:layout_marginStart="@dimen/size_21"
+                      android:orientation="vertical">
+
+
+            <ImageButton android:id="@+id/iv_center"
+                       android:layout_width="@dimen/form_option_size"
+                       android:layout_height="@dimen/form_option_size"
+                       android:background="@drawable/option_unqualified_bg_selector"
+                       android:clickable="true"
+                       android:contentDescription="@null"/>
+
+            <TextView android:id="@+id/tv_center"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_horizontal"
+                      android:layout_marginTop="@dimen/size_10"
+                      android:text="center"
+                      android:textColor="@color/font_subtitle"
+                      android:textSize="@dimen/textsize_14"/>
+
+        </LinearLayout>
+        <LinearLayout android:id="@+id/ll_right"
+                      android:layout_width="@dimen/form_option_size"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentEnd="true"
+                      android:layout_marginEnd="@dimen/size_21"
+                      android:orientation="vertical">
+
+
+            <ImageButton android:id="@+id/iv_right"
+                       android:layout_width="@dimen/form_option_size"
+                       android:layout_height="@dimen/form_option_size"
+                       android:background="@drawable/option_qualified_bg_selector"
+                       android:clickable="true"
+
+                       android:contentDescription="@null"/>
+
+            <TextView android:id="@+id/tv_right"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_horizontal"
+                      android:layout_marginTop="@dimen/size_10"
+                      android:text="right"
+                      android:textColor="@color/font_subtitle"
+                      android:textSize="@dimen/textsize_14"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View android:id="@+id/view_line"
+          android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/form_line_grey"/>
+
+    <TextView android:id="@+id/tv_standard"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingBottom="@dimen/spacing_padding_double"
+              android:paddingTop="@dimen/spacing_padding_double"
+              android:text="content"
+              android:textColor="@color/font_subtitle"
+              android:textSize="@dimen/textsize_15"/>
+
+    <TextView android:id="@+id/tv_action_type"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="right"
+              android:text="项目属性"
+              android:textColor="@color/font_thirdtitle"
+              android:textSize="@dimen/font_small"/>
+
+
+</LinearLayout>

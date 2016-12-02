@@ -234,6 +234,7 @@
     <color name="form_btn_bg_blue">#2B77c1</color>
     <color name="form_bar_bg_blue">#2B77c1</color>
     <color name="form_btn_bg_grey">#bbc1c6</color>
+    <color name="unqualified_information">#2575c4</color>
 
     <color name="form_text_title">#464b4e</color>
     <color name="form_text_content">#7c8489</color>
@@ -243,6 +244,7 @@
     <color name="project_id_write">#999999</color>
     <color name="font_title">#333333</color>
     <color name="font_subtitle">#666666</color>
+    <color name="font_thirdtitle">#999999</color>
     <color name="form_dialog_bg_grey">#fafafa</color>
     <color name="background">#fffafafa</color>
     <color name="primary_light">#C8E6C9</color>
