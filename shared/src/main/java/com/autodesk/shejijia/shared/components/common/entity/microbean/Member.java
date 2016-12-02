@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 10/19/16.
- * update 10/24
+ * update 12/02
  */
 public class Member implements Serializable{
 
@@ -20,6 +20,8 @@ public class Member implements Serializable{
     private long acsMemberId;
     @SerializedName("thread_id")
     private String threadId;
+    @SerializedName("progress_thread_id")
+    private String progressThreadId;
     @SerializedName("is_group")
     private boolean isGroup;
     @SerializedName("group_members")
@@ -89,5 +91,13 @@ public class Member implements Serializable{
 
     public void setThreadId(String threadId) {
         this.threadId = threadId;
+    }
+
+    public String getProgressThreadId() {
+        return progressThreadId;
+    }
+
+    public void setProgressThreadId(String progressThreadId) {
+        this.progressThreadId = progressThreadId;
     }
 }

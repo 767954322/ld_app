@@ -126,7 +126,7 @@
 
     <!--项目信息页面文字-->
     <string name="project_info_title">项目信息</string>
-    <string name="project_info_zxing">监理人员扫码 进入施工阶段</string>
+    <string name="project_info_zxing">监理人员扫码 进入施工验收</string>
 
     <!--form电子表格-->
     <string name="input_code">输入编码</string>
