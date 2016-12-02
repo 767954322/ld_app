@@ -28,10 +28,14 @@ public class IssueListActivity extends BaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        IssueListFragment issueListFragment = IssueListFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fl_issue_list_main, issueListFragment)
-                .commit();
+        if (savedInstanceState == null) {
+
+            IssueListFragment issueListFragment = IssueListFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fl_issue_list_main, issueListFragment)
+                    .commit();
+
+        }
 
     }
 }
