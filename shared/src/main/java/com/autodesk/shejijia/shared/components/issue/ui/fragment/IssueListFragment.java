@@ -120,13 +120,13 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
     //获取列表数据样式
     @Override
-    public void getListData(String[] mIssueListData) {
+    public void onIssueListStyle(String[] mIssueListData) {
         this.mIssueListData = mIssueListData;
     }
 
     //各个列表返回数量
     @Override
-    public void getIssueNum() {
+    public void onIssueListNum() {
         initList();
     }
 

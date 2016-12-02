@@ -38,7 +38,7 @@ public class IssueListPresent implements IssueListContract.Presenter {
         } else if (ConstructionConstants.IssueTracking.REQUEST_TAG_SINGLE_ISSUE.equals(tag)) {//单项目
             mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "其他待处理问题", "已跟进"};
         }
-        mView.getListData(mIssueListData);
+        mView.onIssueListStyle(mIssueListData);
 
     }
 
@@ -57,7 +57,7 @@ public class IssueListPresent implements IssueListContract.Presenter {
     @Override
     public void getIssueNumber() {
 
-        mView.getIssueNum();
+        mView.onIssueListNum();
 
     }
 

@@ -12,9 +12,9 @@ public interface IssueListContract {
 
         void onRefreshIssueTracking();
 
-        void getListData(String[] mIssueListData);
+        void onIssueListStyle(String[] mIssueListData);
 
-        void getIssueNum();
+        void onIssueListNum();
 
     }
 
