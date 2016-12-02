@@ -77,7 +77,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         } else if (id == R.id.tv_project_issue) {
 
             Intent intent = new Intent(ProjectDetailsActivity.this, IssueListActivity.class);
-            intent.putExtra(ConstructionConstants.IssueTracking.REQUEST_TAG_KEY, ConstructionConstants.IssueTracking.REQUEST_TAG_SINGLE_ISSUE);
+            intent.putExtra(ConstructionConstants.IssueTracking.BUNDLE_KEY_ISSUE_LIST_TYPE, ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_SINGLE_PROJECT);
             startActivity(intent);
 
         } else if (id == R.id.tv_project_session) {
