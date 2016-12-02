@@ -77,10 +77,10 @@
                 android:layout_width="@dimen/size_0"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_member_account"
+                android:singleLine="true"
                 android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13"/>
         </LinearLayout>
@@ -114,6 +114,7 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_name"
+                android:maxLength="20"
                 android:singleLine="true"
                 android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13"/>
@@ -223,6 +224,8 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_community_name"
+                android:maxLength="16"
+                android:singleLine="true"
                 android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13"/>
         </LinearLayout>

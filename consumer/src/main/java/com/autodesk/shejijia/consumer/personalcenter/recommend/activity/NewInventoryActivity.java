@@ -146,7 +146,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
      */
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
     }
 
     @Override
@@ -161,7 +160,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mBtnNextPager.setBackgroundResource(R.drawable.bg_common_btn_blue);
             mBtnNextPager.setTextColor(UIUtils.getColor(R.color.bg_ff));
         }
-
     }
 
     @Override
@@ -299,7 +297,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "");
-            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MEMBER_ACCOUNT, memberAccount);
+            // TODO docker环境，uat 还未上线．
+            // jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_MEMBER_ACCOUNT, memberAccount);
 
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
             jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
