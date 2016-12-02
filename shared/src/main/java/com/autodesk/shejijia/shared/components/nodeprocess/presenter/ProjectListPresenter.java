@@ -191,7 +191,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onError(ResponseError error) {
                 mProjectListView.hideLoading();
-                mProjectListView.showNetError(error);
+//                mProjectListView.showNetError(error);
             }
         });
     }

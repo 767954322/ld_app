@@ -62,6 +62,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     * 根据星标接口，获得星标更新成功后的结果，从而更新内存中的该项目对应的数据源
     * */
     public void updateProjectState(Like newLike, int likePosition) {
+        LogUtils.e(newLike.getLike()+"  "+likePosition);
         List<Like> likeList = projectLists.get(likePosition).getLikes();
         for (Like oldLike : likeList) {
             if (oldLike.getUid().equals(newLike.getUid())) {
@@ -72,7 +73,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             }
         }
-        notifyDataSetChanged();
+        notifyItemChanged(likePosition);
     }
 
     @Override
