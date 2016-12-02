@@ -231,11 +231,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             String district_name = requirement.getDistrict_name();
             String community_name = requirement.getCommunity_name();
             if (district_name != null && district_name.equals("none")) {
-                tvc_consumer_local_area.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (community_name == null ? "" : community_name));
-//                tvc_designer_decorate_address.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) );
+                tvc_consumer_local_area.setText(((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) + (community_name == null ? "" : community_name));
+//                tvc_designer_decorate_address.setText(((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) );
             } else {
-                tvc_consumer_local_area.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (district_name == null ? "" : district_name) + (community_name == null ? "" : community_name));
-//                tvc_designer_decorate_address.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (district_name == null ? "" :district_name));
+                tvc_consumer_local_area.setText(((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) + ((district_name == null || district_name.equals("<null>")) ? "" : district_name) + (community_name == null ? "" : community_name));
+//                tvc_designer_decorate_address.setText(((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) + ((district_name == null || district_name.equals("<null>")") ? "" :district_name));
             }
         } else {
 
@@ -476,11 +476,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 String city_name = designer_detail_entity.getCity_name();
                 String district_name = designer_detail_entity.getDistrict_name();
                 if (district_name != null && district_name.equals("none")) {
-                    tvc_consumer_local_area.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name));
-                    tvc_designer_decorate_address.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name));
+                    tvc_consumer_local_area.setText((((province_name == null || province_name.equals("<null>")) ? "" : province_name) + (((city_name == null || city_name.equals("<null>")) || city_name.equals("<null>")) ? "" : city_name)));
+                    tvc_designer_decorate_address.setText((((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name)));
                 } else {
-                    tvc_consumer_local_area.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (district_name == null ? "" : district_name));
-                    tvc_designer_decorate_address.setText((province_name == null ? "" : province_name) + (city_name == null ? "" : city_name) + (district_name == null ? "" : district_name));
+                    tvc_consumer_local_area.setText((((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) + ((district_name == null || district_name.equals("<null>")) ? "" : district_name)));
+                    tvc_designer_decorate_address.setText((((province_name == null || province_name.equals("<null>")) ? "" : province_name) + ((city_name == null || city_name.equals("<null>")) ? "" : city_name) + (((district_name == null || district_name.equals("<null>")) || district_name.equals("<null>")) ? "" : district_name)));
                 }
 
                 designer_name = designer_detail_entity.getReal_name().getReal_name();
@@ -733,7 +733,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     tvc_consumer_email.requestFocus();
                     int location[] = new int[2];
                     tvc_consumer_email.getLocationInWindow(location);
-                    mScrollView.scrollTo(location[0],location[1]);
+                    mScrollView.scrollTo(location[0], location[1]);
                     bValid = false;
                     break;
                 }
