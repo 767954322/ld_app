@@ -38,7 +38,7 @@ public class IssueListPresent implements IssueListContract.Presenter {
         } else if (ConstructionConstants.IssueTracking.ENTERPRISE_ONE_TAG.equals(tag)) {//单项目
             mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "其他待处理问题", "已跟进"};
         }
-        mView.resultsListData(mIssueListData);
+        mView.getListData(mIssueListData);
 
     }
 
@@ -48,16 +48,16 @@ public class IssueListPresent implements IssueListContract.Presenter {
     }
 
     @Override
-    public void refreshIssueListView() {
+    public void refreshIssueTracking() {
 
-        mView.resultsRefreshIssueList();
+        mView.onRefreshIssueTracking();
 
     }
 
     @Override
-    public void getTheIssueNumber() {
+    public void getIssueNumber() {
 
-        mView.resultsIssueNum();
+        mView.getIssueNum();
 
     }
 

@@ -10,11 +10,11 @@ public interface IssueListContract {
 
     interface View extends BaseView {
 
-        void resultsRefreshIssueList();
+        void onRefreshIssueTracking();
 
-        void resultsListData(String[] mIssueListData);
+        void getListData(String[] mIssueListData);
 
-        void resultsIssueNum();
+        void getIssueNum();
 
     }
 
@@ -34,13 +34,13 @@ public interface IssueListContract {
         /*
         * 刷新问题追踪列表
         * */
-        void refreshIssueListView();
+        void refreshIssueTracking();
 
         /*
         * 获取施工已过期，今天到期等 总问题数（一个接口）
         * 获取某个项目的已过期，今天到期等问题数（需要六个接口）
         * */
-        void getTheIssueNumber();
+        void getIssueNumber();
 
     }
 

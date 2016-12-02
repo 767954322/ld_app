@@ -51,10 +51,17 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
     @Override
     protected void initData() {
-
-        judgetypes();
-        initPrensent();
-        getIssueListNum();
+        /**
+         * public static final String ENTERPRISE_ALL_TAG = "enterprise_all_tag";施工总问题
+         * public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";施工单个项目的问题
+         * public static final String CONSEMER_TAG = "consumer_tag";消费者的问题
+         */
+        issue_tracking_type = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.ISSUE_TRACKING_TYPE);
+        //初始化IssueListPresent
+        mIssueListPresent = new IssueListPresent(getActivity(), mContext.getSupportFragmentManager(), this);
+        mIssueListPresent.setIssueListStyle(issue_tracking_type);
+        //获取列表问题数量（目前是三种情况）
+        mIssueListPresent.getIssueNumber();
 
     }
 
@@ -65,32 +72,6 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
         mIssueListView.setRefreshLoadMoreListener(this);
         //让其自动刷新一下，会回调onRefresh()方法一次
         mIssueListView.setRefreshing(true);
-
-    }
-
-    /**
-     * public static final String ENTERPRISE_ALL_TAG = "enterprise_all_tag";施工总问题
-     * public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";施工单个项目的问题
-     * public static final String CONSEMER_TAG = "consumer_tag";消费者的问题
-     */
-    private void judgetypes() {
-
-        issue_tracking_type = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.ISSUE_TRACKING_TYPE);
-
-    }
-
-    //初始化IssueListPresent
-    private void initPrensent() {
-
-        mIssueListPresent = new IssueListPresent(getActivity(), mContext.getSupportFragmentManager(), this);
-        mIssueListPresent.setIssueListStyle(issue_tracking_type);
-
-    }
-
-    //获取列表问题数量（目前是三种情况）
-    private void getIssueListNum() {
-
-        mIssueListPresent.getTheIssueNumber();
 
     }
 
@@ -118,7 +99,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     @Override
     public void onRefresh() {
 
-        mIssueListPresent.refreshIssueListView();
+        mIssueListPresent.refreshIssueTracking();
 
     }
 
@@ -130,7 +111,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
     //刷新问题列表
     @Override
-    public void resultsRefreshIssueList() {
+    public void onRefreshIssueTracking() {
 
         mIssueListView.complete();
         ToastUtils.showLong(activity, "刷新了问题追踪列表");
@@ -139,13 +120,13 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
     //获取列表数据样式
     @Override
-    public void resultsListData(String[] mIssueListData) {
+    public void getListData(String[] mIssueListData) {
         this.mIssueListData = mIssueListData;
     }
 
     //各个列表返回数量
     @Override
-    public void resultsIssueNum() {
+    public void getIssueNum() {
         initList();
     }
 
