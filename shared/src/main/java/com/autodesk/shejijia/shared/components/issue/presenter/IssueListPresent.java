@@ -31,11 +31,11 @@ public class IssueListPresent implements IssueListContract.Presenter {
     public void setIssueListStyle(String tag) {
 
         mIssueTruckingType = tag;
-        if (TextUtils.isEmpty(tag) || ConstructionConstants.IssueTracking.ENTERPRISE_ALL_TAG.equals(tag)) {//总项目
+        if (TextUtils.isEmpty(tag) || ConstructionConstants.IssueTracking.REQUEST_TAG_ALL_ISSUES.equals(tag)) {//总项目
             mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "所有项目问题", "已跟进"};
-        } else if (ConstructionConstants.IssueTracking.CONSEMER_TAG.equals(tag)) {//消费者
+        } else if (ConstructionConstants.IssueTracking.REQUEST_TAG_CONSUMER.equals(tag)) {//消费者
             mIssueListData = new String[]{"消费者1", "消费者2", "消费者3"};
-        } else if (ConstructionConstants.IssueTracking.ENTERPRISE_ONE_TAG.equals(tag)) {//单项目
+        } else if (ConstructionConstants.IssueTracking.REQUEST_TAG_SINGLE_ISSUE.equals(tag)) {//单项目
             mIssueListData = new String[]{"已过期", "今天到期", "我要跟进的问题", "客户反馈", "其他待处理问题", "已跟进"};
         }
         mView.getListData(mIssueListData);

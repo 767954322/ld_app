@@ -56,7 +56,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
          * public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";施工单个项目的问题
          * public static final String CONSEMER_TAG = "consumer_tag";消费者的问题
          */
-        issue_tracking_type = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.ISSUE_TRACKING_TYPE);
+        issue_tracking_type = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.REQUEST_TAG_KEY);
         //初始化IssueListPresent
         mIssueListPresent = new IssueListPresent(getActivity(), mContext.getSupportFragmentManager(), this);
         mIssueListPresent.setIssueListStyle(issue_tracking_type);
@@ -78,7 +78,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     //初始化recyclerView
     private void initList() {
         //添加问题模块BUTON，默认隐藏，只有单项目可以添加
-        if (!TextUtils.isEmpty(issue_tracking_type) && ConstructionConstants.IssueTracking.ENTERPRISE_ONE_TAG.equals(issue_tracking_type)) {
+        if (!TextUtils.isEmpty(issue_tracking_type) && ConstructionConstants.IssueTracking.REQUEST_TAG_SINGLE_ISSUE.equals(issue_tracking_type)) {
             mAddIssueTracking.setVisibility(View.VISIBLE);
         } else {
             mAddIssueTracking.setVisibility(View.GONE);

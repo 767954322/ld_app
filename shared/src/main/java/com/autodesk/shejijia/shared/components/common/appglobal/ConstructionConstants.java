@@ -110,10 +110,10 @@ public class ConstructionConstants {
 
     public static class IssueTracking {
 
-        public static final String ISSUE_TRACKING_TYPE = "issue_tracking_type";//进入问题追踪的key
-        public static final String ENTERPRISE_ALL_TAG = "enterprise_all_tag";//角色查看服务端全部问题追踪
-        public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";//角色查看服务端单个问题追踪
-        public static final String CONSEMER_TAG = "consumer_tag";//消费端查看单个问题追踪
+        public static final String REQUEST_TAG_KEY = "issue_tracking_type";//进入问题追踪的key
+        public static final String REQUEST_TAG_ALL_ISSUES = "enterprise_all_tag";//角色查看服务端全部问题追踪
+        public static final String REQUEST_TAG_SINGLE_ISSUE = "enterprise_one_tag";//角色查看服务端单个问题追踪
+        public static final String REQUEST_TAG_CONSUMER = "consumer_tag";//消费端查看单个问题追踪
 
     }
 
