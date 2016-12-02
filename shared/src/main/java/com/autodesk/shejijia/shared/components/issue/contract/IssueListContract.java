@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.contract;
+package com.autodesk.shejijia.shared.components.issue.contract;
 
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;

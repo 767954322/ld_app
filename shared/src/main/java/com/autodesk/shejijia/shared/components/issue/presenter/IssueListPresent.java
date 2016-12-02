@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
+package com.autodesk.shejijia.shared.components.issue.presenter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
-import com.autodesk.shejijia.shared.components.nodeprocess.contract.IssueListContract;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
 
 /**
  * Created by Menghao.Gu on 2016/12/1.

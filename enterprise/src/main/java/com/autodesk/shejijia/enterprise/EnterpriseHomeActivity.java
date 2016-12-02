@@ -26,7 +26,7 @@ import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActiv
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 

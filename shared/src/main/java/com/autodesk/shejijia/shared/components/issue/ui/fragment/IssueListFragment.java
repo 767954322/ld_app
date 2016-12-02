@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
+package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,9 +13,9 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.nodeprocess.contract.IssueListContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.IssueListPresent;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.IssueListAdapter;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueListPresent;
+import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**

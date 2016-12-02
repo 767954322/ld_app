@@ -1,11 +1,10 @@
-package com.autodesk.shejijia.shared.components.issue.activity;
+package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**

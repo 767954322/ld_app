@@ -230,7 +230,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.autodesk.shejijia.shared.components.issue.activity.IssueListActivity"
+            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.IssueListActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />

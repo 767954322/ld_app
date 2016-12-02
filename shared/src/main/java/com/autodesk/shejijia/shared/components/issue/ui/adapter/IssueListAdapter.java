@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
+package com.autodesk.shejijia.shared.components.issue.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

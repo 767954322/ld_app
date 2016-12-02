@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.data;
+package com.autodesk.shejijia.shared.components.issue.data;
 
 import java.io.Serializable;
 
