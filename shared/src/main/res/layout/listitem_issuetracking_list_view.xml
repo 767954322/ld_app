@@ -19,7 +19,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_left_listtitle_item"
         android:layout_toRightOf="@+id/ibn_issuelist_item_icon"
-        android:text="已过去"
         android:textSize="@dimen/size_17" />
 
     <TextView
@@ -29,8 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_left_listtitle_item"
-        android:layout_marginRight="@dimen/size_20"
-        android:text="(0)" />
+        android:layout_marginRight="@dimen/size_20"/>
 
     <View
         android:layout_width="match_parent"
