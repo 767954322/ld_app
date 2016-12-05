@@ -29,7 +29,7 @@ import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoP
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.form.ui.activity.FormListActivity;
+import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
@@ -91,6 +91,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         return view;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AppCompatDialog(getActivity(), R.style.Construction_DialogStyle_Translucent);
@@ -181,7 +182,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     public void showActions(@NonNull final Task task) {
         List<TaskActionHelper.TaskActionEnum> actions = TaskActionHelper.getInstance().getActions(task);
         for (TaskActionHelper.TaskActionEnum action: actions) {
-            TextView actionBtn = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_action_button, null);
+            TextView actionBtn = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_action_button, mActionsContainer, false);
             actionBtn.setText(getActionName(action, task));
             actionBtn.setTag(action);
             actionBtn.setOnClickListener(new View.OnClickListener() {
@@ -275,14 +276,14 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     private void fillForm(Task task) {
         // TODO Entry of form
-        Intent intent = new Intent(getActivity(), FormListActivity.class);
+        Intent intent = new Intent(getActivity(), FormActivity.class);
         intent.putExtra("task", task);
         getActivity().startActivity(intent);
     }
 
     private void viewForm(Task task) {
         // TODO Entry of form
-        Intent intent = new Intent(getActivity(), FormListActivity.class);
+        Intent intent = new Intent(getActivity(), FormActivity.class);
         intent.putExtra("task", task);
         getActivity().startActivity(intent);
     }

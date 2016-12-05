@@ -19,5 +19,5 @@ public class Config {
 
     //Construction urls
     public static final String CONSTRUCTION_MAIN_URL = "http://cp-plan.shejijia.com/api/v1";
-    public static final String CONSTRUCTION_ISSUE_URL = "http://cp-issue.shejijia.com";
+    public static final String CONSTRUCTION_ISSUE_URL = "http://cp-issue.shejijia.com/v1";
 }
