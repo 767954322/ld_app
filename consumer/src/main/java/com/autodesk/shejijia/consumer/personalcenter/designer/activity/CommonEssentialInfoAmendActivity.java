@@ -117,13 +117,13 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
     private void showState() {
 
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
-            mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.DESIGNER_CONTENT);
+            mContent = getIntent().getExtras().get(Constant.PersonCenterTagKey.DESIGNER_CONTENT).toString();
             setTitleForNavbar(UIUtils.getString(R.string.nick_name));
         } else if (pTag.equals(Constant.PersonCenterTagKey.CONSUMER_INFO)) {
-            mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.CONSUMER_CONTENT);
+            mContent = getIntent().getExtras().get(Constant.PersonCenterTagKey.CONSUMER_CONTENT).toString();
             setTitleForNavbar(UIUtils.getString(R.string.nick_name));
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
-            mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.MEASURE_CONTENT);
+            mContent =getIntent().getExtras().get(Constant.PersonCenterTagKey.MEASURE_CONTENT).toString();
             setTitleForNavbar(UIUtils.getString(R.string.measure_house_cost));
         }
         tvc_content.setText(mContent);
