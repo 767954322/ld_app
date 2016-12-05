@@ -1055,8 +1055,11 @@
     <string name="recommend_hint_remarks">请填写备注</string>
     <string name="recommend_toast_name">客户姓名应为2-20个中文、英文、数字字符</string>
     <string name="recommend_new_project">创建新的项目</string>
-<!--添加主材页面-->
+    <!--添加主材页面-->
     <string name="all_button_name">全部</string>
     <string name="case3dnot">案例不存在</string>
+
+    <string name="delivery_tip_3d">用户在Web端查看</string>
+
 
 </resources>

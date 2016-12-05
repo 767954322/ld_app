@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanShowActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
@@ -28,10 +29,12 @@ import java.util.ArrayList;
  */
 public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
     ArrayList<MPFileBean> mMPFileBeans;
+    private int mCurrentLevel;
 
-    public Wk3DFinishDeliveryAdapter(Context context, ArrayList<MPFileBean> deliveryFilesEntities) {
+    public Wk3DFinishDeliveryAdapter(Context context, ArrayList<MPFileBean> deliveryFilesEntities, int level) {
         super(context, deliveryFilesEntities, R.layout.item_gridview_3dplan);
         this.context = context;
+        this.mCurrentLevel = level;
         this.mMPFileBeans = deliveryFilesEntities;
     }
 
@@ -58,20 +61,22 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
             mShowImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, Wk3DPlanShowActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mMPFileBeans);
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._POSITION, holder.getPosition());
-                    bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
-                    intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
-                    context.startActivity(intent);
+                    if (0 == mCurrentLevel) {
+                        new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.delivery_tip_3d), null, null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, null).show();
+                    } else {
+                        Intent intent = new Intent(context, Wk3DPlanShowActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mMPFileBeans);
+                        bundle.putSerializable(Constant.DeliveryShowBundleKey._POSITION, holder.getPosition());
+                        bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
+                        intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
+                        context.startActivity(intent);
+                    }
                 }
             });
         } else {
             setReflectIcon(mShowImageView, str, url, name);
         }
-
-
     }
 
     private void setReflectIcon(ImageView imageView, String str, final String url, final String name) {
@@ -80,8 +85,6 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//
-
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(url);

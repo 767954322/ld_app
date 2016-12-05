@@ -17,10 +17,9 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DPlanAd
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -268,7 +267,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                 case 4:
                     setTitleForNavbar(UIUtils.getString(R.string.delivery_quantity_room));
             }
-            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(this, mMPFileBeanArrayList);
+            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(this, mMPFileBeanArrayList,level);
             mGridView3DPlan.setAdapter(wk3DFinishDeliveryAdapter);
         } else {
             MyToast.show(this, UIUtils.getString(R.string.to_get_data_fail_try_again_later));

@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,12 +10,11 @@ import android.widget.ToggleButton;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanShowActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
+import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 
 import java.util.ArrayList;
 
@@ -91,13 +88,8 @@ public class Wk3DLevelZeroAdapter extends CommonAdapter<Wk3DPlanListBean> {
         mShowImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, wk3DPlanListBean);
-                bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_LEVEL_ZERO);
-                bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
-                intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
-                mContext.startActivity(intent);
+                /*用户在Web端查看*/
+                new AlertView(UIUtils.getString(R.string.common_tip), UIUtils.getString(R.string.delivery_tip_3d), null, null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, null).show();
             }
         });
     }
