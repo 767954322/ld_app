@@ -67,7 +67,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         super.initData(savedInstanceState);
         CustomProgress.show(this, "", false, null);
 
-        setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
+        setTitleForNavbar(getResources().getString(R.string.flow_pay_detail)); /// 设置标题 .
     }
 
     /**
