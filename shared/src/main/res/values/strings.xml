@@ -259,7 +259,7 @@
     <string name="no_image">手机还没有图片，快去拍一张吧</string>
     <string name="img_error">图片错误</string>
     <string name="update_count">完成(%1$d/%2$d)</string>
-    <string name = "btn_submit_text">完成</string>
+    <string name="btn_submit_text">完成</string>
     <string name="crop_activity_title">选择头像</string>
     <string name="label_general_folder_name">所有图片</string>
     <string name="permission_title_rationale">需要权限</string>
