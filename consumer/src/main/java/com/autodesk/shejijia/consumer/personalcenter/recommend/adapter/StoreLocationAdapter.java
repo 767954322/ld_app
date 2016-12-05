@@ -25,7 +25,7 @@ public class StoreLocationAdapter extends CommonAdapter<MallAddressEntity.MallAd
     public void convert(CommonViewHolder holder, MallAddressEntity.MallAddressesBean entity) {
         holder.setText(R.id.tv_category_name, entity.getStorefront_name());
         holder.setText(R.id.tv_office_hours, entity.getBusiness_hours());
-        holder.setText(R.id.tv_mall_address, entity.getDetailed_address());
+        holder.setText(R.id.tv_mall_address, entity.getStorefront_address());
         holder.setText(R.id.tv_booth_address, entity.getDetailed_address());
         holder.setText(R.id.tv_route_line, entity.getRide_route());
         holder.setText(R.id.tv_mall_mobile, entity.getBooth_phone());
