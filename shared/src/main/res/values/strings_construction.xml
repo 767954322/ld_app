@@ -17,8 +17,18 @@
     <string name="popup_clear_cache_title">清除缓存数据</string>
     <string name="popup_clear_cache_confirm">确定</string>
 
-    <!-- 节点详情添加备注提示语 -->
+    <!-- 节点详情 -->
     <string name="editText_hint_text">添加备注</string>
+    <string name="upload_photo">上传照片</string>
+    <string name="add_reserve_time">添加预约时间</string>
+    <string name="modify_reserve_time">修改预约时间</string>
+    <string name="add_reinspection_time">添加复验时间</string>
+    <string name="modify_reinspection_time">修改复验时间</string>
+    <string name="fill_inspection_form">填写%1$s表</string>
+    <string name="update_inspection_form">修改%1$s表</string>
+    <string name="view_inspection_form">查看%1$s表</string>
+    <string name="material_inspection">主材验收</string>
+    <string name="mark_complete">标记完成</string>
 
     <!-- 个人中心里的文本 -->
     <string name="personal_center_my_project">全部项目</string>

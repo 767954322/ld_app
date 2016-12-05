@@ -124,6 +124,10 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
 
                 if (mOnDateSelectedCallback != null) {
                     mOnDateSelectedCallback.onDateSelected(date);
+                } else if (getTargetFragment() != null) {
+                    Intent data = new Intent();
+                    data.putExtra(BUNDLE_KEY_SELECTED_DATE, date);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                 } else if (getParentFragment() != null) {
                     Intent data = new Intent();
                     data.putExtra(BUNDLE_KEY_SELECTED_DATE, date);
@@ -144,6 +148,10 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
                 if (mOnDatesSelectedCallback != null) {
                     mOnDatesSelectedCallback.onDateRangeSelected(selectedDates.get(0),
                             selectedDates.get(selectedDates.size() - 1));
+                } else if (getTargetFragment() != null) {
+                    Intent data = new Intent();
+                    data.putExtra(BUNDLE_KEY_SELECTED_RANGE, selectedDates);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                 } else if (getParentFragment() != null) {
                     Intent data = new Intent();
                     data.putExtra(BUNDLE_KEY_SELECTED_RANGE, selectedDates);

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_dialog_task_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:minHeight="320dp">
 
-    <include layout="@layout/fragment_task_details_content_view" />
+    <include layout="@layout/fragment_task_details_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -23,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
+            android:layout_marginBottom="@dimen/spacing_margin_double"
             android:src="@drawable/close"
             tools:ignore="ContentDescription" />
     </RelativeLayout>

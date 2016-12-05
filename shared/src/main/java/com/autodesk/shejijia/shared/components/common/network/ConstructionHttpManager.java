@@ -70,6 +70,7 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        LogUtils.d(LOG_TAG, requestUrl);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -6,6 +6,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 /**
  * Class description
@@ -74,6 +75,7 @@ public class TaskUtils {
                 displayStringId = R.string.task_deleted;
                 break;
             default:
+                LogUtils.e(ConstructionConstants.LOG_TAG_TASK, "Unknow status " + status);
                 displayStringId = R.string.task_status_unknow;
                 break;
         }

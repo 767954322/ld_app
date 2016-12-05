@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.autodesk.shejijia.shared.BuildConfig;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 /**
  * Created by jasonxu on 2015/8/28.

@@ -48,7 +48,6 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
-
         mConstructionHttpManager.getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override

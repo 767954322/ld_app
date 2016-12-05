@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,18 +14,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.form.ui.activity.FormListActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by t_xuz on 11/11/16.
@@ -43,6 +58,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     private TextInputEditText mCommentEditView;
     private RecyclerView mTaskMemberListView;
     private ImageButton mCloseBtn;
+    private LinearLayout mActionsContainer;
 
     private TaskDetailsContract.Presenter mTaskDetailsPresenter;
 
@@ -83,6 +99,21 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ConstructionConstants.REQUEST_CODE_PICK_DATE:
+                if (resultCode ==  Activity.RESULT_OK) {
+                    //TODO update reserve time
+                    Date selectedDate = (Date) data.getSerializableExtra(PickDateDialogFragment.BUNDLE_KEY_SELECTED_DATE);
+                    ToastUtils.showShort(getActivity(), selectedDate.toString());
+                }
+            default:
+                break;
+        }
     }
 
     @Override
@@ -147,8 +178,22 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
-    public void showActions(@NonNull Task task) {
-        // TODO
+    public void showActions(@NonNull final Task task) {
+        List<TaskActionHelper.TaskActionEnum> actions = TaskActionHelper.getInstance().getActions(task);
+        for (TaskActionHelper.TaskActionEnum action: actions) {
+            TextView actionBtn = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_action_button, null);
+            actionBtn.setText(getActionName(action, task));
+            actionBtn.setTag(action);
+            actionBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TaskActionHelper.TaskActionEnum attachedAction = (TaskActionHelper.TaskActionEnum) v.getTag();
+                    startAction(attachedAction, task);
+                }
+            });
+            mActionsContainer.addView(actionBtn);
+        }
+
     }
 
     private void initView(View view) {
@@ -161,6 +206,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mTaskMemberListView = (RecyclerView) view.findViewById(R.id.rcy_task_person_list);
         mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
         mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
+        mActionsContainer = (LinearLayout) view.findViewById(R.id.actions_container);
     }
 
     private void initEvent(){
@@ -170,5 +216,103 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                 dismiss();
             }
         });
+    }
+
+    private String getActionName(TaskActionHelper.TaskActionEnum taskActionEnum, Task task) {
+        switch (taskActionEnum) {
+            case ADD_REVERSE_TIME:
+                return getString(R.string.add_reserve_time);
+            case UPDATE_REVERSE_TIME:
+                return getString(R.string.modify_reserve_time);
+            case FILL_FORM:
+                return String.format(getString(R.string.fill_inspection_form), getInspectionName(task));
+            case VIEW_FORM:
+                return String.format(getString(R.string.view_inspection_form), getInspectionName(task));
+            case UPDATE_FORM:
+                return String.format(getString(R.string.update_inspection_form), getInspectionName(task));
+            case MARK_COMPLETE:
+                return getString(R.string.mark_complete);
+            case ADD_REINSPECTION_TIME:
+                return getString(R.string.add_reinspection_time);
+            case UPDATE_REINSPECTION_TIME:
+                return getString(R.string.modify_reinspection_time);
+            default:
+                return "";
+        }
+    }
+
+    private String getInspectionName(Task task) {
+        switch (task.getCategory()) {
+            case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION:
+                return getString(R.string.material_inspection);
+            default:
+                return task.getName();
+        }
+    }
+
+    private void startAction(TaskActionHelper.TaskActionEnum taskActionEnum, Task task) {
+        switch (taskActionEnum) {
+            case FILL_FORM:
+            case UPDATE_FORM:
+                fillForm(task);
+                break;
+            case VIEW_FORM:
+                viewForm(task);
+                break;
+            case MARK_COMPLETE:
+                markComplete(task);
+                break;
+            case ADD_REVERSE_TIME:
+            case ADD_REINSPECTION_TIME:
+            case UPDATE_REVERSE_TIME:
+            case UPDATE_REINSPECTION_TIME:
+                selectDate(task);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void fillForm(Task task) {
+        // TODO Entry of form
+        Intent intent = new Intent(getActivity(), FormListActivity.class);
+        intent.putExtra("task", task);
+        getActivity().startActivity(intent);
+    }
+
+    private void viewForm(Task task) {
+        // TODO Entry of form
+        Intent intent = new Intent(getActivity(), FormListActivity.class);
+        intent.putExtra("task", task);
+        getActivity().startActivity(intent);
+    }
+
+    private void markComplete(Task task) {
+        //TODO mark complete
+        ToastUtils.showShort(getActivity(), "Mark complete");
+        uploadPhoto(task);
+    }
+
+    private void uploadPhoto(Task task) {
+        //TODO navigate to common component
+        Intent intent = new Intent(getActivity(), MPPhotoPickerActivity.class);
+//      intent.putExtra(MPPhotoPickerActivity.ASSET_ID, mAssetId);
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        intent.putExtra(MPPhotoPickerActivity.X_TOKEN, memberEntity.getHs_accesstoken());
+        intent.putExtra(MPPhotoPickerActivity.MEMBER_ID, memberEntity.getAcs_member_id());
+
+        getActivity().startActivityForResult(intent, 0x0105);
+    }
+
+    private void selectDate(Task task) {
+        //TODO change reserve time
+        PickDateDialogFragment.Builder builder = new PickDateDialogFragment.Builder(task.getName());
+        Time time = TaskUtils.getDisplayTime(task);
+        Date startDate = DateUtil.iso8601ToDate(time.getStart());
+        builder.setSelectedDate(startDate);
+        builder.setCurrentDate(startDate);
+        PickDateDialogFragment pickDateDialogFragment = builder.create();
+        pickDateDialogFragment.show(getChildFragmentManager(), "pick_date");
     }
 }

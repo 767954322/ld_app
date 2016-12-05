@@ -18,6 +18,6 @@ public class Config {
     public final static String RECOMMEND_PATH = "http://api.shejijia.com/materials-recommend-app/v1/api";
 
     //Construction urls
-    public static final String CONSTRUCTION_MAIN_URL = "";
-    public static final String CONSTRUCTION_ISSUE_URL = "";
+    public static final String CONSTRUCTION_MAIN_URL = "http://cp-plan.shejijia.com/api/v1";
+    public static final String CONSTRUCTION_ISSUE_URL = "http://cp-issue.shejijia.com";
 }
