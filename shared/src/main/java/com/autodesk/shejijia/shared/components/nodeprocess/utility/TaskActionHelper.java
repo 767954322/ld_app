@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.utility;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -39,7 +39,7 @@ public class TaskActionHelper {
     private JSONObject mTaskActionsJsonObject;
 
     private TaskActionHelper() {
-        mTaskActionsJsonObject = FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(), "template/task_actions.json");
+        mTaskActionsJsonObject = JsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(), "template/task_actions.json");
     }
 
     private static class TaskActionHolder {

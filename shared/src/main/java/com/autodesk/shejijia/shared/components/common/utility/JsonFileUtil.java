@@ -27,7 +27,7 @@ import java.util.Map;
  * Created by t_panya on 16/10/19.
  */
 
-public class FormJsonFileUtil {
+public class JsonFileUtil {
     private static final String FILE_SEPARATE = "/";
 
     public static String loadJSONFromAsset(Activity activity, String fileName) {

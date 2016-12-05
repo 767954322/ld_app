@@ -10,7 +10,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.form.common.network.FormServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,7 +45,7 @@ public class FormRemoteDataSource implements FormDataSource {
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List jsonMapList = FormJsonFileUtil.jsonArray2List(jsonArray);
+                List jsonMapList = JsonFileUtil.jsonArray2List(jsonArray);
                 callBack.onSuccess(jsonMapList);
             }
         });
@@ -76,7 +76,7 @@ public class FormRemoteDataSource implements FormDataSource {
 //
 //            @Override
 //            public void onResponse(JSONObject jsonObject) {
-//                Map map = FormJsonFileUtil.jsonObj2Map(jsonObject);
+//                Map map = JsonFileUtil.jsonObj2Map(jsonObject);
 //                callBack.onLoadSuccess(map);
 //            }
 //        });
