@@ -124,7 +124,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private ImageView mIvCertification;
     private boolean isfromGuanZhu = false;
     private ArrayList<String> mImageListsManYou;
-
+    private Map<String, String> livingRoom;
+    private Map<String, String> toilet;
+    private TextView tvCustomerHomeLivingRoom;
+    private TextView tvCustomerHomeToilet;
 
     @Override
     protected int getLayoutResId() {
@@ -150,6 +153,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
+        tvCustomerHomeLivingRoom = (TextView) findViewById(R.id.tv_customer_home_living_room);
+        tvCustomerHomeToilet = (TextView) findViewById(R.id.tv_customer_home_toilet);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
         mIvCertification = (ImageView) findViewById(R.id.iv_designer_certification);
 
@@ -192,7 +197,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        tvCustomerHomeLivingRoom.setVisibility(View.VISIBLE);
+        tvCustomerHomeToilet.setVisibility(View.VISIBLE);
+        //tvCustomerHomePrice.setVisibility(View.VISIBLE);
+
         roomHall = AppJsonFileReader.getRoomHall(this);
+        livingRoom = AppJsonFileReader.getLivingRoom(this);
+        toilet = AppJsonFileReader.getToilet(this);
         style = AppJsonFileReader.getStyle(this);
 
         CustomProgress.show(this, "", false, null);
@@ -621,6 +632,22 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
         } else {
             tvCustomerHomeRoom.setText(R.string.other_qita);
+        }
+
+        //厅
+        String bedroom = case3DDetailBean.getBedroom();
+        if (livingRoom.containsKey(bedroom)) {
+            tvCustomerHomeLivingRoom.setText(livingRoom.get(bedroom));
+        } else {
+            tvCustomerHomeLivingRoom.setText(bedroom);
+        }
+
+        //卫
+        String restroom = case3DDetailBean.getRestroom();
+        if (toilet.containsKey(restroom)) {
+            tvCustomerHomeToilet.setText(toilet.get(restroom));
+        } else {
+            tvCustomerHomeToilet.setText(restroom);
         }
 
         String project_style = case3DDetailBean.getProject_style();
