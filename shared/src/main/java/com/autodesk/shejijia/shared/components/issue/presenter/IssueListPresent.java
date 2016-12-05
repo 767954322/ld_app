@@ -6,8 +6,15 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
+import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
+import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Menghao.Gu on 2016/12/1.
@@ -58,7 +65,20 @@ public class IssueListPresent implements IssueListContract.Presenter {
     @Override
     public void getIssueNumber() {
 
-        mView.onIssueListNum();
+        IssueRepository.getInstance().getRemoteIssueNum(
+
+                new ResponseCallback<String[], ResponseError>() {  //根据表单id获取具体的表单数据
+                    @Override
+                    public void onSuccess(String[] data) {    //获取到四张表格的数据,包括文字内容
+                        mView.onIssueListNum();
+                    }
+
+                    @Override
+                    public void onError(ResponseError error) {
+
+                    }
+                }
+        );
 
     }
 

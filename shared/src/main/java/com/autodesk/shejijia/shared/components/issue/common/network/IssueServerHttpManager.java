@@ -8,14 +8,17 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +37,6 @@ public class IssueServerHttpManager {
     public static IssueServerHttpManager getInstance() {
         return IssueServerHttpManager.ServerHttpManagerHolder.INSTANCE;
     }
-
 
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
@@ -69,6 +71,17 @@ public class IssueServerHttpManager {
         };
 
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
+    }
+
+    /**
+     * 获取列表数
+     *
+     * @param callback
+     */
+    public void getIssueNum(@NonNull OkJsonRequest.OKResponseCallback callback) {
+        // TODO  目前先打通流程
+        callback.onResponse(null);
+        get("tag", "url", callback);
     }
 
 }
