@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
@@ -70,8 +71,8 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 //        holder.setText(R.id.tv_decoration_beishu_name, contacts_name);
 //        holder.setText(R.id.tv_decoration_community_name, "/" + community_name);
 
-        holder.setText(R.id.tv_decoration_beishu_name, UIUtils.getNoDataIfEmpty(contacts_name).length() > 4 ? UIUtils.getNoDataIfEmpty(contacts_name).substring(0,3)+"..." : UIUtils.getNoDataIfEmpty(contacts_name));
-        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name).length() > 5 ? UIUtils.getNoDataIfEmpty(community_name).substring(0,4)+"..." : UIUtils.getNoDataIfEmpty(community_name));
+        holder.setText(R.id.tv_decoration_beishu_name, UIUtils.getNoDataIfEmpty(contacts_name).length() > 4 ? UIUtils.getNoDataIfEmpty(contacts_name).substring(0, 3) + "..." : UIUtils.getNoDataIfEmpty(contacts_name));
+        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name).length() > 5 ? UIUtils.getNoDataIfEmpty(community_name).substring(0, 4) + "..." : UIUtils.getNoDataIfEmpty(community_name));
 
 
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
@@ -103,10 +104,12 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
             holder.setTag(R.id.poly_designer_photo_beishu, avatar);
             PolygonImageView polygonImageView = holder.getView(R.id.poly_designer_photo_beishu);
-            if (avatar.equalsIgnoreCase((String) polygonImageView.getTag())) {
-                ImageUtils.displayAvatarImage(avatar, polygonImageView);
+            String tag = (String) polygonImageView.getTag();
+            if (!TextUtils.isEmpty(tag)) {
+                if (avatar.equalsIgnoreCase(tag)) {
+                    ImageUtils.displayAvatarImage(avatar, polygonImageView);
+                }
             }
-
             holder.setText(R.id.tv_designer_name_beishu, user_name);
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
