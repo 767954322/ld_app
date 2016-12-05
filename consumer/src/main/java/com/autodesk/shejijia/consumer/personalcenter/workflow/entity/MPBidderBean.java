@@ -31,6 +31,16 @@ public class MPBidderBean implements Serializable {
     private String design_price_max;
     private String design_price_min;
 
+    public int getIs_real_name() {
+        return is_real_name;
+    }
+
+    public void setIs_real_name(int is_real_name) {
+        this.is_real_name = is_real_name;
+    }
+
+    private int is_real_name;
+
     private MPPaymentBean payment;
     private MPDeliveryBean delivery;
     private MPDesignContractBean design_contract;

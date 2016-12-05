@@ -35,6 +35,9 @@ public class DecorationBiddersBean implements Serializable {
     private String design_price_min;
     public String following_count;
 
+
+    public int is_real_name;
+
     private PaymentBean payment;
     private MPDeliveryBean delivery;
     private List<MPDesignContractBean> design_contract;
@@ -65,6 +68,15 @@ public class DecorationBiddersBean implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public int getIs_real_name() {
+        return is_real_name;
+    }
+
+    public void setIs_real_name(int is_real_name) {
+        this.is_real_name = is_real_name;
+    }
+
 
     public String getDeclaration() {
         return declaration;

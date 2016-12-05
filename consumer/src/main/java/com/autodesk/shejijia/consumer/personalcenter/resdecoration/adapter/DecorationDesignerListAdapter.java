@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
@@ -55,11 +56,11 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         final String bidderUid = bidder.getUid();
         final String user_name = bidder.getUser_name();
         final String avatarUrl = bidder.getAvatar();
+        int is_real_name = bidder.getIs_real_name();
         final String mThread_id = bidder.getDesign_thread_id();
         MPDeliveryBean mpDeliveryBean = bidder.getDelivery();
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
-
         String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id, mpDeliveryBean);
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
 
@@ -72,27 +73,30 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
             holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_actionsheet_cancel);
         }
 
-
         holder.setText(R.id.tv_designer_name, user_name);
-
         holder.setTag(R.id.piv_consumer_order_photo, avatarUrl);
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
         String tag = (String) polygonImageView.getTag();
         if (!TextUtils.isEmpty(tag)) {
-            if (avatarUrl.equalsIgnoreCase(tag)) {
-                if (StringUtils.isEmpty(avatarUrl)) {
-                    polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
-                } else {
-                    ImageUtils.loadUserAvatar1(polygonImageView, avatarUrl);
-                }
+            if (!StringUtils.isEmpty(avatarUrl) && avatarUrl.equalsIgnoreCase(tag)) {
+                ImageUtils.loadUserAvatar1(polygonImageView, avatarUrl);
+            } else {
+                polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
             }
+        }
+        if (null != bidder && is_real_name == 2) {
+            holder.setVisible(R.id.iv_real_name, true);
+        } else {
+            holder.setVisible(R.id.iv_real_name, false);
         }
 
         /**
          * 判断进入全流程逻辑还是进入评价页面
          * 节点63,进入评价页面;其它节点，进入全流程逻辑
          */
-        if (falg) {
+        if (falg)
+
+        {
             /**
              * 进入评价页面
              */
@@ -120,7 +124,9 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                     startWkFlowStateActivity(mNeedsId, designerId, template_id, mThread_id);
                 }
             });
-        } else {
+        } else
+
+        {
             /**
              * 进入全流程逻辑
              */
@@ -137,15 +143,19 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         /**
          * 设计师主页
          */
-        holder.setOnClickListener(R.id.piv_consumer_order_photo, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
-                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designerId);
-                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, bidderUid);
-                mActivity.startActivity(intent);
-            }
-        });
+        holder.setOnClickListener(R.id.piv_consumer_order_photo, new View.OnClickListener()
+
+                {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
+                        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designerId);
+                        intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, bidderUid);
+                        mActivity.startActivity(intent);
+                    }
+                }
+
+        );
     }
 
     private void startWkFlowStateActivity(String needsId, String designerId, int template_id, String thread_id) {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -114,6 +115,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             headerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_header, null);
             mListView.addHeaderView(headerView);
             polygonImageView = (PolygonImageView) headerView.findViewById(R.id.piv_consumer_order_photo_01);
+            realName = (ImageView) headerView.findViewById(R.id.iv_real_name);
             ibFlowChart = (ImageButton) headerView.findViewById(R.id.ib_flow_chart);
             ll_piv = (LinearLayout) headerView.findViewById(R.id.ll_piv);
             tvDesignerName = (TextView) headerView.findViewById(R.id.tv_designer_name);
@@ -598,6 +600,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         String avatar = mBiddersEntity.getAvatar();
+        int is_real_name = mBiddersEntity.getIs_real_name();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             if (StringUtils.isEmpty(avatar)) {
                 polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
@@ -608,7 +611,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 tvDesignerName.setText(UIUtils.substring(mBiddersEntity.getUser_name(), 8));
             }
         }
+
+        if (is_real_name == 2) {
+            realName.setVisibility(View.VISIBLE);
+        } else {
+            realName.setVisibility(View.GONE);
+        }
+
         isShowAlertView(sub_node_id);
+
     }
 
     private void isShowAlertView(int sub_node_id) {
@@ -690,6 +701,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private LinearLayout ll_piv;
     //    private RelativeLayout rlStopContract;
     private PolygonImageView polygonImageView;
+    private ImageView realName;
     private Button btnStopDemand;
     private TextView tvDesignerName, tvCreateDate;
     private String demand_type;

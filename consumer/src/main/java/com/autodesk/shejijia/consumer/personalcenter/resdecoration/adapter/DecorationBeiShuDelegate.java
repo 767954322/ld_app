@@ -97,6 +97,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
             final DecorationBiddersBean decorationBiddersBean = bidders.get(0);
             String avatar = decorationBiddersBean.getAvatar();
+            int is_real_name = decorationBiddersBean.getIs_real_name();
             final String user_name = decorationBiddersBean.getUser_name();
             final String uid = decorationBiddersBean.getUid();
             final String designer_id = decorationBiddersBean.getDesigner_id();
@@ -110,6 +111,14 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
                     ImageUtils.displayAvatarImage(avatar, polygonImageView);
                 }
             }
+
+
+            if (is_real_name == 2) {
+                holder.setVisible(R.id.iv_real_name, true);
+            } else {
+                holder.setVisible(R.id.iv_real_name, false);
+            }
+
             holder.setText(R.id.tv_designer_name_beishu, user_name);
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
