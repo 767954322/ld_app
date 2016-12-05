@@ -78,7 +78,7 @@ public class TaskActionHelper {
     }
 
 
-    public TaskActionEnum convertTypeToEnum(String type) {
+    private TaskActionEnum convertTypeToEnum(String type) {
         switch (type) {
             case "add_reserve_time":
                 return TaskActionEnum.ADD_REVERSE_TIME;

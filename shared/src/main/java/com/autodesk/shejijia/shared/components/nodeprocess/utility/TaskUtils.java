@@ -85,8 +85,8 @@ public class TaskUtils {
 
     /**
      * Return status level which will decide background color
-     * @param status
-     * @return
+     * @param status Task status
+     * @return status level
      */
     public static int getStatusLevel(String status) {
         int level;
@@ -122,8 +122,8 @@ public class TaskUtils {
 
     /**
      * Return display time for project details and task details screen
-     * @param task
-     * @return
+     * @param task Task
+     * @return Display Time
      */
     public static Time getDisplayTime(Task task) {
         String category = task.getCategory();

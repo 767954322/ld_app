@@ -20,9 +20,9 @@
     <!-- 节点详情 -->
     <string name="editText_hint_text">添加备注</string>
     <string name="upload_photo">上传照片</string>
-    <string name="add_reserve_time">添加预约时间</string>
+    <string name="add_reserve_time">录入预约时间</string>
     <string name="modify_reserve_time">修改预约时间</string>
-    <string name="add_reinspection_time">添加复验时间</string>
+    <string name="add_reinspection_time">录入复验时间</string>
     <string name="modify_reinspection_time">修改复验时间</string>
     <string name="fill_inspection_form">填写%1$s表</string>
     <string name="update_inspection_form">修改%1$s表</string>
