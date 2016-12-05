@@ -524,6 +524,19 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
+                int statusCode = volleyError.networkResponse.statusCode;
+                if (statusCode==400){
+                    new AlertView(UIUtils.getString(R.string.tip), getString(R.string.case3dnot), null, null, new String[]{UIUtils.getString(R.string.sure)},CaseLibraryDetail3DActivity.this,
+                            AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            if (position != AlertView.CANCELPOSITION) {
+                                finish();
+                            }
+                        }
+                    }).setCancelable(true).show();
+                }
+
 
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryDetail3DActivity.this);
             }
