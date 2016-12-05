@@ -8,6 +8,7 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.issue.common.network.IssueServerHttpManager;
 import com.autodesk.shejijia.shared.components.issue.data.source.IssueDataSource;
+import com.autodesk.shejijia.shared.components.issue.data.source.IssueRemoteDataSource;
 
 import org.json.JSONObject;
 
@@ -31,17 +32,16 @@ public class IssueRepository implements IssueDataSource {
     @Override
     public void getRemoteIssueNum(@NonNull final ResponseCallback<String[], ResponseError> callBack) {
 
-        IssueServerHttpManager.getInstance().getIssueNum(new OkJsonRequest.OKResponseCallback() {
+        IssueRemoteDataSource.getInstance().getRemoteIssueNum(new ResponseCallback<String[], ResponseError>() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
+            public void onSuccess(String[] data) {
+                //TODO  获取数据后，改为真是数据
+                callBack.onSuccess(data);
             }
 
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                //TODO  获取数据后，改为真是数据
-                String[] data = {};
-                callBack.onSuccess(data);
+            public void onError(ResponseError errorMsg) {
+                callBack.onError(errorMsg);
             }
         });
 
