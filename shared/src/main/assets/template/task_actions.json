@@ -4,6 +4,7 @@
         "change_reserve_time",
         "fill_form",
         "view_form",
+        "mark_complete",
         "update_form",
         "add_reinspection_time",
         "change_reinspection_time"
@@ -19,8 +20,7 @@
         },
         "inspectorInspection": {
             "open": [
-                "add_reserve_time",
-                "fill_form"
+                "add_reserve_time"
             ],
             "reserving": [
                 "add_reserve_time"
