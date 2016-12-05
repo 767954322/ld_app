@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +16,14 @@ import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclervi
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.IssueListPresent;
+import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueTrackingActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**
  * Created by t_xuz on 8/25/16.
  */
-public class IssueListFragment extends BaseConstructionFragment implements IssueListContract.View, IssueListAdapter.IssueListItemListener, RefreshLoadMoreListener {
+public class IssueListFragment extends BaseConstructionFragment implements IssueListContract.View, IssueListAdapter.IssueListItemListener, RefreshLoadMoreListener, View.OnClickListener {
 
     private IssueListAdapter mIssueListAdapter;
     private IssueListPresent mIssueListPresent;
@@ -72,6 +74,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
         mIssueListView.setRefreshLoadMoreListener(this);
         //让其自动刷新一下，会回调onRefresh()方法一次
         mIssueListView.setRefreshing(true);
+        mAddIssueTracking.setOnClickListener(this);
 
     }
 
@@ -114,8 +117,18 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     public void onRefreshIssueTracking() {
 
         mIssueListView.complete();
-        ToastUtils.showLong(activity, "刷新了问题追踪列表");
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int i = v.getId();
+        if (i == R.id.rl_add_issuetracking) {
+            Intent addIssueTracking_Intent = new Intent(mContext, AddIssueTrackingActivity.class);
+            startActivity(addIssueTracking_Intent);
+        } else {
+        }
     }
 
     //获取列表数据样式
@@ -137,4 +150,5 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
         ToastUtils.showLong(activity, "查看详情");
 
     }
+
 }

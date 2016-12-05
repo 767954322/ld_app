@@ -67,9 +67,9 @@ public class IssueListPresent implements IssueListContract.Presenter {
 
         IssueRepository.getInstance().getRemoteIssueNum(
 
-                new ResponseCallback<String[], ResponseError>() {  //根据表单id获取具体的表单数据
+                new ResponseCallback<String[], ResponseError>() {
                     @Override
-                    public void onSuccess(String[] data) {    //获取到四张表格的数据,包括文字内容
+                    public void onSuccess(String[] data) {
                         mView.onIssueListNum();
                     }
 

@@ -12,6 +12,8 @@ import com.autodesk.shejijia.shared.components.issue.data.source.IssueRemoteData
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/12/5.
  */
@@ -35,6 +37,24 @@ public class IssueRepository implements IssueDataSource {
         IssueRemoteDataSource.getInstance().getRemoteIssueNum(new ResponseCallback<String[], ResponseError>() {
             @Override
             public void onSuccess(String[] data) {
+                //TODO  获取数据后，改为真是数据
+                callBack.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ResponseError errorMsg) {
+                callBack.onError(errorMsg);
+            }
+        });
+
+    }
+
+    @Override
+    public void putIssueTracking(String contentText, String audioPath, List<String> imgPath, final ResponseCallback<Boolean, ResponseError> callBack) {
+
+        IssueRemoteDataSource.getInstance().putIssueTracking(contentText, audioPath, imgPath, new ResponseCallback<Boolean, ResponseError>() {
+            @Override
+            public void onSuccess(Boolean data) {
                 //TODO  获取数据后，改为真是数据
                 callBack.onSuccess(data);
             }

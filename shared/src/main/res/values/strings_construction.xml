@@ -160,5 +160,6 @@
     <!-- 问题追踪 -->
     <string name="issue_tracking_list_empty_message">问题追踪界面加载失败，请重新加载</string>
     <string name="issue_tracking_list_add_issue">添加问题</string>
+    <string name="toolbar_add_issue_tracking">完成</string>
 
 </resources>

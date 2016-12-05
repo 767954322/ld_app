@@ -84,4 +84,15 @@ public class IssueServerHttpManager {
         get("tag", "url", callback);
     }
 
+    /**
+     * 获取列表数
+     *
+     * @param callback
+     */
+    public void putIssueTracking(@NonNull OkJsonRequest.OKResponseCallback callback) {
+        // TODO  目前先打通流程
+        callback.onResponse(null);
+        get("tag", "url", callback);
+    }
+
 }
