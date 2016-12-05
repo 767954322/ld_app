@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.form.presenter;
 import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.FormFeedBack;
 import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
 
 import java.util.ArrayList;
@@ -31,33 +32,34 @@ public class ItemListPresenter implements ItemListContract.Presenter {
             if (category.equals(checkItem.getCategory())) {
                 OptionCell optionCell = new OptionCell();
                 optionCell.setTitle(checkItem.getTitle());
+                FormFeedBack formFeedBack = checkItem.getFormFeedBack();
+                //根据map的索引获取其中的文字
+                optionCell.setCheckResult(formFeedBack.getCurrentCheckIndex());
 
+                if(map.containsKey(checkItem.getActionType())) {
+                    Object o = map.get(checkItem.getActionType());
+                    if(o instanceof List) {
+                        optionCell.setActionResult(((List<String>) o).get(formFeedBack.getCurrentActionIndex()));
+                    }
+                }
+
+                optionCell.setShowStandard(true);
                 optionCell.setStandard(checkItem.getStandard());
-                optionCell.setActionType(checkItem.getActionType());
+//                optionCell.setActionType(checkItem.getActionType());
 
-                HashMap<String, String[]> typeDict = new HashMap<>();
+                HashMap<String, List<String>> typeDict = new HashMap<>();
                 String itemTypeDict = checkItem.getCheckType();
-//                LogUtils.d("asdf",typeDict.toString() + "类别: "+ itemTypeDict);
-                if(map.containsKey(itemTypeDict)) {
-                    Object o = map.get(itemCellList);
-                    if( o instanceof String[]) {
-                        String[] s = (String[]) o;
-                        typeDict.put(itemTypeDict, s);
-                    } else if(o instanceof List[]){
-                        List<String> list = (List<String>) o;
-                        Object[] objects = list.toArray();
-                        try{
-                            String[] strings = (String[]) objects;
-                        } catch (Exception e) {
-                            typeDict.put(itemTypeDict,new String[]{"右边1","中间1","左边1"});
-                        }
-                    } else {
-                        typeDict.put(itemTypeDict,new String[]{"右边","中间","左边"});
+
+                if (map.containsKey(itemTypeDict)) {
+                    Object o = map.get(itemTypeDict);
+                    if (o instanceof List) {
+                        typeDict.put(itemTypeDict,(List<String>) o);
                     }
                     optionCell.setTypeDict(typeDict);
                 }
                 itemCellList.add(optionCell);
             }
+
         }
 
         return itemCellList;

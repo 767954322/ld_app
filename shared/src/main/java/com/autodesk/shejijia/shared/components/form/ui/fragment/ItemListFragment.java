@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
@@ -21,7 +23,7 @@ import java.util.List;
  * Created by t_aij on 16/11/25.
  */
 
-public class ItemListFragment extends BaseConstructionFragment implements ItemListContract.View {
+public class ItemListFragment extends BaseConstructionFragment implements ItemListContract.View, ItemListAdapter.OnItemClickListener {
 
     private RecyclerView mRecyclerView;
     private FormActivity mActivity;
@@ -62,9 +64,9 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
         mActivity.initToolbar(mCategory);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new ItemListAdapter(mContext, mOptionCellList);
+        mAdapter = new ItemListAdapter(mOptionCellList,this);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -74,5 +76,21 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
             mActivity.initToolbar(mCategory);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onLeftItemClick(View view, int position) {
+        LogUtils.d("asdf","左边 current position:" + position);
+
+    }
+
+    @Override
+    public void onCenterItemClick(View view, int position) {
+        LogUtils.d("asdf","中间 current position:" + position);
+    }
+
+    @Override
+    public void onRightItemClick(View view, int position) {
+        LogUtils.d("asdf","右边 current position:" + position);
     }
 }

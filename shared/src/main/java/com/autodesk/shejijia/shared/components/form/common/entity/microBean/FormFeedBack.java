@@ -19,7 +19,7 @@ public class FormFeedBack implements Serializable {
     private SHFile audio;
     private List<SHFile> images;
     private Integer currentActionIndex = -1;
-    private Integer currentCheckIndex = -1;
+    private Integer currentCheckIndex = 0;
 
     public String getComment() {
         return comment;

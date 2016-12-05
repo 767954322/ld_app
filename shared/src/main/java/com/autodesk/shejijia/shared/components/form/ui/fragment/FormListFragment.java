@@ -85,7 +85,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     @Override
     protected void initListener() {
         rootView.findViewById(R.id.btn_submit).setOnClickListener(this);
-        rootView.findViewById(R.id.btn_cancel).setOnClickListener(this);
 
         mAdapter.setOnItemClickListener(new FormListAdapter.OnItemClickListener() { //条目点击事件,传进去具体的数据
             @Override
@@ -127,8 +126,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         int id = v.getId();
         if (R.id.btn_submit == id) {
             ToastUtils.showShort(mContext, "弹框,确定是否确定保存");
-        } else if (R.id.btn_cancel == id) {
-            ToastUtils.showShort(mContext, "弹框,确定是否取消");
         }
 
     }

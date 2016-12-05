@@ -48,7 +48,7 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_form_item_list;
+        return R.layout.fragment_form_sub_list;
     }
 
     @Override

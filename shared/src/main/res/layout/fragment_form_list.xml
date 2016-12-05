@@ -2,8 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/form_background_grey">
+    android:layout_height="match_parent">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -59,37 +58,18 @@
                   android:background="@color/con_white"
                   android:visibility="gone"/>
 
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="40dp"
-                      android:paddingEnd="@dimen/spacing_padding_double"
-                      android:paddingStart="@dimen/spacing_padding_double">
-
-            <Button android:id="@+id/btn_cancel"
-                    style="?attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginEnd="@dimen/size_12"
-                    android:layout_weight="1"
-                    android:background="@drawable/small_button_grey"
-                    android:text="@string/quit"
-                    android:textColor="@color/white"
-                    android:typeface="sans"/>
-
-            <Button android:id="@+id/btn_submit"
-                    style="?attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="@dimen/size_12"
-                    android:layout_weight="1"
-                    android:background="@drawable/small_button_blue"
-                    android:text="@string/commite"
-                    android:textColor="@color/white"
-                    android:typeface="sans"/>
-
-        </LinearLayout>
-
+        <Button android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginEnd="@dimen/spacing_margin_double"
+                android:layout_marginStart="@dimen/spacing_margin_double"
+                android:layout_marginTop="@dimen/spacing_form_list_top"
+                android:background="@drawable/btn_form_bg_selector"
+                android:enabled="false"
+                android:text="@string/commite"
+                android:textColor="@color/white"/>
 
     </LinearLayout>
+
+
 </ScrollView>

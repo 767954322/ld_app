@@ -8,7 +8,10 @@
     <android.support.v7.widget.RecyclerView android:id="@+id/recycler_view"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:background="@color/form_background_write">
+                                            android:background="@color/form_background_write"
+                                            android:layout_marginTop="@dimen/spacing_form_list_top"
+                                            android:paddingEnd="@dimen/spacing_padding_double"
+                                            android:paddingStart="@dimen/spacing_padding_double">
 
     </android.support.v7.widget.RecyclerView>
 
