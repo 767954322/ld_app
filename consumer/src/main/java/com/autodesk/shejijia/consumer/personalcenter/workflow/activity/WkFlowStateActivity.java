@@ -610,13 +610,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             if (!TextUtils.isEmpty(mBiddersEntity.getUser_name())) {
                 tvDesignerName.setText(UIUtils.substring(mBiddersEntity.getUser_name(), 8));
             }
+
+            if (is_real_name == 2) {
+                realName.setVisibility(View.VISIBLE);
+            } else {
+                realName.setVisibility(View.GONE);
+            }
         }
 
-        if (is_real_name == 2) {
-            realName.setVisibility(View.VISIBLE);
-        } else {
-            realName.setVisibility(View.GONE);
-        }
+
 
         isShowAlertView(sub_node_id);
 

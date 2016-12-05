@@ -163,7 +163,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             /*if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
                 wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
-
             }*/
         }
     };
