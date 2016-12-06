@@ -296,11 +296,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case R.id.rl_thumb_up://点赞
                 if (null != memberEntity) {
                     if (!isMemberLike) {
-                        String design_asset_id = case3DDetailBean.getDesign_asset_id();
-                        if (design_asset_id != null) {
-                            llThumbUp.setOnClickListener(null);
-                            rlThumbUp.setOnClickListener(null);
-                            sendThumbUp(design_asset_id);
+                        if (null != case3DDetailBean) {
+                            String design_asset_id = case3DDetailBean.getDesign_asset_id();
+                            if (design_asset_id != null) {
+                                llThumbUp.setOnClickListener(null);
+                                rlThumbUp.setOnClickListener(null);
+                                sendThumbUp(design_asset_id);
+                            }
                         }
                     } else {
                         //已经点过赞
@@ -913,7 +915,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
      * @param count
      */
     private void initDots(int count) {
-        if (count>0){
+        if (count > 0) {
             for (int j = 0; j < count; j++) {
                 guide_dots.addView(initDot());
             }
@@ -968,7 +970,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         for (int i = 0; i < mImageListsManYou.size(); i++) {
             viewList.add(initView(initImage(mImageListsManYou.get(i))));
         }
-        if (mImageListsManYou.size()!=1){
+        if (mImageListsManYou.size() != 1) {
             initDots(mImageListsManYou.size());
         }
 
