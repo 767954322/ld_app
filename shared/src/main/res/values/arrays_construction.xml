@@ -32,5 +32,12 @@
         <item>其他待处理问题</item>
         <item>已跟进</item>
     </string-array>
+    <!-- 添加问题问题类型列表 -->
+    <string-array name="add_issue_type_list">
+        <item>巡查问题</item>
+        <item>后期安装</item>
+        <item>材料问题</item>
+        <item>其他问题</item>
+    </string-array>
 
 </resources>
