@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/6.
+ * Created by Menghao.Gu on 2016/12/6.
  */
 
 public class IssueDescription implements Serializable {

@@ -8,7 +8,7 @@ import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/5.
+ * Created by Menghao.Gu on 2016/12/5.
  */
 
 public class AddIssueDescriptionPresent implements AddIssueDescriptionContract.Presenter {

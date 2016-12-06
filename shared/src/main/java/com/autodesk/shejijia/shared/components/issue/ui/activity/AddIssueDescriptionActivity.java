@@ -1,29 +1,35 @@
 package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
+import java.util.List;
+
 /**
+ * 添加问题追踪描述
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public class AddIssueDescriptionActivity extends BaseActivity implements AddIssueDescriptionContract.View {
+public class AddIssueDescriptionActivity extends BaseActivity {
     private FrameLayout mAddIssueTracking;
     private CommentFragment addIssueTrackingFragment;
     private CommentPresenter mPresenter;
-    private AddIssueDescriptionPresent mTrackingPresent;
 
     @Override
     protected int getLayoutResId() {
@@ -41,9 +47,7 @@ public class AddIssueDescriptionActivity extends BaseActivity implements AddIssu
     protected void initData(Bundle savedInstanceState) {
 
         if (savedInstanceState == null) {
-            mTrackingPresent = new AddIssueDescriptionPresent(this);
             addIssueTrackingFragment = CommentFragment.getInstance(new CommentConfig());
-
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();
@@ -65,38 +69,25 @@ public class AddIssueDescriptionActivity extends BaseActivity implements AddIssu
             finish();
             return true;
         } else if (i == R.id.add_traction) {
-            mTrackingPresent.putIssueTracking(addIssueTrackingFragment.getCommentContent(), addIssueTrackingFragment.getAudioRecordPath(), addIssueTrackingFragment.getImagePathList());
+            backAddIssueList();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onShowStatus(boolean status) {
-
-        ToastUtils.showLong(this, "添加成功");
-
-    }
-
-    @Override
-    public void showNetError(ResponseError error) {
-
-    }
-
-    @Override
-    public void showError(String errorMsg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
+    private void backAddIssueList() {
+        String mDescription = mPresenter.getCommentContent();
+        String mAudioPath = mPresenter.getAudioPath();
+        List<String> mImagePath = mPresenter.getImageData();
+        boolean hasImage = (mImagePath == null || mImagePath.size() == 0) ? false : true;
+        if (!TextUtils.isEmpty(mDescription) || !TextUtils.isEmpty(mDescription) || hasImage) {
+            IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
+            Intent intent = new Intent();
+            intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY, mEntity);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 

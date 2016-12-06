@@ -9,13 +9,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
-import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
 import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Menghao.Gu on 2016/12/1.
  */

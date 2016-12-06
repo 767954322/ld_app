@@ -11,18 +11,17 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
-import com.autodesk.shejijia.shared.components.issue.ui.fragment.AddIssueTrackingFragment;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.AddIssueListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
-import java.util.List;
-
 /**
+ * 添加问题追踪列表页
  * Created by Menghao.Gu on 2016/12/6.
  */
 
 public class AddIssueListActivity extends BaseActivity implements AddIssueDescriptionContract.View {
     private AddIssueDescriptionPresent mTrackingPresent;
-    private AddIssueTrackingFragment addIssueTrackingFragment;
+    private AddIssueListFragment addIssueTrackingFragment;
     private IssueDescription mIssueDescription;
 
     @Override
@@ -40,7 +39,7 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
     protected void initData(Bundle savedInstanceState) {
 
         if (savedInstanceState == null) {
-            addIssueTrackingFragment = AddIssueTrackingFragment.getInstance();
+            addIssueTrackingFragment = AddIssueListFragment.getInstance();
             mTrackingPresent = new AddIssueDescriptionPresent(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
@@ -70,26 +69,21 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
             return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public void onShowStatus(boolean status) {
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && null != data) {
-            switch (requestCode) {
-                case ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_CODE:
-                    mIssueDescription = (IssueDescription) data.getSerializableExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY);
-                default:
-                    break;
-            }
+
+            mIssueDescription = (IssueDescription) data.getSerializableExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY);
+
         }
     }
 
+    @Override
+    public void onShowStatus(boolean status) {
+
+    }
     @Override
     public void showNetError(ResponseError error) {
 
@@ -109,7 +103,6 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
     public void hideLoading() {
 
     }
-
 
 
 }
