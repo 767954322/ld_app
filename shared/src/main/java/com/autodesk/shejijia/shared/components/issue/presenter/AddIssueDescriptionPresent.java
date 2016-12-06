@@ -2,7 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.presenter;
 
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.issue.contract.AddTrackingContract;
+import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Administrator on 2016/12/5.
  */
 
-public class AddTrackingPrensent implements AddTrackingContract.Presenter {
+public class AddIssueDescriptionPresent implements AddIssueDescriptionContract.Presenter {
 
-    private AddTrackingContract.View mView;
+    private AddIssueDescriptionContract.View mView;
 
-    public AddTrackingPrensent(AddTrackingContract.View mView) {
+    public AddIssueDescriptionPresent(AddIssueDescriptionContract.View mView) {
         this.mView = mView;
     }
 

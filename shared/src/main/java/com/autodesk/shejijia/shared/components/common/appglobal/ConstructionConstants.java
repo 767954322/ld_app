@@ -115,6 +115,11 @@ public class ConstructionConstants {
         public static final String ISSUE_LIST_TYPE_SINGLE_PROJECT = "enterprise_one_tag";//角色查看服务端单个问题追踪
         public static final String ISSUE_LIST_TYPE_CONSUMER = "consumer_tag";//消费端查看单个问题追踪
 
+        public static final int ADD_ISSUE_DESCRIPTION_RESULT_CODE = 0;//添加问题追踪描述返回请求码
+        public static final String ADD_ISSUE_DESCRIPTION_RESULT_KEY = "key_issuedescription";//添加问题追踪描述返回KEY
+
+
+
     }
 
 }

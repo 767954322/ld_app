@@ -16,7 +16,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclervi
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.IssueListPresent;
-import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueTrackingActivity;
+import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueListActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
@@ -125,7 +125,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
 
         int i = v.getId();
         if (i == R.id.rl_add_issuetracking) {
-            Intent addIssueTracking_Intent = new Intent(mContext, AddIssueTrackingActivity.class);
+            Intent addIssueTracking_Intent = new Intent(mContext, AddIssueListActivity.class);
             startActivity(addIssueTracking_Intent);
         } else {
         }

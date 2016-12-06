@@ -11,20 +11,19 @@ import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.C
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.issue.contract.AddTrackingContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.AddTrackingPrensent;
-import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
+import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
+import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public class AddIssueTrackingActivity extends BaseActivity implements AddTrackingContract.View {
+public class AddIssueDescriptionActivity extends BaseActivity implements AddIssueDescriptionContract.View {
     private FrameLayout mAddIssueTracking;
     private CommentFragment addIssueTrackingFragment;
     private CommentPresenter mPresenter;
-    private AddTrackingPrensent mTrackingPresent;
+    private AddIssueDescriptionPresent mTrackingPresent;
 
     @Override
     protected int getLayoutResId() {
@@ -42,7 +41,7 @@ public class AddIssueTrackingActivity extends BaseActivity implements AddTrackin
     protected void initData(Bundle savedInstanceState) {
 
         if (savedInstanceState == null) {
-            mTrackingPresent = new AddTrackingPrensent(this);
+            mTrackingPresent = new AddIssueDescriptionPresent(this);
             addIssueTrackingFragment = CommentFragment.getInstance(new CommentConfig());
 
             getSupportFragmentManager().beginTransaction()

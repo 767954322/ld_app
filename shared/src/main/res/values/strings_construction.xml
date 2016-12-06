@@ -161,5 +161,10 @@
     <string name="issue_tracking_list_empty_message">问题追踪界面加载失败，请重新加载</string>
     <string name="issue_tracking_list_add_issue">添加问题</string>
     <string name="toolbar_add_issue_tracking">完成</string>
+    <string name="add_issuelist_style">问题类型</string>
+    <string name="add_issuelist_descrip">问题描述</string>
+    <string name="add_issuelist_fllow">跟进人员</string>
+    <string name="add_issuelist_notify">通知客户</string>
+    <string name="add_issuelist_reply">明天回复</string>
 
 </resources>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_d4"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_issuetype"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ibn_issuetype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/pay_ico" />
+
+        <TextView
+            android:id="@+id/tx_issuetype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/ibn_issuetype"
+            android:text="@string/add_issuelist_style" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_issuedescrip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_below="@+id/rl_issuetype"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ibn_issuedescrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/pay_ico" />
+
+        <TextView
+            android:id="@+id/tx_issuedescrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/ibn_issuedescrip"
+            android:text="@string/add_issuelist_descrip" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_issuefllow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_below="@+id/rl_issuedescrip"
+        android:layout_marginTop="@dimen/size_7"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ibn_issuefllow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/pay_ico" />
+
+        <TextView
+            android:id="@+id/tx_issuefllow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/ibn_issuefllow"
+            android:text="@string/add_issuelist_fllow" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_issuenotify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_below="@+id/rl_issuefllow"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ibn_issuenotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/pay_ico" />
+
+        <TextView
+            android:id="@+id/tx_issuenotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/ibn_issuenotify"
+            android:text="@string/add_issuelist_notify" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_issuereply"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_below="@+id/rl_issuenotify"
+        android:layout_marginTop="@dimen/size_7"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ibn_issuereply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/pay_ico" />
+
+        <TextView
+            android:id="@+id/tx_issuereply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/ibn_issuereply"
+            android:text="@string/add_issuelist_reply" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
+    </RelativeLayout>
+
+</RelativeLayout>

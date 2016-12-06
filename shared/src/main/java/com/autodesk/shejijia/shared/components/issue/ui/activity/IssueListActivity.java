@@ -1,9 +1,11 @@
 package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -33,8 +35,18 @@ public class IssueListActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_issue_list_main, issueListFragment)
                     .commit();
-
         }
-
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
