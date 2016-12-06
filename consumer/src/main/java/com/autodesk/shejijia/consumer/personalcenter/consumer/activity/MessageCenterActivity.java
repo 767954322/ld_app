@@ -114,9 +114,8 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     }
 
 
-
     private void markThreadAsRead(String inThreadId) {
-        MPChatHttpManager.getInstance().markThreadAsRead(mMemberEntity.getAcs_member_id(),inThreadId, new OkStringRequest.OKResponseCallback() {
+        MPChatHttpManager.getInstance().markThreadAsRead(mMemberEntity.getAcs_member_id(), inThreadId, new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
@@ -285,7 +284,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
                 Log.d("LOG_NET", "成功！");
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 MessageCenterBean messageCenter = GsonUtil.jsonToBean(jsonString, MessageCenterBean.class);
-                if (messageCenter.getMessages() != null) {
+                if (messageCenter != null && messageCenter.getMessages() != null) {
                     updateViewFromData(messageCenter.getMessages(), state);
                 } else {
                     if (state.equals(REFRESH_STATUS)) {
