@@ -35,6 +35,8 @@ public class Task implements Serializable{
     private String planId;
     @SerializedName("is_milestone")
     private boolean isMilestone;
+    @SerializedName("sort_time")
+    private Time sortTime;
     @SerializedName("planning_time")
     private Time planningTime;
     @SerializedName("effect_time")
@@ -166,6 +168,14 @@ public class Task implements Serializable{
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+
+    public Time getSortTime() {
+        return sortTime;
+    }
+
+    public void setSortTime(Time sortTime) {
+        this.sortTime = sortTime;
     }
 
     public Time getPlanningTime() {

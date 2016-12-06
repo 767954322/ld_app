@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
@@ -35,7 +36,7 @@ public interface TaskDetailsContract {
 
         void editComment(@NonNull String comment);
 
-        void showActions(@NonNull Task task);
+        void showActions(@NonNull Task task, @NonNull ProjectInfo project);
 
     }
 

@@ -47,7 +47,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
 
         mTaskDetailsView.showTaskMembers(new ArrayList<Member>()); // TODO get members
 
-        mTaskDetailsView.showActions(mTask);
+        mTaskDetailsView.showActions(mTask, mProjectInfo);
     }
 
     @Override

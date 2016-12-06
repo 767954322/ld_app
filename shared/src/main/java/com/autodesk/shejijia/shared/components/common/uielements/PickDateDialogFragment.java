@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -94,6 +95,14 @@ public class PickDateDialogFragment extends AppCompatDialogFragment implements V
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme_Calendar);
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        View bottomSheet = getDialog().findViewById(android.support.design.R.id.design_bottom_sheet);
+        BottomSheetBehavior.from(bottomSheet).setHideable(false);
+    }
+
 
     @Nullable
     @Override

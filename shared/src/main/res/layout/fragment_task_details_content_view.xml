@@ -14,7 +14,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_task_details_header"
         android:orientation="horizontal"
-        android:padding="@dimen/spacing_padding_third">
+        android:paddingLeft="@dimen/spacing_padding_double"
+        android:paddingRight="@dimen/spacing_padding_double"
+        android:paddingTop="@dimen/spacing_padding_third"
+        android:paddingBottom="@dimen/spacing_padding_third">
 
         <TextView
             android:id="@+id/tv_task_name"

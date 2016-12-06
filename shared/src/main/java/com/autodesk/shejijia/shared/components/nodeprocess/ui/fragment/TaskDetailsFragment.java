@@ -23,20 +23,27 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -179,7 +186,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
-    public void showActions(@NonNull final Task task) {
+    public void showActions(@NonNull final Task task, @NonNull final ProjectInfo projectInfo) {
         List<TaskActionHelper.TaskActionEnum> actions = TaskActionHelper.getInstance().getActions(task);
         for (TaskActionHelper.TaskActionEnum action: actions) {
             TextView actionBtn = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_action_button, mActionsContainer, false);
@@ -189,7 +196,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                 @Override
                 public void onClick(View v) {
                     TaskActionHelper.TaskActionEnum attachedAction = (TaskActionHelper.TaskActionEnum) v.getTag();
-                    startAction(attachedAction, task);
+                    startAction(attachedAction, task, projectInfo);
                 }
             });
             mActionsContainer.addView(actionBtn);
@@ -251,7 +258,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         }
     }
 
-    private void startAction(TaskActionHelper.TaskActionEnum taskActionEnum, Task task) {
+    private void startAction(TaskActionHelper.TaskActionEnum taskActionEnum, Task task, ProjectInfo projectInfo) {
         switch (taskActionEnum) {
             case FILL_FORM:
             case UPDATE_FORM:
@@ -267,7 +274,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
             case ADD_REINSPECTION_TIME:
             case UPDATE_REVERSE_TIME:
             case UPDATE_REINSPECTION_TIME:
-                selectDate(task);
+                selectDate(task, projectInfo);
                 break;
             default:
                 break;
@@ -306,14 +313,10 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         getActivity().startActivityForResult(intent, 0x0105);
     }
 
-    private void selectDate(Task task) {
-        //TODO change reserve time
-        PickDateDialogFragment.Builder builder = new PickDateDialogFragment.Builder(task.getName());
-        Time time = TaskUtils.getDisplayTime(task);
-        Date startDate = DateUtil.iso8601ToDate(time.getStart());
-        builder.setSelectedDate(startDate);
-        builder.setCurrentDate(startDate);
-        PickDateDialogFragment pickDateDialogFragment = builder.create();
-        pickDateDialogFragment.show(getChildFragmentManager(), "pick_date");
+    private void selectDate(Task task, ProjectInfo projectInfo) {
+        PickDateDialogFragment.Builder builder = TaskUtils.getPickDateDialogBuilder(task, projectInfo);
+        builder.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
+        PickDateDialogFragment dialogFragment = builder.create();
+        dialogFragment.show(getChildFragmentManager(), "pick_date");
     }
 }

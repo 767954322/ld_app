@@ -4,9 +4,22 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Class description
@@ -126,31 +139,101 @@ public class TaskUtils {
      * @return Display Time
      */
     public static Time getDisplayTime(Task task) {
-        String category = task.getCategory();
-        if (TextUtils.isEmpty(task.getCategory())) {
-            return null;
-        }
+        Time time = task.getSortTime();
 
-        Time time = null;
-        switch (category) {
-            case ConstructionConstants.TaskCategory.CONSTRUCTION:
-                time = task.getPlanningTime();
-                break;
-            default:
-                if (!TextUtils.isEmpty(task.getStatus())) {
-                    String status = task.getStatus();
-                    if (status.equalsIgnoreCase(ConstructionConstants.TaskStatus.OPEN) ||
-                            status.equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVING)) {
-                        if (task.getPlanningTime() != null) {
-                            time = task.getPlanningTime();
-                        }
-                    } else {
-                        time = task.getReserveTime();
-                    }
-                }
-                break;
-        }
+//        String category = task.getCategory();
+//        if (TextUtils.isEmpty(category)) {
+//            return null;
+//        }
+//
+//        Time time;
+//        switch (category) {
+//            case ConstructionConstants.TaskCategory.CONSTRUCTION:
+//                time = task.getPlanningTime();
+//                break;
+//            default:
+//                if (!TextUtils.isEmpty(task.getStatus())) {
+//                    String status = task.getStatus();
+//                    if (status.equalsIgnoreCase(ConstructionConstants.TaskStatus.OPEN) ||
+//                            status.equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVING)) {
+//                        if (task.getPlanningTime() != null) {
+//                            time = task.getPlanningTime();
+//                        }
+//                    } else {
+//                        time = task.getReserveTime();
+//                    }
+//                }
+//                break;
+//        }
 
         return time;
+    }
+
+    public static PickDateDialogFragment.Builder getPickDateDialogBuilder(Task task, ProjectInfo projectInfo) {
+        PlanInfo plan = projectInfo.getPlan();
+
+        List<Task> milestones = new ArrayList<>();
+        for (Task tmpTask : plan.getTasks()) {
+            if (tmpTask.isMilestone()) {
+                milestones.add(tmpTask);
+            }
+        }
+
+        PickDateDialogFragment.Builder builder = new PickDateDialogFragment.Builder(task.getName());
+
+        // Set formatter
+        MileStoneDayFormatter mileStoneDayFormatter = new MileStoneDayFormatter();
+        mileStoneDayFormatter.setData(milestones);
+        builder.setDayFormatter(mileStoneDayFormatter);
+
+        // Set decorators
+        MileStoneNodeDecorator mileStoneDecorator = new MileStoneNodeDecorator();
+        ActiveMileStoneDecorator activeMileStoneDecorator = new ActiveMileStoneDecorator();
+        activeMileStoneDecorator.setActiveTask(milestones, task);
+        mileStoneDecorator.setData(milestones);
+        builder.addDecorators(activeMileStoneDecorator,
+                mileStoneDecorator);
+
+        // set date limit
+        Date startDate = DateUtil.iso8601ToDate(plan.getStart());
+        Date endDate = DateUtil.iso8601ToDate(plan.getCompletion());
+
+        int limitMonthOffset = 6;
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+        // TODO optimize date format fail case
+        calendar.setTime(startDate == null ? today : startDate);
+        calendar.add(Calendar.MONTH, -limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        Date minDate = calendar.getTime();
+
+        // TODO optimize date format fail case
+        calendar.setTime(endDate == null ? today : endDate);
+        calendar.add(Calendar.MONTH, limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date maxDate = calendar.getTime();
+
+        builder.setDateLimit(minDate, maxDate);
+
+        Time displayTime = TaskUtils.getDisplayTime(task);
+        Date taskStartDay = DateUtil.iso8601ToDate(displayTime.getStart());
+        Date taskEndDay = DateUtil.iso8601ToDate(displayTime.getCompletion());
+        builder.setCurrentDate(taskStartDay == null ? today : taskStartDay);
+
+        // set selected days
+        if (DateUtil.isSameDay(taskStartDay, taskEndDay)) {
+            builder.setSelectedDate(taskStartDay);
+        } else if (taskStartDay != null){
+            builder.setSelectedRange(taskStartDay, taskEndDay);
+        }
+
+        //set current date
+        Time time = TaskUtils.getDisplayTime(task);
+        Date taskStartDate = DateUtil.iso8601ToDate(time.getStart());
+        builder.setSelectedDate(taskStartDate);
+        builder.setCurrentDate(taskStartDate);
+
+        return builder;
     }
 }
