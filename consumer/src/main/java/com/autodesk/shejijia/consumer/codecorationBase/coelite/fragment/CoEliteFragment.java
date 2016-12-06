@@ -35,7 +35,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
      * 装点点的ImageView数组
      */
     private ImageView[] tips;
-    private String [] pictures;
+    private String[] pictures;
 
     @Override
     protected int getLayoutResId() {
@@ -54,13 +54,13 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     protected void initData() {
         SixProductsPicturesBean sixProductsPicturesBean = WkFlowStateMap.sixProductsPicturesBean;
         String backgroundURL = "";
-        if(sixProductsPicturesBean != null ){
+        if (sixProductsPicturesBean != null) {
             SixProductsPicturesBean.AndroidBean.SelectionBean selectionBean = sixProductsPicturesBean.getAndroid().getSelection().get(0);
             String png = selectionBean.getPng();
             backgroundURL = sixProductsPicturesBean.getAndroid().getBackground().get(0).getPic_1();
             pictures = png.split(",");
         }
-        updataView(pictures,backgroundURL);
+        updataView(pictures, backgroundURL);
     }
 
     /**
@@ -68,7 +68,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
      *
      * @param pictures
      */
-    private void updataView(String [] pictures,String backgroundURL) {
+    private void updataView(String[] pictures, String backgroundURL) {
         int size = 1;
         if (pictures != null && pictures.length > 0) {
             size = pictures.length;
@@ -79,8 +79,9 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         addImageViewtips(size);
         vpSelection.setAdapter(new SelectionAdapter(getActivity(), pictures));
         vpSelection.setOnPageChangeListener(this);
+        //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动
+        vpSelection.setCurrentItem(size * 100);
     }
-
 
 
     /**
@@ -134,8 +135,8 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             return;
         }
 
-        String nick_name = mMemberEntity.getNick_name() ;
-        String phone_num = mMemberEntity.getMobile_number() ;
+        String nick_name = mMemberEntity.getNick_name();
+        String phone_num = mMemberEntity.getMobile_number();
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.PHONE_NUMBER, phone_num);
@@ -167,6 +168,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             }
         }
     }
+
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
