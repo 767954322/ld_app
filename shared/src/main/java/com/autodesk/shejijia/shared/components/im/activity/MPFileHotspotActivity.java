@@ -10,8 +10,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -21,11 +22,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.DeviceUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.HotSpotsInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatConversation;
@@ -34,15 +40,8 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntities;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
-
 import com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView;
-import com.autodesk.shejijia.shared.components.common.utility.DeviceUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -53,8 +52,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
-public class MPFileHotspotActivity extends NavigationBarActivity
-{
+public class MPFileHotspotActivity extends NavigationBarActivity {
     final public static String FILEID = "fileid";
     final public static String SERVERFILEURL = "serverfileurl";
     final public static String RECEIVERID = "receiverid";
@@ -65,8 +63,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     final public static String PROJECT_INFO = "project_info";
     final public static String MEDIA_TYPE = "media_type";
 
-    public class HotspotImageData
-    {
+    public class HotspotImageData {
         public int org_img_width;
         public int org_img_height;
         public float img_magnification;
@@ -74,15 +71,13 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
     @Override
-    protected int getLayoutResId()
-    {
+    protected int getLayoutResId() {
         return R.layout.activity_image_sign;
     }
 
 
     @Override
-    protected void initView()
-    {
+    protected void initView() {
         super.initView();
 
         mFileHotspotView = (MPFileHotspotView) findViewById(R.id.singHotSpotImageView);
@@ -96,14 +91,12 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
+    protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
         if (savedInstanceState != null)
             getInstanceStateFromBundle(savedInstanceState);
-        else
-        {
+        else {
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
             getInstanceStateFromBundle(bundle);
@@ -112,37 +105,30 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
 
     @Override
-    protected void initListener()
-    {
+    protected void initListener() {
         super.initListener();
 
-        mAddHotSpotButton.setOnClickListener(new View.OnClickListener()
-        {
+        mAddHotSpotButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mAddHotspotEnabled = true;
             }
         });
 
-        mFileHotspotView.setHotSpotImageViewListener(new MPFileHotspotView.HotSpotImageViewListender()
-        {
+        mFileHotspotView.setHotSpotImageViewListener(new MPFileHotspotView.HotSpotImageViewListender() {
             @Override
-            public boolean shouldInsertNewLocation()
-            {
+            public boolean shouldInsertNewLocation() {
                 return (mAddHotspotEnabled && getCurrentHotspotsCount() < HotSpotsInfo.MaxHotSpotsNumber);
             }
 
             @Override
-            public void didFinishwithAddingNewHotSpot(Point pt)
-            {
+            public void didFinishwithAddingNewHotSpot(Point pt) {
                 openImageChatRoom(null, pt);
                 mAddHotspotEnabled = false;
             }
 
             @Override
-            public void tapOnHotSpot(View view)
-            {
+            public void tapOnHotSpot(View view) {
                 MPChatConversation conversation = (MPChatConversation) view.getTag();
 
                 if (conversation != null)
@@ -150,55 +136,46 @@ public class MPFileHotspotActivity extends NavigationBarActivity
             }
         });
 
-        if (mOnBoardingLayout != null)
-        {
-           mOnBoardingLayout.setOnClickListener(new View.OnClickListener()
-           {
-               @Override
-               public void onClick(View v)
-               {
-                   ++mTapCount;
+        if (mOnBoardingLayout != null) {
+            mOnBoardingLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ++mTapCount;
 
-                   if (mTapCount == 1)
-                       showOnboardingSecondPage();
-                   else
-                   {
-                       saveOnboardingSettings();
-                       finishOnBoarding();
-                   }
-               }
-           });
+                    if (mTapCount == 1)
+                        showOnboardingSecondPage();
+                    else {
+                        saveOnboardingSettings();
+                        finishOnBoarding();
+                    }
+                }
+            });
         }
 
         registerBroadCast();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         reloadData();
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         setResultIntent();
         super.onBackPressed();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
+    protected void onSaveInstanceState(Bundle outState) {
         putInstanceStateToBundle(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == HotSpotsInfo.imgChatResultCode)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == HotSpotsInfo.imgChatResultCode) {
             mParentThreadId = data.getStringExtra(ImageChatRoomActivity.PARENTTHREADID);
             mFileId = data.getStringExtra(ImageChatRoomActivity.FILEID);
 
@@ -207,22 +184,19 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
     @Override
-    protected String getActivityTitle()
-    {
+    protected String getActivityTitle() {
         return getResources().getString(R.string.tag_images);
     }
 
 
     @Override
-    protected String getRightNavButtonTitle()
-    {
+    protected String getRightNavButtonTitle() {
         return getResources().getString(R.string.send);
     }
 
 
     @Override
-    protected void rightNavButtonClicked(View view)
-    {
+    protected void rightNavButtonClicked(View view) {
         mSendButton = view;
         sendImage();
         mProgressBar.setVisibility(View.VISIBLE);
@@ -230,22 +204,19 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
 
     @Override
-    protected void leftNavButtonClicked(View view)
-    {
+    protected void leftNavButtonClicked(View view) {
         setResultIntent();
         super.leftNavButtonClicked(view);
     }
 
 
-    private void setResultIntent()
-    {
+    private void setResultIntent() {
         Intent intent = new Intent();
         intent.putExtra(PARENTTHREADID, mParentThreadId);
         setResult(RESULT_OK, intent);
     }
 
-    private int getCurrentHotspotsCount()
-    {
+    private int getCurrentHotspotsCount() {
         int count = 0;
         if (mChatConversations != null && mChatConversations.conversations != null)
             count = mChatConversations.conversations.size();
@@ -254,8 +225,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void reloadData()
-    {
+    private void reloadData() {
         mChatConversations = null;
         mAddHotSpotButton.setEnabled(false);
 
@@ -278,8 +248,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void downloadImageFromServer()
-    {
+    private void downloadImageFromServer() {
         setVisibilityForNavButton(ButtonType.RIGHT, false);
 
         if (mServerFileURL != null && !mServerFileURL.isEmpty())
@@ -289,28 +258,23 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void downloadImageFromServerWithFileURL()
-    {
+    private void downloadImageFromServerWithFileURL() {
         String fileName = mFileId + ".jpg";
         final File file = MPFileUtility.getFileFromName(UIUtils.getContext(), fileName);
 
         if (file.exists())
             loadLocalFile(file.getAbsolutePath());
-        else
-        {
-            MPChatHttpManager.getInstance().downloadFileFromURL(mServerFileURL + "Original.jpg", file.getAbsolutePath(), true, new MPChatHttpManager.ResponseHandler()
-            {
+        else {
+            MPChatHttpManager.getInstance().downloadFileFromURL(mServerFileURL + "Original.jpg", file.getAbsolutePath(), true, new MPChatHttpManager.ResponseHandler() {
                 @Override
-                public void onSuccess(String response)
-                {
+                public void onSuccess(String response) {
 
                     mProgressBar.setVisibility(View.GONE);
                     loadLocalFile(file.getAbsolutePath());
                 }
 
                 @Override
-                public void onFailure()
-                {
+                public void onFailure() {
                     mProgressBar.setVisibility(View.GONE);
                 }
             });
@@ -318,36 +282,41 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void downloadImageFromServerWithFileId()
-    {
+    private void downloadImageFromServerWithFileId() {
         String fileName = mFileId + ".jpg";
         final File file = MPFileUtility.getFileFromName(UIUtils.getContext(), fileName);
 
         if (file.exists())
             loadLocalFile(file.getAbsolutePath());
-        else
-        {
+        else {
 
-            MPChatHttpManager.getInstance().downloadFileId(mFileId, file.getAbsolutePath(), new MPChatHttpManager.ResponseHandler()
-            {
+            MPChatHttpManager.getInstance().downloadFileId(mFileId, file.getAbsolutePath(), new MPChatHttpManager.ResponseHandler() {
                 @Override
-                public void onSuccess(String response)
-                {
+                public void onSuccess(String response) {
                     mProgressBar.setVisibility(View.GONE);
                     loadLocalFile(file.getAbsolutePath());
                 }
 
                 @Override
-                public void onFailure()
-                {
+                public void onFailure() {
                     mProgressBar.setVisibility(View.GONE);
                 }
             });
         }
     }
 
-    private void clearHotspots()
-    {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Drawable drawable = mFileHotspotView.getDrawable();
+        if (drawable != null && drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            bitmap.recycle();
+        }
+    }
+
+    private void clearHotspots() {
         mHotspotsContainer.setVisibility(View.GONE);
 
         RelativeLayout parentLayout = (RelativeLayout) findViewById(R.id.singHotSpotImageView_frame);
@@ -359,19 +328,18 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
             Object object = view.getTag(view.getId());
 
-            if(object == null || !object.getClass().equals(Point.class))
+            if (object == null || !object.getClass().equals(Point.class))
                 continue;
 
             indices.add(i);
         }
 
-        if(!indices.isEmpty())
+        if (!indices.isEmpty())
             parentLayout.removeViews(indices.get(0), indices.size());
     }
 
 
-    private void updateImageView(Bitmap loadedImage)
-    {
+    private void updateImageView(Bitmap loadedImage) {
         int org_img_width, org_img_height;
 
         org_img_width = loadedImage.getWidth();
@@ -391,7 +359,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         int height = (int) (org_img_height * img_magnification);
 
         Bitmap resizedImage = imageProcessingUtil.getResizedBitmap(loadedImage, width, height);
-        loadedImage.recycle();
+        //  loadedImage.recycle();
 
         mFileHotspotView.setImageBitmap(resizedImage);
 
@@ -405,36 +373,30 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void loadLocalFile(final String localFileURL)
-    {
+    private void loadLocalFile(final String localFileURL) {
         ImageView view = mFileHotspotView;
         mLocalImageFileURL = localFileURL;
 
-        ImageUtils.loadHotspotImage("file://" + localFileURL, view, new SimpleImageLoadingListener()
-        {
+        ImageUtils.loadHotspotImage("file://" + localFileURL, view, new SimpleImageLoadingListener() {
             @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-            {
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 updateImageView(loadedImage);
 
                 if (mFileId != null && !mFileId.isEmpty())
                     retrieveThreadsAndUpdateView(mFileId);
-                else
-                {
+                else {
                     mProgressBar.setVisibility(View.GONE);
                     mAddHotSpotButton.setEnabled(true);
                 }
             }
 
             @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason)
-            {
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 mProgressBar.setVisibility(View.GONE);
 
                 File file = MPFileUtility.getFileFromPath(UIUtils.getContext(), localFileURL);
 
-                if (file != null && file.exists())
-                {
+                if (file != null && file.exists()) {
                     //delete this file and retry from server
                     MPFileUtility.removeFile(file);
                     reloadData();
@@ -446,41 +408,31 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void retrieveThreadsAndUpdateView(String fileId)
-    {
-        MPChatHttpManager.getInstance().retrieveFileConversations(fileId, new OkStringRequest.OKResponseCallback()
-        {
+    private void retrieveThreadsAndUpdateView(String fileId) {
+        MPChatHttpManager.getInstance().retrieveFileConversations(fileId, new OkStringRequest.OKResponseCallback() {
             @Override
-            public void onErrorResponse(VolleyError volleyError)
-            {
+            public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
-            public void onResponse(String s)
-            {
+            public void onResponse(String s) {
                 mProgressBar.setVisibility(View.GONE);
 
                 MPChatEntities mpChatEntities = MPChatEntities.fromJSONString(s);
-                if (mpChatEntities != null && mpChatEntities.entities != null && !mpChatEntities.entities.isEmpty())
-                {
+                if (mpChatEntities != null && mpChatEntities.entities != null && !mpChatEntities.entities.isEmpty()) {
                     MPChatEntity mpChatEntity = mpChatEntities.entities.get(0);
-                    if (mpChatEntity != null)
-                    {
+                    if (mpChatEntity != null) {
                         mChatConversations = mpChatEntity.conversations;
 
-                        if (getCurrentHotspotsCount() < HotSpotsInfo.MaxHotSpotsNumber)
-                        {
+                        if (getCurrentHotspotsCount() < HotSpotsInfo.MaxHotSpotsNumber) {
                             mAddHotSpotButton.setEnabled(true);
-                        }
-                        else
+                        } else
                             mAddHotSpotButton.setEnabled(false);
 
-                        if (mChatConversations != null && mChatConversations.conversations != null)
-                        {
-                            for (MPChatConversation chatConversation : mChatConversations.conversations)
-                            {
+                        if (mChatConversations != null && mChatConversations.conversations != null) {
+                            for (MPChatConversation chatConversation : mChatConversations.conversations) {
                                 RelativeLayout view = (RelativeLayout) View.inflate(MPFileHotspotActivity.this, R.layout.view_hot_spot, null);
                                 TextView tv = (TextView) view.findViewById(R.id.hotSpot_text);
                                 tv.setText(String.valueOf(chatConversation.unread_message_count));
@@ -494,32 +446,26 @@ public class MPFileHotspotActivity extends NavigationBarActivity
                             }
                         }
                     }
-                }
-                else
+                } else
                     mAddHotSpotButton.setEnabled(true);
             }
         });
     }
 
 
-    private void sendImage()
-    {
+    private void sendImage() {
         mSendButton.setEnabled(false);
         mAddHotSpotButton.setEnabled(false);
         MPChatHttpManager.getInstance().sendMediaMessage(mLoggedInUserId, mReceiverId, "New",
-                mParentThreadId, new File(mLocalImageFileURL), "IMAGE", new MPChatHttpManager.ResponseHandler()
-                {
+                mParentThreadId, new File(mLocalImageFileURL), "IMAGE", new MPChatHttpManager.ResponseHandler() {
                     @Override
-                    public void onSuccess(String response)
-                    {
-                        try
-                        {
+                    public void onSuccess(String response) {
+                        try {
                             JSONObject jObj = new JSONObject(response);
                             mFileId = jObj.optString("file_id");
                             if (mParentThreadId == null)
                                 mParentThreadId = jObj.optString("thread_id");
-                        } catch (Exception e)
-                        {
+                        } catch (Exception e) {
                         }
 
                         attachedImageToAsset();
@@ -529,8 +475,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
                     }
 
                     @Override
-                    public void onFailure()
-                    {
+                    public void onFailure() {
                         //TODO error out for resending
                         mProgressBar.setVisibility(View.GONE);
                         MPFileHotspotActivity.this.finish();
@@ -539,49 +484,37 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void attachedImageToAsset()
-    {
-        if (mProjInfo != null && mProjInfo.asset_id > 0)
-        {
-            if (mProjInfo.is_beishu)
-            {
-                MPChatHttpManager.getInstance().addFileToAsset(mFileId, String.valueOf(mProjInfo.asset_id), new OkStringRequest.OKResponseCallback()
-                {
+    private void attachedImageToAsset() {
+        if (mProjInfo != null && mProjInfo.asset_id > 0) {
+            if (mProjInfo.is_beishu) {
+                MPChatHttpManager.getInstance().addFileToAsset(mFileId, String.valueOf(mProjInfo.asset_id), new OkStringRequest.OKResponseCallback() {
                     @Override
-                    public void onErrorResponse(VolleyError volleyError)
-                    {
+                    public void onErrorResponse(VolleyError volleyError) {
                         MPNetworkUtils.logError(TAG, volleyError);
                     }
 
                     @Override
-                    public void onResponse(String s)
-                    {
+                    public void onResponse(String s) {
                     }
                 });
 
-            }
-            else
-            {
+            } else {
                 MPChatHttpManager.getInstance().addFileToWorkflowStep(mFileId, String.valueOf(mProjInfo.asset_id),
-                        mProjInfo.workflow_id, mProjInfo.current_step, new OkStringRequest.OKResponseCallback()
-                        {
+                        mProjInfo.workflow_id, mProjInfo.current_step, new OkStringRequest.OKResponseCallback() {
                             @Override
-                            public void onErrorResponse(VolleyError volleyError)
-                            {
+                            public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
                             }
 
                             @Override
-                            public void onResponse(String s)
-                            {
+                            public void onResponse(String s) {
                             }
                         });
             }
         }
     }
 
-    private void registerBroadCast()
-    {
+    private void registerBroadCast() {
         mBroadcastReceiver = new HotspotBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
@@ -589,15 +522,11 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    class HotspotBroadcastReceiver extends BroadcastReceiver
-    {
+    class HotspotBroadcastReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (intent.getAction().equals(BroadCastInfo.RECEVIER_RECEIVERMESSAGE))
-            {
-                if (mFileId != null)
-                {
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(BroadCastInfo.RECEVIER_RECEIVERMESSAGE)) {
+                if (mFileId != null) {
                     clearHotspots();
                     retrieveThreadsAndUpdateView(mFileId);
                 }
@@ -607,8 +536,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         if (mBroadcastReceiver != null)
             unregisterReceiver(mBroadcastReceiver);
 
@@ -616,8 +544,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void openImageChatRoom(String threadId, Point pt)
-    {
+    private void openImageChatRoom(String threadId, Point pt) {
         Intent intent = new Intent(this, ImageChatRoomActivity.class);
         intent.putExtra(ImageChatRoomActivity.THREAD_ID, threadId);
         intent.putExtra(ImageChatRoomActivity.ABSOLUTEX, pt.x);
@@ -640,8 +567,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     }
 
 
-    private void getInstanceStateFromBundle(Bundle bundle)
-    {
+    private void getInstanceStateFromBundle(Bundle bundle) {
         mFileId = bundle.getString(FILEID);
         mServerFileURL = bundle.getString(SERVERFILEURL);
         mReceiverId = bundle.getString(RECEIVERID);
@@ -653,8 +579,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         mMediaType = bundle.getString(MEDIA_TYPE);
     }
 
-    private void putInstanceStateToBundle(Bundle bundle)
-    {
+    private void putInstanceStateToBundle(Bundle bundle) {
         bundle.putString(FILEID, mFileId);
         bundle.putString(SERVERFILEURL, mServerFileURL);
         bundle.putString(RECEIVERID, mReceiverId);
@@ -663,27 +588,24 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         bundle.putString(LOCALIMAGEURL, mLocalImageFileURL);
         bundle.putString(PARENTTHREADID, mParentThreadId);
         bundle.putParcelable(PROJECT_INFO, mProjInfo);
-        bundle.putString(MEDIA_TYPE,mMediaType);
+        bundle.putString(MEDIA_TYPE, mMediaType);
     }
 
 
-    private void saveOnboardingSettings()
-    {
+    private void saveOnboardingSettings() {
         SharedPreferencesUtils.delete(UIUtils.getContext(), ONBOARDING_SHOWN);
-        SharedPreferencesUtils.delete(UIUtils.getContext(),APP_VERSION);
+        SharedPreferencesUtils.delete(UIUtils.getContext(), APP_VERSION);
 
         int currentAppVersion = DeviceUtils.getVersionCode();
         SharedPreferencesUtils.writeBoolean(ONBOARDING_SHOWN, true);
-        SharedPreferencesUtils.writeInt(APP_VERSION,currentAppVersion);
+        SharedPreferencesUtils.writeInt(APP_VERSION, currentAppVersion);
     }
 
-    private boolean shouldShowOnboarding()
-    {
+    private boolean shouldShowOnboarding() {
         boolean bShow = true;
-        int savedAppVersion =  SharedPreferencesUtils.readInt(APP_VERSION);
+        int savedAppVersion = SharedPreferencesUtils.readInt(APP_VERSION);
 
-        if (savedAppVersion > 0)
-        {
+        if (savedAppVersion > 0) {
             //get current bundle version
             int currentAppVersion = DeviceUtils.getVersionCode();
             boolean bOnBoardingShown = SharedPreferencesUtils.readBoolean(ONBOARDING_SHOWN);
@@ -695,19 +617,16 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         return bShow;
     }
 
-    private void showOnboardingFirstPage()
-    {
-        if (mOnBoardingLayout != null)
-        {
+    private void showOnboardingFirstPage() {
+        if (mOnBoardingLayout != null) {
             mOnBoardingLayout.bringToFront();
             View view = findViewById(R.id.onboarding_slide1);
 
-            if(view != null)
-            {
+            if (view != null) {
                 view.bringToFront();
                 AnimatorSet set = new AnimatorSet();
-                set.play(ObjectAnimator.ofInt(mOnBoardingLayout, "visibility",View.GONE , View.VISIBLE))
-                        .with(ObjectAnimator.ofInt(view, "visibility",View.GONE , View.VISIBLE));
+                set.play(ObjectAnimator.ofInt(mOnBoardingLayout, "visibility", View.GONE, View.VISIBLE))
+                        .with(ObjectAnimator.ofInt(view, "visibility", View.GONE, View.VISIBLE));
                 set.setDuration(500);
                 set.setInterpolator(new DecelerateInterpolator());
                 set.start();
@@ -716,19 +635,16 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
     }
 
-    private void showOnboardingSecondPage()
-    {
-        if (mOnBoardingLayout != null)
-        {
+    private void showOnboardingSecondPage() {
+        if (mOnBoardingLayout != null) {
             View view1 = findViewById(R.id.onboarding_slide1);
             View view2 = findViewById(R.id.onboarding_slide2);
 
-            if(view1 != null && view2 != null)
-            {
+            if (view1 != null && view2 != null) {
                 view2.bringToFront();
                 AnimatorSet set = new AnimatorSet();
-                set.play(ObjectAnimator.ofInt(view1, "visibility",View.VISIBLE , View.GONE))
-                        .with(ObjectAnimator.ofInt(view2, "visibility",View.GONE , View.VISIBLE));
+                set.play(ObjectAnimator.ofInt(view1, "visibility", View.VISIBLE, View.GONE))
+                        .with(ObjectAnimator.ofInt(view2, "visibility", View.GONE, View.VISIBLE));
                 set.setDuration(500);
                 set.setInterpolator(new DecelerateInterpolator());
                 set.start();
@@ -737,39 +653,32 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
     }
 
-    private void removeAllOnboardingViews()
-    {
+    private void removeAllOnboardingViews() {
         if (mOnBoardingLayout != null)
             mOnBoardingLayout.removeAllViews();
     }
 
-    private void finishOnBoarding()
-    {
-        if (mOnBoardingLayout != null)
-        {
+    private void finishOnBoarding() {
+        if (mOnBoardingLayout != null) {
             mOnBoardingLayout.bringToFront();
 
             View view = findViewById(R.id.onboarding_slide2);
 
-            if(view != null)
-            {
+            if (view != null) {
                 AnimatorSet set = new AnimatorSet();
-                set.play(ObjectAnimator.ofInt(mOnBoardingLayout, "visibility",View.VISIBLE , View.GONE)).
-                        with(ObjectAnimator.ofInt(view, "visibility",View.VISIBLE , View.GONE));
+                set.play(ObjectAnimator.ofInt(mOnBoardingLayout, "visibility", View.VISIBLE, View.GONE)).
+                        with(ObjectAnimator.ofInt(view, "visibility", View.VISIBLE, View.GONE));
                 set.setDuration(500);
                 set.setInterpolator(new DecelerateInterpolator());
-                set.addListener(new AnimatorListenerAdapter()
-                {
+                set.addListener(new AnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationCancel(Animator animation)
-                    {
+                    public void onAnimationCancel(Animator animation) {
                         removeAllOnboardingViews();
                         super.onAnimationCancel(animation);
                     }
 
                     @Override
-                    public void onAnimationEnd(Animator animation)
-                    {
+                    public void onAnimationEnd(Animator animation) {
                         removeAllOnboardingViews();
                         super.onAnimationEnd(animation);
                     }
