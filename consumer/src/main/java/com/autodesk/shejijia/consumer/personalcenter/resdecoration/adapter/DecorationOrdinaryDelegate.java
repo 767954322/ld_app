@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
@@ -84,8 +85,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 //        final String thread_id = decorationNeedsListBean.getBeishu_thread_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
-        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name).length() > 4 ? UIUtils.getNoDataIfEmpty(contacts_name).substring(0,3)+"..." : UIUtils.getNoDataIfEmpty(contacts_name));
-        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name).length() > 5 ? UIUtils.getNoDataIfEmpty(community_name).substring(0,4)+"..." : UIUtils.getNoDataIfEmpty(community_name));
+        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name).length() > 4 ? UIUtils.getNoDataIfEmpty(contacts_name).substring(0, 3) + "..." : UIUtils.getNoDataIfEmpty(contacts_name));
+        holder.setText(R.id.tv_decoration_community_name, UIUtils.getNoDataIfEmpty(community_name).length() > 5 ? UIUtils.getNoDataIfEmpty(community_name).substring(0, 4) + "..." : UIUtils.getNoDataIfEmpty(community_name));
 
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
 
@@ -352,6 +353,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
                         if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
                                 && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
+
                             needsState = UIUtils.getString(R.string.project_finish);
                         }
 
@@ -378,6 +380,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             needsState = UIUtils.getString(R.string.project_finish);
             return needsState;
         }
+        if (wk_cur_sub_node_id_int == 24) {
+            needsState = UIUtils.getString(R.string.project_stop);
+            return needsState;
+        }
         switch (custom_string_status) {
             case Constant.NumKey.TWENTY_ONE://21:审核中
                 needsState = UIUtils.getString(R.string.checking);
@@ -391,7 +397,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             default:
                 break;
         }
-
         return needsState;
     }
 
