@@ -38,6 +38,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetails
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.DialogHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -67,6 +68,8 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     private ImageButton mCloseBtn;
     private LinearLayout mActionsContainer;
 
+    private DialogHelper mDialogHelper;
+
     private TaskDetailsContract.Presenter mTaskDetailsPresenter;
 
     public static TaskDetailsFragment newInstance(ProjectInfo projectInfo, Task task) {
@@ -78,6 +81,17 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         return taskDetailsFragment;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mDialogHelper = new DialogHelper(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mDialogHelper = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,9 +129,8 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         switch (requestCode) {
             case ConstructionConstants.REQUEST_CODE_PICK_DATE:
                 if (resultCode ==  Activity.RESULT_OK) {
-                    //TODO update reserve time
                     Date selectedDate = (Date) data.getSerializableExtra(PickDateDialogFragment.BUNDLE_KEY_SELECTED_DATE);
-                    ToastUtils.showShort(getActivity(), selectedDate.toString());
+                    mTaskDetailsPresenter.changeReserveTime(selectedDate);
                 }
             default:
                 break;
@@ -126,22 +139,30 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showNetError(ResponseError error) {
-
+        if (mDialogHelper != null) {
+            mDialogHelper.showNetError(error);
+        }
     }
 
     @Override
     public void showError(String msg) {
-
+        if (mDialogHelper != null) {
+            mDialogHelper.showError(msg);
+        }
     }
 
     @Override
     public void showLoading() {
-
+        if (mDialogHelper != null) {
+            mDialogHelper.showLoading();
+        }
     }
 
     @Override
     public void hideLoading() {
-
+        if (mDialogHelper != null) {
+            mDialogHelper.hideLoading();
+        }
     }
 
     @Override
@@ -187,6 +208,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showActions(@NonNull final Task task, @NonNull final ProjectInfo projectInfo) {
+        mActionsContainer.removeAllViews();
         List<TaskActionHelper.TaskActionEnum> actions = TaskActionHelper.getInstance().getActions(task);
         for (TaskActionHelper.TaskActionEnum action: actions) {
             TextView actionBtn = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_action_button, mActionsContainer, false);

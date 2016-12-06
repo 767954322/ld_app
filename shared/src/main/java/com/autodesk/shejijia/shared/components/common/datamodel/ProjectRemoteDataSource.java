@@ -13,6 +13,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.MileStone;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
@@ -170,6 +171,16 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         });
     }
 
+    @Override
+    public void getTask(Bundle requestParams, String requestTag, ResponseCallback<Task, ResponseError> callback) {
+        mConstructionHttpManager.getTask(requestParams, requestTag, getDefaultCallback(callback, Task.class));
+    }
+
+    @Override
+    public void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.reserveTask(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
     private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T, ResponseError> callback, final Class<T> clazz,
                                                                        final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
         return new OkJsonRequest.OKResponseCallback() {
@@ -178,7 +189,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onResponse(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, result);
-                if (clazz == null) {
+                if (clazz == null || clazz == Void.class) {
                     callback.onSuccess(null);
                 } else {
                     try {

@@ -10,6 +10,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
@@ -55,4 +56,7 @@ public interface ProjectDataSource {
     * */
     void getUnReadMessageAndIssue(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMessageIssue, ResponseError> callback);
 
+    void getTask(Bundle requestParams, String requestTag, ResponseCallback<Task, ResponseError> callback);
+
+    void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 }

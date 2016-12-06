@@ -57,8 +57,10 @@ public class ConstructionConstants {
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";
     public static final String BUNDLE_KEY_PROJECT_NAME = "project_name";
     public static final String BUNDLE_KEY_TASK_LIST = "task_list";
+    public static final String BUNDLE_KEY_TASK_ID = "task_id";
     public static final String BUNDLE_KEY_PLAN_OPERATION = "operation";
     public static final String BUNDLE_KEY_IS_PLAN_EDITING = "is_plan_editing";
+    public static final String BUNDLE_KEY_TASK_START_DATE = "task_start_date";
 
     public static class TaskTemplateId {
         public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底

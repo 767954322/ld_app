@@ -12,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
@@ -90,6 +91,16 @@ public final class ProjectRepository implements ProjectDataSource {
     @Override
     public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().updateProjectLikes(requestParams, requestTag, jsonRequest, callback);
+    }
+
+    @Override
+    public void getTask(Bundle requestParams, String requestTag, ResponseCallback<Task, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getTask(requestParams, requestTag, callback);
+    }
+
+    @Override
+    public void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().reserveTask(requestParams, requestTag, callback);
     }
 
     public ProjectInfo getActiveProject() {

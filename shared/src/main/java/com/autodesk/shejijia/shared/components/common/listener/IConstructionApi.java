@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+
 import org.json.JSONObject;
 
 /**
@@ -42,5 +44,9 @@ public interface IConstructionApi<T> {
     * 有问题有更新查询接口
     * */
     void getUnreadMessageAndIssue(@NonNull String projectIds, @Nullable String requestTag, @NonNull T callback);
+
+    void getTask(@NonNull Bundle requestParams, @NonNull String requestTag, @NonNull T callback);
+
+    void reserveTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 
 }

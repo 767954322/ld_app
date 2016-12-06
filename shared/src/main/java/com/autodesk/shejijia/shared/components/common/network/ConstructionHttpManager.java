@@ -8,12 +8,15 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -75,9 +78,33 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
         get(requestTag, requestUrl, callback);
     }
 
+    public void getTask(@NonNull Bundle requestParams, @NonNull String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String pid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        String tid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_ID);
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid;
+        get(requestTag, requestUrl, callback);
+    }
+
+    @Override
+    public void reserveTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String pid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        String tid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_ID);
+        String start = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_START_DATE);
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid + "/reserve";
+
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("start", start);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        put(requestTag, requestUrl, jsonRequest, callback);
+    }
+
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        LogUtils.d(LOG_TAG, requestUrl);
-        LogUtils.i(LOG_TAG, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -91,8 +118,8 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     private void put(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        LogUtils.v(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
-        LogUtils.v(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, requestUrl, jsonRequest, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
