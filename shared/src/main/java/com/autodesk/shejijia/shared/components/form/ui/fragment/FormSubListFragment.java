@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
@@ -62,11 +63,11 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
         mActivity.initToolbar(mShInspectionForm.getTitle());
 
         mPresenter = new FormSubListPresenter(this);
-        mItemCells.addAll(mPresenter.getItemCells(mShInspectionForm.getCheckItems()));
+        mItemCells.addAll(mPresenter.getItemCells(mShInspectionForm));
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new FormListAdapter(mContext, mItemCells);
+        mAdapter = new FormListAdapter(mItemCells);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -77,9 +78,12 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
         mAdapter.setOnItemClickListener(new FormListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                String category = mItemCells.get(position).getTitle();
                 Bundle args = new Bundle();
-                args.putString("category", mItemCells.get(position).getTitle());  //标题
+                args.putString("category", category);  //标题
                 args.putSerializable("shInspectionForm", mShInspectionForm);  //具体的条目
+                args.putInt("index",mPresenter.getCategoryIndex(mShInspectionForm.getCheckItems(),category));  //初始化位置
+                LogUtils.d("asdf","当前的位置:" + mPresenter.getCategoryIndex(mShInspectionForm.getCheckItems(),category));
                 ItemListFragment mItemListFragment = ItemListFragment.newInstance(args);    //传递具体的条目标题
 
                 mContext.getSupportFragmentManager().beginTransaction()

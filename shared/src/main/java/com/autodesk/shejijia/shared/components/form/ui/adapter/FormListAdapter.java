@@ -1,7 +1,8 @@
 package com.autodesk.shejijia.shared.components.form.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,42 +20,68 @@ import java.util.List;
  */
 
 public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormListVH> {
-    private Context mContext;
     private List<ItemCell> mItemCells;
     private OnItemClickListener mOnItemClickListener;
 
-    public FormListAdapter(Context context, List<ItemCell> titleList) {
-        mContext = context;
+    public FormListAdapter(List<ItemCell> titleList) {
         mItemCells = titleList;
     }
 
     @Override
     public FormListVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.view_plain_table_cell, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_plain_table_cell, parent, false);
         return new FormListVH(view);
     }
 
     @Override
     public void onBindViewHolder(final FormListVH holder, final int position) {
         ItemCell itemCell = mItemCells.get(position);
-
         holder.mTitleTv.setText(itemCell.getTitle());  //标题
-        holder.mResultTv.setText(itemCell.getResult());  //结果
 
-        if (itemCell.getReinspectionNum() == 0) {     //提醒数目
+        initResult(holder, itemCell);                  //验收结果
+
+        initReinspectionNum(holder, itemCell);         //提醒复检数目
+
+        initInformationShow(holder, itemCell);         //是否含有错误信息
+
+        initListener(holder,position);                 //设置监听
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItemCells.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    private void initResult(FormListVH holder, ItemCell itemCell) {
+        if (!TextUtils.isEmpty(itemCell.getResult())) {
+            holder.mResultTv.setText(Html.fromHtml(itemCell.getResult()));
+        }
+    }
+
+    private void initReinspectionNum(FormListVH holder, ItemCell itemCell) {
+        if (itemCell.getReinspectionNum() == 0) {
             holder.mNotificationTv.setVisibility(View.GONE);
         } else {
             holder.mNotificationTv.setVisibility(View.VISIBLE);
-            holder.mNotificationTv.setText(itemCell.getReinspectionNum());
+            holder.mNotificationTv.setText(String.valueOf(itemCell.getReinspectionNum()));
         }
+    }
 
-        if (itemCell.isShow()) {       //错误信息
+    private void initInformationShow(FormListVH holder, ItemCell itemCell) {
+        if (itemCell.isShow()) {
             holder.mInformationIv.setVisibility(View.VISIBLE);
         } else {
             holder.mInformationIv.setVisibility(View.GONE);
         }
+    }
 
-        if (null != mOnItemClickListener) {
+    private void initListener(FormListVH holder, final int position) {
+        if (mOnItemClickListener != null) {
             holder.mTableCellLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,16 +91,6 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
             });
 
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mItemCells.size();
-    }
-
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
     }
 
     static class FormListVH extends RecyclerView.ViewHolder {

@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
 import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ItemListPresenter;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
@@ -31,6 +31,10 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     private ItemListPresenter mPresenter;
     private List<OptionCell> mOptionCellList = new ArrayList<>();
     private ItemListAdapter mAdapter;
+    private int mIndex;
+    private SHInspectionForm mInspectionForm;
+    private ArrayList<CheckItem> mCheckItemList;
+    private LinearLayoutManager mLayoutManager;
 
     public static ItemListFragment newInstance(Bundle args) {
         ItemListFragment itemListFragment = new ItemListFragment();
@@ -56,13 +60,16 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     @Override
     protected void initData() {
-        mCategory = getArguments().getString("category");
-        SHInspectionForm shInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm"); //具体的表格
+        mCategory = getArguments().getString("category");  //表格的类型,初始位置可以传递过来
+        mIndex = getArguments().getInt("index");
+        //具体的表格
+        mInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
+        mCheckItemList = mInspectionForm.getCheckItems();
 
         mPresenter = new ItemListPresenter(this);
-        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory,shInspectionForm));
+        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory, mInspectionForm));
         mActivity.initToolbar(mCategory);
-
+        mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new ItemListAdapter(mOptionCellList,this);
         mRecyclerView.setAdapter(mAdapter);
@@ -80,17 +87,41 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     @Override
     public void onLeftItemClick(View view, int position) {
-        LogUtils.d("asdf","左边 current position:" + position);
-
+//        LogUtils.d("asdf","左边 current position:" + (mIndex + position));
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),2);
+        refresh(position);
     }
 
     @Override
     public void onCenterItemClick(View view, int position) {
-        LogUtils.d("asdf","中间 current position:" + position);
+//        LogUtils.d("asdf","中间 current position:" + (mIndex + position));
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),1);
+        refresh(position);
     }
 
     @Override
     public void onRightItemClick(View view, int position) {
-        LogUtils.d("asdf","右边 current position:" + position);
+//        LogUtils.d("asdf","右边 current position:" + (mIndex + position));
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),0);
+        refresh(position);
     }
+
+    private void refresh(int position) {
+        int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+        int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+        mAdapter.notifyItemRangeChanged(0,firstVisibleItemPosition-0);
+
+
+
+//        if(position < firstVisibleItemPosition) {
+//            if(firstVisibleItemPosition - position > 0) {
+//                mAdapter.notifyItemRangeChanged(0,position-0);
+//            }
+//        } else if(position > lastVisibleItemPosition) {
+//            if(position - lastVisibleItemPosition > 0) {
+//                mAdapter.notifyItemRangeChanged();
+//            }
+//        }
+    }
+
 }

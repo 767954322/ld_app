@@ -10,7 +10,6 @@ import java.util.List;
 public class OptionCell {
     private String title;
     private String standard;
-//    private String actionType;
     private HashMap<String, List<String>> typeDict;
     private boolean isShowStandard;   //是否显示标准;
     private int checkResult;
@@ -31,14 +30,6 @@ public class OptionCell {
     public void setStandard(String standard) {
         this.standard = standard;
     }
-
-//    public String getActionType() {
-//        return actionType;
-//    }
-//
-//    public void setActionType(String actionType) {
-//        this.actionType = actionType;
-//    }
 
     public HashMap<String, List<String>> getTypeDict() {
         return typeDict;

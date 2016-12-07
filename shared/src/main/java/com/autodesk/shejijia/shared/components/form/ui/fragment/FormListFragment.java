@@ -77,7 +77,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new FormListAdapter(mActivity, itemCells);
+        mAdapter = new FormListAdapter(itemCells);
         mRecyclerView.setAdapter(mAdapter);
 
     }

@@ -48,8 +48,7 @@ public class FormActivity extends BaseActivity implements FormContract.View {
         mPresenter = new FormPresenter(this);
         mPresenter.show(task);
     }
-
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (android.R.id.home == item.getItemId()) {
@@ -71,7 +70,7 @@ public class FormActivity extends BaseActivity implements FormContract.View {
 
     @Override
     public void showNetError(ResponseError error) {
-        ToastUtils.showShort(this, "展示网络加载失败的界面");
+        ToastUtils.showShort(this, error.getMessage());
     }
 
     @Override

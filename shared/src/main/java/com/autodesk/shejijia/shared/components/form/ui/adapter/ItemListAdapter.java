@@ -38,8 +38,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     @Override
     public void onBindViewHolder(ItemListVH holder, int position) {
         OptionCell optionCell = mOptionCellList.get(position);
-// TODO: 16/12/2 对显示的条件判断
-        holder.mTableCellLayout.setVisibility(View.VISIBLE);
+//        holder.mTableCellLayout.setVisibility(View.VISIBLE);
         holder.mTitleTv.setText(optionCell.getTitle());
 
         if (optionCell.isShowStandard()) {
@@ -55,13 +54,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             holder.mStandardTv.setVisibility(View.GONE);
             holder.mActionTypeTv.setVisibility(View.GONE);
         }
-
+// TODO: 16/12/6 错误信息是否显示的问题
         holder.mInformationTv.setVisibility(View.GONE);
 
         initOptions(holder, optionCell);
 
         initListener(holder, position, optionCell);
-
 
     }
 
@@ -100,6 +98,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     private void init(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
+            holder.mLeftLayout.setVisibility(View.VISIBLE);
             holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
@@ -133,13 +132,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     private void initRight(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
+            holder.mLeftLayout.setVisibility(View.VISIBLE);
             holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_check_svg);
         } else if (typeDictMap.containsKey("level_options")) {
+            holder.mLeftLayout.setVisibility(View.GONE);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_level_normal_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_level_check_svg);
         } else if (typeDictMap.containsKey("notification_options")) {
+            holder.mLeftLayout.setVisibility(View.GONE);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_notification_normal_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_notification_check_svg);
         }
@@ -147,13 +149,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     private void initCenter(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
+            holder.mLeftLayout.setVisibility(View.VISIBLE);
             holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_check_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
         } else if (typeDictMap.containsKey("level_options")) {
+            holder.mLeftLayout.setVisibility(View.GONE);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_level_check_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_level_normal_svg);
         } else if (typeDictMap.containsKey("notification_options")) {
+            holder.mLeftLayout.setVisibility(View.GONE);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_notification_check_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_notification_normal_svg);
         }
@@ -161,12 +166,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     private void initLeft(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
+            holder.mLeftLayout.setVisibility(View.VISIBLE);
             holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_check_svg);
             holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
             holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
         }
     }
-
 
     private void initListener(final ItemListVH holder, final int position, OptionCell optionCell) {
         if (mOnItemClickListener != null) {
@@ -177,22 +182,26 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                 public void onClick(View v) {
                     mOnItemClickListener.onLeftItemClick(v, position);
                     initLeft(holder, typeDictMap);
+//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
             holder.mCenterImgv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onRightItemClick(v, position);
+                    mOnItemClickListener.onCenterItemClick(v, position);
                     initCenter(holder, typeDictMap);
+//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
             holder.mRightImgv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onCenterItemClick(v, position);
+                    mOnItemClickListener.onRightItemClick(v, position);
                     initRight(holder, typeDictMap);
+//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
+
 
         }
     }
@@ -242,5 +251,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         void onCenterItemClick(View view, int position);
 
         void onRightItemClick(View view, int position);
+
+//        void onRefreshItem(View view,int position);
     }
 }

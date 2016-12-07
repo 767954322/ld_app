@@ -36,16 +36,15 @@ public class ItemListPresenter implements ItemListContract.Presenter {
                 //根据map的索引获取其中的文字
                 optionCell.setCheckResult(formFeedBack.getCurrentCheckIndex());
 
-                if(map.containsKey(checkItem.getActionType())) {
+                if (map.containsKey(checkItem.getActionType())) {
                     Object o = map.get(checkItem.getActionType());
-                    if(o instanceof List) {
+                    if (o instanceof List) {
                         optionCell.setActionResult(((List<String>) o).get(formFeedBack.getCurrentActionIndex()));
                     }
                 }
 
                 optionCell.setShowStandard(true);
                 optionCell.setStandard(checkItem.getStandard());
-//                optionCell.setActionType(checkItem.getActionType());
 
                 HashMap<String, List<String>> typeDict = new HashMap<>();
                 String itemTypeDict = checkItem.getCheckType();
@@ -53,7 +52,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
                 if (map.containsKey(itemTypeDict)) {
                     Object o = map.get(itemTypeDict);
                     if (o instanceof List) {
-                        typeDict.put(itemTypeDict,(List<String>) o);
+                        typeDict.put(itemTypeDict, (List<String>) o);
                     }
                     optionCell.setTypeDict(typeDict);
                 }
@@ -63,5 +62,11 @@ public class ItemListPresenter implements ItemListContract.Presenter {
         }
 
         return itemCellList;
+    }
+
+    @Override
+    public void setCheckIndex(CheckItem checkItem, int type) {
+        FormFeedBack formFeedBack = checkItem.getFormFeedBack();
+        formFeedBack.setCurrentCheckIndex(type);
     }
 }
