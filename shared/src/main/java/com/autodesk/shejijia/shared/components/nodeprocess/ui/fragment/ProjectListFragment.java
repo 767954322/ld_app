@@ -181,9 +181,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         this.mMenuItem = item;
         int itemId = item.getItemId();
         if (itemId == R.id.home_toolbar_search) {
-            startActivity(new Intent(getActivity(),ProjectMessageCenterActivity.class));
-
-//            ToastUtils.showShort(mContext, "search");
+            ToastUtils.showShort(mContext, "search");
             // TODO: 10/25/16 跳转到搜索页面
             return true;
         } else if (itemId == R.id.home_toolbar_screen) {
