@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +19,13 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
@@ -39,7 +42,7 @@ import java.util.List;
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener {
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
-
+    private long projectId;
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -80,8 +83,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     protected void initData() {
-        mProjectDetailsPresenter = new ProjectDetailsPresenter(mContext, this);
-        long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
+         projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
@@ -196,7 +199,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mProjectDetailsPresenter.getProjectInformation();
             return true;
         } else if (itemId == R.id.project_toolbar_message) {
-            mProjectDetailsPresenter.navigateToMessageCenter();
+           mProjectDetailsPresenter.navigateToMessageCenter();
             return true;
         }
 

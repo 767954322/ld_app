@@ -8,6 +8,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.adapter.ProjectMessageCenterAdapter;
 import com.autodesk.shejijia.shared.components.message.datamodel.CallBackMessageCenterDataSource;
@@ -28,7 +29,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
 
     private MessageCenterDataSource mMessageCenterDataSource;
     private List<MessageInfo.DataBean> mData;
-    private String mProjectId;
+    private long mProjectId;
     private boolean isUnrea;
     private RecyclerView mRvProjectMessagCenterView;
     private ProjectMessageCenterAdapter mProjectMessageCenterAdapter;
@@ -43,10 +44,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        if(getIntent().hasExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_NAME)){
-            isUnrea = getIntent().getBooleanExtra(ConstructionConstants.UNREAD,false);
-            mProjectId = getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
-        }
+        isUnrea = getIntent().getBooleanExtra(ConstructionConstants.UNREAD,false);
+        mProjectId = getIntent().getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,0);
     }
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -71,7 +70,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
     }
     private Bundle getRequestBundle(){
         Bundle requestParams = new Bundle();
-        requestParams.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
+        requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
         requestParams.putInt(ConstructionConstants.OFFSET,0);
         requestParams.putBoolean(ConstructionConstants.UNREAD,isUnrea);
         requestParams.putInt(ConstructionConstants.LIMIT,50);
@@ -84,7 +83,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
     }
     @Override
     public void onErrorResponse(ResponseError responseError) {
-
+        ToastUtils.showLong(this,responseError.getMessage());
     }
     @Override
     public void onResponse(JSONObject jsonObject) {
