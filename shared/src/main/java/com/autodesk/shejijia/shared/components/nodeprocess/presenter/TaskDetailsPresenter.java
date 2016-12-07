@@ -23,6 +23,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -53,9 +54,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.showTaskAddress(mProjectInfo.getBuilding().getAddress());
         mTaskDetailsView.showTaskTime(getTaskTime());
 
+        mTaskDetailsView.showTaskMembers(getTaskAssignees());
         mTaskDetailsView.showInspectCompanyInfo(getInspectCompany());
-
-        mTaskDetailsView.showTaskMembers(mProjectInfo.getMembers()); // TODO get members
 
         String memType = UserInfoUtils.getMemberType(AdskApplication.getInstance());
         if (ConstructionConstants.MemberType.MATERIAL_STAFF.equalsIgnoreCase(memType)) {
@@ -91,7 +91,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
             mProjectRepository.submitTaskComment(params, "SUBMIT_COMMENT", new ResponseCallback<Void, ResponseError>() {
                 @Override
                 public void onSuccess(Void data) {
-                    //TODO update dialog
+                    // TODO update dialog
+                    // TODO dirty pre page
                     mTaskDetailsView.hideLoading();
                     mTaskDetailsView.close();
                 }
@@ -116,6 +117,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mProjectRepository.reserveTask(params, "RESERVE_TASK", new ResponseCallback<Void, ResponseError>() {
             @Override
             public void onSuccess(Void data) {
+                // TODO dirty pre page
                 mTaskDetailsView.hideLoading();
                 fetchTask();
             }
@@ -137,7 +139,6 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
             @Override
             public void onSuccess(Task data) {
                 mTaskDetailsView.hideLoading();
-                // TODO dirty pre page
                 mTask = data;
                 startPresent();
             }
@@ -174,7 +175,24 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         return null;
     }
 
+    private ArrayList<Member> getTaskAssignees() {
+        ArrayList<Member> assignees = new ArrayList<>();
+        HashSet<String> memberRoles = TaskUtils.getAllAssigneesRole(mTask);
+        for (String role: memberRoles) {
+            Member member = getMember(role);
+            if (member != null) {
+                assignees.add(member);
+            }
+        }
+
+        return assignees;
+    }
+
     private Member getMember(@NonNull String role) {
+        if (role.equalsIgnoreCase(ConstructionConstants.MemberType.INSPECTOR)) {
+            role = ConstructionConstants.MemberType.INSPECTOR_COMPANY;
+        }
+
         List<Member> members = mProjectInfo.getMembers();
         for (Member member: members) {
             if (role.equalsIgnoreCase(member.getRole())) {
@@ -188,7 +206,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     private String getInspectCompany() {
         String companyName = "";
         if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equalsIgnoreCase(mTask.getCategory())) {
-            Member inspectCompany = getMember(ConstructionConstants.MemberType.INSPECTOR);
+            Member inspectCompany = getMember(ConstructionConstants.MemberType.INSPECTOR_COMPANY);
             if (inspectCompany != null) {
                 companyName = inspectCompany.getProfile().getName();
             }

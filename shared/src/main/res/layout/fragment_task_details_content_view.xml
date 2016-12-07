@@ -51,10 +51,12 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_padding_double">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcy_task_person_list"
+            <LinearLayout
+                android:id="@+id/members_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_task_date"

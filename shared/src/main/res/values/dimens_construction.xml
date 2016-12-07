@@ -66,4 +66,6 @@
     <!--form-->
     <dimen name="spacing_left_listicon_item">5dp</dimen>
     <dimen name="spacing_left_listtitle_item">15dp</dimen>
+
+    <dimen name="avatar_border_width">1dp</dimen>
 </resources>

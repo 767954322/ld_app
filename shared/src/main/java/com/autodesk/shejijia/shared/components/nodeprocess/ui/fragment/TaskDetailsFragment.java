@@ -10,7 +10,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +31,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
@@ -60,7 +61,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     private TextView mTaskAddressView;
     private TextView mTaskPhoneView;
     private TextInputEditText mCommentEditView;
-    private RecyclerView mTaskMemberListView;
+    private ViewGroup mTaskMembersContainer;
     private ImageButton mCloseBtn;
     private LinearLayout mActionsContainer;
 
@@ -180,7 +181,21 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showTaskMembers(@NonNull ArrayList<Member> members) {
-        // TODO
+        for (Member member : members) {
+            ImageView avatarImageView = (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.view_task_member, mTaskMembersContainer, false);
+
+            String imageFile = member.getProfile().getAvatar();
+            if (ConstructionConstants.MemberType.INSPECTOR_COMPANY.equalsIgnoreCase(member.getRole())
+                    || ConstructionConstants.MemberType.INSPECTOR.equalsIgnoreCase(member.getRole())) {
+                avatarImageView.setImageResource(R.drawable.ic_default_avatar_inspector);
+            } else if (TextUtils.isEmpty(imageFile)) {
+                avatarImageView.setImageResource(R.drawable.ic_default_head);
+            } else {
+                ImageUtils.loadUserAvatar(avatarImageView, imageFile);
+            }
+            mTaskMembersContainer.addView(avatarImageView);
+        }
+
     }
 
     @Override
@@ -268,7 +283,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mTaskStatusView = (TextView) view.findViewById(R.id.tv_task_status);
         mTaskDateView = (TextView) view.findViewById(R.id.tv_task_date);
         mTaskAddressView = (TextView) view.findViewById(R.id.tv_task_address);
-        mTaskMemberListView = (RecyclerView) view.findViewById(R.id.rcy_task_person_list);
+        mTaskMembersContainer = (ViewGroup) view.findViewById(R.id.members_container);
         mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
         mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
         mActionsContainer = (LinearLayout) view.findViewById(R.id.actions_container);

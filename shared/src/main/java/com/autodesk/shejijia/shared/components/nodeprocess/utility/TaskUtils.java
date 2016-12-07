@@ -5,11 +5,13 @@ import android.text.TextUtils;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Confirm;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.SubTask;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
@@ -19,6 +21,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.M
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -50,7 +53,7 @@ public class TaskUtils {
                 break;
             case ConstructionConstants.TaskStatus.QUALIFIED:
                 displayStringId = R.string.task_qualified;
-               break;
+                break;
             case ConstructionConstants.TaskStatus.UNQUALIFIED:
                 displayStringId = R.string.task_unqualified;
                 break;
@@ -98,6 +101,7 @@ public class TaskUtils {
 
     /**
      * Return status level which will decide background color
+     *
      * @param status Task status
      * @return status level
      */
@@ -135,39 +139,50 @@ public class TaskUtils {
 
     /**
      * Return display time for project details and task details screen
+     *
      * @param task Task
      * @return Display Time
      */
     public static Time getDisplayTime(Task task) {
-        Time time = task.getSortTime();
-
-//        String category = task.getCategory();
-//        if (TextUtils.isEmpty(category)) {
-//            return null;
-//        }
-//
-//        Time time;
-//        switch (category) {
-//            case ConstructionConstants.TaskCategory.CONSTRUCTION:
-//                time = task.getPlanningTime();
-//                break;
-//            default:
-//                if (!TextUtils.isEmpty(task.getStatus())) {
-//                    String status = task.getStatus();
-//                    if (status.equalsIgnoreCase(ConstructionConstants.TaskStatus.OPEN) ||
-//                            status.equalsIgnoreCase(ConstructionConstants.TaskStatus.RESERVING)) {
-//                        if (task.getPlanningTime() != null) {
-//                            time = task.getPlanningTime();
-//                        }
-//                    } else {
-//                        time = task.getReserveTime();
-//                    }
-//                }
-//                break;
-//        }
-
-        return time;
+        return task.getSortTime();
     }
+
+    /**
+     * Get all related assignee roles of the task
+     *
+     * @param task Task
+     * @return return related assignee roles
+     */
+    public static HashSet<String> getAllAssigneesRole(Task task) {
+        HashSet<String> members = new HashSet<>();
+        String assignee = task.getAssignee();
+        if (!TextUtils.isEmpty(assignee)) {
+            members.add(assignee);
+        }
+
+        if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equalsIgnoreCase(task.getCategory())) {
+            members.add(ConstructionConstants.MemberType.INSPECTOR);
+        }
+
+        List<SubTask> subTasks = task.getSubTasks();
+        for (SubTask subTask : subTasks) {
+            String subtaskAssignee = subTask.getAssignee();
+            if (!TextUtils.isEmpty(subtaskAssignee)) {
+                members.add(subtaskAssignee);
+            }
+
+            List<Confirm> confirms = subTask.getConfirms();
+            for (Confirm confirm: confirms) {
+                String confirmRole = confirm.getRole();
+                if (!TextUtils.isEmpty(confirmRole)) {
+                    members.add(confirmRole);
+                }
+            }
+        }
+
+        return members;
+    }
+
 
     public static PickDateDialogFragment.Builder getPickDateDialogBuilder(Task task, ProjectInfo projectInfo) {
         PlanInfo plan = projectInfo.getPlan();
@@ -224,7 +239,7 @@ public class TaskUtils {
         // set selected days
         if (DateUtil.isSameDay(taskStartDay, taskEndDay)) {
             builder.setSelectedDate(taskStartDay);
-        } else if (taskStartDay != null){
+        } else if (taskStartDay != null) {
             builder.setSelectedRange(taskStartDay, taskEndDay);
         }
 

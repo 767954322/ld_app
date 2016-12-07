@@ -13,6 +13,7 @@ import java.util.List;
 public class Profile implements Serializable {
 
     private String name;
+    private String avatar;
     private String mobile;
     private String email;
     private String avatar;
@@ -25,6 +26,14 @@ public class Profile implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getMobile() {

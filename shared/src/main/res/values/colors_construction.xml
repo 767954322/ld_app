@@ -78,4 +78,5 @@
     <color name="progressbar_circle_complete_selected_color">#36699e</color>
 
 
+    <color name="avatar_border_color">#e0e0f1</color>
 </resources>
