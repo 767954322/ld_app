@@ -64,17 +64,6 @@
 
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
-        </activity>
-
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommonBaseActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:alwaysRetainTaskState="true"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
