@@ -81,7 +81,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.CropActivity"
-            android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"

@@ -10,15 +10,11 @@ import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
-import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.CommentConfig;
-import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment;
-import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentPresenter;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
-import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import java.util.List;
