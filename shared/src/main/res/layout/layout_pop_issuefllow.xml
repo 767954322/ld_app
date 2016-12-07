@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/pop_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_230"
+        android:layout_height="@dimen/size_250"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">

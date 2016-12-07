@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -80,19 +81,22 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             }
             issueStylePopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueStylePopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
         } else if (i == R.id.rl_issuedescrip) {
             Intent intent_description = new Intent(activity, AddIssueDescriptionActivity.class);
             activity.startActivityForResult(intent_description, 0);
-        } else if (i == R.id.iv_close_style_pop) {
-            dismissPopwindow();
+
         } else if (i == R.id.rl_issuefllow) {
             //TODO 构建假数据，打通获取角色信息
             List<IssueFllowBean> list_fllow = initRoleData();
             if (issueFllowPopWin == null) {
-                issueFllowPopWin = new IssueFlowPop(list_fllow,activity.getBaseContext(), this, this);
+                issueFllowPopWin = new IssueFlowPop(list_fllow, activity.getBaseContext(), this, this);
             }
             issueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        } else if (i == R.id.iv_close_style_pop) {
+            dismissPopwindow();
 
         }
     }
@@ -118,6 +122,9 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private void dismissPopwindow() {
         if (null != issueStylePopWin) {
             issueStylePopWin.dismiss();
+        }
+        if (null != issueFllowPopWin) {
+            issueFllowPopWin.dismiss();
         }
     }
 }

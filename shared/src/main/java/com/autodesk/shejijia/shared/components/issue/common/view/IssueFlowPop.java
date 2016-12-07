@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBean;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,9 @@ public class IssueFlowPop extends PopupWindow {
         this.view = LayoutInflater.from(mContext).inflate(R.layout.layout_pop_issuefllow, null);
 
         initView();
-        initListener();
         initPop();
         initListView();
+        initListener();
     }
 
     private void initView() {
@@ -125,11 +127,9 @@ public class IssueFlowPop extends PopupWindow {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            ViewHolder viewHolder = new ViewHolder(view);
-            //TODO 此处有BUG，明天调试
-//            viewHolder.mIssueFllowRole.setText(list.get(position).getmIssueFllowRole());
-//            viewHolder.mIssueFllowName.setText(list.get(position).getmIssueFllowName());
-//            ImageUtils.loadImageRound(viewHolder.mImage, list.get(position).getmImagePath());
+            holder.mIssueFllowRole.setText(list.get(position).getmIssueFllowRole());
+            holder.mIssueFllowName.setText(list.get(position).getmIssueFllowName());
+            ImageUtils.displayRoundImage(list.get(position).getmImagePath(), holder.mImage);
         }
 
         @Override
@@ -143,11 +143,13 @@ public class IssueFlowPop extends PopupWindow {
                 mImage = (ImageView) view.findViewById(R.id.iv_issue_fllow_pic);
                 mIssueFllowRole = (TextView) view.findViewById(R.id.tv_issue_fllow_person_role);
                 mIssueFllowName = (TextView) view.findViewById(R.id.tv_issue_fllow_person_name);
+                mIssueFllowAll = (RelativeLayout) view.findViewById(R.id.rl_issue_fllow_person);
             }
 
             ImageView mImage;
             TextView mIssueFllowRole;
             TextView mIssueFllowName;
+            RelativeLayout mIssueFllowAll;
         }
     }
 

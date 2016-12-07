@@ -280,6 +280,17 @@ public class ImageUtils {
     }
 
     /**
+     * 显示六大模块缩略图
+     *
+     * @param imageUrl
+     * @param imageView
+     */
+    public static void displayRoundImage(String imageUrl, ImageView imageView) {
+        if (imageView != null)
+            ImageLoader.getInstance().displayImage(imageUrl, imageView, RoundOptions);
+    }
+
+    /**
      * @param imageUrl
      * @param target
      * @param imageLoadingListener
