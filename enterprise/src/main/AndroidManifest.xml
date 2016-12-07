@@ -223,6 +223,10 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/FormRecyclerStyle"/>
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckUnqualifiedActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
 
 
         <service

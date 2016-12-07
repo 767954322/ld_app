@@ -65,6 +65,18 @@ public class CommentPresenter implements CommentContract.CommentPresenter {
         loadData();
     }
 
+    public String getCommentContent(){
+        return mCommentView.getCommentContent();
+    }
+
+    public String getAudioPath(){
+        return mCommentView.getCommentContent();
+    }
+
+    public List<String> getImageData(){
+        return mCommentView.getImagePathList();
+    }
+
     /**
      * 加载数据
      */
