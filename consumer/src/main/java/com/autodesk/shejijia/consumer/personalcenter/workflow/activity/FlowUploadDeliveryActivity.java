@@ -202,11 +202,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             mFiles = mDeliveryBean.getFiles();
             if (null == mFiles) {
                 return;
-            }else {
-                if (mFiles.size()<1){
+            } else {
+                if (mFiles.size() < 1) {
                     if (isRoleCustomer()) {
                         alertMeasureOrDesign();
-                    }else {
+                    } else {
                         get3DPlan(needs_id, designer_id);
                         return;
                     }
@@ -617,13 +617,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 for (String s : design_file_id_measure_arrayList) {
                     stringBuilder.append(s + ',');
                 }
-                LogUtils.i(TAG, "design_file_id_measure_arrayList:" + design_file_id_measure_arrayList);
                 type = "0";
                 if (TextUtils.isEmpty(design_asset_id_measure)) {
                     return;
                 }
                 String s = stringBuilder.toString();
-                s = s.replace(s.charAt(s.length() - 1) + "", "");
                 postDelivery(design_asset_id_measure, needs_id, designer_id, s, type);
                 break;
         }
