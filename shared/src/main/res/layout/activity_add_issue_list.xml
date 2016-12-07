@@ -131,8 +131,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_30"
-            android:layout_toRightOf="@+id/tx_issuenotify"
-            android:thumbTextPadding="@dimen/size_10" />
+            android:layout_toRightOf="@+id/tx_issuenotify" />
 
         <View
             android:layout_width="match_parent"

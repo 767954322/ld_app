@@ -169,5 +169,6 @@
 
     <string name="pop_issuestyle_title">选择问题类型</string>
     <string name="pop_issuefllow_title">选择跟进人员</string>
+    <string name="pop_issuereply_title">回复期限</string>
 
 </resources>

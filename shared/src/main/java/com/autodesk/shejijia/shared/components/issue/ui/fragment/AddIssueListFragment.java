@@ -12,7 +12,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBean;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
@@ -20,7 +22,9 @@ import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContra
 import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueDescriptionActivity;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
@@ -35,13 +39,18 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private RelativeLayout mIssueStyle;
     private RelativeLayout mIssueDescription;
     private RelativeLayout mIssueFllow;
+    private RelativeLayout mIssueReply;
 
     private IssueStylePop issueStylePopWin;
     private IssueFlowPop issueFllowPopWin;
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;
+    private TextView mIssueReplyContent;
     private List<IssueFllowBean> list_fllow;
     private Switch mIssueSwitchNotify;
+    private TimePickerView pvTime;
+    private SimpleDateFormat dateFormat;
+
 
     public static AddIssueListFragment getInstance() {
         AddIssueListFragment fragment = new AddIssueListFragment();
@@ -59,26 +68,30 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueStyle = (RelativeLayout) rootView.findViewById(R.id.rl_issuetype);
         mIssueDescription = (RelativeLayout) rootView.findViewById(R.id.rl_issuedescrip);
         mIssueFllow = (RelativeLayout) rootView.findViewById(R.id.rl_issuefllow);
+        mIssueReply = (RelativeLayout) rootView.findViewById(R.id.rl_issuereply);
 
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
+        mIssueReplyContent = (TextView) rootView.findViewById(R.id.tx_issuereply);
         mIssueSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notity_customer);
     }
 
     @Override
     protected void initData() {
 
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        initTimePick();
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-
         mIssueStyle.setOnClickListener(this);
         mIssueDescription.setOnClickListener(this);
         mIssueFllow.setOnClickListener(this);
         mIssueSwitchNotify.setOnCheckedChangeListener(this);
-
+        mIssueReply.setOnClickListener(this);
     }
 
     @Override
@@ -103,6 +116,8 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             }
             issueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        } else if (i == R.id.rl_issuereply) {
+            pvTime.show();
         }
     }
 
@@ -114,18 +129,6 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         } else {
             ToastUtils.showLong(activity, "关");
         }
-    }
-
-    private List<IssueFllowBean> initRoleData() {
-        List<IssueFllowBean> list_fllow = new ArrayList<>();
-        String issueImgPath = "http://img3.imgtn.bdimg.com/it/u=214931719,1608091472&fm=21&gp=0.jpg";
-        String issueRole = "设计师";
-        String issueName = "网络名称";
-        for (int i = 0; i < 4; i++) {
-            IssueFllowBean mIssueFllowBean = new IssueFllowBean(issueImgPath, issueRole + i, issueName + i);
-            list_fllow.add(mIssueFllowBean);
-        }
-        return list_fllow;
     }
 
     @Override
@@ -146,6 +149,36 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         if (null != issueFllowPopWin) {
             issueFllowPopWin.dismiss();
         }
+    }
+
+    //初始化时间控件
+    private void initTimePick() {
+        pvTime = new TimePickerView(activity, TimePickerView.Type.YEAR_MONTH_DAY);
+        pvTime.setRange(1965, 2100);
+        pvTime.setTime(new Date());
+        pvTime.setCyclic(false);
+        pvTime.setCancelable(false);
+        pvTime.setTitle(UIUtils.getString(R.string.pop_issuereply_title));
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                String mDate = dateFormat.format(date);
+                mDate = mDate.length() > 8 ? mDate.substring(0, mDate.length() - 8) : mDate;
+                mIssueReplyContent.setText(mDate);
+            }
+        });
+    }
+
+    private List<IssueFllowBean> initRoleData() {
+        List<IssueFllowBean> list_fllow = new ArrayList<>();
+        String issueImgPath = "http://img3.imgtn.bdimg.com/it/u=214931719,1608091472&fm=21&gp=0.jpg";
+        String issueRole = "设计师";
+        String issueName = "网络名称";
+        for (int i = 0; i < 4; i++) {
+            IssueFllowBean mIssueFllowBean = new IssueFllowBean(issueImgPath, issueRole + i, issueName + i);
+            list_fllow.add(mIssueFllowBean);
+        }
+        return list_fllow;
     }
 
 }
