@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.R;
@@ -18,13 +17,12 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.ProjectUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by t_xuz on 11/11/16.
@@ -54,7 +52,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.showTaskAddress(mProjectInfo.getBuilding().getAddress());
         mTaskDetailsView.showTaskTime(getTaskTime());
 
-        mTaskDetailsView.showTaskMembers(getTaskAssignees());
+        mTaskDetailsView.showTaskMembers(TaskUtils.getTaskAssignees(mTask, mProjectInfo));
         mTaskDetailsView.showInspectCompanyInfo(getInspectCompany());
 
         String memType = UserInfoUtils.getMemberType(AdskApplication.getInstance());
@@ -175,38 +173,10 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         return null;
     }
 
-    private ArrayList<Member> getTaskAssignees() {
-        ArrayList<Member> assignees = new ArrayList<>();
-        HashSet<String> memberRoles = TaskUtils.getAllAssigneesRole(mTask);
-        for (String role: memberRoles) {
-            Member member = getMember(role);
-            if (member != null) {
-                assignees.add(member);
-            }
-        }
-
-        return assignees;
-    }
-
-    private Member getMember(@NonNull String role) {
-        if (role.equalsIgnoreCase(ConstructionConstants.MemberType.INSPECTOR)) {
-            role = ConstructionConstants.MemberType.INSPECTOR_COMPANY;
-        }
-
-        List<Member> members = mProjectInfo.getMembers();
-        for (Member member: members) {
-            if (role.equalsIgnoreCase(member.getRole())) {
-                return member;
-            }
-        }
-
-        return null;
-    }
-
     private String getInspectCompany() {
         String companyName = "";
         if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equalsIgnoreCase(mTask.getCategory())) {
-            Member inspectCompany = getMember(ConstructionConstants.MemberType.INSPECTOR_COMPANY);
+            Member inspectCompany = ProjectUtils.getMemberByRole(mProjectInfo, ConstructionConstants.MemberType.INSPECTOR_COMPANY);
             if (inspectCompany != null) {
                 companyName = inspectCompany.getProfile().getName();
             }

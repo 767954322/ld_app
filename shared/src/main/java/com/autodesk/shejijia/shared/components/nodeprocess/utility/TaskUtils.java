@@ -153,7 +153,7 @@ public class TaskUtils {
      * @param task Task
      * @return return related assignee roles
      */
-    public static HashSet<String> getAllAssigneesRole(Task task) {
+    private static HashSet<String> getAllAssigneesRole(Task task) {
         HashSet<String> members = new HashSet<>();
         String assignee = task.getAssignee();
         if (!TextUtils.isEmpty(assignee)) {
@@ -181,6 +181,19 @@ public class TaskUtils {
         }
 
         return members;
+    }
+
+    public static ArrayList<Member> getTaskAssignees(Task task, ProjectInfo projectInfo) {
+        ArrayList<Member> assignees = new ArrayList<>();
+        HashSet<String> memberRoles = getAllAssigneesRole(task);
+        for (String role: memberRoles) {
+            Member member = ProjectUtils.getMemberByRole(projectInfo, role);
+            if (member != null) {
+                assignees.add(member);
+            }
+        }
+
+        return assignees;
     }
 
 
