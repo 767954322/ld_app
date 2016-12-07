@@ -207,8 +207,8 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         //// TODO: 11/11/16 跳转消息中心逻辑
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
-        intent.putExtra("project_id",projectInfo.getProjectId());
-
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
+        intent.putExtra(ConstructionConstants.UNREAD,false);
         Log.d("test","test:"+projectInfo.getProjectId());
         mContext.startActivity(intent);
 

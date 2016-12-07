@@ -9,7 +9,8 @@
     <string name="failure">失败</string>
     <string name="alert_dialog__default_title">提示</string>
     <string name="retry">重试</string>
-
+    <string name="historical_records">显示全部历史更新</string>
+    <string name="update_priject_details">项目更新详情</string>
     <!--Qr-->
     <string name="scanner_text">将二维码放入框内,即可自动扫描</string>
     <string name="consumer_zxing_describe">请设计师扫码为您创建套餐项目</string>
