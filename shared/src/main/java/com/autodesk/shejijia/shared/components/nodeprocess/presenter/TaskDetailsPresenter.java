@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.R;
@@ -13,7 +14,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
@@ -23,6 +23,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by t_xuz on 11/11/16.
@@ -51,7 +52,10 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.showTaskStatus(mTask.getStatus());
         mTaskDetailsView.showTaskAddress(mProjectInfo.getBuilding().getAddress());
         mTaskDetailsView.showTaskTime(getTaskTime());
-        mTaskDetailsView.showInspectCompanyInfo("监理公司", "111111111");//TODO get inspect company info
+
+        mTaskDetailsView.showInspectCompanyInfo(getInspectCompany());
+
+        mTaskDetailsView.showTaskMembers(mProjectInfo.getMembers()); // TODO get members
 
         String memType = UserInfoUtils.getMemberType(AdskApplication.getInstance());
         if (ConstructionConstants.MemberType.MATERIAL_STAFF.equalsIgnoreCase(memType)) {
@@ -59,8 +63,6 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         } else {
             mTaskDetailsView.showComment(getDisplayComment(mTask));
         }
-
-        mTaskDetailsView.showTaskMembers(new ArrayList<Member>()); // TODO get members
 
         mTaskDetailsView.showActions(mTask, mProjectInfo);
     }
@@ -170,5 +172,28 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         }
 
         return null;
+    }
+
+    private Member getMember(@NonNull String role) {
+        List<Member> members = mProjectInfo.getMembers();
+        for (Member member: members) {
+            if (role.equalsIgnoreCase(member.getRole())) {
+                return member;
+            }
+        }
+
+        return null;
+    }
+
+    private String getInspectCompany() {
+        String companyName = "";
+        if (ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION.equalsIgnoreCase(mTask.getCategory())) {
+            Member inspectCompany = getMember(ConstructionConstants.MemberType.INSPECTOR);
+            if (inspectCompany != null) {
+                companyName = inspectCompany.getProfile().getName();
+            }
+        }
+
+        return companyName;
     }
 }

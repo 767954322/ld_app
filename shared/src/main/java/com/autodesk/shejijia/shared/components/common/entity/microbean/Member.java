@@ -14,7 +14,6 @@ public class Member implements Serializable{
 
     private String role;
     private String uid;
-    private boolean group;
     private Profile profile;
     @SerializedName("acs_member_id")
     private long acsMemberId;
@@ -27,7 +26,6 @@ public class Member implements Serializable{
     @SerializedName("group_members")
     private ArrayList<Member> groupMembers;
     private ArrayList<String> allowed;
-
 
     public String getRole() {
         return role;
@@ -46,11 +44,11 @@ public class Member implements Serializable{
     }
 
     public boolean isGroup() {
-        return group;
+        return isGroup;
     }
 
     public void setGroup(boolean group) {
-        this.group = group;
+        this.isGroup = group;
     }
 
     public ArrayList<Member> getGroupMembers() {

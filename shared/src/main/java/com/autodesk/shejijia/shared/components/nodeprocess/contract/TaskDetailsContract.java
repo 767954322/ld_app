@@ -30,7 +30,7 @@ public interface TaskDetailsContract {
 
         void showTaskTime(@NonNull String time);
 
-        void showInspectCompanyInfo(@NonNull String companyName, @NonNull String phoneNumber);
+        void showInspectCompanyInfo(@Nullable String companyName);
 
         void showComment(@NonNull String comment);
 

@@ -194,8 +194,13 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
-    public void showInspectCompanyInfo(@NonNull String companyName, @NonNull String phoneNumber) {
-        mTaskPhoneView.setText(companyName + " " + phoneNumber);
+    public void showInspectCompanyInfo(@Nullable String companyName) {
+        if (TextUtils.isEmpty(companyName)) {
+            mTaskPhoneView.setVisibility(View.GONE);
+        } else {
+            mTaskPhoneView.setVisibility(View.VISIBLE);
+            mTaskPhoneView.setText(companyName);
+        }
     }
 
     @Override

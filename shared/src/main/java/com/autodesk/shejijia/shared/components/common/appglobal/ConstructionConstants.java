@@ -86,7 +86,7 @@ public class ConstructionConstants {
         public static final String ADMIN = "admin";//系统管理员
         public static final String CLIENT_MANAGER = "clientmanager";//客户经理
         public static final String FORMAN = "foreman";//班长
-        public static final String INSPECTOR = "inspector";//监理
+        public static final String INSPECTOR = "inspectorcompany";//监理
         public static final String MATERIAL_STAFF = "materialstaff";//材料员
         public static final String DESIGNER = "designer";//设计师
         public static final String MEMBER = "member";//消费者
