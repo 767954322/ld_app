@@ -208,12 +208,13 @@
 
             </LinearLayout>
 
-            <include layout="@layout/view_common_line"/>
+            <!--<include layout="@layout/view_common_line"/>-->
 
             <LinearLayout
                 android:id="@+id/ll_personal_recommend"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
