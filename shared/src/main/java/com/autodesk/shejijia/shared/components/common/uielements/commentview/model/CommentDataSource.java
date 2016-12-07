@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.AlbumFolder;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
 import java.util.List;
 
@@ -21,6 +21,8 @@ public interface CommentDataSource {
 
     @Nullable
     List<String> getSelectedResult();
+
+    void addSelected(List<String> paths);
 
     void addSelect(@NonNull String path);
 

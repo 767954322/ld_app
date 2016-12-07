@@ -11,7 +11,8 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.pho
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
+
 
 public class ImageSelector {
 

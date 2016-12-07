@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.previewimage.ImageContract;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseView;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.AlbumFolder;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
 import java.io.File;
 import java.util.List;

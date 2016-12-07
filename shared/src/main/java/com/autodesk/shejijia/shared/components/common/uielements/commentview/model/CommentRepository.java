@@ -12,8 +12,8 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.AlbumFolder;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils;
 
 import java.io.File;
@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
 
 /**
  * Created by t_panya on 16/12/2.
@@ -171,7 +169,7 @@ public class CommentRepository implements CommentDataSource{
     @Nullable
     @Override
     public List<String> getSelectedResult() {
-        return null;
+        return mSelectedResult;
     }
 
     @Override
@@ -206,10 +204,17 @@ public class CommentRepository implements CommentDataSource{
         mSelectedResult.addAll(paths);
     }
 
+    @Override
+    public void addSelected(List<String> paths) {
+        if(paths == null || paths.size() == 0){
+            return;
+        }
+        mSelectedResult.addAll(paths);
+    }
+
     public List<AlbumFolder> getCachedAlbumFolder() {
         return mCachedFolders == null ? null : new ArrayList<>(mCachedFolders.values());
     }
-
 
     /**
      * 根据传入的路径得到AlbumFolder对象

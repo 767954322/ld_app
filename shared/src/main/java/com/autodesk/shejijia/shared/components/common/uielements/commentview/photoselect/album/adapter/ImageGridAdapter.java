@@ -13,13 +13,14 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.AlbumConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumFragment;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Collections;
 import java.util.List;
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
 
 public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

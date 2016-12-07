@@ -5,6 +5,7 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -363,6 +364,20 @@ public class MPAudioManager implements MediaPlayer.OnPreparedListener,
             mRecorderListener.onAudioRecordingCancelled();
     }
 
+    public void deleteVoice(String path)
+    {
+        if(TextUtils.isEmpty(path))
+        {
+            return;
+        }
+        try {
+            MPFileUtility.removeFile(path);
+        }
+        catch (Exception ex)
+        {
+            handleError("Error delete voice" + ex.getMessage());
+        }
+    }
 
     private MPAudioManager()
     {

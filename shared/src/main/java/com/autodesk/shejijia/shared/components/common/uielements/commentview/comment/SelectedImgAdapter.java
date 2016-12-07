@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.CommentConfig;
-import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -27,12 +26,12 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     private static final int IMG_ITEM = 1;
     private List<String> mData = Collections.emptyList();
     private CommentConfig mConfig;
-    private com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment.ImageAddItemClickListener mListener;
+    private CommentFragment.ImageItemClickListener mListener;
     private ImageLoader mLoader;
     private DisplayImageOptions emptyOption;
     private DisplayImageOptions options;
 
-    public SelectedImgAdapter(CommentConfig config, CommentFragment.ImageAddItemClickListener listener, ImageLoader loader){
+    public SelectedImgAdapter(CommentConfig config, CommentFragment.ImageItemClickListener listener, ImageLoader loader){
         mConfig = config;
         mListener = listener;
         mLoader = loader;
@@ -55,7 +54,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         int width = parent.getMeasuredWidth() / 3;
         Log.d("SelectedImgAdapter", "onCreateViewHolder: width == " + width);
         if(viewType == ADD_ITEM){
-            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gridphoto_cell,parent,false);
+            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout_addphoto,parent,false);
             rootView.getLayoutParams().height = width;      //width 已经有layoutmanager 确认过了。所以只需要确认height
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,7 +62,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
                     mListener.onAddItemClick();
                 }
             });
-            return new ImageViewHolder(rootView);
+            return new RecyclerView.ViewHolder(rootView) {};
         } else {
             rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gridphoto_cell,parent,false);
             rootView.getLayoutParams().height = width;      //width 已经有layoutmanager 确认过了。所以只需要确认height
@@ -73,16 +72,21 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        final ImageViewHolder viewHolder = (ImageViewHolder) holder;
         if(isImgItem(position)){
-//            final ImageViewHolder viewHolder = (ImageViewHolder) holder;
+            final ImageViewHolder viewHolder = (ImageViewHolder) holder;
             final String path = getListItem(position);
             if(path != null){
                 mLoader.displayImage(sFilePrefix + path,viewHolder.image,options);
                 viewHolder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mListener.onImgItemClick(position + 1);
+                        mListener.onImgItemClick(position);
+                    }
+                });
+                viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onDeleteImageClick(position);
                     }
                 });
             } else {
@@ -133,9 +137,11 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     class ImageViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
+        ImageView delete;
         public ImageViewHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.iv_gridphoto_cell_thumbnail);
+            image = (ImageView) itemView.findViewById(R.id.iv_photo);
+            delete = (ImageView) itemView.findViewById(R.id.iv_delete_picture);
         }
     }
 }

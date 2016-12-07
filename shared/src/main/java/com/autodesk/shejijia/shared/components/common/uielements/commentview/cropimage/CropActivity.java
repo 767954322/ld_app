@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.photoselect.base.PhotoSelectBaseActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.ActivityUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.ActivityUtils;
 
 public class CropActivity extends PhotoSelectBaseActivity implements CropFragment.CropImageListener {
 

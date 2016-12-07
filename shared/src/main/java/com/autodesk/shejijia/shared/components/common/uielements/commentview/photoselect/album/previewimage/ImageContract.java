@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBasePresenter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseView;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
 public interface ImageContract {
 

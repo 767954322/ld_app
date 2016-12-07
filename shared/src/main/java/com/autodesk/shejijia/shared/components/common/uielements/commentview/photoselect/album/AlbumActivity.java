@@ -8,9 +8,9 @@ import android.widget.Button;
 
 import com.autodesk.shejijia.shared.R;
 //import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.previewimage.ImageDetailFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.CommentRepository;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.AlbumRepository;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.ActivityUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.ActivityUtils;
 
 
 public class AlbumActivity extends PhotoSelectBaseActivity {
@@ -51,7 +51,7 @@ public class AlbumActivity extends PhotoSelectBaseActivity {
                     getSupportFragmentManager(), albumFragment, AlbumFragment.TAG, false);
 
 //        }
-        AlbumRepository albumRepository = AlbumRepository.getInstance(this);
+        CommentRepository albumRepository = CommentRepository.getInstance(this);
         //创建AlbumPresenter
         mAlbumPresenter = new AlbumPresenter(
                 albumRepository,

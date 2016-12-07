@@ -2,25 +2,27 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.ph
 
 import android.support.annotation.NonNull;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.CommentRepository;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumContract;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.AlbumRepository;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+import java.util.List;
+
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
 
 
 /**
  * Created by lijunguan on 2016/4/24.
  */
 public class ImageDetailPresenter implements ImageContract.Presenter {
-    private AlbumRepository mAlbumRepository;
+    private CommentRepository mAlbumRepository;
 
     private ImageContract.View mImageDetailView;
 
     private AlbumContract.View mAlbumView;
 
     public ImageDetailPresenter(
-            @NonNull AlbumRepository albumRepository,
+            @NonNull CommentRepository albumRepository,
             @NonNull ImageContract.View imageDetailView,
             @NonNull AlbumContract.View albumView) {
 
@@ -30,7 +32,7 @@ public class ImageDetailPresenter implements ImageContract.Presenter {
         mImageDetailView.setPresenter(this);
     }
 
-    public void start() {
+    public void start(List<String> mDatas) {
 //        AlbumFolder folder = mAlbumRepository.getFolderByImage(mImageInfo);
 //        int index = folder.getImgInfos().indexOf(mImageInfo);
 //        mImageDetailView.showImageDetail(index, folder.getImgInfos());

@@ -157,17 +157,17 @@ public class CommonAudioAlert {
         switch (status){
             case PRE_RECORD:
                 mRecordingImage.setVisibility(View.VISIBLE);
-                mSuspendImage.setVisibility(View.GONE);
-                mPlayImage.setVisibility(View.GONE);
+                mSuspendImage.setVisibility(View.INVISIBLE);
+                mPlayImage.setVisibility(View.INVISIBLE);
                 break;
             case RECORDING:
-                mRecordingImage.setVisibility(View.GONE);
+                mRecordingImage.setVisibility(View.INVISIBLE);
                 mSuspendImage.setVisibility(View.VISIBLE);
-                mPlayImage.setVisibility(View.GONE);
+                mPlayImage.setVisibility(View.INVISIBLE);
                 break;
             case RECORDED:
                 mRecordingImage.setVisibility(View.VISIBLE);
-                mSuspendImage.setVisibility(View.GONE);
+                mSuspendImage.setVisibility(View.INVISIBLE);
                 mPlayImage.setVisibility(View.VISIBLE);
                 break;
         }

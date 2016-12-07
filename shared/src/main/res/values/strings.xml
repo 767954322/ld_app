@@ -266,6 +266,10 @@
     <string name="label_ok">确定</string>
     <string name="label_cancel">取消</string>
     <string name="permission_read_storage_rationale">需要读取外部存储权限，来加载手机图片</string>
-    <string name="permission_denied_error_msg">权限获取失败，无法加载图片！</string>
+    <string name="permission_read_storage_denied_error_msg">权限获取失败，无法加载图片！</string>
+    <string name="permission_record_play_audio_denied_error_msg">权限获取失败,无法使用</string>
+
+    <!--common comment-->
+    <string name="comment_alert_done">确认</string>
 
 </resources>

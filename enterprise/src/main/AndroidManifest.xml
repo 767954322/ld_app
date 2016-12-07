@@ -64,19 +64,35 @@
 
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommonBaseActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.photoselect.album.AlbumActivity"
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" />
+
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.photoselect.cropimage.CropActivity"
+        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.CropActivity"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

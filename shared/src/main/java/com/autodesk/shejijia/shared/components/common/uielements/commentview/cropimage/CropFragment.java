@@ -14,16 +14,17 @@ import android.view.ViewTreeObserver;
 import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.cropimage.crop.CropView;
-import com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.FileUtils;
-//import com.bumptech.glide.Glide;
-//import com.bumptech.glide.load.engine.DiskCacheStrategy;
-//import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-//import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.photoselect.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
+
+//import com.bumptech.glide.Glide;
+//import com.bumptech.glide.load.engine.DiskCacheStrategy;
+//import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+//import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 public class CropFragment extends Fragment {
 

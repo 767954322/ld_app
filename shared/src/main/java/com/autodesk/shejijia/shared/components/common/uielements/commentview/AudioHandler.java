@@ -53,6 +53,10 @@ public class AudioHandler{
         manager.stopRecording();
     }
 
+    public void deleteVoiceRecord(String path){
+        MPAudioManager manager = MPAudioManager.getInstance();
+        manager.deleteVoice(path);
+    }
 
     public void cancelVoiceRecord(){
         MPAudioManager manager = MPAudioManager.getInstance();

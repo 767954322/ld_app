@@ -12,14 +12,15 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumFragment;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
+
 
 public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.FolderViewHolder> {
     private static final String sFilePrefix = "file://";

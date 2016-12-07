@@ -65,7 +65,7 @@
                     android:id="@+id/iv_voice_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/voice_ico"
+                    android:src="@drawable/ic_addvoice"
                     android:layout_gravity="center_vertical"
                     />
                 <TextView
@@ -103,13 +103,21 @@
                 android:background="@drawable/audio_animation_list_right"/>
             <TextView
                 android:id="@+id/tv_audio_play_duration"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:text="14:19"
                 android:textColor="#D9D9D9"
                 android:textSize="14dp" />
+            <ImageView
+                android:id="@+id/iv_delete_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_delete"/>
         </LinearLayout>
     </RelativeLayout>
 

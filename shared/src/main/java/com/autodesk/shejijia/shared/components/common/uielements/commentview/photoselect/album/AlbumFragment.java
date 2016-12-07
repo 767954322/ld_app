@@ -26,11 +26,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.pho
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.adapter.FolderListAdapter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.adapter.ImageGridAdapter;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.widget.GridDividerDecorator;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.GridDividerDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseFragment;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.AlbumFolder;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.FileUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.FileUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
 
 
 public class AlbumFragment extends PhotoSelectBaseFragment
@@ -79,6 +79,8 @@ public class AlbumFragment extends PhotoSelectBaseFragment
      * 当前选择的相册目录下的 图片集合
      */
     private ArrayList<ImageInfo> mImages;
+
+    private ArrayList<String> mPictures;
 //    private RequestManager mRequestManager;
 
 
@@ -105,6 +107,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
         mImagesAdapter = new ImageGridAdapter(mAlbumConfig, mItemListener);
 //        mFolderAdapter = new FolderListAdapter(mRequestManager, mFolderItemClickListener);
         mFolderAdapter = new FolderListAdapter(mFolderItemClickListener);
+        mPictures = (ArrayList<String>) mAlbumConfig.getStartData();
     }
 
     @Override
@@ -170,7 +173,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
                     getString(R.string.permission_read_storage_rationale),
                     REQUEST_STORAGE_READ_ACCESS_PERMISSION);
         } else {
-            mPresenter.start(); //初始化数据
+            mPresenter.start(mPictures); //初始化数据
         }
     }
 
@@ -182,7 +185,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
         switch (requestCode) {
             case REQUEST_STORAGE_READ_ACCESS_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenter.start(); //初始化数据
+                    mPresenter.start(mPictures); //初始化数据
                 } else {
                     showToast(getString(R.string.permission_read_storage_denied_error_msg));
                     showEmptyView(getString(R.string.permission_read_storage_denied_error_msg));

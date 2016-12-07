@@ -13,8 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.StatusBarUtil;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.StatusBarUtil;
 
 public abstract class PhotoSelectBaseActivity extends AppCompatActivity {
 //

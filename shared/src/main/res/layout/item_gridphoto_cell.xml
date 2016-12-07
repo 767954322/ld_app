@@ -2,14 +2,33 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_common_comment_img">
 
     <ImageView
-        android:id="@+id/iv_gridphoto_cell_thumbnail"
+        android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="@color/bg_be"
-        android:src="@drawable/photopicker_placeholder" />
+        android:src="@drawable/ic_addphoto" />
 
+    <ImageView
+        android:id="@+id/iv_delete_picture"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/iv_photo_select_indicator"
+        android:layout_gravity="top|right"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/photopicker_unchecked"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"/>
 </FrameLayout>

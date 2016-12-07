@@ -5,29 +5,29 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.CommentDataSource;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.CommentRepository;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.CropActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.AlbumDataSource;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.AlbumRepository;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.AlbumFolder;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.AlbumFolder;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
 import java.io.File;
 import java.util.List;
 
-import static com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.utils.CommonUtils.checkNotNull;
+import static com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.CommonUtils.checkNotNull;
 
 public class AlbumPresenter implements AlbumContract.Presenter {
 
     private AlbumContract.View mAlbumView;
 
-    private AlbumRepository mAlbumRepository;
+    private CommentRepository mAlbumRepository;
 
     private LoaderManager mLoadManager;
 
 
     public AlbumPresenter(
-            @NonNull AlbumRepository albumRepository,
+            @NonNull CommentRepository albumRepository,
             @NonNull LoaderManager loaderManager,
             @NonNull AlbumContract.View albumView) {
         mLoadManager = checkNotNull(loaderManager, "loader manager cannot be null");
@@ -38,12 +38,13 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     }
 
     @Override
-    public void start() {
-        loadData();
+    public void start(List<String> images) {
+        loadData(images);
     }
 
-    private void loadData() {
-        mAlbumRepository.initImgRepository(mLoadManager, new AlbumDataSource.InitAlbumCallback() {
+    private void loadData(List<String> images) {
+        mAlbumRepository.addSelected(images);
+        mAlbumRepository.initImgRepository(mLoadManager, new CommentDataSource.InitAlbumCallback() {
             @Override
             public void onInitFinish(List<AlbumFolder> folders) {
                 List<ImageInfo> allImages = folders.get(0).getImgInfos();
@@ -52,7 +53,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
             }
 
             @Override
-            public void onDataNoAvaliable() {
+            public void onDataNotAvailable() {
                 mAlbumView.showEmptyView(null);
             }
         });

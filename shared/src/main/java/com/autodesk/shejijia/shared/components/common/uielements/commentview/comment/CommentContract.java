@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview.comment;
 
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.BasePresenter;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.BaseView;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommentBasePresenter;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommentBaseView;
 
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CommentContract {
 
-    public interface CommentView extends BaseView<CommentPresenter>{
+    public interface CommentView extends CommentBaseView<CommentPresenter> {
 
         void showImages(List<String> imageStrings);
 
@@ -35,9 +35,11 @@ public interface CommentContract {
         String getAudioRecordPath();
 
         List<String> getImagePathList();
+
+        void deleteVoice(String path);
     }
 
-    public interface CommentPresenter extends BasePresenter{
+    public interface CommentPresenter extends CommentBasePresenter {
 
         /**
          * 预览
@@ -54,9 +56,11 @@ public interface CommentContract {
         void stopRecordAudio();
 
         void cancelRecordAudio();
+
+        void deleteVoice(String path);
     }
 
-    public interface CommentImageView extends BaseView<CommentImagePresenter>{
+    public interface CommentImageView extends CommentBaseView<CommentImagePresenter> {
         void updateIndicator();
 
         void showOutOfRange(int position);
@@ -64,7 +68,7 @@ public interface CommentContract {
         void showSelectedCount(int count);
     }
 
-    public interface CommentImagePresenter extends BasePresenter{
+    public interface CommentImagePresenter extends CommentBasePresenter {
 
     }
 

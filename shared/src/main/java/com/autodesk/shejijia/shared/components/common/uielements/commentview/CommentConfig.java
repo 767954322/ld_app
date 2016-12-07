@@ -83,15 +83,6 @@ public class CommentConfig implements Parcelable{
         return this;
     }
 
-    public CommentConfig setFile(List<SHFile> files) {
-        this.files = files;
-        return this;
-    }
-
-    public List<SHFile> getFile() {
-        return files;
-    }
-
     public List<String> getThumbnailData() {
         return thumbnailData;
     }
@@ -162,7 +153,6 @@ public class CommentConfig implements Parcelable{
         dest.writeStringList(pictureData);
         dest.writeStringList(thumbnailData);
         dest.writeInt(selectModel);
-        dest.writeList(files);
     }
 
     protected CommentConfig(Parcel in) {
@@ -175,7 +165,6 @@ public class CommentConfig implements Parcelable{
         in.readStringList(pictureData);
         in.readStringList(thumbnailData);
         selectModel = in.readInt();
-        in.readList(files,SHFile.class.getClassLoader());
     }
 
     public static final Creator<CommentConfig> CREATOR = new Creator<CommentConfig>() {

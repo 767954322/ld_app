@@ -76,7 +76,7 @@ public class FormFeedBack implements Serializable {
                 }
 
                 if("audio".equals(valueMap.get("type"))){
-                    audio.setPicture_url((String) valueMap.get("value"));
+                    audio.setPictureUrl((String) valueMap.get("value"));
                     if(valueMap.get("id") == null){
                         audio.setFileId("");
                     }else {
@@ -86,7 +86,7 @@ public class FormFeedBack implements Serializable {
 
                 if("image".equals(valueMap.get("type"))){
                     SHFile image = new SHFile();
-                    image.setPicture_url((String) valueMap.get("value"));
+                    image.setPictureUrl((String) valueMap.get("value"));
                     if(valueMap.get("id") == null){
                         image.setFileId("");
                     }else {
@@ -123,19 +123,19 @@ public class FormFeedBack implements Serializable {
         textType.put("type","text");
         textType.put("value",this.comment == null?"":this.comment);
         feedBackDataList.add(textType);
-        if(!TextUtils.isEmpty(this.audio.getPicture_url())){
+        if(!TextUtils.isEmpty(this.audio.getPictureUrl())){
             Map<String,Object> audio = new HashMap<>();
             audio.put("type","audio");
-            audio.put("value",this.audio.getPicture_url());
+            audio.put("value",this.audio.getPictureUrl());
             audio.put("id",this.audio.getFileId());
             feedBackDataList.add(audio);
         }
         if(images != null && images.size() != 0){
             for(SHFile file : images){
-                if(!TextUtils.isEmpty(file.getPicture_url())){
+                if(!TextUtils.isEmpty(file.getPictureUrl())){
                     Map<String,Object> image = new HashMap<>();
                     image.put("type","image");
-                    image.put("value",file.getPicture_url());
+                    image.put("value",file.getPictureUrl());
                     image.put("id",file.getFileId());
                     feedBackDataList.add(image);
                 }

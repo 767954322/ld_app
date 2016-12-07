@@ -20,7 +20,7 @@ public class CommonBaseFragment extends Fragment {
             WeakReference<CommonBaseActivity> mActivityRef = new WeakReference<>((CommonBaseActivity) getActivity());
             mContext = mActivityRef.get();
         } else {
-            throw new IllegalArgumentException("unexcepted context ");
+            throw new IllegalArgumentException("unexecepted context ");
         }
     }
 }
