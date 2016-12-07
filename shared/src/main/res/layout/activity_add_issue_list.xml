@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/pay_ico" />
+            android:background="@drawable/add_issue_style" />
 
         <TextView
             android:id="@+id/tx_issuetype"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/pay_ico" />
+            android:background="@drawable/add_issue_description" />
 
         <TextView
             android:id="@+id/tx_issuedescrip"
@@ -81,7 +81,13 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/pay_ico" />
+            android:background="@drawable/add_issue_fllow" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/issue_item_line" />
 
         <TextView
             android:id="@+id/tx_issuefllow"
@@ -89,14 +95,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:layout_toRightOf="@+id/ibn_issuefllow"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/ibn_issuefllow"
             android:text="@string/add_issuelist_fllow" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_0.5"
-            android:layout_alignParentBottom="true"
-            android:background="@color/issue_item_line" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -112,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/pay_ico" />
+            android:background="@drawable/add_issue_notify" />
 
         <TextView
             android:id="@+id/tx_issuenotify"
@@ -144,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/pay_ico" />
+            android:background="@drawable/add_issue_reply" />
 
         <TextView
             android:id="@+id/tx_issuereply"

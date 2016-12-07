@@ -19,20 +19,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
 
-            <ImageView
-                android:id="@+id/iv_close_style_pop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/size_15"
-                android:src="@drawable/close" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/size_20"
                 android:text="@string/pop_issuefllow_title"
-                android:textSize="@dimen/size_18" />
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
 
         </RelativeLayout>
 

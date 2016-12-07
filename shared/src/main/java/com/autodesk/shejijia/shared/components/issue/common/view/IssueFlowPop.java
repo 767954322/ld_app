@@ -36,34 +36,24 @@ public class IssueFlowPop extends PopupWindow {
     private List<IssueFllowBean> list;
     private Context mContext;
     private View view;
-    private ImageView mClosePopImg;
     private RecyclerView mIssueStyleList;
-    private View.OnClickListener itemsOnClick;
     private PopItemClickContract onItemClickListener;
     private GalleryAdapter mListAdapter;
 
 
-    public IssueFlowPop(List<IssueFllowBean> list, Context mContext, View.OnClickListener itemsOnClick, PopItemClickContract onItemClickListener) {
+    public IssueFlowPop(List<IssueFllowBean> list, Context mContext, PopItemClickContract onItemClickListener) {
         this.list = list;
         this.mContext = mContext;
-        this.itemsOnClick = itemsOnClick;
         this.onItemClickListener = onItemClickListener;
         this.view = LayoutInflater.from(mContext).inflate(R.layout.layout_pop_issuefllow, null);
 
         initView();
         initPop();
         initListView();
-        initListener();
     }
 
     private void initView() {
-        mClosePopImg = (ImageView) this.view.findViewById(R.id.iv_close_style_pop);
         mIssueStyleList = (RecyclerView) this.view.findViewById(R.id.id_recyclerview_horizontal);
-    }
-
-    private void initListener() {
-
-        mClosePopImg.setOnClickListener(itemsOnClick);
     }
 
     private void initPop() {
@@ -126,10 +116,16 @@ public class IssueFlowPop extends PopupWindow {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.mIssueFllowRole.setText(list.get(position).getmIssueFllowRole());
             holder.mIssueFllowName.setText(list.get(position).getmIssueFllowName());
             ImageUtils.displayRoundImage(list.get(position).getmImagePath(), holder.mImage);
+            holder.mIssueFllowAll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onPopItemClickListener(v, position);
+                }
+            });
         }
 
         @Override

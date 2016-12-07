@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBean;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
@@ -36,6 +37,8 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private IssueStylePop issueStylePopWin;
     private IssueFlowPop issueFllowPopWin;
     private TextView mIssueStyleContent;
+    private TextView mIssueFllowContent;
+    private List<IssueFllowBean> list_fllow;
 
     public static AddIssueListFragment getInstance() {
         AddIssueListFragment fragment = new AddIssueListFragment();
@@ -55,6 +58,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueFllow = (RelativeLayout) rootView.findViewById(R.id.rl_issuefllow);
 
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
+        mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
     }
 
     @Override
@@ -88,15 +92,12 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
         } else if (i == R.id.rl_issuefllow) {
             //TODO 构建假数据，打通获取角色信息
-            List<IssueFllowBean> list_fllow = initRoleData();
+            list_fllow = initRoleData();
             if (issueFllowPopWin == null) {
-                issueFllowPopWin = new IssueFlowPop(list_fllow, activity.getBaseContext(), this, this);
+                issueFllowPopWin = new IssueFlowPop(list_fllow, activity.getBaseContext(), this);
             }
             issueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-        } else if (i == R.id.iv_close_style_pop) {
-            dismissPopwindow();
 
         }
     }
@@ -115,7 +116,12 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onPopItemClickListener(View view, int position) {
-        mIssueStyleContent.setText(activity.getResources().getStringArray(add_issue_type_list)[position]);
+        if (view.getId() == R.id.rl_issue_fllow_person) {
+            IssueFllowBean issueFllowBean = list_fllow.get(position);
+            mIssueFllowContent.setText(issueFllowBean.getmIssueFllowRole() + issueFllowBean.getmIssueFllowName() + "跟踪");
+        } else {
+            mIssueStyleContent.setText(activity.getResources().getStringArray(add_issue_type_list)[position]);
+        }
         dismissPopwindow();
     }
 

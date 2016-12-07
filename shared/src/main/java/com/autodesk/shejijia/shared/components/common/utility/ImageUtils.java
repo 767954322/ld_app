@@ -280,7 +280,7 @@ public class ImageUtils {
     }
 
     /**
-     * 显示六大模块缩略图
+     * 显示圆形图
      *
      * @param imageUrl
      * @param imageView
