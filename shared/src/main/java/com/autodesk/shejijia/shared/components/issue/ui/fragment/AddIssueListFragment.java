@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -60,6 +61,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private TimePickerView pvTime;
     private SimpleDateFormat dateFormat;
     private IssueDescription mDescriptionBean;
+    private LinearLayout mIssueAudio;
 
 
     public static AddIssueListFragment getInstance() {
@@ -79,6 +81,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueDescription = (RelativeLayout) rootView.findViewById(R.id.rl_issuedescrip);
         mIssueFllow = (RelativeLayout) rootView.findViewById(R.id.rl_issuefllow);
         mIssueReply = (RelativeLayout) rootView.findViewById(R.id.rl_issuereply);
+        mIssueAudio = (LinearLayout) rootView.findViewById(R.id.ll_audio_play_container);
 
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
@@ -230,6 +233,11 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
                 mIssueDescriptionContent.setText(mDescriptionBean.getmDescription());
             } else {
                 mIssueDescriptionContent.setText(UIUtils.getString(R.string.add_issuelist_descrip));
+            }
+            if (mDescriptionBean != null && !TextUtils.isEmpty(mDescriptionBean.getmAudioPath())) {
+                mIssueAudio.setVisibility(View.VISIBLE);
+            } else {
+                mIssueAudio.setVisibility(View.GONE);
             }
         }
     };
