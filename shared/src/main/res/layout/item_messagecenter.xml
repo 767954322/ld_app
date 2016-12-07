@@ -3,85 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#eef1f4"
+    android:gravity="center"
     android:orientation="horizontal">
-
-    <RelativeLayout
-        android:id="@+id/item_relayout_left"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <CheckBox
-            android:id="@+id/item_msg_checkout"
+    <ImageButton
+            android:id="@+id/imgBtn_personal_headPic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
+            android:layout_marginTop="@dimen/spacing_margin_normal"
+            android:layout_gravity="start|top"
+            android:background="@drawable/ic_default_head"
+            android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:id="@+id/ll_msg_tag"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/item_msg_checkout">
-
+            android:layout_marginStart="@dimen/spacing_margin_double"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
             <TextView
-                android:textColor="@color/comment_black"
-                android:id="@+id/tv_msg_title"
+                android:id="@+id/tv_meaasge_name"
                 android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/font_15"
-                android:layout_marginRight="@dimen/font_35"
-                android:layout_marginTop="@dimen/font_10"
-                android:text="@string/item_messagecenter_tital"
-                android:textSize="@dimen/size_16" />
-
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_msg_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_msg_tag"
-            android:layout_marginLeft="@dimen/font_15"
-            android:layout_marginRight="@dimen/font_35"
-            android:layout_marginTop="@dimen/font_10"
-            android:layout_toRightOf="@+id/item_msg_checkout"
-            android:text="内容"
-            android:textSize="@dimen/size_14" />
-
-        <TextView
-            android:id="@+id/tv_msg_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_msg_content"
-            android:layout_marginBottom="@dimen/font_15"
-            android:layout_marginLeft="@dimen/font_15"
-            android:layout_marginRight="@dimen/font_35"
-            android:layout_marginTop="@dimen/font_10"
-            android:layout_toRightOf="@+id/item_msg_checkout"
-            android:text="时间展示"
-            android:textSize="@dimen/size_14" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/item_relayout_right"
-        android:layout_width="@dimen/size_24"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/font_20"
-        android:background="@android:color/holo_red_dark">
-
-        <TextView
-            android:id="@+id/tv_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="删除"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_17"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+                android:textSize="@dimen/font_large"
+                android:layout_marginBottom="@dimen/spacing_margin_normal"
+                android:text="王小明"/>
+            <TextView
+                android:id="@+id/tv_meaasge_cantent"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:text="客户经理"/>
+            <TextView
+                android:id="@+id/tv_message_time"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:text="客户经理"/>
+        </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e3e3e3" />
 
 </LinearLayout>

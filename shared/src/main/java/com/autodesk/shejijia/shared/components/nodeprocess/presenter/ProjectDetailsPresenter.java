@@ -1,9 +1,10 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-
+import android.util.Log;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -14,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailTasksFragment;
@@ -203,6 +205,13 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void navigateToMessageCenter() {
         //// TODO: 11/11/16 跳转消息中心逻辑
+        ProjectInfo projectInfo = mProjectRepository.getActiveProject();
+        Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
+        intent.putExtra("project_id",projectInfo.getProjectId());
+
+        Log.d("test","test:"+projectInfo.getProjectId());
+        mContext.startActivity(intent);
+
     }
 
 }
