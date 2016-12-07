@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -25,6 +27,7 @@ import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueDescriptionActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.text.SimpleDateFormat;
@@ -89,6 +92,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
         dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         initTimePick();
+        initProjectReplyData();
 
     }
 
@@ -175,6 +179,17 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
                 mIssueReplyContent.setText(mDate);
             }
         });
+    }
+
+    //初始化项目角色信息
+    private void initProjectReplyData() {
+        ProjectInfo projectInfo = ProjectRepository.getInstance().getActiveProject();
+        if (projectInfo != null) {
+
+            ArrayList<Member> listMember = projectInfo.getMembers();
+
+        }
+
     }
 
     private List<IssueFllowBean> initRoleData() {
