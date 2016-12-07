@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.wid
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.im.constants.IMChatInfo;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -35,12 +37,14 @@ import java.util.List;
  * Created by t_panya on 16/12/5.
  */
 
-public class CommentFragment extends CommonBaseFragment implements CommentContract.CommentView, View.OnClickListener{
+public class CommentFragment extends Fragment implements CommentContract.CommentView, View.OnClickListener{
     private static final String TAG = "CommentFragment";
     public static final String PARCELABLE_DATA = "parcelable_data";
 
     public static final String POSITION = "position";
     public static final String STRING_LIST = "string_list";
+
+    private BaseActivity mContext;
 
     private CommentContract.CommentPresenter mPresenter;
     private CommentConfig mConfig;
@@ -153,6 +157,12 @@ public class CommentFragment extends CommonBaseFragment implements CommentContra
         mAlertView = mAlertView.setCancelable(true).setOnDismissListener(mDismissListener);
         mAudioHandler = AudioHandler.getInstance(mContext, mAudioListener);
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = (BaseActivity) activity;
     }
 
     @Override
