@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -706,7 +707,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         String total_cost = tvc_total_cost.getText().toString();
         String first_cost = tvc_first_cost.getText().toString();
 
-        String consumerName = tvc_consumer_name.getText().toString();
+        String consumerName = tvc_consumer_name.getText().toString().trim();
         String consumerPhone = tvc_consumer_phone.getText().toString();
         String consumerEmail = tvc_consumer_email.getText().toString();
         String renderCount = tvc_treeD_render_count.getText().toString();
@@ -717,6 +718,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         while (true) {
             if (!Validator.isContractNameValid(consumerName)) {
                 showAlertView(R.string.please_input_consumer_name_correctly);
+                bValid = false;
+                break;
+            }
+            //校验姓名中几个空格
+            String[] split = consumerName.split(" ");
+            if (null != split && split.length > 2) {
+                showAlertView(R.string.recommend_toast_name);
                 bValid = false;
                 break;
             }
@@ -864,12 +872,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         String total_cost = tvc_total_cost.getText().toString();
         String first_cost = tvc_first_cost.getText().toString();
 
-        String consumerName = tvc_consumer_name.getText().toString();
+        String consumerName = tvc_consumer_name.getText().toString().trim();
         String consumerPhone = tvc_consumer_phone.getText().toString();
         String consumerEmail = tvc_consumer_email.getText().toString();
 //        String renderCount = tvc_treeD_render_count.getText().toString();
         String cusumer_location_area = tvc_consumer_local_area.getText().toString();
         String desiner_location_area = tvc_designer_decorate_address.getText().toString();
+
 
         try {
             JSONObject jsonObj = new JSONObject();
