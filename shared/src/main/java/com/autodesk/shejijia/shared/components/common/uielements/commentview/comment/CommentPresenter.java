@@ -18,11 +18,10 @@ public class CommentPresenter implements CommentContract.CommentPresenter {
     private ArrayList<String> mPictures;
     private ArrayList<ImageInfo> mImages;
 
-    public CommentPresenter(@NonNull CommentContract.CommentView view, List<SHFile> files){
+    public CommentPresenter(@NonNull CommentContract.CommentView view, List<String> pictures){
         mCommentView = view;
-        mFiles = (ArrayList<SHFile>) files;
-        mPictures = new ArrayList<>();
-        mImages = new ArrayList<>();
+//        mFiles = (ArrayList<SHFile>) files;
+        mPictures = (ArrayList<String>) pictures;
         mCommentView.setPresenter(this);
     }
 
@@ -70,12 +69,12 @@ public class CommentPresenter implements CommentContract.CommentPresenter {
      * 加载数据
      */
     private void loadData(){
-        if(mFiles != null && mFiles.size() != 0){
-            for(int i = 0; i < mFiles.size(); i++){
-                mPictures.add(i,mFiles.get(i).getPictureUrl());
-                ImageInfo info = new ImageInfo(mFiles.get(i).getPictureUrl(),mFiles.get(i).getThumbnailUrl());
-                mImages.add(i,info);
-            }
+        if(mPictures != null && mPictures.size() != 0){
+//            for(int i = 0; i < mFiles.size(); i++){
+//                mPictures.add(i,mFiles.get(i).getPictureUrl());
+//                ImageInfo info = new ImageInfo(mFiles.get(i).getPictureUrl(),mFiles.get(i).getThumbnailUrl());
+//                mImages.add(i,info);
+//            }
             mCommentView.showImages(mPictures);
         } else {
             mCommentView.showRecyclerEmptyView();
