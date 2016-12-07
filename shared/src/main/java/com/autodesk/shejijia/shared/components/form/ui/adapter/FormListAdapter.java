@@ -57,6 +57,8 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
     private void initResult(FormListVH holder, ItemCell itemCell) {
         if (!TextUtils.isEmpty(itemCell.getResult())) {
             holder.mResultTv.setText(Html.fromHtml(itemCell.getResult()));
+        } else {
+            holder.mResultTv.setText("");
         }
     }
 

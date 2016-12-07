@@ -28,7 +28,7 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
     private RecyclerView mRecyclerView;
     private FormListAdapter mAdapter;
     private SHInspectionForm mShInspectionForm;
-    private List<ItemCell> mItemCells = new ArrayList<>();   //adapter显示的类,需要大小
+    private List<ItemCell> mItemCells = new ArrayList<>();
     private FormSubListPresenter mPresenter;
 
     public static FormSubListFragment newInstance(Bundle args) {
@@ -52,12 +52,13 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
         mShInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
         initToolbar(mShInspectionForm.getTitle());
 
-        mPresenter = new FormSubListPresenter(this);
-        mItemCells.addAll(mPresenter.getItemCells(mShInspectionForm));
+        mPresenter = new FormSubListPresenter(this,mShInspectionForm);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new FormListAdapter(mItemCells,this);
+        if(mAdapter == null) {
+            mAdapter = new FormListAdapter(mItemCells,this);
+        }
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -67,6 +68,7 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
         super.onHiddenChanged(hidden);
         if (!hidden) {
 //            LogUtils.d("asdf","SubListFragment是" + hidden);
+            mPresenter.refreshFormData(mItemCells);
             mAdapter.notifyDataSetChanged();
             initToolbar(mShInspectionForm.getTitle());
         }
@@ -86,6 +88,18 @@ public class FormSubListFragment extends BaseConstructionFragment implements For
                 .add(R.id.fl_main_container, mItemListFragment, SHFormConstant.FragmentTag.ITEM_LIST_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void initItemCellList(List<ItemCell> itemCellList) {
+        mItemCells.clear();
+        mItemCells.addAll(itemCellList);
+
+        if(mAdapter == null) {
+            mAdapter = new FormListAdapter(mItemCells,this);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initToolbar(String title) {

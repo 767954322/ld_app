@@ -32,7 +32,6 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     private ItemListAdapter mAdapter;
     private int mIndex;
     private ArrayList<CheckItem> mCheckItemList;
-    private LinearLayoutManager mLayoutManager;
 
     public static ItemListFragment newInstance(Bundle args) {
         ItemListFragment itemListFragment = new ItemListFragment();
@@ -57,13 +56,13 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
         SHInspectionForm inspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
         mCheckItemList = inspectionForm.getCheckItems();
 
-        mPresenter = new ItemListPresenter(this);
-        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory, inspectionForm));
+        mPresenter = new ItemListPresenter(this,mCategory,inspectionForm);
         initToolbar(mCategory);
 
-        mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new ItemListAdapter(mOptionCellList,this);
+        if (mAdapter == null) {
+            mAdapter = new ItemListAdapter(mOptionCellList,this);
+        }
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -72,6 +71,7 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+            // TODO: 16/12/7 显示错误界面的fragment的时候需要调用
             initToolbar(mCategory);
             mAdapter.notifyDataSetChanged();
         }
@@ -79,46 +79,33 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     @Override
     public void onLeftItemClick(View view, int position) {
-//        LogUtils.d("asdf","左边 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),2);
-//        refresh(position);
     }
 
     @Override
     public void onCenterItemClick(View view, int position) {
-//        LogUtils.d("asdf","中间 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),1);
-//        refresh(position);
     }
 
     @Override
     public void onRightItemClick(View view, int position) {
-//        LogUtils.d("asdf","右边 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),0);
-//        refresh(position);
+    }
+
+    @Override
+    public void initOptionCellList(List<OptionCell> itemCellList) {
+        mOptionCellList.clear();
+        mOptionCellList.addAll(itemCellList);
+
+        if (mAdapter == null) {
+            mAdapter = new ItemListAdapter(mOptionCellList,this);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initToolbar(String category) {
         ActionBar actionBar = mContext.getSupportActionBar();
         actionBar.setTitle(category);
     }
-
-    private void refresh(int position) {
-        int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
-        int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
-        mAdapter.notifyItemRangeChanged(0,firstVisibleItemPosition-0);
-
-
-
-//        if(position < firstVisibleItemPosition) {
-//            if(firstVisibleItemPosition - position > 0) {
-//                mAdapter.notifyItemRangeChanged(0,position-0);
-//            }
-//        } else if(position > lastVisibleItemPosition) {
-//            if(position - lastVisibleItemPosition > 0) {
-//                mAdapter.notifyItemRangeChanged();
-//            }
-//        }
-    }
-
 }

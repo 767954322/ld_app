@@ -29,11 +29,11 @@ import java.util.List;
  */
 
 public class FormListFragment extends BaseConstructionFragment implements FormListContract.View, View.OnClickListener, FormListAdapter.OnItemClickListener {
-    private RecyclerView mRecyclerView;
-    private TextView mProblemTitleTv;
-    private LinearLayout mRectificationLayout;
-    private LinearLayout mReinspectionLayout;
-    private TextView mResultTv;
+    private RecyclerView mRecyclerView;        //表单
+    private TextView mProblemTitleTv;          //问题记录
+    private LinearLayout mRectificationLayout; //监督整改
+    private LinearLayout mReinspectionLayout;  //强制复验
+    private TextView mResultTv;                //结果
 
     private FormListPresenter mPresenter;
     private FormListAdapter mAdapter;
@@ -53,11 +53,11 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     protected void initView() {
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_form_list);                //表单
-        mProblemTitleTv = (TextView) rootView.findViewById(R.id.tv_problem_title);              //问题记录
-        mRectificationLayout = (LinearLayout) rootView.findViewById(R.id.ll_rectification_log); //监督整改
-        mReinspectionLayout = (LinearLayout) rootView.findViewById(R.id.ll_reinspection_log);   //强制复验
-        mResultTv = (TextView) rootView.findViewById(R.id.tv_result);                           //结果
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_form_list);
+        mProblemTitleTv = (TextView) rootView.findViewById(R.id.tv_problem_title);
+        mRectificationLayout = (LinearLayout) rootView.findViewById(R.id.ll_rectification_log);
+        mReinspectionLayout = (LinearLayout) rootView.findViewById(R.id.ll_reinspection_log);
+        mResultTv = (TextView) rootView.findViewById(R.id.tv_result);
     }
 
     @Override
@@ -73,7 +73,9 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new FormListAdapter(mItemCellList, this);
+        if(mAdapter == null) {
+            mAdapter = new FormListAdapter(mItemCellList, this);
+        }
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -88,6 +90,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         super.onHiddenChanged(hidden);
         if (!hidden) {
             // TODO: 16/11/28 如何该界面显示
+            mPresenter.refreshData(mItemCellList);
             mAdapter.notifyDataSetChanged();
             initToolbar(mTitle);
         }
@@ -95,8 +98,14 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void initItemCellList(List<ItemCell> itemCellList) {
+        mItemCellList.clear();
         mItemCellList.addAll(itemCellList);
-        mAdapter.notifyDataSetChanged();
+
+        if(mAdapter == null) {
+            mAdapter = new FormListAdapter(mItemCellList, this);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

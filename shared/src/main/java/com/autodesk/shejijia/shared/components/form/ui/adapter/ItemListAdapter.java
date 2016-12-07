@@ -25,6 +25,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     private OnItemClickListener mOnItemClickListener;
 
     public ItemListAdapter(List<OptionCell> optionCellList, OnItemClickListener onItemClickListener) {
+        mOptionCellList.clear();
         mOptionCellList.addAll(optionCellList);
         mOnItemClickListener = onItemClickListener;
     }
@@ -38,7 +39,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     @Override
     public void onBindViewHolder(ItemListVH holder, int position) {
         OptionCell optionCell = mOptionCellList.get(position);
-//        holder.mTableCellLayout.setVisibility(View.VISIBLE);
         holder.mTitleTv.setText(optionCell.getTitle());
 
         if (optionCell.isShowStandard()) {
@@ -69,7 +69,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     }
 
     private String getRedText(String string) {
-        return String.format("<font color=\"#FF0000\">%s</font>", string); // string 会替换 %s
+        return String.format("<font color=\"#FF0000\">%s</font>", string);
     }
 
     private void initOptions(ItemListVH holder, OptionCell optionCell) {
@@ -99,17 +99,17 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     private void init(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
             holder.mLeftLayout.setVisibility(View.VISIBLE);
-            holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
+            holder.mLeftIv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
         } else if (typeDictMap.containsKey("level_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_level_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_level_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_level_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_level_normal_svg);
         } else if (typeDictMap.containsKey("notification_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_notification_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_notification_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_notification_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_notification_normal_svg);
         }
     }
 
@@ -133,43 +133,43 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     private void initRight(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
             holder.mLeftLayout.setVisibility(View.VISIBLE);
-            holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_check_svg);
+            holder.mLeftIv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_qualified_check_svg);
         } else if (typeDictMap.containsKey("level_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_level_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_level_check_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_level_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_level_check_svg);
         } else if (typeDictMap.containsKey("notification_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_notification_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_notification_check_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_notification_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_notification_check_svg);
         }
     }
 
     private void initCenter(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
             holder.mLeftLayout.setVisibility(View.VISIBLE);
-            holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_check_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
+            holder.mLeftIv.setBackgroundResource(R.drawable.ic_option_none_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_unqualified_check_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
         } else if (typeDictMap.containsKey("level_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_level_check_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_level_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_level_check_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_level_normal_svg);
         } else if (typeDictMap.containsKey("notification_options")) {
             holder.mLeftLayout.setVisibility(View.GONE);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_not_notification_check_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_notification_normal_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_not_notification_check_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_notification_normal_svg);
         }
     }
 
     private void initLeft(ItemListVH holder, HashMap<String, List<String>> typeDictMap) {
         if (typeDictMap.containsKey("acceptance_options")) {
             holder.mLeftLayout.setVisibility(View.VISIBLE);
-            holder.mLeftImgv.setBackgroundResource(R.drawable.ic_option_none_check_svg);
-            holder.mCenterImgv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
-            holder.mRightImgv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
+            holder.mLeftIv.setBackgroundResource(R.drawable.ic_option_none_check_svg);
+            holder.mCenterIv.setBackgroundResource(R.drawable.ic_option_unqualified_normal_svg);
+            holder.mRightIv.setBackgroundResource(R.drawable.ic_option_qualified_normal_svg);
         }
     }
 
@@ -177,28 +177,25 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         if (mOnItemClickListener != null) {
             final HashMap<String, List<String>> typeDictMap = optionCell.getTypeDict();  //选择属性
 
-            holder.mLeftImgv.setOnClickListener(new View.OnClickListener() {
+            holder.mLeftIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.onLeftItemClick(v, position);
                     initLeft(holder, typeDictMap);
-//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
-            holder.mCenterImgv.setOnClickListener(new View.OnClickListener() {
+            holder.mCenterIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.onCenterItemClick(v, position);
                     initCenter(holder, typeDictMap);
-//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
-            holder.mRightImgv.setOnClickListener(new View.OnClickListener() {
+            holder.mRightIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.onRightItemClick(v, position);
                     initRight(holder, typeDictMap);
-//                    mOnItemClickListener.onRefreshItem(v,position);
                 }
             });
 
@@ -212,19 +209,17 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         private TextView mStandardTv;
         private TextView mActionTypeTv;
         private LinearLayout mLeftLayout;   //左边选项的布局
-        private ImageView mLeftImgv;
+        private ImageView mLeftIv;
         private TextView mLeftTv;
-        private ImageView mCenterImgv;
+        private ImageView mCenterIv;
         private TextView mCenterTv;
-        private ImageView mRightImgv;
+        private ImageView mRightIv;
         private TextView mRightTv;
         private View mLineView;            //分隔线
         private TextView mInformationTv;  //显示错误信息的表示
-        private LinearLayout mTableCellLayout;
 
-        public ItemListVH(View itemView) {
+        ItemListVH(View itemView) {
             super(itemView);
-            mTableCellLayout = (LinearLayout) itemView.findViewById(R.id.ll_table_cell);
             mTitleTv = (TextView) itemView.findViewById(R.id.tv_title);
             mStandardTv = (TextView) itemView.findViewById(R.id.tv_standard);
             mActionTypeTv = (TextView) itemView.findViewById(R.id.tv_action_type);
@@ -233,13 +228,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             mLineView = itemView.findViewById(R.id.view_line);
             mInformationTv = (TextView) itemView.findViewById(R.id.tv_information);
 
-            mLeftImgv = (ImageView) itemView.findViewById(R.id.iv_left);
+            mLeftIv = (ImageView) itemView.findViewById(R.id.iv_left);
             mLeftTv = (TextView) itemView.findViewById(R.id.tv_left);
 
-            mCenterImgv = (ImageView) itemView.findViewById(R.id.iv_center);
+            mCenterIv = (ImageView) itemView.findViewById(R.id.iv_center);
             mCenterTv = (TextView) itemView.findViewById(R.id.tv_center);
 
-            mRightImgv = (ImageView) itemView.findViewById(R.id.iv_right);
+            mRightIv = (ImageView) itemView.findViewById(R.id.iv_right);
             mRightTv = (TextView) itemView.findViewById(R.id.tv_right);
         }
     }
@@ -252,6 +247,5 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
         void onRightItemClick(View view, int position);
 
-//        void onRefreshItem(View view,int position);
     }
 }

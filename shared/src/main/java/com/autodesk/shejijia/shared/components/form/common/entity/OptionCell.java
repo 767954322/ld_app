@@ -8,12 +8,12 @@ import java.util.List;
  */
 
 public class OptionCell {
-    private String title;
-    private String standard;
-    private HashMap<String, List<String>> typeDict;
-    private boolean isShowStandard;   //是否显示标准;
-    private int checkResult;
-    private String actionResult;
+    private String title;                            //标题
+    private String standard;                         //标准
+    private HashMap<String, List<String>> typeDict;  //根据属性显示界面
+    private boolean isShowStandard;                  //是否显示标准;
+    private int checkResult;                         //选择结果
+    private String actionResult;                     //属性结果
 
     public String getTitle() {
         return title;

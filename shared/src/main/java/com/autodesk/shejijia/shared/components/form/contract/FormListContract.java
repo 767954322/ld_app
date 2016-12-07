@@ -25,5 +25,6 @@ public interface FormListContract {
 
         void showFormItemList(int position);
 
+        void refreshData(List<ItemCell> itemCellList);
     }
 }

@@ -16,39 +16,40 @@ import java.util.List;
 
 public class ItemListPresenter implements ItemListContract.Presenter {
     private ItemListContract.View mView;
+    private List<OptionCell> mItemCellList = new ArrayList<>();
 
-    public ItemListPresenter(ItemListContract.View view) {
+    public ItemListPresenter(ItemListContract.View view,String category,SHInspectionForm inspectionForm) {
         mView = view;
-    }
-
-    @Override
-    public List<OptionCell> getOptionCells(String category, SHInspectionForm shInspectionForm) {
-        ArrayList<CheckItem> checkItems = shInspectionForm.getCheckItems();
-        HashMap map = shInspectionForm.getTypeDict();
-        List<OptionCell> itemCellList = new ArrayList<>();
-
-        for (CheckItem checkItem : checkItems) {
-
-            if (category.equals(checkItem.getCategory())) {
-                itemCellList.add(initOptionCell(checkItem, map));
-            }
-
-        }
-
-        return itemCellList;
+        initOptionCellList(category,inspectionForm);
     }
 
     @Override
     public void setCheckIndex(CheckItem checkItem, int type) {
         FormFeedBack formFeedBack = checkItem.getFormFeedBack();
         formFeedBack.setCurrentCheckIndex(type);
+
+        refreshItemData(checkItem,type);
+    }
+
+    private void initOptionCellList(String category, SHInspectionForm shInspectionForm) {
+        ArrayList<CheckItem> checkItems = shInspectionForm.getCheckItems();
+        HashMap map = shInspectionForm.getTypeDict();
+
+        for (CheckItem checkItem : checkItems) {
+
+            if (category.equals(checkItem.getCategory())) {
+                mItemCellList.add(initOptionCell(checkItem, map));
+            }
+
+        }
+        mView.initOptionCellList(mItemCellList);
     }
 
     private OptionCell initOptionCell(CheckItem checkItem, HashMap map) {
         OptionCell optionCell = new OptionCell();
-        optionCell.setTitle(checkItem.getTitle());
         FormFeedBack formFeedBack = checkItem.getFormFeedBack();
-        //根据map的索引获取其中的文字
+
+        optionCell.setTitle(checkItem.getTitle());
         optionCell.setCheckResult(formFeedBack.getCurrentCheckIndex());
 
         if (map.containsKey(checkItem.getActionType())) {
@@ -72,5 +73,15 @@ public class ItemListPresenter implements ItemListContract.Presenter {
             optionCell.setTypeDict(typeDict);
         }
         return optionCell;
+    }
+
+    private void refreshItemData(CheckItem checkItem, int type) {
+        for (OptionCell optionCell : mItemCellList) {
+            if(optionCell.getTitle().equals(checkItem.getTitle())) {
+                optionCell.setCheckResult(type);
+                break;
+            }
+        }
+
     }
 }
