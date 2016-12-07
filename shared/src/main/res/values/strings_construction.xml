@@ -18,7 +18,7 @@
     <string name="popup_clear_cache_confirm">确定</string>
 
     <!-- 节点详情 -->
-    <string name="editText_hint_text">添加备注</string>
+    <string name="editText_hint_task_comment">添加品牌等信息</string>
     <string name="upload_photo">上传照片</string>
     <string name="add_reserve_time">录入预约时间</string>
     <string name="modify_reserve_time">修改预约时间</string>

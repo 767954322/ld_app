@@ -23,11 +23,14 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
@@ -195,7 +198,13 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 fragment = ProjectListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_ISSUE:
-                fragment = IssueListFragment.newInstance();
+//                fragment = IssueListFragment.newInstance();
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                fragment = new MPThreadListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(MPThreadListFragment.MEMBERID, memberEntity.getAcs_member_id());
+                bundle.putString(MPThreadListFragment.MEMBERTYPE, memberEntity.getMember_type());
+                fragment.setArguments(bundle);
                 break;
             case FRAGMENT_TAG_GROUP_CHAT:
                 fragment = GroupChatFragment.newInstance();

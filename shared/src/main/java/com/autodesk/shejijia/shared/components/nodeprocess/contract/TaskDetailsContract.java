@@ -38,13 +38,17 @@ public interface TaskDetailsContract {
 
         void showActions(@NonNull Task task, @NonNull ProjectInfo project);
 
+        void close();
+
     }
 
     interface Presenter extends BasePresenter {
 
         void startPresent();
 
-        void addComment(@Nullable String comment);
+        void updateComment(@Nullable String comment);
+
+        void submitComment();
 
         void changeReserveTime(@Nullable Date date);
     }

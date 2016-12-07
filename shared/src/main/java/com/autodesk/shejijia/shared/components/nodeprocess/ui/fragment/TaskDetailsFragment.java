@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,31 +24,23 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.DialogHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -108,6 +104,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         View view  = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_task_details_dialog, container, false);
         initView(view);
         initEvent();
+        setCancelable(false);
         mTaskDetailsPresenter.startPresent();
         return view;
     }
@@ -116,6 +113,11 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AppCompatDialog(getActivity(), R.style.Construction_DialogStyle_Translucent);
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        super.show(manager, tag);
     }
 
     @Override
@@ -198,12 +200,35 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showComment(@NonNull String comment) {
-        mCommentEditView.setText(comment);
+        if (TextUtils.isEmpty(comment)) {
+            mCommentEditView.setVisibility(View.GONE);
+        } else {
+            mCommentEditView.setVisibility(View.VISIBLE);
+            mCommentEditView.setText(comment);
+            mCommentEditView.setEnabled(false);
+        }
     }
 
     @Override
     public void editComment(@NonNull String comment) {
+        mCommentEditView.setVisibility(View.VISIBLE);
         mCommentEditView.setText(comment);
+        mCommentEditView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mTaskDetailsPresenter.updateComment(String.valueOf(s));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -226,6 +251,11 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     }
 
+    @Override
+    public void close() {
+        dismiss();
+    }
+
     private void initView(View view) {
         mCloseBtn = (ImageButton) view.findViewById(R.id.imgBtn_close);
         mHeaderView = (ViewGroup) view.findViewById(R.id.ll_header);
@@ -243,7 +273,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                mTaskDetailsPresenter.submitComment();
             }
         });
     }
