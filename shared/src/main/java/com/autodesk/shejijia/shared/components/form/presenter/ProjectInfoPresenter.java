@@ -22,8 +22,8 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
         switch (status.toLowerCase()) {
             case ConstructionConstants.TaskStatus.INPROGRESS:
             case ConstructionConstants.TaskStatus.DELAYED:
-            case ConstructionConstants.TaskStatus.REINSPECTION_INPROGRESS:
-            case ConstructionConstants.TaskStatus.REINSPECTION_DELAYED:
+            case ConstructionConstants.TaskStatus.REINSPECT_INPROGRESS:
+            case ConstructionConstants.TaskStatus.REINSPECT_DELAY:
                 mView.enterPrecheck(task);
                 break;
             case "REJECTED":   //验收拒绝,查看
