@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.C
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commoncomment.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
@@ -52,6 +54,7 @@ public class AddIssueDescriptionActivity extends BaseActivity {
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();
             mPresenter = new CommentPresenter(addIssueTrackingFragment, null);
+            initToolbar();
         }
 
     }
@@ -60,6 +63,14 @@ public class AddIssueDescriptionActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.issuetraction_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void initToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setTitle(UIUtils.getString(R.string.activity_addissue_description_tital));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

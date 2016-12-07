@@ -166,9 +166,11 @@
     <string name="add_issuelist_fllow">跟进人员</string>
     <string name="add_issuelist_notify">通知客户</string>
     <string name="add_issuelist_reply">明天回复</string>
-
     <string name="pop_issuestyle_title">选择问题类型</string>
     <string name="pop_issuefllow_title">选择跟进人员</string>
     <string name="pop_issuereply_title">回复期限</string>
+    <string name="activity_issuelist_tital">问题列表</string>
+    <string name="activity_addissue_tital">添加问题</string>
+    <string name="activity_addissue_description_tital">问题描述</string>
 
 </resources>

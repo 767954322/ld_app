@@ -2,12 +2,16 @@ package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
@@ -37,15 +41,14 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
         if (savedInstanceState == null) {
+            initToolbar();
             addIssueTrackingFragment = AddIssueListFragment.getInstance();
             mTrackingPresent = new AddIssueDescriptionPresent(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();
         }
-
     }
 
     @Override
@@ -69,6 +72,7 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
             return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -80,10 +84,19 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
         }
     }
 
+    private void initToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setTitle(UIUtils.getString(R.string.activity_addissue_tital));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     @Override
     public void onShowStatus(boolean status) {
 
     }
+
     @Override
     public void showNetError(ResponseError error) {
 
