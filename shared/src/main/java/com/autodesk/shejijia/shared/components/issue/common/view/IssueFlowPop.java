@@ -94,7 +94,7 @@ public class IssueFlowPop extends PopupWindow {
     private void initListView() {
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mIssueStyleList.setLayoutManager(linearLayoutManager);
         //设置适配器
         mListAdapter = new GalleryAdapter(LayoutInflater.from(mContext));

@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/pop_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_250"
+        android:layout_height="@dimen/size_275"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">
@@ -15,7 +15,7 @@
         <RelativeLayout
             android:id="@+id/rl_pop_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_60"
+            android:layout_height="@dimen/size_50"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
 

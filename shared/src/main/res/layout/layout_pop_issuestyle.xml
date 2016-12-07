@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/pop_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_230"
+        android:layout_height="@dimen/size_275"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">
@@ -15,24 +15,18 @@
         <RelativeLayout
             android:id="@+id/rl_pop_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_60"
+            android:layout_height="@dimen/size_50"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
-
-            <ImageView
-                android:id="@+id/iv_close_style_pop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/size_15"
-                android:src="@drawable/close" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/pop_issuefllow_title"
-                android:textSize="@dimen/size_18" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="@string/pop_issuestyle_title"
+                android:textSize="@dimen/size_18"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

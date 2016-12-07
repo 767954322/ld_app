@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_issue_fllow_person"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/size_7"
-    android:padding="@dimen/size_5">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_issue_fllow_pic"
         android:layout_width="@dimen/size_85"
         android:layout_height="@dimen/size_85"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_15"
+        android:layout_marginBottom="@dimen/size_15"
         android:src="@drawable/default_head" />
 
     <TextView
         android:id="@+id/tv_issue_fllow_person_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_issue_fllow_pic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/size_12"
+        android:layout_toRightOf="@+id/iv_issue_fllow_pic"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_centerVertical="true"
         android:text="设计师" />
 
     <TextView
         android:id="@+id/tv_issue_fllow_person_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_issue_fllow_person_role"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/size_7"
+        android:layout_toRightOf="@+id/tv_issue_fllow_person_role"
+        android:layout_marginLeft="@dimen/size_4"
+        android:layout_centerVertical="true"
         android:text="初秋" />
 
 </RelativeLayout>

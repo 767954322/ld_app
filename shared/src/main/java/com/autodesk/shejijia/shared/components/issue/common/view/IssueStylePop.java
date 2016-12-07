@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -32,7 +33,6 @@ public class IssueStylePop extends PopupWindow {
     private List<String> strList;
 
     private View view;
-    private ImageView mClosePopImg;
     private ListView mIssueStyleList;
     private View.OnClickListener itemsOnClick;
     private PopItemClickContract onItemClickListener;
@@ -44,20 +44,13 @@ public class IssueStylePop extends PopupWindow {
         this.onItemClickListener = onItemClickListener;
         this.view = LayoutInflater.from(mContext).inflate(R.layout.layout_pop_issuestyle, null);
         initView();
-        initListener();
         initPop();
         initList();
     }
 
 
     private void initView() {
-        mClosePopImg = (ImageView) this.view.findViewById(R.id.iv_close_style_pop);
         mIssueStyleList = (ListView) this.view.findViewById(R.id.lv_pop_issuestytle);
-    }
-
-    private void initListener() {
-
-        mClosePopImg.setOnClickListener(itemsOnClick);
     }
 
     private void initPop() {
