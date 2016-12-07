@@ -124,6 +124,16 @@
             android:layout_toRightOf="@+id/ibn_issuenotify"
             android:text="@string/add_issuelist_notify" />
 
+        <Switch
+            android:id="@+id/sw_notity_customer"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_30"
+            android:layout_toRightOf="@+id/tx_issuenotify"
+            android:thumbTextPadding="@dimen/size_10" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_0.5"

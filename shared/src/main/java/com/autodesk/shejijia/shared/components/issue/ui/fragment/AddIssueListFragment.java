@@ -5,8 +5,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -27,7 +29,7 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class AddIssueListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract {
+public class AddIssueListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mIssueAll;
     private RelativeLayout mIssueStyle;
@@ -39,6 +41,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;
     private List<IssueFllowBean> list_fllow;
+    private Switch mIssueSwitchNotify;
 
     public static AddIssueListFragment getInstance() {
         AddIssueListFragment fragment = new AddIssueListFragment();
@@ -59,6 +62,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
+        mIssueSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notity_customer);
     }
 
     @Override
@@ -73,6 +77,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueStyle.setOnClickListener(this);
         mIssueDescription.setOnClickListener(this);
         mIssueFllow.setOnClickListener(this);
+        mIssueSwitchNotify.setOnCheckedChangeListener(this);
 
     }
 
@@ -98,7 +103,16 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             }
             issueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        }
+    }
 
+    //通知客户开关按钮监听
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            ToastUtils.showLong(activity, "开");
+        } else {
+            ToastUtils.showLong(activity, "关");
         }
     }
 
@@ -133,4 +147,5 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             issueFllowPopWin.dismiss();
         }
     }
+
 }
