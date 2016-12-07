@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,7 +21,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDis
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommonBaseFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.AudioHandler;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.FileUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.CommonAudioAlert;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
@@ -53,8 +51,10 @@ public class CommentFragment extends CommonBaseFragment implements CommentContra
     private CommentConfig.ModuleType mModuleType = CommentConfig.ModuleType.MODULE_FORM;    //表格模块
     private CommentConfig.RoleType mRoleType = CommentConfig.RoleType.NORMAL;               //如果是网络数据 不可编辑
     private CommentConfig.DataSource mDataSource = CommentConfig.DataSource.LOCAL;          //本地数据
+    private CommentConfig.LayoutType mLayoutType = CommentConfig.LayoutType.EDIT;           //可编辑
+
     private String X_Token;
-    public String mOnlineCommentContent;
+    public String mCommentContent;
     public String mAudioPath;
     public ArrayList<String> mPictureData;
     public int mSelectModel;
@@ -109,8 +109,9 @@ public class CommentFragment extends CommonBaseFragment implements CommentContra
             mModuleType = mConfig.geteModuleType();
             mRoleType = mConfig.geteRoleType();
             mDataSource = mConfig.geteDataSource();
+            mLayoutType = mConfig.geteLayoutType();
             X_Token = mConfig.getX_Token();
-            mOnlineCommentContent = mConfig.getOnlineCommentContent();
+            mCommentContent = mConfig.getCommentContent();
             mAudioPath = mConfig.getAudioPath();
             mPictureData = (ArrayList<String>) mConfig.getPictureData();
             mSelectModel = mConfig.getSelectModel();
@@ -138,11 +139,11 @@ public class CommentFragment extends CommonBaseFragment implements CommentContra
             mAudioRecord.setVisibility(View.VISIBLE);
 
         } else {
-            if(!TextUtils.isEmpty(mOnlineCommentContent)){
-//                mTextView.
+            if(!TextUtils.isEmpty(mCommentContent)){
+                mTextView.setText(mCommentContent);
             }
             if(!TextUtils.isEmpty(mAudioPath)){
-
+                mAudioPlay.setVisibility(View.VISIBLE);
             }
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -303,7 +304,7 @@ public class CommentFragment extends CommonBaseFragment implements CommentContra
     }
 
     private boolean isEditMode() {
-        if (mDataSource == CommentConfig.DataSource.LOCAL) {
+        if (mLayoutType == CommentConfig.LayoutType.EDIT) {
             return true;
         }
         return false;

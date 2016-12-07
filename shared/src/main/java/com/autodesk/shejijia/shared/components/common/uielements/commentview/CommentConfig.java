@@ -3,8 +3,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.autodesk.shejijia.shared.components.common.entity.microbean.SHFile;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +34,30 @@ public class CommentConfig implements Parcelable{
         CLOUD;              //网络
     }
 
+    public enum LayoutType{
+        EDIT,           //编辑
+        SHOW;           //展示
+    }
+
     public ModuleType eModuleType = ModuleType.MODULE_FORM;
     public RoleType eRoleType = RoleType.NORMAL;
     public DataSource eDataSource = DataSource.LOCAL;
+    public LayoutType eLayoutType = LayoutType.EDIT;
 
     public String X_Token;
-    public String onlineCommentContent;
+    public String commentContent;
     public String audioPath;
     public List<String> pictureData;
     public List<String> thumbnailData;
     public int selectModel;
 
+    public LayoutType geteLayoutType() {
+        return eLayoutType;
+    }
+
+    public void seteLayoutType(LayoutType eLayoutType) {
+        this.eLayoutType = eLayoutType;
+    }
 
     public CommentConfig seteModuleType(ModuleType eModuleType) {
         this.eModuleType = eModuleType;
@@ -63,8 +74,8 @@ public class CommentConfig implements Parcelable{
         return this;
     }
 
-    public CommentConfig setOnlineCommentContent(String onlineCommentContent) {
-        this.onlineCommentContent = onlineCommentContent;
+    public CommentConfig setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
         return this;
     }
 
@@ -112,8 +123,8 @@ public class CommentConfig implements Parcelable{
         return X_Token;
     }
 
-    public String getOnlineCommentContent() {
-        return onlineCommentContent;
+    public String getCommentContent() {
+        return commentContent;
     }
 
     public String getAudioPath() {
@@ -132,6 +143,7 @@ public class CommentConfig implements Parcelable{
         eModuleType = ModuleType.MODULE_FORM;
         eRoleType = RoleType.NORMAL;
         eDataSource = DataSource.LOCAL;
+        eLayoutType = LayoutType.EDIT;
         selectModel = MULTI_MODE;
         pictureData = new ArrayList<>();
         thumbnailData = new ArrayList<>();
@@ -147,8 +159,9 @@ public class CommentConfig implements Parcelable{
         dest.writeInt(eModuleType.ordinal());
         dest.writeInt(eRoleType.ordinal());
         dest.writeInt(eDataSource.ordinal());
+        dest.writeInt(eLayoutType.ordinal());
         dest.writeString(X_Token);
-        dest.writeString(onlineCommentContent);
+        dest.writeString(commentContent);
         dest.writeString(audioPath);
         dest.writeStringList(pictureData);
         dest.writeStringList(thumbnailData);
@@ -159,8 +172,9 @@ public class CommentConfig implements Parcelable{
         eModuleType = ModuleType.values()[in.readInt()];
         eRoleType = RoleType.values()[in.readInt()];
         eDataSource = DataSource.values()[in.readInt()];
+        eLayoutType = LayoutType.values()[in.readInt()];
         X_Token = in.readString();
-        onlineCommentContent = in.readString();
+        commentContent = in.readString();
         audioPath = in.readString();
         in.readStringList(pictureData);
         in.readStringList(thumbnailData);

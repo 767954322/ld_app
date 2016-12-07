@@ -144,6 +144,11 @@
     <string name="form_inspect_agree">同意,可进行质量验收</string>
     <string name="form_inspect_disagree">不同意验收</string>
     <string name="form_problem_log">问题记录</string>
+    <string name="form_precheck_unqualified_tint">验收条件未达标, 不予验收</string>
+    <string name="equipment_qualified">01&#160;试验设备合格</string>
+    <string name="customer_disagree">02&#160;客户不同意验收</string>
+    <string name="monitor_absence">03&#160;班长不在场</string>
+    <string name="interface_not_standard">04&#160;施工界面不符合验收标准</string>
 
     <!--footer view text-->
     <string name="footer_no_more">没有更多</string>
