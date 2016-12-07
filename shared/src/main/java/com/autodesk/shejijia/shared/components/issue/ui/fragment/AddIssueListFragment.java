@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,9 +15,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBean;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
@@ -46,10 +51,12 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;
     private TextView mIssueReplyContent;
+    private TextView mIssueDescriptionContent;
     private List<IssueFllowBean> list_fllow;
     private Switch mIssueSwitchNotify;
     private TimePickerView pvTime;
     private SimpleDateFormat dateFormat;
+    private IssueDescription mDescriptionBean;
 
 
     public static AddIssueListFragment getInstance() {
@@ -73,6 +80,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
         mIssueReplyContent = (TextView) rootView.findViewById(R.id.tx_issuereply);
+        mIssueDescriptionContent = (TextView) rootView.findViewById(R.id.tx_issuedescrip);
         mIssueSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notity_customer);
     }
 
@@ -105,8 +113,8 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             issueStylePopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
         } else if (i == R.id.rl_issuedescrip) {
-            Intent intent_description = new Intent(activity, AddIssueDescriptionActivity.class);
-            activity.startActivityForResult(intent_description, 0);
+            Intent intent_description = new Intent(getActivity(), AddIssueDescriptionActivity.class);
+            this.startActivityForResult(intent_description, ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE);
 
         } else if (i == R.id.rl_issuefllow) {
             //TODO 构建假数据，打通获取角色信息
@@ -180,5 +188,35 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         }
         return list_fllow;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == activity.RESULT_OK && null != data) {
+            if (requestCode == ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE && data != null) {
+                IssueDescription mDescriptionBean = (IssueDescription) data.getSerializableExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY);
+                Message message = new Message();
+                message.obj = mDescriptionBean;
+                handler.sendMessage(message);
+            }
+        }
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mDescriptionBean = (IssueDescription) msg.obj;
+            onShowIssueDescription();
+        }
+
+        private void onShowIssueDescription() {
+            if (mDescriptionBean != null && !TextUtils.isEmpty(mDescriptionBean.getmDescription())) {
+                mIssueDescriptionContent.setText(mDescriptionBean.getmDescription());
+            } else {
+                mIssueDescriptionContent.setText(UIUtils.getString(R.string.add_issuelist_descrip));
+            }
+        }
+    };
 
 }

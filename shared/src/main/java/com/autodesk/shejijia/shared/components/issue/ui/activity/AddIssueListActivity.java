@@ -77,11 +77,6 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && null != data) {
-
-            mIssueDescription = (IssueDescription) data.getSerializableExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY);
-
-        }
     }
 
     private void initToolbar() {

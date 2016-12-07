@@ -88,13 +88,11 @@ public class AddIssueDescriptionActivity extends BaseActivity {
         String mAudioPath = mPresenter.getAudioPath();
         List<String> mImagePath = mPresenter.getImageData();
         boolean hasImage = (mImagePath == null || mImagePath.size() == 0) ? false : true;
-        if (!TextUtils.isEmpty(mDescription) || !TextUtils.isEmpty(mDescription) || hasImage) {
-            IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
-            Intent intent = new Intent();
-            intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY, mEntity);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
+        IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
+        Intent intent = new Intent();
+        intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY, mEntity);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 
