@@ -42,7 +42,7 @@ import java.util.Map;
  * Created by t_aij on 16/10/25.
  */
 
-public class PrecheckActivity extends BaseActivity implements View.OnClickListener, PrecheckContract.View {
+public class PrecheckActivity extends BaseActivity implements View.OnClickListener, PrecheckContract.View, FormListAdapter.OnItemClickListener {
 
     private RadioButton mOkBtn;
     private RadioButton mNoBtn;
@@ -76,7 +76,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         mAdditionalRv.setLayoutManager(new LinearLayoutManager(this));
         mAdditionalRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mAdditionalRv.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new FormListAdapter(this, mItemCellList);
+        mAdapter = new FormListAdapter(mItemCellList, this);
         mAdditionalRv.setAdapter(mAdapter);
 
         mPresenter = new PrecheckPresenter(this, this);
@@ -93,20 +93,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         mOkBtn.setOnClickListener(this);
         mNoBtn.setOnClickListener(this);
         mOptionBtn.setOnClickListener(this);
-
-        mAdapter.setOnItemClickListener(new FormListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TextView resultTv = (TextView) view.findViewById(R.id.tv_result);
-                setResult(resultTv, mFormFeedBack.get(position));
-            }
-
-//            @Override
-//            public void onResultClick(TextView view) {
-//                view.setText(R.string.yes);
-//            }
-        });
-
     }
 
     @Override
@@ -120,6 +106,12 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         } else if (i == R.id.btn_option) {
             mPresenter.clickOptionBtn();
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        TextView resultTv = (TextView) view.findViewById(R.id.tv_result);
+        setResult(resultTv, mFormFeedBack.get(position));
     }
 
     @Override

@@ -21,7 +21,6 @@ public class ItemListPresenter implements ItemListContract.Presenter {
         mView = view;
     }
 
-
     @Override
     public List<OptionCell> getOptionCells(String category, SHInspectionForm shInspectionForm) {
         ArrayList<CheckItem> checkItems = shInspectionForm.getCheckItems();
@@ -29,34 +28,9 @@ public class ItemListPresenter implements ItemListContract.Presenter {
         List<OptionCell> itemCellList = new ArrayList<>();
 
         for (CheckItem checkItem : checkItems) {
+
             if (category.equals(checkItem.getCategory())) {
-                OptionCell optionCell = new OptionCell();
-                optionCell.setTitle(checkItem.getTitle());
-                FormFeedBack formFeedBack = checkItem.getFormFeedBack();
-                //根据map的索引获取其中的文字
-                optionCell.setCheckResult(formFeedBack.getCurrentCheckIndex());
-
-                if (map.containsKey(checkItem.getActionType())) {
-                    Object o = map.get(checkItem.getActionType());
-                    if (o instanceof List) {
-                        optionCell.setActionResult(((List<String>) o).get(formFeedBack.getCurrentActionIndex()));
-                    }
-                }
-
-                optionCell.setShowStandard(true);
-                optionCell.setStandard(checkItem.getStandard());
-
-                HashMap<String, List<String>> typeDict = new HashMap<>();
-                String itemTypeDict = checkItem.getCheckType();
-
-                if (map.containsKey(itemTypeDict)) {
-                    Object o = map.get(itemTypeDict);
-                    if (o instanceof List) {
-                        typeDict.put(itemTypeDict, (List<String>) o);
-                    }
-                    optionCell.setTypeDict(typeDict);
-                }
-                itemCellList.add(optionCell);
+                itemCellList.add(initOptionCell(checkItem, map));
             }
 
         }
@@ -68,5 +42,35 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     public void setCheckIndex(CheckItem checkItem, int type) {
         FormFeedBack formFeedBack = checkItem.getFormFeedBack();
         formFeedBack.setCurrentCheckIndex(type);
+    }
+
+    private OptionCell initOptionCell(CheckItem checkItem, HashMap map) {
+        OptionCell optionCell = new OptionCell();
+        optionCell.setTitle(checkItem.getTitle());
+        FormFeedBack formFeedBack = checkItem.getFormFeedBack();
+        //根据map的索引获取其中的文字
+        optionCell.setCheckResult(formFeedBack.getCurrentCheckIndex());
+
+        if (map.containsKey(checkItem.getActionType())) {
+            Object o = map.get(checkItem.getActionType());
+            if (o instanceof List) {
+                optionCell.setActionResult(((List<String>) o).get(formFeedBack.getCurrentActionIndex()));
+            }
+        }
+
+        optionCell.setShowStandard(true);
+        optionCell.setStandard(checkItem.getStandard());
+
+        HashMap<String, List<String>> typeDict = new HashMap<>();
+        String itemTypeDict = checkItem.getCheckType();
+
+        if (map.containsKey(itemTypeDict)) {
+            Object o = map.get(itemTypeDict);
+            if (o instanceof List) {
+                typeDict.put(itemTypeDict, (List<String>) o);
+            }
+            optionCell.setTypeDict(typeDict);
+        }
+        return optionCell;
     }
 }

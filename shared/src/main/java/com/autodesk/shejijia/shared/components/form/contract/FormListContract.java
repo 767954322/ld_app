@@ -15,6 +15,8 @@ public interface FormListContract {
 
     interface View extends BaseView {
 
+        void initItemCellList(List<ItemCell> itemCellList);
+
         void enterFormItem(SHInspectionForm shInspectionForm);
     }
 
@@ -23,6 +25,5 @@ public interface FormListContract {
 
         void showFormItemList(int position);
 
-        List<ItemCell> getItemCells();
     }
 }

@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.S
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
 import com.autodesk.shejijia.shared.components.form.contract.ItemListContract;
 import com.autodesk.shejijia.shared.components.form.presenter.ItemListPresenter;
-import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.form.ui.adapter.ItemListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
@@ -26,13 +25,12 @@ import java.util.List;
 public class ItemListFragment extends BaseConstructionFragment implements ItemListContract.View, ItemListAdapter.OnItemClickListener {
 
     private RecyclerView mRecyclerView;
-    private FormActivity mActivity;
+
     private String mCategory;
     private ItemListPresenter mPresenter;
     private List<OptionCell> mOptionCellList = new ArrayList<>();
     private ItemListAdapter mAdapter;
     private int mIndex;
-    private SHInspectionForm mInspectionForm;
     private ArrayList<CheckItem> mCheckItemList;
     private LinearLayoutManager mLayoutManager;
 
@@ -40,12 +38,6 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
         ItemListFragment itemListFragment = new ItemListFragment();
         itemListFragment.setArguments(args);
         return itemListFragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (FormActivity) context;
     }
 
     @Override
@@ -60,15 +52,15 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
 
     @Override
     protected void initData() {
-        mCategory = getArguments().getString("category");  //表格的类型,初始位置可以传递过来
+        mCategory = getArguments().getString("category");
         mIndex = getArguments().getInt("index");
-        //具体的表格
-        mInspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
-        mCheckItemList = mInspectionForm.getCheckItems();
+        SHInspectionForm inspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
+        mCheckItemList = inspectionForm.getCheckItems();
 
         mPresenter = new ItemListPresenter(this);
-        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory, mInspectionForm));
-        mActivity.initToolbar(mCategory);
+        mOptionCellList.addAll(mPresenter.getOptionCells(mCategory, inspectionForm));
+        initToolbar(mCategory);
+
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new ItemListAdapter(mOptionCellList,this);
@@ -80,7 +72,7 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            mActivity.initToolbar(mCategory);
+            initToolbar(mCategory);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -89,21 +81,26 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     public void onLeftItemClick(View view, int position) {
 //        LogUtils.d("asdf","左边 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),2);
-        refresh(position);
+//        refresh(position);
     }
 
     @Override
     public void onCenterItemClick(View view, int position) {
 //        LogUtils.d("asdf","中间 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),1);
-        refresh(position);
+//        refresh(position);
     }
 
     @Override
     public void onRightItemClick(View view, int position) {
 //        LogUtils.d("asdf","右边 current position:" + (mIndex + position));
         mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),0);
-        refresh(position);
+//        refresh(position);
+    }
+
+    private void initToolbar(String category) {
+        ActionBar actionBar = mContext.getSupportActionBar();
+        actionBar.setTitle(category);
     }
 
     private void refresh(int position) {

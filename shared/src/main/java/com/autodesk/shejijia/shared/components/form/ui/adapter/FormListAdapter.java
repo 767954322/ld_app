@@ -23,8 +23,9 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
     private List<ItemCell> mItemCells;
     private OnItemClickListener mOnItemClickListener;
 
-    public FormListAdapter(List<ItemCell> titleList) {
+    public FormListAdapter(List<ItemCell> titleList, OnItemClickListener onItemClickListener) {
         mItemCells = titleList;
+        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -44,17 +45,13 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
 
         initInformationShow(holder, itemCell);         //是否含有错误信息
 
-        initListener(holder,position);                 //设置监听
+        initListener(holder, position);                 //设置监听
 
     }
 
     @Override
     public int getItemCount() {
         return mItemCells.size();
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
     }
 
     private void initResult(FormListVH holder, ItemCell itemCell) {
