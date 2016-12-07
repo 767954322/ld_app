@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.message.activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.shared.R;
@@ -35,7 +37,6 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
     protected void initView() {
         mRvProjectMessagCenterView = (RecyclerView)findViewById(R.id.rv_project_message_center_view);
     }
-
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
@@ -44,17 +45,24 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
     @Override
     protected void initData(Bundle savedInstanceState) {
         mData = new ArrayList<>();
+        mMessageCenterDataSource = new MessageCenterRemoteDataSource(this);
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(mData,R.layout.item_messagecenter);
+        initRecyclerView();
+        getListMessageCenterInfo();
+    }
+    private void initRecyclerView(){
+        mRvProjectMessagCenterView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRvProjectMessagCenterView.setLayoutManager(layoutManager);
+        mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
+    }
+    private void getListMessageCenterInfo(){
         String result = ss();
         MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
         mData.addAll(messageInfo.getData());
-        mMessageCenterDataSource = new MessageCenterRemoteDataSource(this);
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(mData,R.layout.item_messagecenter);
-        mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
         mProjectMessageCenterAdapter.notifyDataSetChanged();
-        getListMessageCenterInfo();
-    }
-    private void getListMessageCenterInfo(){
-        mMessageCenterDataSource.listMessageCenterInfo(getRequestBundle(),TAG);
+//        mMessageCenterDataSource.listMessageCenterInfo(getRequestBundle(),TAG);
     }
     private Bundle getRequestBundle(){
         Bundle requestParams = new Bundle();

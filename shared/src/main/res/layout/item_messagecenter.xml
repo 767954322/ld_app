@@ -2,49 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#eef1f4"
-    android:gravity="center"
-    android:orientation="horizontal">
-    <ImageButton
-            android:id="@+id/imgBtn_personal_headPic"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/spacing_margin_normal"
-            android:layout_gravity="start|top"
-            android:background="@drawable/ic_default_head"
-            android:layout_height="wrap_content" />
-
+    android:layout_marginTop="@dimen/spacing_small"
+    android:orientation="vertical">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imgBtn_personal_headPic"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_36"
+            android:layout_marginTop="@dimen/spacing_margin_normal"
+            android:layout_marginLeft="@dimen/spacing_margin_normal"
+            android:layout_gravity="start|top"
+            android:background="@drawable/ic_default_head" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_margin_double"
-            android:gravity="center_vertical"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_meaasge_name"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_large"
-                android:layout_marginBottom="@dimen/spacing_margin_normal"
-                android:text="王小明"/>
+                android:layout_marginBottom="@dimen/spacing_margin_micro"/>
             <TextView
                 android:id="@+id/tv_meaasge_cantent"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_large"
-                android:text="客户经理"/>
+                android:textSize="@dimen/textview_corners_double"
+                android:layout_marginBottom="@dimen/spacing_margin_micro"/>
             <TextView
                 android:id="@+id/tv_message_time"
                 android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_large"
-                android:text="客户经理"/>
+                android:textSize="@dimen/textview_corners_double"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-      <TextView
+    </LinearLayout>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#e3e3e3" />
-
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@color/gray" />
 </LinearLayout>

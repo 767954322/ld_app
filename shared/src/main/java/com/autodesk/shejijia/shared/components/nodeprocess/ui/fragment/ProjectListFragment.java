@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectListAdapter;
@@ -179,7 +181,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         this.mMenuItem = item;
         int itemId = item.getItemId();
         if (itemId == R.id.home_toolbar_search) {
-            ToastUtils.showShort(mContext, "search");
+            startActivity(new Intent(getActivity(),ProjectMessageCenterActivity.class));
+
+//            ToastUtils.showShort(mContext, "search");
             // TODO: 10/25/16 跳转到搜索页面
             return true;
         } else if (itemId == R.id.home_toolbar_screen) {

@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.shared.components.message.adapter;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -47,27 +49,39 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<ProjectMes
         if (TextUtils.isEmpty(avatar)) {
             holder.mImgBtnPersonalHeadPic.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
         } else {
-            ImageUtils.loadUserAvatar(holder.mImgBtnPersonalHeadPic, avatar);
+            ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
-        if (!TextUtils.isEmpty(mData.get(position).getSender_role())) {
-            holder.mTvMeaasgeName.setText(mData.get(position).getSender_role());
+
+        MessageInfo.DataBean.DisplayMessageBean display_message = mData.get(position).getDisplay_message();
+        if (display_message != null && !TextUtils.isEmpty(display_message.getSummary())) {
+            String title = display_message.getSummary();
+            for (int i = 0; title.contains("*"); i++) {
+                title = (i % 2 == 0) ? title.replaceFirst("\\*", "<b><tt>") : title.replaceFirst("\\*", "</b></tt>");
+            }
+            holder.mTvMeaasgeName.setText(Html.fromHtml(title));
         }
-//        if (!TextUtils.isEmpty(mData.get(position).getName())) {
-//            mPMCVH.mTvMeaasgeCantent.setText(mData.get(position).getName());
-//        }
+        List<String> detail_items = display_message.getDetail_items();
+        if (detail_items != null ) {
+            String detail_item="";
+            for(String str:detail_items){
+                detail_item += "\n"+str;
+            }
+            detail_item = detail_item.substring(2);
+            holder.mTvMeaasgeCantent.setText(detail_item);
+        }
         if (!TextUtils.isEmpty(mData.get(position).getSent_time())) {
             holder.mTvMessageTime.setText(mData.get(position).getSent_time());
         }
     }
      public class ProjectMessageCenterVH extends RecyclerView.ViewHolder {
-        private ImageButton mImgBtnPersonalHeadPic;
+        private ImageView mImgBtnPersonalHeadPic;
         private TextView  mTvMeaasgeName;
         private TextView  mTvMeaasgeCantent;
         private TextView  mTvMessageTime;
 
         ProjectMessageCenterVH(View itemView) {
             super(itemView);
-            mImgBtnPersonalHeadPic = (ImageButton) itemView.findViewById(R.id.cdv_task_list);
+            mImgBtnPersonalHeadPic = (ImageView) itemView.findViewById(R.id.imgBtn_personal_headPic);
             mTvMeaasgeName = (TextView) itemView.findViewById(R.id.tv_meaasge_name);
             mTvMeaasgeCantent = (TextView) itemView.findViewById(R.id.tv_meaasge_cantent);
             mTvMessageTime = (TextView) itemView.findViewById(R.id.tv_message_time);

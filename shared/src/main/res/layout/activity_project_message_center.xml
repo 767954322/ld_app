@@ -7,5 +7,11 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_project_message_center_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="100dp"/>
+    <TextView
+        android:id="@+id/tv_message_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below ="@+id/rv_project_message_center_view"
+        android:text="显示全部历史更新"/>
 </RelativeLayout>

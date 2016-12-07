@@ -44,13 +44,12 @@ public class MessageInfo implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean  implements Serializable{
+    public static class DataBean implements Serializable {
         private DisplayMessageBean display_message;
         private CustomDataBean custom_data;
         private String sender_role;
         private String sender_avatar;
         private String sent_time;
-
         public DisplayMessageBean getDisplay_message() {
             return display_message;
         }
@@ -93,7 +92,7 @@ public class MessageInfo implements Serializable {
 
         public static class DisplayMessageBean implements Serializable{
             private String summary;
-            private Object detail_items;
+            private List<String> detail_items;
 
             public String getSummary() {
                 return summary;
@@ -103,22 +102,22 @@ public class MessageInfo implements Serializable {
                 this.summary = summary;
             }
 
-            public Object getDetail_items() {
+            public List<String> getDetail_items() {
                 return detail_items;
             }
 
-            public void setDetail_items(Object detail_items) {
+            public void setDetail_items(List<String> detail_items) {
                 this.detail_items = detail_items;
             }
         }
 
         public static class CustomDataBean implements Serializable{
             private String project_id;
-            private String task_id;
+            private Object task_id;
             private String event_category;
             private String event;
             private boolean in_consumer_feeds;
-            private Object entity_id;
+            private String entity_id;
             private ExtendDataBean extend_data;
 
             public String getProject_id() {
@@ -129,11 +128,11 @@ public class MessageInfo implements Serializable {
                 this.project_id = project_id;
             }
 
-            public String getTask_id() {
+            public Object getTask_id() {
                 return task_id;
             }
 
-            public void setTask_id(String task_id) {
+            public void setTask_id(Object task_id) {
                 this.task_id = task_id;
             }
 
@@ -161,11 +160,11 @@ public class MessageInfo implements Serializable {
                 this.in_consumer_feeds = in_consumer_feeds;
             }
 
-            public Object getEntity_id() {
+            public String getEntity_id() {
                 return entity_id;
             }
 
-            public void setEntity_id(Object entity_id) {
+            public void setEntity_id(String entity_id) {
                 this.entity_id = entity_id;
             }
 
