@@ -7,20 +7,28 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <ScrollView
-        android:layout_below="@+id/common_navbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:layout_below="@+id/common_navbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView
-            android:id="@+id/iv_package_detail"
+        <!--<com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView-->
+            <!--android:id="@+id/iv_package_detail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/common_navbar"-->
+            <!--android:scaleType="fitXY" />-->
+
+
+        <ListView
+            android:id="@+id/package_detail_activity_lv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/common_navbar"
-            android:scaleType="fitXY" />
+            android:divider="@null"></ListView>
 
 
-    </ScrollView>
+    <!--</ScrollView>-->
 
 
 
