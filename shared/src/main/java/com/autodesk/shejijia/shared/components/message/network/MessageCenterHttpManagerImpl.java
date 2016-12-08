@@ -43,9 +43,13 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put(Constant.NetBundleKey.ACCPET, Constant.NetBundleKey.APPLICATON_JSON);
                 header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
+            }
+            @Override
+            public String getBodyContentType() {
+                return Constant.NetBundleKey.APPLICATON_JSON;
             }
         };
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);

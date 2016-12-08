@@ -1,9 +1,9 @@
 package com.autodesk.shejijia.shared.components.message.datamodel;
-
 import android.os.Bundle;
-
+import android.support.annotation.NonNull;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManager;
@@ -16,37 +16,35 @@ import org.json.JSONObject;
  */
 
 public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
-    private  static CallBackMessageCenterDataSource mCallback;
     private MessageCenterHttpManager mMessageCenterHttpManager;
-    public MessageCenterRemoteDataSource(CallBackMessageCenterDataSource mCallBackMessageCenterDataSource) {
-        mCallback = mCallBackMessageCenterDataSource;
+    public MessageCenterRemoteDataSource() {
         mMessageCenterHttpManager = MessageCenterHttpManagerImpl.getInstance();
     }
     @Override
-    public void getUnreadCount(String project_ids, String requestTag) {
+    public void getUnreadCount(String project_ids, String requestTag,@NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
         mMessageCenterHttpManager.getUnreadCount(project_ids,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
-                mCallback.onResponse(jsonObject);
+                callback.onSuccess(jsonObject);
             }
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
-                mCallback.onErrorResponse(responseError);
+                callback.onError(responseError);
             }
         });
     }
     @Override
-    public void listMessageCenterInfo(Bundle requestParams, String requestTag) {
+    public void listMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
         mMessageCenterHttpManager.listMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
-                mCallback.onResponse(jsonObject);
+                callback.onSuccess(jsonObject);
             }
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
-                mCallback.onErrorResponse(responseError);
+                callback.onError(responseError);
             }
         });
     }

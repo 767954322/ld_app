@@ -7,27 +7,21 @@ import android.view.MenuItem;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.adapter.ProjectMessageCenterAdapter;
-import com.autodesk.shejijia.shared.components.message.datamodel.CallBackMessageCenterDataSource;
-import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterDataSource;
-import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
+import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenter;
+import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenterImpl;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by luchongbin on 2016/12/5.
  */
-public class ProjectMessageCenterActivity extends BaseActivity implements CallBackMessageCenterDataSource,ProjectMessageCenterAdapter.HistoricalRecordstListener {
+public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterPresenter.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
 
-    private MessageCenterDataSource mMessageCenterDataSource;
+    private ProjectMessageCenterPresenter.Presenter mProjectMessageCenterPresenter;
     private List<MessageInfo.DataBean> mData;
     private long mProjectId;
     private boolean isUnrea;
@@ -52,7 +46,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
         mData = new ArrayList<>();
-        mMessageCenterDataSource = new MessageCenterRemoteDataSource(this);
+        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenterImpl(getApplicationContext(),this);
         mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(mData,isUnrea,R.layout.item_messagecenter);
         initRecyclerView();
         getListMessageCenterInfo();
@@ -66,14 +60,14 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
     }
     private void getListMessageCenterInfo(){
-        mMessageCenterDataSource.listMessageCenterInfo(getRequestBundle(),TAG);
+        mProjectMessageCenterPresenter.listMessageCenterInfo(getRequestBundle(),TAG);
     }
     private Bundle getRequestBundle(){
         Bundle requestParams = new Bundle();
         requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
         requestParams.putInt(ConstructionConstants.OFFSET,0);
         requestParams.putBoolean(ConstructionConstants.UNREAD,isUnrea);
-        requestParams.putInt(ConstructionConstants.LIMIT,50);
+        requestParams.putInt(ConstructionConstants.LIMIT,20);
         return requestParams;
     }
     @Override
@@ -82,20 +76,24 @@ public class ProjectMessageCenterActivity extends BaseActivity implements CallBa
         ProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
     }
     @Override
-    public void onErrorResponse(ResponseError responseError) {
-        ToastUtils.showLong(this,responseError.getMessage());
-    }
-    @Override
-    public void onResponse(JSONObject jsonObject) {
-        String result = jsonObject.toString();
-        isUnrea = false;
-        MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
-        if(messageInfo.getData() != null){
+    public void updateProjectDetailsView(MessageInfo messageInfo) {
+        if(messageInfo.getData() != null) {
             mData.addAll(messageInfo.getData());
         }
         mProjectMessageCenterAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showNetError(ResponseError error) {}
+
+    @Override
+    public void showError(String errorMsg) {}
+
+    @Override
+    public void showLoading() {}
+
+    @Override
+    public void hideLoading() {}
     @Override
     public void onHistoricalRecordstClick() {
         getListMessageCenterInfo();

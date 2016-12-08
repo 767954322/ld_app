@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,8 +58,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private TextView mEditPlanBtn;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
-    private MessageCenterDataSource mMessageCenterDataSource;
-
     public ProjectDetailsFragment() {
     }
 
@@ -91,14 +88,11 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
-
-        mMessageCenterDataSource = new MessageCenterRemoteDataSource(this);
          projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
-            mMessageCenterDataSource.getUnreadCount(projectId+"",TAG);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
             LogUtils.e("GetProjectDetails", "you should input right projectId");
@@ -200,17 +194,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
     }
-
-    @Override
-    public void onErrorResponse(ResponseError responseError) {
-
-    }
-
-    @Override
-    public void onResponse(JSONObject jsonObject) {
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
