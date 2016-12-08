@@ -3,14 +3,16 @@ package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,6 +30,8 @@ import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueDescriptionActivity;
+import com.autodesk.shejijia.shared.components.issue.ui.adapter.AddIssueImageAdapter;
+import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -44,25 +48,6 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 public class AddIssueListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener {
 
-    private RelativeLayout mIssueAll;
-    private RelativeLayout mIssueStyle;
-    private RelativeLayout mIssueDescription;
-    private RelativeLayout mIssueFllow;
-    private RelativeLayout mIssueReply;
-
-    private IssueStylePop issueStylePopWin;
-    private IssueFlowPop issueFllowPopWin;
-    private TextView mIssueStyleContent;
-    private TextView mIssueFllowContent;
-    private TextView mIssueReplyContent;
-    private TextView mIssueDescriptionContent;
-    private List<IssueFllowBean> list_fllow;
-    private Switch mIssueSwitchNotify;
-    private TimePickerView pvTime;
-    private SimpleDateFormat dateFormat;
-    private IssueDescription mDescriptionBean;
-    private LinearLayout mIssueAudio;
-
 
     public static AddIssueListFragment getInstance() {
         AddIssueListFragment fragment = new AddIssueListFragment();
@@ -78,7 +63,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     protected void initView() {
         mIssueAll = (RelativeLayout) rootView.findViewById(R.id.rl_issue_all);
         mIssueStyle = (RelativeLayout) rootView.findViewById(R.id.rl_issuetype);
-        mIssueDescription = (RelativeLayout) rootView.findViewById(R.id.rl_issuedescrip);
+        mIssueDescription = (RelativeLayout) rootView.findViewById(R.id.rl_layout_descrition);
         mIssueFllow = (RelativeLayout) rootView.findViewById(R.id.rl_issuefllow);
         mIssueReply = (RelativeLayout) rootView.findViewById(R.id.rl_issuereply);
         mIssueAudio = (LinearLayout) rootView.findViewById(R.id.ll_audio_play_container);
@@ -87,15 +72,27 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
         mIssueReplyContent = (TextView) rootView.findViewById(R.id.tx_issuereply);
         mIssueDescriptionContent = (TextView) rootView.findViewById(R.id.tx_issuedescrip);
+        mIssueImagesList = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mIssueSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notity_customer);
     }
 
     @Override
     protected void initData() {
-
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         initTimePick();
         initProjectReplyData();
+        initImageList();
+    }
+
+    private void initImageList() {
+        //设置布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mIssueImagesList.setLayoutManager(linearLayoutManager);
+        mIssueImagesList.setHasFixedSize(true);
+        mIssueImagesList.setItemAnimator(new DefaultItemAnimator());
+        //init recyclerView adapter
+        mIssueImageAdapter = new AddIssueImageAdapter(null, getContext(), R.layout.item_addissue_image);
+        mIssueImagesList.setAdapter(mIssueImageAdapter);
 
     }
 
@@ -103,10 +100,10 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     protected void initListener() {
         super.initListener();
         mIssueStyle.setOnClickListener(this);
-        mIssueDescription.setOnClickListener(this);
         mIssueFllow.setOnClickListener(this);
         mIssueSwitchNotify.setOnCheckedChangeListener(this);
         mIssueReply.setOnClickListener(this);
+        mIssueDescription.setOnClickListener(this);
     }
 
     @Override
@@ -118,13 +115,10 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             }
             issueStylePopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueStylePopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-        } else if (i == R.id.rl_issuedescrip) {
+        } else if (i == R.id.rl_layout_descrition) {
             Intent intent_description = new Intent(getActivity(), AddIssueDescriptionActivity.class);
             this.startActivityForResult(intent_description, ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE);
-
         } else if (i == R.id.rl_issuefllow) {
-            //TODO 构建假数据，打通获取角色信息
             list_fllow = initRoleData();
             if (issueFllowPopWin == null) {
                 issueFllowPopWin = new IssueFlowPop(list_fllow, activity.getBaseContext(), this);
@@ -146,6 +140,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    //两个Popwindow的回调
     @Override
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
@@ -157,6 +152,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         dismissPopwindow();
     }
 
+    //关闭Popwindow
     private void dismissPopwindow() {
         if (null != issueStylePopWin) {
             issueStylePopWin.dismiss();
@@ -168,6 +164,7 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
     //初始化时间控件
     private void initTimePick() {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         pvTime = new TimePickerView(activity, TimePickerView.Type.YEAR_MONTH_DAY);
         pvTime.setRange(1965, 2100);
         pvTime.setTime(new Date());
@@ -188,11 +185,8 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private void initProjectReplyData() {
         ProjectInfo projectInfo = ProjectRepository.getInstance().getActiveProject();
         if (projectInfo != null) {
-
             ArrayList<Member> listMember = projectInfo.getMembers();
-
         }
-
     }
 
     private List<IssueFllowBean> initRoleData() {
@@ -239,7 +233,33 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             } else {
                 mIssueAudio.setVisibility(View.GONE);
             }
+            if (mDescriptionBean != null && mDescriptionBean.getmImagePath() != null && mDescriptionBean.getmImagePath().size() > 0) {
+                mIssueImageAdapter.reflushList(mDescriptionBean.getmImagePath());
+            } else {
+                mIssueImageAdapter.reflushList(null);
+            }
         }
     };
+    private RelativeLayout mIssueAll;
+    private RelativeLayout mIssueStyle;
+    private RelativeLayout mIssueDescription;
+    private RelativeLayout mIssueFllow;
+    private RelativeLayout mIssueReply;
+    private LinearLayout mIssueAudio;
+
+    private IssueStylePop issueStylePopWin;
+    private IssueFlowPop issueFllowPopWin;
+    private TextView mIssueStyleContent;
+    private TextView mIssueFllowContent;
+    private TextView mIssueReplyContent;
+    private TextView mIssueDescriptionContent;
+    private RecyclerView mIssueImagesList;
+
+    private AddIssueImageAdapter mIssueImageAdapter;
+    private List<IssueFllowBean> list_fllow;
+    private Switch mIssueSwitchNotify;
+    private TimePickerView pvTime;
+    private SimpleDateFormat dateFormat;
+    private IssueDescription mDescriptionBean;
 
 }

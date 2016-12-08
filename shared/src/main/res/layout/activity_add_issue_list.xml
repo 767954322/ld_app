@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_issue_all"
     android:layout_width="match_parent"
@@ -34,90 +36,6 @@
             android:layout_height="@dimen/size_0.5"
             android:layout_alignParentBottom="true"
             android:background="@color/issue_item_line" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_issuedescrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_issuetype"
-        android:background="@color/white">
-
-        <RelativeLayout
-            android:id="@+id/rl_layout_descrition"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_45">
-
-            <ImageButton
-                android:id="@+id/ibn_issuedescrip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@drawable/add_issue_description" />
-
-            <TextView
-                android:id="@+id/tx_issuedescrip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/size_10"
-                android:layout_toRightOf="@+id/ibn_issuedescrip"
-                android:text="@string/add_issuelist_descrip" />
-
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_audio_play_container"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_35"
-            android:layout_below="@+id/rl_layout_descrition"
-            android:layout_marginBottom="@dimen/size_5"
-            android:layout_marginLeft="@dimen/size_50"
-            android:layout_marginRight="@dimen/size_50"
-            android:background="@drawable/bg_common_comment_audio_play"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="@dimen/chat_room_audiocell_audioimage_width"
-                android:layout_height="@dimen/chat_room_audiocell_audioimage_height"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/chat_room_audiocell_audioimage_sidemargin"
-                android:background="@drawable/audio_animation_list_right"
-                android:scaleType="centerInside"
-                android:src="@drawable/audior" />
-
-            <TextView
-                android:id="@+id/tv_audio_play_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:text="14:19"
-                android:textColor="#D9D9D9"
-                android:textSize="14dp" />
-
-            <ImageView
-                android:id="@+id/iv_delete_voice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/ic_delete" />
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_audio_play_container"
-            android:layout_marginLeft="@dimen/size_50"
-            android:layout_marginRight="@dimen/size_50"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -225,5 +143,88 @@
             android:background="@color/issue_item_line" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_issuedescrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/rl_issuetype"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_layout_descrition"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45">
+
+            <ImageButton
+                android:id="@+id/ibn_issuedescrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@drawable/add_issue_description" />
+
+            <TextView
+                android:id="@+id/tx_issuedescrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_toRightOf="@+id/ibn_issuedescrip"
+                android:text="@string/add_issuelist_descrip" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_audio_play_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_35"
+            android:layout_below="@+id/rl_layout_descrition"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_50"
+            android:layout_marginRight="@dimen/size_50"
+            android:background="@drawable/bg_common_comment_audio_play"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/chat_room_audiocell_audioimage_width"
+                android:layout_height="@dimen/chat_room_audiocell_audioimage_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/chat_room_audiocell_audioimage_sidemargin"
+                android:background="@drawable/audio_animation_list_right"
+                android:scaleType="centerInside"
+                android:src="@drawable/audior" />
+
+            <TextView
+                android:id="@+id/tv_audio_play_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="14:19"
+                android:textColor="#D9D9D9"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/iv_delete_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_delete" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_audio_play_container"
+            android:layout_marginLeft="@dimen/size_50"
+            android:layout_marginRight="@dimen/size_20" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -70,7 +70,7 @@ public class CommentPresenter implements CommentContract.CommentPresenter {
     }
 
     public String getAudioPath(){
-        return mCommentView.getCommentContent();
+        return mCommentView.getAudioRecordPath();
     }
 
     public List<String> getImageData(){
