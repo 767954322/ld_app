@@ -23,6 +23,20 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
         mMessageCenterHttpManager = MessageCenterHttpManagerImpl.getInstance();
     }
     @Override
+    public void getUnreadCount(String project_ids, String requestTag) {
+        mMessageCenterHttpManager.getUnreadCount(project_ids,requestTag,new OkJsonRequest.OKResponseCallback(){
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mCallback.onResponse(jsonObject);
+            }
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
+                mCallback.onErrorResponse(responseError);
+            }
+        });
+    }
+    @Override
     public void listMessageCenterInfo(Bundle requestParams, String requestTag) {
         mMessageCenterHttpManager.listMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override

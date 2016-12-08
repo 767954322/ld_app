@@ -29,6 +29,11 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
         return MessageCenterHttpManagerImpl.ServerHttpManagerHolder.INSTANCE;
     }
     @Override
+    public void getUnreadCount(String project_ids, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = ConstructionConstants.BASE_URL + "/notifications/unread_count?project_ids=" + project_ids;
+        get(requestTag, requestUrl, callback);
+    }
+    @Override
     public void listMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/notifications/messages?", requestParams);
         get(requestTag, requestUrl,callback);
