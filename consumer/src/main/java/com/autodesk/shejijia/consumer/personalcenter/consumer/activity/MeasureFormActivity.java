@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -41,6 +42,7 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -67,6 +69,8 @@ import java.util.Map;
 public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
 
     private HomeTypeDialog mHomeTypeDialog;
+    private EditText et_detail_address;
+    private String detailAddress;
 
     @Override
     protected int getLayoutResId() {
@@ -100,6 +104,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
         ll_house_type = (LinearLayout) findViewById(R.id.ll_house_type);
         ll_line = (LinearLayout) findViewById(R.id.ll_line);
+        et_detail_address = (EditText) findViewById(R.id.et_detail_address);
 
 
         tvc_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -265,64 +270,66 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                    Intent intent = new Intent(MeasureFormActivity.this, StoreActivity.class);
 //                    startActivity(intent);
 //                }else {
-                    name = tvc_name.getText().toString().trim();
-                    mobileNumber = tvc_phone.getText().toString().trim();
-                    communityName = tvc_estate.getText().toString().trim();
-                    houseArea = tvc_area.getText().toString().trim();
+                name = tvc_name.getText().toString().trim();
+                mobileNumber = tvc_phone.getText().toString().trim();
+                communityName = tvc_estate.getText().toString().trim();
+                houseArea = tvc_area.getText().toString().trim();
+                detailAddress = et_detail_address.getText().toString().trim();
 
-                    boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
-                    boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
-                    checkMeasureArea(houseArea);
+                boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
+                boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
+                checkMeasureArea(houseArea);
 
-                    boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
+                boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
+                boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
 
-                    if (name.length() < 2 || name.length() > 20 || !bName) {
+                if (name.length() < 2 || name.length() > 20 || !bName) {
 
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_fill_your_name));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_your_name));
 
-                        return;
-                    }
+                    return;
+                }
 
-                    if (!bMobile || mobileNumber.isEmpty()) {
+                if (!bMobile || mobileNumber.isEmpty()) {
 
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_fill_phone_number));
-                        return;
-                    }
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_phone_number));
+                    return;
+                }
 
-                    if (housingType == null) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.demand_please_project_types));
-                        return;
-                    }
+                if (housingType == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.demand_please_project_types));
+                    return;
+                }
 
-                    if (TextUtils.isEmpty(houseArea)) {
-                        houseArea = "0";
-                    }
+                if (TextUtils.isEmpty(houseArea)) {
+                    houseArea = "0";
+                }
 
-                    String area = String.format("%.2f", Double.valueOf(houseArea));
-                    if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
-                        return;
-                    }
+                String area = String.format("%.2f", Double.valueOf(houseArea));
+                if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
+                    return;
+                }
 
-                    tvc_area.setText(houseArea);
-                    String subNum = "0";
-                    if (houseArea.contains(".")) {
-                        subNum = houseArea.substring(0, houseArea.indexOf("."));
-                    }
-                    if (TextUtils.isEmpty(houseArea) || Float.valueOf(houseArea) == 0) {
+                tvc_area.setText(houseArea);
+                String subNum = "0";
+                if (houseArea.contains(".")) {
+                    subNum = houseArea.substring(0, houseArea.indexOf("."));
+                }
+                if (TextUtils.isEmpty(houseArea) || Float.valueOf(houseArea) == 0) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                    return;
+                } else {
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                         getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                         return;
                     } else {
-                        if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
                             getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                             return;
-                        } else {
-                            if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
-                                getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-                                return;
-                            }
                         }
                     }
+                }
 
 
                 if (designBudget == null) {
@@ -335,92 +342,98 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                    if (tvc_measure_form_type.getText().toString().equals("住宅空间")){
+                if (tvc_measure_form_type.getText().toString().equals("住宅空间")) {
 
-                        if (room == null || hall == null || toilet == null) {
-                            getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
-                            return;
-                        }
-                    }else {
-                        room = "other";
-                        hall = null;
-                        toilet = null;
-
-                    }
-
-                    if (style == null) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
+                    if (room == null || hall == null || toilet == null) {
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                         return;
                     }
+                } else {
+                    room = "other";
+                    hall = null;
+                    toilet = null;
 
-                    if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
-                        return;
+                }
+
+                if (style == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
+                    return;
+                }
+
+                if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
+                    return;
+                }
+
+                if (!bAddress || communityName.isEmpty()) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
+                    return;
+                }
+
+                if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.new_inventory_input_right_detail_address));
+                    return;
+                }
+
+                if (currentData == null) {
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_quantity_room_time));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(mFree)) {
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.volume_rate_cannot_empty));
+                    return;
+                }
+
+                /**
+                 * 获取系统当前时间,通过SimpleDateFormat获取24小时制时间
+                 *
+                 */
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
+                String date = /*currentTime += */sdf.format(new Date());
+
+                CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
+                    jsonObject.put(JsonConstants.JSON_DETAIL_ADDRESS, detailAddress);
+                    if (null == mThread_id || "".equals(mThread_id)) {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    } else {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                    if (!bAddress || communityName.isEmpty()) {
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
-                        return;
-                    }
-
-                    if (currentData == null) {
-
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_quantity_room_time));
-                        return;
-                    }
-
-                    if (TextUtils.isEmpty(mFree)) {
-
-                        getErrorHintAlertView(UIUtils.getString(R.string.volume_rate_cannot_empty));
-                        return;
-                    }
-
-                    /**
-                     * 获取系统当前时间,通过SimpleDateFormat获取24小时制时间
-                     *
-                     */
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
-                    String date = /*currentTime += */sdf.format(new Date());
-
-                    CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
-
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
-                        if (null == mThread_id || "".equals(mThread_id)) {
-                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
-                        } else {
-                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    postSendMeasureForm(jsonObject);
+                selectMeasure(designer_id, jsonObject);
 //                }
                 break;
             case R.id.tvc_measure_form_project_budget:
@@ -507,7 +520,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == 0){
+            if (requestCode == 0) {
                 finish();
             }
         }
@@ -805,11 +818,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      *
      * @param jsonObject
      */
-    public void postSendMeasureForm(JSONObject jsonObject) {
+    public void selectMeasure(String designer_id, JSONObject jsonObject) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.i(TAG, jsonObject + "");
+                String userInfo = GsonUtil.jsonToString(jsonObject);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
@@ -819,11 +833,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 showAlertView(UIUtils.getString(R.string.choose_ta_room_fail));
-
                 CustomProgress.dialog.cancel();
+                NetworkResponse networkResponse = volleyError.networkResponse;
+                int statusCode = networkResponse.statusCode;
             }
         };
-        MPServerHttpManager.getInstance().agreeOneselfResponseBid(jsonObject, okResponseCallback);
+        MPServerHttpManager.getInstance().selectMeasure(designer_id, jsonObject, okResponseCallback);
     }
 
     private void getErrorHintAlertView(String content) {

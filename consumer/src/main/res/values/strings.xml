@@ -1059,7 +1059,11 @@
     <string name="all_button_name">全部</string>
     <string name="case3dnot">案例不存在</string>
 
-    <string name="delivery_tip_3d">用户在Web端查看</string>
+
+	<string name="delivery_tip_3d">用户在Web端查看</string>
+    <string name="information_person">个人信息</string>
+    <string name="hint_input_detail_address">请输入详细地址</string>
+    <string name="project_information">项目信息</string>
 
 
 </resources>

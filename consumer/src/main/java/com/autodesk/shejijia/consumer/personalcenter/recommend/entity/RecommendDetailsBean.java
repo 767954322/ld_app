@@ -1,14 +1,12 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
-import com.qy.appframe.model.IModel;
-
 /**
  * @User: 蜡笔小新
  * @date: 16-10-25
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendDetailsBean implements IModel {
+public class RecommendDetailsBean {
 
 
     /**

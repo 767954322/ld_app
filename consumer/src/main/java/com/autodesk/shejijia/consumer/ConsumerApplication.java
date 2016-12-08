@@ -13,7 +13,6 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.qy.appframe.common.AppFrame;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -32,7 +31,6 @@ public class ConsumerApplication extends AdskApplication {
         AppFrame.initDebug(true);
         //初始化网络请求队列
         NetRequestManager.getInstance().init(this);
-
     }
 
     private void reqisterWXAppId() {

@@ -13,11 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -35,6 +37,8 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import org.json.JSONException;
@@ -55,10 +59,13 @@ import java.util.Map;
 public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener, TextWatcher {
 
     private ScrollView mScrollView;
+    private EditText detail_address;
+    private ImageView iv_measure_icon;
+    private String detailAddress;
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_measure_empty_form;
+        return R.layout.activity_measure_empty_form_1;
     }
 
     @Override
@@ -100,6 +107,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvMeasureWarmTipsContent = (TextView) findViewById(R.id.tvMeasureWarmTipsContent);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
         ll_measure_form_style.setVisibility(View.GONE);
+        ll_measure_form_style.setVisibility(View.GONE);
+        detail_address = (EditText) findViewById(R.id.detail_address);
+        iv_measure_icon = (ImageView) findViewById(R.id.iv_measure_icon);
     }
 
     @Override
@@ -117,11 +127,12 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         CustomProgress.cancelDialog();
-//        if (!isElite(wk_cur_template_id)) {
-//            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
-//        } else {
-//            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
-//        }
+        if (!isElite(wk_cur_template_id)) {
+            iv_measure_icon.setVisibility(View.VISIBLE); /// 竞优 .
+        } else {
+            iv_measure_icon.setVisibility(View.VISIBLE);
+            iv_measure_icon.setBackground(UIUtils.getDrawable(R.drawable.handpicked_icon));///  精选.
+        }
         //fix bug DP-6395
         setTitleForNavbar(getResources().getString(R.string.measure_house_form));
         updateDisplayData();
@@ -175,7 +186,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String free = tv_measure_form_designer_liangfangfeit.getText().toString().trim();
-                if (!hasFocus && TextUtils.isEmpty(free)){
+                if (!hasFocus && TextUtils.isEmpty(free)) {
                     tv_measure_form_designer_liangfangfeit.setText("0.00");
                 }
             }
@@ -188,6 +199,14 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             case R.id.btn_measure_form_send: /// 发送量房表单 .
                 JSONObject jsonObject = new JSONObject();
                 try {
+
+                   detailAddress = detail_address.getText().toString();
+                    boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
+                    if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+                                AlertView.Style.Alert, null).show();
+                        return;
+                    }
                     /**
                      * 获取系统当前时间
                      */
@@ -205,12 +224,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
+                        jsonObject.put(JsonConstants.JSON_DETAIL_ADDRESS, detailAddress);
 
-                        if (TextUtils.isEmpty(mThreead_id)) {
-                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
-                        } else {
-                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
-                        }
+//                        if (TextUtils.isEmpty(mThreead_id)) {
+//                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+//                        } else {
+//                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
+//                        }
 
                         if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
@@ -220,7 +240,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ADJUSTMENT, 600);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
 
-                        agreeResponseBid(jsonObject);
+                        agreeResponseBid(needs_id, designer_id, jsonObject);
 
                     }
                 } catch (JSONException e) {
@@ -533,7 +553,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     /**
      * 消费者同意应标 .
      */
-    public void agreeResponseBid(JSONObject jsonObject) {
+    public void agreeResponseBid(String asset_id, String designer_id, JSONObject jsonObject) {
         CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -551,7 +571,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 mAgreeResponseBidFailAlertView.show();
             }
         };
-        MPServerHttpManager.getInstance().agreeResponseBid(jsonObject, okResponseCallback);
+        MPServerHttpManager.getInstance().selectMeasureBid(asset_id, designer_id, jsonObject, okResponseCallback);
     }
 
     private void updateViewFromData(MPMeasureFormBean mMPMeasureFormBean) {

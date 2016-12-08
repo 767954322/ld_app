@@ -158,6 +158,7 @@ public class JsonConstants {
     public static final String JSON_MEASURE_FORM_THREAD_ID = "thread_id";
     public static final String ASSET_ID = "asset_id";
     public static final String MEASUREMENT = "measurement_status";
+    public static final String JSON_DETAIL_ADDRESS = "address_details";
 
     /// 我的资产.
     public static final String WITHDRAWARE_BALANCE_ACCOUNT_USER_NAME = "account_user_name";

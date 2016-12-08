@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -14,6 +15,8 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SelectionB
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SolicitationSelection;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
@@ -28,6 +31,8 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -38,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+
 /**
  * @author .
  * @version 1.0 .
@@ -47,6 +53,8 @@ import java.util.Map;
  */
 
 public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener {
+    private String detailAddress;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_measure_form2;
@@ -73,6 +81,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormType = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvcMeasureFormStyle = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
+
+        et_detail_address = (EditText) findViewById(R.id.et_detail_address);
 
         tvcName.setEnabled(false);
         tvcPhone.setEnabled(false);
@@ -130,12 +140,14 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
         chageButtonValue();
         setMeasureTime();
-
-        if (district_name.equals("none")) {
-            tvcAddress.setText(province_name + city_name);
-            return;
+        if(!TextUtils.isEmpty(district_name)){
+            if (district_name.equals("none")) {
+                tvcAddress.setText(province_name + city_name);
+                return;
+            }
         }
         tvcAddress.setText(province_name + city_name + district_name);
+
 
     }
 
@@ -201,6 +213,15 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, decorationNeedsListBean.getNeeds_id());
             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, "");
+            jsonObject.put(JsonConstants.JSON_DETAIL_ADDRESS, detailAddress);
+
+            detailAddress = et_detail_address.getText().toString().trim();
+            boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
+
+            if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, SolicitationDesignerActivity.this, AlertView.Style.Alert, null).show();
+                return;
+            }
 
             if (currentData == null) {
                 showAlertView(R.string.tip, UIUtils.getString(R.string.please_select_quantity_room_time),
@@ -287,6 +308,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.dialog.cancel();
+
             }
         };
         MPServerHttpManager.getInstance().SendMeasureForm(decorationNeedsListBean.getNeeds_id(), designerId, jsonObject, okResponseCallback);
@@ -362,6 +384,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private TextView tvcMeasureFormStyle;
     private Button btnSendForm;
     private TextView tvIllustrate;
+    private EditText et_detail_address;
     private TimePickerView pvTime;
     private AddressDialog mChangeAddressDialog;
 

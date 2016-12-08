@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.frame.http.common.Constant;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
@@ -18,8 +16,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,7 +33,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     public static void jumpTo(Activity context, List<RecommendSCFDBean> SCFDList, int position) {
         Intent intent = new Intent(context, ViewCategoryActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable)SCFDList);
-        intent.putExtra(Constant.POSITION, position);
+        intent.putExtra(JsonConstants.LOCATION, position);
         context.startActivityForResult(intent, 23);
     }
 
@@ -62,7 +58,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
         super.initExtraBundle();
         Intent intent = getIntent();
         mRecommendSCFDList = (List<RecommendSCFDBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
-        mPosition = intent.getIntExtra(Constant.POSITION, 0);
+        mPosition = intent.getIntExtra(JsonConstants.LOCATION, 0);
     }
 
     @Override

@@ -502,7 +502,7 @@ public class MPServerHttpManager {
                                  int limit, OkJsonRequest.OKResponseCallback callback) {
         String filterURl = UrlConstants.MAIN_MEMBER + "/designers/search?" +
                 "nick_name=" + findDesignerBean.getNick_name() +
-               // "&style_names=" + findDesignerBean.getStyle_names() +
+                // "&style_names=" + findDesignerBean.getStyle_names() +
                 "&start_experience=" + findDesignerBean.getStart_experience() +
                 "&end_experience=" + findDesignerBean.getEnd_experience() +
                 "&design_price_code=" + findDesignerBean.getDesign_price_code() +
@@ -1259,6 +1259,28 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 消费者同意应标-新接口
+     */
+    public void selectMeasureBid(String asset_id, String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url = "http://192.168.120.90:8080/design-app/v1/api/demands/" + asset_id + "/designers/" + designer_id + "/measurement/options/invitation";
+        String url = UrlConstants.URL_DELIVERY_DELAY_DATA + asset_id + "/designers/" + designer_id + "/measurement/options/invitation";
+        Log.d("urldwadwa",url);
+//        http://192.168.71.73:8080/design-app/v1/api/demands/{asset_id}/designers/{designer_id}/measurement/options/invitation
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+
+        queue.add(okRequest);
+    }
+
+
+    /**
      * 消费者自选设计师量房
      */
     public void agreeOneselfResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
@@ -1271,6 +1293,24 @@ public class MPServerHttpManager {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 消费者自选设计师量房-新接口
+     */
+    public void selectMeasure(String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/measurement/options/choice";
+//        String url = "http://192.168.120.90:8080/design-app/v1/api/designers/" + designer_id + "/measurement/options/choice";
+        Log.d("urldwadwa",url);
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
             }
         };
