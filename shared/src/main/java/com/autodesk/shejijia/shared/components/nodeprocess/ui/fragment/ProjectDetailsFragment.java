@@ -20,12 +20,16 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
+import com.autodesk.shejijia.shared.components.message.datamodel.CallBackMessageCenterDataSource;
+import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterDataSource;
+import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
@@ -33,14 +37,16 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDet
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
+
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View,CallBackMessageCenterDataSource, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
     private long projectId;
     private LinearLayout mProjectRootView;
@@ -53,6 +59,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private TextView mEditPlanBtn;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
+    private MessageCenterDataSource mMessageCenterDataSource;
 
     public ProjectDetailsFragment() {
     }
@@ -84,11 +91,14 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
+
+        mMessageCenterDataSource = new MessageCenterRemoteDataSource(this);
          projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
+            mMessageCenterDataSource.getUnreadCount(projectId+"",TAG);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
             LogUtils.e("GetProjectDetails", "you should input right projectId");
@@ -189,6 +199,16 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
+    }
+
+    @Override
+    public void onErrorResponse(ResponseError responseError) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject jsonObject) {
+
     }
 
     @Override
