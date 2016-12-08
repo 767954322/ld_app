@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -139,7 +138,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     }
 
     private void initToolbar(String title) {
-        ActionBar actionBar = mContext.getSupportActionBar();
-        actionBar.setTitle(title);
+        mContext.getSupportActionBar().setTitle(title);
     }
 }

@@ -57,8 +57,9 @@ public class FormActivity extends BaseActivity {
         if (getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT).isVisible()) {
             startActivity(new Intent(this, ScanQrCodeActivity.class));
             finish();
+        } else {
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
 }

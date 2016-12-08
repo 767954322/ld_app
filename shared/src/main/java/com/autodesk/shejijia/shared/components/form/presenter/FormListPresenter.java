@@ -14,7 +14,9 @@ import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_aij on 16/11/22.
@@ -23,6 +25,8 @@ import java.util.List;
 public class FormListPresenter implements FormListContract.Presenter {
     private FormListContract.View mView;
     private List<SHInspectionForm> mFormList = new ArrayList<>();
+    private Map<String,List<String>> mReinspectionMap = new LinkedHashMap<>();  //强制复验项,string是表单Id,List<String>是强制复验项的item_id的集合
+    private Map<String,List<String>> mRectificationMap =new LinkedHashMap<>();  //监督整改项,同上
 
     public FormListPresenter(FormListContract.View view, Task task) {
         mView = view;
@@ -89,7 +93,7 @@ public class FormListPresenter implements FormListContract.Presenter {
     private ItemCell initItemCell(SHInspectionForm shInspectionForm) {
         ItemCell itemCell = new ItemCell();
         HashMap typeDict = shInspectionForm.getTypeDict();
-        itemCell.setTitle(shInspectionForm.getTitle());//标题
+        itemCell.setTitle(shInspectionForm.getTitle());
 
         ArrayList<CheckItem> checkItems = shInspectionForm.getCheckItems();
 
@@ -107,7 +111,6 @@ public class FormListPresenter implements FormListContract.Presenter {
                 }
             }
 
-            // TODO: 16/12/7 全部选择完成之后的文字显示
         }
 
         return itemCell;
@@ -116,8 +119,11 @@ public class FormListPresenter implements FormListContract.Presenter {
     private void refreshItemCell(ItemCell itemCell, SHInspectionForm inspectionForm) {
         ArrayList<CheckItem> checkItems = inspectionForm.getCheckItems();
         HashMap typeDict = inspectionForm.getTypeDict();
-        for (CheckItem checkItem : checkItems) {
+        int num = 0;
+        for (int i = 0; i < checkItems.size(); i++) {
+            CheckItem checkItem = checkItems.get(i);
             FormFeedBack formFeedBack = checkItem.getFormFeedBack();
+// TODO: 16/12/8 需要根据temp_id 来确定一个item的输入值,强制复验和监督整改需要知道  表单ID和条目ID就可以
             if (formFeedBack.getCurrentCheckIndex() == 1) {
                 Object check = typeDict.get(checkItem.getCheckType());
                 Object action = typeDict.get(checkItem.getActionType());
@@ -125,12 +131,46 @@ public class FormListPresenter implements FormListContract.Presenter {
                     List<String> checkList = (List<String>) check;
                     List<String> actionList = (List<String>) action;
                     if ("不合格".equals(checkList.get(1)) && "强制复验".equals(actionList.get(Integer.valueOf(formFeedBack.getCurrentActionIndex())))) {
-                        itemCell.setResult("强制复验");
+                        if("强制复验".equals(actionList.get(Integer.valueOf(formFeedBack.getCurrentActionIndex())))) {
+                            itemCell.setResult("强制复验");
+                            Object status = typeDict.get("status");
+                            if (status instanceof List) {
+                                List<String> statusList = (List<String>) status;
+                                for (int j = 0; j < statusList.size(); j++) {
+                                    if ("强制复验".equals(statusList.get(j))) {
+                                        inspectionForm.setStatus(j);
+                                    }
+                                }
+                            }
+
+                        }
+
+
+
                         return;
                     }
                 }
             }
+
+            if (checkItem.isChecked()) {
+                num++;
+            }
+
+            if (num == checkItems.size() - 1) {
+                itemCell.setResult("验收通过");
+                Object status = typeDict.get("status");
+                if (status instanceof List) {
+                    List<String> statusList = (List<String>) status;
+                    for (int j = 0; j < statusList.size(); j++) {
+                        if ("验收通过".equals(statusList.get(j))) {
+                            inspectionForm.setStatus(j);
+                        }
+                    }
+                }
+                return;
+            }
         }
+
         itemCell.setResult(null);
     }
 }
