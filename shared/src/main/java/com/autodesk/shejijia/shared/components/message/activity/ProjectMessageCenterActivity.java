@@ -61,7 +61,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
     }
     private void getListMessageCenterInfo(){
-        mProjectMessageCenterPresenter.listMessageCenterInfo(getRequestBundle(),TAG);
+        mProjectMessageCenterPresenter.getMessageCenterInfo(getRequestBundle(),TAG);
     }
     private Bundle getRequestBundle(){
         Bundle requestParams = new Bundle();
@@ -77,7 +77,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         ProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
     }
     @Override
-    public void updateProjectDetailsView(MessageInfo messageInfo) {
+    public void updateProjectMessageView(MessageInfo messageInfo) {
         if(messageInfo.getMessageItemBean() != null) {
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean());
         }
@@ -91,6 +91,9 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
 
     @Override
     public void showLoading() {}
+
+    @Override
+    public void updateUnreadCountView(){}
 
     @Override
     public void hideLoading() {}

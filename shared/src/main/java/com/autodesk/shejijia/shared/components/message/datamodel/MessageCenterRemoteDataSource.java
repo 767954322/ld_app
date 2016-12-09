@@ -40,8 +40,8 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
         });
     }
     @Override
-    public void listMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().listMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
+    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
                 callback.onSuccess(jsonObject);

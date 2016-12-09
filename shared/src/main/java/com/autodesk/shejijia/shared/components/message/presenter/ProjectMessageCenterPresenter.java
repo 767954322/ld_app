@@ -25,15 +25,31 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
         mMessageCenterDataSource = MessageCenterRemoteDataSource.getInstance();
     }
     @Override
-    public void listMessageCenterInfo(Bundle bundle,String mTAG) {
+    public void getUnreadCount(String projectIds, String requestTag) {
         mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.listMessageCenterInfo(bundle,mTAG,new ResponseCallback<JSONObject, ResponseError>(){
+        mMessageCenterDataSource.getUnreadCount(projectIds,requestTag,new ResponseCallback<JSONObject, ResponseError>(){
+            @Override
+            public void onSuccess(JSONObject data) {
+                mProjectMessageCenterPresenterView.updateUnreadCountView();
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectMessageCenterPresenterView.hideLoading();
+                mProjectMessageCenterPresenterView.showNetError(error);
+            }
+        });
+    }
+    @Override
+    public void getMessageCenterInfo(Bundle bundle,String mTAG) {
+        mProjectMessageCenterPresenterView.showLoading();
+        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<JSONObject, ResponseError>(){
             @Override
             public void onSuccess(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
                 mProjectMessageCenterPresenterView.hideLoading();
-                mProjectMessageCenterPresenterView.updateProjectDetailsView(messageInfo);
+                mProjectMessageCenterPresenterView.updateProjectMessageView(messageInfo);
             }
             @Override
             public void onError(ResponseError error) {

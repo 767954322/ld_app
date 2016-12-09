@@ -12,9 +12,12 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 
 public interface ProjectMessageCenterContract {
     interface View extends BaseView{
-        void updateProjectDetailsView(MessageInfo messageInfo);
+        void updateProjectMessageView(MessageInfo messageInfo);
+        void updateUnreadCountView();
+
     }
     interface Presenter extends BasePresenter{
-        void listMessageCenterInfo(Bundle bundle,String mTAG);
+        void getMessageCenterInfo(Bundle bundle,String mTAG);
+        void getUnreadCount(String projectIds, String requestTag);
     }
 }

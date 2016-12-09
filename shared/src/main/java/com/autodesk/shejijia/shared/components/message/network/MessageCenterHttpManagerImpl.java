@@ -34,7 +34,7 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
         get(requestTag, requestUrl, callback);
     }
     @Override
-    public void listMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/notifications/messages?", requestParams);
         get(requestTag, requestUrl,callback);
     }
