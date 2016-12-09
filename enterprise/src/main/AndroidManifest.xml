@@ -234,12 +234,12 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueDescriptionActivity"
+            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueListActivity"
+            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddListActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />

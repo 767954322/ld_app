@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public interface AddIssueDescriptionContract {
+public interface IssueAddDescriptionContract {
 
     interface View extends BaseView {
 

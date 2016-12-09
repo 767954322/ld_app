@@ -172,5 +172,7 @@
     <string name="activity_issuelist_tital">问题列表</string>
     <string name="activity_addissue_tital">添加问题</string>
     <string name="activity_addissue_description_tital">问题描述</string>
+    <string name="Fragment_addissue_fllow_end">跟踪</string>
+    <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
 
 </resources>

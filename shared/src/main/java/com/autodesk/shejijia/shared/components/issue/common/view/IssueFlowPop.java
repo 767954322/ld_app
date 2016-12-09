@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBean;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
@@ -26,6 +27,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 /**
@@ -33,20 +35,23 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  */
 public class IssueFlowPop extends PopupWindow {
 
-    private List<IssueFllowBean> list;
+    //    private List<IssueFllowBean> list;
+    private ArrayList<Member> listMember;
     private Context mContext;
     private View view;
     private RecyclerView mIssueStyleList;
     private PopItemClickContract onItemClickListener;
     private GalleryAdapter mListAdapter;
+    private String[] strRole;
 
 
-    public IssueFlowPop(List<IssueFllowBean> list, Context mContext, PopItemClickContract onItemClickListener) {
-        this.list = list;
+    public IssueFlowPop(ArrayList<Member> listMember, Context mContext, PopItemClickContract onItemClickListener) {
+//        this.list = list;
+        this.listMember = listMember;
         this.mContext = mContext;
         this.onItemClickListener = onItemClickListener;
         this.view = LayoutInflater.from(mContext).inflate(R.layout.layout_pop_issuefllow, null);
-
+        strRole = mContext.getResources().getStringArray(add_issue_fllow);
         initView();
         initPop();
         initListView();
@@ -117,9 +122,10 @@ public class IssueFlowPop extends PopupWindow {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-            holder.mIssueFllowRole.setText(list.get(position).getmIssueFllowRole());
-            holder.mIssueFllowName.setText(list.get(position).getmIssueFllowName());
-            ImageUtils.displayRoundImage(list.get(position).getmImagePath(), holder.mImage);
+
+            holder.mIssueFllowRole.setText(strRole[position]);
+            holder.mIssueFllowName.setText(listMember.get(position + 2).getProfile().getName());
+            ImageUtils.displayRoundImage(listMember.get(position + 2).getProfile().getRoleImage(), holder.mImage);
             holder.mIssueFllowAll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -130,7 +136,7 @@ public class IssueFlowPop extends PopupWindow {
 
         @Override
         public int getItemCount() {
-            return list.size();
+            return 4;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

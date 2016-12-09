@@ -2,7 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.presenter;
 
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueAddDescriptionContract;
 import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public class AddIssueDescriptionPresent implements AddIssueDescriptionContract.Presenter {
+public class IssueAddDescriptionPresent implements IssueAddDescriptionContract.Presenter {
 
-    private AddIssueDescriptionContract.View mView;
+    private IssueAddDescriptionContract.View mView;
 
-    public AddIssueDescriptionPresent(AddIssueDescriptionContract.View mView) {
+    public IssueAddDescriptionPresent(IssueAddDescriptionContract.View mView) {
         this.mView = mView;
     }
 

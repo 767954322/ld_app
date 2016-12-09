@@ -7,15 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
-import com.autodesk.shejijia.shared.components.issue.contract.AddIssueDescriptionContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.AddIssueDescriptionPresent;
-import com.autodesk.shejijia.shared.components.issue.ui.fragment.AddIssueListFragment;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueAddDescriptionContract;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddDescriptionPresent;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueAddListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
@@ -23,9 +20,9 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class AddIssueListActivity extends BaseActivity implements AddIssueDescriptionContract.View {
-    private AddIssueDescriptionPresent mTrackingPresent;
-    private AddIssueListFragment addIssueTrackingFragment;
+public class IssueAddListActivity extends BaseActivity implements IssueAddDescriptionContract.View {
+    private IssueAddDescriptionPresent mTrackingPresent;
+    private IssueAddListFragment addIssueTrackingFragment;
     private IssueDescription mIssueDescription;
 
     @Override
@@ -43,8 +40,8 @@ public class AddIssueListActivity extends BaseActivity implements AddIssueDescri
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             initToolbar();
-            addIssueTrackingFragment = AddIssueListFragment.getInstance();
-            mTrackingPresent = new AddIssueDescriptionPresent(this);
+            addIssueTrackingFragment = IssueAddListFragment.getInstance();
+            mTrackingPresent = new IssueAddDescriptionPresent(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();

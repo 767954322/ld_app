@@ -3,7 +3,6 @@ package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +28,8 @@ import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFllowBea
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
-import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueDescriptionActivity;
-import com.autodesk.shejijia.shared.components.issue.ui.adapter.AddIssueImageAdapter;
-import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
+import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity;
+import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueAddListImageAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -40,17 +38,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 /**
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class AddIssueListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener {
+public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener {
 
 
-    public static AddIssueListFragment getInstance() {
-        AddIssueListFragment fragment = new AddIssueListFragment();
+    public static IssueAddListFragment getInstance() {
+        IssueAddListFragment fragment = new IssueAddListFragment();
         return fragment;
     }
 
@@ -78,9 +77,9 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initData() {
-        initTimePick();
-        initProjectReplyData();
-        initImageList();
+        initTimePick();//初始化TimePick
+        initProjectReplyData();//初始化代码相关成员信息
+        initImageList();//初始化项目描述图片List
     }
 
     private void initImageList() {
@@ -91,8 +90,9 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
         mIssueImagesList.setHasFixedSize(true);
         mIssueImagesList.setItemAnimator(new DefaultItemAnimator());
         //init recyclerView adapter
-        mIssueImageAdapter = new AddIssueImageAdapter(null, getContext(), R.layout.item_addissue_image);
+        mIssueImageAdapter = new IssueAddListImageAdapter(null, getContext(), R.layout.item_addissue_image);
         mIssueImagesList.setAdapter(mIssueImageAdapter);
+        strRole = activity.getResources().getStringArray(add_issue_fllow);
 
     }
 
@@ -116,12 +116,11 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
             issueStylePopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueStylePopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         } else if (i == R.id.rl_layout_descrition) {
-            Intent intent_description = new Intent(getActivity(), AddIssueDescriptionActivity.class);
+            Intent intent_description = new Intent(getActivity(), IssueAddDescriptionActivity.class);
             this.startActivityForResult(intent_description, ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE);
         } else if (i == R.id.rl_issuefllow) {
-            list_fllow = initRoleData();
             if (issueFllowPopWin == null) {
-                issueFllowPopWin = new IssueFlowPop(list_fllow, activity.getBaseContext(), this);
+                issueFllowPopWin = new IssueFlowPop(listMember, activity.getBaseContext(), this);
             }
             issueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             issueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -144,8 +143,8 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
-            IssueFllowBean issueFllowBean = list_fllow.get(position);
-            mIssueFllowContent.setText(issueFllowBean.getmIssueFllowRole() + issueFllowBean.getmIssueFllowName() + "跟踪");
+            Member member = listMember.get(position + 2);
+            mIssueFllowContent.setText(strRole[position] + member.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
         } else {
             mIssueStyleContent.setText(activity.getResources().getStringArray(add_issue_type_list)[position]);
         }
@@ -185,21 +184,23 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private void initProjectReplyData() {
         ProjectInfo projectInfo = ProjectRepository.getInstance().getActiveProject();
         if (projectInfo != null) {
-            ArrayList<Member> listMember = projectInfo.getMembers();
+            listMember = projectInfo.getMembers();
+        } else {
+            ToastUtils.showLong(activity, UIUtils.getString(R.string.Fragment_addissue_getprojectinfo_error));
         }
     }
 
-    private List<IssueFllowBean> initRoleData() {
-        List<IssueFllowBean> list_fllow = new ArrayList<>();
-        String issueImgPath = "http://img3.imgtn.bdimg.com/it/u=214931719,1608091472&fm=21&gp=0.jpg";
-        String issueRole = "设计师";
-        String issueName = "网络名称";
-        for (int i = 0; i < 4; i++) {
-            IssueFllowBean mIssueFllowBean = new IssueFllowBean(issueImgPath, issueRole + i, issueName + i);
-            list_fllow.add(mIssueFllowBean);
-        }
-        return list_fllow;
-    }
+//    private List<IssueFllowBean> initRoleData() {
+//        List<IssueFllowBean> list_fllow = new ArrayList<>();
+//        String issueImgPath = "http://img3.imgtn.bdimg.com/it/u=214931719,1608091472&fm=21&gp=0.jpg";
+//        String issueRole = "设计师";
+//        String issueName = "网络名称";
+//        for (int i = 0; i < 4; i++) {
+//            IssueFllowBean mIssueFllowBean = new IssueFllowBean(issueImgPath, issueRole + i, issueName + i);
+//            list_fllow.add(mIssueFllowBean);
+//        }
+//        return list_fllow;
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -255,8 +256,10 @@ public class AddIssueListFragment extends BaseFragment implements View.OnClickLi
     private TextView mIssueDescriptionContent;
     private RecyclerView mIssueImagesList;
 
-    private AddIssueImageAdapter mIssueImageAdapter;
-    private List<IssueFllowBean> list_fllow;
+    private IssueAddListImageAdapter mIssueImageAdapter;
+    //    private List<IssueFllowBean> list_fllow;
+    private String[] strRole;
+    private ArrayList<Member> listMember;
     private Switch mIssueSwitchNotify;
     private TimePickerView pvTime;
     private SimpleDateFormat dateFormat;

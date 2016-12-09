@@ -5,14 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -20,13 +16,13 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/8.
  */
 
-public class AddIssueImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class IssueAddListImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<String> imgList;
     private Context mContext;
     private int resId;
 
-    public AddIssueImageAdapter(List<String> imgList, Context mContext, int resId) {
+    public IssueAddListImageAdapter(List<String> imgList, Context mContext, int resId) {
         this.imgList = imgList;
         this.mContext = mContext;
         this.resId = resId;
@@ -40,13 +36,13 @@ public class AddIssueImageAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
-        return new AddIssueImageAdapter.IssueImageVH(view);
+        return new IssueAddListImageAdapter.IssueImageVH(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        AddIssueImageAdapter.IssueImageVH issueImagesVh = (AddIssueImageAdapter.IssueImageVH) holder;
+        IssueAddListImageAdapter.IssueImageVH issueImagesVh = (IssueAddListImageAdapter.IssueImageVH) holder;
 
         initView(issueImagesVh, position);
 
@@ -54,13 +50,13 @@ public class AddIssueImageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     }
 
-    private void initView(AddIssueImageAdapter.IssueImageVH issueImagesVh, int position) {
+    private void initView(IssueAddListImageAdapter.IssueImageVH issueImagesVh, int position) {
         if (imgList != null) {
             ImageUtils.loadImage(issueImagesVh.imgIssueDescription, "file:///" + imgList.get(position));
         }
     }
 
-    private void initEvents(AddIssueImageAdapter.IssueImageVH issueImagesVh, final int position) {
+    private void initEvents(IssueAddListImageAdapter.IssueImageVH issueImagesVh, final int position) {
 
     }
 

@@ -41,4 +41,11 @@
         <item>其他问题</item>
     </string-array>
 
+    <string-array name="add_issue_fllow">
+        <item>设计师</item>
+        <item>客户经理</item>
+        <item>材料员</item>
+        <item>班长</item>
+    </string-array>
+
 </resources>

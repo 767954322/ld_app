@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public class AddIssueDescriptionActivity extends BaseActivity {
+public class IssueAddDescriptionActivity extends BaseActivity {
     private FrameLayout mAddIssueTracking;
     private CommentFragment addIssueTrackingFragment;
     private CommentPresenter mPresenter;

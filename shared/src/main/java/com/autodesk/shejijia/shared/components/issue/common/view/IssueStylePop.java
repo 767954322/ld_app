@@ -2,22 +2,17 @@ package com.autodesk.shejijia.shared.components.issue.common.view;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
-import com.autodesk.shejijia.shared.components.issue.ui.fragment.AddIssueListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
