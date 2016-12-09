@@ -143,8 +143,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void refreshLikesButton(Like newLike, int likePosition) {
-        mProjectListAdapter.updateProjectState(newLike, likePosition);
+    public void refreshLikesButton(String filterLike, Like newLike, int likePosition) {
+        mProjectListAdapter.updateProjectState(filterLike, newLike, likePosition);
     }
 
     @Override
@@ -177,9 +177,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             // TODO: 10/25/16 跳转到搜索页面
             return true;
         } else if (itemId == R.id.home_toolbar_screen) {
-            if (mIsFiltered){
+            if (mIsFiltered) {
                 mIsFiltered = false;
-            }else {
+            } else {
                 mIsFiltered = true;
             }
             initScreenPopupWin();
@@ -192,7 +192,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void hideLoading() {
         super.hideLoading();
-        if (mProjectListView.isRefreshing()){
+        if (mProjectListView.isRefreshing()) {
             mProjectListView.complete();
         }
     }

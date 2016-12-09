@@ -90,8 +90,8 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void loadMoreProjectList() {
-            this.mIsRefresh = false;
-            loadProjectList(mOffset);
+        this.mIsRefresh = false;
+        loadProjectList(mOffset);
     }
 
     private void loadProjectList(int offset) {
@@ -125,7 +125,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
                     mProjectListView.refreshProjectListView(taskList.getData());
                     if (taskList.getData() != null && taskList.getData().size() > 0) {
                         mLoadedSize = taskList.getData().size();
-                        mOffset = mLoadedSize - 2;
+                        mOffset = mLoadedSize;
                     } else {
                         mLoadedSize = 0;
                     }
@@ -185,7 +185,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             public void onSuccess(Like data) {
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
                 mProjectListView.hideLoading();
-                mProjectListView.refreshLikesButton(data, position);
+                mProjectListView.refreshLikesButton(mFilterLike, data, position);
             }
 
             @Override

@@ -24,7 +24,7 @@ public interface ProjectListContract {
 
         void addMoreProjectListView(List<ProjectInfo> projectList);
 
-        void refreshLikesButton(Like newLike, int likePosition);
+        void refreshLikesButton(String filterLike, Like newLike, int likePosition);
 
     }
 
