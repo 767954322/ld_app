@@ -65,4 +65,12 @@ public final class UserInfoUtils {
         }
         return null;
     }
+
+    public static String getAcsMemberId(@NonNull Context context){
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getAcs_member_id())) {
+            return entity.getAcs_member_id();
+        }
+        return null;
+    }
 }

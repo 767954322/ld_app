@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -29,6 +30,10 @@ import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
+import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
+import com.autodesk.shejijia.shared.components.im.fragment.GroupChatFragment;
+import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -207,7 +212,12 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 fragment = IssueListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_GROUP_CHAT:
-                fragment = GroupChatFragment.newInstance();
+                fragment = new MPThreadListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(MPThreadListFragment.ISFILEBASE, false);
+                bundle.putString(MPThreadListFragment.MEMBERID, UserInfoUtils.getAcsMemberId(this));
+                bundle.putString(MPThreadListFragment.MEMBERTYPE, UserInfoUtils.getMemberType(this));
+                fragment.setArguments(bundle);
                 break;
             default:
                 break;

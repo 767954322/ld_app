@@ -14,6 +14,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.Body;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
@@ -224,6 +225,7 @@ public class ThreadListAdapter extends BaseAdapter
     {
         MPChatUser sender = MPChatUtility.getComplimentryUserFromThread(thread, "" + mThreadListInterface.getLoggedInUserId());
         String userName = MPChatUtility.getUserDisplayNameFromUser(sender.name);
+        LogUtils.i("sender_name",userName);
         String displayName = null;
 
         assert (userName != null && !userName.isEmpty());

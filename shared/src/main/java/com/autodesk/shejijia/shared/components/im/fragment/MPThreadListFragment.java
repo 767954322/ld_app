@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -110,6 +114,12 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         mThreadListAdapter = new ThreadListAdapter(mActivity, this, mIsFileBase);
         mThreadListView.setAdapter(mThreadListAdapter);
         setSwipeRefreshInfo();
+        //施工端 顶部topBar menu 设置
+        if (mActivity.getPackageName().contains("enterprise")){
+            setHasOptionsMenu(true);
+            mThreadListView.setDividerHeight(1);
+            mThreadListView.setDivider(ContextCompat.getDrawable(mActivity,R.drawable.linearlayout_divider_hor_shape));
+        }
     }
 
 
@@ -337,6 +347,24 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         });
         mPtrLayout.autoRefresh();
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.chat_hotspot_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_chat_hotspot){
+            MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+            Intent intent = new Intent(mActivity, MPFileThreadListActivity.class);
+            intent.putExtra(MPFileThreadListActivity.MEMBERID, memberEntity.getAcs_member_id());
+            intent.putExtra(MPFileThreadListActivity.MEMBERTYPE, memberEntity.getMember_type());
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private PtrClassicFrameLayout mPtrLayout;

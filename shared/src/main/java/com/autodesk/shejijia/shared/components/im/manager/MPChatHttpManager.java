@@ -11,6 +11,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.utility.DeviceUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -97,6 +98,8 @@ public class MPChatHttpManager {
                 "&entity_info=true" +
                 "&entity_types=" + entityTypes;
 
+        LogUtils.e("im-requestUrl-> ",url);
+
         queue.add(new OkStringRequest(Request.Method.GET, url, callback) {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return getDefaultHeaders();
@@ -154,7 +157,7 @@ public class MPChatHttpManager {
                 "&sort_order=desc" +
                 "&offset=" + String.valueOf(offset) +
                 "&limit=" + String.valueOf(limit);
-
+        LogUtils.e("im-requestUrl-> ",url);
         queue.add(new OkStringRequest(Request.Method.GET, url, callback) {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return getDefaultHeaders();
