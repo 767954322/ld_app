@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.message.adapter;
+package com.autodesk.shejijia.shared.components.message;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;

@@ -15,12 +15,9 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
+import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailTasksFragment;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,7 +201,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
 
     @Override
     public void navigateToMessageCenter() {
-        //// TODO: 11/11/16 跳转消息中心逻辑
+
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());

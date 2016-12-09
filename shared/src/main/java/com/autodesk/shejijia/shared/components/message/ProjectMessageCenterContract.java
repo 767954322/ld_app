@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.message.presenter;
+package com.autodesk.shejijia.shared.components.message;
 
 import android.os.Bundle;
 

@@ -1,19 +1,19 @@
-package com.autodesk.shejijia.shared.components.message.activity;
+package com.autodesk.shejijia.shared.components.message;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.adapter.ProjectMessageCenterAdapter;
-import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
-import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterContract;
-import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenter;
+import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 

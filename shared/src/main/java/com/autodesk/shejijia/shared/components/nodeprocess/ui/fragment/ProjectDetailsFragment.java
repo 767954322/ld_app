@@ -23,6 +23,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLay
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
+import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterContract;
+import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
@@ -48,6 +51,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private TextView mWorkStateView;
     private TextView mEditPlanBtn;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
+    private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
+
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
     public ProjectDetailsFragment() {
     }
@@ -79,10 +84,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
+        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getActivity(),this);
          projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
+//            mProjectMessageCenterPresenter.getUnreadCount(projectId+"",TAG);
+
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -180,7 +188,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         // TODO: 11/11/16 其他更加友好的提示方式 
         ToastUtils.showShort(mContext, "you couldn't get right project information");
     }
+    @Override
+    public void updateProjectMessageView(MessageInfo messageInfo) {}
+    @Override
+    public void updateUnreadCountView() {
 
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);

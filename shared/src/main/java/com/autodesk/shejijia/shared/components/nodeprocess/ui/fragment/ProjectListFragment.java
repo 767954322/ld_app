@@ -30,7 +30,6 @@ import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectListAdapter;

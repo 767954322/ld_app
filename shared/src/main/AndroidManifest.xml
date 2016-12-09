@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity android:name=".framework.activity.NavigationBarActivity" />
-        <activity android:name=".components.message.activity.ProjectMessageCenterActivity"></activity>
+        <activity android:name=".components.message.ProjectMessageCenterActivity"></activity>
     </application>
 
 </manifest>
