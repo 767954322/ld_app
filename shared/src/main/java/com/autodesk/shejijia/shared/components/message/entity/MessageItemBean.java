@@ -3,8 +3,6 @@ package com.autodesk.shejijia.shared.components.message.entity;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.List;
-
 /**
  * Created by luchongbin on 2016/12/9.
  */

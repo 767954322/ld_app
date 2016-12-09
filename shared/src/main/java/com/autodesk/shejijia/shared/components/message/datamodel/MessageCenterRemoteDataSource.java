@@ -6,7 +6,6 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
-import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManager;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 
 import org.json.JSONObject;

@@ -6,10 +6,8 @@ import android.os.Bundle;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterDataSource;
 import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
-import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 
 import org.json.JSONObject;
 
