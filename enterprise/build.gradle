@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 def buildNumber = ".0"
+def gitLastCommitId = ""
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
