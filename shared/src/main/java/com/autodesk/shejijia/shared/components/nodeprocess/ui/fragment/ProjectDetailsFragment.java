@@ -18,26 +18,17 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.message.activity.ProjectMessageCenterActivity;
-import com.autodesk.shejijia.shared.components.message.datamodel.CallBackMessageCenterDataSource;
-import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterDataSource;
-import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
-
-import org.json.JSONObject;
-
 import java.util.List;
 
 /**

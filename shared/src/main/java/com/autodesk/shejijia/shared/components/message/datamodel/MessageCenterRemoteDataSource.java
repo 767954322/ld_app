@@ -16,13 +16,19 @@ import org.json.JSONObject;
  */
 
 public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
-    private MessageCenterHttpManager mMessageCenterHttpManager;
     public MessageCenterRemoteDataSource() {
-        mMessageCenterHttpManager = MessageCenterHttpManagerImpl.getInstance();
     }
+    private static class ServerHttpManagerHolder {
+        private static final MessageCenterRemoteDataSource INSTANCE = new MessageCenterRemoteDataSource();
+    }
+
+    public static MessageCenterRemoteDataSource getInstance() {
+        return MessageCenterRemoteDataSource.ServerHttpManagerHolder.INSTANCE;
+    }
+
     @Override
-    public void getUnreadCount(String project_ids, String requestTag,@NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
-        mMessageCenterHttpManager.getUnreadCount(project_ids,requestTag,new OkJsonRequest.OKResponseCallback(){
+    public void getUnreadCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadCount(projectIds,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
                 callback.onSuccess(jsonObject);
@@ -36,7 +42,7 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
     }
     @Override
     public void listMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
-        mMessageCenterHttpManager.listMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
+        MessageCenterHttpManagerImpl.getInstance().listMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
                 callback.onSuccess(jsonObject);

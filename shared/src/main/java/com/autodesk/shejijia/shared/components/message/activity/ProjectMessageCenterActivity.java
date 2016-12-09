@@ -9,9 +9,10 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.adapter.ProjectMessageCenterAdapter;
+import com.autodesk.shejijia.shared.components.message.entity.DataBean;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
+import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterContract;
 import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenter;
-import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenterImpl;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,10 @@ import java.util.List;
 /**
  * Created by luchongbin on 2016/12/5.
  */
-public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterPresenter.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
+public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
 
-    private ProjectMessageCenterPresenter.Presenter mProjectMessageCenterPresenter;
-    private List<MessageInfo.DataBean> mData;
+    private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
+    private List<DataBean> mData;
     private long mProjectId;
     private boolean isUnrea;
     private RecyclerView mRvProjectMessagCenterView;
@@ -46,7 +47,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
         mData = new ArrayList<>();
-        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenterImpl(getApplicationContext(),this);
+        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(),this);
         mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(mData,isUnrea,R.layout.item_messagecenter);
         initRecyclerView();
         getListMessageCenterInfo();

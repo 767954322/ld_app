@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.message.entity.DataBean;
+import com.autodesk.shejijia.shared.components.message.entity.DisplayMessageBean;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 
 import java.util.List;
@@ -21,14 +22,14 @@ import java.util.List;
  */
 
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<MessageInfo.DataBean> mData;
+    private List<DataBean> mData;
     private boolean isUnrea;
     private static HistoricalRecordstListener mHistoricalRecordstListener;
     private int mBottomCount=1;//底部View个数
     public static final int ITEM_TYPE_CONTENT = 0;
     public static final int ITEM_TYPE_BOTTOM = 1;
     private int resId;
-    public ProjectMessageCenterAdapter(List<MessageInfo.DataBean> mData,boolean isUnrea,int resId) {
+    public ProjectMessageCenterAdapter(List<DataBean> mData,boolean isUnrea,int resId) {
         super();
         this.mData = mData;
         this.resId = resId;
@@ -72,7 +73,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             return ITEM_TYPE_CONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<MessageInfo.DataBean> meaasgesInfo) {
+    public void notifyDataForRecyclerView(List<DataBean> meaasgesInfo) {
         this.mData.addAll(meaasgesInfo);
         notifyDataSetChanged();
     }
@@ -95,7 +96,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
 
-        MessageInfo.DataBean.DisplayMessageBean display_message = mData.get(position).getDisplay_message();
+        DisplayMessageBean display_message = mData.get(position).getDisplay_message();
         if (display_message != null && !TextUtils.isEmpty(display_message.getSummary())) {
             String title = display_message.getSummary();
             for (int i = 0; title.contains("*"); i++) {
