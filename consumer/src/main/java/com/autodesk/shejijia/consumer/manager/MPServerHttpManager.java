@@ -271,6 +271,29 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 已有的量房表单数据
+     */
+    public void getExistMeasureOrderData(final int offset, final int limit, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_GET_MY_DECORATION_LIST + member_id + "/demands?" +
+                "&offset=" + offset +
+                "&sort_order=desc" +
+                "&sort_by=date" +
+                "&limit=" + limit +
+                "&server_module_id=" + 2;
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 获取精选设计师作品图片
      *
      * @param callback
@@ -1264,7 +1287,7 @@ public class MPServerHttpManager {
     public void selectMeasureBid(String asset_id, String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
 //        String url = "http://192.168.120.90:8080/design-app/v1/api/demands/" + asset_id + "/designers/" + designer_id + "/measurement/options/invitation";
         String url = UrlConstants.URL_DELIVERY_DELAY_DATA + asset_id + "/designers/" + designer_id + "/measurement/options/invitation";
-        Log.d("urldwadwa",url);
+        Log.d("urldwadwa", url);
 //        http://192.168.71.73:8080/design-app/v1/api/demands/{asset_id}/designers/{designer_id}/measurement/options/invitation
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
             @Override
@@ -1305,7 +1328,7 @@ public class MPServerHttpManager {
     public void selectMeasure(String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/measurement/options/choice";
 //        String url = "http://192.168.120.90:8080/design-app/v1/api/designers/" + designer_id + "/measurement/options/choice";
-        Log.d("urldwadwa",url);
+        Log.d("urldwadwa", url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

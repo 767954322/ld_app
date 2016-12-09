@@ -150,10 +150,10 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                                 jsonObject.put("service_date", currentTime);
                                 jsonObject.put("user_id", user_id);
                                 jsonObject.put("hs_uid", hs_uid);
-                                jsonObject.put("needs_id", dList.get(expandFlag).getNeeds_id());
+                                jsonObject.put("needs_id", mList.get(expandFlag).getNeeds_id());
                                 jsonObject.put("designer_id", designer_id);
-                                jsonObject.put("user_name", dList.get(expandFlag).getContacts_name());
-                                jsonObject.put("mobile_number", dList.get(expandFlag).getContacts_mobile());
+                                jsonObject.put("user_name", mList.get(expandFlag).getContacts_name());
+                                jsonObject.put("mobile_number", mList.get(expandFlag).getContacts_mobile());
                                 jsonObject.put("order_type", 0);
                                 if (TextUtils.isEmpty(fee)) {
                                     jsonObject.put("amount", 0.01);
@@ -255,7 +255,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
      * @param limit
      */
     public void getMyDecorationData(int offset, final int limit) {
-        MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().getExistMeasureOrderData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.dialog.cancel();
@@ -280,24 +280,23 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
      * @param decorationListBean
      */
     private void updateViewFromData(DecorationListBean decorationListBean) {
-        ArrayList<DecorationNeedsListBean> mList = new ArrayList<>();
-        mList.addAll(decorationListBean.getNeeds_list());
 
-        int size = mList.size();
-        for (int i = 0; i < size; i++) {
-            String wk_template_id = mList.get(i).getWk_template_id();
-            if (wk_template_id != null && (Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id) || Constant.NumKey.CERTIFIED_FAILED.equals(wk_template_id))) {
-                if (mList.get(i).getContract() == null) {
-                    dList.add(mList.get(i));
-                } else {
-                    mList.get(i).setContract("null");
-                    dList.add(mList.get(i));
-                }
-            }
-        }
+        mList.addAll(decorationListBean.getNeeds_list());
+//        int size = mList.size();
+//        for (int i = 0; i < size; i++) {
+//            String wk_template_id = mList.get(i).getWk_template_id();
+//            if (wk_template_id != null && (Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id) || Constant.NumKey.CERTIFIED_FAILED.equals(wk_template_id))) {
+//                if (mList.get(i).getContract() == null) {
+//                    dList.add(mList.get(i));
+//                } else {
+//                    mList.get(i).setContract("null");
+//                    dList.add(mList.get(i));
+//                }
+//            }
+//        }
         // 设置悬浮头部VIEW
-        if (dList != null && dList.size() > 0) {
-            adapter = new PinnedHeaderExpandableAdapter(dList, ExistMeasureOrderActivity.this, explistview);
+        if (mList != null && mList.size() > 0) {
+            adapter = new PinnedHeaderExpandableAdapter(mList, ExistMeasureOrderActivity.this, explistview);
             explistview.setAdapter(adapter);
         } else {
             mNoExistMeasure = new AlertView(null, UIUtils.getString(R.string.not_have_send_measure), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this, AlertView.Style.Alert, ExistMeasureOrderActivity.this).setOnDismissListener(this);
@@ -378,6 +377,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private String designer_id;
     private String hs_uid;
     private int expandFlag = -1;// 控制列表的展开
-    private ArrayList<DecorationNeedsListBean> dList = new ArrayList<>();
-
+    //    private ArrayList<DecorationNeedsListBean> dList = new ArrayList<>();
+    ArrayList<DecorationNeedsListBean> mList = new ArrayList<>();
 }
