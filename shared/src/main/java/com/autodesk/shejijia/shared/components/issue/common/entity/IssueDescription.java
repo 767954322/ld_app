@@ -13,10 +13,10 @@ public class IssueDescription implements Serializable {
     private String mAudioPath;
     private List<String> mImagePath;
 
-    public IssueDescription(String mDescription, String mAudioPath, List<String> mImagePath) {
-        this.mDescription = mDescription;
-        this.mAudioPath = mAudioPath;
-        this.mImagePath = mImagePath;
+    public IssueDescription(String description, String audioPath, List<String> imagePath) {
+        this.mDescription = description;
+        this.mAudioPath = audioPath;
+        this.mImagePath = imagePath;
     }
 
     public String getmDescription() {

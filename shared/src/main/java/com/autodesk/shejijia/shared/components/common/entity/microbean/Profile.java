@@ -15,8 +15,7 @@ public class Profile implements Serializable {
     private String name;
     private String mobile;
     private String email;
-    @SerializedName("avatar")
-    private String roleImage;
+    private String avatar;
     @SerializedName("groupids")
     private List<String> groupIds;
 
@@ -52,11 +51,11 @@ public class Profile implements Serializable {
         this.groupIds = groupIds;
     }
 
-    public String getRoleImage() {
-        return roleImage;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setRoleImage(String roleImage) {
-        this.roleImage = roleImage;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

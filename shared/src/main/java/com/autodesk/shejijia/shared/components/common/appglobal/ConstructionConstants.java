@@ -109,17 +109,12 @@ public class ConstructionConstants {
     }
 
     public static class IssueTracking {
-
         public static final String BUNDLE_KEY_ISSUE_LIST_TYPE = "issue_tracking_type";//进入问题追踪的key
         public static final String ISSUE_LIST_TYPE_ALL_PROJECTS = "enterprise_all_tag";//角色查看服务端全部问题追踪
         public static final String ISSUE_LIST_TYPE_SINGLE_PROJECT = "enterprise_one_tag";//角色查看服务端单个问题追踪
         public static final String ISSUE_LIST_TYPE_CONSUMER = "consumer_tag";//消费端查看单个问题追踪
-
         public static final int ADD_ISSUE_DESCRIPTION_REQUEST_CODE = 1;//添加问题追踪描述返回请求码
         public static final String ADD_ISSUE_DESCRIPTION_RESULT_KEY = "key_issuedescription";//添加问题追踪描述返回KEY
-
-
-
     }
 
 }

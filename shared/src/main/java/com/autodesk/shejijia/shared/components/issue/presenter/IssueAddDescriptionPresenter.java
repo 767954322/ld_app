@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public class IssueAddDescriptionPresent implements IssueAddDescriptionContract.Presenter {
+public class IssueAddDescriptionPresenter implements IssueAddDescriptionContract.Presenter {
 
     private IssueAddDescriptionContract.View mView;
 
-    public IssueAddDescriptionPresent(IssueAddDescriptionContract.View mView) {
+    public IssueAddDescriptionPresenter(IssueAddDescriptionContract.View mView) {
         this.mView = mView;
     }
 

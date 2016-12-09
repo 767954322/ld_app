@@ -15,7 +15,7 @@ import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
  * Created by Menghao.Gu on 2016/12/1.
  */
 
-public class IssueListPresent implements IssueListContract.Presenter {
+public class IssueListPresenter implements IssueListContract.Presenter {
 
     private Context mContext;
     private FragmentManager fragmentManager;
@@ -24,7 +24,7 @@ public class IssueListPresent implements IssueListContract.Presenter {
     private String[] mIssueListData;
     private String mIssueTruckingType;
 
-    public IssueListPresent(Context mContext, FragmentManager fragmentManager, IssueListContract.View mView) {
+    public IssueListPresenter(Context mContext, FragmentManager fragmentManager, IssueListContract.View mView) {
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
         this.mView = mView;

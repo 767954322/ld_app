@@ -14,8 +14,9 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueListContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.IssueListPresent;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueListPresenter;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddListActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
@@ -26,11 +27,11 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 public class IssueListFragment extends BaseConstructionFragment implements IssueListContract.View, IssueListAdapter.IssueListItemListener, RefreshLoadMoreListener, View.OnClickListener {
 
     private IssueListAdapter mIssueListAdapter;
-    private IssueListPresent mIssueListPresent;
+    private IssueListPresenter mIssueListPresenter;
     private SwipeRecyclerView mIssueListView;
     private RelativeLayout mAddIssueTracking;
     private String[] mIssueListData;
-    private String issue_tracking_type;
+    private String mIssueTrackingType;
     private TextView mEmptyView;
 
     public static IssueListFragment newInstance() {
@@ -58,12 +59,12 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
          * public static final String ENTERPRISE_ONE_TAG = "enterprise_one_tag";施工单个项目的问题
          * public static final String CONSEMER_TAG = "consumer_tag";消费者的问题
          */
-        issue_tracking_type = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.BUNDLE_KEY_ISSUE_LIST_TYPE);
+        mIssueTrackingType = activity.getIntent().getStringExtra(ConstructionConstants.IssueTracking.BUNDLE_KEY_ISSUE_LIST_TYPE);
         //初始化IssueListPresent
-        mIssueListPresent = new IssueListPresent(getActivity(), mContext.getSupportFragmentManager(), this);
-        mIssueListPresent.setIssueListStyle(issue_tracking_type);
+        mIssueListPresenter = new IssueListPresenter(getActivity(), mContext.getSupportFragmentManager(), this);
+        mIssueListPresenter.setIssueListStyle(mIssueTrackingType);
         //获取列表问题数量（目前是三种情况）
-        mIssueListPresent.getIssueNumber();
+        mIssueListPresenter.getIssueNumber();
 
     }
 
@@ -81,7 +82,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     //初始化recyclerView
     private void initList() {
         //添加问题模块BUTON，默认隐藏，只有单项目可以添加
-        if (!TextUtils.isEmpty(issue_tracking_type) && ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_SINGLE_PROJECT.equals(issue_tracking_type)) {
+        if (!TextUtils.isEmpty(mIssueTrackingType) && ConstructionConstants.IssueTracking.ISSUE_LIST_TYPE_SINGLE_PROJECT.equals(mIssueTrackingType)) {
             mAddIssueTracking.setVisibility(View.VISIBLE);
         } else {
             mAddIssueTracking.setVisibility(View.GONE);
@@ -102,7 +103,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     @Override
     public void onRefresh() {
 
-        mIssueListPresent.refreshIssueTracking();
+        mIssueListPresenter.refreshIssueTracking();
 
     }
 
@@ -146,9 +147,7 @@ public class IssueListFragment extends BaseConstructionFragment implements Issue
     //问题追踪列表Item点击监听
     @Override
     public void onIssueListClick(int item_position) {
-
-        ToastUtils.showLong(activity, "查看详情");
-
+        ToastUtils.showLong(activity, UIUtils.getString(R.string.Fragment_issuelist_itemclick_toast));
     }
 
 }

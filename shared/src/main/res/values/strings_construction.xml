@@ -174,5 +174,6 @@
     <string name="activity_addissue_description_tital">问题描述</string>
     <string name="Fragment_addissue_fllow_end">跟踪</string>
     <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
+    <string name="Fragment_issuelist_itemclick_toast">查看详情</string>
 
 </resources>

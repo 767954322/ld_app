@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +48,9 @@ public class IssueListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private void initView(IssueListVH issueListVh, int position) {
-
-        issueListVh.mIssueItemTitle.setText(mIssueListData[position]);
-
+        if(mIssueListData != null && !TextUtils.isEmpty(mIssueListData[position])){
+            issueListVh.mIssueItemTitle.setText(mIssueListData[position]);
+        }
     }
 
     private void initEvents(IssueListVH issueListVh, final int position) {

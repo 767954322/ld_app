@@ -12,10 +12,10 @@ public class IssueFllowBean implements Serializable {
     private String mIssueFllowRole;
     private String mIssueFllowName;
 
-    public IssueFllowBean(String mImagePath, String mIssueFllowRole, String mIssueFllowName) {
-        this.mImagePath = mImagePath;
-        this.mIssueFllowRole = mIssueFllowRole;
-        this.mIssueFllowName = mIssueFllowName;
+    public IssueFllowBean(String imagePath, String issueFllowRole, String issueFllowName) {
+        this.mImagePath = imagePath;
+        this.mIssueFllowRole = issueFllowRole;
+        this.mIssueFllowName = issueFllowName;
     }
 
     public String getmImagePath() {

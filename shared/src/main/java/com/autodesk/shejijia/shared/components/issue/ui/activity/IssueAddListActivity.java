@@ -11,7 +11,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueAddDescriptionContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddDescriptionPresent;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddDescriptionPresenter;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueAddListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -21,7 +21,7 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  */
 
 public class IssueAddListActivity extends BaseActivity implements IssueAddDescriptionContract.View {
-    private IssueAddDescriptionPresent mTrackingPresent;
+    private IssueAddDescriptionPresenter mTrackingPresent;
     private IssueAddListFragment addIssueTrackingFragment;
     private IssueDescription mIssueDescription;
 
@@ -41,7 +41,7 @@ public class IssueAddListActivity extends BaseActivity implements IssueAddDescri
         if (savedInstanceState == null) {
             initToolbar();
             addIssueTrackingFragment = IssueAddListFragment.getInstance();
-            mTrackingPresent = new IssueAddDescriptionPresent(this);
+            mTrackingPresent = new IssueAddDescriptionPresenter(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();
