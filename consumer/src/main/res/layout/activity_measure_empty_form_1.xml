@@ -254,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
+                    android:enabled="false"
                     android:hint="@string/hint_input_detail_address"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_14" />

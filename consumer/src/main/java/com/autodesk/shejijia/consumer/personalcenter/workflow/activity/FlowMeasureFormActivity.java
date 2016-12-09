@@ -200,7 +200,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 JSONObject jsonObject = new JSONObject();
                 try {
 
-                   detailAddress = detail_address.getText().toString();
+                    detailAddress = detail_address.getText().toString();
                     boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
                     if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
@@ -303,6 +303,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
                 consumer_house_charge_show.setVisibility(View.GONE);
+                detail_address.setText("");
+                detail_address.setEnabled(true);
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
@@ -414,9 +416,16 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         user_name = requirement.getContacts_name();
         mobile_number = requirement.getContacts_mobile();
         amount = mBidders.get(0).getMeasurement_fee();
+
         tvName.setText(user_name);
         tvPhone.setText(mobile_number);
         tvProjectBudget.setText(TextUtils.isEmpty(requirement.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : requirement.getDesign_budget() + "");
+        String address_details = requirement.getAddress();
+        if (!StringUtils.isEmpty(address_details)) {
+            detail_address.setText(address_details);
+        } else {
+            detail_address.setText("");
+        }
 
 
         tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget()) ?

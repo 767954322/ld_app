@@ -208,6 +208,9 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private void getJSONObject() {
         JSONObject jsonObject = new JSONObject();
         try {
+
+            detailAddress = et_detail_address.getText().toString().trim();
+
             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, measureFee);
             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designerId);
             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, decorationNeedsListBean.getNeeds_id());
@@ -215,7 +218,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, "");
             jsonObject.put(JsonConstants.JSON_DETAIL_ADDRESS, detailAddress);
 
-            detailAddress = et_detail_address.getText().toString().trim();
+
             boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
 
             if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {

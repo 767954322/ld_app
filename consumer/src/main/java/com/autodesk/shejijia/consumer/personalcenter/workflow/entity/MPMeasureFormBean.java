@@ -45,6 +45,16 @@ public class MPMeasureFormBean implements Serializable {
     private String house_area;
     private String contacts_name;
     private String room;
+    public String getAddress_details() {
+        return address_details;
+    }
+
+    public void setAddress_details(String address_details) {
+        this.address_details = address_details;
+    }
+
+    private String address_details;
+
 
     private List<BiddersBean> bidders;
 

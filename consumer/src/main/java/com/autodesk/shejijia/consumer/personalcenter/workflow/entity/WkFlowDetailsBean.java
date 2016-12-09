@@ -59,6 +59,15 @@ public class WkFlowDetailsBean implements Serializable {
         private String province_name;
         private String publish_time;
         private String wk_template_id;
+        private String address ;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
 
         private SelectionBean elite;
 
