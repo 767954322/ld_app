@@ -53,6 +53,27 @@ public class DateUtil {
 
 
     }
+    public static String getTimeMYD(String dateString){
+        // String dateString = "March 14, 2016 11:08:35";
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.US);
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        sdf.setTimeZone(tz);
+        String showTimeme = "";
+        Date s;
+        try {
+            s = sdf.parse(dateString);
+            sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
+            String dssate = sdf.format(s);
+            Date date = sdf.parse(dssate);
+            long timeStemp = date.getTime();
+            showTimeme = DateUtil.showDate(timeStemp);
+            // System.out.println(showTime);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return showTimeme;
+    }
 
     public static String getStringDateByFormat(long lTime, String format) {
         Date currentTime = new Date(lTime);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
@@ -113,7 +114,8 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             holder.mTvMeaasgeCantent.setText(detailItem);
         }
         if (!TextUtils.isEmpty(mData.get(position).getSentTime())) {
-            holder.mTvMessageTime.setText(mData.get(position).getSentTime());
+            String sentTime = DateUtil.getTimeMYD(mData.get(position).getSentTime());
+            holder.mTvMessageTime.setText(sentTime);
         }
     }//底部 ViewHolder
     public static class BottomViewHolder extends RecyclerView.ViewHolder {
