@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
@@ -70,6 +71,10 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         }else{
             return ITEM_TYPE_CONTENT;
         }
+    }
+    public void notifyDataForRecyclerView(List<MessageInfo.DataBean> meaasgesInfo) {
+        this.mData.addAll(meaasgesInfo);
+        notifyDataSetChanged();
     }
     public int getContentItemCount(){
         return mData != null?mData.size():0;

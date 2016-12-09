@@ -78,9 +78,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     public void updateProjectDetailsView(MessageInfo messageInfo) {
         if(messageInfo.getData() != null) {
-            mData.addAll(messageInfo.getData());
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getData());
         }
-        mProjectMessageCenterAdapter.notifyDataSetChanged();
     }
 
     @Override
