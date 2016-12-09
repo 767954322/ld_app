@@ -176,4 +176,9 @@
     <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
     <string name="Fragment_issuelist_itemclick_toast">查看详情</string>
 
+    <!-- 室，厅，卫 -->
+    <string name="room">室</string>
+    <string name="hall">厅</string>
+    <string name="toilet">卫</string>
+
 </resources>

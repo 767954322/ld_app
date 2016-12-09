@@ -51,7 +51,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcy_task_person_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/tv_task_date"

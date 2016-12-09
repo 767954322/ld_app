@@ -2,7 +2,9 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
@@ -10,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -174,11 +177,13 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         if (projectInfo != null) {
             Bundle projectInfoBundle = new Bundle();
             projectInfoBundle.putLong("projectId", projectInfo.getProjectId());
-            projectInfoBundle.putString("userName", projectInfo.getName().split("/")[0]);
-            projectInfoBundle.putString("userAddress", projectInfo.getName().split("/")[1]);
-            projectInfoBundle.putString("roomArea", projectInfo.getBuilding().getArea() + "m2");
+            if (!TextUtils.isEmpty(projectInfo.getName()) && projectInfo.getName().contains("/")) {
+                projectInfoBundle.putString("userName", projectInfo.getName().split("/")[0]);
+                projectInfoBundle.putString("userAddress", projectInfo.getName().split("/")[1]);
+            }
+            projectInfoBundle.putString("roomArea", projectInfo.getBuilding().getArea() + " m\u00B2");
             projectInfoBundle.putString("roomType", projectInfo.getBuilding().getBathrooms()
-                    + "室" + projectInfo.getBuilding().getHalls() + "厅");
+                    + UIUtils.getString(R.string.room) + projectInfo.getBuilding().getHalls() + UIUtils.getString(R.string.hall));
             mProjectDetailsView.showProjectInfoDialog(projectInfoBundle);
         } else {
             // 如果没有拿到项目详情，就无法弹出项目消息对话框

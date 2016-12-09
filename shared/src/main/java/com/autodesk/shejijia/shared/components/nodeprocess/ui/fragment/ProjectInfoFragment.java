@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
  * 项目信息页的弹出框
  */
 
-public class ProjectInfoFragment extends DialogFragment {
+public class ProjectInfoFragment extends AppCompatDialogFragment {
 
     private ImageButton mCloseBtn;
     private TextView mUserName;
@@ -46,18 +47,27 @@ public class ProjectInfoFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_FRAME,0);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_project_info_dialog, container,false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        updateViews();
+        initEvent();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Construction_AlertDialogStyle_Translucent);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_project_info_dialog, null);
-        initView(view);
-        updateViews();
-        initEvent();
-        return builder.setView(view).create();
+        return new AppCompatDialog(getActivity(),R.style.Construction_DialogStyle_Translucent);
     }
 
     private void initView(View view) {
@@ -85,9 +95,8 @@ public class ProjectInfoFragment extends DialogFragment {
             mRoomArea.setText(getArguments().getString("roomArea", " "));
             mRoomType.setText(getArguments().getString("roomType", " "));
             try {
-                Bitmap bitmap = EncodingHandler.createQRCode(getArguments().getLong("projectId") + "", ScreenUtil.dip2px(250));
-                BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(),bitmap);
-                mQRCodeImg.setBackground(bitmapDrawable);
+                Bitmap bitmap = EncodingHandler.createQRCode(getArguments().getLong("projectId") + "", ScreenUtil.dip2px(200));
+                mQRCodeImg.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
