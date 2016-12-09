@@ -9,7 +9,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.adapter.ProjectMessageCenterAdapter;
-import com.autodesk.shejijia.shared.components.message.entity.DataBean;
+import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterContract;
 import com.autodesk.shejijia.shared.components.message.presenter.ProjectMessageCenterPresenter;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
 
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
-    private List<DataBean> mData;
+    private List<MessageItemBean> mData;
     private long mProjectId;
     private boolean isUnrea;
     private RecyclerView mRvProjectMessagCenterView;
@@ -78,8 +78,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
     @Override
     public void updateProjectDetailsView(MessageInfo messageInfo) {
-        if(messageInfo.getData() != null) {
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getData());
+        if(messageInfo.getMessageItemBean() != null) {
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean());
         }
     }
 

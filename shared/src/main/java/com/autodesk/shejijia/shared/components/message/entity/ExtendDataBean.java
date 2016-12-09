@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.message.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +12,8 @@ import java.io.Serializable;
 public  class ExtendDataBean implements Serializable {
     private String title;
     private String description;
-    private String task_name;
+    @SerializedName("task_name")
+    private String taskName;
     private Object files;
 
     public String getTitle() {
@@ -21,6 +24,14 @@ public  class ExtendDataBean implements Serializable {
         this.title = title;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -28,15 +39,6 @@ public  class ExtendDataBean implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getTask_name() {
-        return task_name;
-    }
-
-    public void setTask_name(String task_name) {
-        this.task_name = task_name;
-    }
-
     public Object getFiles() {
         return files;
     }

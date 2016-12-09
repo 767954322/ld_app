@@ -11,9 +11,8 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.entity.DataBean;
+import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
 import com.autodesk.shejijia.shared.components.message.entity.DisplayMessageBean;
-import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 
 import java.util.List;
 
@@ -22,14 +21,14 @@ import java.util.List;
  */
 
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<DataBean> mData;
+    private List<MessageItemBean> mData;
     private boolean isUnrea;
     private static HistoricalRecordstListener mHistoricalRecordstListener;
     private int mBottomCount=1;//底部View个数
-    public static final int ITEM_TYPE_CONTENT = 0;
-    public static final int ITEM_TYPE_BOTTOM = 1;
+    public static final int ITEMTYPECONTENT = 0;
+    public static final int ITEMTYPEBOTTOM = 1;
     private int resId;
-    public ProjectMessageCenterAdapter(List<DataBean> mData,boolean isUnrea,int resId) {
+    public ProjectMessageCenterAdapter(List<MessageItemBean> mData, boolean isUnrea, int resId) {
         super();
         this.mData = mData;
         this.resId = resId;
@@ -38,7 +37,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == ITEM_TYPE_CONTENT){
+        if(viewType == ITEMTYPECONTENT){
             View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
             return new ProjectMessageCenterVH(view);
         }else{
@@ -68,12 +67,12 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
     public int getItemViewType(int position){
         int dataItemCount = getContentItemCount();
         if (mBottomCount != 0 && position >= dataItemCount){
-            return ITEM_TYPE_BOTTOM;
+            return ITEMTYPEBOTTOM;
         }else{
-            return ITEM_TYPE_CONTENT;
+            return ITEMTYPECONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<DataBean> meaasgesInfo) {
+    public void notifyDataForRecyclerView(List<MessageItemBean> meaasgesInfo) {
         this.mData.addAll(meaasgesInfo);
         notifyDataSetChanged();
     }
@@ -89,32 +88,32 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         });
     }
     private void initData(ProjectMessageCenterVH holder,int position){
-        String avatar = mData.get(position).getSender_avatar();
+        String avatar = mData.get(position).getSenderAvatar();
         if (TextUtils.isEmpty(avatar)) {
             holder.mImgBtnPersonalHeadPic.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
         } else {
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
 
-        DisplayMessageBean display_message = mData.get(position).getDisplay_message();
-        if (display_message != null && !TextUtils.isEmpty(display_message.getSummary())) {
-            String title = display_message.getSummary();
+        DisplayMessageBean displayMessage = mData.get(position).getDisplayMessage();
+        if (displayMessage != null && !TextUtils.isEmpty(displayMessage.getSummary())) {
+            String title = displayMessage.getSummary();
             for (int i = 0; title.contains("*"); i++) {
                 title = (i % 2 == 0) ? title.replaceFirst("\\*", "<b><tt>") : title.replaceFirst("\\*", "</b></tt>");
             }
             holder.mTvMeaasgeName.setText(Html.fromHtml(title));
         }
-        List<String> detail_items = display_message.getDetail_items();
-        if (detail_items != null ) {
-            String detail_item="";
-            for(String str:detail_items){
-                detail_item += "\n"+str;
+        List<String> detailItems = displayMessage.getDetailItems();
+        if (detailItems != null ) {
+            String detailItem="";
+            for(String str:detailItems){
+                detailItem += str+"\n";
             }
-            detail_item = detail_item.substring(2);
-            holder.mTvMeaasgeCantent.setText(detail_item);
+            detailItem = detailItem.substring(0,detailItem.length()-1);
+            holder.mTvMeaasgeCantent.setText(detailItem);
         }
-        if (!TextUtils.isEmpty(mData.get(position).getSent_time())) {
-            holder.mTvMessageTime.setText(mData.get(position).getSent_time());
+        if (!TextUtils.isEmpty(mData.get(position).getSentTime())) {
+            holder.mTvMessageTime.setText(mData.get(position).getSentTime());
         }
     }//底部 ViewHolder
     public static class BottomViewHolder extends RecyclerView.ViewHolder {

@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.shared.components.message.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by luchongbin on 2016/12/6.
@@ -10,7 +12,8 @@ public class MessageInfo implements Serializable {
     private int total;
     private int limit;
     private int offset;
-    private List<DataBean> data;
+    @SerializedName("data")
+    private ArrayList<MessageItemBean> messageItemBean;
 
     public int getTotal() {
         return total;
@@ -36,11 +39,11 @@ public class MessageInfo implements Serializable {
         this.offset = offset;
     }
 
-    public List<DataBean> getData() {
-        return data;
+    public ArrayList<MessageItemBean> getMessageItemBean() {
+        return messageItemBean;
     }
 
-    public void setData(List<DataBean> data) {
-        this.data = data;
+    public void setMessageItemBean(ArrayList<MessageItemBean> messageItemBean) {
+        this.messageItemBean = messageItemBean;
     }
 }

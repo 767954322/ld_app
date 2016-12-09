@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.message.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,36 +9,42 @@ import java.io.Serializable;
  */
 
 public  class CustomDataBean implements Serializable {
-    private String project_id;
-    private Object task_id;
-    private String event_category;
+    @SerializedName("project_id")
+    private String projectId;
+    @SerializedName("task_id")
+    private Object taskId;
+    @SerializedName("event_category")
+    private String eventCategory;
     private String event;
-    private boolean in_consumer_feeds;
-    private String entity_id;
-    private ExtendDataBean extend_data;
+    @SerializedName("in_consumer_feeds")
+    private boolean inConsumerFeeds;
+    @SerializedName("entity_id")
+    private String entityId;
+    @SerializedName("extend_data")
+    private ExtendDataBean extendData;
 
-    public String getProject_id() {
-        return project_id;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(String project_id) {
-        this.project_id = project_id;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
-    public Object getTask_id() {
-        return task_id;
+    public Object getTaskId() {
+        return taskId;
     }
 
-    public void setTask_id(Object task_id) {
-        this.task_id = task_id;
+    public void setTaskId(Object taskId) {
+        this.taskId = taskId;
     }
 
-    public String getEvent_category() {
-        return event_category;
+    public String getEventCategory() {
+        return eventCategory;
     }
 
-    public void setEvent_category(String event_category) {
-        this.event_category = event_category;
+    public void setEventCategory(String eventCategory) {
+        this.eventCategory = eventCategory;
     }
 
     public String getEvent() {
@@ -47,28 +55,27 @@ public  class CustomDataBean implements Serializable {
         this.event = event;
     }
 
-    public boolean isIn_consumer_feeds() {
-        return in_consumer_feeds;
+    public boolean isInConsumerFeeds() {
+        return inConsumerFeeds;
     }
 
-    public void setIn_consumer_feeds(boolean in_consumer_feeds) {
-        this.in_consumer_feeds = in_consumer_feeds;
+    public void setInConsumerFeeds(boolean inConsumerFeeds) {
+        this.inConsumerFeeds = inConsumerFeeds;
     }
 
-    public String getEntity_id() {
-        return entity_id;
+    public String getEntityId() {
+        return entityId;
     }
 
-    public void setEntity_id(String entity_id) {
-        this.entity_id = entity_id;
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
     }
 
-    public ExtendDataBean getExtend_data() {
-        return extend_data;
+    public ExtendDataBean getExtendData() {
+        return extendData;
     }
 
-    public void setExtend_data(ExtendDataBean extend_data) {
-        this.extend_data = extend_data;
+    public void setExtendData(ExtendDataBean extendData) {
+        this.extendData = extendData;
     }
-
 }
