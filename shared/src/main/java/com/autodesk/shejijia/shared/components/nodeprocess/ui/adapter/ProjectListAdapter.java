@@ -28,6 +28,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +50,11 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setProjectLists(List<ProjectInfo> projectLists) {
-        this.mProjectLists = projectLists;
+        if (projectLists == null){
+            mProjectLists = new ArrayList<>();
+        }else {
+            this.mProjectLists = projectLists;
+        }
         notifyDataSetChanged();
     }
 

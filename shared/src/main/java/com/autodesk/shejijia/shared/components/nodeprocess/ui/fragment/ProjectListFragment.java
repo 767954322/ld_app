@@ -96,10 +96,13 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     /*
     * 筛选功能也会回调 onRefresh方法
+    *
     * */
     @Override
     public void onRefresh() {
         mEmptyView.setVisibility(View.GONE);
+        mProjectListView.setVisibility(View.VISIBLE);
+        mProjectListAdapter.setProjectLists(null);
         mProjectListView.onRefreshing();
         mProjectListPresenter.refreshProjectList();
     }
@@ -107,6 +110,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void onLoadMore() {
         mEmptyView.setVisibility(View.GONE);
+        mProjectListView.setVisibility(View.VISIBLE);
         mProjectListView.onLoadingMore();
         mProjectListPresenter.loadMoreProjectList();
     }
@@ -128,6 +132,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             mProjectListAdapter.setProjectLists(projectList);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
+            mProjectListView.setVisibility(View.GONE);
             mProjectListView.complete();
         }
     }

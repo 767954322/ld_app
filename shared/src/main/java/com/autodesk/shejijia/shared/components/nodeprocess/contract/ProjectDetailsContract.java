@@ -37,5 +37,7 @@ public interface ProjectDetailsContract {
         void getProjectInformation(); //获取项目信息
 
         void navigateToMessageCenter();//跳转消息中心
+
+        void initRefreshState(boolean isNeedRefresh);
     }
 }

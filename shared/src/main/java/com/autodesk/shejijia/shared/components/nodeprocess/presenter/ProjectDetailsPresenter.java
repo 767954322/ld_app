@@ -33,7 +33,8 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     private ProjectDetailsContract.View mProjectDetailsView;
     private ProjectRepository mProjectRepository;
     private long mProjectId;
-    private boolean isHasTaskData;
+    private boolean mIsHasTaskData;
+    private boolean mIsNeedRefresh; //标记已经在项目详情页面下拉刷新时候的状态
 
     public ProjectDetailsPresenter(Context context, ProjectDetailsContract.View projectDetailsView) {
         this.mContext = context;
@@ -44,15 +45,23 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void initRequestParams(long projectId, boolean taskData) {
         this.mProjectId = projectId;
-        this.isHasTaskData = taskData;
+        this.mIsHasTaskData = taskData;
+        this.mIsNeedRefresh = false;
+    }
+
+    @Override
+    public void initRefreshState(boolean isNeedRefresh) {
+        this.mIsNeedRefresh = isNeedRefresh;
     }
 
     @Override
     public void getProjectDetails() {
-        mProjectDetailsView.showLoading();
+        if (!mIsNeedRefresh) {
+            mProjectDetailsView.showLoading();
+        }
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", mProjectId);
-        requestParamsBundle.putBoolean("task_data", isHasTaskData);
+        requestParamsBundle.putBoolean("task_data", mIsHasTaskData);
 
         getProjectDetailsData(requestParamsBundle);
     }

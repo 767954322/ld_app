@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -35,11 +36,13 @@ import java.util.List;
  * Created by t_xuz on 10/20/16.
  * 项目详情
  */
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener {
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
 
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private ViewPager mContentViewPager;
     private ProgressbarIndicator mProgressBarIndicator;
     private Button mCreatePlanBtn;
@@ -63,13 +66,15 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initView() {
         mProjectRootView = (LinearLayout) rootView.findViewById(R.id.ll_project_details);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         mContentTipView = (RelativeLayout) rootView.findViewById(R.id.rl_content_tip);
         mContentViewPager = (ViewPager) rootView.findViewById(R.id.vp_task_list);
         mProgressBarIndicator = (ProgressbarIndicator) rootView.findViewById(R.id.progressBar_indicator);
         mCreatePlanBtn = (Button) rootView.findViewById(R.id.btn_create_plan);
         mWorkStateView = (TextView) rootView.findViewById(R.id.img_work_state);
         mEditPlanBtn = (TextView) rootView.findViewById(R.id.tv_edit_plan);
-
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat
+                .getColor(mContext, R.color.colorPrimary));
         setHasOptionsMenu(true);
     }
 
@@ -92,8 +97,23 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         super.initListener();
         mCreatePlanBtn.setOnClickListener(this);
         mEditPlanBtn.setOnClickListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onRefresh() {
+        long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        if (projectId != 0) {
+            LogUtils.e("projectDetails_projectId ", projectId + "");
+            mProjectDetailsPresenter.initRequestParams(projectId, true);
+            mProjectDetailsPresenter.initRefreshState(true);
+            mProjectDetailsPresenter.getProjectDetails();
+        }else {
+            if (mSwipeRefreshLayout.isRefreshing()){
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -109,6 +129,9 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void updateProjectDetailsView(String memberType, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
 
         mProjectRootView.setVisibility(View.VISIBLE);
+        if (mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
 
         if (isKaiGongResolved) {
             if (memberType.equals(ConstructionConstants.MemberType.CLIENT_MANAGER)) {
@@ -188,7 +211,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mProjectDetailsPresenter.getProjectDetails();
                 } else {
                     if (mCreatePlanBtn.getVisibility() == View.VISIBLE
-                        && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
+                            && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
                         mCreatePlanBtn.setText(R.string.continue_edit_plan);
                     }
                 }

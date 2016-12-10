@@ -47,7 +47,7 @@ public class ProjectInfoFragment extends AppCompatDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME,0);
+        setStyle(STYLE_NO_TITLE,0);
     }
 
     @Nullable
