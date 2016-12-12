@@ -18,6 +18,8 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
 import org.json.JSONObject;
 
+import java.util.Map;
+
 
 /**
  * Created by t_xuz on 10/17/16.
@@ -116,6 +118,11 @@ public final class ProjectRepository implements ProjectDataSource {
     @Override
     public void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().uploadTaskFiles(requestParams, requestTag, callback);
+    }
+
+    @Override
+    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String, String>, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().updateTaskStatus(requestParams,requestTag,jsonRequest,callback);
     }
 
     public ProjectInfo getActiveProject() {

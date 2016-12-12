@@ -15,6 +15,8 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
 
+import java.util.Map;
+
 /**
  * Created by t_xuz on 10/17/16.
  * 主线所有与网络请求接口相关的
@@ -51,6 +53,7 @@ public interface ProjectDataSource {
     * */
     void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like, ResponseError> callback);
 
+
     /*
     * 获取有问题有更新
     * */
@@ -65,4 +68,9 @@ public interface ProjectDataSource {
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
+
+	/**
+     * 跟新Task的Status
+     */
+    void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String,String>, ResponseError> callback);
 }

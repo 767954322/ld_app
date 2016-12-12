@@ -54,4 +54,9 @@ public interface IConstructionApi<T> {
     void confirmTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 
     void uploadTaskFiles(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
+
+     /**
+     * 跟新Task的Status
+     */
+    void updateTaskStatus(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull JSONObject jsonRequest, @NonNull T callback);
 }

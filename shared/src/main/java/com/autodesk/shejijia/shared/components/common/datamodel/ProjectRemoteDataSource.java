@@ -28,6 +28,9 @@ import com.google.gson.TypeAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by t_xuz on 10/17/16.
  * 与 project 相关的api对应的dataModel
@@ -150,6 +153,30 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
+        });
+    }
+
+    @Override
+    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Map<String,String>, ResponseError> callback) {
+        mConstructionHttpManager.updateTaskStatus(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("PlanStatus",jsonObject.toString());
+                Map<String, String> map = new LinkedHashMap<>();
+                try {
+                    map.put("task_id",jsonObject.getString("task_id"));
+                    map.put("task_status",jsonObject.getString("task_status"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.onSuccess(map);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+               callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+            }
         });
     }
 

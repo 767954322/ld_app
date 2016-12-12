@@ -152,6 +152,13 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
         put(requestTag, requestUrl, jsonRequest, callback);
     }
 
+    @Override
+    public void updateTaskStatus(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + requestParams.getLong("pid")
+                + "/tasks/" + requestParams.getString("tid") + "/status";
+        put(requestTag,requestUrl,jsonRequest,callback);
+    }
+
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
         LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
