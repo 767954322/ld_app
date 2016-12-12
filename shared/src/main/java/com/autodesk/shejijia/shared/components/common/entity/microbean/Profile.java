@@ -14,7 +14,6 @@ public class Profile implements Serializable {
 
     private String name;
     private String mobile;
-    private String avatar;
     private String email;
     private String avatar;
     @SerializedName("groupids")
@@ -34,14 +33,6 @@ public class Profile implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public String getEmail() {
