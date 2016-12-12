@@ -2,7 +2,9 @@ package com.autodesk.shejijia.shared.components.message;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -10,6 +12,8 @@ import android.view.MenuItem;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
+import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
@@ -21,13 +25,14 @@ import java.util.List;
 /**
  * Created by luchongbin on 2016/12/5.
  */
-public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
-
+public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,
+        ProjectMessageCenterAdapter.HistoricalRecordstListener, RefreshLoadMoreListener {
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
     private List<MessageItemBean> messageItemBeans;
     private long mProjectId;
     private boolean mIsUnread;
-    private RecyclerView mRvProjectMessagCenterView;
+    private int mOffset = 0;
+    private SwipeRecyclerView mRvProjectMessagCenterView;
     private ProjectMessageCenterAdapter mProjectMessageCenterAdapter;
     @Override
     protected int getLayoutResId() {
@@ -35,7 +40,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
     @Override
     protected void initView() {
-        mRvProjectMessagCenterView = (RecyclerView)findViewById(R.id.rv_project_message_center_view);
+        mRvProjectMessagCenterView = (SwipeRecyclerView)findViewById(R.id.rv_project_message_center_view);
     }
     @Override
     protected void initExtraBundle() {
@@ -51,15 +56,19 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(),this);
         mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(messageItemBeans,mIsUnread,R.layout.item_messagecenter);
         initRecyclerView();
-        getListMessageCenterInfo();
+//        getListMessageCenterInfo();
     }
 
     private void initRecyclerView(){
-        mRvProjectMessagCenterView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRvProjectMessagCenterView.setLayoutManager(layoutManager);
+        mRvProjectMessagCenterView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
+        mRvProjectMessagCenterView.getRecyclerView().setHasFixedSize(true);
+        mRvProjectMessagCenterView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mRvProjectMessagCenterView.getSwipeRefreshLayout()
+                .setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
+
+
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
+//        setHasOptionsMenu(true);
     }
     private void getListMessageCenterInfo(){
         mProjectMessageCenterPresenter.getMessageCenterInfo(getRequestBundle(),TAG);
@@ -67,7 +76,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     private Bundle getRequestBundle(){
         Bundle requestParams = new Bundle();
         requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
-        requestParams.putInt(ConstructionConstants.OFFSET,0);
+        requestParams.putInt(ConstructionConstants.OFFSET,mOffset);
         requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
         requestParams.putInt(ConstructionConstants.LIMIT,20);
         return requestParams;
@@ -76,14 +85,29 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     protected void initListener() {
         super.initListener();
         ProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
+        mRvProjectMessagCenterView.setRefreshLoadMoreListener(this);
+        //让其自动刷新一下，会回调onRefresh()方法一次
+        mRvProjectMessagCenterView.setRefreshing(true);
     }
     @Override
     public void updateProjectMessageView(MessageInfo messageInfo) {
+        mRvProjectMessagCenterView.complete();
         if(messageInfo.getMessageItemBean() != null) {
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread);
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,mOffset);
             mIsUnread = false;
             setResult(RESULT_OK,new Intent());
         }
+    }
+    @Override
+    public void onRefresh() {
+        mOffset = 0;
+        getListMessageCenterInfo();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mOffset++;
+        getListMessageCenterInfo();
     }
 
     @Override

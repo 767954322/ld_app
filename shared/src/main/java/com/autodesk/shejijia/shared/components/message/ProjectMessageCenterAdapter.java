@@ -73,8 +73,11 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             return ITEMTYPECONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<MessageItemBean> meaasgesInfo,boolean mIsUnread) {
-        this.messageItemBeans.addAll(meaasgesInfo);
+    public void notifyDataForRecyclerView(List<MessageItemBean> messageItemBean,boolean mIsUnread,int mOffset) {
+        if(messageItemBeans != null && mOffset == 0){
+            messageItemBeans.clear();
+        }
+        this.messageItemBeans.addAll(messageItemBean);
         this.mIsUnread = mIsUnread;
         notifyDataSetChanged();
     }
