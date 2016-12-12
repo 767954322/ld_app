@@ -329,6 +329,12 @@
             </intent-filter>
         </receiver>
 
+        <!-- pgy Required -->
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="48385e1a59f4a38d3d7efeae666d8898" >
+        </meta-data>
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />

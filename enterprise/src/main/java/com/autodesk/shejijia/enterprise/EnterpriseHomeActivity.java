@@ -32,6 +32,8 @@ import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragme
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.update.PgyUpdateManager;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -88,6 +90,11 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         mNavigationView.setNavigationItemSelectedListener(this);
         mHeadPicBtn.setOnClickListener(this);
         toolbarTitle.setOnClickListener(this);
+        //pgy update register
+        if (BuildConfig.DEBUG) {
+            PgyCrashManager.register(this);
+            PgyUpdateManager.register(this);
+        }
     }
 
     @Override
