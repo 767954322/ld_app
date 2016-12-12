@@ -296,6 +296,21 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
+                if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
+                    return;
+                }
+
+                if (!bAddress || communityName.isEmpty()) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
+                    return;
+                }
+
+                if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.new_inventory_input_right_detail_address));
+                    return;
+                }
+
                 if (housingType == null) {
                     getErrorHintAlertView(UIUtils.getString(R.string.demand_please_project_types));
                     return;
@@ -342,6 +357,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
+                if (style == null) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
+                    return;
+                }
+
                 if (tvc_measure_form_type.getText().toString().equals("住宅空间")) {
 
                     if (room == null || hall == null || toilet == null) {
@@ -353,26 +373,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     hall = null;
                     toilet = null;
 
-                }
-
-                if (style == null) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
-                    return;
-                }
-
-                if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
-                    return;
-                }
-
-                if (!bAddress || communityName.isEmpty()) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
-                    return;
-                }
-
-                if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.new_inventory_input_right_detail_address));
-                    return;
                 }
 
                 if (currentData == null) {
