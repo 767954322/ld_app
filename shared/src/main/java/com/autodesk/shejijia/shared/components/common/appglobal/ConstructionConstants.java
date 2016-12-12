@@ -71,7 +71,7 @@ public class ConstructionConstants {
     public static final String UNREAD = "unread";
     public static final String OFFSET = "offset";
     public static final String LIMIT = "limit";
-
+    public static final String BETA_API = "http://beta-api.acgcn.autodesk.com/API/v2/members/";
     public static class TaskTemplateId {
         public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底
         public static final String YINBIGONGCHENG_YANSHOU = "yinbigongcheng_yanshou";//隐蔽工程验收

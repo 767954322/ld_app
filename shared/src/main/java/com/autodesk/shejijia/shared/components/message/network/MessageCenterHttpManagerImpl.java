@@ -29,6 +29,12 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
     public static MessageCenterHttpManagerImpl getInstance() {
         return MessageCenterHttpManagerImpl.ServerHttpManagerHolder.INSTANCE;
     }
+
+    @Override
+    public void changeUnreadState(String requestTag,String memberId, String threadId, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = ConstructionConstants.BETA_API + memberId+"/messages/?action=read&thread_id="+threadId;
+        get(requestTag, requestUrl, callback);
+    }
     @Override
     public void getUnreadCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/notifications/unread_count?project_ids=" + projectIds;
@@ -52,23 +58,6 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
             }
         };
         NetRequestManager.getInstance().addRequest(okRequest);
-
-
-
-//        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> header = new HashMap<>();
-//                header.put(Constant.NetBundleKey.ACCPET, Constant.NetBundleKey.APPLICATON_JSON);
-//                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
-//                return header;
-//            }
-//            @Override
-//            public String getBodyContentType() {
-//                return Constant.NetBundleKey.APPLICATON_JSON;
-//            }
-//        };
-//        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {

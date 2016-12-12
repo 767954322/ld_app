@@ -78,7 +78,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
         requestParams.putInt(ConstructionConstants.OFFSET,mOffset);
         requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
-        requestParams.putInt(ConstructionConstants.LIMIT,20);
+        requestParams.putInt(ConstructionConstants.LIMIT,100);
         return requestParams;
     }
     @Override
@@ -94,7 +94,6 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.complete();
         if(messageInfo.getMessageItemBean() != null) {
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,mOffset);
-            mIsUnread = false;
             setResult(RESULT_OK,new Intent());
         }
     }
@@ -106,8 +105,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
 
     @Override
     public void onLoadMore() {
-        mOffset++;
-        getListMessageCenterInfo();
+//        mOffset=mOffset+4;
+//        getListMessageCenterInfo();
     }
 
     @Override
@@ -126,6 +125,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void hideLoading() {}
     @Override
     public void onHistoricalRecordstClick() {
+        mOffset = 0;
+        mIsUnread = false;
         getListMessageCenterInfo();
     }
     @Override
