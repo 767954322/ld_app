@@ -9,6 +9,6 @@
 
     <item android:id="@+id/project_toolbar_message"
         android:title="@string/menu_project_message"
-        android:icon="@drawable/ic_menu_message"
+        app:actionLayout="@layout/menu_action_item_badge"
         app:showAsAction="ifRoom"/>
 </menu>

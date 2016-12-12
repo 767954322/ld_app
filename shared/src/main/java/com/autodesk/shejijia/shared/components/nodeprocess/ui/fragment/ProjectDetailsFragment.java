@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -197,6 +198,15 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
+        FrameLayout frameLayout = (FrameLayout)menu.findItem(R.id.project_toolbar_message).getActionView();
+//        final TextView textView = (TextView)frameLayout.findViewById(R.id.menu_badge);
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProjectDetailsPresenter.navigateToMessageCenter();
+//                textView.setText("100");
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
