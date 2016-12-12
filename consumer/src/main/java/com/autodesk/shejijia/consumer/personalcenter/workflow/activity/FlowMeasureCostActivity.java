@@ -144,7 +144,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 }
             }
         } else if (memberEntity.getMember_type().equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
-            setTitleForNavbar(getResources().getString(R.string.flow_cost_detail));
+            setTitleForNavbar(getResources().getString(R.string.flow_pay_detail));
             btn_pay_measure.setVisibility(View.GONE);
             btn_pay_measure.setOnClickListener(null);
         }

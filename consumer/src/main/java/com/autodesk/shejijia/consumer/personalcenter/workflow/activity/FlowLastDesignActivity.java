@@ -67,7 +67,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
         super.initData(savedInstanceState);
 
-        setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
+        setTitleForNavbar(getResources().getString(R.string.flow_pay_detail)); /// 设置标题 .
 
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type())) {
             btn_flow_last_design_send.setVisibility(View.GONE);
