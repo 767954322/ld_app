@@ -21,7 +21,7 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  * @since 16/12/12
  */
 
-public class PickPhotoActivity extends BaseActivity {
+public class UploadPhotoActivity extends BaseActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_pick_photo;

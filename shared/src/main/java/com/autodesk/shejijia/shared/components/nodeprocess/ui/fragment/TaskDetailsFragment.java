@@ -35,11 +35,10 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Ma
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.PickPhotoActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.UploadPhotoActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.DialogHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
@@ -461,7 +460,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     private void uploadPhoto(Task task) {
         //TODO navigate to common component
-        Intent intent = new Intent(getActivity(), PickPhotoActivity.class);
+        Intent intent = new Intent(getActivity(), UploadPhotoActivity.class);
         getActivity().startActivityForResult(intent, 0x0105);
     }
 

@@ -121,7 +121,7 @@
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity" />
 
         <activity
-            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.PickPhotoActivity"/>
+            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.UploadPhotoActivity"/>
 
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity"
