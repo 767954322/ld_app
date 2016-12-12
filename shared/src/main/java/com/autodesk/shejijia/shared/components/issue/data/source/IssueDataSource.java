@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public interface IssueDataSource {
     void getRemoteIssueNum(final ResponseCallback<String[], ResponseError> callBack);
 
 
-    void putIssueTracking(String contentText, String audioPath, List<String> imgPath, final ResponseCallback<Boolean, ResponseError> callBack);
+    void putIssueTracking(JSONObject jsonObject, final ResponseCallback<Boolean, ResponseError> callBack);
 
 
 }

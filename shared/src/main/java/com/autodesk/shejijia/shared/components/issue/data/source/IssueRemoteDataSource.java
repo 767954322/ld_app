@@ -56,22 +56,17 @@ public class IssueRemoteDataSource implements IssueDataSource {
     }
 
     @Override
-    public void putIssueTracking(String contentText, String audioPath, List<String> imgPath, final ResponseCallback<Boolean, ResponseError> callBack) {
-
-        IssueServerHttpManager.getInstance().getIssueNum(new OkJsonRequest.OKResponseCallback() {
+    public void putIssueTracking(JSONObject jsonObject, final ResponseCallback<Boolean, ResponseError> callBack) {
+        IssueServerHttpManager.getInstance().putIssueTracking(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                //TODO  上传失败
                 callBack.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                //TODO  上传成功
                 callBack.onSuccess(true);
             }
         });
-
     }
 }

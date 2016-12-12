@@ -1,10 +1,14 @@
 package com.autodesk.shejijia.shared.components.issue.data;
 
 import android.support.annotation.NonNull;
+
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.issue.data.source.IssueDataSource;
 import com.autodesk.shejijia.shared.components.issue.data.source.IssueRemoteDataSource;
+
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -43,12 +47,11 @@ public class IssueRepository implements IssueDataSource {
     }
 
     @Override
-    public void putIssueTracking(String contentText, String audioPath, List<String> imgPath, final ResponseCallback<Boolean, ResponseError> callBack) {
+    public void putIssueTracking(JSONObject jsonObject, final ResponseCallback<Boolean, ResponseError> callBack) {
 
-        IssueRemoteDataSource.getInstance().putIssueTracking(contentText, audioPath, imgPath, new ResponseCallback<Boolean, ResponseError>() {
+        IssueRemoteDataSource.getInstance().putIssueTracking(jsonObject, new ResponseCallback<Boolean, ResponseError>() {
             @Override
             public void onSuccess(Boolean data) {
-                //TODO  获取数据后，改为真是数据
                 callBack.onSuccess(data);
             }
 

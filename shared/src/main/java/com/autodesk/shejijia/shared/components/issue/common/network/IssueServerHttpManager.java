@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.issue.common.network;
 
 import android.support.annotation.NonNull;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -10,7 +11,9 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +69,19 @@ public class IssueServerHttpManager {
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
+    private void post(String requestTag, String requestUrl, JSONObject jsonObject, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, requestUrl, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                return header;
+            }
+        };
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
+    }
+
     /**
      * 获取列表数
      *
@@ -82,10 +98,13 @@ public class IssueServerHttpManager {
      *
      * @param callback
      */
-    public void putIssueTracking(@NonNull OkJsonRequest.OKResponseCallback callback) {
+    public void putIssueTracking(JSONObject jsonObject, @NonNull OkJsonRequest.OKResponseCallback callback) {
         // TODO  目前先打通流程
-        callback.onResponse(null);
-        get("tag", "url", callback);
+//        callback.onResponse(null);
+
+        String postUrl = "";
+
+        post(null, postUrl, jsonObject, callback);
     }
 
 }

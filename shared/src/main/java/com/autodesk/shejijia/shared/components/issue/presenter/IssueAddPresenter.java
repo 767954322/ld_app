@@ -2,10 +2,16 @@ package com.autodesk.shejijia.shared.components.issue.presenter;
 
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
+import com.autodesk.shejijia.shared.components.issue.data.IssueRepository;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,89 +44,71 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
             FileHttpManager.getInstance().upLoadFileByType(new File(audioPath), "AUDIO", new FileHttpManager.ResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
-                    resultPutAudioFile = true;
+                    mOkPutVoiceFile = true;
                     resultPutFile();
                 }
 
                 @Override
                 public void onFailure() {
-                    resultPutAudioFile = false;
-                    resultPutFile();
                 }
             });
         } else {
-            resultPutAudioFile = true;
-            resultPutFile();
+            mOkPutVoiceFile = true;
         }
 
         if (imgPath != null && imgPath.size() > 0) {
             for (int i = 0; i < imgPath.size(); i++) {
-                numTitalPutImageFile = i + 1;
-                File file = new File(imgPath.get(i));
-                if (file.exists()) {
-                    FileHttpManager.getInstance().upLoadFileByType(file, "IMAGE", new FileHttpManager.ResponseHandler() {
-                        @Override
-                        public void onSuccess(String response) {
-
-                            if (numTitalPutImageFile == imgPath.size()) {
-                                resultPutImageFile = true;
-                            }
+                mCurrentImageFilePosition = i + 1;
+                FileHttpManager.getInstance().upLoadFileByType(new File(imgPath.get(i)), "IMAGE", new FileHttpManager.ResponseHandler() {
+                    @Override
+                    public void onSuccess(String response) {
+                        if (mCurrentImageFilePosition == imgPath.size()) {
+                            mOkPutImageFile = true;
                             resultPutFile();
                         }
+                    }
 
-                        @Override
-                        public void onFailure() {
-                            resultPutImageFile = false;
-                            ++numFailurePutImageFile;
-                            resultPutFile();
-                        }
-                    });
-                }
-
+                    @Override
+                    public void onFailure() {
+                    }
+                });
             }
         } else {
-            resultPutImageFile = true;
-            resultPutFile();
+            mOkPutImageFile = true;
         }
 
     }
 
     void resultPutFile() {
 
-        if (numFailurePutImageFile == 0 && numTitalPutImageFile == (mImgPath == null ? 0 : mImgPath.size())) {
+        if (mOkPutImageFile && mOkPutVoiceFile) {
+            Log.d("test", "完成上传服务器");
+            JSONObject jsonObject = new JSONObject();
+            //TODO 做JsonObject　的操作
+            IssueRepository.getInstance().putIssueTracking(
+                    jsonObject, new ResponseCallback<Boolean, ResponseError>() {
+                        @Override
+                        public void onSuccess(Boolean data) {
 
-            if (resultPutImageFile && resultPutAudioFile) {
-                //成功
-                ToastUtils.showLong(mContext, "成功");
-            } else {
-                ToastUtils.showLong(mContext, "失败");
-            }
+                        }
+
+                        @Override
+                        public void onError(ResponseError error) {
+
+                        }
+                    }
+            );
 
         } else {
-            ToastUtils.showLong(mContext, "失败");
+            Log.d("test", "未完成，继续调接口");
         }
 
     }
 
-    private int numTitalPutImageFile = 0;
-    private int numFailurePutImageFile = 0;
-    private boolean resultPutImageFile = false;
-    private boolean resultPutAudioFile = false;
+    private int mCurrentImageFilePosition = 0;
+    private boolean mOkPutImageFile = false;
+    private boolean mOkPutVoiceFile = false;
     private List<String> urlFromServer;
 
 
-//        IssueRepository.getInstance().putIssueTracking(
-//                contentText, audioPath, imgPath,
-//                new ResponseCallback<Boolean, ResponseError>() {
-//                    @Override
-//                    public void onSuccess(Boolean data) {
-//                        mView.onShowStatus(data);
-//                    }
-//
-//                    @Override
-//                    public void onError(ResponseError error) {
-//                        mView.onShowStatus(false);
-//                    }
-//                }
-//        );
 }
