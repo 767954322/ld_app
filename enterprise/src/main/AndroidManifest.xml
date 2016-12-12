@@ -121,6 +121,9 @@
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity" />
 
         <activity
+            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.PickPhotoActivity"/>
+
+        <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

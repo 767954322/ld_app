@@ -66,7 +66,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
         //refresh ProjectLists
-        String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
+        String defaultSelectedDate = DateUtil.dateToIso8601(Calendar.getInstance().getTime());
         mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.UNCOMPLET);
     }
 

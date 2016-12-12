@@ -131,5 +131,11 @@ public class ConstructionConstants {
         public static final String OPEN = "OPEN";
         public static final String READY = "READY";
     }
+    
+    public static class FileType {
+        public static final String IMAGE = "image";
+        public static final String AUDIO = "audio";
+        public static final String VIDEO = "video";
+    }
 
 }

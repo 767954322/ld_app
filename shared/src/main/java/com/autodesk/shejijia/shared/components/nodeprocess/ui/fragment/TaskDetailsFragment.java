@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,23 +24,24 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.File;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.PickPhotoActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.DialogHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,8 +64,9 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     private TextView mTaskPhoneView;
     private TextInputEditText mCommentEditView;
     private ViewGroup mTaskMembersContainer;
-    private ImageButton mCloseBtn;
+    private GridLayout mTaskPhotosContainer;
     private LinearLayout mActionsContainer;
+    private ImageButton mCloseBtn;
 
     private DialogHelper mDialogHelper;
 
@@ -106,7 +109,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         initView(view);
         initEvent();
         setCancelable(false);
-        mTaskDetailsPresenter.startPresent();
         return view;
     }
 
@@ -114,6 +116,18 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AppCompatDialog(getActivity(), R.style.Construction_DialogStyle_Translucent);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        mTaskDetailsPresenter.startPresent();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mTaskDetailsPresenter.startPresent();
     }
 
     @Override
@@ -252,6 +266,52 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
+    public void showTaskPhoto(@NonNull Task task) {
+        final List<File> files = task.getFiles();
+        if (files == null) {
+            return;
+        }
+
+        final ArrayList<String> photos = new ArrayList<>();
+        for (File file: files) {
+            if (ConstructionConstants.FileType.IMAGE.equalsIgnoreCase(file.getType())) {
+                photos.add(file.getPublicUrl());
+            }
+        }
+
+        getView().post(new Runnable() {
+            @Override
+            public void run() {
+                int itemMargin = getResources().getDimensionPixelSize(R.dimen.spacing_margin_micro);
+                int width = (mTaskPhotosContainer.getMeasuredWidth() - itemMargin * 4) / 4;
+                for (int index = 0; index < photos.size(); index++) {
+                    String photoUri = photos.get(index);
+                    ImageView imageView = new ImageView(getContext());
+                    mTaskPhotosContainer.addView(imageView);
+                    GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) imageView.getLayoutParams();
+                    layoutParams.width = width;
+                    layoutParams.height = width;
+                    layoutParams.setMargins(itemMargin, itemMargin, itemMargin, itemMargin);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setTag(index);
+                    ImageUtils.loadImage(imageView, photoUri);
+
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
+                            intent.putExtra(CommentFragment.POSITION, (int) v.getTag());
+                            intent.putStringArrayListExtra(CommentFragment.STRING_LIST, photos);
+                            getActivity().startActivity(intent);
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+    @Override
     public void showActions(@NonNull final Task task, @NonNull final ProjectInfo projectInfo) {
         mActionsContainer.removeAllViews();
         List<TaskActionHelper.TaskActionEnum> actions = TaskActionHelper.getInstance().getActions(task);
@@ -287,6 +347,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
         mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
         mActionsContainer = (LinearLayout) view.findViewById(R.id.actions_container);
+        mTaskPhotosContainer = (GridLayout) view.findViewById(R.id.photos_container);
     }
 
     private void initEvent(){
@@ -375,13 +436,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     private void uploadPhoto(Task task) {
         //TODO navigate to common component
-        Intent intent = new Intent(getActivity(), MPPhotoPickerActivity.class);
-//      intent.putExtra(MPPhotoPickerActivity.ASSET_ID, mAssetId);
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        intent.putExtra(MPPhotoPickerActivity.X_TOKEN, memberEntity.getHs_accesstoken());
-        intent.putExtra(MPPhotoPickerActivity.MEMBER_ID, memberEntity.getAcs_member_id());
-
+        Intent intent = new Intent(getActivity(), PickPhotoActivity.class);
         getActivity().startActivityForResult(intent, 0x0105);
     }
 

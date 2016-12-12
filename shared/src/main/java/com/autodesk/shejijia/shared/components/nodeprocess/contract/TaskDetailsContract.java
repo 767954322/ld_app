@@ -36,6 +36,8 @@ public interface TaskDetailsContract {
 
         void editComment(@NonNull String comment);
 
+        void showTaskPhoto(@NonNull Task task);
+
         void showActions(@NonNull Task task, @NonNull ProjectInfo project);
 
         void close();

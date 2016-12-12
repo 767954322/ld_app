@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview.comment;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -17,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +112,13 @@ public class CommentPreviewActivity extends AppCompatActivity {
 //                    .fitCenter()
 //                    .thumbnail(0.2f)
 //                    .into(photoView);
-            mLoader.displayImage(sFilePrefix + mData.get(position),photoView,options);
+
+            String url = mData.get(position);
+            Uri uri = Uri.parse(url);
+            if (Uri.parse(url).getScheme() == null) {
+                uri = Uri.fromFile(new File(url));
+            }
+            mLoader.displayImage(uri.toString(),photoView,options);
             container.addView(photoView);
             return photoView;
         }

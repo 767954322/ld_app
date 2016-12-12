@@ -110,6 +110,12 @@
                 android:textColorHint="@color/gray"
                 android:textSize="@dimen/font_normal" />
 
+            <GridLayout
+                android:id="@+id/photos_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4">
+            </GridLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

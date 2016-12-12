@@ -55,6 +55,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.showTaskMembers(TaskUtils.getTaskAssignees(mTask, mProjectInfo));
         mTaskDetailsView.showInspectCompanyInfo(getInspectCompany());
 
+        mTaskDetailsView.showTaskPhoto(mTask);
+
         String memType = UserInfoUtils.getMemberType(AdskApplication.getInstance());
         if (ConstructionConstants.MemberType.MATERIAL_STAFF.equalsIgnoreCase(memType)) {
             mTaskDetailsView.editComment(getDisplayComment(mTask));
@@ -99,7 +101,9 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                 public void onError(ResponseError error) {
                     //TODO update dialog
                     mTaskDetailsView.hideLoading();
-                    mTaskDetailsView.showError(error.getMessage());
+                    // TODO show error
+                    mTaskDetailsView.close();
+//                    mTaskDetailsView.showError(error.getMessage());
                 }
             });
         }

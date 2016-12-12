@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview.comment;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
+import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,9 +77,15 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(isImgItem(position)){
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
-            final String path = getListItem(position);
-            if(path != null){
-                mLoader.displayImage(sFilePrefix + path,viewHolder.image,options);
+            final String item = getListItem(position);
+            if(item != null){
+                String uriString;
+                if (mConfig.geteDataSource() == CommentConfig.DataSource.LOCAL) {
+                    uriString = Uri.fromFile(new File(item)).toString();
+                } else {
+                    uriString = item;
+                }
+                mLoader.displayImage(uriString, viewHolder.image,options);
                 viewHolder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -99,17 +108,25 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mData.size() + 1;
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+            return mData.size() + 1;
+        } else {
+            return mData.size();
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(mData == null || mData.size() == 0){
-            return ADD_ITEM;
-        } else {
-            if(position == mData.size()){
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+            if(mData == null || mData.size() == 0){
                 return ADD_ITEM;
+            } else {
+                if(position == mData.size()){
+                    return ADD_ITEM;
+                }
+                return IMG_ITEM;
             }
+        } else {
             return IMG_ITEM;
         }
     }

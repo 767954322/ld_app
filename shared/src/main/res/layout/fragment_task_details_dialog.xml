@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:minHeight="320dp">
+    android:minHeight="360dp">
 
     <include layout="@layout/fragment_task_details_content_view"
         android:layout_width="match_parent"
