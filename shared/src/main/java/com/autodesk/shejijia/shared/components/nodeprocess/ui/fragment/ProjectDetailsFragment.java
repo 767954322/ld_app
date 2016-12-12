@@ -19,11 +19,13 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.SwipeRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterContract;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterPresenter;
@@ -199,10 +201,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if(list.size() <= 0){
             return;
         }
-        mIsUnread = true;
-        mtVmenuBadge.setVisibility(View.VISIBLE);
         HashMap remoteMap = (HashMap) list.get(0);
         String count = String.format("%s", remoteMap.get("count"));
+        if(!count.contentEquals("0")){
+            mIsUnread = true;
+            mtVmenuBadge.setVisibility(View.VISIBLE);
+        }
         mtVmenuBadge.setText(count);
     }
     @Override
@@ -213,7 +217,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProjectDetailsPresenter.navigateToMessageCenter(mIsUnread);
+                mtVmenuBadge.setVisibility(View.GONE);
+                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread);
             }
         });
     }

@@ -73,8 +73,9 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             return ITEMTYPECONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<MessageItemBean> meaasgesInfo) {
+    public void notifyDataForRecyclerView(List<MessageItemBean> meaasgesInfo,boolean mIsUnread) {
         this.messageItemBeans.addAll(meaasgesInfo);
+        this.mIsUnread = mIsUnread;
         notifyDataSetChanged();
     }
     public int getContentItemCount(){

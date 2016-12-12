@@ -18,6 +18,8 @@ import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,12 +202,12 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter(boolean isUnread) {
+    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
         intent.putExtra(ConstructionConstants.UNREAD,isUnread);
-        mContext.startActivity(intent);
+        projectDetailsFragment.startActivityForResult(intent,104);
     }
 
 }

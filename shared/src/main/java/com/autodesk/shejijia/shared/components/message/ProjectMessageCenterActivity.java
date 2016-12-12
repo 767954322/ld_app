@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.message;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,8 +80,9 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     public void updateProjectMessageView(MessageInfo messageInfo) {
         if(messageInfo.getMessageItemBean() != null) {
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread);
             mIsUnread = false;
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean());
+            setResult(RESULT_OK,new Intent());
         }
     }
 
