@@ -198,13 +198,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 fragment = ProjectListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_ISSUE:
-//                fragment = IssueListFragment.newInstance();
-                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                fragment = new MPThreadListFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(MPThreadListFragment.MEMBERID, memberEntity.getAcs_member_id());
-                bundle.putString(MPThreadListFragment.MEMBERTYPE, memberEntity.getMember_type());
-                fragment.setArguments(bundle);
+                fragment = IssueListFragment.newInstance();
                 break;
             case FRAGMENT_TAG_GROUP_CHAT:
                 fragment = GroupChatFragment.newInstance();

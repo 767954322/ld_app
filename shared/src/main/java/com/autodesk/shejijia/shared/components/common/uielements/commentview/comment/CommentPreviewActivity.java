@@ -113,6 +113,7 @@ public class CommentPreviewActivity extends AppCompatActivity {
 //                    .thumbnail(0.2f)
 //                    .into(photoView);
 
+            //TODO temp solution, remove later
             String url = mData.get(position);
             Uri uri = Uri.parse(url);
             if (Uri.parse(url).getScheme() == null) {

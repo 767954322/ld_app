@@ -79,6 +79,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
             final String item = getListItem(position);
             if(item != null){
+                //TODO temp solution, remove later
                 String uriString;
                 if (mConfig.geteDataSource() == CommentConfig.DataSource.LOCAL) {
                     uriString = Uri.fromFile(new File(item)).toString();
