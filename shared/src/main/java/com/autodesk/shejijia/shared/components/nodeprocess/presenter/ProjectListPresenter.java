@@ -72,7 +72,6 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void onFilterLikeChange(String newLike) {
         this.mFilterLike = newLike;
-//        refreshProjectList();
     }
 
     @Override

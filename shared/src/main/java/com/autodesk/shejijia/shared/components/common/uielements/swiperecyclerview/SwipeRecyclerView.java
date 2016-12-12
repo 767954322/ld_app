@@ -36,7 +36,6 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     private DataObserver mDataObserver;
     private WrapperAdapter mWrapperAdapter;
     private RefreshLoadMoreListener mListener;
-    private int mCurrentScrollState;
 
     public SwipeRecyclerView(Context context) {
         this(context, null);
@@ -221,16 +220,6 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            mCurrentScrollState = newState;
-            mLayoutManager = mRecyclerView.getLayoutManager();
-            int visibleItemCount = mLayoutManager.getChildCount();
-            int totalItemCount = mLayoutManager.getItemCount();
-            if ((visibleItemCount > 1 && mCurrentScrollState == RecyclerView.SCROLL_STATE_IDLE && (mLastVisiblePosition) >= totalItemCount - 1)) {
-                if (mListener != null) {
-                    mIsLoadingMore = true;
-                    mListener.onLoadMore();
-                }
-            }
         }
 
         @Override
@@ -251,6 +240,13 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
                 mLastVisiblePosition = findMax(into);
             }
 
+            int childCount = mWrapperAdapter == null ? 0 : mWrapperAdapter.getItemCount();
+            if (childCount > 1 && mLastVisiblePosition == childCount - 1) {
+                if (mListener != null) {
+                    mIsLoadingMore = true;
+                    mListener.onLoadMore();
+                }
+            }
         }
 
         private int findMax(int[] lastPositions) {

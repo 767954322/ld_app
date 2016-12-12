@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +67,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
-        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.ALL);
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.UNCOMPLET);
     }
 
     @Override
@@ -102,7 +103,6 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     public void onRefresh() {
         mEmptyView.setVisibility(View.GONE);
         mProjectListView.setVisibility(View.VISIBLE);
-        mProjectListAdapter.setProjectLists(null);
         mProjectListView.onRefreshing();
         mProjectListPresenter.refreshProjectList();
     }
@@ -127,8 +127,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     public void refreshProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
             mEmptyView.setVisibility(View.GONE);
+            mProjectListView.setVisibility(View.VISIBLE);
             mProjectListView.complete();
-            mProjectListView.scrollToPosition(0);
+            mProjectListView.getRecyclerView().getLayoutManager().scrollToPosition(0);
             mProjectListAdapter.setProjectLists(projectList);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
@@ -143,7 +144,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
             mProjectListView.complete();
             mProjectListAdapter.appendProjectLists(projectList);
         } else {
-            mProjectListView.onNoMore(" ");
+            mProjectListView.onNoMore(null);
         }
     }
 
@@ -270,6 +271,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         }
         mScreenPopup.setFocusable(true);
         mScreenPopup.setOutsideTouchable(true);
+        mScreenPopup.setBackgroundDrawable(new ColorDrawable());
         mScreenPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

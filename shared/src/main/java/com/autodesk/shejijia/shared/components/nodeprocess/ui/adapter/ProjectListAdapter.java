@@ -50,11 +50,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setProjectLists(List<ProjectInfo> projectLists) {
-        if (projectLists == null){
-            mProjectLists = new ArrayList<>();
-        }else {
-            this.mProjectLists = projectLists;
-        }
+        this.mProjectLists.clear();
+        this.mProjectLists.addAll(projectLists);
         notifyDataSetChanged();
     }
 
