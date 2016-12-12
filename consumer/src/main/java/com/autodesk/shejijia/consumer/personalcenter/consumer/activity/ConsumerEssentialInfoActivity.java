@@ -256,18 +256,39 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
         mCityDataHelper = CityDataHelper.getInstance(this);
         mDb = mCityDataHelper.openDataBase();
-        province_name = mCityDataHelper.getProvinceName(mDb, province);
-        city_name = mCityDataHelper.getCityName(mDb, city);
 
-        if (!TextUtils.isEmpty(district)) {
-            if (!TextUtils.isEmpty(district.trim())) {
-                district_name = mCityDataHelper.getDistrictName(mDb, district);
+        if (!TextUtils.isEmpty(province))
+            if (!province.equals("<null>")) {
+                if (!TextUtils.isEmpty(province.trim())) {
+                    province_name = mCityDataHelper.getProvinceName(mDb, province);
+                } else {
+                    province_name = "";
+                }
+            } else {
+                province_name = "";
+            }
+
+        if (!TextUtils.isEmpty(city))
+            if (!city.equals("<null>")) {
+                if (!TextUtils.isEmpty(city.trim())) {
+                    city_name = mCityDataHelper.getCityName(mDb, city);
+                } else {
+                    city_name = "";
+                }
+            } else {
+                city_name = "";
+            }
+
+        if (!TextUtils.isEmpty(district))
+            if (!district.equals("<null>")) {
+                if (!TextUtils.isEmpty(district.trim())) {
+                    district_name = mCityDataHelper.getDistrictName(mDb, district);
+                } else {
+                    district_name = "";
+                }
             } else {
                 district_name = "";
             }
-        } else {
-            district_name = "";
-        }
 
 
         mDb.close();
