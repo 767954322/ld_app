@@ -102,7 +102,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar(UIUtils.getString(R.string.demand_elite_measure_house_form));
+        setTitleForNavbar(UIUtils.getString(R.string.measure_house_form));
         tvcTime.setFocusable(false);
         tvcEstate.setEnabled(false);
 //        List<DecorationBiddersBean> list = decorationNeedsListBean.getBidders();
