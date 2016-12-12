@@ -46,6 +46,7 @@
                       android:background="@null"
                       android:hint="@string/write_project_id"
                       android:inputType="number"
+                      android:focusable="true"
                       android:textColor="@color/project_id_write"
                       android:textSize="@dimen/font_normal"/>
 

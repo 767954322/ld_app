@@ -1,27 +1,30 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
-import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHInspectionForm;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.contract.FormListContract;
 import com.autodesk.shejijia.shared.components.form.presenter.FormListPresenter;
+import com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity;
 import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_aij on 16/11/17.
@@ -30,14 +33,17 @@ import java.util.List;
 public class FormListFragment extends BaseConstructionFragment implements FormListContract.View, View.OnClickListener, FormListAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;        //表单
     private TextView mProblemTitleTv;          //问题记录
-    private LinearLayout mRectificationLayout; //监督整改
-    private LinearLayout mReinspectionLayout;  //强制复验
+    private RelativeLayout mRectificationLayout; //监督整改
+    private RelativeLayout mReinspectionLayout;  //强制复验
     private TextView mResultTv;                //结果
 
     private FormListPresenter mPresenter;
     private FormListAdapter mAdapter;
     private List<ItemCell> mItemCellList = new ArrayList<>();
     private String mTitle;
+    private Button mSubmitBtn;
+    private View mLineView;
+    private SHPrecheckForm mPrecheckForm;
 
     public static FormListFragment newInstance(Bundle args) {
         FormListFragment formListfragment = new FormListFragment();
@@ -54,9 +60,11 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     protected void initView() {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_form_list);
         mProblemTitleTv = (TextView) rootView.findViewById(R.id.tv_problem_title);
-        mRectificationLayout = (LinearLayout) rootView.findViewById(R.id.ll_rectification_log);
-        mReinspectionLayout = (LinearLayout) rootView.findViewById(R.id.ll_reinspection_log);
+        mRectificationLayout = (RelativeLayout) rootView.findViewById(R.id.rl_rectification_log);
+        mLineView = rootView.findViewById(R.id.view_line);
+        mReinspectionLayout = (RelativeLayout) rootView.findViewById(R.id.rl_reinspection_log);
         mResultTv = (TextView) rootView.findViewById(R.id.tv_result);
+        mSubmitBtn = (Button) rootView.findViewById(R.id.btn_submit);
     }
 
     @Override
@@ -64,7 +72,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         Bundle bundle = getArguments();
         Task task = (Task) bundle.getSerializable("task");
         // TODO: 16/12/7 验收条件满足的表格数据
-        SHPrecheckForm precheckForm = (SHPrecheckForm) bundle.getSerializable("precheckForm");
+        mPrecheckForm = (SHPrecheckForm) bundle.getSerializable("precheckForm");
         mTitle = task.getName();
         initToolbar(mTitle);
 
@@ -81,7 +89,16 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     protected void initListener() {
-        rootView.findViewById(R.id.btn_submit).setOnClickListener(this);
+        mSubmitBtn.setOnClickListener(this);
+
+        rootView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectorAll();
+            }
+        });
+
+
     }
 
     @Override
@@ -108,7 +125,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     }
 
     @Override
-    public void enterFormItem(SHInspectionForm shInspectionForm) {
+    public void enterFormItem(SHForm shInspectionForm) {
         // TODO: 16/11/28 进入到第二个fragment的判断,第一次进来,还是第二次显示出来
         Bundle args = new Bundle();
         args.putSerializable("shInspectionForm", shInspectionForm);  //将具体的表格传递进去
@@ -123,11 +140,52 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     }
 
     @Override
+    public void refreshReinspection(Map<String, List<String>> reinspectionMap) {
+        if(reinspectionMap == null) {
+            mProblemTitleTv.setVisibility(View.GONE);
+            mReinspectionLayout.setVisibility(View.GONE);
+        } else {
+            mProblemTitleTv.setVisibility(View.VISIBLE);
+            mReinspectionLayout.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
+    public void refreshRectification(Map<String, List<String>> rectificationMap) {
+        if(rectificationMap == null) {
+            if(mReinspectionLayout.getVisibility() != View.VISIBLE) {
+                mProblemTitleTv.setVisibility(View.GONE);
+            }
+            mLineView.setVisibility(View.GONE);
+            mRectificationLayout.setVisibility(View.GONE);
+        } else {
+            mProblemTitleTv.setVisibility(View.VISIBLE);
+            if(mReinspectionLayout.getVisibility() != View.VISIBLE) {
+                mLineView.setVisibility(View.GONE);
+            } else {
+                mLineView.setVisibility(View.VISIBLE);
+            }
+            mRectificationLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showSubmitBtn() {
+        mSubmitBtn.setEnabled(true);
+    }
+
+    @Override
+    public void SubmitSuccess() {
+        startActivity(new Intent(mContext, ScanQrCodeActivity.class));
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
 
         if (R.id.btn_submit == id) {
-            ToastUtils.showShort(mContext, "弹框,确定是否确定保存");
+            mPresenter.submitData(mPrecheckForm);
         }
 
     }

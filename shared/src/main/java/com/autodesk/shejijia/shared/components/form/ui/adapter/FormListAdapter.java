@@ -93,11 +93,11 @@ public class FormListAdapter extends RecyclerView.Adapter<FormListAdapter.FormLi
     }
 
     static class FormListVH extends RecyclerView.ViewHolder {
-        private TextView mTitleTv;  //标题
-        private TextView mResultTv; //随时跟新结果  初始化的时候就应该做出判断,是否有复验
+        private TextView mTitleTv;                //标题
+        private TextView mResultTv;               //随时跟新结果  初始化的时候就应该做出判断,是否有复验
         private RelativeLayout mTableCellLayout;  //条目点击
-        private TextView mNotificationTv;   //通知标签   初始化的时候就应该做出判断,是复验的通知,和数量
-        private ImageView mInformationIv;    //错误详情视图   初始化的时候就应该做出判断,是否又错误信息
+        private TextView mNotificationTv;         //通知标签   初始化的时候就应该做出判断,是复验的通知,和数量
+        private ImageView mInformationIv;         //错误详情视图   初始化的时候就应该做出判断,是否又错误信息
 
         public FormListVH(View itemView) {
             super(itemView);

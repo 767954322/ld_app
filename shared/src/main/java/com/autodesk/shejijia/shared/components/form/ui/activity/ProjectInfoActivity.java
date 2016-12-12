@@ -53,7 +53,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mTask = (Task) intent.getSerializableExtra("task");
         mMember = (Member) intent.getSerializableExtra("member");
         mBuilding = (Building) intent.getSerializableExtra("building");
-
         mPresenter = new ProjectInfoPresenter(this);
     }
 

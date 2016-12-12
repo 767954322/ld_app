@@ -95,10 +95,21 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
 
     @Override
     public void clickOptionBtn() {
-        if (1 == index) {
-            mView.enterUnqualified(mShForm);
-        } else if (2 == index) {
-            mView.enterQualified(mTask, mShForm);
+        HashMap typeDict = mShForm.getTypeDict();
+        Object status = typeDict.get("status");
+        if (status instanceof List) {
+            List<String> list = (List<String>) status;
+            if (1 == index) {   //不合格
+                for (int i = 0; i < list.size(); i++) {
+                    if ("不合格".equals(list.get(i))) mShForm.setStatus(i);
+                }
+                mView.enterUnqualified(mShForm);
+            } else if (2 == index) {   //合格
+                for (int i = 0; i < list.size(); i++) {
+                    if ("合格".equals(list.get(i))) mShForm.setStatus(i);
+                }
+                mView.enterQualified(mTask, mShForm);
+            }
         }
     }
 

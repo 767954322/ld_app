@@ -31,6 +31,9 @@ import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContra
 import com.autodesk.shejijia.shared.components.form.presenter.ProjectIdCodePresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickListener, ProjectIdCodeContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private EditText mProjectIdEt;
@@ -60,11 +63,13 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
         mProjectIdEt = (EditText) findViewById(R.id.et_project_id);
         mConfirmBtn = (Button) findViewById(R.id.btn_confirm);
+
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         initToolbar();
+        openSoftInput();
         mPresenter = new ProjectIdCodePresenter(this);
     }
 
@@ -99,10 +104,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
             startActivity(new Intent(this, ScanQrCodeActivity.class));
             return true;
         } else if (id == android.R.id.home) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm.isActive()) {
-                imm.hideSoftInputFromWindow(mProjectIdEt.getWindowToken(), 0); //强制隐藏键盘
-            }
+            closeSoftInput();
             initNavigationHeadState();
             mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
@@ -173,6 +175,25 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
         mToolbar.setTitle(R.string.input_code);
         mToolbar.setTitleTextColor(UIUtils.getColor(R.color.con_white));
         setSupportActionBar(mToolbar);
+    }
+
+    private void openSoftInput() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager)ProjectIdCodeActivity.this.getSystemService(INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+
+        }, 1000);
+    }
+
+    private void closeSoftInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(mProjectIdEt.getWindowToken(), 0);
+        }
     }
 
     private void initNavigationHeadState() {
