@@ -26,6 +26,7 @@
         android:paddingTop="1dp"
         android:text="10"
         android:background="@drawable/redsharp"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="12sp" />
 </FrameLayout>

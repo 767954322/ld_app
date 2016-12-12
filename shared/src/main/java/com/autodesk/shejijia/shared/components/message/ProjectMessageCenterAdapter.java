@@ -22,18 +22,18 @@ import java.util.List;
  */
 
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<MessageItemBean> mData;
-    private boolean isUnrea;
+    private List<MessageItemBean> messageItemBeans;
+    private boolean mIsUnread;
     private static HistoricalRecordstListener mHistoricalRecordstListener;
     private int mBottomCount=1;//底部View个数
     public static final int ITEMTYPECONTENT = 0;
     public static final int ITEMTYPEBOTTOM = 1;
     private int resId;
-    public ProjectMessageCenterAdapter(List<MessageItemBean> mData, boolean isUnrea, int resId) {
+    public ProjectMessageCenterAdapter(List<MessageItemBean> messageItemBeans, boolean isUnread, int resId) {
         super();
-        this.mData = mData;
+        this.messageItemBeans = messageItemBeans;
         this.resId = resId;
-        this.isUnrea = isUnrea;
+        this.mIsUnread = isUnread;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             String mHistoricalRecords = UIUtils.getString(R.string.historical_records);
             mBottomViewHolder.mTvMessageHistoricalRecords.setText(Html.fromHtml("<u>"+mHistoricalRecords+"</u>"));
             initListener(mBottomViewHolder);
-            mBottomViewHolder.mTvMessageHistoricalRecords.setVisibility(isUnrea?View.VISIBLE:View.GONE);
+            mBottomViewHolder.mTvMessageHistoricalRecords.setVisibility(mIsUnread?View.VISIBLE:View.GONE);
         }
     }
 
@@ -74,11 +74,11 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
     public void notifyDataForRecyclerView(List<MessageItemBean> meaasgesInfo) {
-        this.mData.addAll(meaasgesInfo);
+        this.messageItemBeans.addAll(meaasgesInfo);
         notifyDataSetChanged();
     }
     public int getContentItemCount(){
-        return mData != null?mData.size():0;
+        return messageItemBeans != null?messageItemBeans.size():0;
     }
     private void initListener(BottomViewHolder mBottomViewHolder){
         mBottomViewHolder.mTvMessageHistoricalRecords.setOnClickListener(new View.OnClickListener(){
@@ -89,14 +89,14 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         });
     }
     private void initData(ProjectMessageCenterVH holder,int position){
-        String avatar = mData.get(position).getSenderAvatar();
+        String avatar = messageItemBeans.get(position).getSenderAvatar();
         if (TextUtils.isEmpty(avatar)) {
             holder.mImgBtnPersonalHeadPic.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
         } else {
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
 
-        DisplayMessageBean displayMessage = mData.get(position).getDisplayMessage();
+        DisplayMessageBean displayMessage = messageItemBeans.get(position).getDisplayMessage();
         if (displayMessage != null && !TextUtils.isEmpty(displayMessage.getSummary())) {
             String title = displayMessage.getSummary();
             for (int i = 0; title.contains("*"); i++) {
@@ -113,8 +113,8 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             detailItem = detailItem.substring(0,detailItem.length()-1);
             holder.mTvMeaasgeCantent.setText(detailItem);
         }
-        if (!TextUtils.isEmpty(mData.get(position).getSentTime())) {
-            String sentTime = DateUtil.getTimeMYD(mData.get(position).getSentTime());
+        if (!TextUtils.isEmpty(messageItemBeans.get(position).getSentTime())) {
+            String sentTime = DateUtil.getTimeMYD(messageItemBeans.get(position).getSentTime());
             holder.mTvMessageTime.setText(sentTime);
         }
     }//底部 ViewHolder

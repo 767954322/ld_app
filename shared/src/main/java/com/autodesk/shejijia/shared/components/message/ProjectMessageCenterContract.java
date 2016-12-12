@@ -6,6 +6,8 @@ import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
+import java.util.List;
+
 /**
  * Created by luchongbin on 2016/12/8.
  */
@@ -13,7 +15,7 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 public interface ProjectMessageCenterContract {
     interface View extends BaseView{
         void updateProjectMessageView(MessageInfo messageInfo);
-        void updateUnreadCountView();
+        void updateUnreadCountView(List list);
 
     }
     interface Presenter extends BasePresenter{

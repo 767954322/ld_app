@@ -200,15 +200,12 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter() {
-
+    public void navigateToMessageCenter(boolean isUnread) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
-        intent.putExtra(ConstructionConstants.UNREAD,false);
-        Log.d("test","test:"+projectInfo.getProjectId());
+        intent.putExtra(ConstructionConstants.UNREAD,isUnread);
         mContext.startActivity(intent);
-
     }
 
 }

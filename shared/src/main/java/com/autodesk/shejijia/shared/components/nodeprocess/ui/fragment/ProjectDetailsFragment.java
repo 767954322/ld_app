@@ -33,6 +33,8 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrE
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsPagerAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.progressbar.ProgressbarIndicator;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,6 +53,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private TextView mEditPlanBtn;
+    private TextView mtVmenuBadge;
+    private boolean mIsUnread = false;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
 
@@ -90,8 +94,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
-//            mProjectMessageCenterPresenter.getUnreadCount(projectId+"",TAG);
-
+            mProjectMessageCenterPresenter.getUnreadCount(projectId+"",TAG);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -192,19 +195,25 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     public void updateProjectMessageView(MessageInfo messageInfo) {}
     @Override
-    public void updateUnreadCountView() {
-
+    public void updateUnreadCountView(List list) {
+        if(list.size() <= 0){
+            return;
+        }
+        mIsUnread = true;
+        mtVmenuBadge.setVisibility(View.VISIBLE);
+        HashMap remoteMap = (HashMap) list.get(0);
+        String count = String.format("%s", remoteMap.get("count"));
+        mtVmenuBadge.setText(count);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
         FrameLayout frameLayout = (FrameLayout)menu.findItem(R.id.project_toolbar_message).getActionView();
-//        final TextView textView = (TextView)frameLayout.findViewById(R.id.menu_badge);
+        mtVmenuBadge = (TextView)frameLayout.findViewById(R.id.menu_badge);
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProjectDetailsPresenter.navigateToMessageCenter();
-//                textView.setText("100");
+                mProjectDetailsPresenter.navigateToMessageCenter(mIsUnread);
             }
         });
     }
@@ -216,7 +225,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mProjectDetailsPresenter.getProjectInformation();
             return true;
         } else if (itemId == R.id.project_toolbar_message) {
-           mProjectDetailsPresenter.navigateToMessageCenter();
+//           mProjectDetailsPresenter.navigateToMessageCenter();
             return true;
         }
 

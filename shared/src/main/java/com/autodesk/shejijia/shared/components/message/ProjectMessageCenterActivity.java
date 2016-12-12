@@ -23,9 +23,9 @@ import java.util.List;
 public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,ProjectMessageCenterAdapter.HistoricalRecordstListener {
 
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
-    private List<MessageItemBean> mData;
+    private List<MessageItemBean> messageItemBeans;
     private long mProjectId;
-    private boolean isUnrea;
+    private boolean mIsUnread;
     private RecyclerView mRvProjectMessagCenterView;
     private ProjectMessageCenterAdapter mProjectMessageCenterAdapter;
     @Override
@@ -39,16 +39,16 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        isUnrea = getIntent().getBooleanExtra(ConstructionConstants.UNREAD,false);
+        mIsUnread = getIntent().getBooleanExtra(ConstructionConstants.UNREAD,false);
         mProjectId = getIntent().getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,0);
     }
     @Override
     protected void initData(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
-        mData = new ArrayList<>();
+        messageItemBeans = new ArrayList<>();
         mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(),this);
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(mData,isUnrea,R.layout.item_messagecenter);
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(messageItemBeans,mIsUnread,R.layout.item_messagecenter);
         initRecyclerView();
         getListMessageCenterInfo();
     }
@@ -67,7 +67,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         Bundle requestParams = new Bundle();
         requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
         requestParams.putInt(ConstructionConstants.OFFSET,0);
-        requestParams.putBoolean(ConstructionConstants.UNREAD,isUnrea);
+        requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
         requestParams.putInt(ConstructionConstants.LIMIT,20);
         return requestParams;
     }
@@ -79,6 +79,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     public void updateProjectMessageView(MessageInfo messageInfo) {
         if(messageInfo.getMessageItemBean() != null) {
+            mIsUnread = false;
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean());
         }
     }
@@ -93,7 +94,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void showLoading() {}
 
     @Override
-    public void updateUnreadCountView(){}
+    public void updateUnreadCountView(List list){}
 
     @Override
     public void hideLoading() {}
