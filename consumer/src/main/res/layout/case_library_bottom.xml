@@ -7,13 +7,56 @@
     android:layout_height="match_parent">
 
 
+    <ImageView
+        android:id="@+id/img_look_more_detail_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/size_15"
+        android:background="@drawable/im_ico"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout">
+
+        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
+            android:id="@+id/piv_img_customer_home_header"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_45"
+            android:layout_gravity="top"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="@dimen/size_10"
+            android:src="@drawable/icon_default_avator"
+            app:poly_border="true"
+            app:poly_border_color="@color/bg_ff"
+            app:poly_border_width="@dimen/size_5"
+            app:poly_corner_radius="5"
+            app:poly_vertices="0" />
+
+        <ImageView
+            android:id="@+id/iv_designer_certification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="@dimen/size_43"
+            android:src="@drawable/icon_real_name_small"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_10"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/size_70">
+        android:paddingLeft="@dimen/size_70"
+        android:layout_alignBottom="@+id/frameLayout"
+        android:layout_alignParentStart="true">
 
 
         <LinearLayout
@@ -116,45 +159,4 @@
 
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/img_look_more_detail_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginRight="@dimen/size_15"
-        android:background="@drawable/im_ico"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
-            android:id="@+id/piv_img_customer_home_header"
-            android:layout_width="@dimen/size_45"
-            android:layout_height="@dimen/size_45"
-            android:layout_gravity="top"
-            android:layout_marginBottom="18dp"
-            android:layout_marginLeft="@dimen/size_10"
-            android:src="@drawable/icon_default_avator"
-            app:poly_border="true"
-            app:poly_border_color="@color/bg_ff"
-            app:poly_border_width="@dimen/size_5"
-            app:poly_corner_radius="5"
-            app:poly_vertices="0" />
-
-        <ImageView
-            android:id="@+id/iv_designer_certification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="18dp"
-            android:layout_marginLeft="@dimen/size_43"
-            android:src="@drawable/icon_real_name_small"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-    </FrameLayout>
 </RelativeLayout>

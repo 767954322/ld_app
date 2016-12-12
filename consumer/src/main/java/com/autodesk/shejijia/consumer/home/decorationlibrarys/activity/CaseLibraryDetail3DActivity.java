@@ -641,7 +641,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (livingRoom.containsKey(bedroom)) {
             tvCustomerHomeLivingRoom.setText(livingRoom.get(bedroom));
         } else {
-            tvCustomerHomeLivingRoom.setText(bedroom);
+            tvCustomerHomeLivingRoom.setText(R.string.other_qita);
         }
 
         //卫
@@ -649,7 +649,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (toilet.containsKey(restroom)) {
             tvCustomerHomeToilet.setText(toilet.get(restroom));
         } else {
-            tvCustomerHomeToilet.setText(restroom);
+            tvCustomerHomeToilet.setText(R.string.other_qita);
         }
 
         String project_style = case3DDetailBean.getProject_style();
