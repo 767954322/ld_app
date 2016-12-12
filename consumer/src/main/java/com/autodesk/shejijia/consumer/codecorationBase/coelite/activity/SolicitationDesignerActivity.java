@@ -111,6 +111,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         String city_name = decorationNeedsListBean.getCity_name();
         String district_name = decorationNeedsListBean.getDistrict_name();
 
+
         String house_type = decorationNeedsListBean.getHouse_type();
 
         Map<String, String> spaceMap = AppJsonFileReader.getSpace(this);
@@ -129,6 +130,12 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcPhone.setText(decorationNeedsListBean.getContacts_mobile());
         tvcMeasureFormType.setText(UIUtils.getNoSelectIfEmpty(spaceMap.get(house_type)));
 
+        if (!TextUtils.isEmpty(detailAddress)) {
+            et_detail_address.setText(detailAddress);
+            et_detail_address.setEnabled(false);
+        }
+
+
         String room = ConvertUtils.getConvert2CN(roomMap, decorationNeedsListBean.getRoom());
         String livingRoom = ConvertUtils.getConvert2CN(roomHallMap, decorationNeedsListBean.getLiving_room());
         String toilet = ConvertUtils.getConvert2CN(toiletMap, decorationNeedsListBean.getToilet());
@@ -140,7 +147,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
         chageButtonValue();
         setMeasureTime();
-        if(!TextUtils.isEmpty(district_name)){
+        if (!TextUtils.isEmpty(district_name)) {
             if (district_name.equals("none")) {
                 tvcAddress.setText(province_name + city_name);
                 return;
@@ -330,6 +337,10 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private void getExtraData() {
         Intent intent = getIntent();
         decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
+        if (!TextUtils.isEmpty(decorationNeedsListBean.getAddress())) {
+            detailAddress = decorationNeedsListBean.getAddress();
+
+        }
         designerId = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         falg = intent.getBooleanExtra(Constant.SeekDesignerDetailKey.ORDERS, false);
     }

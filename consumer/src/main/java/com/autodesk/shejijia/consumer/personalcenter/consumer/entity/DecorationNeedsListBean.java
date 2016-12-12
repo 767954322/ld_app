@@ -45,6 +45,7 @@ public class DecorationNeedsListBean implements Serializable {
     private String design_budget;
     private String detail_desc;
     private String district_name;
+    private String address;
     private String end_day;
     private String house_area;
     private String house_type;
@@ -58,7 +59,13 @@ public class DecorationNeedsListBean implements Serializable {
     private String contract;
     private List<DecorationBiddersBean> bidders;
     private SelectionBean elite;
+    public String getAddress() {
+        return address;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
     public SelectionBean getElite() {
         return elite;
     }

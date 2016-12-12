@@ -133,6 +133,15 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             iv_measure_icon.setVisibility(View.VISIBLE);
             iv_measure_icon.setBackground(UIUtils.getDrawable(R.drawable.handpicked_icon));///  精选.
         }
+
+
+        String address_details = requirement.getAddress();
+        if (!StringUtils.isEmpty(address_details)) {
+            detail_address.setText(address_details);
+        }else {
+            detail_address.setEnabled(true);
+        }
+
         //fix bug DP-6395
         setTitleForNavbar(getResources().getString(R.string.measure_house_form));
         updateDisplayData();
@@ -303,8 +312,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
                 consumer_house_charge_show.setVisibility(View.GONE);
-                detail_address.setText("");
-                detail_address.setEnabled(true);
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
@@ -420,12 +427,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvName.setText(user_name);
         tvPhone.setText(mobile_number);
         tvProjectBudget.setText(TextUtils.isEmpty(requirement.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : requirement.getDesign_budget() + "");
-        String address_details = requirement.getAddress();
-        if (!StringUtils.isEmpty(address_details)) {
-            detail_address.setText(address_details);
-        } else {
-            detail_address.setText("");
-        }
 
 
         tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget()) ?

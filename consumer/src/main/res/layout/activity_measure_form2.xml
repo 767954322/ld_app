@@ -200,6 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_44"
                 android:background="@color/bg_ff"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -207,14 +208,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_16"
                     android:text="@string/demand_village_name"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_14" />
 
                 <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_estate"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:background="@color/no_color"
                     android:ems="10"
                     android:hint="@string/please_select_community_name"
