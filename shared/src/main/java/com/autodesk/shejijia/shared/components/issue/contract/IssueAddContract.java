@@ -9,15 +9,15 @@ import java.util.List;
  * Created by Menghao.Gu on 2016/12/5.
  */
 
-public interface IssueAddDescriptionContract {
+public interface IssueAddContract {
 
-    interface View extends BaseView {
+    interface View {
 
         void onShowStatus(boolean status);
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter {
 
         /*
         *上传问题

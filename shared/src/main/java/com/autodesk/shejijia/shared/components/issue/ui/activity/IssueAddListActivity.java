@@ -10,8 +10,8 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
-import com.autodesk.shejijia.shared.components.issue.contract.IssueAddDescriptionContract;
-import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddDescriptionPresenter;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddPresenter;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueAddListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -20,10 +20,8 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class IssueAddListActivity extends BaseActivity implements IssueAddDescriptionContract.View {
-    private IssueAddDescriptionPresenter mTrackingPresent;
+public class IssueAddListActivity extends BaseActivity {
     private IssueAddListFragment addIssueTrackingFragment;
-    private IssueDescription mIssueDescription;
 
     @Override
     protected int getLayoutResId() {
@@ -41,7 +39,6 @@ public class IssueAddListActivity extends BaseActivity implements IssueAddDescri
         if (savedInstanceState == null) {
             initToolbar();
             addIssueTrackingFragment = IssueAddListFragment.getInstance();
-            mTrackingPresent = new IssueAddDescriptionPresenter(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_add_issuetracking, addIssueTrackingFragment)
                     .commit();
@@ -61,9 +58,7 @@ public class IssueAddListActivity extends BaseActivity implements IssueAddDescri
             finish();
             return true;
         } else if (i == R.id.add_traction) {
-            // TODO 上传图片语音文字
-//            mTrackingPresent.putIssueTracking(mIssueDescription.getmDescription(), mIssueDescription.getmAudioPath()
-//                    , mIssueDescription.getmImagePath());
+            addIssueTrackingFragment.sendIssueTracking();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -83,31 +78,4 @@ public class IssueAddListActivity extends BaseActivity implements IssueAddDescri
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-
-    @Override
-    public void onShowStatus(boolean status) {
-
-    }
-
-    @Override
-    public void showNetError(ResponseError error) {
-
-    }
-
-    @Override
-    public void showError(String errorMsg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-
 }

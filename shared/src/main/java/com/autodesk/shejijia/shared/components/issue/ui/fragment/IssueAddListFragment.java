@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,24 +16,33 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
+import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
+import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddPresenter;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity;
+import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddListActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueAddListImageAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
@@ -40,7 +50,7 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener {
+public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View {
 
 
     public static IssueAddListFragment getInstance() {
@@ -72,9 +82,10 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initData() {
-        initTimePick();//初始化TimePick
-        initProjectReplyData();//初始化代码相关成员信息
-        initImageList();//初始化项目描述图片List
+        mIssueAddPresenter = new IssueAddPresenter(this, activity);
+        initTimePick();
+        initProjectReplyData();
+        initImageList();
     }
 
     private void initImageList() {
@@ -124,7 +135,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    //通知客户开关按钮监听
+    /**
+     * 通知客户开关按钮监听
+     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
@@ -134,7 +147,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    //两个Popwindow的回调
+    /**
+     * 两个Popwindow的回调
+     */
     @Override
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
@@ -146,7 +161,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         dismissPopwindow();
     }
 
-    //关闭Popwindow
+    /**
+     * 关闭Popwindow
+     */
     private void dismissPopwindow() {
         if (null != mIssueStylePopWin) {
             mIssueStylePopWin.dismiss();
@@ -156,7 +173,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    //初始化时间控件
+    /**
+     * 初始化时间控件
+     */
     private void initTimePick() {
         mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         mPvTime = new TimePickerView(activity, TimePickerView.Type.YEAR_MONTH_DAY);
@@ -175,7 +194,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         });
     }
 
-    //初始化项目角色信息
+    /**
+     * 初始化项目角色信息
+     */
     private void initProjectReplyData() {
         ProjectInfo projectInfo = ProjectRepository.getInstance().getActiveProject();
         if (projectInfo != null) {
@@ -185,6 +206,19 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    /**
+     * 发送添加问题
+     */
+    public void sendIssueTracking() {
+        mIssueAddPresenter.putIssueTracking(mDescriptionBean.getmDescription(), mDescriptionBean.getmAudioPath(), mDescriptionBean.getmImagePath());
+    }
+
+
+    /**
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -226,6 +260,14 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
             }
         }
     };
+
+    @Override
+    public void onShowStatus(boolean status) {
+
+
+    }
+
+
     private RelativeLayout mIssueAll;
     private RelativeLayout mIssueStyle;
     private RelativeLayout mIssueDescription;
@@ -248,5 +290,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private TimePickerView mPvTime;
     private SimpleDateFormat mDateFormat;
     private IssueDescription mDescriptionBean;
+    private IssueAddContract.Presenter mIssueAddPresenter;
+
 
 }
