@@ -1065,6 +1065,8 @@
     <string name="hint_input_detail_address">请输入详细地址</string>
     <string name="project_information">项目信息</string>
     <string name="phone_number">手机号码不能为空</string>
+    <string name="number_dashi">请输入2-20个字符</string>
+    <string name="mobile_phone">请输入正确的手机号码</string>
 
 
 </resources>
