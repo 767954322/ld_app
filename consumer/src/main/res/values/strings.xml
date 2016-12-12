@@ -1006,7 +1006,7 @@
     <string name="other_filtr">其他</string>
     <string name="manyoutu">漫游图</string>
     <string name="name_empty">姓名不能为空</string>
-    <string name="hint_edit_input_name">请输入2-20个字符</string>
+    <string name="hint_edit_input_name">姓名不能为空</string>
 
 
     <!--推荐清单表单校验提示-->
@@ -1064,6 +1064,7 @@
     <string name="information_person">个人信息</string>
     <string name="hint_input_detail_address">请输入详细地址</string>
     <string name="project_information">项目信息</string>
+    <string name="phone_number">手机号码不能为空</string>
 
 
 </resources>
