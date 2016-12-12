@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.form.common.entity;
 
 import com.autodesk.shejijia.shared.components.common.utility.CastUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
-import com.autodesk.shejijia.shared.components.form.common.entity.microBean.TypeDict;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -195,8 +194,6 @@ public class SHForm implements Serializable {
     }
 
     protected void init(HashMap map){
-        this.formInstanceId = (String) map.get("id");
-        this.formTemplateId = (String) map.get("id");
         this.title = (String) map.get("title");
         this.version = (Integer) map.get("version");
         this.category = (String) map.get("category");
@@ -219,9 +216,10 @@ public class SHForm implements Serializable {
     }
 
     public void applyFormData(HashMap map){
+        this.id = (String) map.get("id");
         this.projectId = String.valueOf(map.get("project_id"));
         this.taskId = (String) map.get("task_id");
-        this.formInstanceId = (String) map.get("formInstanceId");
+        this.formInstanceId = (String) map.get("form_instance_id");
         this.formTemplateId = (String) map.get("form_template_id");
         this.status = (Integer) map.get("status");
         this.version = (Integer) map.get("version");
@@ -252,9 +250,12 @@ public class SHForm implements Serializable {
 
     public Map getUpdateFormData(){
         Map<String,Object> updateFormData = new HashMap<>();
+        updateFormData.put("project_id",this.projectId);
+        updateFormData.put("task_id",this.taskId);
         updateFormData.put("template_id",this.formTemplateId);
         updateFormData.put("form_instance_id",this.formInstanceId);
         updateFormData.put("status",this.status);
+        updateFormData.put("version",this.version);
         List<Map> tempCheckItemList = new ArrayList<>();
         for(CheckItem checkItem : this.checkItems){
             Map<String,Object> miniCheckItem = new HashMap<>();

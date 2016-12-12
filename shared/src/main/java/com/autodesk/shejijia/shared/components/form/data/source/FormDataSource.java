@@ -6,6 +6,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_panya on 16/10/20.
@@ -16,4 +17,5 @@ public interface FormDataSource {
 
     void getRemoteFormItemDetails(@NonNull ResponseCallback<List, ResponseError> callBack, List<String> formIds);
 
+    void verifyInspector(@NonNull Long pid,@NonNull ResponseCallback<Map, ResponseError> callBack);
 }

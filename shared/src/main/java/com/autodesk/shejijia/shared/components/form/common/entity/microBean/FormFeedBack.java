@@ -150,11 +150,11 @@ public class FormFeedBack implements Serializable {
         List<Map> feedBackDataList = new ArrayList<>();
         Map<String,Object> checkMap = new HashMap<>();
         checkMap.put("type","check_result");
-        checkMap.put("value",this.currentCheckIndex);
+        checkMap.put("value",this.currentCheckIndex.toString());
         feedBackDataList.add(checkMap);
         Map<String,Object> actionMap = new HashMap<>();
         actionMap.put("type","action_result");
-        actionMap.put("value",this.currentActionIndex);
+        actionMap.put("value",this.currentActionIndex.toString());
         feedBackDataList.add(actionMap);
         return feedBackDataList;
     }

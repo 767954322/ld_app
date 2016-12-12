@@ -92,6 +92,21 @@ public class FormRepository implements FormDataSource {
         }
     }
 
+    @Override
+    public void verifyInspector(@NonNull Long pid, @NonNull final ResponseCallback<Map, ResponseError> callBack) {
+        FormRemoteDataSource.getInstance().verifyInspector(pid, new ResponseCallback<Map, ResponseError>() {
+            @Override
+            public void onSuccess(Map data) {
+                callBack.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                callBack.onError(error);
+            }
+        });
+    }
+
 
     public void updateRemoteForms(List<SHForm> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
         if (forms == null || forms.size() == 0) {
