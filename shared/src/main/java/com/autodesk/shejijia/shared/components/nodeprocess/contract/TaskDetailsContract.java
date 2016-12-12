@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -19,6 +20,12 @@ import java.util.Date;
 public interface TaskDetailsContract {
 
     interface View extends BaseView {
+
+        void showUploading();
+
+        void hideUploading();
+
+        void showError(@NonNull String error, @NonNull DialogInterface.OnClickListener positiveClickListener, @NonNull DialogInterface.OnClickListener negativeClickListener);
 
         void showTaskName(@NonNull String taskName);
 
@@ -41,11 +48,6 @@ public interface TaskDetailsContract {
         void showActions(@NonNull Task task, @NonNull ProjectInfo project);
 
         void close();
-
-        void showUploading();
-
-        void hideUploading();
-
     }
 
     interface Presenter extends BasePresenter {

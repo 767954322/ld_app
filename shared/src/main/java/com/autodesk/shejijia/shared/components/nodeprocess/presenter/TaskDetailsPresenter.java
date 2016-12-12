@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -99,11 +100,18 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
 
                 @Override
                 public void onError(ResponseError error) {
-                    //TODO update dialog
                     mTaskDetailsView.hideUploading();
-                    // TODO show error
-                    mTaskDetailsView.close();
-//                    mTaskDetailsView.showError(error.getMessage());
+                    mTaskDetailsView.showError(error.getMessage(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            submitComment();
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mTaskDetailsView.close();
+                        }
+                    });
                 }
             });
         }

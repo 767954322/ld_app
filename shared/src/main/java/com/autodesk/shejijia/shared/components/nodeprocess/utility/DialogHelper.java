@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.utility;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialog;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
@@ -52,6 +53,17 @@ public class DialogHelper {
 
             }
         });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showError(String error, DialogInterface.OnClickListener positiveClickListener,
+                          DialogInterface.OnClickListener negativeClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(error);
+        builder.setNegativeButton(R.string.cancel, negativeClickListener);
+        builder.setPositiveButton(R.string.retry, positiveClickListener);
         AlertDialog dialog = builder.create();
         dialog.show();
     }

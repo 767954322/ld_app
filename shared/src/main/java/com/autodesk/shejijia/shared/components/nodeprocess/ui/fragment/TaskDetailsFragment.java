@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -183,6 +184,27 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
+    public void showUploading() {
+        if (mDialogHelper != null) {
+            mDialogHelper.showUpLoading();
+        }
+    }
+
+    @Override
+    public void hideUploading() {
+        if (mDialogHelper != null) {
+            mDialogHelper.hideUpLoading();
+        }
+    }
+
+    @Override
+    public void showError(@NonNull String error, @NonNull DialogInterface.OnClickListener positiveClickListener, @NonNull DialogInterface.OnClickListener negativeClickListener) {
+        if (mDialogHelper != null) {
+            mDialogHelper.showError(error, positiveClickListener, negativeClickListener);
+        }
+    }
+
+    @Override
     public void showTaskName(@NonNull String taskName) {
         mTaskNameView.setText(taskName);
     }
@@ -334,20 +356,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public void close() {
         dismiss();
-    }
-
-    @Override
-    public void showUploading() {
-        if (mDialogHelper != null) {
-            mDialogHelper.showUpLoading();
-        }
-    }
-
-    @Override
-    public void hideUploading() {
-        if (mDialogHelper != null) {
-            mDialogHelper.hideUpLoading();
-        }
     }
 
     private void initView(View view) {
