@@ -50,4 +50,8 @@ public interface IConstructionApi<T> {
     void reserveTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 
     void submitTaskComment(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
+
+    void confirmTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
+
+    void uploadTaskFiles(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 }

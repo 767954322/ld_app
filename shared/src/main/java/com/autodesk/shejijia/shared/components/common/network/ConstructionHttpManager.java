@@ -14,6 +14,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -123,6 +124,34 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
         }
     }
 
+    @Override
+    public void confirmTask(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String pid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        String tid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_ID);
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid + "/confirm";
+
+        JSONObject jsonRequest = new JSONObject();
+        put(requestTag, requestUrl, jsonRequest, callback);
+    }
+
+    @Override
+    public void uploadTaskFiles(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String pid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        String tid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_ID);
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid + "/files";
+
+        String filesJson = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_FILES);
+        JSONObject jsonRequest = null;
+        try {
+            jsonRequest = new JSONObject(filesJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Data format is incorrect, e=" + e);
+        }
+
+        put(requestTag, requestUrl, jsonRequest, callback);
+    }
+
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
         LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
@@ -140,7 +169,7 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
 
     private void put(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
         LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
-        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest == null ? "null" : jsonRequest.toString());
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, requestUrl, jsonRequest, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

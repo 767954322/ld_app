@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.utility;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -32,6 +33,7 @@ public class TaskActionHelper {
         VIEW_FORM,
         UPDATE_FORM,
         MARK_COMPLETE,
+        UPLOAD_PHOTO,
         ADD_REINSPECTION_TIME,
         UPDATE_REINSPECTION_TIME,
     }
@@ -74,6 +76,14 @@ public class TaskActionHelper {
             }
         }
 
+        // Special case: forman + constucion + resolved + no files, show upload photo
+        if (ConstructionConstants.MemberType.FORMAN.equalsIgnoreCase(memType)
+                && ConstructionConstants.TaskCategory.CONSTRUCTION.equalsIgnoreCase(taskCategory)
+                && ConstructionConstants.TaskStatus.RESOLVED.equalsIgnoreCase(taskStatus)
+                && (task.getFiles() == null || task.getFiles().isEmpty())) {
+            actionEnums.add(TaskActionEnum.UPLOAD_PHOTO);
+        }
+
         return actionEnums;
     }
 
@@ -92,6 +102,8 @@ public class TaskActionHelper {
                 return TaskActionEnum.UPDATE_FORM;
             case "mark_complete":
                 return TaskActionEnum.MARK_COMPLETE;
+            case "upload_photo":
+                return TaskActionEnum.UPLOAD_PHOTO;
             case "add_reinspection_time":
                 return TaskActionEnum.ADD_REINSPECTION_TIME;
             case "change_reinspection_time":

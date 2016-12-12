@@ -77,7 +77,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         if (mEditingComment == null) {
             mTaskDetailsView.close();
         } else {
-            mTaskDetailsView.showLoading();
+            mTaskDetailsView.showUploading();
             Bundle params = new Bundle();
             params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(mProjectInfo.getProjectId()));
             params.putString(ConstructionConstants.BUNDLE_KEY_TASK_ID, String.valueOf(mTask.getTaskId()));
@@ -93,14 +93,14 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                 public void onSuccess(Void data) {
                     // TODO update dialog
                     // TODO dirty pre page
-                    mTaskDetailsView.hideLoading();
+                    mTaskDetailsView.hideUploading();
                     mTaskDetailsView.close();
                 }
 
                 @Override
                 public void onError(ResponseError error) {
                     //TODO update dialog
-                    mTaskDetailsView.hideLoading();
+                    mTaskDetailsView.hideUploading();
                     // TODO show error
                     mTaskDetailsView.close();
 //                    mTaskDetailsView.showError(error.getMessage());
@@ -111,7 +111,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
 
     @Override
     public void changeReserveTime(@Nullable Date date) {
-        mTaskDetailsView.showLoading();
+        mTaskDetailsView.showUploading();
         Bundle params = new Bundle();
         params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(mProjectInfo.getProjectId()));
         params.putString(ConstructionConstants.BUNDLE_KEY_TASK_ID, String.valueOf(mTask.getTaskId()));
@@ -120,13 +120,34 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
             @Override
             public void onSuccess(Void data) {
                 // TODO dirty pre page
-                mTaskDetailsView.hideLoading();
+                mTaskDetailsView.hideUploading();
                 fetchTask();
             }
 
             @Override
             public void onError(ResponseError error) {
-                mTaskDetailsView.hideLoading();
+                mTaskDetailsView.hideUploading();
+                mTaskDetailsView.showError(error.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void markComplete() {
+        mTaskDetailsView.showUploading();
+        Bundle params = new Bundle();
+        params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(mProjectInfo.getProjectId()));
+        params.putString(ConstructionConstants.BUNDLE_KEY_TASK_ID, String.valueOf(mTask.getTaskId()));
+        mProjectRepository.confirmTask(params, "CONFIRM_TASK", new ResponseCallback<Void, ResponseError>() {
+            @Override
+            public void onSuccess(Void data) {
+                mTaskDetailsView.hideUploading();
+                fetchTask();
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mTaskDetailsView.hideUploading();
                 mTaskDetailsView.showError(error.getMessage());
             }
         });

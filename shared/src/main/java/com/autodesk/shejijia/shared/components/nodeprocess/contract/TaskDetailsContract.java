@@ -42,6 +42,10 @@ public interface TaskDetailsContract {
 
         void close();
 
+        void showUploading();
+
+        void hideUploading();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -53,5 +57,7 @@ public interface TaskDetailsContract {
         void submitComment();
 
         void changeReserveTime(@Nullable Date date);
+
+        void markComplete();
     }
 }

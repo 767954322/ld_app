@@ -336,6 +336,20 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         dismiss();
     }
 
+    @Override
+    public void showUploading() {
+        if (mDialogHelper != null) {
+            mDialogHelper.showUpLoading();
+        }
+    }
+
+    @Override
+    public void hideUploading() {
+        if (mDialogHelper != null) {
+            mDialogHelper.hideUpLoading();
+        }
+    }
+
     private void initView(View view) {
         mCloseBtn = (ImageButton) view.findViewById(R.id.imgBtn_close);
         mHeaderView = (ViewGroup) view.findViewById(R.id.ll_header);
@@ -373,6 +387,8 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                 return String.format(getString(R.string.update_inspection_form), getInspectionName(task));
             case MARK_COMPLETE:
                 return getString(R.string.mark_complete);
+            case UPLOAD_PHOTO:
+                return getString(R.string.upload_photo);
             case ADD_REINSPECTION_TIME:
                 return getString(R.string.add_reinspection_time);
             case UPDATE_REINSPECTION_TIME:
@@ -403,6 +419,9 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
             case MARK_COMPLETE:
                 markComplete(task);
                 break;
+            case UPLOAD_PHOTO:
+                uploadPhoto(task);
+                break;
             case ADD_REVERSE_TIME:
             case ADD_REINSPECTION_TIME:
             case UPDATE_REVERSE_TIME:
@@ -429,9 +448,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     private void markComplete(Task task) {
-        //TODO mark complete
-        ToastUtils.showShort(getActivity(), "Mark complete");
-        uploadPhoto(task);
+        mTaskDetailsPresenter.markComplete();
     }
 
     private void uploadPhoto(Task task) {

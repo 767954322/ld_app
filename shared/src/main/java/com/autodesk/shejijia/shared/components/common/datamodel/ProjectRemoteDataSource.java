@@ -186,6 +186,16 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         mConstructionHttpManager.submitTaskComment(requestParams, requestTag, getDefaultCallback(callback, Void.class));
     }
 
+    @Override
+    public void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.confirmTask(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
+    @Override
+    public void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        mConstructionHttpManager.uploadTaskFiles(requestParams, requestTag, getDefaultCallback(callback, Void.class));
+    }
+
     private <T, V> OkJsonRequest.OKResponseCallback getDefaultCallback(final ResponseCallback<T, ResponseError> callback, final Class<T> clazz,
                                                                        final Class<V> multiTypeClazz, final TypeAdapter<V> typeAdapter) {
         return new OkJsonRequest.OKResponseCallback() {

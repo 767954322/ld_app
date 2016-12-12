@@ -61,4 +61,8 @@ public interface ProjectDataSource {
     void reserveTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
     void submitTaskComment(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
+
+    void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
+
+    void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 }

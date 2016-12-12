@@ -108,6 +108,16 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().submitTaskComment(requestParams, requestTag, callback);
     }
 
+    @Override
+    public void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().confirmTask(requestParams, requestTag, callback);
+    }
+
+    @Override
+    public void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().uploadTaskFiles(requestParams, requestTag, callback);
+    }
+
     public ProjectInfo getActiveProject() {
         return mProjectInfo;
     }
