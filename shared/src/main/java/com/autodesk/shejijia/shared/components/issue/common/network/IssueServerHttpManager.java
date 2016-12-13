@@ -1,21 +1,31 @@
 package com.autodesk.shejijia.shared.components.issue.common.network;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.toolbox.Volley;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Menghao.Gu on 2016/12/5.
@@ -74,7 +84,7 @@ public class IssueServerHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("Accept", Constant.NetBundleKey.APPLICATON_JSON);
                 header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
@@ -99,10 +109,8 @@ public class IssueServerHttpManager {
      * @param callback
      */
     public void putIssueTracking(JSONObject jsonObject, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        // TODO  目前先打通流程
-//        callback.onResponse(null);
 
-        String postUrl = "";
+        String postUrl = "http://cp-uat-issue.homestyler.com/api/v1/issues";
 
         post(null, postUrl, jsonObject, callback);
     }

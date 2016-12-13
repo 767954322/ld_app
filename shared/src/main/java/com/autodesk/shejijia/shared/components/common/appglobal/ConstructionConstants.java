@@ -123,6 +123,18 @@ public class ConstructionConstants {
         public static final String ISSUE_LIST_TYPE_CONSUMER = "consumer_tag";//消费端查看单个问题追踪
         public static final int ADD_ISSUE_DESCRIPTION_REQUEST_CODE = 1;//添加问题追踪描述返回请求码
         public static final String ADD_ISSUE_DESCRIPTION_RESULT_KEY = "key_issuedescription";//添加问题追踪描述返回KEY
+        public static final String JSONOBJECT_ADDISSUE_ACS_RESOURCES = "acs_resources";
+        public static final String JSONOBJECT_ADDISSUE_DESCRIPTION = "description";
+        public static final String JSONOBJECT_ADDISSUE_CREATED_BY = "created_by";
+        public static final String JSONOBJECT_ADDISSUE_DUE_AT = "due_at";
+        public static final String JSONOBJECT_ADDISSUE_FOLLOW_UP_ID = "follow_up_id";
+        public static final String JSONOBJECT_ADDISSUE_FOLLOW_UP_ROLE = "follow_up_role";
+        public static final String JSONOBJECT_ADDISSUE_TYPE = "type";
+        public static final String JSONOBJECT_ADDISSUE_PROJECT_ID = "project_id";
+        public static final String JSONOBJECT_ADDISSUE_CREATOR_ROLE = "creator_role";
+        public static final String JSONOBJECT_ADDISSUE_IS_VISIBLE = "is_visible";
+        public static final String MEDIA_TYPE_IMAGE = "image";
+        public static final String MEDIA_TYPE_VOICE = "voice";
 	}
 	
     public static class ProjectStatus {
@@ -133,7 +145,7 @@ public class ConstructionConstants {
         public static final String OPEN = "OPEN";
         public static final String READY = "READY";
     }
-    
+
     public static class FileType {
         public static final String IMAGE = "image";
         public static final String AUDIO = "audio";

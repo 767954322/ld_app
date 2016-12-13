@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,8 +20,8 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
@@ -32,16 +31,13 @@ import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddPresenter;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity;
-import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddListActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueAddListImageAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
@@ -141,9 +137,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            ToastUtils.showLong(activity, "开");
+            mNotifyCustormer = 1;
         } else {
-            ToastUtils.showLong(activity, "关");
+            mNotifyCustormer = 0;
         }
     }
 
@@ -153,12 +149,33 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
-            Member member = mListMember.get(position + 2);
-            mIssueFllowContent.setText(strRole[position] + member.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
+            mFollowMember = mListMember.get(position + 2);
+            mIssueFllowContent.setText(strRole[position] + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
         } else {
-            mIssueStyleContent.setText(activity.getResources().getStringArray(add_issue_type_list)[position]);
+            mIssueType = mArrayType[position];
+            String strType = activity.getResources().getStringArray(add_issue_type_list)[position];
+            mIssueStyleContent.setText(strType);
+            fllowRole(strType);
         }
         dismissPopwindow();
+    }
+
+    private void fllowRole(String strType) {
+        String role = "";
+        if (strType.equals("设计问题")) {
+            mFollowMember = mListMember.get(2);
+            role = strRole[0];
+        } else if (strType.equals("巡查问题") || strType.equals("后期安装")) {
+            role = strRole[3];
+            mFollowMember = mListMember.get(5);
+        } else if (strType.equals("材料问题")) {
+            role = strRole[2];
+            mFollowMember = mListMember.get(4);
+        } else if (strType.equals("其他问题")) {
+            role = strRole[1];
+            mFollowMember = mListMember.get(3);
+        }
+        mIssueFllowContent.setText(role + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
     }
 
     /**
@@ -187,7 +204,8 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         mPvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                String mDate = mDateFormat.format(date);
+                mTime = String.valueOf(date.getTime());
+                mDate = mDateFormat.format(date);
                 mDate = mDate.length() > 8 ? mDate.substring(0, mDate.length() - 8) : mDate;
                 mIssueReplyContent.setText(mDate);
             }
@@ -198,9 +216,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
      * 初始化项目角色信息
      */
     private void initProjectReplyData() {
-        ProjectInfo projectInfo = ProjectRepository.getInstance().getActiveProject();
-        if (projectInfo != null) {
-            mListMember = projectInfo.getMembers();
+        mProjectInfo = ProjectRepository.getInstance().getActiveProject();
+        if (mProjectInfo != null) {
+            mListMember = mProjectInfo.getMembers();
         } else {
             ToastUtils.showLong(activity, UIUtils.getString(R.string.Fragment_addissue_getprojectinfo_error));
         }
@@ -210,7 +228,15 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
      * 发送添加问题
      */
     public void sendIssueTracking() {
-        mIssueAddPresenter.putIssueTracking(mDescriptionBean.getmDescription(), mDescriptionBean.getmAudioPath(), mDescriptionBean.getmImagePath());
+
+        if (mIssueType != -1 || mFollowMember != null || !TextUtils.isEmpty(mTime)) {
+            if (mDescriptionBean != null && (!TextUtils.isEmpty(mDescriptionBean.getmDescription()) || !TextUtils.isEmpty(mDescriptionBean.getmAudioPath()))) {
+                mIssueAddPresenter.putIssueTracking(mNotifyCustormer, mProjectInfo, mIssueType, mFollowMember,
+                        mTime, mDescriptionBean.getmDescription(), mDescriptionBean.getmAudioPath(), mDescriptionBean.getmImagePath());
+            }
+        } else {
+            ToastUtils.showLong(activity, "请将信息填写完整");
+        }
     }
 
 
@@ -264,6 +290,11 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onShowStatus(boolean status) {
 
+        if (status) {
+            ToastUtils.showLong(activity, "上传成功");
+        } else {
+            ToastUtils.showLong(activity, "上传失败");
+        }
 
     }
 
@@ -292,5 +323,12 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private IssueDescription mDescriptionBean;
     private IssueAddContract.Presenter mIssueAddPresenter;
 
+    private ProjectInfo mProjectInfo;
+    private Member mFollowMember;
+    private int mNotifyCustormer = 0;
+    private String mDate;
+    private String mTime;
+    private int mIssueType = -1;
+    private int[] mArrayType = new int[]{11, 10, 12, 13, 15};
 
 }

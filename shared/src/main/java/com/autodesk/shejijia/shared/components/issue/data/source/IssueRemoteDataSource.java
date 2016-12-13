@@ -65,6 +65,7 @@ public class IssueRemoteDataSource implements IssueDataSource {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                //TODO 处理数据　返回有用信息
                 callBack.onSuccess(true);
             }
         });
