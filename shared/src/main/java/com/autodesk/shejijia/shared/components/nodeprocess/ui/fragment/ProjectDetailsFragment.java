@@ -45,7 +45,7 @@ import java.util.List;
  */
 
 
-public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View,CallBackMessageCenterDataSource, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
     private long projectId;
