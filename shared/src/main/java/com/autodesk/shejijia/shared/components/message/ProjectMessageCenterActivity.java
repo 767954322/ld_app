@@ -119,9 +119,6 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void showLoading() {}
 
     @Override
-    public void updateUnreadCountView(List list){}
-
-    @Override
     public void hideLoading() {}
     @Override
     public void onHistoricalRecordstClick() {

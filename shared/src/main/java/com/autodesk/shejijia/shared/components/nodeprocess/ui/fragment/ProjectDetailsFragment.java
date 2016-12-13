@@ -44,7 +44,9 @@ import java.util.List;
  * 项目详情
  */
 
+
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View,CallBackMessageCenterDataSource, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
     private long projectId;
     private LinearLayout mProjectRootView;
@@ -58,8 +60,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private TextView mtVmenuBadge;
     private boolean mIsUnread = false;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
-    private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
-
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
     public ProjectDetailsFragment() {
     }
@@ -91,12 +91,11 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     protected void initData() {
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
-        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getActivity(),this);
-         projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+        projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
-            mProjectMessageCenterPresenter.getUnreadCount(projectId+"",TAG);
+            mProjectDetailsPresenter.getUnreadCount(projectId+"",TAG);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -195,8 +194,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         ToastUtils.showShort(mContext, "you couldn't get right project information");
     }
     @Override
-    public void updateProjectMessageView(MessageInfo messageInfo) {}
-    @Override
     public void updateUnreadCountView(List list) {
         if(list.size() <= 0){
             return;
@@ -255,4 +252,5 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 break;
         }
     }
+
 }

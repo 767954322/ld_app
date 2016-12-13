@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
@@ -33,7 +34,7 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
     @Override
     public void changeUnreadState(String requestTag,String memberId, String threadId, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BETA_API + memberId+"/messages/?action=read&thread_id="+threadId;
-        get(requestTag, requestUrl, callback);
+        put(requestTag, requestUrl, callback);
     }
     @Override
     public void getUnreadCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback) {
@@ -59,6 +60,24 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
         };
         NetRequestManager.getInstance().addRequest(okRequest);
     }
+
+    private void put(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, requestUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.ACCPET, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                return header;
+            }
+            @Override
+            public String getBodyContentType() {
+                return Constant.NetBundleKey.APPLICATON_JSON;
+            }
+        };
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
+    }
+
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {

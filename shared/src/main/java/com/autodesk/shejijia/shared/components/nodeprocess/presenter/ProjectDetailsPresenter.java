@@ -14,11 +14,16 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
+
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,9 +206,35 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         }
     }
 
+//    @Override
+//    public void getUnreadCount(String projectIds, String requestTag) {
+//
+//    }
+    @Override
+    public void getUnreadCount(String projectIds, String requestTag) {
+        mProjectDetailsView.showLoading();
+        mProjectRepository.getUnreadCount(projectIds,requestTag,new ResponseCallback<JSONArray, ResponseError>(){
+            @Override
+            public void onSuccess(JSONArray jSONArray) {
+                mProjectDetailsView.hideLoading();
+                List list = JsonFileUtil.jsonArray2List(jSONArray);
+                mProjectDetailsView.updateUnreadCountView(list);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectDetailsView.hideLoading();
+                mProjectDetailsView.showNetError(error);
+            }
+        });
+    }
+
     @Override
     public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
+        if(projectInfo == null){
+            return;
+        }
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
         intent.putExtra(ConstructionConstants.UNREAD,isUnread);

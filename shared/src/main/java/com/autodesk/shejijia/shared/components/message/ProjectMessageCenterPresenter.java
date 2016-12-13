@@ -26,23 +26,7 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
         this.mProjectMessageCenterPresenterView = mProjectMessageCenterPresenterView;
         mMessageCenterDataSource = MessageCenterRemoteDataSource.getInstance();
     }
-    @Override
-    public void getUnreadCount(String projectIds, String requestTag) {
-        mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.getUnreadCount(projectIds,requestTag,new ResponseCallback<JSONArray, ResponseError>(){
-            @Override
-            public void onSuccess(JSONArray jSONArray) {
-                mProjectMessageCenterPresenterView.hideLoading();
-                List list = JsonFileUtil.jsonArray2List(jSONArray);
-                mProjectMessageCenterPresenterView.updateUnreadCountView(list);
-            }
 
-            @Override
-            public void onError(ResponseError error) {
-                isHideLoading(error);
-            }
-        });
-    }
     @Override
     public void getMessageCenterInfo(Bundle bundle,String mTAG) {
         mProjectMessageCenterPresenterView.showLoading();
@@ -51,6 +35,7 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
             public void onSuccess(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
+//                changeUnreadState(messageInfo);
                 mProjectMessageCenterPresenterView.hideLoading();
                 mProjectMessageCenterPresenterView.updateProjectMessageView(messageInfo);
             }
@@ -63,5 +48,18 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     private void isHideLoading(ResponseError error){
         mProjectMessageCenterPresenterView.hideLoading();
         mProjectMessageCenterPresenterView.showNetError(error);
+    }
+    private void changeUnreadState(MessageInfo messageInfo){
+        mMessageCenterDataSource.changeUnreadState("","","",new ResponseCallback<JSONObject, ResponseError>(){
+            @Override
+            public void onSuccess(JSONObject data) {
+
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+
+            }
+        });
     }
 }

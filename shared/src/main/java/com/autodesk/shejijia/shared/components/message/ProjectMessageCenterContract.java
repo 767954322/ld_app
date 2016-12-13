@@ -15,11 +15,11 @@ import java.util.List;
 public interface ProjectMessageCenterContract {
     interface View extends BaseView{
         void updateProjectMessageView(MessageInfo messageInfo);
-        void updateUnreadCountView(List list);
+
 
     }
     interface Presenter extends BasePresenter{
         void getMessageCenterInfo(Bundle bundle,String mTAG);
-        void getUnreadCount(String projectIds, String requestTag);
+
     }
 }

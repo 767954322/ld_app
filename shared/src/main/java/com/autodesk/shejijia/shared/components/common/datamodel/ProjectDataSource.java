@@ -13,6 +13,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMes
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -66,6 +67,9 @@ public interface ProjectDataSource {
     void submitTaskComment(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
+
+    void getUnreadCount(String projectIds, String requestTag,@NonNull ResponseCallback<JSONArray, ResponseError> callback);
+
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 

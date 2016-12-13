@@ -17,14 +17,17 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.IConstructionApi;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +39,21 @@ import java.util.Map;
  * 与 project 相关的api对应的dataModel
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
+    @Override
+    public void getUnreadCount(String projectIds, String requestTag, @NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
+                callback.onError(responseError);
+            }
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                callback.onSuccess(jsonArray);
+            }
+        });
+    }
 
     private IConstructionApi<OkJsonRequest.OKResponseCallback> mConstructionHttpManager;
 

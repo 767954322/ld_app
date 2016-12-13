@@ -12,7 +12,6 @@ import org.json.JSONObject;
  * Created by luchongbin on 2016/12/6.
  */
 public interface MessageCenterDataSource {
-     void getUnreadCount(String projectIds, String requestTag,@NonNull ResponseCallback<JSONArray, ResponseError> callback);
      void getMessageCenterInfo(Bundle requestParams, String requestTag,@NonNull ResponseCallback<JSONObject, ResponseError> callback);
      void changeUnreadState(String requestTag,String memberId,String threadId,@NonNull ResponseCallback<JSONObject, ResponseError> callback);
 }

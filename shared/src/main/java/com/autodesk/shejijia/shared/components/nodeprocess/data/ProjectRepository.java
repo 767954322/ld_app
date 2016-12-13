@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.data;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
@@ -14,8 +15,12 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -149,6 +154,22 @@ public final class ProjectRepository implements ProjectDataSource {
         } else {
             callback.onSuccess(mActivePlan);
         }
+    }
+
+    @Override
+    public void getUnreadCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
+                callback.onError(responseError);
+            }
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                callback.onSuccess(jsonArray);
+            }
+        });
     }
 
     public boolean isActivePlanEditing() {

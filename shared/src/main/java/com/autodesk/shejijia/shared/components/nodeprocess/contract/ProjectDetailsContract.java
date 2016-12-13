@@ -27,6 +27,8 @@ public interface ProjectDetailsContract {
         void showProjectInfoDialog(Bundle projectInfoBundle);
 
         void cancelProjectInfoDialog(); //没有获取项目详情的情况下，是无法显示项目消息的对话框的
+
+        void updateUnreadCountView(List list);
     }
 
     interface Presenter extends BasePresenter {
@@ -37,8 +39,13 @@ public interface ProjectDetailsContract {
 
         void getProjectInformation(); //获取项目信息
 
-        void navigateToMessageCenter();//跳转消息中心
+
 
         void initRefreshState(boolean isNeedRefresh);
+
+        void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread);//跳转消息中心
+
+        void getUnreadCount(String projectIds, String requestTag);
+
     }
 }

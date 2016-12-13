@@ -28,21 +28,6 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
 
 
     @Override
-    public void getUnreadCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().getUnreadCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
-                callback.onError(responseError);
-            }
-
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                callback.onSuccess(jsonArray);
-            }
-        });
-    }
-    @Override
     public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
