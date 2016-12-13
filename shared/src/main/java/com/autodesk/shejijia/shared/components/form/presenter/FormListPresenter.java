@@ -7,7 +7,6 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
@@ -79,77 +78,59 @@ public class FormListPresenter implements FormListContract.Presenter {
     @Override
     public void submitData(final SHPrecheckForm precheckForm) {
         mFormList.add(precheckForm);
-
         Bundle bundle = new Bundle();
         bundle.putString("user_id", UserInfoUtils.getMemberId(AdskApplication.getInstance().getApplicationContext()));
+
         FormRepository.getInstance().updateRemoteForms(mFormList, bundle, new ResponseCallback<Object, ResponseError>() {
             @Override
             public void onSuccess(Object data) {
-                modifyTaskStatu(precheckForm);
-//                mView.SubmitSuccess();
-                LogUtils.d("asdf",data.toString());
+                modifyTaskStatus(precheckForm);
             }
 
             @Override
             public void onError(ResponseError error) {
+// TODO: 16/12/13 提交表单失败的业务逻辑
                 mView.showNetError(error);
             }
 
         });
     }
 
-    private void modifyTaskStatu(SHPrecheckForm precheckForm) {
+    private void modifyTaskStatus(SHPrecheckForm precheckForm) {
         Bundle bundle = new Bundle();
-        bundle.putLong("pid",Long.valueOf(precheckForm.getProjectId()));
-        bundle.putString("tid",precheckForm.getTaskId());
+        bundle.putLong("pid", Long.valueOf(precheckForm.getProjectId()));
+        bundle.putString("tid", precheckForm.getTaskId());
 
-        Iterator<List<String>> iterator = mReinspectionMap.values().iterator();
-        boolean isReinspection = false;
-        if(iterator.hasNext()) {
-            List<String> list = iterator.next();
-            if(list != null && list.size() != 0) {
-                isReinspection = true;
-            }
-        }
+        boolean isReinspection = getByMap(mReinspectionMap);
 
-        Iterator<List<String>> iterator1 = mRectificationMap.values().iterator();
-        boolean isRectification = false;
-        if(iterator1.hasNext()) {
-            List<String> list1 = iterator1.next();
-            if(list1 != null && list1.size() != 0) {
-                isRectification = true;
-            }
-        }
+        boolean isRectification = getByMap(mRectificationMap);
 
-        Map<String,String> map = new HashMap<>();
-        if(isRectification && isReinspection) {   //监督整改,强制复验
+        Map<String, String> map = new HashMap<>();
+        if (isRectification && isReinspection) {   //监督整改,强制复验
             map.put("result", ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION.toUpperCase());
         } else {
-            if(isRectification) {
-                map.put("result",ConstructionConstants.TaskStatus.RECTIFICATION.toUpperCase());
-            } else if(isReinspection) {
-                map.put("result",ConstructionConstants.TaskStatus.REINSPECTION.toUpperCase());
+            if (isRectification) {
+                map.put("result", ConstructionConstants.TaskStatus.RECTIFICATION.toUpperCase());
+            } else if (isReinspection) {
+                map.put("result", ConstructionConstants.TaskStatus.REINSPECTION.toUpperCase());
             } else {
-                map.put("result",ConstructionConstants.TaskStatus.QUALIFIED.toUpperCase());
+                map.put("result", ConstructionConstants.TaskStatus.QUALIFIED.toUpperCase());
             }
         }
 
-        JSONObject jsonRequest = new JSONObject(map);
-
-        FormRepository.getInstance().inspectTask(bundle, jsonRequest, new ResponseCallback<Map, ResponseError>() {
+        FormRepository.getInstance().inspectTask(bundle, new JSONObject(map), new ResponseCallback<Map, ResponseError>() {
             @Override
             public void onSuccess(Map data) {
-                LogUtils.d("asdf","成功的数据" + data.toString());
+// TODO: 16/12/13 改变Task状态成功后的业务逻辑
                 mView.SubmitSuccess();
             }
 
             @Override
             public void onError(ResponseError error) {
-                LogUtils.d("asdf","失败后的数据" + error.getMessage());
+// TODO: 16/12/13 改变Task状态失败后的业务逻辑
                 mView.showNetError(error);
             }
         });
-
 
 
     }
@@ -217,6 +198,7 @@ public class FormListPresenter implements FormListContract.Presenter {
 
         return itemCell;
     }
+
     //跟新每个条目
     private void refreshItemCell(ItemCell itemCell, SHForm inspectionForm) {
         ArrayList<CheckItem> checkItems = inspectionForm.getCheckItems();
@@ -236,13 +218,9 @@ public class FormListPresenter implements FormListContract.Presenter {
                     List<String> actionList = (List<String>) action;
                     if ("不合格".equals(checkList.get(1))) {
                         if ("强制复验".equals(actionList.get(Integer.valueOf(formFeedBack.getCurrentActionIndex())))) {
-                            itemCell.setResult("强制复验");
-
-                            setFormStatus(typeDict, inspectionForm);
                             updateMap(mReinspectionMap, checkItem, formTemplateId, true);
 
                         } else if ("监督整改".equals(actionList.get(Integer.valueOf(formFeedBack.getCurrentActionIndex())))) {
-
                             updateMap(mRectificationMap, checkItem, formTemplateId, true);
 
                         }
@@ -253,23 +231,27 @@ public class FormListPresenter implements FormListContract.Presenter {
                 updateMap(mRectificationMap, checkItem, formTemplateId, false);
             }
 
-            refreshMapUi(mReinspectionMap, REINSPECTION);   //刷新强制复验
 
-            refreshMapUi(mRectificationMap, RECTIFICATION); //刷新监督整改
-
-            if (checkItem.isChecked()) {   //判断验收来多少项
+            if (checkItem.isChecked()) {                    //判断验收来多少项
                 num++;
                 mCheckSum++;
             }
 
+            refreshMapUi(mReinspectionMap, REINSPECTION);   //刷新强制复验
+
+            refreshMapUi(mRectificationMap, RECTIFICATION); //刷新监督整改
+
             if (mReinspectionMap.containsKey(formTemplateId)) {   //根据强制复验项决定显示结果标签
                 List<String> list = mReinspectionMap.get(formTemplateId);
                 if (list == null || list.size() == 0) {
-                    checkAllItem(itemCell,typeDict, inspectionForm,checkItems.size(),num);
+                    checkAllItem(itemCell, typeDict, inspectionForm, checkItems.size(), num);
+                } else if (list != null && list.size() != 0 && num == checkItems.size()) {
+                    itemCell.setResult("强制复验");
+                    setFormStatus(typeDict, inspectionForm, "强制复验");
                 }
 
             } else {
-                checkAllItem(itemCell,typeDict, inspectionForm,checkItems.size(),num);
+                checkAllItem(itemCell, typeDict, inspectionForm, checkItems.size(), num);
             }
 
 
@@ -277,21 +259,22 @@ public class FormListPresenter implements FormListContract.Presenter {
 
 
     }
+
     //设置表单状态
-    private void setFormStatus(HashMap typeDict, SHForm inspectionForm) {
+    private void setFormStatus(HashMap typeDict, SHForm inspectionForm, String type) {
         Object status = typeDict.get("status");   //设置整条表单验收状态,强制复验或者验收通过
         if (status instanceof List) {
             List<String> statusList = (List<String>) status;
 
             for (int j = 0; j < statusList.size(); j++) {
-                if ("强制复验".equals(statusList.get(j))) {
+                if (type.equals(statusList.get(j))) {
                     inspectionForm.setStatus(j);
-                } else if ("验收通过".equals(statusList.get(j))) {
-                    inspectionForm.setStatus(j);
+                    break;
                 }
             }
         }
     }
+
     //跟新强制复验和监督整改的集合
     private void updateMap(Map<String, List<String>> map, CheckItem checkItem, String formTemplateId, boolean isAdd) {
 
@@ -314,16 +297,11 @@ public class FormListPresenter implements FormListContract.Presenter {
 
 
     }
+
     //跟新强制复验和监督整改的界面UI
     private void refreshMapUi(Map<String, List<String>> map, int identify) {
-        Iterator<List<String>> iterator = map.values().iterator();
-        boolean flag = false;  //是否显示强制复验
-        while (iterator.hasNext()) {
-            List<String> list = iterator.next();
-            if (list != null && list.size() != 0) {
-                flag = true;
-            }
-        }
+        boolean flag = getByMap(map);
+
         if (identify == REINSPECTION) {
             if (flag) {
                 mView.refreshReinspection(map);
@@ -339,17 +317,31 @@ public class FormListPresenter implements FormListContract.Presenter {
         }
 
     }
+
     //一个条目是否全选的判断
     private void checkAllItem(ItemCell itemCell, HashMap typeDict, SHForm inspectionForm, int size, int num) {
 
         if (num == size) {    //通过的条件:1,全部选择完;2,没有强制复验项
             itemCell.setResult("验收通过");
 
-            setFormStatus(typeDict, inspectionForm);
+            setFormStatus(typeDict, inspectionForm, "验收通过");
 
         } else {
             itemCell.setResult(null);
         }
+    }
+
+    //是否显示强制复验或者监督整改
+    private boolean getByMap(Map<String, List<String>> map) {
+        Iterator<List<String>> iterator = map.values().iterator();
+        boolean flag = false;
+        while (iterator.hasNext()) {
+            List<String> list = iterator.next();
+            if (list != null && list.size() != 0) {
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     // TODO: 16/12/12 后期删除,只为测试使用
@@ -361,7 +353,6 @@ public class FormListPresenter implements FormListContract.Presenter {
                 for (CheckItem checkItem : inspectionForm.getCheckItems()) {
                     checkItem.getFormFeedBack().setCurrentCheckIndex(0);
                 }
-
             }
 
             mView.showSubmitBtn();
