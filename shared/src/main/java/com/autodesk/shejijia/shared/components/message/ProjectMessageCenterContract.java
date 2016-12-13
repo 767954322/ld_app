@@ -1,14 +1,8 @@
 package com.autodesk.shejijia.shared.components.message;
-
 import android.os.Bundle;
-
-import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
-
-import java.util.List;
-
 /**
  * Created by luchongbin on 2016/12/8.
  */
