@@ -156,7 +156,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         getViewPager().setAdapter(mPagerAdapter);
         getViewPager().setOnPageChangeListener(this);
         addImageViewtips(mMasterInfo2Remotes.size());
-        getViewPager().setCurrentItem(mMasterInfo2Remotes.size() * 1000);
+        getViewPager().setCurrentItem(mMasterInfo2Remotes.size() * 100);
     }
 
     // 将圆点加入到ViewGroup中
