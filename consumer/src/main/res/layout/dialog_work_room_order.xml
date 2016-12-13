@@ -64,7 +64,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/line_name"
                 android:layout_marginRight="@dimen/size_26"
-                android:text="请输入2-10个字符"
+                android:text="@string/hint_edit_input_name"
                 android:textColor="#ED2424"
                 android:textSize="@dimen/font_11"
                 android:visibility="gone" />

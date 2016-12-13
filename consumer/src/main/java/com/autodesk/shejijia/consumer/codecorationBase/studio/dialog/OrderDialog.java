@@ -3,6 +3,9 @@ package com.autodesk.shejijia.consumer.codecorationBase.studio.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,10 +14,6 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.utility.PhoneNumberUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author yaoxuehua .
@@ -108,58 +107,73 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
 
     public void setEdiTextListener() {
 
-        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        name.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if (hasFocus == true) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (name.getText().toString().equals("")) {
+
+                    line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                    write_name.setVisibility(View.VISIBLE);
+                    nameSure = false;
+                } else if (name.getText().toString().length() < 2 || name.getText().toString().length() > 20) {
+                    line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                    write_name.setVisibility(View.VISIBLE);
+                    write_name.setText(R.string.number_dashi);
+                    nameSure = false;
                 } else {
 
-                    if (name.getText().toString().equals("") ||
-                            (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
-                            (name.getText().toString().length() > 10)) {
-
-                        line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
-                        write_name.setVisibility(View.VISIBLE);
-                        nameSure = false;
-                    } else {
-
-                        line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
-                        write_name.setVisibility(View.GONE);
-                        nameSure = true;
-                    }
+                    line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
+                    write_name.setVisibility(View.GONE);
+                    nameSure = true;
                 }
+
             }
         });
-
-        phoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        phoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if (hasFocus == true) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String mobile = phoneNumber.getText().toString();
+                phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
+                if (phoneRight) {
+
+                    line_phone.setBackgroundColor(Color.BLACK);
+                    write_phone.setVisibility(View.GONE);
 
                 } else {
+                    if (mobile.equals("")) {
 
-                    String mobile = phoneNumber.getText().toString();
-                    phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
-                    if (phoneRight) {
-
-                        line_phone.setBackgroundColor(Color.BLACK);
-                        write_phone.setVisibility(View.GONE);
+                        line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                        write_phone.setVisibility(View.VISIBLE);
+                    } else if ((mobile.length() > 0 && mobile.length() <= 11)) {
+                        line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                        write_phone.setVisibility(View.VISIBLE);
+                        write_phone.setText(R.string.mobile_phone);
 
                     } else {
-                        if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
 
-                            line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
-                            write_phone.setVisibility(View.VISIBLE);
-                        } else {
-
-                            line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
-                            write_phone.setVisibility(View.GONE);
-                        }
+                        line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
+                        write_phone.setVisibility(View.GONE);
                     }
-
                 }
 
             }
@@ -178,12 +192,16 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                 String phoneNumberText = phoneNumber.getText().toString();
 
                 //name
-                if (name.getText().toString().equals("") ||
-                        (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
-                        (name.getText().toString().length() > 10)) {
+                if (TextUtils.isEmpty(nameText)) {
 
                     line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                     write_name.setVisibility(View.VISIBLE);
+                    write_name.setText(R.string.hint_edit_input_name);
+                    nameSure = false;
+                } else if (nameText.length() < 2 || nameText.length() > 20) {
+                    line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                    write_name.setVisibility(View.VISIBLE);
+                    write_name.setText(R.string.number_dashi);
                     nameSure = false;
                 } else {
 
@@ -201,10 +219,15 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                     write_phone.setVisibility(View.GONE);
 
                 } else {
-                    if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
+                    if (mobile.equals("")) {
 
                         line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_phone.setVisibility(View.VISIBLE);
+                    } else if ((mobile.length() > 0 && mobile.length() <= 11)) {
+                        line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
+                        write_phone.setVisibility(View.VISIBLE);
+                        write_phone.setText(R.string.mobile_phone);
+
                     } else {
 
                         line_phone.setBackgroundColor(Color.BLACK);
