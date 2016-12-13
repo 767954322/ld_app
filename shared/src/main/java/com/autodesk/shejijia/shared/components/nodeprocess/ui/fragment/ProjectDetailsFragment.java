@@ -49,6 +49,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
     private long projectId;
+    private String threadId;
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -199,7 +200,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             return;
         }
         HashMap remoteMap = (HashMap) list.get(0);
-        String count = String.format("%s", remoteMap.get("count"));
+        String count = String.format("%s", remoteMap.get(ConstructionConstants.COUNT));
+        threadId = String.format("%s", remoteMap.get(ConstructionConstants.THREAD_ID));
         if(!count.contentEquals("0")){
             mIsUnread = true;
             mtVmenuBadge.setVisibility(View.VISIBLE);
@@ -215,7 +217,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             @Override
             public void onClick(View v) {
                 mtVmenuBadge.setVisibility(View.GONE);
-                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread);
+                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread,threadId);
             }
         });
     }

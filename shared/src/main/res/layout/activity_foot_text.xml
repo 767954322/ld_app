@@ -8,6 +8,7 @@
         android:layout_height="@dimen/app_topBar_height"
         android:gravity="center"
         android:layout_below ="@+id/rv_project_message_center_view"
+        android:visibility="gone"
         android:text=""/>
 
 </RelativeLayout>

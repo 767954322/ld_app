@@ -230,7 +230,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread) {
+    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread,String threadId) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         if(projectInfo == null){
             return;
@@ -238,6 +238,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
         intent.putExtra(ConstructionConstants.UNREAD,isUnread);
+        intent.putExtra(ConstructionConstants.THREAD_ID,threadId);
         projectDetailsFragment.startActivityForResult(intent,104);
     }
 

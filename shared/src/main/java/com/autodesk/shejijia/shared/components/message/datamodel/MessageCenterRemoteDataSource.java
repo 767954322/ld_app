@@ -4,11 +4,9 @@ import android.support.annotation.NonNull;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -54,7 +52,7 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                callback.onSuccess(jsonObject);
             }
         });
     }

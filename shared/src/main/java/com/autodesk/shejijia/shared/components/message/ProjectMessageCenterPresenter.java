@@ -2,16 +2,16 @@ package com.autodesk.shejijia.shared.components.message;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import java.util.List;
 
 /**
  * Created by luchongbin on 2016/12/8.
@@ -19,12 +19,36 @@ import java.util.List;
 
 public class ProjectMessageCenterPresenter implements ProjectMessageCenterContract.Presenter {
     private Context mContext;
+    private int mOffset = 0;
+    private static final int LIMIT = 5;
+    private String mTAG;
     private MessageCenterRemoteDataSource mMessageCenterDataSource;
     private ProjectMessageCenterContract.View mProjectMessageCenterPresenterView;
-    public ProjectMessageCenterPresenter(Context context, ProjectMessageCenterContract.View mProjectMessageCenterPresenterView) {
+    public ProjectMessageCenterPresenter(Context context,String mTAG,ProjectMessageCenterContract.View mProjectMessageCenterPresenterView) {
         this.mContext = context;
+        this.mTAG =mTAG;
         this.mProjectMessageCenterPresenterView = mProjectMessageCenterPresenterView;
         mMessageCenterDataSource = MessageCenterRemoteDataSource.getInstance();
+    }
+
+    @Override
+    public void refreshProjectMessages(long mProjectId,boolean mIsUnread) {
+        mOffset = 0;
+        getMessage(mOffset,mProjectId,mIsUnread);
+    }
+
+    @Override
+    public void loadMoreProjectMessages(long mProjectId,boolean mIsUnread) {
+        mOffset++;
+        getMessage(mOffset,mProjectId,mIsUnread);
+    }
+    private void getMessage(int offset,long mProjectId,boolean mIsUnread){
+        Bundle requestParams = new Bundle();
+        requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
+        requestParams.putInt(ConstructionConstants.OFFSET,offset);
+        requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
+        requestParams.putInt(ConstructionConstants.LIMIT,LIMIT);
+        getMessageCenterInfo(requestParams,mTAG);
     }
 
     @Override
@@ -35,9 +59,13 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
             public void onSuccess(JSONObject jsonObject) {
                 String result = jsonObject.toString();
                 MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
-//                changeUnreadState(messageInfo);
+                if(messageInfo.getOffset() == 0){
+                    mProjectMessageCenterPresenterView.refreshProjectMessagesView(messageInfo);
+                }else{
+                    mProjectMessageCenterPresenterView.loadMoreProjectMessagesView(messageInfo);
+                }
                 mProjectMessageCenterPresenterView.hideLoading();
-                mProjectMessageCenterPresenterView.updateProjectMessageView(messageInfo);
+//                mProjectMessageCenterPresenterView.updateProjectMessageView(messageInfo);
             }
             @Override
             public void onError(ResponseError error) {
@@ -49,11 +77,13 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
         mProjectMessageCenterPresenterView.hideLoading();
         mProjectMessageCenterPresenterView.showNetError(error);
     }
-    private void changeUnreadState(MessageInfo messageInfo){
-        mMessageCenterDataSource.changeUnreadState("","","",new ResponseCallback<JSONObject, ResponseError>(){
+    @Override
+    public void changeUnreadState(String threadId){
+        String acsMemberId = UserInfoUtils.getAcsMemberId(mContext);
+        mMessageCenterDataSource.changeUnreadState(mTAG,acsMemberId,threadId,new ResponseCallback<JSONObject, ResponseError>(){
             @Override
             public void onSuccess(JSONObject data) {
-
+                mProjectMessageCenterPresenterView.changeUnreadStateView();
             }
 
             @Override

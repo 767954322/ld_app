@@ -11,10 +11,12 @@ import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -26,12 +28,12 @@ import java.util.List;
  * Created by luchongbin on 2016/12/5.
  */
 public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,
-        ProjectMessageCenterAdapter.HistoricalRecordstListener, RefreshLoadMoreListener {
+        ProjectMessageCenterAdapter.HistoricalRecordstListener,RefreshLoadMoreListener{
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
     private List<MessageItemBean> messageItemBeans;
     private long mProjectId;
     private boolean mIsUnread;
-    private int mOffset = 0;
+    private String mThreadId;
     private SwipeRecyclerView mRvProjectMessagCenterView;
     private ProjectMessageCenterAdapter mProjectMessageCenterAdapter;
     @Override
@@ -45,18 +47,20 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        mIsUnread = getIntent().getBooleanExtra(ConstructionConstants.UNREAD,false);
-        mProjectId = getIntent().getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,0);
+        Intent intent = getIntent();
+        mIsUnread = intent.getBooleanExtra(ConstructionConstants.UNREAD,false);
+        mProjectId = intent.getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,0);
+        mThreadId = intent.getStringExtra(ConstructionConstants.THREAD_ID);
+
     }
     @Override
     protected void initData(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
         messageItemBeans = new ArrayList<>();
-        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(),this);
+        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(),TAG,this);
         mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(messageItemBeans,mIsUnread,R.layout.item_messagecenter);
         initRecyclerView();
-//        getListMessageCenterInfo();
     }
 
     private void initRecyclerView(){
@@ -65,48 +69,52 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRvProjectMessagCenterView.getSwipeRefreshLayout()
                 .setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
-
-
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
-//        setHasOptionsMenu(true);
     }
-    private void getListMessageCenterInfo(){
-        mProjectMessageCenterPresenter.getMessageCenterInfo(getRequestBundle(),TAG);
-    }
-    private Bundle getRequestBundle(){
-        Bundle requestParams = new Bundle();
-        requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
-        requestParams.putInt(ConstructionConstants.OFFSET,mOffset);
-        requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
-        requestParams.putInt(ConstructionConstants.LIMIT,100);
-        return requestParams;
-    }
+
     @Override
     protected void initListener() {
         super.initListener();
         ProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
-        mRvProjectMessagCenterView.setRefreshLoadMoreListener(this);
         //让其自动刷新一下，会回调onRefresh()方法一次
         mRvProjectMessagCenterView.setRefreshing(true);
+        mRvProjectMessagCenterView.setRefreshLoadMoreListener(this);
+
     }
-    @Override
-    public void updateProjectMessageView(MessageInfo messageInfo) {
-        mRvProjectMessagCenterView.complete();
-        if(messageInfo.getMessageItemBean() != null) {
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,mOffset);
-            setResult(RESULT_OK,new Intent());
-        }
-    }
+
     @Override
     public void onRefresh() {
-        mOffset = 0;
-        getListMessageCenterInfo();
+        mProjectMessageCenterPresenter.refreshProjectMessages(mProjectId,mIsUnread);
     }
 
     @Override
     public void onLoadMore() {
-//        mOffset=mOffset+4;
-//        getListMessageCenterInfo();
+        mProjectMessageCenterPresenter.loadMoreProjectMessages(mProjectId,mIsUnread);
+    }
+
+    @Override
+    public void refreshProjectMessagesView(MessageInfo messageInfo) {
+        mRvProjectMessagCenterView.complete();
+        mProjectMessageCenterPresenter.changeUnreadState(mThreadId);
+        if(messageInfo.getMessageItemBean() != null) {
+            mRvProjectMessagCenterView.scrollToPosition(0);
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,messageInfo.getOffset());
+        }
+    }
+
+    @Override
+    public void loadMoreProjectMessagesView(MessageInfo messageInfo) {
+        mRvProjectMessagCenterView.complete();
+        if(messageInfo.getMessageItemBean() != null) {
+            mRvProjectMessagCenterView.scrollToPosition(0);
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,messageInfo.getOffset());
+            return;
+        }
+        mRvProjectMessagCenterView.onNoMore(null);
+    }
+    @Override
+    public void changeUnreadStateView() {
+        setResult(RESULT_OK,new Intent());
     }
 
     @Override
@@ -122,9 +130,11 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void hideLoading() {}
     @Override
     public void onHistoricalRecordstClick() {
-        mOffset = 0;
         mIsUnread = false;
-        getListMessageCenterInfo();
+        mRvProjectMessagCenterView.setRefreshing(true);
+//        mOffset = 0;
+//        mIsUnread = false;
+//        getListMessageCenterInfo();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

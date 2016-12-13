@@ -7,6 +7,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -33,7 +34,7 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
 
     @Override
     public void changeUnreadState(String requestTag,String memberId, String threadId, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        String requestUrl = ConstructionConstants.BETA_API + memberId+"/messages/?action=read&thread_id="+threadId;
+        String requestUrl = ConstructionConstants.BETA_API + memberId+"/messages?action=read&thread_id="+threadId;
         put(requestTag, requestUrl, callback);
     }
     @Override
@@ -66,8 +67,8 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.ACCPET, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                header.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
+                header.put("X-SESSION", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
                 return header;
             }
             @Override
