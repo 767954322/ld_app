@@ -36,6 +36,11 @@ public class FormSubListPresenter implements Presenter {
         mCategoryMap = new LinkedHashMap<>();                      //条目的类型
         HashMap<String, Integer> checkMap = new HashMap<>();       //类型+选择数量
         HashMap<String, Integer> precheckMap = new HashMap<>();    //类型+强制复验项数量
+        if(mCheckItemList.size() == 0) {
+            // TODO: 16/12/13 对于基层检查的情况,需要后面在做处理 ,先设置一个完成的状态
+            inspectionForm.setStatus(1);
+            return;
+        }
 
         for (int i = 0; i < mCheckItemList.size(); i++) {
             CheckItem checkItem = mCheckItemList.get(i);

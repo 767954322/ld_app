@@ -77,6 +77,31 @@ public class FormRemoteDataSource implements FormDataSource {
         });
     }
 
+    @Override
+    public void inspectTask(@NonNull Bundle bundle, JSONObject jsonRequest, @NonNull final ResponseCallback callback) {
+        FormServerHttpManager.getInstance().inspectTask(bundle,jsonRequest,new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Map<String,Object> map = new HashMap<>();
+                try {
+                    map.put("project_id",jsonObject.get("project_id"));
+                    map.put("task_id",jsonObject.get("task_id"));
+                    map.put("subtask_id",jsonObject.get("subject_id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                callback.onSuccess(map);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+            }
+        });
+    }
+
     public void updateFormDataWithData(List<Map> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
         FormServerHttpManager.getInstance().updateForms(forms, bundle, new OkJsonRequest.OKResponseCallback() {
             @Override

@@ -86,8 +86,8 @@ public class FormServerHttpManager {
     /**
      * 监理是否有资格检验该项目
      */
-    public void verifyInspector(Long pid,OkJsonRequest.OKResponseCallback callback) {
-        String url = ConstructionConstants.BASE_URL + "/projects/" + pid +"/inspect_verify";
+    public void verifyInspector(Long pid, OkJsonRequest.OKResponseCallback callback) {
+        String url = ConstructionConstants.BASE_URL + "/projects/" + pid + "/inspect_verify";
         OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -103,6 +103,24 @@ public class FormServerHttpManager {
 
     }
 
+    /**
+     *检测表格
+     */
+    public void inspectTask(Bundle bundle, JSONObject jsonRequest, OkJsonRequest.OKResponseCallback callback) {
+        String url = ConstructionConstants.BASE_URL + "/projects/" + bundle.getLong("pid")
+                + "/tasks/" + bundle.getString("tid") + "/inspect";
+        OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.PUT, url, jsonRequest, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put("Accept", "application/json");
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                return header;
+            }
+        };
+
+        NetRequestManager.getInstance().addRequest(okJsonRequest);
+    }
 
 
     private JSONObject combineJson(List<Map> formList, Bundle bundle) {

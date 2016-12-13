@@ -204,7 +204,7 @@
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"/>
 

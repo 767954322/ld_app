@@ -3,7 +3,6 @@ package com.autodesk.shejijia.shared.components.form.presenter;
 import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -86,8 +85,8 @@ public class FormListPresenter implements FormListContract.Presenter {
         FormRepository.getInstance().updateRemoteForms(mFormList, bundle, new ResponseCallback<Object, ResponseError>() {
             @Override
             public void onSuccess(Object data) {
-//                modifyTaskStatu(precheckForm);
-                mView.SubmitSuccess();
+                modifyTaskStatu(precheckForm);
+//                mView.SubmitSuccess();
                 LogUtils.d("asdf",data.toString());
             }
 
@@ -123,26 +122,30 @@ public class FormListPresenter implements FormListContract.Presenter {
         }
 
         Map<String,String> map = new HashMap<>();
-        if(isReinspection && isRectification) {  //监督整改,强制复验
-            map.put("taskStatus", ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION.toUpperCase());
-        } else if(isRectification) {
-            map.put("taskStatus",ConstructionConstants.TaskStatus.RECTIFICATION.toUpperCase());
-        } else if(isReinspection) {
-            map.put("taskStatus",ConstructionConstants.TaskStatus.REINSPECTION.toUpperCase());
-        } else  {
-            map.put("taskStatus",ConstructionConstants.TaskStatus.RESOLVED.toUpperCase());
+        if(isRectification && isReinspection) {   //监督整改,强制复验
+            map.put("result", ConstructionConstants.TaskStatus.REINSPECTION_AND_RECTIFICATION.toUpperCase());
+        } else {
+            if(isRectification) {
+                map.put("result",ConstructionConstants.TaskStatus.RECTIFICATION.toUpperCase());
+            } else if(isReinspection) {
+                map.put("result",ConstructionConstants.TaskStatus.REINSPECTION.toUpperCase());
+            } else {
+                map.put("result",ConstructionConstants.TaskStatus.QUALIFIED.toUpperCase());
+            }
         }
 
         JSONObject jsonRequest = new JSONObject(map);
 
-        ProjectRemoteDataSource.getInstance().updateTaskStatus(bundle, null, jsonRequest, new ResponseCallback<Map<String, String>, ResponseError>() {
+        FormRepository.getInstance().inspectTask(bundle, jsonRequest, new ResponseCallback<Map, ResponseError>() {
             @Override
-            public void onSuccess(Map<String, String> data) {
+            public void onSuccess(Map data) {
+                LogUtils.d("asdf","成功的数据" + data.toString());
                 mView.SubmitSuccess();
             }
 
             @Override
             public void onError(ResponseError error) {
+                LogUtils.d("asdf","失败后的数据" + error.getMessage());
                 mView.showNetError(error);
             }
         });

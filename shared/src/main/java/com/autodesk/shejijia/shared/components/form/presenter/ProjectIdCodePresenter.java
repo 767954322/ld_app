@@ -80,6 +80,16 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter {
                                             break;
                                         }
                                     }
+
+//                                    List<SubTask> subTaskList = task.getSubTasks();
+//                                    for (int i = 0; i < subTaskList.size(); i++) {
+//                                        String type = subTaskList.get(i).getType().toUpperCase();
+//                                        if(statusList.contains(type)) {
+//
+//                                        }
+//                                    }
+
+
                                     mView.enterProjectInfo(task, data.getBuilding(), role);
                                     return;
                                 }

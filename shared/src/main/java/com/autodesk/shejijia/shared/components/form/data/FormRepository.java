@@ -107,6 +107,21 @@ public class FormRepository implements FormDataSource {
         });
     }
 
+    @Override
+    public void inspectTask(@NonNull Bundle bundle, JSONObject jsonRequest, @NonNull final ResponseCallback<Map, ResponseError> callback) {
+        FormRemoteDataSource.getInstance().inspectTask(bundle,jsonRequest, new ResponseCallback<Map, ResponseError>() {
+            @Override
+            public void onSuccess(Map data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                callback.onError(error);
+            }
+        });
+    }
+
 
     public void updateRemoteForms(List<SHForm> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
         if (forms == null || forms.size() == 0) {
