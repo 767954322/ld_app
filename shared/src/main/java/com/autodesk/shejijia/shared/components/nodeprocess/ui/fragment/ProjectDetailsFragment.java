@@ -218,6 +218,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             public void onClick(View v) {
                 mtVmenuBadge.setVisibility(View.GONE);
                 mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread,threadId);
+                mIsUnread = false;
             }
         });
     }
@@ -229,7 +230,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mProjectDetailsPresenter.getProjectInformation();
             return true;
         } else if (itemId == R.id.project_toolbar_message) {
-//           mProjectDetailsPresenter.navigateToMessageCenter();
             return true;
         }
 
@@ -238,6 +238,10 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 10010){
+            mIsUnread = false;
+            return;
+        }
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
                 if (resultCode == Activity.RESULT_OK) {

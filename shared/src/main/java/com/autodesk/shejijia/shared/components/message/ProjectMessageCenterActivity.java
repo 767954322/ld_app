@@ -1,15 +1,23 @@
 package com.autodesk.shejijia.shared.components.message;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -92,7 +100,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void refreshProjectMessagesView(MessageInfo messageInfo) {
         mRvProjectMessagCenterView.complete();
         mProjectMessageCenterPresenter.changeUnreadState(mThreadId);
-        if(messageInfo.getMessageItemBean() != null) {
+        if(messageInfo.getMessageItemBean() != null&& messageInfo.getMessageItemBean().size() > 0) {
             mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,messageInfo.getOffset());
         }
@@ -101,7 +109,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     public void loadMoreProjectMessagesView(MessageInfo messageInfo) {
         mRvProjectMessagCenterView.complete();
-        if(messageInfo.getMessageItemBean() != null) {
+        if(messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() > 0) {
             mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(),mIsUnread,messageInfo.getOffset());
             return;
@@ -110,27 +118,30 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
     @Override
     public void changeUnreadStateView() {
-        setResult(RESULT_OK,new Intent());
+        setResult(10010,new Intent());
     }
 
     @Override
-    public void showNetError(ResponseError error) {}
+    public void showNetError(final ResponseError error) {
+
+
+    }
 
     @Override
-    public void showError(String errorMsg) {}
+    public void showError(String errorMsg) {
+    }
 
     @Override
-    public void showLoading() {}
+    public void showLoading() {
+    }
 
     @Override
-    public void hideLoading() {}
+    public void hideLoading() {
+    }
     @Override
     public void onHistoricalRecordstClick() {
         mIsUnread = false;
         mRvProjectMessagCenterView.setRefreshing(true);
-//        mOffset = 0;
-//        mIsUnread = false;
-//        getListMessageCenterInfo();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
