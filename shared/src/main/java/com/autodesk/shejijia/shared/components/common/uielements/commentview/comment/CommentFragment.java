@@ -22,9 +22,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDis
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommonBaseFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.AudioHandler;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.CommonAudioAlert;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.im.constants.IMChatInfo;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -38,11 +41,11 @@ import java.util.List;
  */
 
 public class CommentFragment extends Fragment implements CommentContract.CommentView, View.OnClickListener{
-    private static final String TAG = "CommentFragment";
+    public static final String TAG = "CommentFragment";
     public static final String PARCELABLE_DATA = "parcelable_data";
 
     public static final String POSITION = "position";
-    public static final String STRING_LIST = "string_list";
+    public static final String IMAGE_LIST = "image_list";
 
     private BaseActivity mContext;
 
@@ -60,7 +63,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private String X_Token;
     public String mCommentContent;
     public String mAudioPath;
-    public ArrayList<String> mPictureData;
+    public ArrayList<ImageInfo> mImages;
     public int mSelectModel;
 
     private ImageLoader mImageLoader;
@@ -117,9 +120,9 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             X_Token = mConfig.getX_Token();
             mCommentContent = mConfig.getCommentContent();
             mAudioPath = mConfig.getAudioPath();
-            mPictureData = (ArrayList<String>) mConfig.getPictureData();
             mSelectModel = mConfig.getSelectModel();
         }
+        mImages = new ArrayList<>();
         mImageLoader = ImageLoader.getInstance();
         mAdapter = new SelectedImgAdapter(mConfig, mImgItemClickListener, mImageLoader);
     }
@@ -129,7 +132,6 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_common_comment, container, false);
         containerId = container.getId();
-        Log.d("CommonBaseActivity", "onCreateView: containerId == " + containerId);
         mEditText = (EditText) view.findViewById(R.id.et_comment_content);
         mTextView = (TextView) view.findViewById(R.id.tv_comment_content);
         mAudioRecord = (LinearLayout) view.findViewById(R.id.ll_record_audio_container);
@@ -144,6 +146,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 
         } else {
             if(!TextUtils.isEmpty(mCommentContent)){
+                mTextView.setVisibility(View.VISIBLE);
                 mTextView.setText(mCommentContent);
             }
             if(!TextUtils.isEmpty(mAudioPath)){
@@ -201,7 +204,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             mAudioRecord.setVisibility(View.VISIBLE);
             mAudioHandler.deleteVoiceRecord(mAudioPath);
             mAudioPath = null;
-
+            SharedPreferencesUtils.writeString("AudioPath","");
         }
     }
 
@@ -213,17 +216,17 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageSelector.REQUEST_SELECT_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                mPictureData = data.getStringArrayListExtra(ImageSelector.SELECTED_RESULT);
-                mAdapter.replaceData(mPictureData);
+                mImages = data.getParcelableArrayListExtra(ImageSelector.SELECTED_RESULT);
+                mAdapter.replaceData(mImages);
             }
         }
     }
 
     @Override
-    public void showImages(List<String> imageStrings) {
-        if (imageStrings != null) {
-            mPictureData = (ArrayList<String>) imageStrings;
-            mAdapter.replaceData(mPictureData);
+    public void showImages(List<ImageInfo> images) {
+        if (images != null) {
+            mImages = (ArrayList<ImageInfo>) images;
+            mAdapter.replaceData(mImages);
         }
     }
 
@@ -266,7 +269,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     public void showImageDetailUi(int position) {
         Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
         intent.putExtra(POSITION,position);
-        intent.putStringArrayListExtra(STRING_LIST,mPictureData);
+        intent.putParcelableArrayListExtra(IMAGE_LIST,mImages);
         getActivity().startActivity(intent);
     }
 
@@ -288,11 +291,11 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     }
 
     @Override
-    public List<String> getImagePathList() {
-        if (mPictureData == null || mPictureData.size() == 0) {
+    public List<ImageInfo> getImages() {
+        if (mImages == null || mImages.size() == 0) {
             return null;
         }
-        return mPictureData;
+        return mImages;
     }
 
     @Override
@@ -331,7 +334,6 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                     mVoiceRecordingStartTime = System.nanoTime();
                     mPresenter.startRecordAudio();
                     mAlertView.setRecordStatus(CommonAudioAlert.RECORDING);
-                    isRecording = true;
                 }
             } else if (id == R.id.iv_sound_suspend) {
                 long endTime = System.nanoTime();
@@ -345,6 +347,11 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                 }
                 isRecording = false;
             } else if (id == R.id.iv_sound_playing) {
+                Log.d(TAG, "onItemClick: mAudioPath == " + mAudioPath);
+                mAudioPath = SharedPreferencesUtils.readString("AudioPath");
+//                if(!TextUtils.isEmpty(mAudioPath)){
+//                    mAudioHandler.startPlayAudio(mAudioPath);
+//                }
                 if(!TextUtils.isEmpty(mAudioPath)){
                     mAudioHandler.startPlayAudio(mAudioPath);
                 }
@@ -357,6 +364,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         }
     };
 
+    private String mPath;
     private AudioHandler.AudioHandlerListener mAudioListener = new AudioHandler.AudioHandlerListener() {
         @Override
         public void audioRecordStart() {
@@ -367,6 +375,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         @Override
         public void audioRecordEnd(String filePath) {
             mAudioPath = filePath;
+            SharedPreferencesUtils.writeString("AudioPath",filePath);
             isRecording = false;
         }
 
@@ -401,7 +410,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private ImageItemClickListener mImgItemClickListener = new ImageItemClickListener() {
         @Override
         public void onAddItemClick() {
-            ImageSelector.getInstance().setSelectModel(mConfig.selectModel).setStartData(mPictureData).startSelect(CommentFragment.this);
+            ImageSelector.getInstance().setSelectModel(mConfig.selectModel).setStartData(mImages).startSelect(CommentFragment.this);
         }
 
         @Override
@@ -411,8 +420,8 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 
         @Override
         public void onDeleteImageClick(int position) {
-            mPictureData.remove(position);
-            mAdapter.replaceData(mPictureData);
+            mImages.remove(position);
+            mAdapter.replaceData(mImages);
         }
 
     };

@@ -20,19 +20,19 @@ public interface CommentDataSource {
     void initRemoteRepository(@NonNull List<ImageInfo> images);
 
     @Nullable
-    List<String> getSelectedResult();
+    List<ImageInfo> getSelectedResult();
 
-    void addSelected(List<String> paths);
+    void addSelected(List<ImageInfo> pics);
 
-    void addSelect(@NonNull String path);
+    void addSelect(@NonNull ImageInfo pic);
 
-    void removeSelect(@NonNull String path);
+    void removeSelect(@NonNull ImageInfo pic);
 
     void clearCacheAndSelect();
 
     int getSelectedCount();
 
-    void addSelectedOnline(List<String> datas);
+    void addSelectedOnline(List<ImageInfo> pics);
 
 
     interface InitAlbumCallback {

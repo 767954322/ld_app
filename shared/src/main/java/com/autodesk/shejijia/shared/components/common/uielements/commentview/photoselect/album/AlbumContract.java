@@ -47,7 +47,7 @@ public interface AlbumContract {
          * @param imagePaths   选择的图片路径集合
          * @param refreshMedia 是否刷新系统媒体库 true 将通过相机拍摄的照片加入Media.Store
          */
-        void selectComplete(List<String> imagePaths, boolean refreshMedia);
+        void selectComplete(List<ImageInfo> imagePaths, boolean refreshMedia);
 
         /**
          * 同步  ImageDetailFragment 界面Checkbox选中状态
@@ -79,9 +79,9 @@ public interface AlbumContract {
         /**
          * 系统相机Activity 返回结果    * {@link Activity#onActivityResult(int, int, Intent)}.
          *
-         * @param mTmpFile 保存相机拍摄图片的零时文件
+         * @param
          */
-        void result(int requestCode, int resultCode, Intent data, File mTmpFile);
+        void result(int requestCode, int resultCode, Intent data, File file);
 
         void clearCache();
     }

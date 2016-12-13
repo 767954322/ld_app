@@ -80,7 +80,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
      */
     private ArrayList<ImageInfo> mImages;
 
-    private ArrayList<String> mPictures;
+//    private ArrayList<String> mPictures;
 //    private RequestManager mRequestManager;
 
 
@@ -107,7 +107,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
         mImagesAdapter = new ImageGridAdapter(mAlbumConfig, mItemListener);
 //        mFolderAdapter = new FolderListAdapter(mRequestManager, mFolderItemClickListener);
         mFolderAdapter = new FolderListAdapter(mFolderItemClickListener);
-        mPictures = (ArrayList<String>) mAlbumConfig.getStartData();
+        mImages = (ArrayList<ImageInfo>) mAlbumConfig.getStartData();
     }
 
     @Override
@@ -160,12 +160,6 @@ public class AlbumFragment extends PhotoSelectBaseFragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_album, container, false);
         initViews(rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN //READ_EXTERNAL_STORAGE Permission 再 API Level 16 时被添加
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -173,8 +167,9 @@ public class AlbumFragment extends PhotoSelectBaseFragment
                     getString(R.string.permission_read_storage_rationale),
                     REQUEST_STORAGE_READ_ACCESS_PERMISSION);
         } else {
-            mPresenter.start(mPictures); //初始化数据
+            mPresenter.start(mImages); //初始化数据
         }
+        return rootView;
     }
 
     /**
@@ -185,7 +180,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
         switch (requestCode) {
             case REQUEST_STORAGE_READ_ACCESS_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mPresenter.start(mPictures); //初始化数据
+                    mPresenter.start(mImages); //初始化数据
                 } else {
                     showToast(getString(R.string.permission_read_storage_denied_error_msg));
                     showEmptyView(getString(R.string.permission_read_storage_denied_error_msg));
@@ -352,10 +347,10 @@ public class AlbumFragment extends PhotoSelectBaseFragment
     }
 
     @Override
-    public void selectComplete(List<String> imagePaths, boolean refreshMedia) {
+    public void selectComplete(List<ImageInfo> imagePaths, boolean refreshMedia) {
         checkNotNull(imagePaths);
         Intent data = new Intent();
-        data.putStringArrayListExtra(ImageSelector.SELECTED_RESULT, (ArrayList<String>) imagePaths);
+        data.putParcelableArrayListExtra(ImageSelector.SELECTED_RESULT, (ArrayList<ImageInfo>) imagePaths);
         // notify system ,保存拍照的照片到MediaStore,
         if (refreshMedia) {
             mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(mTmpFile)));
@@ -399,7 +394,7 @@ public class AlbumFragment extends PhotoSelectBaseFragment
 
         void onCameraItemClick();
 
-        void onImageClick(int realPosition, ImageInfo imageInfo, int slecteModel);
+        void onImageClick(int realPosition, ImageInfo imageInfo, int selectModel);
     }
 
     public interface FolderItemListener {

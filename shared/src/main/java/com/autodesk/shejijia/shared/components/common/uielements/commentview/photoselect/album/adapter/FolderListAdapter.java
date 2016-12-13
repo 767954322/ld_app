@@ -64,10 +64,10 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Fo
         final AlbumFolder folder = mData.get(position);
 
 //        mRequestManager
-//                .load(folder.getCover().getPath())
+//                .load(folder.getCover().getPictureUri())
 //                .asBitmap()
 //                .into(holder.mCoverView);
-        ImageLoader.getInstance().displayImage(sFilePrefix + folder.getCover().getPath(),holder.mCoverView,options);
+        ImageLoader.getInstance().displayImage(sFilePrefix + folder.getCover().getPictureUri(),holder.mCoverView,options);
         holder.mFolderName.setText(folder.getFloderName());
         holder.mFolderSize.setText(holder.itemView.getContext()
                 .getString(R.string.folder_size, folder.getImgInfos().size()));

@@ -26,7 +26,6 @@ public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static final int NORMAL_ITEM = 0;
     public static final int CAMERA_ITEM = 1;
-    private static final String sFilePrefix = "file://";
 
     private List<ImageInfo> mData = Collections.emptyList();
 
@@ -135,10 +134,10 @@ public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mListener.onImageClick(realPositon, imageInfo, mAlbumConfig.getSelectModel());
                 }
             });
-            ImageLoader.getInstance().displayImage(sFilePrefix + imageInfo.getPath(),imgHolder.mImageView,options);
+            ImageLoader.getInstance().displayImage(imageInfo.getPictureUri(),imgHolder.mImageView,options);
 
 //            mRequestManager
-//                    .load(imageInfo.getPath())
+//                    .load(imageInfo.getPictureUri())
 //                    .asBitmap()
 ////                    .placeholder(R.drawable.placeholder)
 //                    .into(imgHolder.mImageView);
@@ -152,8 +151,8 @@ public class ImageGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(mAlbumConfig.getStartData() == null || mAlbumConfig.getStartData().size() == 0){
             return;
         }
-        for(String string : mAlbumConfig.getStartData()){
-            if(string.equals(imageInfo.getPath())){
+        for(ImageInfo info : mAlbumConfig.getStartData()){
+            if(info.equals(imageInfo)){
                 imageInfo.setSelected(true);
                 return;
             }

@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.components.common.entity.microbean.File;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.SHFile;
 
 import java.io.Serializable;
@@ -16,8 +17,8 @@ import java.util.Map;
 
 public class FormFeedBack implements Serializable {
     private String comment;
-    private SHFile audio;
-    private List<SHFile> images;
+    private File audio;
+    private List<File> images;
     private Integer currentActionIndex = 0;
     private Integer currentCheckIndex = -1;
 
@@ -29,19 +30,19 @@ public class FormFeedBack implements Serializable {
         this.comment = comment;
     }
 
-    public SHFile getAudio() {
+    public File getAudio() {
         return audio;
     }
 
-    public void setAudio(SHFile audio) {
+    public void setAudio(File audio) {
         this.audio = audio;
     }
 
-    public List<SHFile> getImages() {
+    public List<File> getImages() {
         return images;
     }
 
-    public void setImages(List<SHFile> images) {
+    public void setImages(List<File> images) {
         this.images = images;
     }
 
@@ -67,8 +68,8 @@ public class FormFeedBack implements Serializable {
 
     private void initWithList(List<Map> values){
         this.comment = "";
-        this.audio = new SHFile();
-        this.images = new ArrayList<SHFile>();
+        this.audio = new File();
+        this.images = new ArrayList<File>();
         for(Map valueMap : values){
             if(valueMap instanceof HashMap){
                 if("text".equals(valueMap.get("type"))){
@@ -76,7 +77,7 @@ public class FormFeedBack implements Serializable {
                 }
 
                 if("audio".equals(valueMap.get("type"))){
-                    audio.setPictureUrl((String) valueMap.get("value"));
+                    audio.setPublicUrl((String) valueMap.get("value"));
                     if(valueMap.get("id") == null){
                         audio.setFileId("");
                     }else {
@@ -85,8 +86,8 @@ public class FormFeedBack implements Serializable {
                 }
 
                 if("image".equals(valueMap.get("type"))){
-                    SHFile image = new SHFile();
-                    image.setPictureUrl((String) valueMap.get("value"));
+                    File image = new File();
+                    image.setPublicUrl((String) valueMap.get("value"));
                     if(valueMap.get("id") == null){
                         image.setFileId("");
                     }else {
@@ -123,19 +124,19 @@ public class FormFeedBack implements Serializable {
         textType.put("type","text");
         textType.put("value",this.comment == null?"":this.comment);
         feedBackDataList.add(textType);
-        if(!TextUtils.isEmpty(this.audio.getPictureUrl())){
+        if(!TextUtils.isEmpty(this.audio.getPublicUrl())){
             Map<String,Object> audio = new HashMap<>();
             audio.put("type","audio");
-            audio.put("value",this.audio.getPictureUrl());
+            audio.put("value",this.audio.getPublicUrl());
             audio.put("id",this.audio.getFileId());
             feedBackDataList.add(audio);
         }
         if(images != null && images.size() != 0){
-            for(SHFile file : images){
-                if(!TextUtils.isEmpty(file.getPictureUrl())){
+            for(File file : images){
+                if(!TextUtils.isEmpty(file.getPublicUrl())){
                     Map<String,Object> image = new HashMap<>();
                     image.put("type","image");
-                    image.put("value",file.getPictureUrl());
+                    image.put("value",file.getPublicUrl());
                     image.put("id",file.getFileId());
                     feedBackDataList.add(image);
                 }

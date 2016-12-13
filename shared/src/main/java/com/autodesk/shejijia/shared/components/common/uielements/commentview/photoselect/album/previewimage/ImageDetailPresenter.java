@@ -32,13 +32,6 @@ public class ImageDetailPresenter implements ImageContract.Presenter {
         mImageDetailView.setPresenter(this);
     }
 
-    public void start(List<String> mDatas) {
-//        AlbumFolder folder = mAlbumRepository.getFolderByImage(mImageInfo);
-//        int index = folder.getImgInfos().indexOf(mImageInfo);
-//        mImageDetailView.showImageDetail(index, folder.getImgInfos());
-    }
-
-
     @Override
     public void selectImage(@NonNull ImageInfo imageInfo, int maxCount, int position) {
         checkNotNull(imageInfo, "ImageInfo cannot be null");
@@ -47,7 +40,7 @@ public class ImageDetailPresenter implements ImageContract.Presenter {
             return;
         }
         imageInfo.setSelected(true);
-        mAlbumRepository.addSelect(imageInfo.getPath());
+        mAlbumRepository.addSelect(imageInfo);
         mImageDetailView.showSelectedCount(mAlbumRepository.getSelectedCount());
         mAlbumView.syncCheckboxStatus(position);
     }
@@ -56,8 +49,13 @@ public class ImageDetailPresenter implements ImageContract.Presenter {
     public void unSelectImage(@NonNull ImageInfo imageInfo, int position) {
         checkNotNull(imageInfo, "ImageInfo cannot be null");
         imageInfo.setSelected(false);
-        mAlbumRepository.removeSelect(imageInfo.getPath());
+        mAlbumRepository.removeSelect(imageInfo);
         mImageDetailView.showSelectedCount(mAlbumRepository.getSelectedCount());
         mAlbumView.syncCheckboxStatus(position);
+    }
+
+    @Override
+    public void start(List<ImageInfo> images) {
+
     }
 }

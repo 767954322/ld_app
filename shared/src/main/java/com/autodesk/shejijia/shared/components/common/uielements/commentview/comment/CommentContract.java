@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.co
 
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommentBasePresenter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommentBaseView;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface CommentContract {
 
     public interface CommentView extends CommentBaseView<CommentPresenter> {
 
-        void showImages(List<String> imageStrings);
+        void showImages(List<ImageInfo> images);
 
         void showRecyclerEmptyView();
 
@@ -34,7 +35,7 @@ public interface CommentContract {
 
         String getAudioRecordPath();
 
-        List<String> getImagePathList();
+        List<ImageInfo> getImages();
 
         void deleteVoice(String path);
     }

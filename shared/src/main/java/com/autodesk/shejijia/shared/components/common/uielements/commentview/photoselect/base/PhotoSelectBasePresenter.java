@@ -16,12 +16,14 @@
 
 package com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
+
 import java.util.List;
 
 public interface PhotoSelectBasePresenter {
     /**
      * 一般在onResume（）方法中调用，执行一些数据初始化工作
      */
-    void start(List<String> images);
+    void start(List<ImageInfo> images);
 
 }

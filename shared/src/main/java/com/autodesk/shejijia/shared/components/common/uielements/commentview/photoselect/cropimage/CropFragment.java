@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.ph
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewTreeObserver;
 
 import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.crop.CropView;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.FileUtils;
 //import com.bumptech.glide.Glide;
@@ -121,16 +123,20 @@ public class CropFragment extends Fragment {
 
     public void cropImage() {
 
-        final File avatorFile = new File(FileUtils.getCacheDirectory(mContext), System.currentTimeMillis() + "avator.jpg");
+        final File avatarFile = new File(FileUtils.getCacheDirectory(mContext), System.currentTimeMillis() + "avator.jpg");
 
         try {
             new CropView.CropRequest(mCropView)
                     .quality(80)
                     .format(Bitmap.CompressFormat.JPEG)
-                    .into(avatorFile);
+                    .into(avatarFile);
             if (mListener != null) {
                 //通知Activity裁剪完成
-                mListener.onCropCompleted(avatorFile.getPath());
+                ImageInfo info = new ImageInfo();
+                Uri uri = Uri.fromFile(avatarFile);
+                info.setPath(avatarFile.getAbsolutePath());
+                info.setPictureUri(uri.toString());
+                mListener.onCropCompleted(info);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,7 +147,7 @@ public class CropFragment extends Fragment {
     }
 
     interface CropImageListener {
-        void onCropCompleted(String path);
+        void onCropCompleted(ImageInfo info);
     }
 
 //    static class FillViewportTransformation extends BitmapTransformation {

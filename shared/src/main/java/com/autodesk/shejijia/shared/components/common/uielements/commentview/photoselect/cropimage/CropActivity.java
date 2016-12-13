@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.base.PhotoSelectBaseActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.utils.ActivityUtils;
 
@@ -42,9 +43,9 @@ public class CropActivity extends PhotoSelectBaseActivity implements CropFragmen
 
 
     @Override
-    public void onCropCompleted(String path) {
+    public void onCropCompleted(ImageInfo info) {
         Intent intent = new Intent();
-        intent.putExtra(CROP_RESULT, path);
+        intent.putExtra(CROP_RESULT, info);
         setResult(RESULT_OK, intent);
         finish();
     }

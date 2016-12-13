@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumActivity;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class ImageSelector {
         return this;
     }
 
-    public ImageSelector setStartData(List<String> data){
+    public ImageSelector setStartData(List<ImageInfo> data){
         checkNotNull(data);
         mConfig.setStartData(data);
         return this;

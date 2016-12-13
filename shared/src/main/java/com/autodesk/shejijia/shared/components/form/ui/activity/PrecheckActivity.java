@@ -205,6 +205,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     public void enterUnqualified(SHPrecheckForm shPrecheckForm) {
         // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,
         ToastUtils.showShort(this, "另外再开启一个activity来处理验收条件不合格的情况");
+        Intent intent = new Intent(this,UnqualifiedActivity.class);
+        intent.putExtra(UnqualifiedActivity.UNQUALIFIED_FORM,shPrecheckForm);
+        startActivity(intent);
     }
 
     private void initToolbar(Task task) {

@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -103,7 +104,7 @@ public class FileHttpManager {
                     JSONObject jObj = new JSONObject(response);
                     final String uploadServer = jObj.optString("server");
 
-                    String postURL = "http://" + uploadServer + "/api/v2/server/upload";
+                    String postURL = "http://" + uploadServer + "/api/v2/files/upload";
 
                     // the types are implicitly taken, we may need to revisit this again
                     String type = "image/jpg";
@@ -117,6 +118,9 @@ public class FileHttpManager {
                     HashMap<String, String> params = new HashMap<String, String>();
 
                     params.put("content_type", mediaType);
+                    params.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
+                    params.put("X-SESSION", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+                    params.put("public", "true");
                     for (Map.Entry<String, String> entry : params.entrySet())
                         builder.addFormDataPart(entry.getKey(), entry.getValue());
                     RequestBody reqBody = builder.build();
@@ -127,6 +131,84 @@ public class FileHttpManager {
                     Map<String, String> map = getDefaultHeaders();
                     for (Map.Entry<String, String> entry : map.entrySet())
                         reqBuilder.addHeader(entry.getKey(), entry.getValue());
+                    com.squareup.okhttp.Request request = reqBuilder.build();
+
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    okHttpClient.setConnectTimeout(120, TimeUnit.SECONDS);
+                    okHttpClient.setWriteTimeout(120, TimeUnit.SECONDS);
+                    okHttpClient.setReadTimeout(120, TimeUnit.SECONDS);
+
+                    Call call = okHttpClient.newCall(request);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+                            errorHandler(handler);
+                        }
+
+                        @Override
+                        public void onResponse(Response response) throws IOException {
+                            if (response.isSuccessful())
+                                successHandler(handler, response.body().string());
+                            else
+                                errorHandler(handler);
+                        }
+                    });
+                } catch (JSONException e) {
+                    handler.onFailure();
+                } catch (Exception e) {
+                    handler.onFailure();
+                }
+            }
+        });
+    }
+
+
+    public void upLoadFileByType(final List<File> files, final String mediaType, //AUDIO or IMAGE
+                                 final ResponseHandler handler) {
+        Assert.assertTrue(files != null);
+
+        // first get the upload server
+        getUploadServer(new OkStringRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                handler.onFailure();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    final String uploadServer = jObj.optString("server");
+
+                    String postURL = "http://" + uploadServer + "/api/v2/server/upload";
+
+                    // the types are implicitly taken, we may need to revisit this again
+                    String type = "image/jpg";
+                    if (mediaType.equalsIgnoreCase("AUDIO")){
+                        type = "audio/x-m4a";
+                    }
+
+                    MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+                    for(File file : files){
+                        RequestBody fileBody = RequestBody.create(MediaType.parse(type), file);
+                        builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"file\"; filename=\"" + file.getName() + "\""), fileBody);
+                    }
+
+                    HashMap<String, String> params = new HashMap<String, String>();
+
+                    params.put("content_type", mediaType);
+                    for (Map.Entry<String, String> entry : params.entrySet()){
+                        builder.addFormDataPart(entry.getKey(), entry.getValue());
+                    }
+                    RequestBody reqBody = builder.build();
+
+                    com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
+                    reqBuilder.url(postURL);
+                    reqBuilder.post(reqBody);
+                    Map<String, String> map = getDefaultHeaders();
+                    for (Map.Entry<String, String> entry : map.entrySet()){
+                        reqBuilder.addHeader(entry.getKey(), entry.getValue());
+                    }
                     com.squareup.okhttp.Request request = reqBuilder.build();
 
                     OkHttpClient okHttpClient = new OkHttpClient();
@@ -257,8 +339,9 @@ public class FileHttpManager {
         Map<String, String> map = new HashMap<>();
         map.put("Content-Type", "application/x-www-form-urlencoded");
         map.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
-        if (AdskApplication.getInstance().getMemberEntity() != null)
+        if (AdskApplication.getInstance().getMemberEntity() != null){
             map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+        }
         return map;
     }
 }

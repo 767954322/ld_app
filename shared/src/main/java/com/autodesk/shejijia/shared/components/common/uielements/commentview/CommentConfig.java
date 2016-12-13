@@ -47,16 +47,15 @@ public class CommentConfig implements Parcelable{
     public String X_Token;
     public String commentContent;
     public String audioPath;
-    public List<String> pictureData;
-    public List<String> thumbnailData;
     public int selectModel;
 
     public LayoutType geteLayoutType() {
         return eLayoutType;
     }
 
-    public void seteLayoutType(LayoutType eLayoutType) {
+    public CommentConfig seteLayoutType(LayoutType eLayoutType) {
         this.eLayoutType = eLayoutType;
+        return this;
     }
 
     public CommentConfig seteModuleType(ModuleType eModuleType) {
@@ -82,20 +81,6 @@ public class CommentConfig implements Parcelable{
     public CommentConfig setAudioPath(String audioPath) {
         this.audioPath = audioPath;
         return this;
-    }
-
-    public CommentConfig setPictureData(List<String> pictureData) {
-        this.pictureData = pictureData;
-        return this;
-    }
-
-    public CommentConfig setThumbnailData(List<String> thumbnailData) {
-        this.thumbnailData = thumbnailData;
-        return this;
-    }
-
-    public List<String> getThumbnailData() {
-        return thumbnailData;
     }
 
     public CommentConfig setSelectModel(int selectModel) {
@@ -131,10 +116,6 @@ public class CommentConfig implements Parcelable{
         return audioPath;
     }
 
-    public List<String> getPictureData() {
-        return pictureData;
-    }
-
     public int getSelectModel() {
         return selectModel;
     }
@@ -145,8 +126,6 @@ public class CommentConfig implements Parcelable{
         eDataSource = DataSource.LOCAL;
         eLayoutType = LayoutType.EDIT;
         selectModel = MULTI_MODE;
-        pictureData = new ArrayList<>();
-        thumbnailData = new ArrayList<>();
     }
 
     @Override
@@ -163,8 +142,6 @@ public class CommentConfig implements Parcelable{
         dest.writeString(X_Token);
         dest.writeString(commentContent);
         dest.writeString(audioPath);
-        dest.writeStringList(pictureData);
-        dest.writeStringList(thumbnailData);
         dest.writeInt(selectModel);
     }
 
@@ -176,8 +153,6 @@ public class CommentConfig implements Parcelable{
         X_Token = in.readString();
         commentContent = in.readString();
         audioPath = in.readString();
-        in.readStringList(pictureData);
-        in.readStringList(thumbnailData);
         selectModel = in.readInt();
     }
 

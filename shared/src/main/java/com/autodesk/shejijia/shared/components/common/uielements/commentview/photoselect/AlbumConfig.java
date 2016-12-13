@@ -3,6 +3,8 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.ph
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class AlbumConfig implements Parcelable {
      */
     private int mGridColumns;
 
-    private List<String> mStartData;
+    private List<ImageInfo> mStartData;
 
     public int getSelectModel() {
         return mSelectModel;
@@ -64,11 +66,11 @@ public class AlbumConfig implements Parcelable {
         this.mGridColumns = mGridColumns;
     }
 
-    public List<String> getStartData() {
+    public List<ImageInfo> getStartData() {
         return mStartData;
     }
 
-    public void setStartData(List<String> mStartData) {
+    public void setStartData(List<ImageInfo> mStartData) {
         this.mStartData = mStartData;
     }
 
@@ -91,7 +93,7 @@ public class AlbumConfig implements Parcelable {
         dest.writeInt(this.mMaxCount);
         dest.writeByte(mShownCamera ? (byte) 1 : (byte) 0);
         dest.writeInt(this.mGridColumns);
-        dest.writeStringList(this.mStartData);
+        dest.writeList(mStartData);
     }
 
     protected AlbumConfig(Parcel in) {
@@ -99,7 +101,7 @@ public class AlbumConfig implements Parcelable {
         this.mMaxCount = in.readInt();
         this.mShownCamera = in.readByte() != 0;
         this.mGridColumns = in.readInt();
-        in.readStringList(mStartData);
+        in.readList(mStartData,ImageInfo.class.getClassLoader());
     }
 
     public static final Creator<AlbumConfig> CREATOR = new Creator<AlbumConfig>() {

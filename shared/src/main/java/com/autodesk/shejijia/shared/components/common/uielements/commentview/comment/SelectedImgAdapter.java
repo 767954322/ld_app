@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
-import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -27,7 +27,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     private static final String sFilePrefix = "file://";
     private static final int ADD_ITEM = 0;
     private static final int IMG_ITEM = 1;
-    private List<String> mData = Collections.emptyList();
+    private List<ImageInfo> mImages = Collections.emptyList();
     private CommentConfig mConfig;
     private CommentFragment.ImageItemClickListener mListener;
     private ImageLoader mLoader;
@@ -77,16 +77,9 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(isImgItem(position)){
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
-            final String item = getListItem(position);
-            if(item != null){
-                //TODO temp solution, remove later
-                String uriString;
-                if (mConfig.geteDataSource() == CommentConfig.DataSource.LOCAL) {
-                    uriString = Uri.fromFile(new File(item)).toString();
-                } else {
-                    uriString = item;
-                }
-                mLoader.displayImage(uriString, viewHolder.image,options);
+            final String path = getListItem(position);
+            if(path != null){
+                mLoader.displayImage(path,viewHolder.image,options);
                 viewHolder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -109,22 +102,20 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
-            return mData.size() + 1;
-        } else {
-            return mData.size();
-        }
+        return (mImages.size() >= 9) ? mImages.size() : (mImages.size() + 1);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
-            if(mData == null || mData.size() == 0){
+        if(mImages == null || mImages.size() == 0){
+            return ADD_ITEM;
+        } else {
+            if(position == mImages.size() && mImages.size() < 9){
                 return ADD_ITEM;
             } else {
                 if(position == mData.size()){
                     return ADD_ITEM;
-                }
+            }
                 return IMG_ITEM;
             }
         } else {
@@ -132,8 +123,8 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void replaceData(List<String> data){
-        mData = data;
+    public void replaceData(List<ImageInfo> images){
+        mImages = images;
         notifyDataSetChanged();
     }
 
@@ -147,7 +138,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     private String getListItem(int position){
         if(isImgItem(position)){
-            return mData.get(position);
+            return mImages.get(position).getPictureUri();
         }else {
             return null;
         }

@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.mo
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -33,7 +34,7 @@ public class CommentRepository implements CommentDataSource{
     /**
      * 唯一loader号
      */
-    private static final int IMAGE_LOADER_ID = 1001;
+    private static final int IMAGE_LOADER_ID = 1000;
 
     /**
      * 缓存的相册文件
@@ -42,7 +43,7 @@ public class CommentRepository implements CommentDataSource{
     /**
      * 用户选择的图片路径集合
      */
-    private List<String> mSelectedResult = new ArrayList<>();
+    private List<ImageInfo> mSelectedResult = new ArrayList<>();
     /**
      * 包涵所有图片的相册名  综合的相册名
      */
@@ -50,7 +51,7 @@ public class CommentRepository implements CommentDataSource{
 
     private CursorLoader mLoader;
 
-    List<AlbumFolder> albumFolders;
+//    List<AlbumFolder> albumFolders;
 
     public static CommentRepository getInstance(Context context) {
         if (mInstance == null) {
@@ -100,6 +101,7 @@ public class CommentRepository implements CommentDataSource{
 
             @Override
             public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+                List<AlbumFolder> albumFolders = new ArrayList<>();
                 if(data == null){
                     return;
                 }
@@ -107,19 +109,18 @@ public class CommentRepository implements CommentDataSource{
                     mCallback.onDataNotAvailable();
                     return;
                 }
-                albumFolders = new ArrayList<AlbumFolder>();
+
                 //创建包涵所有图片的相册目录
                 AlbumFolder generalAlbumFolder = new AlbumFolder();
-                ArrayList<ImageInfo> imageList = new ArrayList<ImageInfo>();
+                ArrayList<ImageInfo> imageList = new ArrayList<>();
                 generalAlbumFolder.setImgInfos(imageList);
                 generalAlbumFolder.setFloderName(mGeneralFolderName);
                 albumFolders.add(generalAlbumFolder);
-
                 while (data.moveToNext()) {
                     ImageInfo imageInfo = createImageInfo(data);
                     generalAlbumFolder.getImgInfos().add(imageInfo); //每一张图片都加入到allAlbumFolder 目录中
 
-                    File folderFile = new File(imageInfo.getPath()).getParentFile(); //得到当前图片的目录
+                    File folderFile = new File(imageInfo.getPictureUri()).getParentFile(); //得到当前图片的目录
                     String path = folderFile.getAbsolutePath();
                     AlbumFolder albumFolder = getFolderByPath(path, albumFolders);
                     if (albumFolder == null) {
@@ -155,31 +156,31 @@ public class CommentRepository implements CommentDataSource{
      */
     @Override
     public void initRemoteRepository(@NonNull List<ImageInfo> images) {
-        if(images == null || images.size() == 0){
-            return;
-        }
-        AlbumFolder remoteAlbum = new AlbumFolder();
-        remoteAlbum.setFloderName("云相册");
-        remoteAlbum.setCover(images.get(0));
-        remoteAlbum.setImgInfos(images);
-        albumFolders.add(1,remoteAlbum);
+//        if(images == null || images.size() == 0){
+//            return;
+//        }
+//        AlbumFolder remoteAlbum = new AlbumFolder();
+//        remoteAlbum.setFloderName("云相册");
+//        remoteAlbum.setCover(images.get(0));
+//        remoteAlbum.setImgInfos(images);
+//        albumFolders.add(1,remoteAlbum);
     }
 
 
     @Nullable
     @Override
-    public List<String> getSelectedResult() {
+    public List<ImageInfo> getSelectedResult() {
         return mSelectedResult;
     }
 
     @Override
-    public void addSelect(@NonNull String path) {
-        mSelectedResult.add(CommonUtils.checkNotNull(path));
+    public void addSelect(@NonNull ImageInfo pic) {
+        mSelectedResult.add(CommonUtils.checkNotNull(pic));
     }
 
     @Override
-    public void removeSelect(@NonNull String path) {
-        mSelectedResult.remove(CommonUtils.checkNotNull(path));
+    public void removeSelect(@NonNull ImageInfo pic) {
+        mSelectedResult.remove(CommonUtils.checkNotNull(pic));
     }
 
     @Override
@@ -194,22 +195,22 @@ public class CommentRepository implements CommentDataSource{
     }
 
     @Override
-    public void addSelectedOnline(List<String> paths) {
-        if(paths == null){
+    public void addSelectedOnline(List<ImageInfo> pics) {
+        if(pics == null){
             return;
         }
         if(mSelectedResult == null){
             mSelectedResult = new ArrayList<>();
         }
-        mSelectedResult.addAll(paths);
+        mSelectedResult.addAll(pics);
     }
 
     @Override
-    public void addSelected(List<String> paths) {
-        if(paths == null || paths.size() == 0){
+    public void addSelected(List<ImageInfo> pics) {
+        if(pics == null || pics.size() == 0){
             return;
         }
-        mSelectedResult.addAll(paths);
+        mSelectedResult.addAll(pics);
     }
 
     public List<AlbumFolder> getCachedAlbumFolder() {
@@ -235,11 +236,13 @@ public class CommentRepository implements CommentDataSource{
     }
 
     private ImageInfo createImageInfo(Cursor data) {
+        int index = data.getInt(data.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+        Uri uri_temp = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(Integer.toString(index)).build();
         String imgPath = data.getString(data.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
         String displayName = data.getString(data.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME));
         long addedTime = data.getLong(data.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED));
         long imageSize = data.getLong(data.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-        return new ImageInfo(imgPath, displayName, addedTime, imageSize);
+        return new ImageInfo(uri_temp.toString(), imgPath, displayName, addedTime, imageSize);
     }
 
     private void processLoadedAlbumFolder(List<AlbumFolder> folders) {

@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
@@ -67,7 +68,7 @@ public class AudioHandler{
         try{
             String uniqueAudioFileName = MPFileUtility.getUniqueFileNameWithExtension(MPChatConstants.AUDIO_FILE_EXT);
             mAudioFile = MPFileUtility.getFileFromName(mContext,uniqueAudioFileName);
-
+            Log.d(TAG, "startVoiceRecord: mAudioFile.path == " + mAudioFile.getAbsolutePath());
             MPAudioManager manager = MPAudioManager.getInstance();
             manager.startRecording(mAudioFile.getAbsolutePath(),MPChatConstants.MAX_AUDIO_RECORDING_DURATION,
                     new MPAudioManager.AudioRecorderListener(){
@@ -78,16 +79,19 @@ public class AudioHandler{
 
                         @Override
                         public void onAudioRecordingEnd() {
+                            Log.d(TAG, "onAudioRecordingEnd: mAudioFile.path == " + mAudioFile.getAbsolutePath());
                             mCommentHandlerListener.audioRecordEnd(mAudioFile.getAbsolutePath());
                         }
 
                         @Override
                         public void onAudioRecordingCancelled() {
+                            Log.d(TAG, "onAudioRecordingCancelled: cancel");
                             mCommentHandlerListener.audioRecordEnd(null);
                         }
 
                         @Override
                         public void onAudioRecordingError() {
+                            Log.d(TAG, "onAudioRecordingError: error");
                             mCommentHandlerListener.audioRecordEnd(null);
                         }
                     });

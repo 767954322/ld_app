@@ -177,7 +177,7 @@
 //            PhotoView photoView = (PhotoView) LayoutInflater.from(container.getContext())
 //                    .inflate(R.layout.item_image_detail, container, false);
 //            mRequestManager
-//                    .load(mData.get(position).getPath())
+//                    .load(mData.get(position).getPictureUri())
 //                    .asBitmap()
 //                    .fitCenter()
 //                    .thumbnail(0.2f)

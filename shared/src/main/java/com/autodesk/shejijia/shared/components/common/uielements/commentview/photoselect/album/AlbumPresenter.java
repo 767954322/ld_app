@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.ph
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 
@@ -38,11 +39,11 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     }
 
     @Override
-    public void start(List<String> images) {
+    public void start(List<ImageInfo> images) {
         loadData(images);
     }
 
-    private void loadData(List<String> images) {
+    private void loadData(List<ImageInfo> images) {
         mAlbumRepository.addSelected(images);
         mAlbumRepository.initImgRepository(mLoadManager, new CommentDataSource.InitAlbumCallback() {
             @Override
@@ -65,11 +66,15 @@ public class AlbumPresenter implements AlbumContract.Presenter {
         switch (requestCode) {
             case ImageSelector.REQUEST_OPEN_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
+                    Uri photo = data.getData();
                     if (ImageSelector.getInstance().getConfig().getSelectModel() == ImageSelector.AVATOR_MODE) {
-                        mAlbumView.showImageCropUi(mTmpFile.getPath());
+                        mAlbumView.showImageCropUi(photo.toString());
                         return;
                     }
-                    mAlbumRepository.addSelect(mTmpFile.getPath());
+                    ImageInfo info = new ImageInfo();
+                    info.setPictureUri(photo.toString());
+                    info.setPath(mTmpFile.getAbsolutePath());
+                    mAlbumRepository.addSelect(info);
                     mAlbumView.selectComplete(mAlbumRepository.getSelectedResult(), true);
                 } else if (mTmpFile != null && mTmpFile.exists()) {
                     //出错时，删除零时文件,
@@ -78,8 +83,8 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 break;
             case ImageSelector.REQUEST_CROP_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
-                    String path = data.getStringExtra(CropActivity.CROP_RESULT);
-                    mAlbumRepository.addSelect(path);
+                    ImageInfo info = data.getParcelableExtra(CropActivity.CROP_RESULT);
+                    mAlbumRepository.addSelect(info);
                     mAlbumView.selectComplete(mAlbumRepository.getSelectedResult(), false);
                 }
                 break;
@@ -103,7 +108,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
             return;
         }
         imageInfo.setSelected(true);
-        mAlbumRepository.addSelect(imageInfo.getPath());
+        mAlbumRepository.addSelect(imageInfo);
         mAlbumView.showSelectedCount(mAlbumRepository.getSelectedCount());
     }
 
@@ -111,7 +116,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     public void unSelectImage(@NonNull ImageInfo imageInfo, int positon) {
         checkNotNull(imageInfo, "ImageInfo cannot be null");
         imageInfo.setSelected(false);
-        mAlbumRepository.removeSelect(imageInfo.getPath());
+        mAlbumRepository.removeSelect(imageInfo);
         mAlbumView.showSelectedCount(mAlbumRepository.getSelectedCount());
     }
 
@@ -123,12 +128,12 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     @Override
     public void cropImage(ImageInfo imageInfo) {
         checkNotNull(imageInfo);
-        mAlbumView.showImageCropUi(imageInfo.getPath());
+        mAlbumView.showImageCropUi(imageInfo.getPictureUri());
     }
 
     @Override
     public void returnResult() {
-        List<String> selectedResult = mAlbumRepository.getSelectedResult();
+        List<ImageInfo> selectedResult = mAlbumRepository.getSelectedResult();
         mAlbumView.selectComplete(selectedResult, false);
     }
 

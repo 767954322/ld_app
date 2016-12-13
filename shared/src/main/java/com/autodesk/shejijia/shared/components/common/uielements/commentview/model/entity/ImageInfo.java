@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,6 +28,10 @@ public class ImageInfo implements Parcelable {
      */
     private String mThumbnailURL;
     /**
+     * 文件路径
+     */
+    private String mPath;
+    /**
      * 图片大小
      */
     private long mSize;
@@ -37,32 +42,51 @@ public class ImageInfo implements Parcelable {
     /**
      * 照片来源
      */
-    private PhotoSource ePhotoSource;
+    private PhotoSource ePhotoSource = PhotoSource.LOCAL;
 
-    public ImageInfo(String mPath, String mDisplayName, long mAddedTime, long mSize) {
+    public ImageInfo(String uri, String path, String mDisplayName,long mAddedTime, long mSize) {
         this.mDisplayName = mDisplayName;
         this.mAddedTime = mAddedTime;
-        this.mPictureURL = mPath;
+        this.mPictureURL = uri;
+        this.mPath = path;
         this.mSize = mSize;
     }
 
-    public ImageInfo(String mPath, String thumbnail, long mSize) {
-        this.mPictureURL = mPath;
+    public ImageInfo(String uri, String mDisplayName,long mAddedTime, long mSize) {
+        this.mDisplayName = mDisplayName;
+        this.mAddedTime = mAddedTime;
+        this.mPictureURL = uri;
+        this.mSize = mSize;
+    }
+
+    public ImageInfo(String uri, String thumbnail, long mSize) {
+        this.mPictureURL = uri;
         this.mThumbnailURL = thumbnail;
         this.mSize = mSize;
     }
 
-    public ImageInfo(String mPath, String thumbnail) {
-        this.mPictureURL = mPath;
+    public ImageInfo(String uri, String thumbnail) {
+        this.mPictureURL = uri;
         this.mThumbnailURL = thumbnail;
     }
 
-    public String getUrl() {
+    public ImageInfo() {
+    }
+
+    public String getPath() {
+        return mPath;
+    }
+
+    public void setPath(String path) {
+        this.mPath = path;
+    }
+
+    public String getThumbnailUri() {
         return mThumbnailURL;
     }
 
-    public void setUrl(String url) {
-        this.mThumbnailURL = url;
+    public void setThumbnailUri(String uri) {
+        this.mThumbnailURL = uri;
     }
 
     public long getSize() {
@@ -89,12 +113,12 @@ public class ImageInfo implements Parcelable {
         this.mAddedTime = mAddedTime;
     }
 
-    public String getPath() {
+    public String getPictureUri() {
         return mPictureURL;
     }
 
-    public void setPath(String mPath) {
-        this.mPictureURL = mPath;
+    public void setPictureUri(String uri) {
+        this.mPictureURL = uri;
     }
 
     public boolean isSelected() {
@@ -113,9 +137,6 @@ public class ImageInfo implements Parcelable {
         this.ePhotoSource = mPhotoSource;
     }
 
-    public ImageInfo() {
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -127,6 +148,7 @@ public class ImageInfo implements Parcelable {
         dest.writeLong(this.mAddedTime);
         dest.writeString(this.mPictureURL);
         dest.writeString(this.mThumbnailURL);
+        dest.writeString(this.mPath);
         dest.writeLong(this.mSize);
         dest.writeByte(isSelected ? (byte) 1 : (byte) 0);
         dest.writeInt(ePhotoSource.ordinal());
@@ -137,6 +159,7 @@ public class ImageInfo implements Parcelable {
         this.mAddedTime = in.readLong();
         this.mPictureURL = in.readString();
         this.mThumbnailURL = in.readString();
+        this.mPath = in.readString();
         this.mSize = in.readLong();
         this.isSelected = in.readByte() != 0;
         this.ePhotoSource = PhotoSource.values()[in.readInt()];
@@ -153,4 +176,25 @@ public class ImageInfo implements Parcelable {
             return new ImageInfo[size];
         }
     };
+
+    @Override
+    public int hashCode() {
+        if(mPictureURL != null){
+            return mPictureURL.hashCode();
+        }
+
+        if(mPath != null){
+            return mPictureURL.hashCode();
+        }
+
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof ImageInfo) {
+            return o.hashCode() == this.hashCode();
+        }
+        return super.equals(o);
+    }
 }
