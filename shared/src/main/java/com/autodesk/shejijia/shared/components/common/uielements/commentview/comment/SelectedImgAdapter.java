@@ -34,7 +34,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     private DisplayImageOptions emptyOption;
     private DisplayImageOptions options;
 
-    public SelectedImgAdapter(CommentConfig config, CommentFragment.ImageItemClickListener listener, ImageLoader loader){
+    public SelectedImgAdapter(CommentConfig config, CommentFragment.ImageItemClickListener listener, ImageLoader loader) {
         mConfig = config;
         mListener = listener;
         mLoader = loader;
@@ -56,8 +56,8 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         View rootView;
         int width = parent.getMeasuredWidth() / 3;
         Log.d("SelectedImgAdapter", "onCreateViewHolder: width == " + width);
-        if(viewType == ADD_ITEM){
-            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout_addphoto,parent,false);
+        if (viewType == ADD_ITEM) {
+            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout_addphoto, parent, false);
             rootView.getLayoutParams().height = width;      //width 已经有layoutmanager 确认过了。所以只需要确认height
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,9 +65,10 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
                     mListener.onAddItemClick();
                 }
             });
-            return new RecyclerView.ViewHolder(rootView) {};
+            return new RecyclerView.ViewHolder(rootView) {
+            };
         } else {
-            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gridphoto_cell,parent,false);
+            rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gridphoto_cell, parent, false);
             rootView.getLayoutParams().height = width;      //width 已经有layoutmanager 确认过了。所以只需要确认height
             return new ImageViewHolder(rootView);
         }
@@ -75,11 +76,11 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(isImgItem(position)){
+        if (isImgItem(position)) {
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
             final String path = getListItem(position);
-            if(path != null){
-                mLoader.displayImage(path,viewHolder.image,options);
+            if (path != null) {
+                mLoader.displayImage(path, viewHolder.image, options);
                 viewHolder.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,29 +94,31 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
                     }
                 });
             } else {
-                mLoader.displayImage(null,viewHolder.image,emptyOption);
+                mLoader.displayImage(null, viewHolder.image, emptyOption);
             }
-        }else {
+        } else {
 //            mLoader.displayImage(null,viewHolder.image,emptyOption);
         }
     }
 
     @Override
     public int getItemCount() {
-        return (mImages.size() >= 9) ? mImages.size() : (mImages.size() + 1);
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+            return mImages.size() + 1;
+        } else {
+            return mImages.size();
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(mImages == null || mImages.size() == 0){
-            return ADD_ITEM;
-        } else {
-            if(position == mImages.size() && mImages.size() < 9){
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+            if(mImages == null || mImages.size() == 0){
                 return ADD_ITEM;
             } else {
-                if(position == mData.size()){
+                if(position == mImages.size()){
                     return ADD_ITEM;
-            }
+                }
                 return IMG_ITEM;
             }
         } else {
@@ -123,30 +126,31 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void replaceData(List<ImageInfo> images){
+    public void replaceData(List<ImageInfo> images) {
         mImages = images;
         notifyDataSetChanged();
     }
 
-    public void showEmptyRecyclerView(){
+    public void showEmptyRecyclerView() {
         notifyDataSetChanged();
     }
 
-    private boolean isImgItem(int position){
-        return  getItemViewType(position) == IMG_ITEM ? true : false;
+    private boolean isImgItem(int position) {
+        return getItemViewType(position) == IMG_ITEM ? true : false;
     }
 
-    private String getListItem(int position){
-        if(isImgItem(position)){
+    private String getListItem(int position) {
+        if (isImgItem(position)) {
             return mImages.get(position).getPictureUri();
-        }else {
+        } else {
             return null;
         }
     }
 
-    class ImageViewHolder extends RecyclerView.ViewHolder{
+    class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         ImageView delete;
+
         public ImageViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.iv_photo);

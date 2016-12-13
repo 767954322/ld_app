@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.issue.common.entity;
 
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,9 +13,9 @@ public class IssueDescription implements Serializable {
 
     private String mDescription;
     private String mAudioPath;
-    private List<String> mImagePath;
+    private List<ImageInfo> mImagePath;
 
-    public IssueDescription(String description, String audioPath, List<String> imagePath) {
+    public IssueDescription(String description, String audioPath, List<ImageInfo> imagePath) {
         this.mDescription = description;
         this.mAudioPath = audioPath;
         this.mImagePath = imagePath;
@@ -35,11 +37,11 @@ public class IssueDescription implements Serializable {
         this.mAudioPath = mAudioPath;
     }
 
-    public List<String> getmImagePath() {
+    public List<ImageInfo> getmImagePath() {
         return mImagePath;
     }
 
-    public void setmImagePath(List<String> mImagePath) {
+    public void setmImagePath(List<ImageInfo> mImagePath) {
         this.mImagePath = mImagePath;
     }
 

@@ -13,6 +13,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -86,7 +87,7 @@ public class IssueAddDescriptionActivity extends BaseActivity {
     private void backAddIssueList() {
         String mDescription = mPresenter.getCommentContent();
         String mAudioPath = mPresenter.getAudioPath();
-        List<String> mImagePath = mPresenter.getImageData();
+        List<ImageInfo> mImagePath = mPresenter.getImageData();
         boolean hasImage = (mImagePath == null || mImagePath.size() == 0) ? false : true;
         IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
         Intent intent = new Intent();

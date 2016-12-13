@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
@@ -18,17 +19,17 @@ import java.util.List;
 
 public class IssueAddListImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<String> imgList;
+    private List<ImageInfo> imgList;
     private Context mContext;
     private int resId;
 
-    public IssueAddListImageAdapter(List<String> imgList, Context mContext, int resId) {
+    public IssueAddListImageAdapter(List<ImageInfo> imgList, Context mContext, int resId) {
         this.imgList = imgList;
         this.mContext = mContext;
         this.resId = resId;
     }
 
-    public void reflushList(List<String> imgList) {
+    public void reflushList(List<ImageInfo> imgList) {
         this.imgList = imgList;
         this.notifyDataSetChanged();
     }

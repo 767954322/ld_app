@@ -313,7 +313,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
                     intent.putExtra(CommentFragment.POSITION, (int) v.getTag());
-                    intent.putStringArrayListExtra(CommentFragment.STRING_LIST, photos);
+                    intent.putStringArrayListExtra(CommentFragment.IMAGE_LIST, photos);
                     getActivity().startActivity(intent);
                 }
             });
