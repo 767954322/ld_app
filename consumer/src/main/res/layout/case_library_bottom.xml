@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_case_library_bottom"
     android:layout_width="wrap_content"
     android:background="@android:color/white"
+    android:orientation="horizontal"
     android:layout_height="match_parent">
-
-
-    <ImageView
-        android:id="@+id/img_look_more_detail_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginRight="@dimen/size_15"
-        android:background="@drawable/im_ico"
-        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -50,11 +39,11 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/size_70"
         android:layout_alignBottom="@+id/frameLayout"
         android:layout_alignParentStart="true">
 
@@ -159,4 +148,15 @@
 
 
     </LinearLayout>
-</RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_look_more_detail_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/size_15"
+        android:background="@drawable/im_ico"
+        android:visibility="gone"
+        />
+</LinearLayout>

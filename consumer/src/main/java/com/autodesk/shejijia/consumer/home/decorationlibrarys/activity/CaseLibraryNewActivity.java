@@ -93,7 +93,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         llThumbUp = (LinearLayout) findViewById(R.id.rl_thumb_up);
         ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
-        rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
+        rlCaseLibraryBottom = (LinearLayout) findViewById(R.id.rl_case_library_bottom);
 
         ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
         mIvCertification = (ImageView) findViewById(R.id.iv_designer_certification);
@@ -787,7 +787,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private List<ImagesBean> images;
     private RelativeLayout rlCaseLibraryHead;
     private View viewHead;
-    private RelativeLayout rlCaseLibraryBottom;
+    private LinearLayout rlCaseLibraryBottom;
     private ImageView mdesignerAvater;
     private TextView mCaseLibraryText;
     private PolygonImageView pivImgCustomerHomeHeader;
