@@ -31,6 +31,7 @@ import java.util.List;
 public class PackageDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mListView;
+    private List<Bitmap> mBitmapList;
 
     @Override
     protected int getLayoutResId() {
@@ -126,10 +127,10 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccessed(byte[] data) {
                 CustomProgress.cancelDialog();
-                List<Bitmap> list = getBitMapList(data, mListView, 10);
+                mBitmapList = getBitMapList(data, mListView, 10);
 //                iv_package_detail.setImageBitmap(list.get(3));
 
-                BaseCommonAdapter<Bitmap> adapter = new BaseCommonAdapter<Bitmap>(PackageDetailActivity.this, list) {
+                BaseCommonAdapter<Bitmap> adapter = new BaseCommonAdapter<Bitmap>(PackageDetailActivity.this, mBitmapList) {
                     @Override
                     public void convert(ViewHolder holder, Bitmap item, int position, View convertView, ViewGroup parent) {
                         ImageView imageView = holder.getView(R.id.item_package_detail_activity_iv);
@@ -155,6 +156,14 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onPause() {
         super.onPause();
+        if (mBitmapList != null){
+            for (Bitmap bitmap : mBitmapList){
+                if (!bitmap.isRecycled()) {
+                    bitmap.recycle();
+                }
+            }
+            mBitmapList = null;
+        }
         finish();
     }
 
