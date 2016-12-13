@@ -112,9 +112,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                         int currentItem = getViewPager().getCurrentItem();
                         String nicke_name = "", member_id = "", hs_uid = "", login_member_id = "", login_hs_uid = "";
                         if (currentItem != 0) {
-                            nicke_name = mMasterInfoList.get(currentItem - 1).getNick_name();
-                            member_id = mMasterInfoList.get(currentItem - 1).getMember_id();
-                            hs_uid = mMasterInfoList.get(currentItem - 1).getHs_uid();
+                            nicke_name = mMasterInfo2Remotes.get(currentItem - 1).getNick_name();
+                            member_id = mMasterInfo2Remotes.get(currentItem - 1).getMember_id();
+                            hs_uid = mMasterInfo2Remotes.get(currentItem - 1).getHs_uid();
                         }
                         if (isLoginUserJust) {
                             login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
@@ -150,18 +150,18 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         isLoginUserJust = isLoginUser();
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
-            mMasterInfoList = grandMasterInfo.getDesigner_list();
+            mMasterInfo2Remotes = grandMasterInfo.getDesigner_list();
         }
-        mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
+        mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfo2Remotes);
         getViewPager().setAdapter(mPagerAdapter);
         getViewPager().setOnPageChangeListener(this);
-
-        addImageViewtips();
+        addImageViewtips(mMasterInfo2Remotes.size());
+        getViewPager().setCurrentItem(mMasterInfo2Remotes.size() * 1000);
     }
 
     // 将圆点加入到ViewGroup中
-    private void addImageViewtips() {
-        tips = new ImageView[mPagerAdapter.getCount()];
+    private void addImageViewtips(int size) {
+        tips = new ImageView[size];
         for (int i = 0; i < tips.length; i++) {
             ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -173,7 +173,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             } else {
                 tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
-
             ll_grand_selection.addView(imageView);
         }
     }
@@ -206,7 +205,8 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
         @Override
         public int getCount() {
-            return mMasterInfoList.size() + 1;
+            return Integer.MAX_VALUE;
+//            return mMasterInfo2Remotes.size() + 1;
         }
 
         @Override
@@ -218,50 +218,51 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         public Object instantiateItem(ViewGroup container, final int position) {
             View view;
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            switch (position) {
-                case 0:
-                    String default_Master = "";
-                    if (null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size() > 0) {
-                        default_Master = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getV2_master().get(0).getPoster();
-                    }
-                    view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
-                    ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
+//            switch (position) {
+//                case 0:
+            if (position % mMasterInfoList.size() == 0) {
+                String default_Master = "";
+                if (null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size() > 0) {
+                    default_Master = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getV2_master().get(0).getPoster();
+                }
+                view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
+                ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
 //                    一般情况下的普通屏幕：ldpi是120，mdpi是160，hdpi是240，xhdpi是320。
-                    DisplayMetrics dm = new DisplayMetrics();
-                    mContext.getWindowManager().getDefaultDisplay().getMetrics(dm);
-                    int densityDpi = dm.densityDpi;
-                    if (densityDpi == 120 || densityDpi == 160 || densityDpi == 240) {
-                        default_Master = default_Master + "Introduction-hdpi.png";
-                    } else if (densityDpi == 320) {
-                        default_Master = default_Master + "Introduction-xhdpi.png";
-                    } else if (densityDpi == 480) {
-                        default_Master = default_Master + "Introduction-xxhdpi.png";
-                    } else {
+                DisplayMetrics dm = new DisplayMetrics();
+                mContext.getWindowManager().getDefaultDisplay().getMetrics(dm);
+                int densityDpi = dm.densityDpi;
+                if (densityDpi == 120 || densityDpi == 160 || densityDpi == 240) {
+                    default_Master = default_Master + "Introduction-hdpi.png";
+                } else if (densityDpi == 320) {
+                    default_Master = default_Master + "Introduction-xhdpi.png";
+                } else if (densityDpi == 480) {
+                    default_Master = default_Master + "Introduction-xxhdpi.png";
+                } else {
 //                        default_Master = default_Master + "Introduction-xxhdpi.png";
-                        default_Master = default_Master + "Introduction-hdpi.png";
-                    }
+                    default_Master = default_Master + "Introduction-hdpi.png";
+                }
 
-                    ImageUtils.displaySixImage(default_Master, iv_grandmaster_pic_first);
-
-                    break;
-                default:
-                    view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
-                    ImageView iv_grandmaster_pic = (ImageView) view.findViewById(R.id.iv_grandmaster_pic);
-                    final MasterInfo masterInfo = mMasterInfoList.get(position - 1);
-                    if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
-                            && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
-                        String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
-                        ImageUtils.displaySixImage(img_url, iv_grandmaster_pic);
+                ImageUtils.displaySixImage(default_Master, iv_grandmaster_pic_first);
+//                break;
+//                default:
+            } else {
+                view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
+                ImageView iv_grandmaster_pic = (ImageView) view.findViewById(R.id.iv_grandmaster_pic);
+                final MasterInfo masterInfo = mMasterInfoList.get(Math.abs(position % mMasterInfoList.size() - 1));
+                if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
+                        && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
+                    String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
+                    ImageUtils.displaySixImage(img_url, iv_grandmaster_pic);
+                }
+                //大师列表点击监听
+                iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, GrandMasterDetailActivity.class);
+                        intent.putExtra("hs_uid", masterInfo.getHs_uid());
+                        mContext.startActivity(intent);
                     }
-                    //大师列表点击监听
-                    iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent intent = new Intent(mContext, GrandMasterDetailActivity.class);
-                            intent.putExtra("hs_uid", masterInfo.getHs_uid());
-                            mContext.startActivity(intent);
-                        }
-                    });
-                    break;
+                });
+//                    break;
             }
 
             container.addView(view);
@@ -316,7 +317,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-        setImageBackground(position % mPagerAdapter.getCount());
+        setImageBackground(position % mMasterInfo2Remotes.size());
     }
 
     @Override
@@ -330,6 +331,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private ImageButton bt_grand_reservation;
     private boolean isLoginUserJust = false;
     private ImageView[] tips;
-    private List<MasterInfo> mMasterInfoList = new ArrayList<>();
+    private List<MasterInfo> mMasterInfo2Remotes = new ArrayList<>();
     private MastersPagerAdapter mPagerAdapter;
 }
