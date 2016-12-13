@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.im.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ChatConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -21,15 +23,16 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUser;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.widget.RoundImageViewGroup;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class ThreadListAdapter extends BaseAdapter
-{
-    public interface ThreadListAdapterInterface
-    {
+public class ThreadListAdapter extends BaseAdapter {
+    public interface ThreadListAdapterInterface {
         int getThreadCount();
 
         MPChatThread getThreadObjectForIndex(int index);
@@ -37,45 +40,47 @@ public class ThreadListAdapter extends BaseAdapter
         Boolean isUserConsumer();
 
         int getLoggedInUserId();
+
+        String getChatListType(); //获取聊天列表类型
     }
 
 
-    public ThreadListAdapter(Context context, ThreadListAdapterInterface threadListInterface, boolean isFileBased)
-    {
+    public ThreadListAdapter(Context context, ThreadListAdapterInterface threadListInterface, boolean isFileBased) {
         mContext = context;
         mThreadListInterface = threadListInterface;
         mIsFileBased = isFileBased;
     }
 
 
-    public int getCount()
-    {
+    public int getCount() {
         return mThreadListInterface.getThreadCount();
     }
 
 
-    public MPChatThread getItem(int position)
-    {
+    public MPChatThread getItem(int position) {
         return mThreadListInterface.getThreadObjectForIndex(position);
     }
 
 
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
 
-    public int getLayoutId()
-    {
-        if (mIsFileBased)
+    public int getLayoutId() {
+        if (mIsFileBased) {
             return R.layout.view_thread_list_row_for_file;
-        else
-            return R.layout.view_thread_list_row;
+        } else {
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
+                return R.layout.view_thread_list_row_for_group;
+            } else {
+                return R.layout.view_thread_list_row;
+            }
+        }
+
     }
 
-    public void hideUnreadCountForRow(View view)
-    {
+    public void hideUnreadCountForRow(View view) {
         View unreadMessageCountView = view.findViewById(R.id.tv_unread_message_count);
 
         if (unreadMessageCountView != null)
@@ -85,8 +90,7 @@ public class ThreadListAdapter extends BaseAdapter
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
             convertView = LayoutInflater.from(mContext).inflate(getLayoutId(), null);
         ViewHolder holder = initHolder(convertView);
@@ -95,19 +99,22 @@ public class ThreadListAdapter extends BaseAdapter
     }
 
 
-    private boolean isUserConsumer()
-    {
+    private boolean isUserConsumer() {
         return mThreadListInterface.isUserConsumer();
     }
 
 
-    private ViewHolder initHolder(View container)
-    {
+    private ViewHolder initHolder(View container) {
         ViewHolder viewHolder = new ViewHolder();
-        if (mIsFileBased)
+        if (mIsFileBased) {
             viewHolder.fileThumbnail = (ImageView) container.findViewById(R.id.head_ico);
-        else
-            viewHolder.userThumbnail = (CircleImageView) container.findViewById(R.id.head_ico);
+        } else {
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
+                viewHolder.imageViewGroup = (RoundImageViewGroup) container.findViewById(R.id.head_ico);
+            } else {
+                viewHolder.userThumbnail = (CircleImageView) container.findViewById(R.id.head_ico);
+            }
+        }
 
         viewHolder.unreadMessageCount = (TextView) container.findViewById(R.id.tv_unread_message_count);
         viewHolder.name = (TextView) container.findViewById(R.id.tv_name);
@@ -117,17 +124,13 @@ public class ThreadListAdapter extends BaseAdapter
     }
 
 
-    private void loadData(ViewHolder holder, int position)
-    {
+    private void loadData(ViewHolder holder, int position) {
         MPChatThread thread = getItem(position);
         MPChatUser sender = MPChatUtility.getComplimentryUserFromThread(thread, "" + mThreadListInterface.getLoggedInUserId());
-        if (thread.unread_message_count > 0)
-        {
+        if (thread.unread_message_count > 0) {
             (holder).unreadMessageCount.setText(String.valueOf(thread.unread_message_count));
             (holder).unreadMessageCount.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             (holder).unreadMessageCount.setVisibility(View.GONE);
         }
 
@@ -141,8 +144,7 @@ public class ThreadListAdapter extends BaseAdapter
             (holder).time.setText(DateUtil.getTimeMY(thread.latest_message.sent_time));
 
         MPChatMessage.eMPChatMessageType message_media_type = thread.latest_message.message_media_type;
-        switch (message_media_type)
-        {
+        switch (message_media_type) {
             case eTEXT:
                 (holder).description.setText(thread.latest_message.body);
                 break;
@@ -152,10 +154,8 @@ public class ThreadListAdapter extends BaseAdapter
             case eAUDIO:
                 (holder).description.setText(R.string.audio_msg);
                 break;
-            case eCOMMAND:
-            {
-                if (thread.latest_message.command.equalsIgnoreCase("command"))
-                {
+            case eCOMMAND: {
+                if (thread.latest_message.command.equalsIgnoreCase("command")) {
                     MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
 
                     if (info == null || (info.for_consumer == null && info.for_designer == null))
@@ -165,36 +165,23 @@ public class ThreadListAdapter extends BaseAdapter
                         (holder).description.setText(info.for_consumer);
                     else
                         (holder).description.setText(info.for_designer);
-                }
-                else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_ADD"))
-                {
+                } else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_ADD")) {
                     (holder).description.setText(thread.latest_message.body);
-                }
-                else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_REMOVE"))
-                {
+                } else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_REMOVE")) {
                     (holder).description.setText(thread.latest_message.body);
-                }
-                else
-                {
+                } else {
                     //thread.latest_message.command为NULL
-                    if (thread.latest_message.body != null)
-                    {
+                    if (thread.latest_message.body != null) {
                         String user_type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                         String body = thread.latest_message.body;
-                        try
-                        {
+                        try {
                             Body body_entity = GsonUtil.jsonToBean(body, Body.class);
-                            if (user_type.equals(Constant.UerInfoKey.DESIGNER_TYPE))
-                            {
+                            if (user_type.equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
                                 (holder).description.setText(body_entity.getFor_designer() + "");
-                            }
-                            else if (user_type.equals(Constant.UerInfoKey.CONSUMER_TYPE))
-                            {
+                            } else if (user_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {
                                 (holder).description.setText(body_entity.getFor_consumer() + "");
                             }
-                        }
-                        catch (Exception ignored)
-                        {
+                        } catch (Exception ignored) {
 
                         }
                     }
@@ -206,62 +193,76 @@ public class ThreadListAdapter extends BaseAdapter
                 break;
         }
 
-        if (mIsFileBased)
-        {
+        if (mIsFileBased) {
             String fileUrl = MPChatUtility.getFileUrlFromThread(thread) + "Medium.jpg";
             ImageUtils.loadImage((holder).fileThumbnail, fileUrl);
-        }
-        else
-        {
-            if (MPChatUtility.isAvatarImageIsDefaultForUser(sender.profile_image))
-                (holder).userThumbnail.setImageResource(R.drawable.default_useravatar);
-            else
-                ImageUtils.loadUserAvatar((holder).userThumbnail, sender.profile_image);
+        } else {
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
+                List<String> imageList = getRecipientsImageList(thread);
+                if (imageList != null && imageList.size()>0){
+                    (holder).imageViewGroup.setImageDataList(imageList);
+                }
+            }else {
+                if (MPChatUtility.isAvatarImageIsDefaultForUser(sender.profile_image))
+                    (holder).userThumbnail.setImageResource(R.drawable.default_useravatar);
+                else
+                    ImageUtils.loadUserAvatar((holder).userThumbnail, sender.profile_image);
+            }
         }
     }
 
 
-    private String getDisplayName(MPChatThread thread)
-    {
+    private String getDisplayName(MPChatThread thread) {
         MPChatUser sender = MPChatUtility.getComplimentryUserFromThread(thread, "" + mThreadListInterface.getLoggedInUserId());
         String userName = MPChatUtility.getUserDisplayNameFromUser(sender.name);
-        LogUtils.i("sender_name",userName);
+        LogUtils.i("sender_name", userName);
         String displayName = null;
 
         assert (userName != null && !userName.isEmpty());
 
-        if (!isUserConsumer())
-        {
+        if (!isUserConsumer()) {
             userName = trimAndAddEllipsis(userName, kMaxNameLength);
 
             String assetName = MPChatUtility.getAssetNameFromThread(thread);
 
-            if (assetName != null && !assetName.isEmpty())
-            {
+            if (assetName != null && !assetName.isEmpty()) {
                 assetName = trimAndAddEllipsis(assetName, kMaxAssetNameLength);
                 userName = trimAndAddEllipsis(userName, kMaxUserName);
                 displayName = userName + "/" + assetName;
-            }
-            else
+            } else
                 displayName = userName;
-        }
-        else
+        } else
             displayName = trimAndAddEllipsis(userName, kMaxTotalNameLength);
 
         return displayName;
     }
 
 
-    private String trimAndAddEllipsis(String original, int maxCharacters)
-    {
+    private String trimAndAddEllipsis(String original, int maxCharacters) {
         if (original.length() > maxCharacters)
             return original.substring(0, maxCharacters) + "…";
         else
             return original;
     }
 
-    private class ViewHolder
-    {
+    /*
+    * 获取群聊列表里参与人的头像url
+    * */
+    private List<String> getRecipientsImageList(MPChatThread thread){
+        if (thread.recipients != null && thread.recipients.users.size()>0){
+            List<String> imageList = new ArrayList<>();
+            for (MPChatUser chatUser : thread.recipients.users){
+                if (!TextUtils.isEmpty(chatUser.profile_image)){
+                    imageList.add(chatUser.profile_image);
+                }
+            }
+            return imageList;
+        }
+        return null;
+    }
+
+    private class ViewHolder {
+        private RoundImageViewGroup imageViewGroup;
         private ImageView fileThumbnail;
         private CircleImageView userThumbnail;
         private TextView unreadMessageCount;

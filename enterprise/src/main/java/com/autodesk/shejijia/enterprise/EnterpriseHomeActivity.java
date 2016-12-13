@@ -21,7 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -32,8 +31,12 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChat
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
 import com.autodesk.shejijia.shared.components.im.fragment.GroupChatFragment;
+import com.autodesk.shejijia.shared.components.common.appglobal.ChatConstants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
+import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -217,6 +220,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 bundle.putBoolean(MPThreadListFragment.ISFILEBASE, false);
                 bundle.putString(MPThreadListFragment.MEMBERID, UserInfoUtils.getAcsMemberId(this));
                 bundle.putString(MPThreadListFragment.MEMBERTYPE, UserInfoUtils.getMemberType(this));
+                bundle.putString(MPThreadListFragment.LIST_TYPE, ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST);
                 fragment.setArguments(bundle);
                 break;
             default:

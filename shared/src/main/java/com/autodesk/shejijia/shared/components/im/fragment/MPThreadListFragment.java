@@ -53,7 +53,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     public static final String ISFILEBASE = "IsFileBase";
     public static final String MEMBERID = "Memeber_Id";
     public static final String MEMBERTYPE = "Memeber_Type";
-
+    public static final String LIST_TYPE = "list_type";//聊天列表类型
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         outState.putBoolean(MPThreadListFragment.ISFILEBASE, mIsFileBase);
         outState.putString(MPThreadListFragment.MEMBERID, mMemberId);
         outState.putString(MPThreadListFragment.MEMBERTYPE, mMemberType);
+        outState.putString(MPThreadListFragment.LIST_TYPE, mChatListType);
     }
 
 
@@ -115,10 +116,10 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         mThreadListView.setAdapter(mThreadListAdapter);
         setSwipeRefreshInfo();
         //施工端 顶部topBar menu 设置
-        if (mActivity.getPackageName().contains("enterprise")){
+        if (mActivity.getPackageName().contains("enterprise")) {
             setHasOptionsMenu(true);
             mThreadListView.setDividerHeight(1);
-            mThreadListView.setDivider(ContextCompat.getDrawable(mActivity,R.drawable.linearlayout_divider_hor_shape));
+            mThreadListView.setDivider(ContextCompat.getDrawable(mActivity, R.drawable.linearlayout_divider_hor_shape));
         }
     }
 
@@ -133,6 +134,8 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         mIsFileBase = bundle.getBoolean(MPThreadListFragment.ISFILEBASE, false);
         mMemberId = bundle.getString(MPThreadListFragment.MEMBERID, "");
         mMemberType = bundle.getString(MPThreadListFragment.MEMBERTYPE, "");
+        mChatListType = bundle.getString(MPThreadListFragment.LIST_TYPE, "");
+
     }
 
 
@@ -150,11 +153,12 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     // ThreadListAdapterInterface
+    @Override
     public int getThreadCount() {
         return mThreadList.size();
     }
 
-
+    @Override
     public MPChatThread getThreadObjectForIndex(int index) {
         if (index < mThreadList.size())
             return mThreadList.get(index);
@@ -162,15 +166,22 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         return null;
     }
 
+    @Override
     public Boolean isUserConsumer() {
         return Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType);
     }
 
+    @Override
     public int getLoggedInUserId() {
         return Integer.parseInt(mMemberId);
     }
 
-//
+    @Override
+    public String getChatListType() {
+        return mChatListType;
+    }
+
+    //
 //    //OnScrollListener
 //    @Override
 //    public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -351,12 +362,12 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.chat_hotspot_menu,menu);
+        inflater.inflate(R.menu.chat_hotspot_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_chat_hotspot){
+        if (item.getItemId() == R.id.menu_chat_hotspot) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             Intent intent = new Intent(mActivity, MPFileThreadListActivity.class);
             intent.putExtra(MPFileThreadListActivity.MEMBERID, memberEntity.getAcs_member_id());
@@ -372,6 +383,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
     private String mMemberId;
     private String mMemberType;
+    private String mChatListType;
     private boolean mIsFileBase;
 
     private ArrayList<MPChatThread> mThreadList = new ArrayList<MPChatThread>();

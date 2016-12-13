@@ -27,4 +27,11 @@
         <attr name="loadMoreEnable" format="boolean" />
     </declare-styleable>
 
+    <!--自定义 群聊列表 imageViewGroup-->
+    <declare-styleable name="RoundImageViewGroup">
+        <attr name="maxSize" format="integer" />
+        <attr name="gapSize" format="dimension" />
+        <attr name="singleImageSize" format="dimension" />
+    </declare-styleable>
+
 </resources>
