@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -242,7 +243,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                 break;
 
             case CASE_LIBRARY_BUTTON_TAG:    /// 查看案例库详情页面.
-               // CommonUtils.launchActivity(activity, CaseLibraryActivity.class);
+                // CommonUtils.launchActivity(activity, CaseLibraryActivity.class);
                 break;
         }
     }
@@ -257,12 +258,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             } else {
                 mListView.onLoadMoreComplete();
             }
-            //设置数据小于等于2的是不显示没有更多数据了 fix bug DP-6440
-            if (mAdapter != null && mAdapter.getCount() <= 2 ) {
-                mListView.setNoLoadMoreHideView(true);
-            } else {
-                mListView.setNoLoadMoreHideView(false);
-            }
+
             mAdapter.notifyDataSetChanged();
         }
     };
@@ -498,11 +494,13 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             mPtrLayout.setVisibility(View.GONE);
         }
         case3DBeanList.addAll(case3DLibraryListBean.getCases());
-        if (case3DLibraryListBean.getCases().size() < LIMIT) {
+        int size = case3DLibraryListBean.getCases().size();
+        if (size < 15) {
             mListView.setHasLoadMore(false);
         } else {
             mListView.setHasLoadMore(true);
         }
+        mListView.setNoLoadMoreHideView(false);
         Message msg = Message.obtain();
         msg.obj = offset;
         handler.sendMessage(msg);

@@ -537,6 +537,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         } else {
             mListView.setHasLoadMore(true);
         }
+        mListView.setNoLoadMoreHideView(false);
         Message msg = Message.obtain();
         msg.obj = offset;
         handler.sendMessage(msg);
