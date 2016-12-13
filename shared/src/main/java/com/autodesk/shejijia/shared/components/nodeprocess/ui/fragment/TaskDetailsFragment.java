@@ -17,7 +17,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,7 +63,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     private TextView mTaskPhoneView;
     private TextInputEditText mCommentEditView;
     private ViewGroup mTaskMembersContainer;
-    private GridLayout mTaskPhotosContainer;
+    private ViewGroup mTaskPhotosContainer;
     private LinearLayout mActionsContainer;
     private ImageButton mCloseBtn;
 
@@ -302,35 +301,23 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
             }
         }
 
-        getView().post(new Runnable() {
-            @Override
-            public void run() {
-                int itemMargin = getResources().getDimensionPixelSize(R.dimen.spacing_margin_micro);
-                int width = (mTaskPhotosContainer.getMeasuredWidth() - itemMargin * 4) / 4;
-                for (int index = 0; index < photos.size(); index++) {
-                    String photoUri = photos.get(index);
-                    ImageView imageView = new ImageView(getContext());
-                    mTaskPhotosContainer.addView(imageView);
-                    GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) imageView.getLayoutParams();
-                    layoutParams.width = width;
-                    layoutParams.height = width;
-                    layoutParams.setMargins(itemMargin, itemMargin, itemMargin, itemMargin);
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    imageView.setTag(index);
-                    ImageUtils.loadImage(imageView, photoUri);
+        for (int index = 0; index < photos.size(); index++) {
+            String photoUri = photos.get(index);
+            ImageView imageView = (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.item_task_photo, mTaskPhotosContainer, false);
+            mTaskPhotosContainer.addView(imageView);
+            imageView.setTag(index);
+            ImageUtils.loadImage(imageView, photoUri);
 
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
-                            intent.putExtra(CommentFragment.POSITION, (int) v.getTag());
-                            intent.putStringArrayListExtra(CommentFragment.STRING_LIST, photos);
-                            getActivity().startActivity(intent);
-                        }
-                    });
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
+                    intent.putExtra(CommentFragment.POSITION, (int) v.getTag());
+                    intent.putStringArrayListExtra(CommentFragment.STRING_LIST, photos);
+                    getActivity().startActivity(intent);
                 }
-            }
-        });
+            });
+        }
 
     }
 
@@ -370,7 +357,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         mTaskPhoneView = (TextView) view.findViewById(R.id.tv_task_phone);
         mCommentEditView = (TextInputEditText) view.findViewById(R.id.edt_task_remark);
         mActionsContainer = (LinearLayout) view.findViewById(R.id.actions_container);
-        mTaskPhotosContainer = (GridLayout) view.findViewById(R.id.photos_container);
+        mTaskPhotosContainer = (ViewGroup) view.findViewById(R.id.photos_container);
     }
 
     private void initEvent(){
@@ -461,7 +448,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     private void uploadPhoto(Task task) {
-        //TODO navigate to common component
+        // TODO navigate to common component
         Intent intent = new Intent(getActivity(), UploadPhotoActivity.class);
         getActivity().startActivityForResult(intent, 0x0105);
     }
