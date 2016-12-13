@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.utility;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
@@ -129,12 +131,26 @@ public class TaskUtils {
             case ConstructionConstants.TaskStatus.RESOLVED:
                 level = 4;
                 break;
+            case ConstructionConstants.TaskStatus.OPEN:
+                level = 5;
+                break;
             default:
                 level = 0;
                 break;
         }
 
         return level;
+    }
+
+
+    public static int getStatusTextColor(Context context, String status) {
+        switch (status.toLowerCase()) {
+            case ConstructionConstants.TaskStatus.OPEN:
+            case ConstructionConstants.TaskStatus.RESERVED:
+                return ContextCompat.getColor(context, R.color.con_font_gray);
+            default:
+                return ContextCompat.getColor(context, R.color.white);
+        }
     }
 
     /**

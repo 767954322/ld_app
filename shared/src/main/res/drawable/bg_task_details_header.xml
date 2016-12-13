@@ -45,4 +45,13 @@
                 android:topRightRadius="@dimen/linearLayout_corners_normal"/>
         </shape>
     </item>
+    <item
+        android:maxLevel="5" >
+        <shape android:shape="rectangle">
+            <solid android:color="@color/task_status_grey_light"/>
+            <corners
+                android:topLeftRadius="@dimen/linearLayout_corners_normal"
+                android:topRightRadius="@dimen/linearLayout_corners_normal"/>
+        </shape>
+    </item>
 </level-list>

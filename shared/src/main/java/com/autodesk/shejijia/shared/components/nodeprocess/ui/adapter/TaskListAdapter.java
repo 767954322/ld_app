@@ -71,7 +71,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String status = taskLists.get(position).getStatus();
         if (!TextUtils.isEmpty(status)) {
             taskListVH.mTaskStatus.setText(TaskUtils.getDisplayStatus(status));
-            taskListVH.mTaskStatus.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            taskListVH.mTaskStatus.setTextColor(TaskUtils.getStatusTextColor(mContext, status));
             taskListVH.mTaskStatus.getBackground().setLevel(TaskUtils.getStatusLevel(status));
         }
 

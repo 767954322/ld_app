@@ -211,6 +211,8 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public void showTaskStatus(@NonNull String status) {
         mTaskStatusView.setText(TaskUtils.getDisplayStatus(status));
+        mTaskStatusView.setTextColor(TaskUtils.getStatusTextColor(getContext(), status));
+        mTaskNameView.setTextColor(TaskUtils.getStatusTextColor(getContext(), status));
         mHeaderView.getBackground().setLevel(TaskUtils.getStatusLevel(status));
     }
 

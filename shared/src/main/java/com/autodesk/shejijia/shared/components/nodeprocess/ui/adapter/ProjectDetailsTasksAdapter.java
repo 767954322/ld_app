@@ -81,7 +81,7 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
         String status = taskLists.get(position).getStatus();
         if (!TextUtils.isEmpty(status)) {
             taskListVH.mTaskStatus.setText(TaskUtils.getDisplayStatus(status));
-            taskListVH.mTaskStatus.setTextColor(getTaskStatusTextColor(status));
+            taskListVH.mTaskStatus.setTextColor(TaskUtils.getStatusTextColor(mContext, status));
             taskListVH.mTaskStatus.getBackground().setLevel(TaskUtils.getStatusLevel(status));
         }
 
@@ -134,16 +134,6 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private String formattedDateFromDate(Date date) {
         return getStringDateByFormat(date, UIUtils.getString(R.string.date_format_month_day));
-    }
-
-    private int getTaskStatusTextColor(String status) {
-        switch (status.toLowerCase()) {
-            case ConstructionConstants.TaskStatus.OPEN:
-            case ConstructionConstants.TaskStatus.RESERVED:
-                return ContextCompat.getColor(mContext, R.color.con_font_gray);
-            default:
-                return ContextCompat.getColor(mContext, R.color.white);
-        }
     }
 
     private static class TaskListVH extends RecyclerView.ViewHolder {
