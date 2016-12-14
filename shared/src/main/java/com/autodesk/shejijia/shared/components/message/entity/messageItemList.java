@@ -8,9 +8,9 @@ import java.io.Serializable;
  */
 public  class messageItemList implements Serializable {
     @SerializedName("display_message")
-    private DisplayMessageBean displayMessage;
+    private DisplayMessage displayMessage;
     @SerializedName("custom_data")
-    private CustomDataBean customDataBean;
+    private CustomData customDataBean;
     @SerializedName("sender_role")
     private String senderRole;
     @SerializedName("sender_avatar")
@@ -18,11 +18,11 @@ public  class messageItemList implements Serializable {
     @SerializedName("sent_time")
     private String sentTime;
 
-    public DisplayMessageBean getDisplayMessage() {
+    public DisplayMessage getDisplayMessage() {
         return displayMessage;
     }
 
-    public void setDisplayMessage(DisplayMessageBean displayMessage) {
+    public void setDisplayMessage(DisplayMessage displayMessage) {
         this.displayMessage = displayMessage;
     }
 
@@ -50,11 +50,11 @@ public  class messageItemList implements Serializable {
         this.senderRole = senderRole;
     }
 
-    public CustomDataBean getCustomDataBean() {
+    public CustomData getCustomDataBean() {
         return customDataBean;
     }
 
-    public void setCustomDataBean(CustomDataBean customDataBean) {
+    public void setCustomDataBean(CustomData customDataBean) {
         this.customDataBean = customDataBean;
     }
 }

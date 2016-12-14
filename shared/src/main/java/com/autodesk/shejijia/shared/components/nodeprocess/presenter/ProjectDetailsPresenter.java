@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -12,20 +11,14 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-
-import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
-
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
-
-import org.json.JSONArray;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,6 +32,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     private ProjectDetailsContract.View mProjectDetailsView;
     private ProjectRepository mProjectRepository;
     private long mProjectId;
+    private String mThreadId;
     private boolean mIsHasTaskData;
     private boolean mIsNeedRefresh; //标记已经在项目详情页面下拉刷新时候的状态
 
@@ -213,7 +207,14 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             @Override
             public void onSuccess(List list) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updategetUnreadMsgCountView(list);
+                if(list.size() <= 0){
+                    return;
+                }
+                HashMap remoteMap = (HashMap) list.get(0);
+                int count = (int) remoteMap.get(ConstructionConstants.BUNDLE_KEY_COUNT);
+                mThreadId = String.format("%s", remoteMap.get(ConstructionConstants.BUNDLE_KEY_THREAD_ID));
+
+                mProjectDetailsView.updateUnreadMsgCountView(count);
             }
 
             @Override
@@ -225,7 +226,12 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread,String threadId) {
+    public String getmThreadId() {
+        return mThreadId;
+    }
+
+    @Override
+    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
         if(projectInfo == null){
             return;
@@ -233,7 +239,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD,isUnread);
-        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID,threadId);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID,mThreadId);
         projectDetailsFragment.startActivityForResult(intent,104);
     }
 

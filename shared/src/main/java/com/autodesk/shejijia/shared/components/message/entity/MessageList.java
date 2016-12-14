@@ -13,7 +13,7 @@ public class MessageList implements Serializable {
     private int limit;
     private int offset;
     @SerializedName("data")
-    private ArrayList<MessageItemBean> messageItemBean;
+    private ArrayList<messageItemList> messageItemBean;
 
     public int getTotal() {
         return total;
@@ -39,11 +39,11 @@ public class MessageList implements Serializable {
         this.offset = offset;
     }
 
-    public ArrayList<MessageItemBean> getMessageItemBean() {
+    public ArrayList<messageItemList> getMessageItemBean() {
         return messageItemBean;
     }
 
-    public void setMessageItemBean(ArrayList<MessageItemBean> messageItemBean) {
+    public void setMessageItemBean(ArrayList<messageItemList> messageItemBean) {
         this.messageItemBean = messageItemBean;
     }
 }

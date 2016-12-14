@@ -6,10 +6,9 @@ import android.os.Bundle;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
-import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
+import com.autodesk.shejijia.shared.components.message.entity.MessageList;
 
 import org.json.JSONObject;
 
@@ -54,9 +53,9 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     @Override
     public void getMessageCenterInfo(Bundle bundle,String mTAG) {
         mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageInfo, ResponseError>(){
+        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageList, ResponseError>(){
             @Override
-            public void onSuccess(MessageInfo messageInfo) {
+            public void onSuccess(MessageList messageInfo) {
                 if(messageInfo.getOffset() == 0){
                     mProjectMessageCenterPresenterView.refreshProjectMessagesView(messageInfo);
                 }else{
@@ -66,13 +65,10 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
             }
             @Override
             public void onError(ResponseError error) {
-                isHideLoading(error);
+                mProjectMessageCenterPresenterView.hideLoading();
+                mProjectMessageCenterPresenterView.showNetError(error);
             }
         });
-    }
-    private void isHideLoading(ResponseError error){
-        mProjectMessageCenterPresenterView.hideLoading();
-        mProjectMessageCenterPresenterView.showNetError(error);
     }
     @Override
     public void changeUnreadMsgState(String threadId){

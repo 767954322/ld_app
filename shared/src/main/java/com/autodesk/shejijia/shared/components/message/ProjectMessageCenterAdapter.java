@@ -12,8 +12,8 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.entity.MessageItemBean;
-import com.autodesk.shejijia.shared.components.message.entity.DisplayMessageBean;
+import com.autodesk.shejijia.shared.components.message.entity.messageItemList;
+import com.autodesk.shejijia.shared.components.message.entity.DisplayMessage;
 
 import java.util.List;
 
@@ -22,14 +22,14 @@ import java.util.List;
  */
 
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<MessageItemBean> messageItemBeans;
+    private List<messageItemList> messageItemBeans;
     private boolean mIsUnread;
     private  HistoricalRecordstListener mHistoricalRecordstListener;
     private int mBottomCount=1;//底部View个数
     private  final int ITEMTYPECONTENT = 0;
     private  final int ITEMTYPEBOTTOM = 1;
     private int resId;
-    public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener,List<MessageItemBean> messageItemBeans, boolean isUnread, int resId) {
+    public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener, List<messageItemList> messageItemBeans, boolean isUnread, int resId) {
         super();
         this.messageItemBeans = messageItemBeans;
         this.resId = resId;
@@ -54,7 +54,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             initData((ProjectMessageCenterVH)holder,position);
         } else{
             BottomViewHolder mBottomViewHolder = (BottomViewHolder)holder;
-            String mHistoricalRecords = UIUtils.getString(R.string.historical_records);
+            String mHistoricalRecords = UIUtils.getString(R.string.show_historical_records);
             mBottomViewHolder.mTvMessageHistoricalRecords.setText(Html.fromHtml("<u>"+mHistoricalRecords+"</u>"));
             initListener(mBottomViewHolder);
             mBottomViewHolder.mTvMessageHistoricalRecords.setVisibility(mIsUnread?View.VISIBLE:View.GONE);
@@ -74,7 +74,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             return ITEMTYPECONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<MessageItemBean> messageItemBean,boolean isUnread,int offset) {
+    public void notifyDataForRecyclerView(List<messageItemList> messageItemBean, boolean isUnread, int offset) {
         if(offset == 0){
             messageItemBeans.clear();
         }
@@ -101,7 +101,7 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
 
-        DisplayMessageBean displayMessage = messageItemBeans.get(position).getDisplayMessage();
+        DisplayMessage displayMessage = messageItemBeans.get(position).getDisplayMessage();
         if (displayMessage != null && !TextUtils.isEmpty(displayMessage.getSummary())) {
             String title = displayMessage.getSummary();
             for (int i = 0; title.contains("*"); i++) {
