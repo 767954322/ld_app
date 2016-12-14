@@ -80,7 +80,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private List3DLibraryAdapter mCase3DLibraryAdapter;
     private RelativeLayout rlCaseLibraryHead;
     private View viewHead;
-    private RelativeLayout rlCaseLibraryBottom;
+    private LinearLayout rlCaseLibraryBottom;
     private ImageView mdesignerAvater;
     private TextView mCaseLibraryText;
     private PolygonImageView pivImgCustomerHomeHeader;
@@ -141,7 +141,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         llThumbUp = (LinearLayout) findViewById(R.id.rl_thumb_up);
         ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
-        rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
+        rlCaseLibraryBottom = (LinearLayout) findViewById(R.id.rl_case_library_bottom);
 
         ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
 
