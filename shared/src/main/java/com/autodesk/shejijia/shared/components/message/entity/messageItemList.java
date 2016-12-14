@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by luchongbin on 2016/12/9.
  */
-public  class MessageItemBean implements Serializable {
+public  class messageItemList implements Serializable {
     @SerializedName("display_message")
     private DisplayMessageBean displayMessage;
     @SerializedName("custom_data")

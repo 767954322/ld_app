@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by luchongbin on 2016/12/6.
  */
-public class MessageInfo implements Serializable {
+public class MessageList implements Serializable {
     private int total;
     private int limit;
     private int offset;

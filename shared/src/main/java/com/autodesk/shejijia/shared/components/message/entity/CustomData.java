@@ -8,11 +8,11 @@ import java.io.Serializable;
  * Created by luchongbin on 2016/12/9.
  */
 
-public  class CustomDataBean implements Serializable {
+public  class CustomData implements Serializable {
     @SerializedName("project_id")
     private String projectId;
     @SerializedName("task_id")
-    private Object taskId;
+    private String taskId;
     @SerializedName("event_category")
     private String eventCategory;
     private String event;
@@ -21,7 +21,7 @@ public  class CustomDataBean implements Serializable {
     @SerializedName("entity_id")
     private String entityId;
     @SerializedName("extend_data")
-    private ExtendDataBean extendData;
+    private ExtendData extendData;
 
     public String getProjectId() {
         return projectId;
@@ -31,11 +31,11 @@ public  class CustomDataBean implements Serializable {
         this.projectId = projectId;
     }
 
-    public Object getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(Object taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 
@@ -71,11 +71,11 @@ public  class CustomDataBean implements Serializable {
         this.entityId = entityId;
     }
 
-    public ExtendDataBean getExtendData() {
+    public ExtendData getExtendData() {
         return extendData;
     }
 
-    public void setExtendData(ExtendDataBean extendData) {
+    public void setExtendData(ExtendData extendData) {
         this.extendData = extendData;
     }
 }
