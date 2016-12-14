@@ -38,7 +38,7 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
 
     @Override
     public void loadMoreProjectMessages(long mProjectId,boolean mIsUnread) {
-        mOffset++;
+        mOffset += 10;
         getMessage(mOffset,mProjectId,mIsUnread);
     }
     private void getMessage(int offset,long mProjectId,boolean mIsUnread){

@@ -73,9 +73,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     protected void initListener() {
         super.initListener();
-//        mProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
         mRvProjectMessagCenterView.setRefreshLoadMoreListener(this);
-        //让其自动刷新一下，会回调onRefresh()方法一次
         mRvProjectMessagCenterView.setRefreshing(true);
     }
 
