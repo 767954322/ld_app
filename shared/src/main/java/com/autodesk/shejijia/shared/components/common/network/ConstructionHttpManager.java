@@ -138,7 +138,7 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     public void uploadTaskFiles(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String pid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         String tid = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_ID);
-        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid + "/files";
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/tasks/" + tid + "/files?operation=add";
 
         String filesJson = requestParams.getString(ConstructionConstants.BUNDLE_KEY_TASK_FILES);
         JSONObject jsonRequest = null;
@@ -160,8 +160,8 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, "token=" + UserInfoUtils.getToken(AdskApplication.getInstance()));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -175,8 +175,8 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     private void put(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest == null ? "null" : jsonRequest.toString());
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest == null ? "null" : jsonRequest.toString());
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, requestUrl, jsonRequest, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -196,8 +196,8 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     private void post(String requestTag, String requestUrl, JSONObject jsonRequest, @NonNull OkJsonRequest.OKResponseCallback callback) {
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
-        LogUtils.d(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, requestUrl);
+        LogUtils.i(ConstructionConstants.LOG_TAG_REQUEST, jsonRequest.toString());
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, requestUrl, jsonRequest, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

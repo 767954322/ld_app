@@ -29,18 +29,16 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.UploadPhotoActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.DialogHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskActionHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
@@ -150,6 +148,12 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                     Date selectedDate = (Date) data.getSerializableExtra(PickDateDialogFragment.BUNDLE_KEY_SELECTED_DATE);
                     mTaskDetailsPresenter.changeReserveTime(selectedDate);
                 }
+                break;
+            case ConstructionConstants.REQUEST_CODE_UPLOAD_PHOTO:
+                if (resultCode ==  Activity.RESULT_OK) {
+                    mTaskDetailsPresenter.fetchTask();
+                }
+                break;
             default:
                 break;
         }
@@ -452,25 +456,10 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     private void uploadPhoto(Task task) {
-        // TODO navigate to common component
-//        Intent intent = new Intent(getActivity(), UploadPhotoActivity.class);
-//        getActivity().startActivityForResult(intent, 0x0105);
-
-
-        ArrayList<java.io.File> files = new ArrayList<>();
-        files.add(new java.io.File("/sdcard/1.png"));
-        files.add(new java.io.File("/sdcard/2.png"));
-        files.add(new java.io.File("/sdcard/3.png"));
-        FileHttpManager.getInstance().uploadFiles(files, new ResponseCallback<ArrayList<ConstructionFile>, ResponseError>() {
-            @Override
-            public void onSuccess(ArrayList<ConstructionFile> data) {
-            }
-
-            @Override
-            public void onError(ResponseError error) {
-
-            }
-        });
+        Intent intent = new Intent(getActivity(), UploadPhotoActivity.class);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, task.getProjectId());
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_TASK_ID, task.getTaskId());
+        startActivityForResult(intent, ConstructionConstants.REQUEST_CODE_UPLOAD_PHOTO);
     }
 
     private void selectDate(Task task, ProjectInfo projectInfo) {

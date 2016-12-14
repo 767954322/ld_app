@@ -52,6 +52,7 @@ public class ConstructionConstants {
     public final static int REQUEST_CODE_PICK_DATE = 0x0110;
     public final static int REQUEST_CODE_PICK_DATE_RANGE = 0x0111;
     public final static int REQUEST_CODE_ADD_TASK = 0x0112;
+    public final static int REQUEST_CODE_UPLOAD_PHOTO = 0x0113;
 
     //Bundle key
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";

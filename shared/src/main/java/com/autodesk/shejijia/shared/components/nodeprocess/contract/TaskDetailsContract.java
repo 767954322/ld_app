@@ -54,6 +54,8 @@ public interface TaskDetailsContract {
 
         void startPresent();
 
+        void fetchTask();
+
         void updateComment(@Nullable String comment);
 
         void submitComment();

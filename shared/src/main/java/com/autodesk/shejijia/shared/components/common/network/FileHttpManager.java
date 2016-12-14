@@ -220,8 +220,6 @@ public class FileHttpManager {
         return type;
     }
 
-
-
     public void upLoadFileByType(final File file, final String mediaType, //AUDIO or IMAGE
                                  final ResponseHandler handler) {
         Assert.assertTrue(file != null);

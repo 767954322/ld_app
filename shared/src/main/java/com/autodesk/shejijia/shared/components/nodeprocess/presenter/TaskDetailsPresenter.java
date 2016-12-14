@@ -161,7 +161,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         });
     }
 
-    private void fetchTask() {
+    @Override
+    public void fetchTask() {
         mTaskDetailsView.showLoading();
         Bundle params = new Bundle();
         params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(mProjectInfo.getProjectId()));
