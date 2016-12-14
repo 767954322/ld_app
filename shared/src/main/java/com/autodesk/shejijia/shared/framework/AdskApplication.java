@@ -31,6 +31,7 @@ import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
+import com.pgyersdk.crash.PgyCrashManager;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -83,7 +84,10 @@ public abstract class AdskApplication extends Application {
     }
 
     public void initListener() {
-
+        //注册pgy
+        if (BuildConfig.DEBUG) {
+            PgyCrashManager.register(this);
+        }
         mSignInNotificationReceiver = new SignInNotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);

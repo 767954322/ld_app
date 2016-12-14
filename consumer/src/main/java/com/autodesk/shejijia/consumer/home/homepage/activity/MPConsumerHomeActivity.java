@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.BuildConfig;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Filtrate3DActivity;
@@ -61,6 +62,7 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -180,6 +182,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         rbCustomerElite.setOnClickListener(this);
         construction.setOnClickListener(this);
         mConsumerEliteCircularBtn.setOnClickListener(this);
+        //pgy update register
+        if (BuildConfig.DEBUG) {
+            PgyUpdateManager.register(this);
+        }
     }
 
     @Override

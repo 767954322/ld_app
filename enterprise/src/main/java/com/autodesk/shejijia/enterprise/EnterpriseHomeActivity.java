@@ -92,7 +92,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         toolbarTitle.setOnClickListener(this);
         //pgy update register
         if (BuildConfig.DEBUG) {
-            PgyCrashManager.register(this);
             PgyUpdateManager.register(this);
         }
     }

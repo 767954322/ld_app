@@ -564,6 +564,12 @@
             android:name="JPUSH_APPKEY"
             android:value="915fdda4cb38d567e3421c43"/>
 
+        <!-- pgy Required -->
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="bc822ecc80d0a32593a2ff1306d438f8" >
+        </meta-data>
+
         <!-- ＵＭ统计 -->
         <meta-data
             android:name="UMENG_APPKEY"
