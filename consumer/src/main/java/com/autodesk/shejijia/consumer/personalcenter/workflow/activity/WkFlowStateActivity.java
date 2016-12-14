@@ -627,13 +627,13 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private void isShowAlertView(int sub_node_id) {
         if (isElite(wk_cur_template_id)) {
             if (sub_node_id < 11) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer__quantity_room), null,
-                        new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Object object, int position) {
-                        finish();
-                    }
-                }).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer__quantity_room), null,
+//                        new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(Object object, int position) {
+//                        finish();
+//                    }
+//                }).show();
             }
         }
     }
