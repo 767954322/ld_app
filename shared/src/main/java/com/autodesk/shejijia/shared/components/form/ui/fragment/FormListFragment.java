@@ -31,11 +31,11 @@ import java.util.Map;
  */
 
 public class FormListFragment extends BaseConstructionFragment implements FormListContract.View, View.OnClickListener, FormListAdapter.OnItemClickListener {
-    private RecyclerView mRecyclerView;        //表单
-    private TextView mProblemTitleTv;          //问题记录
-    private RelativeLayout mRectificationLayout; //监督整改
-    private RelativeLayout mReinspectionLayout;  //强制复验
-    private TextView mResultTv;                //结果
+    private RecyclerView mRecyclerView;             //表单
+    private TextView mProblemTitleTv;               //问题记录
+    private RelativeLayout mRectificationLayout;    //监督整改
+    private RelativeLayout mReinspectionLayout;     //强制复验
+    private TextView mResultTv;                     //结果
 
     private FormListPresenter mPresenter;
     private FormListAdapter mAdapter;
@@ -177,7 +177,9 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void SubmitSuccess() {
-        startActivity(new Intent(mContext, ScanQrCodeActivity.class));
+        Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override

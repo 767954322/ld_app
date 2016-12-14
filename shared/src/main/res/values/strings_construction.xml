@@ -133,6 +133,7 @@
     <string name="inspect_show_null_error">项目编码不能为空,请重新输入</string>
     <string name="inspect_show_no_task_error">当前没有需要验收的项目</string>
     <string name="inspect_show_format_error">二维码格式不正确,请再次扫码</string>
+    <string name="inspect_show_not_has_project">该项目不属于本监理公司</string>
     <string name="project_id">项目编码:</string>
     <string name="write_project_id">请输入项目编号</string>
     <string name="project_info">客户资料</string>

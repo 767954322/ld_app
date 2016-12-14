@@ -55,7 +55,9 @@ public class FormActivity extends BaseActivity {
     public void onBackPressed() {
         // TODO: 16/11/30 回退时在做处理,弹框确认
         if (getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT).isVisible()) {
-            startActivity(new Intent(this, ScanQrCodeActivity.class));
+            Intent intent = new Intent(this, ScanQrCodeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         } else {
             super.onBackPressed();
