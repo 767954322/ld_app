@@ -68,7 +68,7 @@ public interface ProjectDataSource {
 
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
-    void getUnreadCount(String projectIds, String requestTag,@NonNull ResponseCallback<JSONArray, ResponseError> callback);
+    void getUnreadMsgCount(String projectIds, String requestTag,@NonNull ResponseCallback<JSONArray, ResponseError> callback);
 
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);

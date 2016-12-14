@@ -96,7 +96,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
             mProjectRootView.setVisibility(View.GONE);
-            mProjectDetailsPresenter.getUnreadCount(projectId+"",TAG);
+            mProjectDetailsPresenter.getUnreadMsgCount(projectId+"",TAG);
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.getProjectDetails();
         } else {
@@ -195,7 +195,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         ToastUtils.showShort(mContext, "you couldn't get right project information");
     }
     @Override
-    public void updateUnreadCountView(List list) {
+    public void updategetUnreadMsgCountView(List list) {
         if(list.size() <= 0){
             return;
         }

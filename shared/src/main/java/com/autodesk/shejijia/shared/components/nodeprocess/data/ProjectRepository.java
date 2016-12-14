@@ -157,8 +157,8 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getUnreadCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().getUnreadCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
+    public void getUnreadMsgCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);

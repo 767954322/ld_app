@@ -11,7 +11,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
  */
 
 public interface MessageCenterHttpManager {
-    void getUnreadCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback);
+    void getUnreadMsgCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback);
     void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback);
     void changeUnreadState(String requestTag,String memberId,String threadId,@NonNull OkJsonRequest.OKResponseCallback callback);
 }

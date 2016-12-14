@@ -37,7 +37,7 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
         put(requestTag, requestUrl, callback);
     }
     @Override
-    public void getUnreadCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback) {
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull OkJsonArrayRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/notifications/unread_count?project_ids=" + projectIds;
         get(requestTag, requestUrl, callback);
     }
