@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.contract;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
@@ -24,7 +25,7 @@ public interface IssueAddContract {
         /*
         *上传问题
         * */
-        void putIssueTracking(int notifyCustormer,ProjectInfo projectInfo,int issueType, Member followMember, String date, String contentText, String audioPath, List<String> imgPath);
+        void putIssueTracking(int notifyCustormer, ProjectInfo projectInfo, int issueType, Member followMember, String date, String contentText, String audioPath, List<ImageInfo> imgPath);
 
 
     }

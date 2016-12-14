@@ -10,6 +10,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFileBean;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueFiles;
@@ -31,26 +32,13 @@ import java.util.List;
 
 public class IssueAddPresenter implements IssueAddContract.Presenter {
 
-    private Activity mContext;
-    private IssueAddContract.View mView;
-    private String mAudioPath;
-    private String mContentText;
-    private int mIssueType;
-    private String mDate;
-    private int mNotifyCustormer;
-    private Member mFollowMember;
-    private List<String> mImgPath;
-    private ProjectInfo mProjectInfo;
-
     public IssueAddPresenter(IssueAddContract.View mView, Activity context) {
         this.mView = mView;
         this.mContext = context;
     }
 
-
     @Override
-    public void putIssueTracking(int notifyCustormer, ProjectInfo projectInfo, int issueType, Member followMember, String date, String contentText, String audioPath, final List<String> imgPath) {
-
+    public void putIssueTracking(int notifyCustormer, ProjectInfo projectInfo, int issueType, Member followMember, String date, String contentText, String audioPath, final List<ImageInfo> imgPath) {
         this.mAudioPath = audioPath;
         this.mImgPath = imgPath;
         this.mContentText = contentText;
@@ -85,7 +73,7 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
 
         if (imgPath != null && imgPath.size() > 0) {
             for (int i = 0; i < imgPath.size(); i++) {
-                FileHttpManager.getInstance().upLoadFileByType(new File(imgPath.get(i)), ConstructionConstants.IssueTracking.MEDIA_TYPE_IMAGE, new FileHttpManager.ResponseHandler() {
+                FileHttpManager.getInstance().upLoadFileByType(new File(imgPath.get(i).getPath()), ConstructionConstants.IssueTracking.MEDIA_TYPE_IMAGE, new FileHttpManager.ResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
                         ++mCurrentImageFileNum;
@@ -137,23 +125,19 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
 
 
     private void putFiles() {
-        JSONObject jsonObject = null;
+        JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        if (urlFromServer.size() > 0) {
-            int count = urlFromServer.size();
-            for (int i = 0; i < count; i++) {
-                JSONObject tmpObj = new JSONObject();
-                try {
-                    tmpObj.put("type", urlFromServer.get(i).getType());
-                    tmpObj.put("resource_file_id", urlFromServer.get(i).getResource_file_id());
-                    tmpObj.put("resource_url", urlFromServer.get(i).getResource_url());
+        try {
+            int urlCount = urlFromServer.size();
+            if (urlCount > 0) {
+                for (int i = 0; i < urlCount; i++) {
+                    JSONObject tmpObj = new JSONObject();
+                    tmpObj.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_FILETYPE, urlFromServer.get(i).getType());
+                    tmpObj.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_RESOURCE_FILE_id, urlFromServer.get(i).getResource_file_id());
+                    tmpObj.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_RESOURCE_URL, urlFromServer.get(i).getResource_url());
                     jsonArray.put(tmpObj);
-                } catch (JSONException e) {
                 }
             }
-        }
-        try {
-            jsonObject = new JSONObject();
             jsonObject.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_ACS_RESOURCES, jsonArray);
             jsonObject.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_DESCRIPTION, mContentText);
             jsonObject.put(ConstructionConstants.IssueTracking.JSONOBJECT_ADDISSUE_CREATED_BY, AdskApplication.getInstance().getMemberEntity().getHs_uid());
@@ -184,10 +168,24 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
 
     }
 
+
+    private int mIssueType;
+    private int mNotifyCustormer;
     private int mMissImageFileNum = 0;
     private int mCurrentImageFileNum = 0;
+
+    private String mDate;
+    private String mAudioPath;
+    private String mContentText;
     private boolean mOkPutVoiceFile = false;
+
+    private List<ImageInfo> mImgPath;
     private List<IssueFiles> urlFromServer;
+
+    private Activity mContext;
+    private Member mFollowMember;
+    private ProjectInfo mProjectInfo;
+    private IssueAddContract.View mView;
 
 
 }

@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -94,7 +95,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         //init recyclerView adapter
         mIssueImageAdapter = new IssueAddListImageAdapter(null, getContext(), R.layout.item_addissue_image);
         mIssueImagesList.setAdapter(mIssueImageAdapter);
-        strRole = activity.getResources().getStringArray(add_issue_fllow);
+        mStrRole = activity.getResources().getStringArray(add_issue_fllow);
 
     }
 
@@ -150,7 +151,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
             mFollowMember = mListMember.get(position + 2);
-            mIssueFllowContent.setText(strRole[position] + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
+            mIssueFllowContent.setText(mStrRole[position] + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
         } else {
             mIssueType = mArrayType[position];
             String strType = activity.getResources().getStringArray(add_issue_type_list)[position];
@@ -164,15 +165,15 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         String role = "";
         if (strType.equals("设计问题")) {
             mFollowMember = mListMember.get(2);
-            role = strRole[0];
+            role = mStrRole[0];
         } else if (strType.equals("巡查问题") || strType.equals("后期安装")) {
-            role = strRole[3];
+            role = mStrRole[3];
             mFollowMember = mListMember.get(5);
         } else if (strType.equals("材料问题")) {
-            role = strRole[2];
+            role = mStrRole[2];
             mFollowMember = mListMember.get(4);
         } else if (strType.equals("其他问题")) {
-            role = strRole[1];
+            role = mStrRole[1];
             mFollowMember = mListMember.get(3);
         }
         mIssueFllowContent.setText(role + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
@@ -228,13 +229,13 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
      * 发送添加问题
      */
     public void sendIssueTracking() {
-
         if (mIssueType != -1 || mFollowMember != null || !TextUtils.isEmpty(mTime)) {
-            if (mDescriptionBean != null && (!TextUtils.isEmpty(mDescriptionBean.getmDescription()) || !TextUtils.isEmpty(mDescriptionBean.getmAudioPath()))) {
-                mIssueAddPresenter.putIssueTracking(mNotifyCustormer, mProjectInfo, mIssueType, mFollowMember,
-                        mTime, mDescriptionBean.getmDescription(), mDescriptionBean.getmAudioPath(), mDescriptionBean.getmImagePath());
+            if (!TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice)) {
+                mIssueAddPresenter.putIssueTracking(mNotifyCustormer, mProjectInfo, mIssueType, mFollowMember, mTime,
+                        mDescriptionContent, mDescriptionVoice, mDescriptionImage);
             }
         } else {
+            //TODO 会删除掉（逻辑会修改，暂时给个提示）
             ToastUtils.showLong(activity, "请将信息填写完整");
         }
     }
@@ -250,10 +251,11 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == activity.RESULT_OK && null != data) {
             if (requestCode == ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE && data != null) {
-                IssueDescription mDescriptionBean = (IssueDescription) data.getSerializableExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY);
-                Message message = new Message();
-                message.obj = mDescriptionBean;
-                handler.sendMessage(message);
+                mDescriptionContent = data.getStringExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_CONTENT);
+                mDescriptionVoice = data.getStringExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE);
+                mDescriptionImage = data.getParcelableArrayListExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_IMAGES);
+                handler.sendEmptyMessage(0);
+
             }
         }
     }
@@ -262,25 +264,22 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (null != msg.obj) {
-                mDescriptionBean = (IssueDescription) msg.obj;
-                onShowIssueDescription();
-            }
+            onShowIssueDescription();
         }
 
         private void onShowIssueDescription() {
-            if (mDescriptionBean != null && !TextUtils.isEmpty(mDescriptionBean.getmDescription())) {
-                mIssueDescriptionContent.setText(mDescriptionBean.getmDescription());
+            if (!TextUtils.isEmpty(mDescriptionContent)) {
+                mIssueDescriptionContent.setText(mDescriptionContent);
             } else {
                 mIssueDescriptionContent.setText(UIUtils.getString(R.string.add_issuelist_descrip));
             }
-            if (mDescriptionBean != null && !TextUtils.isEmpty(mDescriptionBean.getmAudioPath())) {
+            if (!TextUtils.isEmpty(mDescriptionVoice)) {
                 mIssueAudio.setVisibility(View.VISIBLE);
             } else {
                 mIssueAudio.setVisibility(View.GONE);
             }
-            if (mDescriptionBean != null && mDescriptionBean.getmImagePath() != null && mDescriptionBean.getmImagePath().size() > 0) {
-                mIssueImageAdapter.reflushList(mDescriptionBean.getmImagePath());
+            if (mDescriptionImage != null && mDescriptionImage.size() > 0) {
+                mIssueImageAdapter.reflushList(mDescriptionImage);
             } else {
                 mIssueImageAdapter.reflushList(null);
             }
@@ -315,7 +314,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private RecyclerView mIssueImagesList;
 
     private IssueAddListImageAdapter mIssueImageAdapter;
-    private String[] strRole;
+    private String[] mStrRole;
     private ArrayList<Member> mListMember;
     private Switch mIssueSwitchNotify;
     private TimePickerView mPvTime;
@@ -325,10 +324,15 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
 
     private ProjectInfo mProjectInfo;
     private Member mFollowMember;
-    private int mNotifyCustormer = 0;
     private String mDate;
     private String mTime;
+    private String mDescriptionContent;
+    private String mDescriptionVoice;
+    private ArrayList<ImageInfo> mDescriptionImage;
+
+
     private int mIssueType = -1;
+    private int mNotifyCustormer = 0;
     private int[] mArrayType = new int[]{11, 10, 12, 13, 15};
 
 }

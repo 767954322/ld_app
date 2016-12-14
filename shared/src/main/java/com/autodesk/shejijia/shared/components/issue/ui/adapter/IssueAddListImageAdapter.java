@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,17 +20,17 @@ import java.util.List;
 
 public class IssueAddListImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ImageInfo> imgList;
+    private ArrayList<ImageInfo> imgList;
     private Context mContext;
     private int resId;
 
-    public IssueAddListImageAdapter(List<ImageInfo> imgList, Context mContext, int resId) {
+    public IssueAddListImageAdapter(ArrayList<ImageInfo> imgList, Context mContext, int resId) {
         this.imgList = imgList;
         this.mContext = mContext;
         this.resId = resId;
     }
 
-    public void reflushList(List<ImageInfo> imgList) {
+    public void reflushList(ArrayList<ImageInfo> imgList) {
         this.imgList = imgList;
         this.notifyDataSetChanged();
     }
@@ -53,7 +54,7 @@ public class IssueAddListImageAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private void initView(IssueAddListImageAdapter.IssueImageVH issueImagesVh, int position) {
         if (imgList != null) {
-            ImageUtils.loadImage(issueImagesVh.imgIssueDescription, "file:///" + imgList.get(position));
+            ImageUtils.loadImage(issueImagesVh.imgIssueDescription, imgList.get(position).getPictureUri());
         }
     }
 

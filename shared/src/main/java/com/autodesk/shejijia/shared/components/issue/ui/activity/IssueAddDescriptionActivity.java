@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,11 +89,14 @@ public class IssueAddDescriptionActivity extends BaseActivity {
     private void backAddIssueList() {
         String mDescription = mPresenter.getCommentContent();
         String mAudioPath = mPresenter.getAudioPath();
-        List<ImageInfo> mImagePath = mPresenter.getImageData();
+        ArrayList<ImageInfo> mImagePath = (ArrayList<ImageInfo>) mPresenter.getImageData();
         boolean hasImage = (mImagePath == null || mImagePath.size() == 0) ? false : true;
-        IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
+//        IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
+
         Intent intent = new Intent();
-        intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_KEY, mEntity);
+        intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_CONTENT, mDescription);
+        intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE, mAudioPath);
+        intent.putParcelableArrayListExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_IMAGES, mImagePath);
         setResult(RESULT_OK, intent);
         finish();
     }
