@@ -56,10 +56,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     protected void initData(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
-        messageItemBeans = new ArrayList<>();
         mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(), TAG, this);
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this,messageItemBeans, mIsUnread, R.layout.item_messagecenter);
-
     }
 
     private void initRecyclerView() {
@@ -68,6 +65,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRvProjectMessagCenterView.getSwipeRefreshLayout()
                 .setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
+        messageItemBeans = new ArrayList<>();
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this,messageItemBeans, mIsUnread, R.layout.item_messagecenter);
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
     }
 
@@ -98,7 +97,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
             mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
         }
-//        setLoadMoreEnable(messageInfo);
+        setLoadMoreEnable(messageInfo);
     }
 
     private void setLoadMoreEnable(MessageInfo messageInfo) {
@@ -114,11 +113,10 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     public void loadMoreProjectMessagesView(MessageInfo messageInfo) {
         mRvProjectMessagCenterView.complete();
         if (messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() > 0) {
-            mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
             return;
         }
-//        setLoadMoreEnable(messageInfo);
+        setLoadMoreEnable(messageInfo);
         mRvProjectMessagCenterView.onNoMore(null);
     }
 

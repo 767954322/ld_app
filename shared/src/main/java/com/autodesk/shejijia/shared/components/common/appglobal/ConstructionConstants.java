@@ -24,6 +24,8 @@ public class ConstructionConstants {
     //添加问题url地址（问题追踪）:
     public static final String ADDISSUE_URL = Config.CONSTRUCTION_ADDISSUE_URL;
 
+    public static final String ACS_MEMBERS_URL = Config.ACS_MEMBERS;
+
     //下拉刷新,上拉加载更多事件标记
     public static final String REFRESH_EVENT = "refresh";
     public static final String LOAD_MORE_EVENT = "loadMore";
@@ -74,7 +76,6 @@ public class ConstructionConstants {
     public static final String BUNDLE_KEY_COUNT = "count";
     public static final String BUNDLE_KEY_THREAD_ID = "thread_id";
 
-    public static final String BETA_API = "http://beta-api.acgcn.autodesk.com/API/v2/members/";
     public static class TaskTemplateId {
         public static final String KAI_GONG_JIAO_DI = "kai_gong_jiao_di";//开工交底
         public static final String YINBIGONGCHENG_YANSHOU = "yinbigongcheng_yanshou";//隐蔽工程验收

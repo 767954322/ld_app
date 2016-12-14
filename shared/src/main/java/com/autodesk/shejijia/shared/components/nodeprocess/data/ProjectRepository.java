@@ -17,13 +17,14 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -157,7 +158,7 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag,@NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
+    public void getUnreadMsgCount(String projectIds, String requestTag,@NonNull final ResponseCallback<List, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -167,7 +168,8 @@ public final class ProjectRepository implements ProjectDataSource {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                callback.onSuccess(jsonArray);
+                List list = JsonFileUtil.jsonArray2List(jsonArray);
+                callback.onSuccess(list);
             }
         });
     }

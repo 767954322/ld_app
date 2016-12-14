@@ -15,8 +15,8 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.Map;
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/17/16.
@@ -68,7 +68,7 @@ public interface ProjectDataSource {
 
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
-    void getUnreadMsgCount(String projectIds, String requestTag,@NonNull ResponseCallback<JSONArray, ResponseError> callback);
+    void getUnreadMsgCount(String projectIds, String requestTag,@NonNull ResponseCallback<List, ResponseError> callback);
 
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);

@@ -21,12 +21,12 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     private Context mContext;
     private int mOffset = 0;
     public static final int LIMIT = 10;
-    private String mTAG;
+    private String mRequestTag;
     private MessageCenterRemoteDataSource mMessageCenterDataSource;
     private ProjectMessageCenterContract.View mProjectMessageCenterPresenterView;
-    public ProjectMessageCenterPresenter(Context context,String mTAG,ProjectMessageCenterContract.View mProjectMessageCenterPresenterView) {
+    public ProjectMessageCenterPresenter(Context context,String requestTag,ProjectMessageCenterContract.View mProjectMessageCenterPresenterView) {
         this.mContext = context;
-        this.mTAG =mTAG;
+        this.mRequestTag =requestTag;
         this.mProjectMessageCenterPresenterView = mProjectMessageCenterPresenterView;
         mMessageCenterDataSource = MessageCenterRemoteDataSource.getInstance();
     }
@@ -48,17 +48,15 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
         requestParams.putInt(ConstructionConstants.BUNDLE_KEY_OFFSET,offset);
         requestParams.putBoolean(ConstructionConstants.BUNDLE_KEY_UNREAD,mIsUnread);
         requestParams.putInt(ConstructionConstants.BUNDLE_KEY_LIMIT,LIMIT);
-        getMessageCenterInfo(requestParams,mTAG);
+        getMessageCenterInfo(requestParams,mRequestTag);
     }
 
     @Override
     public void getMessageCenterInfo(Bundle bundle,String mTAG) {
         mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<JSONObject, ResponseError>(){
+        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageInfo, ResponseError>(){
             @Override
-            public void onSuccess(JSONObject jsonObject) {
-                String result = jsonObject.toString();
-                MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
+            public void onSuccess(MessageInfo messageInfo) {
                 if(messageInfo.getOffset() == 0){
                     mProjectMessageCenterPresenterView.refreshProjectMessagesView(messageInfo);
                 }else{
@@ -79,7 +77,7 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     @Override
     public void changeUnreadMsgState(String threadId){
         String acsMemberId = UserInfoUtils.getAcsMemberId(mContext);
-        mMessageCenterDataSource.changeUnreadMsgState(mTAG,acsMemberId,threadId,new ResponseCallback<JSONObject, ResponseError>(){
+        mMessageCenterDataSource.changeUnreadMsgState(mRequestTag,acsMemberId,threadId,new ResponseCallback<JSONObject, ResponseError>(){
             @Override
             public void onSuccess(JSONObject data) {
                 mProjectMessageCenterPresenterView.changeUnreadMsgStateView();

@@ -5,7 +5,9 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.entity.MessageInfo;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 import org.json.JSONObject;
 
@@ -26,11 +28,13 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
 
 
     @Override
-    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
+    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<MessageInfo, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
-                callback.onSuccess(jsonObject);
+                String result = jsonObject.toString();
+                MessageInfo messageInfo = GsonUtil.jsonToBean(result, MessageInfo.class);
+                callback.onSuccess(messageInfo);
 
             }
             @Override

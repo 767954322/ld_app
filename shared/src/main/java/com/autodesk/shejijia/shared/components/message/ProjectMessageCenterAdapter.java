@@ -24,10 +24,10 @@ import java.util.List;
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<MessageItemBean> messageItemBeans;
     private boolean mIsUnread;
-    private static HistoricalRecordstListener mHistoricalRecordstListener;
+    private  HistoricalRecordstListener mHistoricalRecordstListener;
     private int mBottomCount=1;//底部View个数
-    public static final int ITEMTYPECONTENT = 0;
-    public static final int ITEMTYPEBOTTOM = 1;
+    private  final int ITEMTYPECONTENT = 0;
+    private  final int ITEMTYPEBOTTOM = 1;
     private int resId;
     public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener,List<MessageItemBean> messageItemBeans, boolean isUnread, int resId) {
         super();
@@ -74,16 +74,16 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             return ITEMTYPECONTENT;
         }
     }
-    public void notifyDataForRecyclerView(List<MessageItemBean> messageItemBean,boolean mIsUnread,int Offset) {
-        if(Offset == 0){
+    public void notifyDataForRecyclerView(List<MessageItemBean> messageItemBean,boolean isUnread,int offset) {
+        if(offset == 0){
             messageItemBeans.clear();
         }
         this.messageItemBeans.addAll(messageItemBean);
-        this.mIsUnread = mIsUnread;
+        this.mIsUnread = isUnread;
         notifyDataSetChanged();
     }
     public int getContentItemCount(){
-        return messageItemBeans != null?messageItemBeans.size():0;
+        return messageItemBeans == null?0:messageItemBeans.size();
     }
     private void initListener(BottomViewHolder mBottomViewHolder){
         mBottomViewHolder.mTvMessageHistoricalRecords.setOnClickListener(new View.OnClickListener(){
@@ -146,9 +146,6 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             mTvMessageTime = (TextView) itemView.findViewById(R.id.tv_message_time);
         }
     }
-//    private void setHistoricalRecordstListener(HistoricalRecordstListener historicalRecordstListener){
-//        mHistoricalRecordstListener = historicalRecordstListener;
-//    }
     public interface HistoricalRecordstListener {
         void onHistoricalRecordstClick();
     }

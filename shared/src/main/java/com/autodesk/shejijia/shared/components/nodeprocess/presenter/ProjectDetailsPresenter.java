@@ -209,11 +209,10 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag) {
         mProjectDetailsView.showLoading();
-        mProjectRepository.getUnreadMsgCount(projectIds,requestTag,new ResponseCallback<JSONArray, ResponseError>(){
+        mProjectRepository.getUnreadMsgCount(projectIds,requestTag,new ResponseCallback<List, ResponseError>(){
             @Override
-            public void onSuccess(JSONArray jSONArray) {
+            public void onSuccess(List list) {
                 mProjectDetailsView.hideLoading();
-                List list = JsonFileUtil.jsonArray2List(jSONArray);
                 mProjectDetailsView.updategetUnreadMsgCountView(list);
             }
 

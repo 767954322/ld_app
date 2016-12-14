@@ -18,7 +18,7 @@ public interface ProjectMessageCenterContract {
 
     }
     interface Presenter extends BasePresenter{
-        void getMessageCenterInfo(Bundle bundle,String mTAG);
+        void getMessageCenterInfo(Bundle bundle,String requestTag);
         /*
        * 上拉刷新项目列表
        * */

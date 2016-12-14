@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpMa
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/17/16.
@@ -40,7 +42,7 @@ import java.util.Map;
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<JSONArray, ResponseError> callback) {
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<List, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -50,7 +52,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                callback.onSuccess(jsonArray);
+                List list = JsonFileUtil.jsonArray2List(jsonArray);
+                callback.onSuccess(list);
             }
         });
     }
