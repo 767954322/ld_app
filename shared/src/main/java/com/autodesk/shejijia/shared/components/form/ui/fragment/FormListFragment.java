@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -177,6 +179,8 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void SubmitSuccess() {
+        mPresenter.submitData(mPrecheckForm);
+
         Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -187,7 +191,27 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         int id = v.getId();
 
         if (R.id.btn_submit == id) {
-            mPresenter.submitData(mPrecheckForm);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.alert_dialog__default_title);
+            builder.setMessage("提交后不可修改");
+            builder.setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mPresenter.submitData(mPrecheckForm);//提交表单
+                    dialog.dismiss();
+                    showLoading();
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
 
     }
