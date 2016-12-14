@@ -90,9 +90,6 @@ public class IssueAddDescriptionActivity extends BaseActivity {
         String mDescription = mPresenter.getCommentContent();
         String mAudioPath = mPresenter.getAudioPath();
         ArrayList<ImageInfo> mImagePath = (ArrayList<ImageInfo>) mPresenter.getImageData();
-        boolean hasImage = (mImagePath == null || mImagePath.size() == 0) ? false : true;
-//        IssueDescription mEntity = new IssueDescription(mDescription, mAudioPath, mImagePath);
-
         Intent intent = new Intent();
         intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_CONTENT, mDescription);
         intent.putExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE, mAudioPath);

@@ -38,6 +38,7 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -203,6 +204,9 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         mPvTime.setCyclic(false);
         mPvTime.setCancelable(false);
         mPvTime.setTitle(UIUtils.getString(R.string.pop_issuereply_title));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, +1);
+        mTime = String.valueOf(cal.getTime().getTime());
         mPvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -212,6 +216,10 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
                 mIssueReplyContent.setText(mDate);
             }
         });
+    }
+
+    private void setTomoTime() {
+
     }
 
     /**
