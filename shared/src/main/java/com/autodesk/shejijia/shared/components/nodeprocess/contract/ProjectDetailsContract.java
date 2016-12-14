@@ -38,7 +38,7 @@ public interface ProjectDetailsContract {
 
         void initRefreshState(boolean isNeedRefresh);
 
-        void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread);//跳转消息中心
+        void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread,int requestCode);//跳转消息中心
 
         void getUnreadMsgCount(String projectIds, String requestTag);
 

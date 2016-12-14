@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.message;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -122,7 +123,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
 
     @Override
     public void changeUnreadMsgStateView() {
-        setResult(10010, new Intent());
+        setResult(Activity.RESULT_OK, new Intent());
     }
 
     @Override

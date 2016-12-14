@@ -43,6 +43,7 @@ import java.util.List;
 public class ProjectDetailsFragment extends BaseConstructionFragment implements ProjectDetailsContract.View, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final static int REQUEST_CODE_EDIT_PLAN = 0x0099;
+    private final static int REQUEST_CODE_PROJECT_MESSAGE_CENTER = 0x0097;
 //    private String threadId;
     private LinearLayout mProjectRootView;
     private RelativeLayout mContentTipView;
@@ -205,7 +206,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             @Override
             public void onClick(View v) {
                 mtVmenuBadge.setVisibility(View.GONE);
-                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread);
+                mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this,mIsUnread,REQUEST_CODE_PROJECT_MESSAGE_CENTER);
                 mIsUnread = false;
             }
         });
@@ -227,10 +228,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 104){
-            mIsUnread = false;
-            return;
-        }
         switch (requestCode) {
             case REQUEST_CODE_EDIT_PLAN:
                 if (resultCode == Activity.RESULT_OK) {
@@ -240,6 +237,11 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                             && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
                         mBtnCreatePlan.setText(R.string.continue_edit_plan);
                     }
+                }
+                break;
+            case REQUEST_CODE_PROJECT_MESSAGE_CENTER:
+                if(resultCode == Activity.RESULT_OK){
+                    mIsUnread = false;
                 }
                 break;
             default:

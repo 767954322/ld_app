@@ -24,9 +24,12 @@ import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,18 +45,20 @@ import java.util.List;
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<List, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsgEntity, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
+                ResponseError responseError = ResponseErrorUtil.checkVolleyError(volleyError);
                 callback.onError(responseError);
             }
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List list = JsonFileUtil.jsonArray2List(jsonArray);
-                callback.onSuccess(list);
+                List<UnreadMsgEntity> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsgEntity>>() {
+                        }.getType());
+                callback.onSuccess(UnreadMsgEntityList.get(0));
             }
         });
     }
@@ -178,16 +183,16 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Map<String,String>, ResponseError> callback) {
+    public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Map<String, String>, ResponseError> callback) {
         mConstructionHttpManager.updateTaskStatus(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.d("PlanStatus",jsonObject.toString());
+                LogUtils.d("PlanStatus", jsonObject.toString());
                 Map<String, String> map = new LinkedHashMap<>();
                 try {
-                    map.put("task_id",jsonObject.getString("task_id"));
-                    map.put("task_status",jsonObject.getString("task_status"));
+                    map.put("task_id", jsonObject.getString("task_id"));
+                    map.put("task_status", jsonObject.getString("task_status"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -196,7 +201,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-               callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
+                callback.onError(ResponseErrorUtil.checkVolleyError(volleyError));
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -14,9 +15,11 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -203,18 +206,12 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag) {
         mProjectDetailsView.showLoading();
-        mProjectRepository.getUnreadMsgCount(projectIds,requestTag,new ResponseCallback<List, ResponseError>(){
+        mProjectRepository.getUnreadMsgCount(projectIds, requestTag, new ResponseCallback<UnreadMsgEntity, ResponseError>() {
             @Override
-            public void onSuccess(List list) {
+            public void onSuccess(UnreadMsgEntity unreadMsgEntity) {
                 mProjectDetailsView.hideLoading();
-                if(list.size() <= 0){
-                    return;
-                }
-                HashMap remoteMap = (HashMap) list.get(0);
-                int count = (int) remoteMap.get(ConstructionConstants.BUNDLE_KEY_COUNT);
-                mThreadId = String.format("%s", remoteMap.get(ConstructionConstants.BUNDLE_KEY_THREAD_ID));
-
-                mProjectDetailsView.updateUnreadMsgCountView(count);
+                mThreadId = unreadMsgEntity.getThreadId();
+                mProjectDetailsView.updateUnreadMsgCountView(unreadMsgEntity.getCount());
             }
 
             @Override
@@ -231,16 +228,16 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment,boolean isUnread) {
+    public void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread, int requestCode) {
         ProjectInfo projectInfo = mProjectRepository.getActiveProject();
-        if(projectInfo == null){
+        if (projectInfo == null) {
             return;
         }
-        Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
-        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
-        intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD,isUnread);
-        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID,mThreadId);
-        projectDetailsFragment.startActivityForResult(intent,104);
+        Intent intent = new Intent(mContext, ProjectMessageCenterActivity.class);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectInfo.getProjectId());
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD, isUnread);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID, mThreadId);
+        projectDetailsFragment.startActivityForResult(intent, requestCode);
     }
 
 }

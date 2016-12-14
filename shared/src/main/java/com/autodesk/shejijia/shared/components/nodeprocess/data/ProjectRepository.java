@@ -19,10 +19,15 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.List;
 
@@ -128,7 +133,7 @@ public final class ProjectRepository implements ProjectDataSource {
 
     @Override
     public void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String, String>, ResponseError> callback) {
-        ProjectRemoteDataSource.getInstance().updateTaskStatus(requestParams,requestTag,jsonRequest,callback);
+        ProjectRemoteDataSource.getInstance().updateTaskStatus(requestParams, requestTag, jsonRequest, callback);
     }
 
     public ProjectInfo getActiveProject() {
@@ -158,18 +163,21 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag,@NonNull final ResponseCallback<List, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds,requestTag,new OkJsonArrayRequest.OKResponseCallback(){
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsgEntity, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);
+                ResponseError responseError = ResponseErrorUtil.checkVolleyError(volleyError);
                 callback.onError(responseError);
+
             }
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List list = JsonFileUtil.jsonArray2List(jsonArray);
-                callback.onSuccess(list);
+                List<UnreadMsgEntity> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsgEntity>>() {
+                        }.getType());
+                callback.onSuccess(UnreadMsgEntityList.get(0));
             }
         });
     }

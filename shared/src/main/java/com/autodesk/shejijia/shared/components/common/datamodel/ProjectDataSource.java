@@ -12,9 +12,11 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.Map;
 import java.util.List;
 
@@ -68,13 +70,13 @@ public interface ProjectDataSource {
 
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
-    void getUnreadMsgCount(String projectIds, String requestTag,@NonNull ResponseCallback<List, ResponseError> callback);
+    void getUnreadMsgCount(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMsgEntity, ResponseError> callback);
 
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
-	/**
+    /**
      * 跟新Task的Status
      */
-    void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String,String>, ResponseError> callback);
+    void updateTaskStatus(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Map<String, String>, ResponseError> callback);
 }
