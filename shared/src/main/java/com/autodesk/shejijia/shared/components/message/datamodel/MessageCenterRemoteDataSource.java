@@ -42,8 +42,8 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
     }
 
     @Override
-    public void changeUnreadState(String requestTag, String memberId, String threadId, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
-        MessageCenterHttpManagerImpl.getInstance().changeUnreadState(requestTag,memberId,threadId, new OkJsonRequest.OKResponseCallback(){
+    public void changeUnreadMsgState(String requestTag, String memberId, String threadId, @NonNull final ResponseCallback<JSONObject, ResponseError> callback) {
+        MessageCenterHttpManagerImpl.getInstance().changeUnreadMsgState(requestTag,memberId,threadId, new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 ResponseError responseError =  ResponseErrorUtil.checkVolleyError(volleyError);

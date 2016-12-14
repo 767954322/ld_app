@@ -206,10 +206,6 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         }
     }
 
-//    @Override
-//    public void getUnreadCount(String projectIds, String requestTag) {
-//
-//    }
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag) {
         mProjectDetailsView.showLoading();
@@ -237,8 +233,8 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         }
         Intent intent = new Intent(mContext,ProjectMessageCenterActivity.class);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,projectInfo.getProjectId());
-        intent.putExtra(ConstructionConstants.UNREAD,isUnread);
-        intent.putExtra(ConstructionConstants.THREAD_ID,threadId);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD,isUnread);
+        intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID,threadId);
         projectDetailsFragment.startActivityForResult(intent,104);
     }
 

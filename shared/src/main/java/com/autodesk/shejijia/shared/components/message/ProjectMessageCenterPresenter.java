@@ -45,9 +45,9 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     private void getMessage(int offset,long mProjectId,boolean mIsUnread){
         Bundle requestParams = new Bundle();
         requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);
-        requestParams.putInt(ConstructionConstants.OFFSET,offset);
-        requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
-        requestParams.putInt(ConstructionConstants.LIMIT,LIMIT);
+        requestParams.putInt(ConstructionConstants.BUNDLE_KEY_OFFSET,offset);
+        requestParams.putBoolean(ConstructionConstants.BUNDLE_KEY_UNREAD,mIsUnread);
+        requestParams.putInt(ConstructionConstants.BUNDLE_KEY_LIMIT,LIMIT);
         getMessageCenterInfo(requestParams,mTAG);
     }
 
@@ -77,12 +77,12 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
         mProjectMessageCenterPresenterView.showNetError(error);
     }
     @Override
-    public void changeUnreadState(String threadId){
+    public void changeUnreadMsgState(String threadId){
         String acsMemberId = UserInfoUtils.getAcsMemberId(mContext);
-        mMessageCenterDataSource.changeUnreadState(mTAG,acsMemberId,threadId,new ResponseCallback<JSONObject, ResponseError>(){
+        mMessageCenterDataSource.changeUnreadMsgState(mTAG,acsMemberId,threadId,new ResponseCallback<JSONObject, ResponseError>(){
             @Override
             public void onSuccess(JSONObject data) {
-                mProjectMessageCenterPresenterView.changeUnreadStateView();
+                mProjectMessageCenterPresenterView.changeUnreadMsgStateView();
             }
 
             @Override

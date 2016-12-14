@@ -29,11 +29,12 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int ITEMTYPECONTENT = 0;
     public static final int ITEMTYPEBOTTOM = 1;
     private int resId;
-    public ProjectMessageCenterAdapter(List<MessageItemBean> messageItemBeans, boolean isUnread, int resId) {
+    public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener,List<MessageItemBean> messageItemBeans, boolean isUnread, int resId) {
         super();
         this.messageItemBeans = messageItemBeans;
         this.resId = resId;
         this.mIsUnread = isUnread;
+        this.mHistoricalRecordstListener = historicalRecordstListener;
     }
 
     @Override
@@ -145,9 +146,9 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             mTvMessageTime = (TextView) itemView.findViewById(R.id.tv_message_time);
         }
     }
-    public static void setHistoricalRecordstListener(HistoricalRecordstListener hr){
-        mHistoricalRecordstListener = hr;
-    }
+//    private void setHistoricalRecordstListener(HistoricalRecordstListener historicalRecordstListener){
+//        mHistoricalRecordstListener = historicalRecordstListener;
+//    }
     public interface HistoricalRecordstListener {
         void onHistoricalRecordstClick();
     }

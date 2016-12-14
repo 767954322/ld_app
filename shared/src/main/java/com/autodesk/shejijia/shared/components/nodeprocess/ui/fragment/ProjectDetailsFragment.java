@@ -200,8 +200,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             return;
         }
         HashMap remoteMap = (HashMap) list.get(0);
-        String count = String.format("%s", remoteMap.get(ConstructionConstants.COUNT));
-        threadId = String.format("%s", remoteMap.get(ConstructionConstants.THREAD_ID));
+        String count = String.format("%s", remoteMap.get(ConstructionConstants.BUNDLE_KEY_COUNT));
+        threadId = String.format("%s", remoteMap.get(ConstructionConstants.BUNDLE_KEY_THREAD_ID));
         if(!count.contentEquals("0")){
             mIsUnread = true;
             mtVmenuBadge.setVisibility(View.VISIBLE);

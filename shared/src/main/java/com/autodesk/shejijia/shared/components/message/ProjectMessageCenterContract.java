@@ -13,7 +13,7 @@ public interface ProjectMessageCenterContract {
 //
         void loadMoreProjectMessagesView(MessageInfo messageInfo);
 
-        void changeUnreadStateView();
+        void changeUnreadMsgStateView();
 
 
     }
@@ -31,7 +31,7 @@ public interface ProjectMessageCenterContract {
         /*
          * 更新消息状态
          * */
-        void changeUnreadState(String threadId);
+        void changeUnreadMsgState(String threadId);
 
     }
 }

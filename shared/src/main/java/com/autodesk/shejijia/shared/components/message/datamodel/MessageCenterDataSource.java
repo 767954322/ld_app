@@ -11,5 +11,5 @@ import org.json.JSONObject;
  */
 public interface MessageCenterDataSource {
      void getMessageCenterInfo(Bundle requestParams, String requestTag,@NonNull ResponseCallback<JSONObject, ResponseError> callback);
-     void changeUnreadState(String requestTag,String memberId,String threadId,@NonNull ResponseCallback<JSONObject, ResponseError> callback);
+     void changeUnreadMsgState(String requestTag,String memberId,String threadId,@NonNull ResponseCallback<JSONObject, ResponseError> callback);
 }

@@ -47,9 +47,9 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        mIsUnread = intent.getBooleanExtra(ConstructionConstants.UNREAD, false);
+        mIsUnread = intent.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_UNREAD, false);
         mProjectId = intent.getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, 0);
-        mThreadId = intent.getStringExtra(ConstructionConstants.THREAD_ID);
+        mThreadId = intent.getStringExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         actionBar.setTitle(UIUtils.getString(R.string.update_priject_details));
         messageItemBeans = new ArrayList<>();
         mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(), TAG, this);
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(messageItemBeans, mIsUnread, R.layout.item_messagecenter);
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this,messageItemBeans, mIsUnread, R.layout.item_messagecenter);
 
     }
 
@@ -74,7 +74,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     protected void initListener() {
         super.initListener();
-        ProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
+//        mProjectMessageCenterAdapter.setHistoricalRecordstListener(this);
         mRvProjectMessagCenterView.setRefreshLoadMoreListener(this);
         //让其自动刷新一下，会回调onRefresh()方法一次
         mRvProjectMessagCenterView.setRefreshing(true);
@@ -93,12 +93,12 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     public void refreshProjectMessagesView(MessageInfo messageInfo) {
         mRvProjectMessagCenterView.complete();
-        mProjectMessageCenterPresenter.changeUnreadState(mThreadId);
+        mProjectMessageCenterPresenter.changeUnreadMsgState(mThreadId);
         if (messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() > 0) {
             mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
         }
-        setLoadMoreEnable(messageInfo);
+//        setLoadMoreEnable(messageInfo);
     }
 
     private void setLoadMoreEnable(MessageInfo messageInfo) {
@@ -118,12 +118,12 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
             return;
         }
-        setLoadMoreEnable(messageInfo);
+//        setLoadMoreEnable(messageInfo);
         mRvProjectMessagCenterView.onNoMore(null);
     }
 
     @Override
-    public void changeUnreadStateView() {
+    public void changeUnreadMsgStateView() {
         setResult(10010, new Intent());
     }
 

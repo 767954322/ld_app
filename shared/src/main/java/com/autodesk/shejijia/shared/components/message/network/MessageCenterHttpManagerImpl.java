@@ -32,7 +32,7 @@ public class MessageCenterHttpManagerImpl implements MessageCenterHttpManager {
     }
 
     @Override
-    public void changeUnreadState(String requestTag,String memberId, String threadId, @NonNull OkJsonRequest.OKResponseCallback callback) {
+    public void changeUnreadMsgState(String requestTag,String memberId, String threadId, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BETA_API + memberId+"/messages?action=read&thread_id="+threadId;
         put(requestTag, requestUrl, callback);
     }
