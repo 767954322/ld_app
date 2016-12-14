@@ -91,6 +91,9 @@ public class ImageUtils {
             .cacheInMemory(false)
             .displayer(new RoundedBitmapDisplayer(360))
             .cacheOnDisk(true)
+            .showImageOnFail(R.drawable.ic_default_head)
+            .showImageOnLoading(R.drawable.ic_default_head)
+            .showImageForEmptyUri(R.drawable.ic_default_head)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .imageScaleType(ImageScaleType.EXACTLY)
             .build();

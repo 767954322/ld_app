@@ -22,10 +22,10 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
+import com.autodesk.shejijia.shared.components.issue.common.tools.IssueRoleUtils;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
@@ -39,6 +39,7 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
@@ -80,8 +81,12 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initData() {
         mIssueAddPresenter = new IssueAddPresenter(this, activity);
+        mProjectInfo = ProjectRepository.getInstance().getActiveProject();
+        if (mProjectInfo != null) {
+            mMapMember = IssueRoleUtils.getInstance().getMembersFromProject(mProjectInfo);
+            mListMember = IssueRoleUtils.getInstance().getFollowListByProject(mProjectInfo);
+        }
         initTimePick();
-        initProjectReplyData();
         initImageList();
     }
 
@@ -95,7 +100,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         //init recyclerView adapter
         mIssueImageAdapter = new IssueAddListImageAdapter(null, getContext(), R.layout.item_addissue_image);
         mIssueImagesList.setAdapter(mIssueImageAdapter);
-        mStrRole = activity.getResources().getStringArray(add_issue_fllow);
 
     }
 
@@ -113,28 +117,29 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.rl_issuetype) {
+
             if (mIssueStylePopWin == null) {
                 mIssueStylePopWin = new IssueStylePop(activity.getBaseContext(), this, this);
             }
             mIssueStylePopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             mIssueStylePopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         } else if (i == R.id.rl_layout_descrition) {
+
             Intent intent_description = new Intent(getActivity(), IssueAddDescriptionActivity.class);
             this.startActivityForResult(intent_description, ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_REQUEST_CODE);
         } else if (i == R.id.rl_issuefllow) {
+
             if (mIssueFllowPopWin == null) {
                 mIssueFllowPopWin = new IssueFlowPop(mListMember, activity.getBaseContext(), this);
             }
             mIssueFllowPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             mIssueFllowPopWin.showAtLocation(mIssueAll, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         } else if (i == R.id.rl_issuereply) {
+
             mPvTime.show();
         }
     }
 
-    /**
-     * 通知客户开关按钮监听
-     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
@@ -144,44 +149,24 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    /**
-     * 两个Popwindow的回调
-     */
     @Override
     public void onPopItemClickListener(View view, int position) {
         if (view.getId() == R.id.rl_issue_fllow_person) {
-            mFollowMember = mListMember.get(position + 2);
-            mIssueFllowContent.setText(mStrRole[position] + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
+            mFollowMember = mListMember.get(position);
+            String chinaRole = IssueRoleUtils.getInstance().getChiRoleByEngRole(mFollowMember.getRole());
+            mIssueFllowContent.setText(chinaRole + mFollowMember.getProfile().getName() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
         } else {
             mIssueType = mArrayType[position];
             String strType = activity.getResources().getStringArray(add_issue_type_list)[position];
             mIssueStyleContent.setText(strType);
-            fllowRole(strType);
+            //设置跟进人员
+            mFollowMember = IssueRoleUtils.getInstance().getMemberByIssueType(mMapMember, strType);
+            String followRole = IssueRoleUtils.getInstance().getChiRoleByIssueType(strType);
+            mIssueFllowContent.setText(followRole + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
         }
         dismissPopwindow();
     }
 
-    private void fllowRole(String strType) {
-        String role = "";
-        if (strType.equals("设计问题")) {
-            mFollowMember = mListMember.get(2);
-            role = mStrRole[0];
-        } else if (strType.equals("巡查问题") || strType.equals("后期安装")) {
-            role = mStrRole[3];
-            mFollowMember = mListMember.get(5);
-        } else if (strType.equals("材料问题")) {
-            role = mStrRole[2];
-            mFollowMember = mListMember.get(4);
-        } else if (strType.equals("其他问题")) {
-            role = mStrRole[1];
-            mFollowMember = mListMember.get(3);
-        }
-        mIssueFllowContent.setText(role + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
-    }
-
-    /**
-     * 关闭Popwindow
-     */
     private void dismissPopwindow() {
         if (null != mIssueStylePopWin) {
             mIssueStylePopWin.dismiss();
@@ -189,6 +174,22 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         if (null != mIssueFllowPopWin) {
             mIssueFllowPopWin.dismiss();
         }
+    }
+
+    /**
+     * 添加问题回调
+     *
+     * @param status
+     */
+    @Override
+    public void onShowStatus(boolean status) {
+
+        if (status) {
+            ToastUtils.showLong(activity, "上传成功");
+        } else {
+            ToastUtils.showLong(activity, "上传失败");
+        }
+
     }
 
     /**
@@ -214,18 +215,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     }
 
     /**
-     * 初始化项目角色信息
-     */
-    private void initProjectReplyData() {
-        mProjectInfo = ProjectRepository.getInstance().getActiveProject();
-        if (mProjectInfo != null) {
-            mListMember = mProjectInfo.getMembers();
-        } else {
-            ToastUtils.showLong(activity, UIUtils.getString(R.string.Fragment_addissue_getprojectinfo_error));
-        }
-    }
-
-    /**
      * 发送添加问题
      */
     public void sendIssueTracking() {
@@ -240,12 +229,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-
-    /**
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -286,17 +269,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     };
 
-    @Override
-    public void onShowStatus(boolean status) {
-
-        if (status) {
-            ToastUtils.showLong(activity, "上传成功");
-        } else {
-            ToastUtils.showLong(activity, "上传失败");
-        }
-
-    }
-
 
     private RelativeLayout mIssueAll;
     private RelativeLayout mIssueStyle;
@@ -314,12 +286,11 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private RecyclerView mIssueImagesList;
 
     private IssueAddListImageAdapter mIssueImageAdapter;
-    private String[] mStrRole;
     private ArrayList<Member> mListMember;
+    private Map<String, Member> mMapMember;
     private Switch mIssueSwitchNotify;
     private TimePickerView mPvTime;
     private SimpleDateFormat mDateFormat;
-    private IssueDescription mDescriptionBean;
     private IssueAddContract.Presenter mIssueAddPresenter;
 
     private ProjectInfo mProjectInfo;
