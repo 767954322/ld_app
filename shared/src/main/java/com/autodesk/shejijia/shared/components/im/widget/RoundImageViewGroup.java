@@ -69,7 +69,7 @@ public class RoundImageViewGroup<T> extends ViewGroup {
                 mGridSize = (totalWidth - mGapSize * (mColumnCount - 1)) / mColumnCount;
             }
             int realHeight = mGridSize * mRowCount + mGapSize * (mRowCount - 1) + getPaddingTop() + getPaddingBottom();
-            //height = width > realHeight ? width : realHeight;
+//            height = width > realHeight ? width : realHeight;
             setMeasuredDimension(width, realHeight);
         } else {
             height = width > MeasureSpec.getSize(heightMeasureSpec) ? width : MeasureSpec.getSize(heightMeasureSpec);

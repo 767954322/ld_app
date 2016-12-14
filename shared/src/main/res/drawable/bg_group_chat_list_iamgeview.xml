@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <solid android:color="@color/bg_c4" />
+    <solid android:color="@color/chat_room_commandcell_background" />
 
     <corners
-       android:radius="@dimen/spacing_margin_normal" />
+       android:radius="@dimen/spacing_padding_micro2" />
 </shape>

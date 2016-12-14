@@ -19,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.Body;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntityData;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUser;
@@ -134,7 +135,13 @@ public class ThreadListAdapter extends BaseAdapter {
             (holder).unreadMessageCount.setVisibility(View.GONE);
         }
 
-        (holder).name.setText(getDisplayName(thread));
+        if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
+            if (!TextUtils.isEmpty(getProjectName(thread))) {
+                (holder).name.setText(getProjectName(thread));
+            }
+        }else {
+            (holder).name.setText(getDisplayName(thread));
+        }
 
         Date date = DateUtil.acsDateToDate(thread.latest_message.sent_time);
 
@@ -144,6 +151,7 @@ public class ThreadListAdapter extends BaseAdapter {
             (holder).time.setText(DateUtil.getTimeMY(thread.latest_message.sent_time));
 
         MPChatMessage.eMPChatMessageType message_media_type = thread.latest_message.message_media_type;
+        LogUtils.d("message_type",message_media_type.name());
         switch (message_media_type) {
             case eTEXT:
                 (holder).description.setText(thread.latest_message.body);
@@ -158,8 +166,9 @@ public class ThreadListAdapter extends BaseAdapter {
                 if (thread.latest_message.command.equalsIgnoreCase("command")) {
                     MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
 
-                    if (info == null || (info.for_consumer == null && info.for_designer == null))
+                    if (info == null || (info.for_consumer == null && info.for_designer == null)) {
                         break;
+                    }
 
                     if (isUserConsumer())
                         (holder).description.setText(info.for_consumer);
@@ -169,7 +178,11 @@ public class ThreadListAdapter extends BaseAdapter {
                     (holder).description.setText(thread.latest_message.body);
                 } else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_REMOVE")) {
                     (holder).description.setText(thread.latest_message.body);
-                } else {
+                } else if (thread.latest_message.command.equalsIgnoreCase("CHAT_WELCOME_MESSAGE")){
+                    if (!TextUtils.isEmpty(thread.latest_message.body)){
+                        (holder).description.setText(thread.latest_message.body);
+                    }
+                }else {
                     //thread.latest_message.command为NULL
                     if (thread.latest_message.body != null) {
                         String user_type = AdskApplication.getInstance().getMemberEntity().getMember_type();
@@ -257,6 +270,23 @@ public class ThreadListAdapter extends BaseAdapter {
                 }
             }
             return imageList;
+        }
+        return null;
+    }
+
+    /*
+    * 获取群聊列表显示的项目名字
+    * */
+    private String getProjectName(MPChatThread thread){
+        if (thread.entity != null && thread.entity.entityInfos.size()>0){
+            MPChatEntityData entityData = thread.entity.entityInfos.get(0).entity_data;
+            if (entityData !=null && !TextUtils.isEmpty(entityData.asset_name)){
+                if (entityData.asset_name.equalsIgnoreCase("unbound")){
+                    MPChatUser sender = MPChatUtility.getComplimentryUserFromThread(thread, "" + mThreadListInterface.getLoggedInUserId());
+                    return MPChatUtility.getUserDisplayNameFromUser(sender.name);
+                }
+                return entityData.asset_name;
+            }
         }
         return null;
     }
