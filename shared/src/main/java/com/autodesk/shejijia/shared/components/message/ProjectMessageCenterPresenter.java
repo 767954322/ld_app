@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class ProjectMessageCenterPresenter implements ProjectMessageCenterContract.Presenter {
     private Context mContext;
     private int mOffset = 0;
-    private static final int LIMIT = 5;
+    public static final int LIMIT = 10;
     private String mTAG;
     private MessageCenterRemoteDataSource mMessageCenterDataSource;
     private ProjectMessageCenterContract.View mProjectMessageCenterPresenterView;
@@ -44,7 +44,7 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     }
     private void getMessage(int offset,long mProjectId,boolean mIsUnread){
         Bundle requestParams = new Bundle();
-        requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);//"1642677"
+        requestParams.putLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID,mProjectId);
         requestParams.putInt(ConstructionConstants.OFFSET,offset);
         requestParams.putBoolean(ConstructionConstants.UNREAD,mIsUnread);
         requestParams.putInt(ConstructionConstants.LIMIT,LIMIT);
@@ -65,7 +65,6 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
                     mProjectMessageCenterPresenterView.loadMoreProjectMessagesView(messageInfo);
                 }
                 mProjectMessageCenterPresenterView.hideLoading();
-//                mProjectMessageCenterPresenterView.updateProjectMessageView(messageInfo);
             }
             @Override
             public void onError(ResponseError error) {
