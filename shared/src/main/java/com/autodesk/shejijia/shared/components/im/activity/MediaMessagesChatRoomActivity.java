@@ -77,7 +77,7 @@ public class MediaMessagesChatRoomActivity extends BaseChatRoomActivity
         }
     }
 
-    private void getThreadDetailForThreadId(String inThreadId)
+    protected void getThreadDetailForThreadId(String inThreadId)
     {
         MPChatHttpManager.getInstance().retrieveThreadDetails(mAcsMemberId, inThreadId, new OkStringRequest.OKResponseCallback()
         {

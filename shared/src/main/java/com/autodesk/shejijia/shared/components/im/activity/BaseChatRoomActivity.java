@@ -32,6 +32,7 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessages;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -446,9 +447,43 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             getProjectInfo();
         } else {
             changeConsumerUI();
+            getThreadDetailForThreadId(mThreadId);
         }
     }
 
+
+    private void updateUnreadMessageCountForThread(MPChatThread thread) {
+        String fileId = MPChatUtility.getFileEntityIdForThread(thread);
+        if (fileId != null) {
+            for (int i = 0; i < mMessageList.size(); ++i) {
+                MPChatMessage chatMsg = mMessageList.get(i);
+                if (String.valueOf(chatMsg.media_file_id).equalsIgnoreCase(fileId)) {
+                    mMessageAdapter.updateMessageCell(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    protected void getThreadDetailForThreadId(String inThreadId) {
+        MPChatHttpManager.getInstance().retrieveThreadDetails(mAcsMemberId, inThreadId, new OkStringRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+
+            @Override
+            public void onResponse(String s) {
+                MPChatThread thread = MPChatThread.fromJSONString(s);
+                updateUnreadMessageCountForThread(thread);
+
+                mAssetId = String.valueOf(MPChatUtility.getAssetIdFromThread(thread));
+                mMediaType = MPChatUtility.getMediaTypeFromThread(thread);
+                if (mAssetId != null )
+                    getProjectInfo();
+            }
+        });
+    }
 
     protected void setNewThreadId(String response) {
         try {
