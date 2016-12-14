@@ -30,7 +30,7 @@ import java.util.List;
  * @since 16/12/12
  */
 
-public class UploadPhotoActivity extends BaseActivity implements UploadPhotoContact.View{
+public class UploadPhotoActivity extends BaseActivity implements UploadPhotoContact.View {
 
     private CommentPresenter mCommentPresenter;
     private UploadPhotoContact.Presenter mUploadPhotoPresenter;
@@ -92,8 +92,7 @@ public class UploadPhotoActivity extends BaseActivity implements UploadPhotoCont
             commentFragment = (CommentFragment) getSupportFragmentManager().findFragmentById(R.id.content_container);
         }
 
-
-        mCommentPresenter = new CommentPresenter(commentFragment,null);
+        mCommentPresenter = new CommentPresenter(commentFragment, null);
 
         String projectId = getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         String taskId = getIntent().getStringExtra(ConstructionConstants.BUNDLE_KEY_TASK_ID);

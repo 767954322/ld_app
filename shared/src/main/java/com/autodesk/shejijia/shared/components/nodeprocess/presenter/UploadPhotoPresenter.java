@@ -45,7 +45,7 @@ public class UploadPhotoPresenter implements UploadPhotoContact.Presenter {
         mView.showUploading();
 
         ArrayList<File> files = new ArrayList<>();
-        for (ImageInfo imageInfo: imageInfos) {
+        for (ImageInfo imageInfo : imageInfos) {
             files.add(new File(imageInfo.getPath()));
         }
 
@@ -67,7 +67,7 @@ public class UploadPhotoPresenter implements UploadPhotoContact.Presenter {
         JSONObject filesJsonObject = new JSONObject();
         JSONArray filesJsonArray = new JSONArray();
         try {
-            for (ConstructionFile file: data) {
+            for (ConstructionFile file : data) {
                 JSONObject fileJsonObject = new JSONObject();
                 fileJsonObject.put("file_id", file.getFileId());
                 fileJsonObject.put("file_type", ConstructionConstants.FileType.IMAGE);

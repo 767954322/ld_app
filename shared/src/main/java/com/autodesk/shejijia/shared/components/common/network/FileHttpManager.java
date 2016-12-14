@@ -107,7 +107,6 @@ public class FileHttpManager {
                 RequestBody reqBody = buildRequestBody(files);
                 com.squareup.okhttp.Request request = buildRequest(postUrl, reqBody);
 
-
                 OkHttpClient okHttpClient = new OkHttpClient();
                 okHttpClient.setConnectTimeout(120, TimeUnit.SECONDS);
                 okHttpClient.setWriteTimeout(120, TimeUnit.SECONDS);
@@ -132,7 +131,8 @@ public class FileHttpManager {
                             try {
                                 JSONObject responseJsonObject = new JSONObject(responseString);
                                 JSONArray filesJSONObject = responseJsonObject.getJSONArray("files");
-                                Type listType = new TypeToken<ArrayList<ConstructionFile>>(){}.getType();
+                                Type listType = new TypeToken<ArrayList<ConstructionFile>>() {
+                                }.getType();
                                 resultFiles = new Gson().fromJson(filesJSONObject.toString(), listType);
                             } catch (JSONException e) {
                                 e.printStackTrace();
