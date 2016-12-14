@@ -286,8 +286,13 @@ public class ProgressbarIndicator extends View {
                 circlePaint.setColor(circleCompleteColor);
                 canvas.drawCircle(pointX, centerY, radius, circlePaint);
             } else if (i == currentStatus) {
-                circlePaint.setColor(circleInProgressColor);
-                canvas.drawCircle(pointX, centerY, radius, circlePaint);
+                if (currentStatus == 0){
+                    circlePaint.setColor(circleUnOpenColor);
+                    canvas.drawCircle(pointX, centerY, radius, circlePaint);
+                }else {
+                    circlePaint.setColor(circleInProgressColor);
+                    canvas.drawCircle(pointX, centerY, radius, circlePaint);
+                }
             } else {
                 circlePaint.setColor(circleUnOpenColor);
                 canvas.drawCircle(pointX, centerY, radius, circlePaint);
@@ -303,7 +308,11 @@ public class ProgressbarIndicator extends View {
                 if (i < currentStatus) {
                     canvas.drawBitmap(iconList.get(2), pointX - iconList.get(2).getWidth() / 2, centerY - iconList.get(2).getHeight() / 2, null);
                 } else if (i == currentStatus) {
-                    canvas.drawBitmap(iconList.get(1), pointX - iconList.get(1).getWidth() / 2, centerY - iconList.get(1).getHeight() / 2, null);
+                    if (currentStatus == 0) {
+                        canvas.drawBitmap(iconList.get(0), pointX - iconList.get(0).getWidth() / 2, centerY - iconList.get(0).getHeight() / 2, null);
+                    } else {
+                        canvas.drawBitmap(iconList.get(1), pointX - iconList.get(1).getWidth() / 2, centerY - iconList.get(1).getHeight() / 2, null);
+                    }
                 } else {
                     canvas.drawBitmap(iconList.get(0), pointX - iconList.get(0).getWidth() / 2, centerY - iconList.get(0).getHeight() / 2, null);
                 }
@@ -319,7 +328,11 @@ public class ProgressbarIndicator extends View {
                 if (i < currentStatus) {
                     pStoke.setColor(circleCompleteSelectedColor);
                 } else if (i == currentStatus) {
-                    pStoke.setColor(circleInProgressSelectedColor);
+                    if (currentStatus == 0){
+                        pStoke.setColor(circleUnOpenSelectedColor);
+                    }else {
+                        pStoke.setColor(circleInProgressSelectedColor);
+                    }
                 } else {
                     pStoke.setColor(circleUnOpenSelectedColor);
                 }
