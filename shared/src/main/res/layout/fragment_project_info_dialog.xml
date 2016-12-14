@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_dialog_project_info"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_project_info">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -55,7 +55,9 @@
                 android:id="@+id/tv_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="start"
+                android:lines="1"
                 android:paddingEnd="@dimen/spacing_padding_micro"
                 android:paddingStart="@dimen/spacing_padding_micro"
                 android:textColor="@color/white"
@@ -145,11 +147,11 @@
             <!--why margin fu zhi,because zxing create pic has large kongbai -->
             <ImageView
                 android:id="@+id/img_qr_code"
-                android:layout_marginTop="-25dp"
-                android:layout_marginBottom="-22dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"/>
+                android:layout_marginBottom="-22dp"
+                android:layout_marginTop="-25dp"
+                android:scaleType="centerCrop" />
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"

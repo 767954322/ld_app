@@ -188,13 +188,14 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         if (projectInfo != null) {
             Bundle projectInfoBundle = new Bundle();
             projectInfoBundle.putLong("projectId", projectInfo.getProjectId());
-            if (!TextUtils.isEmpty(projectInfo.getName()) && projectInfo.getName().contains("/")) {
-                projectInfoBundle.putString("userName", projectInfo.getName().split("/")[0]);
-                projectInfoBundle.putString("userAddress", projectInfo.getName().split("/")[1]);
-            }
+            projectInfoBundle.putString("userName", projectInfo.getName());
             projectInfoBundle.putString("roomArea", projectInfo.getBuilding().getArea() + " m\u00B2");
-            projectInfoBundle.putString("roomType", projectInfo.getBuilding().getBathrooms()
-                    + UIUtils.getString(R.string.room) + projectInfo.getBuilding().getHalls() + UIUtils.getString(R.string.hall));
+            projectInfoBundle.putString("userAddress", projectInfo.getBuilding().getCityName()
+                    + projectInfo.getBuilding().getDistrictName() + projectInfo.getBuilding().getCommunityName());
+            projectInfoBundle.putString("roomType",
+                    projectInfo.getBuilding().getRoomType() + UIUtils.getString(R.string.room)
+                            + projectInfo.getBuilding().getHalls() + UIUtils.getString(R.string.hall)
+                            + projectInfo.getBuilding().getBathrooms() + UIUtils.getString(R.string.toilet));
             mProjectDetailsView.showProjectInfoDialog(projectInfoBundle);
         } else {
             // 如果没有拿到项目详情，就无法弹出项目消息对话框
