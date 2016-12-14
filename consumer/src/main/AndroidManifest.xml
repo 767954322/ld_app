@@ -68,9 +68,18 @@
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="app"
+                    android:pathPrefix="/android-open"
+                    android:scheme="consumer"/>
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -456,7 +465,8 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".codecorationBase.studio.activity.WorkRoomDetailActivity"
@@ -644,7 +654,8 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"
