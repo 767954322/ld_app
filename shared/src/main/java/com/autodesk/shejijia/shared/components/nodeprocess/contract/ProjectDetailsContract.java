@@ -34,7 +34,7 @@ public interface ProjectDetailsContract {
 
         void getProjectInformation(); //获取项目信息
 
-        String getmThreadId();
+        String getThreadId();
 
         void initRefreshState(boolean isNeedRefresh);
 

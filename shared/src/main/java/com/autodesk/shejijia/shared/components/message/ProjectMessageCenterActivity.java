@@ -1,4 +1,5 @@
 package com.autodesk.shejijia.shared.components.message;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -6,14 +7,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
+
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.entity.MessageList;
-import com.autodesk.shejijia.shared.components.message.entity.messageItemList;
+import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
+import com.autodesk.shejijia.shared.components.message.entity.messageItemListEntity;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import java.util.List;
 public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,
         ProjectMessageCenterAdapter.HistoricalRecordstListener, RefreshLoadMoreListener {
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
-    private List<messageItemList> messageItemBeans;
+    private List<messageItemListEntity> messageItemBeans;
     private long mProjectId;
     private boolean mIsUnread;
     private String mThreadId;
@@ -66,7 +68,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.getSwipeRefreshLayout()
                 .setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         messageItemBeans = new ArrayList<>();
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this,messageItemBeans, mIsUnread, R.layout.item_messagecenter);
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this, messageItemBeans, mIsUnread, R.layout.item_messagecenter);
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
     }
 
@@ -88,18 +90,18 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
 
     @Override
-    public void refreshProjectMessagesView(MessageList messageInfo) {
+    public void refreshProjectMessagesView(MessageEntity messageInfo) {
         mRvProjectMessagCenterView.complete();
         mProjectMessageCenterPresenter.changeUnreadMsgState(mThreadId);
-        if (messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() > 0) {
+        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() > 0) {
             mRvProjectMessagCenterView.scrollToPosition(0);
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
         }
         setLoadMoreEnable(messageInfo);
     }
 
-    private void setLoadMoreEnable(MessageList messageInfo) {
-        if (messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() < ProjectMessageCenterPresenter.LIMIT) {
+    private void setLoadMoreEnable(MessageEntity messageInfo) {
+        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() < ProjectMessageCenterPresenter.LIMIT) {
             mRvProjectMessagCenterView.setLoadMoreEnable(false);
         } else {
             mRvProjectMessagCenterView.setLoadMoreEnable(true);
@@ -108,10 +110,10 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
 
 
     @Override
-    public void loadMoreProjectMessagesView(MessageList messageInfo) {
+    public void loadMoreProjectMessagesView(MessageEntity messageInfo) {
         mRvProjectMessagCenterView.complete();
-        if (messageInfo.getMessageItemBean() != null && messageInfo.getMessageItemBean().size() > 0) {
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemBean(), mIsUnread, messageInfo.getOffset());
+        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() > 0) {
+            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
             return;
         }
         setLoadMoreEnable(messageInfo);

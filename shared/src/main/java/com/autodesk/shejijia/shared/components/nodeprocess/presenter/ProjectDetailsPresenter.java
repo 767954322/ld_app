@@ -226,7 +226,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     @Override
-    public String getmThreadId() {
+    public String getThreadId() {
         return mThreadId;
     }
 

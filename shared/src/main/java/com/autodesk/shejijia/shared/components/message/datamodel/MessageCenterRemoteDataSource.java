@@ -7,7 +7,7 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
-import com.autodesk.shejijia.shared.components.message.entity.MessageList;
+import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 import org.json.JSONObject;
 
@@ -28,12 +28,12 @@ public class MessageCenterRemoteDataSource implements MessageCenterDataSource{
 
 
     @Override
-    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<MessageList, ResponseError> callback) {
+    public void getMessageCenterInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<MessageEntity, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getMessageCenterInfo(requestParams,requestTag,new OkJsonRequest.OKResponseCallback(){
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String result = jsonObject.toString();
-                MessageList messageInfo = GsonUtil.jsonToBean(result, MessageList.class);
+                MessageEntity messageInfo = GsonUtil.jsonToBean(result, MessageEntity.class);
                 callback.onSuccess(messageInfo);
 
             }

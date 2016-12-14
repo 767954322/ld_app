@@ -6,11 +6,11 @@ import java.io.Serializable;
 /**
  * Created by luchongbin on 2016/12/9.
  */
-public  class messageItemList implements Serializable {
+public  class messageItemListEntity implements Serializable {
     @SerializedName("display_message")
-    private DisplayMessage displayMessage;
+    private DisplayMessageEntity displayMessage;
     @SerializedName("custom_data")
-    private CustomData customDataBean;
+    private CustomDataEntity customDataBean;
     @SerializedName("sender_role")
     private String senderRole;
     @SerializedName("sender_avatar")
@@ -18,11 +18,11 @@ public  class messageItemList implements Serializable {
     @SerializedName("sent_time")
     private String sentTime;
 
-    public DisplayMessage getDisplayMessage() {
+    public DisplayMessageEntity getDisplayMessage() {
         return displayMessage;
     }
 
-    public void setDisplayMessage(DisplayMessage displayMessage) {
+    public void setDisplayMessage(DisplayMessageEntity displayMessage) {
         this.displayMessage = displayMessage;
     }
 
@@ -50,11 +50,11 @@ public  class messageItemList implements Serializable {
         this.senderRole = senderRole;
     }
 
-    public CustomData getCustomDataBean() {
+    public CustomDataEntity getCustomDataBean() {
         return customDataBean;
     }
 
-    public void setCustomDataBean(CustomData customDataBean) {
+    public void setCustomDataBean(CustomDataEntity customDataBean) {
         this.customDataBean = customDataBean;
     }
 }

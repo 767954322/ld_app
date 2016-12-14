@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by luchongbin on 2016/12/9.
  */
 
-public  class CustomData implements Serializable {
+public  class CustomDataEntity implements Serializable {
     @SerializedName("project_id")
     private String projectId;
     @SerializedName("task_id")
@@ -21,7 +21,7 @@ public  class CustomData implements Serializable {
     @SerializedName("entity_id")
     private String entityId;
     @SerializedName("extend_data")
-    private ExtendData extendData;
+    private ExtendDataEntity extendData;
 
     public String getProjectId() {
         return projectId;
@@ -71,11 +71,11 @@ public  class CustomData implements Serializable {
         this.entityId = entityId;
     }
 
-    public ExtendData getExtendData() {
+    public ExtendDataEntity getExtendData() {
         return extendData;
     }
 
-    public void setExtendData(ExtendData extendData) {
+    public void setExtendData(ExtendDataEntity extendData) {
         this.extendData = extendData;
     }
 }

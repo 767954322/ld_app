@@ -8,7 +8,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
-import com.autodesk.shejijia.shared.components.message.entity.MessageList;
+import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
 
 import org.json.JSONObject;
 
@@ -38,7 +38,6 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
 
     @Override
     public void loadMoreProjectMessages(long mProjectId,boolean mIsUnread) {
-        mOffset += 10;
         getMessage(mOffset,mProjectId,mIsUnread);
     }
     private void getMessage(int offset,long mProjectId,boolean mIsUnread){
@@ -53,9 +52,11 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     @Override
     public void getMessageCenterInfo(Bundle bundle,String mTAG) {
         mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageList, ResponseError>(){
+        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageEntity, ResponseError>(){
             @Override
-            public void onSuccess(MessageList messageInfo) {
+            public void onSuccess(MessageEntity messageInfo) {
+                mOffset += messageInfo.getMessageItemList() != null?messageInfo.getMessageItemList().size():0;
+                mOffset = messageInfo.getOffset()+10;
                 if(messageInfo.getOffset() == 0){
                     mProjectMessageCenterPresenterView.refreshProjectMessagesView(messageInfo);
                 }else{

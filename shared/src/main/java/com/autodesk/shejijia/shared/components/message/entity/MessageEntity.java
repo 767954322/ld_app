@@ -8,12 +8,12 @@ import java.util.ArrayList;
 /**
  * Created by luchongbin on 2016/12/6.
  */
-public class MessageList implements Serializable {
+public class MessageEntity implements Serializable {
     private int total;
     private int limit;
     private int offset;
     @SerializedName("data")
-    private ArrayList<messageItemList> messageItemBean;
+    private ArrayList<messageItemListEntity> messageItemList;
 
     public int getTotal() {
         return total;
@@ -39,11 +39,11 @@ public class MessageList implements Serializable {
         this.offset = offset;
     }
 
-    public ArrayList<messageItemList> getMessageItemBean() {
-        return messageItemBean;
+    public ArrayList<messageItemListEntity> getMessageItemList() {
+        return messageItemList;
     }
 
-    public void setMessageItemBean(ArrayList<messageItemList> messageItemBean) {
-        this.messageItemBean = messageItemBean;
+    public void setMessageItemList(ArrayList<messageItemListEntity> messageItemList) {
+        this.messageItemList = messageItemList;
     }
 }

@@ -10,7 +10,6 @@
         android:supportsRtl="true">
         <activity android:name=".framework.activity.NavigationBarActivity" />
         <activity android:name=".components.message.ProjectMessageCenterActivity" />
-        <activity android:name=".components.message.TestActivity"></activity>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 
-public  class ExtendData implements Serializable {
+public  class ExtendDataEntity implements Serializable {
     private String title;
     private String description;
     @SerializedName("task_name")
