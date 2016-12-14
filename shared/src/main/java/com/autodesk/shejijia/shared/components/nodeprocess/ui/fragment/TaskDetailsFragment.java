@@ -33,6 +33,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogF
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
@@ -120,7 +121,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        mTaskDetailsPresenter.startPresent();
     }
 
     @Override
@@ -294,15 +294,15 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
             return;
         }
 
-        final ArrayList<String> photos = new ArrayList<>();
+        final ArrayList<ImageInfo> photos = new ArrayList<>();
         for (File file: files) {
             if (ConstructionConstants.FileType.IMAGE.equalsIgnoreCase(file.getType())) {
-                photos.add(file.getPublicUrl());
+                photos.add(new ImageInfo(file.getPublicUrl(), file.getThumbnailUrl()));
             }
         }
 
         for (int index = 0; index < photos.size(); index++) {
-            String photoUri = photos.get(index);
+            String photoUri = photos.get(index).getPictureUri();
             ImageView imageView = (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.item_task_photo, mTaskPhotosContainer, false);
             mTaskPhotosContainer.addView(imageView);
             imageView.setTag(index);
@@ -313,7 +313,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
                     intent.putExtra(CommentFragment.POSITION, (int) v.getTag());
-                    intent.putStringArrayListExtra(CommentFragment.IMAGE_LIST, photos);
+                    intent.putParcelableArrayListExtra(CommentFragment.IMAGE_LIST, photos);
                     getActivity().startActivity(intent);
                 }
             });
