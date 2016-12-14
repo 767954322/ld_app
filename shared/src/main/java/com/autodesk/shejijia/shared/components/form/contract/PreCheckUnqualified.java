@@ -18,10 +18,8 @@ public interface PreCheckUnqualified {
     }
 
     interface Presenter extends BasePresenter {
-        void nextStep(List<ImageInfo> mPictures, String mediaType);
+        void upLoadFiles(final List<ImageInfo> mPictures, final String audioPath, final String commentContent, SHPrecheckForm preCheckForm);
 
         void setCheckIndex(SHPrecheckForm mPreCheckForm, boolean checked, int id);
-
-        void onButtonClick(int id);
     }
 }

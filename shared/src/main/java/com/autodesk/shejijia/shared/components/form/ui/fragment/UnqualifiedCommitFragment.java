@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
@@ -59,28 +60,25 @@ public class UnqualifiedCommitFragment extends BaseConstructionFragment implemen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_commit) {
-            LogUtils.d(TAG, mPicture.get(0).getPath());
-            File file = new File(mPicture.get(0).getPath());
-            FileHttpManager.getInstance().upLoadFileByType(file, "IMAGE", new FileHttpManager.ResponseHandler() {
-                @Override
-                public void onSuccess(String response) {
-                    LogUtils.d(TAG, response);
-                    ToastUtils.showShort(mContext, "上传成功");
-                }
-
-                @Override
-                public void onFailure() {
-
-                }
-            });
+            showDialog("上传以后不可更改,是否确定上传");
         } else if (v.getId() == R.id.btn_cancel) {
-
+            getActivity().finish();
         }
     }
 
     @Override
     public void showDialog(String message) {
+        new CustomDialog(mContext, new CustomDialog.OnDialogClickListenerCallBack() {
+            @Override
+            public void onClickOkListener() {
+                mPresenter.upLoadFiles(mPicture,mAudioPath,mCommentContent,mPreCheckForm);
+            }
 
+            @Override
+            public void onClickCancelListener() {
+
+            }
+        }).showCustomViewDialog("提示",message,false,true,true,false);
     }
 
     @Override
