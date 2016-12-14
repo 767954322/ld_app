@@ -143,6 +143,17 @@ public class ConstructionConstants {
         public static final String JSONOBJECT_ADDISSUE_RESOURCE_URL = "resource_url";
         public static final String MEDIA_TYPE_IMAGE = "image";
         public static final String MEDIA_TYPE_AUDIO = "audio";
+
+
+        public static final String ISSUE_ROLE_ENGLISH_INSPECTORCOMPANY = "inspectorcompany";
+        public static final String ISSUE_ROLE_ENGLISH_INSPECTOR = "inspector";
+        public static final String ISSUE_ROLE_ENGLISH_MEMBER = "member";
+        public static final String ISSUE_ROLE_ENGLISH_DESIGNER = "designer";
+        public static final String ISSUE_ROLE_ENGLISH_FOREMAN = "foreman";
+        public static final String ISSUE_ROLE_ENGLISH_MATERIALSTAFF = "materialstaff";
+        public static final String ISSUE_ROLE_ENGLISH_CLIENTMANAGER = "clientmanager";
+
+
     }
 
     public static class ProjectStatus {

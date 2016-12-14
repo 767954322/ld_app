@@ -179,6 +179,20 @@
     <string name="Fragment_addissue_fllow_end">跟进</string>
     <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
     <string name="Fragment_issuelist_itemclick_toast">查看详情</string>
+    <!-- 问题追踪职位 -->
+    <string name="issuerole_china_inspectorcompany">监理公司</string>
+    <string name="issuerole_china_inspector">监理</string>
+    <string name="issuerole_china_member">消费者</string>
+    <string name="issuerole_china_designer">设计师</string>
+    <string name="issuerole_china_foreman">班长</string>
+    <string name="issuerole_china_materialstaff">材料员</string>
+    <string name="issuerole_china_clientmanager">客户经理</string>
+    <!-- 问题追踪类型 -->
+    <string name="issuetype_china_sheji">设计问题</string>
+    <string name="issuetype_china_xuncha">巡查问题</string>
+    <string name="issuetype_china_houqi">后期安装</string>
+    <string name="issuetype_china_cailiao">材料问题</string>
+    <string name="issuetype_china_qita">其他问题</string>
 
     <!-- 室，厅，卫 -->
     <string name="room">室</string>
