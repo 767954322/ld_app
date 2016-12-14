@@ -21,6 +21,8 @@ public class ConstructionConstants {
 
     //服务器端url地址(问题列表):
     public static final String ISSUE_URL = Config.CONSTRUCTION_ISSUE_URL;
+    //添加问题url地址（问题追踪）:
+    public static final String ADDISSUE_URL = Config.CONSTRUCTION_ADDISSUE_URL;
 
     //下拉刷新,上拉加载更多事件标记
     public static final String REFRESH_EVENT = "refresh";
@@ -140,7 +142,7 @@ public class ConstructionConstants {
         public static final String JSONOBJECT_ADDISSUE_RESOURCE_FILE_id = "resource_file_id";
         public static final String JSONOBJECT_ADDISSUE_RESOURCE_URL = "resource_url";
         public static final String MEDIA_TYPE_IMAGE = "image";
-        public static final String MEDIA_TYPE_VOICE = "voice";
+        public static final String MEDIA_TYPE_AUDIO = "audio";
     }
 
     public static class ProjectStatus {

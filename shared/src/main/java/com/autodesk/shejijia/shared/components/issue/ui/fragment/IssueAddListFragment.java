@@ -41,8 +41,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-
-import static com.autodesk.shejijia.shared.R.array.add_issue_fllow;
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 /**
@@ -216,10 +214,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
                 mIssueReplyContent.setText(mDate);
             }
         });
-    }
-
-    private void setTomoTime() {
-
     }
 
     /**

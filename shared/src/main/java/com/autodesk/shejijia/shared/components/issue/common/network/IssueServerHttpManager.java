@@ -110,7 +110,8 @@ public class IssueServerHttpManager {
      */
     public void putIssueTracking(JSONObject jsonObject, @NonNull OkJsonRequest.OKResponseCallback callback) {
 
-        String postUrl = "http://cp-uat-issue.homestyler.com/api/v1/issues";
+        String postUrl = ConstructionConstants.ADDISSUE_URL + "/issues";
+//        String postUrl = "http://cp-uat-issue.homestyler.com/api/v1/issues";
 
         post(null, postUrl, jsonObject, callback);
     }

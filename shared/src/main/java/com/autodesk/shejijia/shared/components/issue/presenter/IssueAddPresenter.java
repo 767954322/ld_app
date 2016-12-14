@@ -48,15 +48,16 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
         this.mProjectInfo = projectInfo;
         this.mNotifyCustormer = notifyCustormer;
         urlFromServer = new ArrayList<>();
+
         if (!TextUtils.isEmpty(audioPath)) {
-            FileHttpManager.getInstance().upLoadFileByType(new File(audioPath), ConstructionConstants.IssueTracking.MEDIA_TYPE_VOICE, new FileHttpManager.ResponseHandler() {
+            FileHttpManager.getInstance().upLoadFileByType(new File(audioPath), ConstructionConstants.IssueTracking.MEDIA_TYPE_AUDIO, new FileHttpManager.ResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
                     mOkPutVoiceFile = true;
                     IssueFileBean issueFile = GsonUtil.jsonToBean(response, IssueFileBean.class);
                     List<IssueFileBean.Files> files = issueFile.getFiles();
                     if (files.size() > 0) {
-                        urlFromServer.add(new IssueFiles(ConstructionConstants.IssueTracking.MEDIA_TYPE_VOICE, files.get(0).getFile_id(), files.get(0).getPublic_url()));
+                        urlFromServer.add(new IssueFiles(ConstructionConstants.IssueTracking.MEDIA_TYPE_AUDIO, files.get(0).getFile_id(), files.get(0).getPublic_url()));
                     }
                     resultPutFile();
                 }
@@ -96,7 +97,6 @@ public class IssueAddPresenter implements IssueAddContract.Presenter {
                 });
             }
         }
-
     }
 
     //判断是否语音图片上传结束
