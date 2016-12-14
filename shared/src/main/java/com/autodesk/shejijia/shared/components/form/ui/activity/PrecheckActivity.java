@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.DividerItemDecoration;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.ItemCell;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
@@ -192,7 +191,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void enterQualified(Task task, SHPrecheckForm shPrecheckForm) {
-        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,task提供各种表单的id,后者保存了辅助条件的信息
         Intent intent = new Intent(this, FormActivity.class);
         intent.putExtra("task", task);
         intent.putExtra("shPrecheckForm", shPrecheckForm);
@@ -203,8 +201,6 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void enterUnqualified(SHPrecheckForm shPrecheckForm) {
-        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,
-        ToastUtils.showShort(this, "另外再开启一个activity来处理验收条件不合格的情况");
         Intent intent = new Intent(this,UnqualifiedActivity.class);
         intent.putExtra(UnqualifiedActivity.UNQUALIFIED_FORM,shPrecheckForm);
         startActivity(intent);

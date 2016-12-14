@@ -989,7 +989,7 @@
         {
             "item_id": "wall_space_tile_5",
             "category": "饰面工程",
-            "title": "25．墙面砖粘贴(四)",
+            "title": "25．墙面砖粘贴(五)",
             "standard": "表面平整，排砖合理，非整砖不小于整砖的1/3（以排砖图为准）",
             "check_type": "acceptance_options",
             "action_visibility": true,

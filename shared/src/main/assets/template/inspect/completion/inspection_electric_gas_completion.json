@@ -40,11 +40,11 @@
         {
             "item_id": "lamp_installation",
             "category": "安装",
-            "title": "灯具安装",
+            "title": "1.灯具安装",
             "standard": "无机械损伤，变形，涂层脱落和灯罩破裂；安装端正",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -80,7 +80,7 @@
         {
             "item_id": "switch_socket_installation_first",
             "category": "安装",
-            "title": "开关/插座安装（一）",
+            "title": "2.开关/插座安装(一)",
             "standard": "接线正确，无混接、接错现象",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -120,7 +120,7 @@
         {
             "item_id": "switch_socket_installation_second",
             "category": "安装",
-            "title": "开关/插座安装（二）",
+            "title": "3.开关/插座安装(二)",
             "standard": "同一房间内新做开关、插座高度同一水平面上",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -160,11 +160,11 @@
         {
             "item_id": "switch_socket_installation_three",
             "category": "安装",
-            "title": "开关/插座安装（三）",
+            "title": "4.开关/插座安装(三)",
             "standard": "面板端正、牢固，紧贴墙角、无缝隙，表面洁净，与饰面交接严密、吻合",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -200,7 +200,7 @@
         {
             "item_id": "switch_socket_installation_four",
             "category": "安装",
-            "title": "开关/插座安装(四)",
+            "title": "5.开关/插座安装(四)",
             "standard": "厨房、厕浴间面板应安装防水罩",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -240,11 +240,11 @@
         {
             "item_id": "brake_box_installation_first",
             "category": "安装",
-            "title": "闸箱安装(一)",
+            "title": "6.闸箱安装(一)",
             "standard": "空开标识对应、固定牢固，与盖板开孔吻合",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -280,11 +280,11 @@
         {
             "item_id": "brake_box_installation_second",
             "category": "安装",
-            "title": "闸箱安装(二)",
+            "title": "7.闸箱安装(二)",
             "standard": "箱体无污染，与饰面交接严密、吻合、美观",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -320,7 +320,7 @@
         {
             "item_id": "leakage_detection",
             "category": "试验",
-            "title": "漏电检测",
+            "title": "8.漏电检测",
             "standard": "空开动作灵敏，动作时间不超过100ms，动作电流30mA要求",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -360,11 +360,11 @@
         {
             "item_id": "lighting_through_electric_test_run",
             "category": "试验",
-            "title": "照明通电试运行",
+            "title": "9.照明通电试运行",
             "standard": "供电正常，开关面板启闭灵活，多联开关启闭方向一致；多控开关满足使用要求",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -400,7 +400,7 @@
         {
             "item_id": "exhaust_equipment_commissioning",
             "category": "试验",
-            "title": "排风设备试运行",
+            "title": "10.排风设备试运行",
             "standard": "独立控制开关，运行正常，无异响，禁止与灯具开关共用",
             "check_type": "acceptance_options",
             "action_visibility": false,
@@ -440,11 +440,11 @@
         {
             "item_id": "quality_of_appearance",
             "category": "其他",
-            "title": "观感质量",
+            "title": "11.观感质量",
             "standard": "观感质量良好",
             "check_type": "acceptance_options",
-            "action_visibility": false,
-            "action_changeability": false,
+            "action_visibility": true,
+            "action_changeability": true,
             "action_type": "action_options",
             "acceptance_criteria": [
                 0,
@@ -478,9 +478,9 @@
             ]
         },
         {
-            "item_id": "quality_of_appearance",
+            "item_id": "quality_of_appearance_postsale",
             "category": "其他",
-            "title": "售后提示",
+            "title": "12.售后提示",
             "standard": "家中长期无人时，注意关闭电闸，冰箱内存放物品应及时处理",
             "check_type": "notification_options",
             "action_visibility": false,

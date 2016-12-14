@@ -121,7 +121,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
             startActivity(new Intent(this, RegisterOrLoginActivity.class));
             finish();
         } else if (itemId == R.id.inspect_more) {
-            // TODO: 16/11/21  样式不定,以后再做
+// TODO: 16/11/21  样式不定,以后再做
             ToastUtils.showShort(this, "显示更多");
         }
         mDrawerLayout.closeDrawers();

@@ -1,12 +1,19 @@
 {
     "id": "inspection_brick_hollowness",
-    "version": 1,
+    "version": 0,
     "status": -1,
-    "schema_version": 1,
     "category": "inspection",
     "title": "饰面砖空鼓检查记录",
+    "schema_version": 1,
     "doc_type": "form_template",
-    "check_items_variability": "false",
-    "type_dict": {},
+    "check_items_variability": true,
+    "type_dict": {
+        "status": [
+                   "未完成",
+                   "已完成"
+                   ],
+      "room_options":["卧室","客厅","厨房","饭厅","卫生间"],
+      "angle_options":["A", "B", "C", "D"]
+    },
     "check_items": []
 }

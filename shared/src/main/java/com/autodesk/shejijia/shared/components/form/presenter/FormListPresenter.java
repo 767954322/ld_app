@@ -90,7 +90,7 @@ public class FormListPresenter implements FormListContract.Presenter {
             @Override
             public void onError(ResponseError error) {
 // TODO: 16/12/13 提交表单失败的业务逻辑
-                mView.showNetError(error);
+                mView.showError(error.getMessage());
             }
 
         });
@@ -129,7 +129,7 @@ public class FormListPresenter implements FormListContract.Presenter {
             public void onError(ResponseError error) {
 // TODO: 16/12/13 改变Task状态失败后的业务逻辑
                 mView.hideLoading();
-                mView.showNetError(error);
+                mView.showError(error.getMessage());
             }
         });
 

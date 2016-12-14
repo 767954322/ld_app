@@ -73,7 +73,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     protected void initData() {
         Bundle bundle = getArguments();
         Task task = (Task) bundle.getSerializable("task");
-        // TODO: 16/12/7 验收条件满足的表格数据
+// TODO: 16/12/7 验收条件满足的表格数据
         mPrecheckForm = (SHPrecheckForm) bundle.getSerializable("precheckForm");
         mTitle = task.getName();
         initToolbar(mTitle);
@@ -82,7 +82,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-        if(mAdapter == null) {
+        if (mAdapter == null) {
             mAdapter = new FormListAdapter(mItemCellList, this);
         }
         mRecyclerView.setAdapter(mAdapter);
@@ -92,6 +92,8 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     @Override
     protected void initListener() {
         mSubmitBtn.setOnClickListener(this);
+        mReinspectionLayout.setOnClickListener(this);
+        mRectificationLayout.setOnClickListener(this);
 
         rootView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +121,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         mItemCellList.clear();
         mItemCellList.addAll(itemCellList);
 
-        if(mAdapter == null) {
+        if (mAdapter == null) {
             mAdapter = new FormListAdapter(mItemCellList, this);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -143,7 +145,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void refreshReinspection(Map<String, List<String>> reinspectionMap) {
-        if(reinspectionMap == null) {
+        if (reinspectionMap == null) {
             mProblemTitleTv.setVisibility(View.GONE);
             mReinspectionLayout.setVisibility(View.GONE);
         } else {
@@ -155,15 +157,15 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void refreshRectification(Map<String, List<String>> rectificationMap) {
-        if(rectificationMap == null) {
-            if(mReinspectionLayout.getVisibility() != View.VISIBLE) {
+        if (rectificationMap == null) {
+            if (mReinspectionLayout.getVisibility() != View.VISIBLE) {
                 mProblemTitleTv.setVisibility(View.GONE);
             }
             mLineView.setVisibility(View.GONE);
             mRectificationLayout.setVisibility(View.GONE);
         } else {
             mProblemTitleTv.setVisibility(View.VISIBLE);
-            if(mReinspectionLayout.getVisibility() != View.VISIBLE) {
+            if (mReinspectionLayout.getVisibility() != View.VISIBLE) {
                 mLineView.setVisibility(View.GONE);
             } else {
                 mLineView.setVisibility(View.VISIBLE);
@@ -179,7 +181,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void SubmitSuccess() {
-        mPresenter.submitData(mPrecheckForm);
+//        mPresenter.submitData(mPrecheckForm);
 
         Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -191,26 +193,13 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         int id = v.getId();
 
         if (R.id.btn_submit == id) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.alert_dialog__default_title);
-            builder.setMessage("提交后不可修改");
-            builder.setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mPresenter.submitData(mPrecheckForm);//提交表单
-                    dialog.dismiss();
-                    showLoading();
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            showSubmitDialog();
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
+        } else if(R.id.rl_reinspection_log == id) {
+
+
+        } else if(R.id.rl_rectification_log == id) {
+
 
         }
 
@@ -223,5 +212,28 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     private void initToolbar(String title) {
         mContext.getSupportActionBar().setTitle(title);
+    }
+
+    private void showSubmitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage(R.string.tip_form_commit);
+        builder.setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.submitData(mPrecheckForm);//提交表单
+                dialog.dismiss();
+                showLoading();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

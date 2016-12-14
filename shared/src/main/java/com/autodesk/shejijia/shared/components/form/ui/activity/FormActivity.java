@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
@@ -53,15 +55,46 @@ public class FormActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        // TODO: 16/11/30 回退时在做处理,弹框确认
         if (getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT).isVisible()) {
-            Intent intent = new Intent(this, ScanQrCodeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+            showBackDialog();
+
+
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void showBackDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.alert_dialog__default_title);
+        builder.setMessage("保存表单的数据么?");
+        builder.setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+// TODO: 16/12/14 后期需要添加保存表单数据在本地
+                dialog.dismiss();
+                enterInspectorActivity();
+            }
+
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                enterInspectorActivity();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void enterInspectorActivity() {
+// TODO: 16/12/14 后期做监理主界面的跳转
+        Intent intent = new Intent(this, ScanQrCodeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -134,13 +134,13 @@ public class PrecheckPresenter implements PrecheckContract.Presenter {
     private void addNecessaryView(int index, int spacing, CheckItem checkItem) {
         TextView view = new TextView(mContext);
         view.setPadding(0, spacing, 0, spacing);
-        String standard = checkItem.getStandard().replaceAll("是否", "");
+
         if (index < 10) {
-            standard = "0" + String.valueOf(index) + " " + standard;
+            view.setText("0" + String.valueOf(index) + " " + checkItem.getTitle());
         } else {
-            standard = String.valueOf(index) + " " + standard;
+            view.setText(checkItem.getTitle());
         }
-        view.setText(standard);
+
         view.setTextColor(UIUtils.getColor(R.color.con_font_gray));
 
         mView.addNecessaryView(view);

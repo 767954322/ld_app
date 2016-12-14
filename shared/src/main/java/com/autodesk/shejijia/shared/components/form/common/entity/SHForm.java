@@ -189,24 +189,24 @@ public class SHForm implements Serializable {
         this.checkItems = checkItems;
     }
 
-    public SHForm(HashMap map){
+    public SHForm(HashMap map) {
         init(map);
     }
 
-    protected void init(HashMap map){
+    protected void init(HashMap map) {
         this.title = (String) map.get("title");
         this.version = (Integer) map.get("version");
         this.category = (String) map.get("category");
         this.status = (Integer) map.get("status");
-        this.checkItemsVariability = Boolean.getBoolean((String) map.get("check_items_variability"));
+        this.checkItemsVariability = Boolean.valueOf(String.valueOf(map.get("check_items_variability")));
         this.typeDict = (HashMap) map.get("type_dict");
-        this.statusOptions = CastUtils.cast(typeDict.get("status")) ;
+        this.statusOptions = CastUtils.cast(typeDict.get("status"));
         this.checkItems = new ArrayList<>();
 
         List<Map> tempItems = CastUtils.cast(map.get("check_items"));
-        if(tempItems != null){
-            for(Map itemMap : tempItems){
-                if(itemMap instanceof HashMap) {
+        if (tempItems != null) {
+            for (Map itemMap : tempItems) {
+                if (itemMap instanceof HashMap) {
                     itemMap.put("type_dict", this.typeDict);
                     CheckItem checkItem = new CheckItem((HashMap) itemMap);
                     checkItems.add(checkItem);
@@ -215,7 +215,7 @@ public class SHForm implements Serializable {
         }
     }
 
-    public void applyFormData(HashMap map){
+    public void applyFormData(HashMap map) {
         this.id = (String) map.get("id");
         this.projectId = String.valueOf(map.get("project_id"));
         this.taskId = (String) map.get("task_id");
@@ -225,10 +225,10 @@ public class SHForm implements Serializable {
         this.version = (Integer) map.get("version");
 
         List<Map> tempItems = CastUtils.cast(map.get("check_items"));
-        if(tempItems != null){
-            for(Map itemMap : tempItems){
+        if (tempItems != null) {
+            for (Map itemMap : tempItems) {
                 CheckItem item = getFormItemWithItemID((String) itemMap.get("item_id"));
-                if(item != null ){
+                if (item != null) {
                     List<Map> values = CastUtils.cast(itemMap.get("value"));
                     item.applyItemValue(values);
                 }
@@ -236,34 +236,34 @@ public class SHForm implements Serializable {
         }
     }
 
-    protected CheckItem getFormItemWithItemID(String itemID){
-        if(checkItems == null || itemID == null){
+    protected CheckItem getFormItemWithItemID(String itemID) {
+        if (checkItems == null || itemID == null) {
             return null;
         }
-        for(CheckItem item : checkItems){
-            if(item.getItemId().equals(itemID)){
+        for (CheckItem item : checkItems) {
+            if (item.getItemId().equals(itemID)) {
                 return item;
             }
         }
         return null;
     }
 
-    public Map getUpdateFormData(){
-        Map<String,Object> updateFormData = new HashMap<>();
-        updateFormData.put("project_id",this.projectId);
-        updateFormData.put("task_id",this.taskId);
-        updateFormData.put("template_id",this.formTemplateId);
-        updateFormData.put("form_instance_id",this.formInstanceId);
-        updateFormData.put("status",this.status);
-        updateFormData.put("version",this.version);
+    public Map getUpdateFormData() {
+        Map<String, Object> updateFormData = new HashMap<>();
+        updateFormData.put("project_id", this.projectId);
+        updateFormData.put("task_id", this.taskId);
+        updateFormData.put("template_id", this.formTemplateId);
+        updateFormData.put("form_instance_id", this.formInstanceId);
+        updateFormData.put("status", this.status);
+        updateFormData.put("version", this.version);
         List<Map> tempCheckItemList = new ArrayList<>();
-        for(CheckItem checkItem : this.checkItems){
-            Map<String,Object> miniCheckItem = new HashMap<>();
-            miniCheckItem.put("item_id",checkItem.getItemId());
-            miniCheckItem.put("value",checkItem.getFormFeedBack().combineUpdateData());
+        for (CheckItem checkItem : this.checkItems) {
+            Map<String, Object> miniCheckItem = new HashMap<>();
+            miniCheckItem.put("item_id", checkItem.getItemId());
+            miniCheckItem.put("value", checkItem.getFormFeedBack().combineUpdateData());
             tempCheckItemList.add(miniCheckItem);
         }
-        updateFormData.put("check_items",tempCheckItemList);
+        updateFormData.put("check_items", tempCheckItemList);
         return updateFormData;
     }
 
