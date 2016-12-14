@@ -9,7 +9,7 @@ import java.io.Serializable;
  * version 2.0 update 10/24
  * Task 里 files字段
  */
-public class File implements Serializable{
+public class ConstructionFile implements Serializable{
 
     @SerializedName("file_id")
     private String fileId;

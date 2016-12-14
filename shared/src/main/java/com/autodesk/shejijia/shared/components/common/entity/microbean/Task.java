@@ -20,7 +20,7 @@ public class Task implements Serializable{
     private String assignee;
     private ArrayList<Comment> comments;
     private ArrayList<Form> forms;
-    private ArrayList<File> files;
+    private ArrayList<ConstructionFile> files;
     @SerializedName("doc_type")
     private String docType;
     @SerializedName("task_id")
@@ -106,11 +106,11 @@ public class Task implements Serializable{
         this.forms = forms;
     }
 
-    public ArrayList<File> getFiles() {
+    public ArrayList<ConstructionFile> getFiles() {
         return files;
     }
 
-    public void setFiles(ArrayList<File> files) {
+    public void setFiles(ArrayList<ConstructionFile> files) {
         this.files = files;
     }
 
