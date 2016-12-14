@@ -40,6 +40,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     @Override
     protected void initView() {
         mRvProjectMessagCenterView = (SwipeRecyclerView) findViewById(R.id.rv_project_message_center_view);
+        initRecyclerView();
     }
 
     @Override
@@ -49,7 +50,6 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mIsUnread = intent.getBooleanExtra(ConstructionConstants.UNREAD, false);
         mProjectId = intent.getLongExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, 0);
         mThreadId = intent.getStringExtra(ConstructionConstants.THREAD_ID);
-
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         messageItemBeans = new ArrayList<>();
         mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(), TAG, this);
         mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(messageItemBeans, mIsUnread, R.layout.item_messagecenter);
-        initRecyclerView();
+
     }
 
     private void initRecyclerView() {
