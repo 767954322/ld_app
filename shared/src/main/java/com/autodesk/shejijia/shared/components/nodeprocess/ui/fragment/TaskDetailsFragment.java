@@ -217,6 +217,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showTaskMembers(@NonNull ArrayList<Member> members) {
+        mTaskMembersContainer.removeAllViews();
         for (Member member : members) {
             ImageView avatarImageView = (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.view_task_member, mTaskMembersContainer, false);
 
@@ -289,6 +290,7 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void showTaskPhoto(@NonNull Task task) {
+        mTaskPhotosContainer.removeAllViews();
         final List<File> files = task.getFiles();
         if (files == null) {
             return;
