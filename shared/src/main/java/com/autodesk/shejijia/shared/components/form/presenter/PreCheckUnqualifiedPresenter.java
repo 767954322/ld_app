@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
 import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -26,8 +27,8 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
     private static final String TAG = "PreCheckUnqualifiedPresenter";
     private PreCheckUnqualified.View mView;
     private Context mContext;
-    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> mResponseImageFileList;
-    private com.autodesk.shejijia.shared.components.common.entity.microbean.File mAudioFile;
+    private List<ConstructionFile> mResponseImageFileList;
+    private ConstructionFile mAudioFile;
     private List<ImageInfo> mPictures;
     private String mAudioPath;
     private String mCommentContent;
@@ -65,8 +66,8 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
                     public void onSuccess(String response) {
                         LogUtils.d(TAG, response);
                         ++mCurrentImageFileNum;
-                        com.autodesk.shejijia.shared.components.common.entity.microbean.File reponseFile =
-                                GsonUtil.jsonToBean(response, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                        ConstructionFile reponseFile =
+                                GsonUtil.jsonToBean(response, ConstructionFile.class);
                         mResponseImageFileList.add(reponseFile);
                         if(mCurrentImageFileNum == mPictures.size()){
                             resultPutFile();
@@ -91,8 +92,8 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
                 @Override
                 public void onSuccess(String response) {
                     mOkPutVoiceFile = true;
-                    com.autodesk.shejijia.shared.components.common.entity.microbean.File responseFile =
-                            GsonUtil.jsonToBean(response, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                    ConstructionFile responseFile =
+                            GsonUtil.jsonToBean(response, ConstructionFile.class);
                     mAudioFile = responseFile;
                     resultPutFile();
                 }
