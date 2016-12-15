@@ -53,7 +53,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     private Button mCreatePlanBtn;
     private TextView mWorkStateView;
     private TextView mEditPlanBtn;
-    private TextView mtvMenuBadge;
+    private TextView mMenuBadgeView;
     private boolean mIsUnread = false;
     private ProjectDetailsContract.Presenter mProjectDetailsPresenter;
     private ProjectDetailsPagerAdapter mFragmentPagerAdapter;
@@ -202,20 +202,20 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     public void updateUnreadMsgCountView(int count) {
         if (count != 0) {
             mIsUnread = true;
-            mtvMenuBadge.setVisibility(View.VISIBLE);
+            mMenuBadgeView.setVisibility(View.VISIBLE);
         }
-        mtvMenuBadge.setText(count + "");
+        mMenuBadgeView.setText(count + "");
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.project_details_menu, menu);
         FrameLayout frameLayout = (FrameLayout) menu.findItem(R.id.project_toolbar_message).getActionView();
-        mtvMenuBadge = (TextView) frameLayout.findViewById(R.id.menu_badge);
+        mMenuBadgeView = (TextView) frameLayout.findViewById(R.id.menu_badge);
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mtvMenuBadge.setVisibility(View.GONE);
+                mMenuBadgeView.setVisibility(View.GONE);
                 mProjectDetailsPresenter.navigateToMessageCenter(ProjectDetailsFragment.this, mIsUnread, REQUEST_CODE_PROJECT_MESSAGE_CENTER);
                 mIsUnread = false;
             }
