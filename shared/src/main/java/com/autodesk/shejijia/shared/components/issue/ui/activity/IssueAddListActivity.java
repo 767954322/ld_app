@@ -46,19 +46,10 @@ public class IssueAddListActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.issuetraction_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
         if (i == android.R.id.home) {
             finish();
-            return true;
-        } else if (i == R.id.add_traction) {
-            addIssueTrackingFragment.sendIssueTracking();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

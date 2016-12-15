@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -15,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.com
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -23,9 +27,7 @@ import java.util.ArrayList;
  */
 
 public class IssueAddDescriptionActivity extends BaseActivity {
-    private FrameLayout mAddIssueTracking;
-    private CommentFragment addIssueTrackingFragment;
-    private CommentPresenter mPresenter;
+
 
     @Override
     protected int getLayoutResId() {
@@ -34,8 +36,6 @@ public class IssueAddDescriptionActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
-        mAddIssueTracking = (FrameLayout) findViewById(R.id.fl_add_issuetracking);
 
     }
 
@@ -55,7 +55,8 @@ public class IssueAddDescriptionActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.issuetraction_menu, menu);
+        MenuInflater menuInflater =  getMenuInflater();
+        menuInflater.inflate(R.menu.issuetraction_description_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -93,5 +94,7 @@ public class IssueAddDescriptionActivity extends BaseActivity {
         finish();
     }
 
-
+    private CommentFragment addIssueTrackingFragment;
+    private CommentPresenter mPresenter;
+    private TextView mAddIssueDescription;
 }

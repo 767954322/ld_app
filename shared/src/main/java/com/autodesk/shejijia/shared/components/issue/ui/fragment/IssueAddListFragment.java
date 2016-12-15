@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.issue.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,9 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -40,6 +45,7 @@ import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueSuccesA
 import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueAddListImageAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -56,6 +62,7 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  */
 
 public class IssueAddListFragment extends BaseConstructionFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View, IssueAddListImageAdapter.IssueDescriptionClick {
+
 
     public static IssueAddListFragment getInstance() {
         IssueAddListFragment fragment = new IssueAddListFragment();
@@ -93,6 +100,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mMapMember = IssueRoleUtils.getInstance().getMembersFromProject(mProjectInfo);
             mListMember = IssueRoleUtils.getInstance().getFollowListByProject(mProjectInfo);
         }
+        setHasOptionsMenu(true);
         initTimePick();
         initImageList();
     }
@@ -169,6 +177,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mFollowMember = mListMember.get(position);
             String chinaRole = IssueRoleUtils.getInstance().getChiRoleByEngRole(mFollowMember.getRole());
             mIssueFllowContent.setText(chinaRole + mFollowMember.getProfile().getName() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
+            setPutTextViewStatus();
         } else {
             mIssueType = mArrayType[position];
             String strType = activity.getResources().getStringArray(add_issue_type_list)[position];
@@ -177,6 +186,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mFollowMember = IssueRoleUtils.getInstance().getMemberByIssueType(mMapMember, strType);
             String followRole = IssueRoleUtils.getInstance().getChiRoleByIssueType(strType);
             mIssueFllowContent.setText(followRole + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
+            setPutTextViewStatus();
         }
         dismissPopwindow();
     }
@@ -304,6 +314,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
                 mDescriptionVoice = data.getStringExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE);
                 mDescriptionImage = data.getParcelableArrayListExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_IMAGES);
                 handler.sendEmptyMessage(0);
+                setPutTextViewStatus();
             }
         }
     }
@@ -354,6 +365,47 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
 
     };
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.issuetraction_menu, menu);
+        RelativeLayout relativeLayout = (RelativeLayout) menu.findItem(R.id.add_traction).getActionView();
+        mAddIssue = (TextView) relativeLayout.findViewById(R.id.tv_addissue);
+        mAddIssue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendIssueTracking();
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.add_traction) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * 判断发送文字是否可点击
+     */
+    private void setPutTextViewStatus() {
+        boolean allowAdd = mIssueType != -1 && (!TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice)) && mDescriptionVoice != null ? true : false;
+        if (allowAdd) {
+            mAddIssue.setClickable(true);
+            mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_visible));
+        } else {
+            mAddIssue.setClickable(false);
+            mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_invisible));
+        }
+
+    }
+
+
     private RelativeLayout mIssueAll;
     private RelativeLayout mIssueStyle;
     private RelativeLayout mIssueDescription;
@@ -363,6 +415,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
 
     private IssueStylePop mIssueStylePopWin;
     private IssueFlowPop mIssueFllowPopWin;
+    private TextView mAddIssue;
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;
     private TextView mIssueReplyContent;
