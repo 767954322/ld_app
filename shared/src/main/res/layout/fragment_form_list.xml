@@ -126,12 +126,12 @@
                 android:text="@string/commite"
                 android:textColor="@color/white"/>
 
-        <Button android:layout_width="match_parent"
-                android:text="全选择合格"
-                android:textColor="#f00"
-                android:id="@+id/btn_delete"
-                android:layout_marginTop="30dp"
-                android:layout_height="56dp"/>
+        <!--<Button android:layout_width="match_parent"-->
+                <!--android:text="全选择合格"-->
+                <!--android:textColor="#f00"-->
+                <!--android:id="@+id/btn_delete"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:layout_height="56dp"/>-->
 
     </LinearLayout>
 

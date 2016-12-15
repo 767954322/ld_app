@@ -42,6 +42,7 @@ public class FormListPresenter implements FormListContract.Presenter {
 
     public FormListPresenter(FormListContract.View view, Task task) {
         mView = view;
+        mView.showLoading();
         initFormList(task);
     }
 
@@ -76,7 +77,7 @@ public class FormListPresenter implements FormListContract.Presenter {
     }
 
     @Override
-    public void submitData(final SHPrecheckForm precheckForm) {
+    public synchronized void submitData(final SHPrecheckForm precheckForm) {
         mFormList.add(precheckForm);
         Bundle bundle = new Bundle();
         bundle.putString("user_id", UserInfoUtils.getMemberId(AdskApplication.getInstance().getApplicationContext()));
@@ -91,6 +92,7 @@ public class FormListPresenter implements FormListContract.Presenter {
             public void onError(ResponseError error) {
 // TODO: 16/12/13 提交表单失败的业务逻辑
                 mView.showError(error.getMessage());
+                mView.hideLoading();
             }
 
         });
@@ -166,11 +168,13 @@ public class FormListPresenter implements FormListContract.Presenter {
                 mFormList.clear();
                 mFormList.addAll(data);
                 mView.initItemCellList(initList());
+                mView.hideLoading();
             }
 
             @Override
             public void onError(ResponseError error) {
                 mView.showNetError(error);
+                mView.hideLoading();
             }
         }, formIdList);
     }

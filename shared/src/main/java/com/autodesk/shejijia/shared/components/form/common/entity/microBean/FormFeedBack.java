@@ -62,36 +62,38 @@ public class FormFeedBack implements Serializable {
         this.currentCheckIndex = currentCheckIndex;
     }
 
-    public FormFeedBack(List<Map> values){
+    public FormFeedBack(List<Map> values) {
         initWithList(values);
     }
 
-    private void initWithList(List<Map> values){
+    private void initWithList(List<Map> values) {
         this.comment = "";
         this.audio = new ConstructionFile();
         this.images = new ArrayList<ConstructionFile>();
-        for(Map valueMap : values){
-            if(valueMap instanceof HashMap){
-                if("text".equals(valueMap.get("type"))){
+        for (Map valueMap : values) {
+            if (valueMap instanceof HashMap) {
+                if ("text".equals(valueMap.get("type"))) {
                     comment = (String) valueMap.get("value");
                 }
 
-                if("audio".equals(valueMap.get("type"))){
+                if ("audio".equals(valueMap.get("type"))) {
                     audio.setPublicUrl((String) valueMap.get("value"));
-                    if(valueMap.get("id") == null){
+                    if (valueMap.get("id") == null) {
                         audio.setFileId("");
-                    }else {
+                    } else {
                         audio.setFileId(valueMap.get("id").toString());
                     }
                 }
 
-                if("image".equals(valueMap.get("type"))){
+                if ("image".equals(valueMap.get("type"))) {
                     ConstructionFile image = new ConstructionFile();
                     image.setPublicUrl((String) valueMap.get("value"));
-                    image.setThumbnailUrlPrefix((String) valueMap.get("thumbnail_url"));
-                    if(valueMap.get("id") == null){
+                    if (valueMap.get("thumbnail_url") != null) {
+                        image.setThumbnailUrlPrefix(valueMap.get("thumbnail_url").toString());
+                    }
+                    if (valueMap.get("id") == null) {
                         image.setFileId("");
-                    }else {
+                    } else {
                         image.setFileId(valueMap.get("id").toString());
                     }
                     images.add(image);
@@ -102,49 +104,49 @@ public class FormFeedBack implements Serializable {
 
     }
 
-    private void onInit(List<Map> values){
-        for(Map valueMap : values){
-            if(valueMap instanceof HashMap){
-                if("check_result".equals(valueMap.get("type"))){
+    private void onInit(List<Map> values) {
+        for (Map valueMap : values) {
+            if (valueMap instanceof HashMap) {
+                if ("check_result".equals(valueMap.get("type"))) {
                     this.currentCheckIndex = Integer.parseInt((String) valueMap.get("value"));
                 }
-                if("action_result".equals(valueMap.get("type"))){
+                if ("action_result".equals(valueMap.get("type"))) {
                     this.currentActionIndex = Integer.parseInt((String) valueMap.get("value"));
                 }
             }
         }
     }
 
-    public void applyInitData(List<Map> values){
+    public void applyInitData(List<Map> values) {
         initWithList(values);
     }
 
-    public List combineUpdateData(){
+    public List combineUpdateData() {
         List<Map> feedBackDataList = new ArrayList<>();
-        Map<String,Object> textType = new HashMap<>();
-        textType.put("type","text");
-        textType.put("value",this.comment == null?"":this.comment);
+        Map<String, Object> textType = new HashMap<>();
+        textType.put("type", "text");
+        textType.put("value", this.comment == null ? "" : this.comment);
         LogUtils.d("FormFeedBack", "comment == " + this.comment);
         feedBackDataList.add(textType);
-        if(!TextUtils.isEmpty(this.audio.getPublicUrl())){
+        if (!TextUtils.isEmpty(this.audio.getPublicUrl())) {
             LogUtils.d("FormFeedBack", "file" + this.audio.toString());
-            Map<String,Object> audio = new HashMap<>();
-            audio.put("type","audio");
-            audio.put("value",this.audio.getPublicUrl());
-            audio.put("id",this.audio.getFileId());
+            Map<String, Object> audio = new HashMap<>();
+            audio.put("type", "audio");
+            audio.put("value", this.audio.getPublicUrl());
+            audio.put("id", this.audio.getFileId());
             feedBackDataList.add(audio);
         }
-        if(images != null && images.size() != 0){
+        if (images != null && images.size() != 0) {
             LogUtils.d("FormFeedBack", "images.size == " + images.size());
-            for(ConstructionFile file : images){
+            for (ConstructionFile file : images) {
                 LogUtils.d("FormFeedBack", "file" + file.toString());
-                if(!TextUtils.isEmpty(file.getPublicUrl())){
+                if (!TextUtils.isEmpty(file.getPublicUrl())) {
                     LogUtils.d("FormFeedBack", "file.getPublicUrl() == " + file.getPublicUrl());
-                    Map<String,Object> image = new HashMap<>();
-                    image.put("type","image");
-                    image.put("value",file.getPublicUrl());
-                    image.put("id",file.getFileId());
-                    image.put("thumbnail_url",file.getThumbnailUrl());
+                    Map<String, Object> image = new HashMap<>();
+                    image.put("type", "image");
+                    image.put("value", file.getPublicUrl());
+                    image.put("id", file.getFileId());
+                    image.put("thumbnail_url", file.getThumbnailUrl());
                     feedBackDataList.add(image);
                 }
             }
@@ -153,15 +155,15 @@ public class FormFeedBack implements Serializable {
         return feedBackDataList;
     }
 
-    private List onCombineUpdateData(){
+    private List onCombineUpdateData() {
         List<Map> feedBackDataList = new ArrayList<>();
-        Map<String,Object> checkMap = new HashMap<>();
-        checkMap.put("type","check_result");
-        checkMap.put("value",this.currentCheckIndex.toString());
+        Map<String, Object> checkMap = new HashMap<>();
+        checkMap.put("type", "check_result");
+        checkMap.put("value", this.currentCheckIndex.toString());
         feedBackDataList.add(checkMap);
-        Map<String,Object> actionMap = new HashMap<>();
-        actionMap.put("type","action_result");
-        actionMap.put("value",this.currentActionIndex.toString());
+        Map<String, Object> actionMap = new HashMap<>();
+        actionMap.put("type", "action_result");
+        actionMap.put("value", this.currentActionIndex.toString());
         feedBackDataList.add(actionMap);
         return feedBackDataList;
     }

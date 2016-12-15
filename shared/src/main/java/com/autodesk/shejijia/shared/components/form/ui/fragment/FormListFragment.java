@@ -96,12 +96,12 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         mReinspectionLayout.setOnClickListener(this);
         mRectificationLayout.setOnClickListener(this);
 
-        rootView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.selectorAll();
-            }
-        });
+//        rootView.findViewById(R.id.btn_delete).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mPresenter.selectorAll();
+//            }
+//        });
 
 
     }
@@ -181,8 +181,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void SubmitSuccess() {
-//        mPresenter.submitData(mPrecheckForm);
-
         Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -198,7 +196,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mContext.getSupportFragmentManager().beginTransaction()
                 .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
-                .add(R.id.fl_main_container, fragment,SHFormConstant.FragmentTag.MUTABLE_ITEMS_FRAGMENT)
+                .add(R.id.fl_main_container, fragment, SHFormConstant.FragmentTag.MUTABLE_ITEMS_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -213,7 +211,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mContext.getSupportFragmentManager().beginTransaction()
                 .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
-                .add(R.id.fl_main_container, fragment,SHFormConstant.FragmentTag.IMMUTABLE_ITEMS_FRAGMENT)
+                .add(R.id.fl_main_container, fragment, SHFormConstant.FragmentTag.IMMUTABLE_ITEMS_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -251,9 +249,9 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
         builder.setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mPresenter.submitData(mPrecheckForm);//提交表单
                 dialog.dismiss();
                 showLoading();
+                mPresenter.submitData(mPrecheckForm);//提交表单
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
