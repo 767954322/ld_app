@@ -56,7 +56,6 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
             @Override
             public void onSuccess(Message messageInfo) {
                 mOffset += messageInfo.getMessageItemList() != null?messageInfo.getMessageItemList().size():0;
-                mOffset = messageInfo.getOffset()+10;
                 if(messageInfo.getOffset() == 0){
                     mProjectMessageCenterPresenterView.refreshProjectMessagesView(messageInfo);
                 }else{
