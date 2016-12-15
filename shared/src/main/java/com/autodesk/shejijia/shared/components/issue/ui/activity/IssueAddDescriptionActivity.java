@@ -2,9 +2,7 @@ package com.autodesk.shejijia.shared.components.issue.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -16,11 +14,8 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.com
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 添加问题追踪描述

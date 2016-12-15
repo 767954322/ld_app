@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerViewIssue;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -47,7 +48,7 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View {
+public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View, IssueAddListImageAdapter.IssueDescriptionClick {
 
 
     private int tomorrowYear;
@@ -102,7 +103,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         mIssueImagesList.setHasFixedSize(true);
         mIssueImagesList.setItemAnimator(new DefaultItemAnimator());
         //init recyclerView adapter
-        mIssueImageAdapter = new IssueAddListImageAdapter(null, getContext(), R.layout.item_addissue_image);
+        mIssueImageAdapter = new IssueAddListImageAdapter(this, null, getContext(), R.layout.item_addissue_image);
         mIssueImagesList.setAdapter(mIssueImageAdapter);
 
     }
@@ -181,19 +182,43 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     }
 
     /**
+     * 查看问题详情图片
+     *
+     * @param position
+     */
+    @Override
+    public void showImageDetail(int position) {
+        Intent intent = new Intent(getContext(), CommentPreviewActivity.class);
+        intent.putExtra(POSITION, position);
+        intent.putParcelableArrayListExtra(IMAGE_LIST, mDescriptionImage);
+        startActivity(intent);
+    }
+
+    /**
+     * 删除某条问题详情图片
+     *
+     * @param position
+     */
+    @Override
+    public void deleteImage(int position) {
+        if (mDescriptionImage != null && mDescriptionImage.size() > position) {
+            mDescriptionImage.remove(position);
+            mIssueImageAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
      * 添加问题回调
      *
      * @param status
      */
     @Override
     public void onShowStatus(boolean status) {
-
         if (status) {
             ToastUtils.showLong(activity, "上传成功");
         } else {
             ToastUtils.showLong(activity, "上传失败");
         }
-
     }
 
     /**
@@ -326,5 +351,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private int mIssueType = -1;
     private int mNotifyCustormer = 0;
     private int[] mArrayType = new int[]{11, 10, 12, 13, 15};
+    public static final String IMAGE_LIST = "image_list";
+    public static final String POSITION = "position";
 
 }
