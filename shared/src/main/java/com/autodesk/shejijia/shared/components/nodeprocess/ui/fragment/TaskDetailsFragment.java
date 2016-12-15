@@ -310,11 +310,13 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
         }
 
         for (int index = 0; index < photos.size(); index++) {
-            String photoUri = photos.get(index).getPictureUri();
+            ImageInfo imageInfo = photos.get(index);
+            String thumbnailUri = imageInfo.getThumbnailUri();
+            String photoUri = imageInfo.getPictureUri();
             ImageView imageView = (ImageView) LayoutInflater.from(getContext()).inflate(R.layout.item_task_photo, mTaskPhotosContainer, false);
             mTaskPhotosContainer.addView(imageView);
             imageView.setTag(index);
-            ImageUtils.loadImage(imageView, photoUri);
+            ImageUtils.loadImage(imageView, TextUtils.isEmpty(thumbnailUri) ? photoUri : thumbnailUri);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

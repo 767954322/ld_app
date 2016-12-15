@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.entity.microbean;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -20,7 +22,7 @@ public class ConstructionFile implements Serializable{
     @SerializedName("public_url")
     private String publicUrl;
     @SerializedName("thumbnail_url")
-    private String thumbnailUrl;
+    private String thumbnailUrlPrefix;
 
     public String getFileId() {
         return fileId;
@@ -71,10 +73,18 @@ public class ConstructionFile implements Serializable{
     }
 
     public String getThumbnailUrl() {
+        String thumbnailUrl = thumbnailUrlPrefix;
+        if (!TextUtils.isEmpty(thumbnailUrlPrefix)) {
+            thumbnailUrl += "Medium.jpg";
+        }
         return thumbnailUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public String getThumbnailUrlPrefix() {
+        return thumbnailUrlPrefix;
+    }
+
+    public void setThumbnailUrlPrefix(String thumbnailUrlPrefix) {
+        this.thumbnailUrlPrefix = thumbnailUrlPrefix;
     }
 }

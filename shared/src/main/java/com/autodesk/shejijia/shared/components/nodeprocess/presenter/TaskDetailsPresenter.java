@@ -59,10 +59,16 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mTaskDetailsView.showTaskPhoto(mTask);
 
         String memType = UserInfoUtils.getMemberType(AdskApplication.getInstance());
-        if (ConstructionConstants.MemberType.MATERIAL_STAFF.equalsIgnoreCase(memType)) {
-            mTaskDetailsView.editComment(getDisplayComment(mTask));
+
+        if (mTask.getCategory().equalsIgnoreCase(ConstructionConstants.TaskCategory.MATERIAL_MEASURING)
+            || mTask.getCategory().equalsIgnoreCase(ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION)) {
+            if (ConstructionConstants.MemberType.MATERIAL_STAFF.equalsIgnoreCase(memType)) {
+                mTaskDetailsView.editComment(getDisplayComment(mTask));
+            } else {
+                mTaskDetailsView.showComment(getDisplayComment(mTask));
+            }
         } else {
-            mTaskDetailsView.showComment(getDisplayComment(mTask));
+            mTaskDetailsView.showComment("");
         }
 
         mTaskDetailsView.showActions(mTask, mProjectInfo);
