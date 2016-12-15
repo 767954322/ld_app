@@ -74,10 +74,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         likeList.add(newLike);
         if (filterLike.equalsIgnoreCase("true")) { //星标列表里，移除取消星标成功该位置的数据
             mProjectLists.remove(likePosition);
-            notifyDataSetChanged();
-        } else {
-            notifyItemChanged(likePosition);
         }
+        notifyDataSetChanged();
     }
 
     @Override
