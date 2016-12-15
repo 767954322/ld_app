@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -86,6 +87,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
         mIssueReplyContent = (TextView) rootView.findViewById(R.id.tx_issuereply);
+        mDeleteVocie = (ImageView) rootView.findViewById(R.id.iv_delete_voice);
         mIssueDescriptionContent = (TextView) rootView.findViewById(R.id.tx_issuedescrip);
         mIssueImagesList = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mIssueSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notity_customer);
@@ -95,7 +97,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
     protected void initData() {
         mIssueAddPresenter = new IssueAddPresenter(this, activity);
         mProjectInfo = ProjectRepository.getInstance().getActiveProject();
-        mAudioHandler = AudioHandler.getInstance(getContext(), mAudioListener);
+        mAudioHandler = new AudioHandler(getContext(), mAudioListener);
         if (mProjectInfo != null) {
             mMapMember = IssueRoleUtils.getInstance().getMembersFromProject(mProjectInfo);
             mListMember = IssueRoleUtils.getInstance().getFollowListByProject(mProjectInfo);
@@ -127,6 +129,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         mIssueSwitchNotify.setOnCheckedChangeListener(this);
         mIssueReply.setOnClickListener(this);
         mIssueDescription.setOnClickListener(this);
+        mDeleteVocie.setOnClickListener(this);
     }
 
     @Override
@@ -157,7 +160,9 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             if (!TextUtils.isEmpty(mDescriptionVoice)) {
                 mAudioHandler.startPlayAudio(mDescriptionVoice);
             }
-
+        } else if (i == R.id.iv_delete_voice) {
+            mIssueAudio.setVisibility(View.GONE);
+            mDescriptionVoice = null;
 
         }
     }
@@ -415,6 +420,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
 
     private IssueStylePop mIssueStylePopWin;
     private IssueFlowPop mIssueFllowPopWin;
+    private ImageView mDeleteVocie;
     private TextView mAddIssue;
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;

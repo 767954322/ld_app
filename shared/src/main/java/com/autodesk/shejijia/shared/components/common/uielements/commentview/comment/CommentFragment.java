@@ -159,7 +159,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         initRecyclerView();
         mAlertView = new CommonAudioAlert(mContext, mItemListener);
         mAlertView = mAlertView.setCancelable(true).setOnDismissListener(mDismissListener);
-        mAudioHandler = AudioHandler.getInstance(mContext, mAudioListener);
+        mAudioHandler = new AudioHandler(mContext, mAudioListener);
         return view;
     }
 

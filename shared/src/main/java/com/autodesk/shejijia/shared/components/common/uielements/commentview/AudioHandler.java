@@ -34,18 +34,18 @@ public class AudioHandler{
         void audioPlayStop();
     }
 
-    public static AudioHandler getInstance(Context context, AudioHandlerListener handlerListener){
-        if(sInstance == null){
-            synchronized (Object.class){
-               if (sInstance == null){
-                   sInstance = new AudioHandler(context,handlerListener);
-               }
-            }
-        }
-        return sInstance;
-    }
+//    public static AudioHandler getInstance(Context context, AudioHandlerListener handlerListener){
+//        if(sInstance == null){
+//            synchronized (Object.class){
+//               if (sInstance == null){
+//                   sInstance = new AudioHandler(context,handlerListener);
+//               }
+//            }
+//        }
+//        return sInstance;
+//    }
 
-    private AudioHandler(Context context, AudioHandlerListener handlerInterface){
+    public AudioHandler(Context context, AudioHandlerListener handlerInterface){
         mContext = context;
         mCommentHandlerListener = handlerInterface;
     }
