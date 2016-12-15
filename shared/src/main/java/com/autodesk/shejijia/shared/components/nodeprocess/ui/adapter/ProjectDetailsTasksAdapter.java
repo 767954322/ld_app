@@ -126,7 +126,6 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
                 }
                 break;
         }
-
     }
 
     private void initEvents(TaskListVH taskListVH, final int position) {

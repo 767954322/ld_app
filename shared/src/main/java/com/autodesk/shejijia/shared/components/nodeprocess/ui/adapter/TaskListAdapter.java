@@ -85,7 +85,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         // 当前任务节点头像
         String taskHeadStatus = TaskHeadPicHelper.getInstance().getActions(taskLists.get(position));
-        LogUtils.e("taskActions", taskHeadStatus);
         switch (taskHeadStatus) {
             case TaskHeadPicHelper.SHOW_HEAD:
                 String avatarUrl = TaskUtils.getAvatarUrl(mContext, mProject.getMembers());
@@ -125,7 +124,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
                 break;
         }
-
     }
 
     private void initEvents(TaskListVH taskListVH, final int position) {

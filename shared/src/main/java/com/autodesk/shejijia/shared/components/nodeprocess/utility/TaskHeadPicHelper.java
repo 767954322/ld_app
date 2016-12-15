@@ -27,7 +27,7 @@ public class TaskHeadPicHelper {
     private JSONObject taskHeadPicJsonObject;
 
     private TaskHeadPicHelper() {
-        taskHeadPicJsonObject = JsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(), "template/task_pic_actions.json");
+        taskHeadPicJsonObject = JsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(), "template/task_icon_actions.json");
     }
 
     private static class TaskHeadPicHelperHolder {
@@ -45,7 +45,7 @@ public class TaskHeadPicHelper {
         try {
             JSONObject memberActions = taskHeadPicJsonObject.getJSONObject(memberType);
             JSONObject taskCategoryActions = memberActions.getJSONObject(taskCategory);
-            LogUtils.e("taskCategoryActions", taskCategoryActions.toString());
+            LogUtils.i("taskCategoryActions", taskCategoryActions.toString());
             if (taskCategoryActions.has(taskStatus.toLowerCase())) {
                 JSONArray taskActions = taskCategoryActions.getJSONArray(taskStatus.toLowerCase());
                 Gson gson = new Gson();
@@ -56,7 +56,6 @@ public class TaskHeadPicHelper {
                     return SHOW_HEAD;
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
