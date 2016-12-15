@@ -21,10 +21,9 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
-import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerViewIssue;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.issue.common.entity.IssueDescription;
 import com.autodesk.shejijia.shared.components.issue.common.tools.IssueRoleUtils;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueFlowPop;
 import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
@@ -41,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+
 import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 /**
@@ -49,6 +49,11 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
 
 public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View {
 
+
+    private int tomorrowYear;
+    private int tomorrowMonth;
+    private int tomorrowDay;
+    private String mTomorrow;
 
     public static IssueAddListFragment getInstance() {
         IssueAddListFragment fragment = new IssueAddListFragment();
@@ -195,23 +200,37 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
      * 初始化时间控件
      */
     private void initTimePick() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, +1);
+        tomorrowYear = calendar.get(Calendar.YEAR);
+        tomorrowMonth = calendar.get(Calendar.MONTH);
+        tomorrowDay = calendar.get(Calendar.DAY_OF_MONTH);
         mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        mPvTime = new TimePickerView(activity, TimePickerView.Type.YEAR_MONTH_DAY);
+        mPvTime = new TimePickerViewIssue(activity, TimePickerViewIssue.Type.YEAR_MONTH_DAY);
         mPvTime.setRange(1965, 2100);
-        mPvTime.setTime(new Date());
+        mPvTime.setTime(tomorrowYear, tomorrowMonth, tomorrowDay);
         mPvTime.setCyclic(false);
         mPvTime.setCancelable(false);
         mPvTime.setTitle(UIUtils.getString(R.string.pop_issuereply_title));
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, +1);
-        mTime = String.valueOf(cal.getTime().getTime());
-        mPvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+        mTomorrow = String.valueOf(cal.getTime().getTime());
+        mTime = mTomorrow;
+        mPvTime.setOnTimeSelectListener(new TimePickerViewIssue.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                mTime = String.valueOf(date.getTime());
                 mDate = mDateFormat.format(date);
                 mDate = mDate.length() > 8 ? mDate.substring(0, mDate.length() - 8) : mDate;
-                mIssueReplyContent.setText(mDate);
+                String[] time = mDate.split("-");
+                if (time.length == 3) {
+                    if (time[0].trim().equals(String.valueOf(tomorrowYear)) && time[1].trim().equals(String.valueOf(tomorrowMonth + 1)) && time[2].trim().equals(String.valueOf(tomorrowDay))) {
+                        mTime = mTomorrow;
+                        mIssueReplyContent.setText(UIUtils.getString(R.string.add_issuelist_reply));
+                    } else {
+                        mTime = String.valueOf(date.getTime());
+                        mIssueReplyContent.setText(mDate);
+                    }
+                }
             }
         });
     }
@@ -291,7 +310,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     private ArrayList<Member> mListMember;
     private Map<String, Member> mMapMember;
     private Switch mIssueSwitchNotify;
-    private TimePickerView mPvTime;
+    private TimePickerViewIssue mPvTime;
     private SimpleDateFormat mDateFormat;
     private IssueAddContract.Presenter mIssueAddPresenter;
 
