@@ -35,7 +35,7 @@ import java.util.List;
  */
 
 public class UnqualifiedEditFragment extends BaseConstructionFragment implements View.OnClickListener,
-        UnqualifiedContract.View{
+        UnqualifiedContract.View {
 
     private FrameLayout mFragmentContainer;
     private ImageButton mEquipmentNotQualifiedBtn;
@@ -60,7 +60,7 @@ public class UnqualifiedEditFragment extends BaseConstructionFragment implements
     private String mAudioPath;
     private String mCommentContent;
 
-    public static UnqualifiedEditFragment getInstance(Bundle params){
+    public static UnqualifiedEditFragment getInstance(Bundle params) {
         UnqualifiedEditFragment fragment = new UnqualifiedEditFragment();
         fragment.setArguments(params);
         return fragment;
@@ -89,15 +89,15 @@ public class UnqualifiedEditFragment extends BaseConstructionFragment implements
         mUnStandardBtn.setOnClickListener(this);
         mNextStepBtn.setOnClickListener(this);
         mCommentFragment = CommentFragment.getInstance(new CommentConfig());
-        mCommentPresenter = new CommentPresenter(mCommentFragment,null);
+        mCommentPresenter = new CommentPresenter(mCommentFragment, null);
         setFragment();
         mPresenter = new UnqualifiedPresenter(this);
     }
 
-    private void setFragment(){
+    private void setFragment() {
         FragmentManager manager = mContext.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.add(R.id.fl_comment_container,mCommentFragment,CommentFragment.TAG);
+        ft.add(R.id.fl_comment_container, mCommentFragment, CommentFragment.TAG);
         ft.commit();
     }
 
@@ -128,34 +128,34 @@ public class UnqualifiedEditFragment extends BaseConstructionFragment implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.imgbtn_equipment){
+        if (v.getId() == R.id.imgbtn_equipment) {
             mEquipmentNotQualifiedBtn.setSelected(!mEquipmentNotQualifiedBtn.isSelected());
-            mPresenter.setCheckIndex(mPreCheckForm,mEquipmentNotQualifiedBtn.isSelected(),R.id.imgbtn_equipment);
-        }else if(v.getId() == R.id.imgbtn_custom_disagree){
+            mPresenter.setCheckIndex(mPreCheckForm, mEquipmentNotQualifiedBtn.isSelected(), R.id.imgbtn_equipment);
+        } else if (v.getId() == R.id.imgbtn_custom_disagree) {
             mCustomDisagreeBtn.setSelected(!mCustomDisagreeBtn.isSelected());
-            mPresenter.setCheckIndex(mPreCheckForm,mEquipmentNotQualifiedBtn.isSelected(),R.id.imgbtn_custom_disagree);
-        }else if(v.getId() == R.id.imgbtn_monitor_absence){
+            mPresenter.setCheckIndex(mPreCheckForm, mEquipmentNotQualifiedBtn.isSelected(), R.id.imgbtn_custom_disagree);
+        } else if (v.getId() == R.id.imgbtn_monitor_absence) {
             mMonitorAbsenceBtn.setSelected(!mMonitorAbsenceBtn.isSelected());
-            mPresenter.setCheckIndex(mPreCheckForm,mEquipmentNotQualifiedBtn.isSelected(),R.id.imgbtn_monitor_absence);
-        }else if(v.getId() == R.id.imgbtn_not_standard){
+            mPresenter.setCheckIndex(mPreCheckForm, mEquipmentNotQualifiedBtn.isSelected(), R.id.imgbtn_monitor_absence);
+        } else if (v.getId() == R.id.imgbtn_not_standard) {
             mUnStandardBtn.setSelected(!mUnStandardBtn.isSelected());
-            mPresenter.setCheckIndex(mPreCheckForm,mEquipmentNotQualifiedBtn.isSelected(),R.id.imgbtn_not_standard);
-        } else if (v.getId() == R.id.btn_next_step){
-            if(!(mEquipmentNotQualifiedBtn.isSelected()
+            mPresenter.setCheckIndex(mPreCheckForm, mEquipmentNotQualifiedBtn.isSelected(), R.id.imgbtn_not_standard);
+        } else if (v.getId() == R.id.btn_next_step) {
+            if (!(mEquipmentNotQualifiedBtn.isSelected()
                     || mCustomDisagreeBtn.isSelected()
                     || mMonitorAbsenceBtn.isSelected()
-                    || mUnStandardBtn.isSelected())){
-                ToastUtils.showShort(mContext,"必选项至少选一个");
+                    || mUnStandardBtn.isSelected())) {
+                ToastUtils.showShort(mContext, "必选项至少选一个");
                 return;
             }
             mPicture = (ArrayList<ImageInfo>) mCommentPresenter.getImageData();
             mCommentContent = mCommentPresenter.getCommentContent();
             mAudioPath = mCommentPresenter.getAudioPath();
             Bundle params = new Bundle();
-            params.putSerializable(UnqualifiedActivity.UNQUALIFIED_FORM,mPreCheckForm);
-            params.putString(UnqualifiedActivity.UNQUALIFIED_COMMENT,mCommentContent);
-            params.putString(UnqualifiedActivity.UNQUALIFIED_AUDIO,mAudioPath);
-            params.putParcelableArrayList(UnqualifiedActivity.UNQUALIFIED_IMAGES,mPicture);
+            params.putSerializable(UnqualifiedActivity.UNQUALIFIED_FORM, mPreCheckForm);
+            params.putString(UnqualifiedActivity.UNQUALIFIED_COMMENT, mCommentContent);
+            params.putString(UnqualifiedActivity.UNQUALIFIED_AUDIO, mAudioPath);
+            params.putParcelableArrayList(UnqualifiedActivity.UNQUALIFIED_IMAGES, mPicture);
             mFragment = UnqualifiedSubmitFragment.newInstance(params);
             mContext.getSupportFragmentManager().beginTransaction()
                     .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_UNQUALIFIED_EDIT))

@@ -86,7 +86,7 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         if (isImgItem(position)) {
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
             final String path = getListItem(position);
-            if(mConfig.geteLayoutType() == CommentConfig.LayoutType.SHOW){
+            if (mConfig.geteLayoutType() == CommentConfig.LayoutType.SHOW) {
                 viewHolder.delete.setVisibility(View.GONE);
             }
             if (path != null) {
@@ -123,10 +123,10 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
-            if(mImages == null || mImages.size() == 0){
+            if (mImages == null || mImages.size() == 0) {
                 return ADD_ITEM;
             } else {
-                if(position == mImages.size()){
+                if (position == mImages.size()) {
                     return ADD_ITEM;
                 }
                 return IMG_ITEM;

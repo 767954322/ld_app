@@ -49,12 +49,12 @@ public class CommentPreviewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mCurrentPosition = getIntent().getIntExtra(CommentFragment.POSITION,0);
+        mCurrentPosition = getIntent().getIntExtra(CommentFragment.POSITION, 0);
         mPictureData = getIntent().getParcelableArrayListExtra(CommentFragment.IMAGE_LIST);
         mImageLoader = ImageLoader.getInstance();
         mViewPager = (ViewPager) findViewById(R.id.vp_comment_preview);
         mIndicatorText = (TextView) findViewById(R.id.tv_photo_range);
-        mPagerAdapter = new ImageDetailAdapter(mImageLoader,mPictureData);
+        mPagerAdapter = new ImageDetailAdapter(mImageLoader, mPictureData);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(mCurrentPosition);
         mViewPager.addOnPageChangeListener(onPageChangeListener);
@@ -68,7 +68,7 @@ public class CommentPreviewActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
@@ -88,7 +88,7 @@ public class CommentPreviewActivity extends BaseActivity {
     }
 
     public void showToast(String message) {
-        ToastUtils.showShort(this,message);
+        ToastUtils.showShort(this, message);
     }
 
     static class ImageDetailAdapter extends PagerAdapter {
@@ -124,7 +124,7 @@ public class CommentPreviewActivity extends BaseActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             PhotoView photoView = (PhotoView) LayoutInflater.from(container.getContext())
                     .inflate(R.layout.item_image_detail, container, false);
-            mLoader.displayImage(mData.get(position).getPictureUri(),photoView,options);
+            mLoader.displayImage(mData.get(position).getPictureUri(), photoView, options);
             container.addView(photoView);
             return photoView;
         }

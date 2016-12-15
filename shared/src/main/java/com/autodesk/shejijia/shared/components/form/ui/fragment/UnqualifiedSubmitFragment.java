@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
@@ -36,14 +34,14 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
         UnqualifiedContract.View {
     private static final String TAG = "UnqualifiedCommitFragment";
     public static boolean isSubmitFinish = false;
-    private TextView mCustomAbsenceTel;
-    private TextView mCustomDetail;
-    private TextView mConfirmId;
-    private TextView mConfirmDetail;
-    private TextView mCheckPaper;
-    private TextView mCheckPaperDetail;
+    private TextView mCustomAbsenceTelTV;
+    private TextView mCustomDetailTV;
+    private TextView mConfirmIdTV;
+    private TextView mConfirmDetailTV;
+    private TextView mCheckPaperTV;
+    private TextView mCheckPaperDetailTV;
     private Button mSubmitBtn;
-    private Button mSubmitCancel;
+    private Button mSubmitCancelBtn;
 
     private CommentFragment mCommentFragment;
     private SHPrecheckForm mPreCheckForm;
@@ -57,7 +55,7 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
 
     private onFinishListener mListener;
 
-    public interface onFinishListener{
+    public interface onFinishListener {
         void onSubmitFinish();
     }
 
@@ -70,8 +68,8 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof UnqualifiedActivity){
-            LogUtils.d(TAG,"context instanceof UnqualifiedActivity");
+        if (context instanceof UnqualifiedActivity) {
+            LogUtils.d(TAG, "context instanceof UnqualifiedActivity");
             mListener = (onFinishListener) context;
         }
     }
@@ -91,14 +89,14 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
             @Override
             public void onClickOkListener() {
                 showLoading();
-                mPresenter.upLoadFiles(mPicture,mAudioPath,mCommentContent,mPreCheckForm);
+                mPresenter.upLoadFiles(mPicture, mAudioPath, mCommentContent, mPreCheckForm);
             }
 
             @Override
             public void onClickCancelListener() {
 
             }
-        }).showCustomViewDialog("提示",message,false,true,true,false);
+        }).showCustomViewDialog("提示", message, false, true, true, false);
     }
 
     @Override
@@ -113,7 +111,7 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
 
     @Override
     public void submitSuccess() {
-        if(mProgressDialog.isShowing()){
+        if (mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
         isSubmitFinish = true;
@@ -132,16 +130,16 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
 
     @Override
     protected void initView() {
-        mCustomAbsenceTel = (TextView) rootView.findViewById(R.id.tv_custom_absence_tel);
-        mCustomDetail = (TextView) rootView.findViewById(R.id.tv_custom_detail);
-        mConfirmId = (TextView) rootView.findViewById(R.id.tv_confirm_id);
-        mConfirmDetail = (TextView) rootView.findViewById(R.id.tv_confirm_detail);
-        mCheckPaper = (TextView) rootView.findViewById(R.id.tv_check_paper);
-        mCheckPaperDetail = (TextView) rootView.findViewById(R.id.tv_check_paper_detail);
+        mCustomAbsenceTelTV = (TextView) rootView.findViewById(R.id.tv_custom_absence_tel);
+        mCustomDetailTV = (TextView) rootView.findViewById(R.id.tv_custom_detail);
+        mConfirmIdTV = (TextView) rootView.findViewById(R.id.tv_confirm_id);
+        mConfirmDetailTV = (TextView) rootView.findViewById(R.id.tv_confirm_detail);
+        mCheckPaperTV = (TextView) rootView.findViewById(R.id.tv_check_paper);
+        mCheckPaperDetailTV = (TextView) rootView.findViewById(R.id.tv_check_paper_detail);
         mSubmitBtn = (Button) rootView.findViewById(R.id.btn_commit);
         mSubmitBtn.setOnClickListener(this);
-        mSubmitCancel = (Button) rootView.findViewById(R.id.btn_cancel);
-        mSubmitCancel.setOnClickListener(this);
+        mSubmitCancelBtn = (Button) rootView.findViewById(R.id.btn_cancel);
+        mSubmitCancelBtn.setOnClickListener(this);
         mPresenter = new UnqualifiedPresenter(this);
     }
 
@@ -160,44 +158,44 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
 
         for (CheckItem item : mPreCheckForm.getCheckItems()) {
             if ("telephone_consultation".equals(item.getItemId())) {
-                mCustomAbsenceTel.setText(item.getTitle());
+                mCustomAbsenceTelTV.setText(item.getTitle());
                 switch (item.getFormFeedBack().getCurrentCheckIndex()) {
                     case 1:
-                        mCustomDetail.setText("否");
+                        mCustomDetailTV.setText("否");
                         break;
                     case 0:
-                        mCustomDetail.setText("是");
+                        mCustomDetailTV.setText("是");
                         break;
                     default:
-                        mCustomDetail.setText("否");
+                        mCustomDetailTV.setText("否");
                         break;
                 }
                 continue;
             } else if ("identify_status".equals(item.getItemId())) {
-                mConfirmId.setText(item.getTitle());
+                mConfirmIdTV.setText(item.getTitle());
                 switch (item.getFormFeedBack().getCurrentCheckIndex()) {
                     case 1:
-                        mConfirmDetail.setText("否");
+                        mConfirmDetailTV.setText("否");
                         break;
                     case 0:
-                        mConfirmDetail.setText("是");
+                        mConfirmDetailTV.setText("是");
                         break;
                     default:
-                        mConfirmDetail.setText("否");
+                        mConfirmDetailTV.setText("否");
                         break;
                 }
                 continue;
             } else if ("check_hydropower_drawings".equals(item.getItemId())) {
-                mCheckPaper.setText(item.getTitle());
+                mCheckPaperTV.setText(item.getTitle());
                 switch (item.getFormFeedBack().getCurrentCheckIndex()) {
                     case 1:
-                        mCheckPaperDetail.setText("否");
+                        mCheckPaperDetailTV.setText("否");
                         break;
                     case 0:
-                        mCheckPaperDetail.setText("是");
+                        mCheckPaperDetailTV.setText("是");
                         break;
                     default:
-                        mCheckPaperDetail.setText("否");
+                        mCheckPaperDetailTV.setText("否");
                         break;
                 }
                 continue;

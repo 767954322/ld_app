@@ -55,15 +55,15 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
 
     @Override
     public void upLoadFiles(final List<ImageInfo> pictures, final String audioPath, final String commentContent, SHPrecheckForm preCheckForm) {
-        if(preCheckForm == null){
+        if (preCheckForm == null) {
             return;
         }
         mCommentContent = commentContent;
         mPreCheckForm = preCheckForm;
-        if(pictures != null && pictures.size() != 0){
+        if (pictures != null && pictures.size() != 0) {
             mPictures = pictures;
-            for(ImageInfo info : mPictures){
-                if(info.getPhotoSource() == ImageInfo.PhotoSource.CLOUD){
+            for (ImageInfo info : mPictures) {
+                if (info.getPhotoSource() == ImageInfo.PhotoSource.CLOUD) {
                     continue;
                 }
                 String path = info.getPath();
@@ -81,7 +81,7 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
 //                        com.autodesk.shejijia.shared.components.common.entity.microbean.File responseFile =
 //                                GsonUtil.jsonToBean(response, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
                             mResponseImageFileList.addAll(files);
-                            if(mCurrentImageFileNum == mPictures.size()){
+                            if (mCurrentImageFileNum == mPictures.size()) {
                                 resultPutFile();
                             }
                         } catch (JSONException e) {
@@ -95,13 +95,13 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
                         ++mCurrentImageFileNum;
                         ++mMissImageFileNum;
                         resultPutFile();
-                        LogUtils.d(TAG,"onFailure");
+                        LogUtils.d(TAG, "onFailure");
                     }
                 });
             }
         }
 
-        if(!TextUtils.isEmpty(audioPath)){
+        if (!TextUtils.isEmpty(audioPath)) {
             mAudioPath = audioPath;
             File file = new File(mAudioPath);
             FileHttpManager.getInstance().upLoadFileByType(file, "AUDIO", new FileHttpManager.ResponseHandler() {
@@ -125,7 +125,7 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
                 @Override
                 public void onFailure() {
                     resultPutFile();
-                    LogUtils.d(TAG,"onFailure");
+                    LogUtils.d(TAG, "onFailure");
                 }
             });
         } else {
@@ -134,16 +134,16 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
         }
     }
 
-    private void resultPutFile(){
-        LogUtils.d(TAG,"reultput file");
-        if(mPictures == null || mPictures.size() == 0){
-            if(mOkPutVoiceFile){
+    private void resultPutFile() {
+        LogUtils.d(TAG, "reultput file");
+        if (mPictures == null || mPictures.size() == 0) {
+            if (mOkPutVoiceFile) {
                 upLoadFormFile();
             } else {
                 // TODO: 16/12/14 上传失败
             }
         } else {
-            if(mCurrentImageFileNum == mPictures.size() && mMissImageFileNum == 0 && mOkPutVoiceFile){
+            if (mCurrentImageFileNum == mPictures.size() && mMissImageFileNum == 0 && mOkPutVoiceFile) {
                 upLoadFormFile();
             } else {
                 // TODO: 16/12/14 上传失败
@@ -151,21 +151,21 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
         }
     }
 
-    private void upLoadFormFile(){
-        LogUtils.d(TAG,"upLoadFormFile");
-        if(mPreCheckForm == null){
+    private void upLoadFormFile() {
+        LogUtils.d(TAG, "upLoadFormFile");
+        if (mPreCheckForm == null) {
             return;
         }
-        for(CheckItem item : mPreCheckForm.getCheckItems()){
+        for (CheckItem item : mPreCheckForm.getCheckItems()) {
             mPreCheckForm.setStatus(0);
-            if("input_content".equals(item.getItemId())){
-                if(mResponseImageFileList != null && mResponseImageFileList.size() != 0){
+            if ("input_content".equals(item.getItemId())) {
+                if (mResponseImageFileList != null && mResponseImageFileList.size() != 0) {
                     item.getFormFeedBack().setImages(mResponseImageFileList);
                 }
-                if(mAudioFileList != null && mAudioFileList.size() != 0){
+                if (mAudioFileList != null && mAudioFileList.size() != 0) {
                     item.getFormFeedBack().setAudio(mAudioFileList.get(0));
                 }
-                if(!TextUtils.isEmpty(mCommentContent)){
+                if (!TextUtils.isEmpty(mCommentContent)) {
                     item.getFormFeedBack().setComment(mCommentContent);
                 }
                 break;
@@ -194,7 +194,7 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
         bundle.putString("tid", mPreCheckForm.getTaskId());
 
         Map<String, String> map = new HashMap<>();
-        map.put("result",ConstructionConstants.TaskStatus.REJECTED.toUpperCase());
+        map.put("result", ConstructionConstants.TaskStatus.REJECTED.toUpperCase());
 
         FormRepository.getInstance().inspectTask(bundle, new JSONObject(map), new ResponseCallback<Map, ResponseError>() {
             @Override

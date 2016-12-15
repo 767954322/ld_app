@@ -40,7 +40,7 @@ import java.util.List;
  * Created by t_panya on 16/12/5.
  */
 
-public class CommentFragment extends Fragment implements CommentContract.CommentView, View.OnClickListener{
+public class CommentFragment extends Fragment implements CommentContract.CommentView, View.OnClickListener {
     public static final String TAG = "CommentFragment";
     public static final String PARCELABLE_DATA = "parcelable_data";
 
@@ -145,11 +145,11 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         if (isEditMode()) {
             initDetailShowStatus();
         } else {
-            if(!TextUtils.isEmpty(mCommentContent)){
+            if (!TextUtils.isEmpty(mCommentContent)) {
                 mTextView.setVisibility(View.VISIBLE);
                 mTextView.setText(mCommentContent);
             }
-            if(!TextUtils.isEmpty(mAudioPath)){
+            if (!TextUtils.isEmpty(mAudioPath)) {
                 mAudioPlay.setVisibility(View.VISIBLE);
 //                mAudioTime.setText();
             }
@@ -178,16 +178,16 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(isPlaying){
+        if (isPlaying) {
             mAudioHandler.stopVoiceRecord();
         }
-        if(isRecording){
+        if (isRecording) {
             mAudioHandler.cancelVoiceRecord();
         }
         isPlaying = false;
         isRecording = false;
-        if(mAlertView.isShowing()){
-          mAlertView.dismiss();
+        if (mAlertView.isShowing()) {
+            mAlertView.dismiss();
         }
     }
 
@@ -195,17 +195,17 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     public void onClick(View v) {
         if (v.getId() == R.id.ll_record_audio_container) {
             mAlertView.show();
-        }else if(v.getId() == R.id.ll_audio_play_container){
+        } else if (v.getId() == R.id.ll_audio_play_container) {
             mPresenter.startPlayAudio(mAudioPath);
-        } else if(v.getId() == R.id.iv_delete_voice){
-            if(isPlaying){
+        } else if (v.getId() == R.id.iv_delete_voice) {
+            if (isPlaying) {
                 mPresenter.stopPlayAudio();
             }
             mAudioPlay.setVisibility(View.GONE);
             mAudioRecord.setVisibility(View.VISIBLE);
             mAudioHandler.deleteVoiceRecord(mAudioPath);
             mAudioPath = null;
-            SharedPreferencesUtils.writeString("AudioPath","");
+            SharedPreferencesUtils.writeString("AudioPath", "");
         }
     }
 
@@ -268,9 +268,9 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 
     @Override
     public void showImageDetailUi(int position) {
-        Intent intent = new Intent(getActivity(),CommentPreviewActivity.class);
-        intent.putExtra(POSITION,position);
-        intent.putParcelableArrayListExtra(IMAGE_LIST,mImages);
+        Intent intent = new Intent(getActivity(), CommentPreviewActivity.class);
+        intent.putExtra(POSITION, position);
+        intent.putParcelableArrayListExtra(IMAGE_LIST, mImages);
         getActivity().startActivity(intent);
     }
 
@@ -306,7 +306,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 
     @Override
     public void showToast(String message) {
-        ToastUtils.showShort(mContext,message);
+        ToastUtils.showShort(mContext, message);
     }
 
     private void initRecyclerView() {
@@ -317,21 +317,22 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initDetailShowStatus(){
-        if(mLayoutType == CommentConfig.LayoutType.EDIT){
+    private void initDetailShowStatus() {
+        if (mLayoutType == CommentConfig.LayoutType.EDIT) {
             mEditText.setVisibility(View.VISIBLE);
             mAudioRecord.setVisibility(View.VISIBLE);
-        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_AUDIO_ONLY){
+        } else if (mLayoutType == CommentConfig.LayoutType.EDIT_AUDIO_ONLY) {
             mAudioRecord.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
-        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_IMAGE_ONLY){
+        } else if (mLayoutType == CommentConfig.LayoutType.EDIT_IMAGE_ONLY) {
             mEditText.setVisibility(View.GONE);
             mAudioRecord.setVisibility(View.GONE);
-        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_TEXT_ONLY){
+        } else if (mLayoutType == CommentConfig.LayoutType.EDIT_TEXT_ONLY) {
             mAudioRecord.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
         }
     }
+
     private boolean isEditMode() {
         if (mLayoutType != CommentConfig.LayoutType.SHOW) {
             return true;
@@ -353,7 +354,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                 }
             } else if (id == R.id.iv_sound_suspend) {
                 long endTime = System.nanoTime();
-                if((endTime - mVoiceRecordingStartTime) / Math.pow(10, 9) >= IMChatInfo.VoiceLeastTime){
+                if ((endTime - mVoiceRecordingStartTime) / Math.pow(10, 9) >= IMChatInfo.VoiceLeastTime) {
                     mPresenter.stopRecordAudio();
                     mAlertView.setRecordStatus(CommonAudioAlert.RECORDED);
                 } else {
@@ -368,11 +369,11 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 //                if(!TextUtils.isEmpty(mAudioPath)){
 //                    mAudioHandler.startPlayAudio(mAudioPath);
 //                }
-                if(!TextUtils.isEmpty(mAudioPath)){
+                if (!TextUtils.isEmpty(mAudioPath)) {
                     mAudioHandler.startPlayAudio(mAudioPath);
                 }
-            } else if(id == R.id.tv_done){
-                if(isRecording){
+            } else if (id == R.id.tv_done) {
+                if (isRecording) {
                     mAudioHandler.stopVoiceRecord();
                 }
                 mAlertView.dismiss();
@@ -394,7 +395,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         @Override
         public void audioRecordEnd(String filePath) {
             mAudioPath = filePath;
-            SharedPreferencesUtils.writeString("AudioPath",filePath);
+            SharedPreferencesUtils.writeString("AudioPath", filePath);
             isRecording = false;
             mTimer = mAudioHandler.getAudioTimer(filePath);
         }
@@ -414,14 +415,14 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private OnDismissListener mDismissListener = new OnDismissListener() {
         @Override
         public void onDismiss(Object o) {
-            if(o != mAlertView){
+            if (o != mAlertView) {
                 return;
             }
-            if(isPlaying){
+            if (isPlaying) {
                 mPresenter.stopPlayAudio();
             }
 
-            if(isRecording){
+            if (isRecording) {
                 mPresenter.stopRecordAudio();
             }
         }
