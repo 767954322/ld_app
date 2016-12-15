@@ -2,8 +2,7 @@ package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import android.text.TextUtils;
 
-import com.autodesk.shejijia.shared.components.common.entity.microbean.File;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.SHFile;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.io.Serializable;
@@ -18,8 +17,8 @@ import java.util.Map;
 
 public class FormFeedBack implements Serializable {
     private String comment;
-    private File audio;
-    private List<File> images;
+    private ConstructionFile audio;
+    private List<ConstructionFile> images;
     private Integer currentActionIndex = 0;
     private Integer currentCheckIndex = -1;
 
@@ -31,19 +30,19 @@ public class FormFeedBack implements Serializable {
         this.comment = comment;
     }
 
-    public File getAudio() {
+    public ConstructionFile getAudio() {
         return audio;
     }
 
-    public void setAudio(File audio) {
+    public void setAudio(ConstructionFile audio) {
         this.audio = audio;
     }
 
-    public List<File> getImages() {
+    public List<ConstructionFile> getImages() {
         return images;
     }
 
-    public void setImages(List<File> images) {
+    public void setImages(List<ConstructionFile> images) {
         this.images = images;
     }
 
@@ -69,8 +68,8 @@ public class FormFeedBack implements Serializable {
 
     private void initWithList(List<Map> values){
         this.comment = "";
-        this.audio = new File();
-        this.images = new ArrayList<File>();
+        this.audio = new ConstructionFile();
+        this.images = new ArrayList<ConstructionFile>();
         for(Map valueMap : values){
             if(valueMap instanceof HashMap){
                 if("text".equals(valueMap.get("type"))){
@@ -87,9 +86,9 @@ public class FormFeedBack implements Serializable {
                 }
 
                 if("image".equals(valueMap.get("type"))){
-                    File image = new File();
+                    ConstructionFile image = new ConstructionFile();
                     image.setPublicUrl((String) valueMap.get("value"));
-                    image.setThumbnailUrl((String) valueMap.get("thumbnail_url"));
+                    image.setThumbnailUrlPrefix((String) valueMap.get("thumbnail_url"));
                     if(valueMap.get("id") == null){
                         image.setFileId("");
                     }else {
@@ -137,7 +136,7 @@ public class FormFeedBack implements Serializable {
         }
         if(images != null && images.size() != 0){
             LogUtils.d("FormFeedBack", "images.size == " + images.size());
-            for(File file : images){
+            for(ConstructionFile file : images){
                 LogUtils.d("FormFeedBack", "file" + file.toString());
                 if(!TextUtils.isEmpty(file.getPublicUrl())){
                     LogUtils.d("FormFeedBack", "file.getPublicUrl() == " + file.getPublicUrl());

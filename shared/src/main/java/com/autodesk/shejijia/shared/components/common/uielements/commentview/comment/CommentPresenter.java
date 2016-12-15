@@ -2,7 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.co
 
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.shared.components.common.entity.microbean.File;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
@@ -15,14 +15,14 @@ import java.util.List;
 
 public class CommentPresenter implements CommentContract.CommentPresenter {
     private CommentContract.CommentView mCommentView;
-    private ArrayList<File> mFiles;
+    private ArrayList<ConstructionFile> mFiles;
     //    private ArrayList<String> mPictures;
     private ArrayList<ImageInfo> mImages;
     private boolean isJustShowLocal;
 
-    public CommentPresenter(@NonNull CommentContract.CommentView view, List<File> files) {
+    public CommentPresenter(@NonNull CommentContract.CommentView view, List<ConstructionFile> files) {
         mCommentView = view;
-        mFiles = (ArrayList<File>) files;
+        mFiles = (ArrayList<ConstructionFile>) files;
         mImages = new ArrayList<>();
 //        mPictures = (ArrayList<String>) pictures;
         mCommentView.setPresenter(this);

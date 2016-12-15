@@ -36,8 +36,8 @@ import java.util.Map;
 public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
     private static final String TAG = "PreCheckUnqualifiedPresenter";
     private UnqualifiedContract.View mView;
-    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> mResponseImageFileList;
-    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> mAudioFileList;
+    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile> mResponseImageFileList;
+    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile> mAudioFileList;
     private List<ImageInfo> mPictures;
     private String mAudioPath;
     private String mCommentContent;
@@ -75,8 +75,8 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray array = jsonObject.optJSONArray("files");
-                            List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> files =
-                                    JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                            List<com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile> files =
+                                    JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile.class);
                             ++mCurrentImageFileNum;
 //                        com.autodesk.shejijia.shared.components.common.entity.microbean.File responseFile =
 //                                GsonUtil.jsonToBean(response, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
@@ -111,8 +111,8 @@ public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONArray array = jsonObject.optJSONArray("files");
-                        List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> files =
-                                JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                        List<com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile> files =
+                                JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile.class);
                         mOkPutVoiceFile = true;
                         mAudioFileList.addAll(files);
                         resultPutFile();
