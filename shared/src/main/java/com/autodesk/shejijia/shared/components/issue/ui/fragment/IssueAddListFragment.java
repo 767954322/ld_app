@@ -21,6 +21,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionCons
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.AudioHandler;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
@@ -54,14 +56,6 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  */
 
 public class IssueAddListFragment extends BaseConstructionFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View, IssueAddListImageAdapter.IssueDescriptionClick {
-
-
-    private int tomorrowYear;
-    private int tomorrowMonth;
-    private int tomorrowDay;
-    private String mTomorrow;
-    private AudioHandler mAudioHandler;
-    private ConProgressDialog mProgressDialog;
 
     public static IssueAddListFragment getInstance() {
         IssueAddListFragment fragment = new IssueAddListFragment();
@@ -293,18 +287,12 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
 
     @Override
     public void showLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.add_issuetracking_loading));
-        }
-        mProgressDialog.show();
+        CustomProgress.show(activity, getString(R.string.add_issuetracking_loading), false, null);
     }
 
     @Override
     public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
+        CustomProgress.cancelDialog();
     }
 
     @Override
@@ -387,16 +375,20 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
     private Switch mIssueSwitchNotify;
     private TimePickerViewIssue mPvTime;
     private SimpleDateFormat mDateFormat;
+    private AudioHandler mAudioHandler;
     private IssueAddContract.Presenter mIssueAddPresenter;
 
     private ProjectInfo mProjectInfo;
     private Member mFollowMember;
+    private int tomorrowYear;
+    private int tomorrowMonth;
+    private int tomorrowDay;
     private String mDate;
     private String mTime;
+    private String mTomorrow;
     private String mDescriptionContent;
     private String mDescriptionVoice;
     private ArrayList<ImageInfo> mDescriptionImage;
-
 
     private int mIssueType = -1;
     private int mNotifyCustormer = 0;

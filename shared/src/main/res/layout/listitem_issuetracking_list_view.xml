@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_left_listicon_item"
-        android:src="@drawable/search_clear_normal_or" />
+        android:background="@drawable/add_issue_style" />
 
     <TextView
         android:id="@+id/tv_issuelist_item_title"
