@@ -1,6 +1,4 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragment;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.Gravity;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.AboutActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
