@@ -218,7 +218,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         return;
                     }
 
-                    if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+                    if (!bdetailAddress) {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                         return;
