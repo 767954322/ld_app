@@ -98,27 +98,16 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
             mRvProjectMessagCenterView.scrollToPosition(0);
             mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
         }
-        setLoadMoreEnable(messageInfo);
     }
-
-    private void setLoadMoreEnable(MessageEntity messageInfo) {
-        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() < ProjectMessageCenterPresenter.LIMIT) {
-            mRvProjectMessagCenterView.setLoadMoreEnable(false);
-        } else {
-            mRvProjectMessagCenterView.setLoadMoreEnable(true);
-        }
-    }
-
 
     @Override
     public void loadMoreProjectMessagesView(MessageEntity messageInfo) {
         mRvProjectMessagCenterView.complete();
-        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() > 0) {
-            mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
-            return;
+        mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
+        if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() <= 0) {
+            mRvProjectMessagCenterView.onNoMore(null);
         }
-        setLoadMoreEnable(messageInfo);
-        mRvProjectMessagCenterView.onNoMore(null);
+
     }
 
     @Override

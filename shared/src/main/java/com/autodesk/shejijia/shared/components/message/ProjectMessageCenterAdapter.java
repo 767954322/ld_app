@@ -1,4 +1,5 @@
 package com.autodesk.shejijia.shared.components.message;
+
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -21,84 +22,76 @@ import java.util.List;
  * Created by luchongbin on 2016/12/5.
  */
 
-public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<messageItemListEntity> messageItemBeans;
     private boolean mIsUnread;
-    private  HistoricalRecordstListener mHistoricalRecordstListener;
-    private int mBottomCount=1;//底部View个数
-    private  final int ITEMTYPECONTENT = 0;
-    private  final int ITEMTYPEBOTTOM = 1;
+    private boolean mISOutstripLIMIT;
+    private HistoricalRecordstListener mHistoricalRecordstListener;
     private int resId;
+
     public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener, List<messageItemListEntity> messageItemBeans, boolean isUnread, int resId) {
         super();
         this.messageItemBeans = messageItemBeans;
         this.resId = resId;
         this.mIsUnread = isUnread;
         this.mHistoricalRecordstListener = historicalRecordstListener;
+        this.mISOutstripLIMIT = false;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == ITEMTYPECONTENT){
-            View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
-            return new ProjectMessageCenterVH(view);
-        }else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_foot_text, parent, false);
-            return new BottomViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
+        return new ProjectMessageCenterVH(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ProjectMessageCenterAdapter.ProjectMessageCenterVH) {
-            initData((ProjectMessageCenterVH)holder,position);
-        } else{
-            BottomViewHolder mBottomViewHolder = (BottomViewHolder)holder;
-            String mHistoricalRecords = UIUtils.getString(R.string.show_historical_records);
-            mBottomViewHolder.mTvMessageHistoricalRecords.setText(Html.fromHtml("<u>"+mHistoricalRecords+"</u>"));
-            initListener(mBottomViewHolder);
-            mBottomViewHolder.mTvMessageHistoricalRecords.setVisibility(mIsUnread?View.VISIBLE:View.GONE);
-        }
+        ProjectMessageCenterVH projectMessageCenterVHHolder = (ProjectMessageCenterVH) holder;
+        initData(projectMessageCenterVHHolder, position);
+        initListener(projectMessageCenterVHHolder);
     }
 
     @Override
     public int getItemCount() {
-        return getContentItemCount()+mBottomCount;
+        return getContentItemCount();
     }
-    @Override
-    public int getItemViewType(int position){
-        int dataItemCount = getContentItemCount();
-        if (mBottomCount != 0 && position >= dataItemCount){
-            return ITEMTYPEBOTTOM;
-        }else{
-            return ITEMTYPECONTENT;
-        }
-    }
+
     public void notifyDataForRecyclerView(List<messageItemListEntity> messageItemBean, boolean isUnread, int offset) {
-        if(offset == 0){
+        mISOutstripLIMIT = messageItemBean.size() < ProjectMessageCenterPresenter.LIMIT ? true : false;
+        if (offset == 0) {
             messageItemBeans.clear();
         }
-        this.messageItemBeans.addAll(messageItemBean);
+        if (messageItemBean.size() > 0) {
+            this.messageItemBeans.addAll(messageItemBean);
+        }
         this.mIsUnread = isUnread;
         notifyDataSetChanged();
     }
-    public int getContentItemCount(){
-        return messageItemBeans == null?0:messageItemBeans.size();
+
+    public int getContentItemCount() {
+        return messageItemBeans == null ? 0 : messageItemBeans.size();
     }
-    private void initListener(BottomViewHolder mBottomViewHolder){
-        mBottomViewHolder.mTvMessageHistoricalRecords.setOnClickListener(new View.OnClickListener(){
+
+    private void initListener(ProjectMessageCenterVH projectMessageCenterVHHolder) {
+        projectMessageCenterVHHolder.mTvMessageHistoricalRecords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mHistoricalRecordstListener.onHistoricalRecordstClick();
             }
         });
     }
-    private void initData(ProjectMessageCenterVH holder,int position){
+
+    private void initData(ProjectMessageCenterVH holder, int position) {
         String avatar = messageItemBeans.get(position).getSenderAvatar();
         if (TextUtils.isEmpty(avatar)) {
             holder.mImgBtnPersonalHeadPic.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
         } else {
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
+        }
+        if (mIsUnread && mISOutstripLIMIT && (position == messageItemBeans.size() - 1)) {
+            holder.mTvMessageHistoricalRecords.setVisibility(View.VISIBLE);
+        } else {
+            holder.mTvMessageHistoricalRecords.setVisibility(View.GONE);
         }
 
         DisplayMessageEntity displayMessage = messageItemBeans.get(position).getDisplayMessage();
@@ -110,33 +103,26 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             holder.mTvMeaasgeName.setText(Html.fromHtml(title));
         }
         List<String> detailItems = displayMessage.getDetailItems();
-        if (detailItems != null ) {
-            String detailItem="";
-            for(String str:detailItems){
-                detailItem += str+"\n";
+        if (detailItems != null) {
+            String detailItem = "";
+            for (String str : detailItems) {
+                detailItem += str + "\n";
             }
-            detailItem = detailItem.substring(0,detailItem.length()-1);
+            detailItem = detailItem.substring(0, detailItem.length() - 1);
             holder.mTvMeaasgeCantent.setText(detailItem);
         }
         if (!TextUtils.isEmpty(messageItemBeans.get(position).getSentTime())) {
             String sentTime = DateUtil.getTimeMYD(messageItemBeans.get(position).getSentTime());
             holder.mTvMessageTime.setText(sentTime);
         }
-    }//底部 ViewHolder
-    public static class BottomViewHolder extends RecyclerView.ViewHolder {
-        private TextView  mTvMessageHistoricalRecords;
-
-        public BottomViewHolder(View itemView) {
-            super(itemView);
-            mTvMessageHistoricalRecords = (TextView) itemView.findViewById(R.id.tv_message_historical_records);
-        }
     }
 
-     public static class ProjectMessageCenterVH extends RecyclerView.ViewHolder {
+    public static class ProjectMessageCenterVH extends RecyclerView.ViewHolder {
         private ImageView mImgBtnPersonalHeadPic;
-        private TextView  mTvMeaasgeName;
-        private TextView  mTvMeaasgeCantent;
-        private TextView  mTvMessageTime;
+        private TextView mTvMeaasgeName;
+        private TextView mTvMeaasgeCantent;
+        private TextView mTvMessageTime;
+        private TextView mTvMessageHistoricalRecords;
 
         ProjectMessageCenterVH(View itemView) {
             super(itemView);
@@ -144,8 +130,10 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
             mTvMeaasgeName = (TextView) itemView.findViewById(R.id.tv_meaasge_name);
             mTvMeaasgeCantent = (TextView) itemView.findViewById(R.id.tv_meaasge_cantent);
             mTvMessageTime = (TextView) itemView.findViewById(R.id.tv_message_time);
+            mTvMessageHistoricalRecords = (TextView) itemView.findViewById(R.id.tv_message_historical_records);
         }
     }
+
     public interface HistoricalRecordstListener {
         void onHistoricalRecordstClick();
     }
