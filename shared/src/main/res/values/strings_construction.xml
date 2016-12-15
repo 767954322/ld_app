@@ -157,6 +157,10 @@
     <string name="submit_cancel">放弃编辑</string>
     <string name="submit_loading">正在提交...</string>
     <string name="submit_success">提交成功</string>
+    <string name="tip_form_commit">提交后不可修改</string>
+    <string name="form_reinspection_log">强制复验项</string>
+    <string name="form_rectification_log">监督整改项</string>
+>>>>>>> e3c97dd49e04489f425de2fe14becec93d06def9
 
     <!--footer view text-->
     <string name="footer_no_more">没有更多</string>

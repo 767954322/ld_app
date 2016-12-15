@@ -6,6 +6,8 @@ import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.S
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +30,10 @@ public interface FormListContract {
         void showSubmitBtn();
 
         void SubmitSuccess();
+
+        void enterMutableItems(ArrayList<SHForm> formList, LinkedHashMap<String, List<String>> linkedHashMap);
+
+        void enterImmutableItems(ArrayList<SHForm> formList, LinkedHashMap<String, List<String>> linkedHashMap);
     }
 
 
@@ -38,5 +44,9 @@ public interface FormListContract {
         void refreshData(List<ItemCell> itemCellList);
 
         void submitData(SHPrecheckForm precheckForm);
+
+        void enterReinspection();
+
+        void enterRectification();
     }
 }

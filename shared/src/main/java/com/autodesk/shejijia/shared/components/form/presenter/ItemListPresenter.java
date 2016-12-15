@@ -18,9 +18,9 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     private ItemListContract.View mView;
     private List<OptionCell> mItemCellList = new ArrayList<>();
 
-    public ItemListPresenter(ItemListContract.View view,String category,SHInspectionForm inspectionForm) {
+    public ItemListPresenter(ItemListContract.View view, String category, SHInspectionForm inspectionForm) {
         mView = view;
-        initOptionCellList(category,inspectionForm);
+        initOptionCellList(category, inspectionForm);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
         FormFeedBack formFeedBack = checkItem.getFormFeedBack();
         formFeedBack.setCurrentCheckIndex(type);
 
-        refreshItemData(checkItem,type);
+        refreshItemData(checkItem, type);
     }
 
     private void initOptionCellList(String category, SHInspectionForm shInspectionForm) {
@@ -77,7 +77,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     private void refreshItemData(CheckItem checkItem, int type) {
         for (OptionCell optionCell : mItemCellList) {
-            if(optionCell.getTitle().equals(checkItem.getTitle())) {
+            if (optionCell.getTitle().equals(checkItem.getTitle())) {
                 optionCell.setCheckResult(type);
                 break;
             }

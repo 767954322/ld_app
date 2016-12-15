@@ -180,21 +180,21 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             holder.mLeftIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onLeftItemClick(v, position);
+                    mOnItemClickListener.onLeftItemClick(2, position);
                     initLeft(holder, typeDictMap);
                 }
             });
             holder.mCenterIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onCenterItemClick(v, position);
+                    mOnItemClickListener.onCenterItemClick(1, position);
                     initCenter(holder, typeDictMap);
                 }
             });
             holder.mRightIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onRightItemClick(v, position);
+                    mOnItemClickListener.onRightItemClick(0, position);
                     initRight(holder, typeDictMap);
                 }
             });
@@ -241,11 +241,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     public interface OnItemClickListener {
 
-        void onLeftItemClick(View view, int position);
+        void onLeftItemClick(int type, int position);
 
-        void onCenterItemClick(View view, int position);
+        void onCenterItemClick(int type, int position);
 
-        void onRightItemClick(View view, int position);
+        void onRightItemClick(int type, int position);
 
     }
 }

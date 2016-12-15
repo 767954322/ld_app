@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.form.ui.adapter.FormListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +131,6 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void enterFormItem(SHForm shInspectionForm) {
-        // TODO: 16/11/28 进入到第二个fragment的判断,第一次进来,还是第二次显示出来
         Bundle args = new Bundle();
         args.putSerializable("shInspectionForm", shInspectionForm);  //将具体的表格传递进去
         FormSubListFragment formSubListFragment = FormSubListFragment.newInstance(args);
@@ -189,17 +189,47 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
     }
 
     @Override
+    public void enterMutableItems(ArrayList<SHForm> formList, LinkedHashMap<String, List<String>> linkedHashMap) {
+        // TODO: 16/12/14 进入可变的条目界面
+        Bundle args = new Bundle();
+        args.putSerializable("formList", formList);
+        args.putSerializable("linkedHashMap", linkedHashMap);
+        MutableItemsFragment fragment = MutableItemsFragment.newInstance(args);
+
+        mContext.getSupportFragmentManager().beginTransaction()
+                .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
+                .add(R.id.fl_main_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void enterImmutableItems(ArrayList<SHForm> formList, LinkedHashMap<String, List<String>> linkedHashMap) {
+        // TODO: 16/12/14 进入不可变的item界面
+        Bundle args = new Bundle();
+        args.putSerializable("formList", formList);
+        args.putSerializable("linkedHashMap", linkedHashMap);
+        ImmutableItemsFragment fragment = ImmutableItemsFragment.newInstance(args);
+
+        mContext.getSupportFragmentManager().beginTransaction()
+                .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
+                .add(R.id.fl_main_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
 
         if (R.id.btn_submit == id) {
             showSubmitDialog();
 
-        } else if(R.id.rl_reinspection_log == id) {
+        } else if (R.id.rl_reinspection_log == id) {
+            mPresenter.enterReinspection();
 
-
-        } else if(R.id.rl_rectification_log == id) {
-
+        } else if (R.id.rl_rectification_log == id) {
+            mPresenter.enterRectification();
 
         }
 

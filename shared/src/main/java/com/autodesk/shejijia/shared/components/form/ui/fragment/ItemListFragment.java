@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.form.common.entity.OptionCell;
@@ -53,7 +52,7 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     protected void initData() {
         mCategory = getArguments().getString("category");
         mIndex = getArguments().getInt("index");
-        SHInspectionForm inspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");
+        SHInspectionForm inspectionForm = (SHInspectionForm) getArguments().getSerializable("shInspectionForm");  //具体的表单的条目
         mCheckItemList = inspectionForm.getCheckItems();
 
         mPresenter = new ItemListPresenter(this,mCategory,inspectionForm);
@@ -78,24 +77,24 @@ public class ItemListFragment extends BaseConstructionFragment implements ItemLi
     }
 
     @Override
-    public void onLeftItemClick(View view, int position) {
-        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),2);
+    public void onLeftItemClick(int type, int position) {
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),type);
     }
 
     @Override
-    public void onCenterItemClick(View view, int position) {
-        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),1);
+    public void onCenterItemClick(int type, int position) {
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),type);
     }
 
     @Override
-    public void onRightItemClick(View view, int position) {
-        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),0);
+    public void onRightItemClick(int type, int position) {
+        mPresenter.setCheckIndex(mCheckItemList.get(mIndex + position),type);
     }
 
     @Override
-    public void initOptionCellList(List<OptionCell> itemCellList) {
+    public void initOptionCellList(List<OptionCell> optionCellList) {
         mOptionCellList.clear();
-        mOptionCellList.addAll(itemCellList);
+        mOptionCellList.addAll(optionCellList);
 
         if (mAdapter == null) {
             mAdapter = new ItemListAdapter(mOptionCellList,this);

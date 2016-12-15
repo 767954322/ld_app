@@ -33,9 +33,9 @@ import java.util.Map;
 
 public class FormListPresenter implements FormListContract.Presenter {
     private FormListContract.View mView;
-    private List<SHForm> mFormList = new ArrayList<>();
-    private Map<String, List<String>> mReinspectionMap = new LinkedHashMap<>();  //强制复验项,string是表单Id,List<String>是强制复验项的item_id的集合
-    private Map<String, List<String>> mRectificationMap = new LinkedHashMap<>();  //监督整改项,同上
+    private ArrayList<SHForm> mFormList = new ArrayList<>();
+    private LinkedHashMap<String, List<String>> mReinspectionMap = new LinkedHashMap<>();   //强制复验项,string是表单Id,List<String>是强制复验项的item_id的集合
+    private LinkedHashMap<String, List<String>> mRectificationMap = new LinkedHashMap<>();  //监督整改项,同上
     private int mCheckSum = 0;
     private final int REINSPECTION = 1;   //身份标识,下同
     private final int RECTIFICATION = 2;
@@ -94,6 +94,19 @@ public class FormListPresenter implements FormListContract.Presenter {
             }
 
         });
+    }
+
+    @Override
+    public void enterReinspection() {
+        //可变的界面和不可变的界面
+        mView.enterMutableItems(mFormList,mReinspectionMap);
+        //根据角色,进入不同的界面
+    }
+
+    @Override
+    public void enterRectification() {
+        //可变的界面和不可变的界面
+        mView.enterImmutableItems(mFormList,mRectificationMap);
     }
 
     private void modifyTaskStatus(SHPrecheckForm precheckForm) {
