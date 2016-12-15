@@ -90,7 +90,12 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     protected void initData(Bundle savedInstanceState) {
 
         mContext = this;
-        setTitleForNavbar(UIUtils.getString(R.string.title_messagecenter));
+        if(message_type.equals(Constant.MessageCenterActivityKey.PROJECT_MSG)){
+            setTitleForNavbar(UIUtils.getString(R.string.project_update__messagecenter_detail));
+        }else {
+            setTitleForNavbar(UIUtils.getString(R.string.title_messagecenter));
+        }
+
         listMessagesBeans = new ArrayList<>();
         listpositions = new ArrayList<>();
         nav_right_textView.setVisibility(View.VISIBLE);
