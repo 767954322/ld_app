@@ -23,9 +23,9 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.ChatConstants;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
@@ -209,7 +209,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 bundle.putBoolean(MPThreadListFragment.ISFILEBASE, false);
                 bundle.putString(MPThreadListFragment.MEMBERID, UserInfoUtils.getAcsMemberId(this));
                 bundle.putString(MPThreadListFragment.MEMBERTYPE, UserInfoUtils.getMemberType(this));
-                bundle.putString(MPThreadListFragment.LIST_TYPE, ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST);
+                bundle.putString(MPThreadListFragment.LIST_TYPE, MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST);
                 fragment.setArguments(bundle);
                 break;
             default:

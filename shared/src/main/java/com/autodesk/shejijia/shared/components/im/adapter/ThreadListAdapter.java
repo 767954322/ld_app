@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.ChatConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.datamodel.Body;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntityData;
@@ -72,7 +72,7 @@ public class ThreadListAdapter extends BaseAdapter {
         if (mIsFileBased) {
             return R.layout.view_thread_list_row_for_file;
         } else {
-            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
                 return R.layout.view_thread_list_row_for_group;
             } else {
                 return R.layout.view_thread_list_row;
@@ -110,7 +110,7 @@ public class ThreadListAdapter extends BaseAdapter {
         if (mIsFileBased) {
             viewHolder.fileThumbnail = (ImageView) container.findViewById(R.id.head_ico);
         } else {
-            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)) {
                 viewHolder.imageViewGroup = (RoundImageViewGroup) container.findViewById(R.id.head_ico);
             } else {
                 viewHolder.userThumbnail = (CircleImageView) container.findViewById(R.id.head_ico);
@@ -135,7 +135,7 @@ public class ThreadListAdapter extends BaseAdapter {
             (holder).unreadMessageCount.setVisibility(View.GONE);
         }
 
-        if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
+        if (mThreadListInterface.getChatListType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
             if (!TextUtils.isEmpty(getProjectName(thread))) {
                 (holder).name.setText(getProjectName(thread));
             }
@@ -210,7 +210,7 @@ public class ThreadListAdapter extends BaseAdapter {
             String fileUrl = MPChatUtility.getFileUrlFromThread(thread) + "Medium.jpg";
             ImageUtils.loadImage((holder).fileThumbnail, fileUrl);
         } else {
-            if (mThreadListInterface.getChatListType().equalsIgnoreCase(ChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
+            if (mThreadListInterface.getChatListType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
                 List<String> imageList = getRecipientsImageList(thread);
                 if (imageList != null && imageList.size()>0){
                     (holder).imageViewGroup.setImageDataList(imageList);
