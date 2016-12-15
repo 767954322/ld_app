@@ -44,16 +44,18 @@ public class TaskHeadPicHelper {
         String taskStatus = task.getStatus();
         try {
             JSONObject memberActions = taskHeadPicJsonObject.getJSONObject(memberType);
-            JSONObject taskCategoryActions = memberActions.getJSONObject(taskCategory);
-            LogUtils.i("taskCategoryActions", taskCategoryActions.toString());
-            if (taskCategoryActions.has(taskStatus.toLowerCase())) {
-                JSONArray taskActions = taskCategoryActions.getJSONArray(taskStatus.toLowerCase());
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<String>>() {
-                }.getType();
-                List<String> taskActionList = gson.fromJson(taskActions.toString(), listType);
-                if (taskActionList.get(0).equalsIgnoreCase(SHOW_HEAD)) {
-                    return SHOW_HEAD;
+            if (memberActions.has(taskCategory)) {
+                JSONObject taskCategoryActions = memberActions.getJSONObject(taskCategory);
+                LogUtils.i("taskCategoryActions", taskCategoryActions.toString());
+                if (taskCategoryActions.has(taskStatus.toLowerCase())) {
+                    JSONArray taskActions = taskCategoryActions.getJSONArray(taskStatus.toLowerCase());
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<String>>() {
+                    }.getType();
+                    List<String> taskActionList = gson.fromJson(taskActions.toString(), listType);
+                    if (taskActionList.get(0).equalsIgnoreCase(SHOW_HEAD)) {
+                        return SHOW_HEAD;
+                    }
                 }
             }
         } catch (Exception e) {
