@@ -181,6 +181,8 @@
     <string name="Fragment_addissue_fllow_end">跟进</string>
     <string name="Fragment_addissue_getprojectinfo_error">项目信息获取错误，请重新进入页面</string>
     <string name="Fragment_issuelist_itemclick_toast">查看详情</string>
+    <string name="activity_add_issuetracking_succes">提交成功</string>
+    <string name="activity_add_issuetracking_error">上传失败,请重新上传</string>
     <!-- 问题追踪职位 -->
     <string name="issuerole_china_inspectorcompany">监理公司</string>
     <string name="issuerole_china_inspector">监理</string>

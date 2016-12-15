@@ -246,6 +246,11 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueSuccesActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.autodesk.shejijia.shared.components.im.service.webSocketService"

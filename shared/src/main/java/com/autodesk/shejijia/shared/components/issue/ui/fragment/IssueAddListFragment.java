@@ -20,9 +20,12 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
+import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.AudioHandler;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerViewIssue;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.issue.common.tools.IssueRoleUtils;
@@ -31,9 +34,11 @@ import com.autodesk.shejijia.shared.components.issue.common.view.IssueStylePop;
 import com.autodesk.shejijia.shared.components.issue.contract.IssueAddContract;
 import com.autodesk.shejijia.shared.components.issue.contract.PopItemClickContract;
 import com.autodesk.shejijia.shared.components.issue.presenter.IssueAddPresenter;
+import com.autodesk.shejijia.shared.components.issue.ui.activity.AddIssueSuccesActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.activity.IssueAddDescriptionActivity;
 import com.autodesk.shejijia.shared.components.issue.ui.adapter.IssueAddListImageAdapter;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.text.SimpleDateFormat;
@@ -48,13 +53,15 @@ import static com.autodesk.shejijia.shared.R.array.add_issue_type_list;
  * Created by Menghao.Gu on 2016/12/6.
  */
 
-public class IssueAddListFragment extends BaseFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View, IssueAddListImageAdapter.IssueDescriptionClick {
+public class IssueAddListFragment extends BaseConstructionFragment implements View.OnClickListener, PopItemClickContract, CompoundButton.OnCheckedChangeListener, IssueAddContract.View, IssueAddListImageAdapter.IssueDescriptionClick {
 
 
     private int tomorrowYear;
     private int tomorrowMonth;
     private int tomorrowDay;
     private String mTomorrow;
+    private AudioHandler mAudioHandler;
+    private ConProgressDialog mProgressDialog;
 
     public static IssueAddListFragment getInstance() {
         IssueAddListFragment fragment = new IssueAddListFragment();
@@ -87,6 +94,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     protected void initData() {
         mIssueAddPresenter = new IssueAddPresenter(this, activity);
         mProjectInfo = ProjectRepository.getInstance().getActiveProject();
+        mAudioHandler = AudioHandler.getInstance(getContext(), mAudioListener);
         if (mProjectInfo != null) {
             mMapMember = IssueRoleUtils.getInstance().getMembersFromProject(mProjectInfo);
             mListMember = IssueRoleUtils.getInstance().getFollowListByProject(mProjectInfo);
@@ -113,6 +121,7 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         super.initListener();
         mIssueStyle.setOnClickListener(this);
         mIssueFllow.setOnClickListener(this);
+        mIssueAudio.setOnClickListener(this);
         mIssueSwitchNotify.setOnCheckedChangeListener(this);
         mIssueReply.setOnClickListener(this);
         mIssueDescription.setOnClickListener(this);
@@ -142,6 +151,12 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         } else if (i == R.id.rl_issuereply) {
 
             mPvTime.show();
+        } else if (i == R.id.ll_audio_play_container) {
+            if (!TextUtils.isEmpty(mDescriptionVoice)) {
+                mAudioHandler.startPlayAudio(mDescriptionVoice);
+            }
+
+
         }
     }
 
@@ -215,9 +230,12 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onShowStatus(boolean status) {
         if (status) {
-            ToastUtils.showLong(activity, "上传成功");
+            hideLoading();
+            Intent intent = new Intent(getActivity(), AddIssueSuccesActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         } else {
-            ToastUtils.showLong(activity, "上传失败");
+            ToastUtils.showLong(activity, UIUtils.getString(R.string.activity_add_issuetracking_error));
         }
     }
 
@@ -266,12 +284,26 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
     public void sendIssueTracking() {
         if (mIssueType != -1 || mFollowMember != null || !TextUtils.isEmpty(mTime)) {
             if (!TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice)) {
+                showLoading();
                 mIssueAddPresenter.putIssueTracking(mNotifyCustormer, mProjectInfo, mIssueType, mFollowMember, mTime,
                         mDescriptionContent, mDescriptionVoice, mDescriptionImage);
             }
-        } else {
-            //TODO 会删除掉（逻辑会修改，暂时给个提示）
-            ToastUtils.showLong(activity, "请将信息填写完整");
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.add_issuetracking_loading));
+        }
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
         }
     }
 
@@ -284,7 +316,6 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
                 mDescriptionVoice = data.getStringExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE);
                 mDescriptionImage = data.getParcelableArrayListExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_IMAGES);
                 handler.sendEmptyMessage(0);
-
             }
         }
     }
@@ -315,6 +346,25 @@ public class IssueAddListFragment extends BaseFragment implements View.OnClickLi
         }
     };
 
+    private AudioHandler.AudioHandlerListener mAudioListener = new AudioHandler.AudioHandlerListener() {
+        @Override
+        public void audioRecordStart() {
+            //// TODO: 16/11/30
+        }
+
+        @Override
+        public void audioRecordEnd(String filePath) {
+        }
+
+        @Override
+        public void audioPlayStart() {
+        }
+
+        @Override
+        public void audioPlayStop() {
+        }
+
+    };
 
     private RelativeLayout mIssueAll;
     private RelativeLayout mIssueStyle;

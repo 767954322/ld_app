@@ -272,5 +272,7 @@
 
     <!--common comment-->
     <string name="comment_alert_done">确认</string>
+    <!--issuetracking-->
+    <string name="add_issuetracking_loading">正在提交，请稍后...</string>
 
 </resources>
