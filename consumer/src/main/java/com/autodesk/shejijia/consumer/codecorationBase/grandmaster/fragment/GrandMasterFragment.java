@@ -48,6 +48,7 @@ import java.util.List;
 
 public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
+    private ViewPager mViewPager;
 
     @Override
     protected int getLayoutResId() {
@@ -60,6 +61,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         //vp_grand_selection = (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
         bt_grand_reservation = (ImageButton) rootView.findViewById(R.id.bt_grand_reservation);
         ll_grand_selection = (ViewGroup) rootView.findViewById(R.id.ll_grand_selection);
+        mViewPager = getViewPager();
     }
 
     @Override
@@ -70,6 +72,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     @Override
     protected void initData() {
         initGrandListData();
+        mViewPager.addOnPageChangeListener(this);
     }
 
     private ViewPager getViewPager() {
@@ -109,7 +112,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
                         JSONObject jsonObject = new JSONObject();
 
-                        int currentItem = getViewPager().getCurrentItem();
+                        int currentItem = getViewPager().getCurrentItem() % (mMasterInfoList.size() + 1);
                         String nicke_name = "", member_id = "", hs_uid = "", login_member_id = "", login_hs_uid = "";
                         if (currentItem != 0) {
                             nicke_name = mMasterInfoList.get(currentItem - 1).getNick_name();
@@ -155,13 +158,13 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
         getViewPager().setAdapter(mPagerAdapter);
         getViewPager().setOnPageChangeListener(this);
-
         addImageViewtips();
+        mViewPager.setCurrentItem((mMasterInfoList.size() +1)*100);
     }
 
     // 将圆点加入到ViewGroup中
     private void addImageViewtips() {
-        tips = new ImageView[mPagerAdapter.getCount()];
+        tips = new ImageView[(mMasterInfoList.size() + 1) % mPagerAdapter.getCount()];
         for (int i = 0; i < tips.length; i++) {
             ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -206,7 +209,8 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
         @Override
         public int getCount() {
-            return mMasterInfoList.size() + 1;
+//            return mMasterInfoList.size() + 1;
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -218,7 +222,8 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         public Object instantiateItem(ViewGroup container, final int position) {
             View view;
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            switch (position) {
+            int newPosition = position % (mMasterInfoList.size() +1);
+            switch (newPosition) {
                 case 0:
                     String default_Master = "";
                     if (null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size() > 0) {
@@ -247,7 +252,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 default:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
                     ImageView iv_grandmaster_pic = (ImageView) view.findViewById(R.id.iv_grandmaster_pic);
-                    final MasterInfo masterInfo = mMasterInfoList.get(position - 1);
+                    final MasterInfo masterInfo = mMasterInfoList.get(newPosition - 1);
                     if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
                             && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
                         String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
@@ -316,7 +321,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-        setImageBackground(position % mPagerAdapter.getCount());
+        setImageBackground(position % (mMasterInfoList.size()+1));
     }
 
     @Override
