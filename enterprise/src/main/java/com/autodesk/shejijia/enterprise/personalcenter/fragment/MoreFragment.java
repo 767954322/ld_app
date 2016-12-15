@@ -150,9 +150,9 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
         String cacheSize ="";
         File cacheDir = getActivity().getCacheDir();
         try {
-            double mpCachesize = DataCleanManager.getFolderSize(MPFileUtility.getCacheRootDirectoryHandle(getActivity()));
-            double othercachesize = DataCleanManager.getFolderSize(cacheDir);
-            cacheSize = DataCleanManager.getFormatSize(mpCachesize + othercachesize);
+            double rootDirectoryize = DataCleanManager.getFolderSize(MPFileUtility.getCacheRootDirectoryHandle(getActivity()));
+            double dirCachesize = DataCleanManager.getFolderSize(cacheDir);
+            cacheSize = DataCleanManager.getFormatSize(rootDirectoryize + dirCachesize);
         }catch (Exception e){
             e.printStackTrace();
 
