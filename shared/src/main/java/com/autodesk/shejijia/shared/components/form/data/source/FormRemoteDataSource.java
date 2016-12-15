@@ -9,6 +9,7 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.form.common.network.FormServerHttpManager;
 
@@ -83,6 +84,7 @@ public class FormRemoteDataSource implements FormDataSource {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("inspectTask", jsonObject.toString());
                 Map<String,Object> map = new HashMap<>();
                 try {
                     map.put("project_id",jsonObject.get("project_id"));
@@ -115,22 +117,5 @@ public class FormRemoteDataSource implements FormDataSource {
             }
         });
     }
-
-//
-//    @Override
-//    public void getRemoteFormItemDetails(@NonNull final LoadDataCallBack<Map> callBack, String[] fIds) {
-//        FormServerHttpManager.getInstance().getFormWithIds(fIds, new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                callBack.onLoadFailed(volleyError.getMessage());
-//            }
-//
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                Map map = JsonFileUtil.jsonObj2Map(jsonObject);
-//                callBack.onLoadSuccess(map);
-//            }
-//        });
-//    }
 
 }

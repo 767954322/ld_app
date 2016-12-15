@@ -2,7 +2,9 @@ package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import android.text.TextUtils;
 
-import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.File;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.SHFile;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,8 +18,8 @@ import java.util.Map;
 
 public class FormFeedBack implements Serializable {
     private String comment;
-    private ConstructionFile audio;
-    private List<ConstructionFile> images;
+    private File audio;
+    private List<File> images;
     private Integer currentActionIndex = 0;
     private Integer currentCheckIndex = -1;
 
@@ -29,19 +31,19 @@ public class FormFeedBack implements Serializable {
         this.comment = comment;
     }
 
-    public ConstructionFile getAudio() {
+    public File getAudio() {
         return audio;
     }
 
-    public void setAudio(ConstructionFile audio) {
+    public void setAudio(File audio) {
         this.audio = audio;
     }
 
-    public List<ConstructionFile> getImages() {
+    public List<File> getImages() {
         return images;
     }
 
-    public void setImages(List<ConstructionFile> images) {
+    public void setImages(List<File> images) {
         this.images = images;
     }
 
@@ -67,8 +69,8 @@ public class FormFeedBack implements Serializable {
 
     private void initWithList(List<Map> values){
         this.comment = "";
-        this.audio = new ConstructionFile();
-        this.images = new ArrayList<ConstructionFile>();
+        this.audio = new File();
+        this.images = new ArrayList<File>();
         for(Map valueMap : values){
             if(valueMap instanceof HashMap){
                 if("text".equals(valueMap.get("type"))){
@@ -85,8 +87,9 @@ public class FormFeedBack implements Serializable {
                 }
 
                 if("image".equals(valueMap.get("type"))){
-                    ConstructionFile image = new ConstructionFile();
+                    File image = new File();
                     image.setPublicUrl((String) valueMap.get("value"));
+                    image.setThumbnailUrl((String) valueMap.get("thumbnail_url"));
                     if(valueMap.get("id") == null){
                         image.setFileId("");
                     }else {
@@ -122,8 +125,10 @@ public class FormFeedBack implements Serializable {
         Map<String,Object> textType = new HashMap<>();
         textType.put("type","text");
         textType.put("value",this.comment == null?"":this.comment);
+        LogUtils.d("FormFeedBack", "comment == " + this.comment);
         feedBackDataList.add(textType);
         if(!TextUtils.isEmpty(this.audio.getPublicUrl())){
+            LogUtils.d("FormFeedBack", "file" + this.audio.toString());
             Map<String,Object> audio = new HashMap<>();
             audio.put("type","audio");
             audio.put("value",this.audio.getPublicUrl());
@@ -131,12 +136,16 @@ public class FormFeedBack implements Serializable {
             feedBackDataList.add(audio);
         }
         if(images != null && images.size() != 0){
-            for(ConstructionFile file : images){
+            LogUtils.d("FormFeedBack", "images.size == " + images.size());
+            for(File file : images){
+                LogUtils.d("FormFeedBack", "file" + file.toString());
                 if(!TextUtils.isEmpty(file.getPublicUrl())){
+                    LogUtils.d("FormFeedBack", "file.getPublicUrl() == " + file.getPublicUrl());
                     Map<String,Object> image = new HashMap<>();
                     image.put("type","image");
                     image.put("value",file.getPublicUrl());
                     image.put("id",file.getFileId());
+                    image.put("thumbnail_url",file.getThumbnailUrl());
                     feedBackDataList.add(image);
                 }
             }

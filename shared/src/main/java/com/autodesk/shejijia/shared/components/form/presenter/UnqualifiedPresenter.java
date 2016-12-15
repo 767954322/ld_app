@@ -1,34 +1,43 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
-import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.ConstructionFile;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.form.common.entity.SHForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
-import com.autodesk.shejijia.shared.components.form.contract.PreCheckUnqualified;
+import com.autodesk.shejijia.shared.components.form.contract.UnqualifiedContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
-import com.autodesk.shejijia.shared.components.form.ui.activity.UnqualifiedActivity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_panya on 16/12/12.
  */
 
-public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Presenter {
+public class UnqualifiedPresenter implements UnqualifiedContract.Presenter {
     private static final String TAG = "PreCheckUnqualifiedPresenter";
-    private PreCheckUnqualified.View mView;
-    private Context mContext;
-    private List<ConstructionFile> mResponseImageFileList;
-    private ConstructionFile mAudioFile;
+    private UnqualifiedContract.View mView;
+    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> mResponseImageFileList;
+    private List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> mAudioFileList;
     private List<ImageInfo> mPictures;
     private String mAudioPath;
     private String mCommentContent;
@@ -38,12 +47,10 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
     private int mCurrentImageFileNum = 0;
     private boolean mOkPutVoiceFile = false;
 
-    public PreCheckUnqualifiedPresenter(PreCheckUnqualified.View view) {
+    public UnqualifiedPresenter(UnqualifiedContract.View view) {
         mView = view;
-        if (view instanceof UnqualifiedActivity) {
-            mContext = (Context) view;
-        }
         mResponseImageFileList = new ArrayList<>();
+        mAudioFileList = new ArrayList<>();
     }
 
     @Override
@@ -65,13 +72,22 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
                     @Override
                     public void onSuccess(String response) {
                         LogUtils.d(TAG, response);
-                        ++mCurrentImageFileNum;
-                        ConstructionFile reponseFile =
-                                GsonUtil.jsonToBean(response, ConstructionFile.class);
-                        mResponseImageFileList.add(reponseFile);
-                        if(mCurrentImageFileNum == mPictures.size()){
-                            resultPutFile();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = jsonObject.optJSONArray("files");
+                            List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> files =
+                                    JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                            ++mCurrentImageFileNum;
+//                        com.autodesk.shejijia.shared.components.common.entity.microbean.File responseFile =
+//                                GsonUtil.jsonToBean(response, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                            mResponseImageFileList.addAll(files);
+                            if(mCurrentImageFileNum == mPictures.size()){
+                                resultPutFile();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
                     }
 
                     @Override
@@ -91,11 +107,19 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
             FileHttpManager.getInstance().upLoadFileByType(file, "AUDIO", new FileHttpManager.ResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
-                    mOkPutVoiceFile = true;
-                    ConstructionFile responseFile =
-                            GsonUtil.jsonToBean(response, ConstructionFile.class);
-                    mAudioFile = responseFile;
-                    resultPutFile();
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray array = jsonObject.optJSONArray("files");
+                        List<com.autodesk.shejijia.shared.components.common.entity.microbean.File> files =
+                                JsonFileUtil.jsonArray2ModelList(array, com.autodesk.shejijia.shared.components.common.entity.microbean.File.class);
+                        mOkPutVoiceFile = true;
+                        mAudioFileList.addAll(files);
+                        resultPutFile();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -111,6 +135,7 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
     }
 
     private void resultPutFile(){
+        LogUtils.d(TAG,"reultput file");
         if(mPictures == null || mPictures.size() == 0){
             if(mOkPutVoiceFile){
                 upLoadFormFile();
@@ -127,16 +152,18 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
     }
 
     private void upLoadFormFile(){
+        LogUtils.d(TAG,"upLoadFormFile");
         if(mPreCheckForm == null){
             return;
         }
         for(CheckItem item : mPreCheckForm.getCheckItems()){
+            mPreCheckForm.setStatus(0);
             if("input_content".equals(item.getItemId())){
                 if(mResponseImageFileList != null && mResponseImageFileList.size() != 0){
                     item.getFormFeedBack().setImages(mResponseImageFileList);
                 }
-                if(mAudioFile != null){
-                    item.getFormFeedBack().setAudio(mAudioFile);
+                if(mAudioFileList != null && mAudioFileList.size() != 0){
+                    item.getFormFeedBack().setAudio(mAudioFileList.get(0));
                 }
                 if(!TextUtils.isEmpty(mCommentContent)){
                     item.getFormFeedBack().setComment(mCommentContent);
@@ -144,10 +171,49 @@ public class PreCheckUnqualifiedPresenter implements PreCheckUnqualified.Present
                 break;
             }
         }
-        List<SHPrecheckForm> formList = new ArrayList<>();
+        List<SHForm> formList = new ArrayList<>();
         formList.add(mPreCheckForm);
-//        FormRepository.getInstance().updateRemoteForms();
+        Bundle bundle = new Bundle();
+        bundle.putString("user_id", UserInfoUtils.getMemberId(AdskApplication.getInstance().getApplicationContext()));
+        FormRepository.getInstance().updateRemoteForms(formList, bundle, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                modifyTaskStatus();
+            }
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
     }
+
+    private void modifyTaskStatus() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("pid", Long.valueOf(mPreCheckForm.getProjectId()));
+        bundle.putString("tid", mPreCheckForm.getTaskId());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("result",ConstructionConstants.TaskStatus.REJECTED.toUpperCase());
+
+        FormRepository.getInstance().inspectTask(bundle, new JSONObject(map), new ResponseCallback<Map, ResponseError>() {
+            @Override
+            public void onSuccess(Map data) {
+                // TODO: 16/12/13 改变Task状态成功后的业务逻辑
+                mView.submitSuccess();
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                // TODO: 16/12/13 改变Task状态失败后的业务逻辑
+                mView.hideLoading();
+                mView.showNetError(error);
+            }
+        });
+
+
+    }
+
 
     @Override
     public void setCheckIndex(SHPrecheckForm mPreCheckForm, boolean checked, int id) {

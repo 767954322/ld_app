@@ -11,10 +11,13 @@ import java.util.List;
  * Created by t_panya on 16/12/12.
  */
 
-public interface PreCheckUnqualified {
+public interface UnqualifiedContract {
     interface View extends BaseView{
         void showDialog(String message);
 
+        void submitSuccess();
+
+        void submitError();
     }
 
     interface Presenter extends BasePresenter {

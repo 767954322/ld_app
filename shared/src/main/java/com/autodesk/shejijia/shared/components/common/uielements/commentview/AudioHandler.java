@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.commentview;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
@@ -47,6 +48,13 @@ public class AudioHandler{
     private AudioHandler(Context context, AudioHandlerListener handlerInterface){
         mContext = context;
         mCommentHandlerListener = handlerInterface;
+    }
+
+    public int getAudioTimer(String path){
+        if(!TextUtils.isEmpty(path)){
+            return MPAudioManager.getInstance().getAudioDuration(path);
+        }
+        return 0;
     }
 
     public void stopVoiceRecord(){

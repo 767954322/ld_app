@@ -5,19 +5,24 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.ui.fragment.UnqualifiedEditFragment;
+import com.autodesk.shejijia.shared.components.form.ui.fragment.UnqualifiedSubmitFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by t_panya on 16/12/7.
  */
 
-public class UnqualifiedActivity extends BaseActivity{
+public class UnqualifiedActivity extends BaseActivity implements UnqualifiedSubmitFragment.onFinishListener, View.OnClickListener {
     private static final String TAG = "PrecheckUnqualifiedActivity";
     public static final String UNQUALIFIED_FORM = "unqualified_form";
     public static final String UNQUALIFIED_COMMENT = "unqualified_comment";
@@ -28,6 +33,11 @@ public class UnqualifiedActivity extends BaseActivity{
 
     private SHPrecheckForm mPreCheckForm;
 
+    private RelativeLayout mSubmitSuccess;
+    private ScrollView mScrollView;
+    private Button mSubmitBtn;
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_unqualified;
@@ -35,6 +45,10 @@ public class UnqualifiedActivity extends BaseActivity{
 
     @Override
     protected void initView() {
+        mSubmitSuccess = (RelativeLayout) findViewById(R.id.rl_submit_success_container);
+        mScrollView = (ScrollView) findViewById(R.id.sc_unqualified_container);
+        mSubmitBtn = (Button) findViewById(R.id.btn_submit_success);
+        mSubmitBtn.setOnClickListener(this);
     }
 
     @Override
@@ -51,8 +65,37 @@ public class UnqualifiedActivity extends BaseActivity{
     }
 
     @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_submit_success){
+            finish();
+        }
+    }
+
+    @Override
+    public void onSubmitFinish() {
+        if(UnqualifiedSubmitFragment.isSubmitFinish){
+            mSubmitSuccess.setVisibility(View.VISIBLE);
+            mScrollView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(UnqualifiedSubmitFragment.isSubmitFinish){
+            finish();
+            return;
+        }
+        showDialog("是否退出编辑");
+        return;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
+            if(UnqualifiedSubmitFragment.isSubmitFinish){
+                finish();
+                return true;
+            }
             showDialog("是否退出编辑");
             return true;
         }

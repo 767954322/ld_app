@@ -66,7 +66,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
         switch (requestCode) {
             case ImageSelector.REQUEST_OPEN_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
-                    Uri photo = data.getData();
+                    Uri photo = Uri.fromFile(mTmpFile);
                     if (ImageSelector.getInstance().getConfig().getSelectModel() == ImageSelector.AVATOR_MODE) {
                         mAlbumView.showImageCropUi(photo.toString());
                         return;

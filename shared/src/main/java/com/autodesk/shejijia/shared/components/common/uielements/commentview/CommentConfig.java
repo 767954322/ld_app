@@ -35,7 +35,10 @@ public class CommentConfig implements Parcelable{
     }
 
     public enum LayoutType{
-        EDIT,           //编辑
+        EDIT,           //编辑所有
+        EDIT_IMAGE_ONLY,    //只显示图片
+        EDIT_TEXT_ONLY,     //只显示edittext
+        EDIT_AUDIO_ONLY,    //只显示语音
         SHOW;           //展示
     }
 
@@ -48,6 +51,16 @@ public class CommentConfig implements Parcelable{
     public String commentContent;
     public String audioPath;
     public int selectModel;
+    public int columnNum;
+
+    public int getColumnNum() {
+        return columnNum;
+    }
+
+    public CommentConfig setColumnNum(int columnNum) {
+        this.columnNum = columnNum;
+        return this;
+    }
 
     public LayoutType geteLayoutType() {
         return eLayoutType;
@@ -126,6 +139,7 @@ public class CommentConfig implements Parcelable{
         eDataSource = DataSource.LOCAL;
         eLayoutType = LayoutType.EDIT;
         selectModel = MULTI_MODE;
+        columnNum = 3;
     }
 
     @Override
@@ -143,6 +157,7 @@ public class CommentConfig implements Parcelable{
         dest.writeString(commentContent);
         dest.writeString(audioPath);
         dest.writeInt(selectModel);
+        dest.writeInt(columnNum);
     }
 
     protected CommentConfig(Parcel in) {
@@ -154,6 +169,7 @@ public class CommentConfig implements Parcelable{
         commentContent = in.readString();
         audioPath = in.readString();
         selectModel = in.readInt();
+        columnNum = in.readInt();
     }
 
     public static final Creator<CommentConfig> CREATOR = new Creator<CommentConfig>() {

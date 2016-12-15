@@ -1,60 +1,79 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.network.FileHttpManager;
+import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
-import com.autodesk.shejijia.shared.components.form.contract.PreCheckUnqualified;
-import com.autodesk.shejijia.shared.components.form.presenter.PreCheckUnqualifiedPresenter;
+import com.autodesk.shejijia.shared.components.form.contract.UnqualifiedContract;
+import com.autodesk.shejijia.shared.components.form.presenter.UnqualifiedPresenter;
 import com.autodesk.shejijia.shared.components.form.ui.activity.UnqualifiedActivity;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by t_panya on 16/12/13.
  */
 
-public class UnqualifiedCommitFragment extends BaseConstructionFragment implements View.OnClickListener,
-        PreCheckUnqualified.View {
+public class UnqualifiedSubmitFragment extends BaseConstructionFragment implements View.OnClickListener,
+        UnqualifiedContract.View {
     private static final String TAG = "UnqualifiedCommitFragment";
-    private TextView mAcceptanceCondition;
+    public static boolean isSubmitFinish = false;
     private TextView mCustomAbsenceTel;
     private TextView mCustomDetail;
     private TextView mConfirmId;
     private TextView mConfirmDetail;
     private TextView mCheckPaper;
     private TextView mCheckPaperDetail;
-    private Button mCommitBtn;
-    private Button mCommitCancel;
+    private Button mSubmitBtn;
+    private Button mSubmitCancel;
+
     private CommentFragment mCommentFragment;
     private SHPrecheckForm mPreCheckForm;
     private ArrayList<ImageInfo> mPicture;
     private String mAudioPath;
     private String mCommentContent;
     private CommentPresenter mCommentPresenter;
-    private PreCheckUnqualifiedPresenter mPresenter;
+    private UnqualifiedPresenter mPresenter;
 
-    public static UnqualifiedCommitFragment newInstance(Bundle params) {
-        UnqualifiedCommitFragment fragment = new UnqualifiedCommitFragment();
+    private ConProgressDialog mProgressDialog;
+
+    private onFinishListener mListener;
+
+    public interface onFinishListener{
+        void onSubmitFinish();
+    }
+
+    public static UnqualifiedSubmitFragment newInstance(Bundle params) {
+        UnqualifiedSubmitFragment fragment = new UnqualifiedSubmitFragment();
         fragment.setArguments(params);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof UnqualifiedActivity){
+            LogUtils.d(TAG,"context instanceof UnqualifiedActivity");
+            mListener = (onFinishListener) context;
+        }
     }
 
     @Override
@@ -71,6 +90,7 @@ public class UnqualifiedCommitFragment extends BaseConstructionFragment implemen
         new CustomDialog(mContext, new CustomDialog.OnDialogClickListenerCallBack() {
             @Override
             public void onClickOkListener() {
+                showLoading();
                 mPresenter.upLoadFiles(mPicture,mAudioPath,mCommentContent,mPreCheckForm);
             }
 
@@ -82,24 +102,47 @@ public class UnqualifiedCommitFragment extends BaseConstructionFragment implemen
     }
 
     @Override
+    public void showLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ConProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.submit_loading));
+        }
+
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void submitSuccess() {
+        if(mProgressDialog.isShowing()){
+            mProgressDialog.dismiss();
+        }
+        isSubmitFinish = true;
+        mListener.onSubmitFinish();
+    }
+
+    @Override
+    public void submitError() {
+
+    }
+
+    @Override
     protected int getLayoutResId() {
         return R.layout.fragment_unqualified_commit;
     }
 
     @Override
     protected void initView() {
-        mAcceptanceCondition = (TextView) rootView.findViewById(R.id.tv_acceptance_condition);
         mCustomAbsenceTel = (TextView) rootView.findViewById(R.id.tv_custom_absence_tel);
         mCustomDetail = (TextView) rootView.findViewById(R.id.tv_custom_detail);
         mConfirmId = (TextView) rootView.findViewById(R.id.tv_confirm_id);
         mConfirmDetail = (TextView) rootView.findViewById(R.id.tv_confirm_detail);
         mCheckPaper = (TextView) rootView.findViewById(R.id.tv_check_paper);
         mCheckPaperDetail = (TextView) rootView.findViewById(R.id.tv_check_paper_detail);
-        mCommitBtn = (Button) rootView.findViewById(R.id.btn_commit);
-        mCommitBtn.setOnClickListener(this);
-        mCommitCancel = (Button) rootView.findViewById(R.id.btn_cancel);
-        mCommitCancel.setOnClickListener(this);
-        mPresenter = new PreCheckUnqualifiedPresenter(this);
+        mSubmitBtn = (Button) rootView.findViewById(R.id.btn_commit);
+        mSubmitBtn.setOnClickListener(this);
+        mSubmitCancel = (Button) rootView.findViewById(R.id.btn_cancel);
+        mSubmitCancel.setOnClickListener(this);
+        mPresenter = new UnqualifiedPresenter(this);
     }
 
     @Override

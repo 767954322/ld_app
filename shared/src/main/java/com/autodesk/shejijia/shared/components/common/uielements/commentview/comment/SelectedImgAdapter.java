@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.CircleDisplayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.Collections;
@@ -39,10 +42,14 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         mListener = listener;
         mLoader = loader;
         options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
                 .showImageOnLoading(R.drawable.photopicker_placeholder)
+                .showImageOnFail(R.drawable.photopicker_placeholder)
+                .showImageForEmptyUri(R.drawable.photopicker_placeholder)
+                .cacheInMemory(false)
+                .cacheOnDisk(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .resetViewBeforeLoading(true)
                 .build();
         emptyOption = new DisplayImageOptions.Builder()
                 .cacheInMemory(false)
@@ -79,6 +86,9 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
         if (isImgItem(position)) {
             final ImageViewHolder viewHolder = (ImageViewHolder) holder;
             final String path = getListItem(position);
+            if(mConfig.geteLayoutType() == CommentConfig.LayoutType.SHOW){
+                viewHolder.delete.setVisibility(View.GONE);
+            }
             if (path != null) {
                 mLoader.displayImage(path, viewHolder.image, options);
                 viewHolder.image.setOnClickListener(new View.OnClickListener() {

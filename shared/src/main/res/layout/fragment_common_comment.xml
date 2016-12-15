@@ -18,8 +18,10 @@
             android:maxHeight="100dp"
             android:textCursorDrawable="@null"
             android:background="@color/white"
+            android:padding="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:letterSpacing="1.2"
             android:gravity="top|left"
             android:textSize="16sp"
             android:textColor="#353535"
@@ -108,7 +110,6 @@
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
-                android:text="14:19"
                 android:textColor="#D9D9D9"
                 android:textSize="14dp" />
             <ImageView
@@ -169,5 +170,8 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
         />
 </LinearLayout>

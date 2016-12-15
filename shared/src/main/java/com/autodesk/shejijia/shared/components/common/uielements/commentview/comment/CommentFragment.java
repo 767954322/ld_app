@@ -20,13 +20,13 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
-import com.autodesk.shejijia.shared.components.common.uielements.commentview.base.CommonBaseFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.AudioHandler;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.CommonAudioAlert;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.GridDividerDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.ImageSelector;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.commentview.widget.SpaceItemDecoration;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.im.constants.IMChatInfo;
@@ -79,6 +79,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private LinearLayout mAudioPlay;
     private ImageView mDeleteImage;
     private CommonAudioAlert mAlertView;
+    private TextView mAudioTime;
 
     /**
      * audio
@@ -88,7 +89,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private boolean isPlaying;
     private long mVoiceRecordingStartTime;
 
-    private int containerId;
+    private int mTimer;
 
     public interface ImageItemClickListener {
         void onAddItemClick();
@@ -131,19 +132,18 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_common_comment, container, false);
-        containerId = container.getId();
         mEditText = (EditText) view.findViewById(R.id.et_comment_content);
         mTextView = (TextView) view.findViewById(R.id.tv_comment_content);
         mAudioRecord = (LinearLayout) view.findViewById(R.id.ll_record_audio_container);
         mAudioRecord.setOnClickListener(this);
         mAudioPlay = (LinearLayout) view.findViewById(R.id.ll_audio_play_container);
         mAudioPlay.setOnClickListener(this);
+        mAudioTime = (TextView) view.findViewById(R.id.tv_audio_play_duration);
         mDeleteImage = (ImageView) view.findViewById(R.id.iv_delete_voice);
         mDeleteImage.setOnClickListener(this);
-        if (isEditMode()) {
-            mEditText.setVisibility(View.VISIBLE);
-            mAudioRecord.setVisibility(View.VISIBLE);
 
+        if (isEditMode()) {
+            initDetailShowStatus();
         } else {
             if(!TextUtils.isEmpty(mCommentContent)){
                 mTextView.setVisibility(View.VISIBLE);
@@ -151,6 +151,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             }
             if(!TextUtils.isEmpty(mAudioPath)){
                 mAudioPlay.setVisibility(View.VISIBLE);
+//                mAudioTime.setText();
             }
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -311,13 +312,28 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         //给RecclerView设置GridlayoutManager，并根据配置信息，指定列数
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
-//        mRecyclerView.addItemDecoration(new GridDividerDecorator(mContext)); //添加divider
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, mConfig.getColumnNum()));
+//        mRecyclerView.addItemDecoration(new SpaceItemDecoration(10,mConfig.getColumnNum())); //添加divider
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void initDetailShowStatus(){
+        if(mLayoutType == CommentConfig.LayoutType.EDIT){
+            mEditText.setVisibility(View.VISIBLE);
+            mAudioRecord.setVisibility(View.VISIBLE);
+        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_AUDIO_ONLY){
+            mAudioRecord.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_IMAGE_ONLY){
+            mEditText.setVisibility(View.GONE);
+            mAudioRecord.setVisibility(View.GONE);
+        } else if(mLayoutType == CommentConfig.LayoutType.EDIT_TEXT_ONLY){
+            mAudioRecord.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+    }
     private boolean isEditMode() {
-        if (mLayoutType == CommentConfig.LayoutType.EDIT) {
+        if (mLayoutType != CommentConfig.LayoutType.SHOW) {
             return true;
         }
         return false;
@@ -356,15 +372,18 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                     mAudioHandler.startPlayAudio(mAudioPath);
                 }
             } else if(id == R.id.tv_done){
+                if(isRecording){
+                    mAudioHandler.stopVoiceRecord();
+                }
                 mAlertView.dismiss();
                 mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
                 mAudioRecord.setVisibility(View.GONE);
                 mAudioPlay.setVisibility(View.VISIBLE);
+                mAudioTime.setText(mTimer + "''");
             }
         }
     };
 
-    private String mPath;
     private AudioHandler.AudioHandlerListener mAudioListener = new AudioHandler.AudioHandlerListener() {
         @Override
         public void audioRecordStart() {
@@ -377,6 +396,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             mAudioPath = filePath;
             SharedPreferencesUtils.writeString("AudioPath",filePath);
             isRecording = false;
+            mTimer = mAudioHandler.getAudioTimer(filePath);
         }
 
         @Override
