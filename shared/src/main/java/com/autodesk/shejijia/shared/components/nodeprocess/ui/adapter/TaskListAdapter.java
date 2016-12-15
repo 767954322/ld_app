@@ -8,16 +8,24 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskHeadPicHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,41 +83,49 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             taskListVH.mTaskStatus.getBackground().setLevel(TaskUtils.getStatusLevel(status));
         }
 
-        //当前任务节点的类型
-        if (!TextUtils.isEmpty(taskLists.get(position).getCategory())) {
-            String category = taskLists.get(position).getCategory();
-            Drawable drawable = null;
-            switch (category) {
-                case ConstructionConstants.TaskCategory.TIME_LINE:
-                    drawable = ContextCompat.getDrawable(mContext, R.drawable.default_head);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
-                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
-                    drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_checkaccept);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                case ConstructionConstants.TaskCategory.CONSTRUCTION:
-                    drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_construction);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                case ConstructionConstants.TaskCategory.MATERIAL_MEASURING:
-                    drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_material);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION:
-                    drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_material);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
-                    break;
-                default:
-                    break;
-            }
+        // 当前任务节点头像
+        String taskHeadStatus = TaskHeadPicHelper.getInstance().getActions(taskLists.get(position));
+        LogUtils.e("taskActions", taskHeadStatus);
+        switch (taskHeadStatus) {
+            case TaskHeadPicHelper.SHOW_HEAD:
+                String avatarUrl = TaskUtils.getAvatarUrl(mContext, mProject.getMembers());
+                if (!TextUtils.isEmpty(avatarUrl)) {
+                    taskListVH.mTaskIcon.setVisibility(View.VISIBLE);
+                    ImageUtils.loadUserAvatar(taskListVH.mTaskIcon, avatarUrl);
+                }
+                break;
+            case TaskHeadPicHelper.SHOW_DEFAULT:
+                taskListVH.mTaskIcon.setVisibility(View.GONE);
+                String category = taskLists.get(position).getCategory();
+                if (!TextUtils.isEmpty(category)) {
+                    Drawable drawable = null;
+                    switch (category) {
+                        case ConstructionConstants.TaskCategory.TIME_LINE:
+                            drawable = ContextCompat.getDrawable(mContext, R.drawable.default_head);
+                            break;
+                        case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
+                        case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
+                            drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_checkaccept);
+                            break;
+                        case ConstructionConstants.TaskCategory.CONSTRUCTION:
+                            drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_construction);
+                            break;
+                        case ConstructionConstants.TaskCategory.MATERIAL_MEASURING://主材测量
+                        case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION://主材安装
+                            drawable = ContextCompat.getDrawable(mContext, R.drawable.ic_task_material);
+                            break;
+                        default:
+                            break;
+
+                    }
+                    if (drawable != null) {
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        taskListVH.mTaskName.setCompoundDrawables(drawable, null, null, null);
+                    }
+                }
+                break;
         }
+
     }
 
     private void initEvents(TaskListVH taskListVH, final int position) {
@@ -122,6 +138,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private static class TaskListVH extends RecyclerView.ViewHolder {
+        private CircleImageView mTaskIcon;
         private TextView mTaskName;
         private TextView mTaskStatus;
         private LinearLayout mTaskDetails;
@@ -129,6 +146,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TaskListVH(View itemView) {
             super(itemView);
 
+            mTaskIcon = (CircleImageView) itemView.findViewById(R.id.img_task_icon);
             mTaskName = (TextView) itemView.findViewById(R.id.tv_task_name);
             mTaskStatus = (TextView) itemView.findViewById(R.id.tv_task_status);
             mTaskDetails = (LinearLayout) itemView.findViewById(R.id.ll_task_details);

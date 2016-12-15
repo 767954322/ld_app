@@ -16,6 +16,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
@@ -279,5 +280,17 @@ public class TaskUtils {
         builder.setCurrentDate(taskStartDate);
 
         return builder;
+    }
+
+    public static String getAvatarUrl(Context context,ArrayList<Member> members) {
+        String uid = UserInfoUtils.getUid(context);
+        if (members != null && members.size() > 0) {
+            for (Member member : members) {
+                if (member.getUid().equalsIgnoreCase(uid)) {
+                    return member.getProfile().getAvatar();
+                }
+            }
+        }
+        return null;
     }
 }

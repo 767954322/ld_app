@@ -15,8 +15,11 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskHeadPicHelper;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
 import java.util.Date;
@@ -31,21 +34,23 @@ import static com.autodesk.shejijia.shared.components.common.utility.DateUtil.ge
 
 public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Task> taskLists;
-    private int resId;
+    private List<Task> mTaskLists;
+    private int mResId;
+    private String mAvatarUrl;
     private Context mContext;
     private ProjectDetailsTasksAdapter.TaskListItemClickListener mTaskListItemClickListener;
 
-    public ProjectDetailsTasksAdapter(List<Task> taskLists, int resId, Context mContext, ProjectDetailsTasksAdapter.TaskListItemClickListener taskListItemListener) {
-        this.taskLists = taskLists;
-        this.resId = resId;
+    public ProjectDetailsTasksAdapter(List<Task> taskLists, String avatarUrl, int resId, Context mContext, ProjectDetailsTasksAdapter.TaskListItemClickListener taskListItemListener) {
+        this.mTaskLists = taskLists;
+        this.mAvatarUrl = avatarUrl;
+        this.mResId = resId;
         this.mContext = mContext;
         this.mTaskListItemClickListener = taskListItemListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);
         return new TaskListVH(view);
     }
 
@@ -60,17 +65,17 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return taskLists.size();
+        return mTaskLists.size();
     }
 
     private void initView(TaskListVH taskListVH, int position) {
         // 当前任务节点名
-        if (!TextUtils.isEmpty(taskLists.get(position).getName())) {
-            taskListVH.mTaskName.setText(taskLists.get(position).getName());
+        if (!TextUtils.isEmpty(mTaskLists.get(position).getName())) {
+            taskListVH.mTaskName.setText(mTaskLists.get(position).getName());
         }
 
         //设置任务节点日期
-        Time time = TaskUtils.getDisplayTime(taskLists.get(position));
+        Time time = TaskUtils.getDisplayTime(mTaskLists.get(position));
         if (time != null) {
             String startDate = time.getStart();
             String endDate = time.getCompletion();
@@ -78,44 +83,57 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         // 当前任务节点的状态
-        String status = taskLists.get(position).getStatus();
+        String status = mTaskLists.get(position).getStatus();
         if (!TextUtils.isEmpty(status)) {
             taskListVH.mTaskStatus.setText(TaskUtils.getDisplayStatus(status));
             taskListVH.mTaskStatus.setTextColor(TaskUtils.getStatusTextColor(mContext, status));
             taskListVH.mTaskStatus.getBackground().setLevel(TaskUtils.getStatusLevel(status));
         }
 
-        //当前任务节点的类型
-        if (!TextUtils.isEmpty(taskLists.get(position).getCategory())) {
-            String category = taskLists.get(position).getCategory();
-            switch (category) {
-                case ConstructionConstants.TaskCategory.TIME_LINE://开工交底
-                    taskListVH.mTaskIcon.setImageResource(R.drawable.default_head);
-                    break;
-                case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
-                case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
-                    taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_checkaccept);
-                    break;
-                case ConstructionConstants.TaskCategory.CONSTRUCTION://施工类
-                    taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_construction);
-                    break;
-                case ConstructionConstants.TaskCategory.MATERIAL_MEASURING://主材测量
-                    taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_material);
-                    break;
-                case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION: //主材安装
-                    taskListVH.mTaskIcon.setImageResource(R.drawable.ic_task_material);
-                    break;
-                default:
-                    break;
-            }
+        // 当前任务节点头像
+        String taskHeadStatus = TaskHeadPicHelper.getInstance().getActions(mTaskLists.get(position));
+        switch (taskHeadStatus) {
+            case TaskHeadPicHelper.SHOW_HEAD:
+                taskListVH.mTaskIconHead.setVisibility(View.VISIBLE);
+                taskListVH.mTaskIconDefault.setVisibility(View.GONE);
+                if (!TextUtils.isEmpty(mAvatarUrl)) {
+                    ImageUtils.loadUserAvatar(taskListVH.mTaskIconHead, mAvatarUrl);
+                }
+                break;
+            case TaskHeadPicHelper.SHOW_DEFAULT:
+                taskListVH.mTaskIconDefault.setVisibility(View.VISIBLE);
+                taskListVH.mTaskIconHead.setVisibility(View.GONE);
+                if (!TextUtils.isEmpty(mTaskLists.get(position).getCategory())) {
+                    String category = mTaskLists.get(position).getCategory();
+                    switch (category) {
+                        case ConstructionConstants.TaskCategory.TIME_LINE://开工交底
+                            taskListVH.mTaskIconDefault.setImageResource(R.drawable.default_head);
+                            break;
+                        case ConstructionConstants.TaskCategory.INSPECTOR_INSPECTION://监理验收
+                        case ConstructionConstants.TaskCategory.CLIENT_MANAGER_INSPECTION://客户经理验收
+                            taskListVH.mTaskIconDefault.setImageResource(R.drawable.ic_task_checkaccept);
+                            break;
+                        case ConstructionConstants.TaskCategory.CONSTRUCTION://施工类
+                            taskListVH.mTaskIconDefault.setImageResource(R.drawable.ic_task_construction);
+                            break;
+                        case ConstructionConstants.TaskCategory.MATERIAL_MEASURING://主材测量
+                        case ConstructionConstants.TaskCategory.MATERIAL_INSTALLATION: //主材安装
+                            taskListVH.mTaskIconDefault.setImageResource(R.drawable.ic_task_material);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
         }
+
     }
 
     private void initEvents(TaskListVH taskListVH, final int position) {
         taskListVH.mTaskDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTaskListItemClickListener.onTaskClick(taskLists, position);
+                mTaskListItemClickListener.onTaskClick(mTaskLists, position);
             }
         });
     }
@@ -137,7 +155,8 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     private static class TaskListVH extends RecyclerView.ViewHolder {
-        private ImageView mTaskIcon;
+        private ImageView mTaskIconDefault;
+        private CircleImageView mTaskIconHead;
         private TextView mTaskName;
         private TextView mTaskStatus;
         private TextView mTaskDate;
@@ -145,7 +164,8 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
 
         TaskListVH(View itemView) {
             super(itemView);
-            mTaskIcon = (ImageView) itemView.findViewById(R.id.img_task_icon);
+            mTaskIconDefault = (ImageView) itemView.findViewById(R.id.img_task_iconDefault);
+            mTaskIconHead = (CircleImageView) itemView.findViewById(R.id.img_task_iconHead);
             mTaskName = (TextView) itemView.findViewById(R.id.tv_task_name);
             mTaskStatus = (TextView) itemView.findViewById(R.id.tv_task_status);
             mTaskDate = (TextView) itemView.findViewById(R.id.tv_task_date);

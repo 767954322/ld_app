@@ -69,6 +69,7 @@ public class ConstructionConstants {
     public static final String BUNDLE_KEY_TASK_COMMENT_ID = "task_comment_id";
     public static final String BUNDLE_KEY_TASK_COMMENT_CONTENT = "task_comment_content";
     public static final String BUNDLE_KEY_TASK_FILES = "task_files";
+    public static final String BUNDLE_KEY_USER_AVATAR = "avatar_url";
 
     public static final String BUNDLE_KEY_UNREAD = "unread";
     public static final String BUNDLE_KEY_OFFSET = "offset";

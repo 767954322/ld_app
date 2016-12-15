@@ -19,11 +19,13 @@ import java.util.List;
 
 public class ProjectDetailsPagerAdapter extends FragmentPagerAdapter {
 
-    private List<List<Task>> taskLists;
+    private List<List<Task>> mTaskLists;
+    private String mAvatarUrl;
 
-    public ProjectDetailsPagerAdapter(FragmentManager fm, List<List<Task>> taskLists) {
+    public ProjectDetailsPagerAdapter(FragmentManager fm, String avatarUrl, List<List<Task>> taskLists) {
         super(fm);
-        this.taskLists = taskLists;
+        this.mAvatarUrl = avatarUrl;
+        this.mTaskLists = taskLists;
     }
 
     @Override
@@ -33,14 +35,15 @@ public class ProjectDetailsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return taskLists.size();
+        return mTaskLists.size();
     }
 
     private Fragment getFragment(int position) {
         Bundle taskListBundle = new Bundle();
         ArrayList<Task> childTaskArrayList = new ArrayList<>();
-        childTaskArrayList.addAll(taskLists.get(position));
+        childTaskArrayList.addAll(mTaskLists.get(position));
         taskListBundle.putSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST, childTaskArrayList);
+        taskListBundle.putString(ConstructionConstants.BUNDLE_KEY_USER_AVATAR, mAvatarUrl);
         return ProjectDetailTasksFragment.newInstance(taskListBundle);
     }
 }

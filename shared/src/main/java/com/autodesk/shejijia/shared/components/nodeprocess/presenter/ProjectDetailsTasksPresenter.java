@@ -30,8 +30,9 @@ public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract
     public void handleTaskList(Bundle taskBundle) {
         if (taskBundle != null) {
             List<Task> taskList = (ArrayList<Task>) taskBundle.getSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST);
+            String avatarUrl = taskBundle.getString(ConstructionConstants.BUNDLE_KEY_USER_AVATAR);
             if (taskList != null) {
-                mPDTaskListView.refreshTaskListView(taskList);
+                mPDTaskListView.refreshTaskListView(taskList, avatarUrl);
             }
         }
     }

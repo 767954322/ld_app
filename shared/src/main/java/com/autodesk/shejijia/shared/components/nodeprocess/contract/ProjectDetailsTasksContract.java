@@ -18,7 +18,7 @@ public interface ProjectDetailsTasksContract {
 
     interface View extends BaseView {
 
-        void refreshTaskListView(List<Task> taskList);
+        void refreshTaskListView(List<Task> taskList, String avatarUrl);
     }
 
     interface Presenter extends BasePresenter {

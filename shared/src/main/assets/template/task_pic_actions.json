@@ -1,0 +1,323 @@
+{
+  "actions": [
+    "show_head",
+    "show_default"
+  ],
+  "clientmanager": {
+    "timeline": {
+      "open": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "inspectorInspection": {
+      "open": [
+        "show_head"
+      ],
+      "reserving": [
+        "show_head"
+      ],
+      "reserved": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "qualified": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "rejected": [
+        "show_head"
+      ],
+      "reinspection": [
+        "show_head"
+      ],
+      "rectification": [
+        "show_head"
+      ],
+      "reinspecting": [
+        "show_head"
+      ],
+      "reinspection_and_rectification": [
+        "show_head"
+      ],
+      "reinspection_reserving": [
+        "show_head"
+      ],
+      "reinspection_reserved": [
+        "show_head"
+      ],
+      "reinspection_inprogress": [
+        "show_head"
+      ],
+      "reinspection_delayed": [
+        "show_head"
+      ],
+      "deleted": [
+        "show_head"
+      ]
+    },
+    "clientmanagerInspection": {
+      "open": [
+        "show_head"
+      ],
+      "reserving": [
+        "show_head"
+      ],
+      "reserved": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "unqualified": [
+        "show_head"
+      ]
+    }
+  },
+  "foreman": {
+    "timeline": {
+      "open": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "inspectorInspection": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "qualified": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "rejected": [
+        "show_head"
+      ],
+      "reinspection": [
+        "show_head"
+      ],
+      "rectification": [
+        "show_head"
+      ],
+      "reinspecting": [
+        "show_head"
+      ],
+      "reinspection_and_rectification": [
+        "show_head"
+      ],
+      "reinspection_reserving": [
+        "show_head"
+      ],
+      "reinspection_reserved": [
+        "show_head"
+      ],
+      "reinspection_inprogress": [
+        "show_head"
+      ],
+      "reinspection_delayed": [
+        "show_head"
+      ],
+      "deleted": [
+        "show_head"
+      ]
+    },
+    "clientmanagerInspection": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "unqualified": [
+        "show_head"
+      ]
+    },
+    "construction": {
+      "open": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "materialMeasuring": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "materialInstallation": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "unqualified": [
+        "show_head"
+      ]
+    }
+  },
+  "materialstaff": {
+    "timeline": {
+      "open": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "materialMeasuring": {
+      "open": [
+        "show_head"
+      ],
+      "reserving": [
+        "show_head"
+      ],
+      "reserved": [
+        "show_head"
+      ]
+    },
+    "materialInstallation": {
+      "open": [
+        "show_head"
+      ],
+      "reserving": [
+        "show_head"
+      ],
+      "reserved": [
+        "show_head"
+      ]
+    }
+  },
+  "member": {
+    "timeline": {
+      "open": [
+        "show_head"
+      ],
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ]
+    },
+    "inspectorInspection": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "qualified": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "rejected": [
+        "show_head"
+      ],
+      "reinspection": [
+        "show_head"
+      ],
+      "rectification": [
+        "show_head"
+      ],
+      "reinspecting": [
+        "show_head"
+      ],
+      "reinspection_and_rectification": [
+        "show_head"
+      ],
+      "reinspection_reserving": [
+        "show_head"
+      ],
+      "reinspection_reserved": [
+        "show_head"
+      ],
+      "reinspection_inprogress": [
+        "show_head"
+      ],
+      "reinspection_delayed": [
+        "show_head"
+      ],
+      "deleted": [
+        "show_head"
+      ]
+    },
+    "clientmanagerInspection": {
+      "inprogress": [
+        "show_head"
+      ],
+      "delayed": [
+        "show_head"
+      ],
+      "resolved": [
+        "show_head"
+      ],
+      "unqualified": [
+        "show_head"
+      ]
+    }
+  }
+}

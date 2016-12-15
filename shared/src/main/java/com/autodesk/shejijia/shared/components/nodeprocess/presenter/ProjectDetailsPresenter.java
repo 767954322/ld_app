@@ -3,7 +3,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -19,6 +18,7 @@ import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,9 +111,10 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             int currentMilestonePosition = getCurrentMilestonePosition(projectInfo.getPlan());
             List<List<Task>> taskLists = handleTaskListData(projectInfo.getPlan());
             boolean isKaiGongResolved = isKaiGongResolved(projectInfo);
+            String avatarUrl = TaskUtils.getAvatarUrl(mContext, projectInfo.getMembers());
             if (taskLists != null) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), taskLists, currentMilestonePosition, isKaiGongResolved);
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), avatarUrl, taskLists, currentMilestonePosition, isKaiGongResolved);
             } else {
                 mProjectDetailsView.showError("handle data error");
             }

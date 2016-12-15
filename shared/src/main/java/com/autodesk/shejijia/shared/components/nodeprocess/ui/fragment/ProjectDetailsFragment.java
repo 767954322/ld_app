@@ -115,8 +115,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mProjectDetailsPresenter.initRequestParams(projectId, true);
             mProjectDetailsPresenter.initRefreshState(true);
             mProjectDetailsPresenter.getProjectDetails();
-        }else {
-            if (mSwipeRefreshLayout.isRefreshing()){
+        } else {
+            if (mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }
@@ -133,10 +133,10 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void updateProjectDetailsView(String memberType, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
+    public void updateProjectDetailsView(String memberType, String avatarUrl, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
 
         mProjectRootView.setVisibility(View.VISIBLE);
-        if (mSwipeRefreshLayout.isRefreshing()){
+        if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
 
@@ -151,7 +151,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mTVPlan.setVisibility(View.GONE);
             mTVWorkStateView.setVisibility(View.GONE);
 
-            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), taskLists);
+            mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), avatarUrl, taskLists);
             mContentViewPager.setAdapter(mFragmentPagerAdapter);
 
             //progressbar indicator( must first have viewpager adapter)

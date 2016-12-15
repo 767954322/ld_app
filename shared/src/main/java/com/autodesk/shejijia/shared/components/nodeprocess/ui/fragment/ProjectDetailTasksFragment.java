@@ -52,8 +52,8 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
     }
 
     @Override
-    public void refreshTaskListView(List<Task> taskList) {
-        mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, R.layout.listitem_projectdetails_task_list_view, mContext, this);
+    public void refreshTaskListView(List<Task> taskList, String avatarUrl) {
+        mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, avatarUrl, R.layout.listitem_projectdetails_task_list_view, mContext, this);
         mTaskListView.setAdapter(mTaskListAdapter);
     }
 
