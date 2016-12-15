@@ -163,6 +163,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         } else if (i == R.id.iv_delete_voice) {
             mIssueAudio.setVisibility(View.GONE);
             mDescriptionVoice = null;
+            setPutTextViewStatus();
 
         }
     }
@@ -399,7 +400,10 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
      * 判断发送文字是否可点击
      */
     private void setPutTextViewStatus() {
-        boolean allowAdd = mIssueType != -1 && (!TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice)) && mDescriptionVoice != null ? true : false;
+
+        boolean okDescription = !TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice);
+
+        boolean allowAdd = mIssueType != -1 && okDescription && mFollowMember != null ? true : false;
         if (allowAdd) {
             mAddIssue.setClickable(true);
             mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_visible));
