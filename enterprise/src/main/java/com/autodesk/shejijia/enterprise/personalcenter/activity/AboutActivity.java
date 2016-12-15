@@ -23,7 +23,7 @@ public class AboutActivity extends BaseActivity {
     protected void initView() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(getString(R.string.personal_center_more_about));
+            actionBar.setTitle(getString(R.string.designer_home_about));
         }
     }
 

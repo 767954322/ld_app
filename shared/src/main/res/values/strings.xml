@@ -35,6 +35,10 @@
     <string name="no_repeat_click">请勿重复点击</string>
     <string name="bid_filter">筛选</string>
     <string name="share">分享</string>
+    <string name="version_introduced">版权说明</string>
+    <string name="version_detail">版本</string>
+    <string name="designer_introduced">设计家介绍</string>
+    <string name="designer_home_about">关于设计家</string>
 
     <!--Login-->
     <string name="welcome_dialog">需要登陆后，进行后续操作</string>

@@ -482,14 +482,8 @@
     <!-- AboutActivity -->
     <string name="more_about">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;简约风格是由“极简主义”演化而来，它代表的是简洁和品味。简约不等于简单，只是经过精心设计后对房子进行精简，但每一处精简都能看出主人花的心思。田园风格有很多种，但是万变不离其宗，它的主要特点就是回归自然。田园风格是向往田园，喜爱自然的人所钟爱的。</string>
     <string name="version">Version BQ0.0.0.1</string>
-    <string name="designer_home_about">关于设计家</string>
-    <string name="designer_introduced">设计家介绍</string>
     <string name="reservation">立即预约</string>
-
     <string name="contact">联系方式</string>
-    <string name="version_introduced">版权说明</string>
-    <string name="version_detail">版本</string>
-
     <!-- AmendDemandActivity -->
     <string name="demand_phone">手机号码：</string>
     <string name="demand_project_types">房屋类型：</string>
