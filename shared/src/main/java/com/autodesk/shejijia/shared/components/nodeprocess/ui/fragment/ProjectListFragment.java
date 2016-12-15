@@ -129,24 +129,23 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         if (projectList != null && projectList.size() > 0) {
             mEmptyView.setVisibility(View.GONE);
             mProjectListView.setVisibility(View.VISIBLE);
-            mProjectListView.complete();
             mProjectListView.getRecyclerView().getLayoutManager().scrollToPosition(0);
             mProjectListAdapter.setProjectLists(projectList);
         } else {
             mEmptyView.setVisibility(View.VISIBLE);
             mProjectListView.setVisibility(View.GONE);
-            mProjectListView.complete();
         }
+        mProjectListView.complete();
     }
 
     @Override
     public void addMoreProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
-            mProjectListView.complete();
             mProjectListAdapter.appendProjectLists(projectList);
         } else {
             mProjectListView.onNoMore(null);
         }
+        mProjectListView.complete();
     }
 
     @Override
