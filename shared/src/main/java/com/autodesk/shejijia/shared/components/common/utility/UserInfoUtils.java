@@ -6,8 +6,6 @@ import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 /**
  * Created by t_xuz on 10/17/16.
@@ -62,14 +60,6 @@ public final class UserInfoUtils {
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
         if (entity != null && !TextUtils.isEmpty(entity.getHs_uid())) {
             return entity.getHs_uid();
-        }
-        return null;
-    }
-
-    public static String getAcsMemberId(@NonNull Context context){
-        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
-        if (entity != null && !TextUtils.isEmpty(entity.getAcs_member_id())) {
-            return entity.getAcs_member_id();
         }
         return null;
     }

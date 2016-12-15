@@ -23,24 +23,13 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
-import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
-import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
-import com.autodesk.shejijia.shared.components.im.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.common.appglobal.ChatConstants;
-import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.update.PgyUpdateManager;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
