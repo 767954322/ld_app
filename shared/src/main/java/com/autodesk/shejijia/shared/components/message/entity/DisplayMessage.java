@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 
-public  class DisplayMessageEntity implements Serializable {
+public  class DisplayMessage implements Serializable {
     private String summary;
     @SerializedName("detail_items")
     private ArrayList<String> detailItems;

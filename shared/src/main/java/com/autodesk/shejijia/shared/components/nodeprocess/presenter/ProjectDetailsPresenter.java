@@ -15,13 +15,12 @@ import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
-import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -206,9 +205,9 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag) {
         mProjectDetailsView.showLoading();
-        mProjectRepository.getUnreadMsgCount(projectIds, requestTag, new ResponseCallback<UnreadMsgEntity, ResponseError>() {
+        mProjectRepository.getUnreadMsgCount(projectIds, requestTag, new ResponseCallback<UnreadMsg, ResponseError>() {
             @Override
-            public void onSuccess(UnreadMsgEntity unreadMsgEntity) {
+            public void onSuccess(UnreadMsg unreadMsgEntity) {
                 mProjectDetailsView.hideLoading();
                 mThreadId = unreadMsgEntity.getThreadId();
                 mProjectDetailsView.updateUnreadMsgCountView(unreadMsgEntity.getCount());

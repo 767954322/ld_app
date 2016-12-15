@@ -13,8 +13,8 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.entity.messageItemListEntity;
-import com.autodesk.shejijia.shared.components.message.entity.DisplayMessageEntity;
+import com.autodesk.shejijia.shared.components.message.entity.MessageItem;
+import com.autodesk.shejijia.shared.components.message.entity.DisplayMessage;
 
 import java.util.List;
 
@@ -23,24 +23,24 @@ import java.util.List;
  */
 
 public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<messageItemListEntity> messageItemBeans;
+    private List<MessageItem> messageItemBeans;
     private boolean mIsUnread;
-    private boolean mISOutstripLIMIT;
+    private boolean mIsOutstripLimit;
     private HistoricalRecordstListener mHistoricalRecordstListener;
-    private int resId;
+    private int mLayoutResourceId;
 
-    public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener, List<messageItemListEntity> messageItemBeans, boolean isUnread, int resId) {
+    public ProjectMessageCenterAdapter(HistoricalRecordstListener historicalRecordstListener, List<MessageItem> messageItemBeans, boolean isUnread, int layoutResourceId) {
         super();
         this.messageItemBeans = messageItemBeans;
-        this.resId = resId;
+        this.mLayoutResourceId = layoutResourceId;
         this.mIsUnread = isUnread;
         this.mHistoricalRecordstListener = historicalRecordstListener;
-        this.mISOutstripLIMIT = false;
+        this.mIsOutstripLimit = false;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mLayoutResourceId, parent, false);
         return new ProjectMessageCenterVH(view);
     }
 
@@ -56,8 +56,8 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         return getContentItemCount();
     }
 
-    public void notifyDataForRecyclerView(List<messageItemListEntity> messageItemBean, boolean isUnread, int offset) {
-        mISOutstripLIMIT = messageItemBean.size() < ProjectMessageCenterPresenter.LIMIT ? true : false;
+    public void notifyDataForRecyclerView(List<MessageItem> messageItemBean, boolean isUnread, int offset) {
+        mIsOutstripLimit = messageItemBean.size() < ProjectMessageCenterPresenter.LIMIT ? true : false;
         if (offset == 0) {
             messageItemBeans.clear();
         }
@@ -88,13 +88,13 @@ public class ProjectMessageCenterAdapter extends RecyclerView.Adapter<RecyclerVi
         } else {
             ImageUtils.loadImageRound(holder.mImgBtnPersonalHeadPic, avatar);
         }
-        if (mIsUnread && mISOutstripLIMIT && (position == messageItemBeans.size() - 1)) {
+        if (mIsUnread && mIsOutstripLimit && (position == messageItemBeans.size() - 1)) {
             holder.mTvMessageHistoricalRecords.setVisibility(View.VISIBLE);
         } else {
             holder.mTvMessageHistoricalRecords.setVisibility(View.GONE);
         }
 
-        DisplayMessageEntity displayMessage = messageItemBeans.get(position).getDisplayMessage();
+        DisplayMessage displayMessage = messageItemBeans.get(position).getDisplayMessage();
         if (displayMessage != null && !TextUtils.isEmpty(displayMessage.getSummary())) {
             String title = displayMessage.getSummary();
             for (int i = 0; title.contains("*"); i++) {

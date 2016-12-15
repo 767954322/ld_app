@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by luchongbin on 2016/12/14.
  */
 
-public class UnreadMsgEntity implements Serializable {
+public class UnreadMsg implements Serializable {
     @SerializedName("project_id")
     private long projectId;
     @SerializedName("thread_id")

@@ -8,7 +8,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.datamodel.MessageCenterRemoteDataSource;
-import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
+import com.autodesk.shejijia.shared.components.message.entity.Message;
 
 import org.json.JSONObject;
 
@@ -52,9 +52,9 @@ public class ProjectMessageCenterPresenter implements ProjectMessageCenterContra
     @Override
     public void getMessageCenterInfo(Bundle bundle,String mTAG) {
         mProjectMessageCenterPresenterView.showLoading();
-        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<MessageEntity, ResponseError>(){
+        mMessageCenterDataSource.getMessageCenterInfo(bundle,mTAG,new ResponseCallback<Message, ResponseError>(){
             @Override
-            public void onSuccess(MessageEntity messageInfo) {
+            public void onSuccess(Message messageInfo) {
                 mOffset += messageInfo.getMessageItemList() != null?messageInfo.getMessageItemList().size():0;
                 mOffset = messageInfo.getOffset()+10;
                 if(messageInfo.getOffset() == 0){

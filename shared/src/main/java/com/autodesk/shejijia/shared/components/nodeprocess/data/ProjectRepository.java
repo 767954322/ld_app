@@ -17,9 +17,8 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
-import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +26,6 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.List;
 
@@ -163,7 +161,7 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsgEntity, ResponseError> callback) {
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsg, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -174,8 +172,8 @@ public final class ProjectRepository implements ProjectDataSource {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List<UnreadMsgEntity> UnreadMsgEntityList = new Gson()
-                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsgEntity>>() {
+                List<UnreadMsg> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsg>>() {
                         }.getType());
                 callback.onSuccess(UnreadMsgEntityList.get(0));
             }

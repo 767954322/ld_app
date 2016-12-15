@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.shared.components.message;
 import android.os.Bundle;
-import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
+import com.autodesk.shejijia.shared.components.message.entity.Message;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 /**
@@ -9,9 +9,9 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 
 public interface ProjectMessageCenterContract {
     interface View extends BaseView{
-        void refreshProjectMessagesView(MessageEntity messageInfo);
+        void refreshProjectMessagesView(Message messageInfo);
 //
-        void loadMoreProjectMessagesView(MessageEntity messageInfo);
+        void loadMoreProjectMessagesView(Message messageInfo);
 
         void changeUnreadMsgStateView();
 

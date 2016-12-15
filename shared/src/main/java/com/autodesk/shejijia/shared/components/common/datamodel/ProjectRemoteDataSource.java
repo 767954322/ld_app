@@ -20,11 +20,10 @@ import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpMa
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.JsonFileUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
-import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.message.network.MessageCenterHttpManagerImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -45,7 +44,7 @@ import java.util.List;
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
     @Override
-    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsgEntity, ResponseError> callback) {
+    public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsg, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -55,8 +54,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List<UnreadMsgEntity> UnreadMsgEntityList = new Gson()
-                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsgEntity>>() {
+                List<UnreadMsg> UnreadMsgEntityList = new Gson()
+                        .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsg>>() {
                         }.getType());
                 callback.onSuccess(UnreadMsgEntityList.get(0));
             }

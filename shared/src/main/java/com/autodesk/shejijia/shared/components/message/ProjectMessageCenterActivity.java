@@ -15,8 +15,8 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.RefreshLoadMoreListener;
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.message.entity.MessageEntity;
-import com.autodesk.shejijia.shared.components.message.entity.messageItemListEntity;
+import com.autodesk.shejijia.shared.components.message.entity.Message;
+import com.autodesk.shejijia.shared.components.message.entity.MessageItem;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.List;
 public class ProjectMessageCenterActivity extends BaseActivity implements ProjectMessageCenterContract.View,
         ProjectMessageCenterAdapter.HistoricalRecordstListener, RefreshLoadMoreListener {
     private ProjectMessageCenterContract.Presenter mProjectMessageCenterPresenter;
-    private List<messageItemListEntity> messageItemBeans;
+    private List<MessageItem> mMessageItems;
     private long mProjectId;
     private boolean mIsUnread;
     private String mThreadId;
@@ -59,7 +59,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     protected void initData(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(UIUtils.getString(R.string.update_project_details));
-        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(), TAG, this);
+        mProjectMessageCenterPresenter = new ProjectMessageCenterPresenter(getApplicationContext(), getClass().getSimpleName(), this);
     }
 
     private void initRecyclerView() {
@@ -68,8 +68,8 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
         mRvProjectMessagCenterView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRvProjectMessagCenterView.getSwipeRefreshLayout()
                 .setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
-        messageItemBeans = new ArrayList<>();
-        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this, messageItemBeans, mIsUnread, R.layout.item_messagecenter);
+        mMessageItems = new ArrayList<>();
+        mProjectMessageCenterAdapter = new ProjectMessageCenterAdapter(this, mMessageItems, mIsUnread, R.layout.item_messagecenter);
         mRvProjectMessagCenterView.setAdapter(mProjectMessageCenterAdapter);
     }
 
@@ -91,7 +91,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
 
     @Override
-    public void refreshProjectMessagesView(MessageEntity messageInfo) {
+    public void refreshProjectMessagesView(Message messageInfo) {
         mRvProjectMessagCenterView.complete();
         mProjectMessageCenterPresenter.changeUnreadMsgState(mThreadId);
         if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() > 0) {
@@ -101,7 +101,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
     }
 
     @Override
-    public void loadMoreProjectMessagesView(MessageEntity messageInfo) {
+    public void loadMoreProjectMessagesView(Message messageInfo) {
         mRvProjectMessagCenterView.complete();
         mProjectMessageCenterAdapter.notifyDataForRecyclerView(messageInfo.getMessageItemList(), mIsUnread, messageInfo.getOffset());
         if (messageInfo.getMessageItemList() != null && messageInfo.getMessageItemList().size() <= 0) {
@@ -112,7 +112,7 @@ public class ProjectMessageCenterActivity extends BaseActivity implements Projec
 
     @Override
     public void changeUnreadMsgStateView() {
-        setResult(Activity.RESULT_OK, new Intent());
+        setResult(Activity.RESULT_OK);
     }
 
     @Override

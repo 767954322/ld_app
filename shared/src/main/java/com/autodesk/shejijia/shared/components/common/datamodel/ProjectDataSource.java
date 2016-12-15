@@ -8,17 +8,14 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.UnreadMessageIssue;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.message.entity.UnreadMsgEntity;
+import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
-import java.util.List;
 
 /**
  * Created by t_xuz on 10/17/16.
@@ -70,7 +67,7 @@ public interface ProjectDataSource {
 
     void confirmTask(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
 
-    void getUnreadMsgCount(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMsgEntity, ResponseError> callback);
+    void getUnreadMsgCount(String projectIds, String requestTag, @NonNull ResponseCallback<UnreadMsg, ResponseError> callback);
 
 
     void uploadTaskFiles(Bundle requestParams, String requestTag, ResponseCallback<Void, ResponseError> callback);
