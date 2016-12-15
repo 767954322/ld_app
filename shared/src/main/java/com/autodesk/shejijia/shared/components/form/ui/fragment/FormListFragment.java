@@ -190,7 +190,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
     @Override
     public void enterMutableItems(ArrayList<SHForm> formList, LinkedHashMap<String, List<String>> linkedHashMap) {
-        // TODO: 16/12/14 进入可变的条目界面
+        // TODO: 16/12/14 进入可变的item界面
         Bundle args = new Bundle();
         args.putSerializable("formList", formList);
         args.putSerializable("linkedHashMap", linkedHashMap);
@@ -198,7 +198,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mContext.getSupportFragmentManager().beginTransaction()
                 .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
-                .add(R.id.fl_main_container, fragment)
+                .add(R.id.fl_main_container, fragment,SHFormConstant.FragmentTag.MUTABLE_ITEMS_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -213,7 +213,7 @@ public class FormListFragment extends BaseConstructionFragment implements FormLi
 
         mContext.getSupportFragmentManager().beginTransaction()
                 .hide(mContext.getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT))
-                .add(R.id.fl_main_container, fragment)
+                .add(R.id.fl_main_container, fragment,SHFormConstant.FragmentTag.IMMUTABLE_ITEMS_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }

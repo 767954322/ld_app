@@ -38,6 +38,8 @@ public class SHFormConstant {
         public static final String ITEM_LIST_FRAGMENT = "itemListFragment";
         public static final String FORM_UNQUALIFIED_EDIT = "unqualifiedEditFragment";
         public static final String FORM_UNQUALIFIED_COMMIT = "unqualifiedCommitFragment";
+        public static final String IMMUTABLE_ITEMS_FRAGMENT = "immutableItemsFragment";
+        public static final String MUTABLE_ITEMS_FRAGMENT = "mutableItemsFragment";
     }
 
 }

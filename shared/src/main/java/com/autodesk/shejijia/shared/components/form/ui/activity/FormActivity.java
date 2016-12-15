@@ -7,7 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.ui.fragment.FormListFragment;
@@ -56,12 +58,22 @@ public class FormActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(SHFormConstant.FragmentTag.FORM_LIST_FRAGMENT).isVisible()) {
-            showBackDialog();
-
-
+            enterActivity();
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void enterActivity() {
+        switch(UserInfoUtils.getMemberType(this)) {
+            case ConstructionConstants.MemberType.INSPECTOR:
+                showBackDialog();
+                break;
+            default:
+                super.onBackPressed();
+                break;
+        }
+
     }
 
     private void showBackDialog() {
