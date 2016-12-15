@@ -332,7 +332,7 @@
     <string name="demand_measure_house_charge">量&#160;&#160;房&#160;&#160;费：</string>
     <string name="flow_send">发送</string>
     <string name="agreed">同意</string>
-    <string name="agreed_home">确定量房</string>
+    <string name="agreed_home">确认量房</string>
     <string name="refuse">拒绝</string>
     <string name="amount_of_time_is_empty">请选择量房时间</string>
     <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>

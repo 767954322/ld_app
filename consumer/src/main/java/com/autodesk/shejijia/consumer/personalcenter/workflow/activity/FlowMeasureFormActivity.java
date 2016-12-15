@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -65,7 +64,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_measure_empty_form_1;
+        return R.layout.activity_measure_empty_form;
     }
 
     @Override
