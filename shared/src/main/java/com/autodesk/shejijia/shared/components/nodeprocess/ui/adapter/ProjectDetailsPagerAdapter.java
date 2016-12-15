@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.ViewGroup;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -17,7 +20,7 @@ import java.util.List;
  * Created by t_xuz on 11/14/16.
  */
 
-public class ProjectDetailsPagerAdapter extends FragmentPagerAdapter {
+public class ProjectDetailsPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<List<Task>> mTaskLists;
     private String mAvatarUrl;
@@ -36,6 +39,16 @@ public class ProjectDetailsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mTaskLists.size();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return PagerAdapter.POSITION_NONE;
+    }
+
+    public void updateFragment(List<List<Task>> taskLists) {
+        this.mTaskLists = taskLists;
+        notifyDataSetChanged();
     }
 
     private Fragment getFragment(int position) {
