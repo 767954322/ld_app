@@ -306,6 +306,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
+                if (StringUtils.isEmpty(detailAddress)) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.new_inventory_input_right_detail_address_empty));
+                    return;
+                }
                 if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
                     getErrorHintAlertView(UIUtils.getString(R.string.new_inventory_input_right_detail_address));
                     return;

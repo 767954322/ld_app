@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.NewInventoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -226,9 +227,17 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             jsonObject.put(JsonConstants.JSON_DETAIL_ADDRESS, detailAddress);
 
 
+            /**
+             * 详细地址
+             */
+            if (StringUtils.isEmpty(detailAddress)) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address_empty),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, SolicitationDesignerActivity.this, AlertView.Style.Alert, null).show();
+                return;
+            }
             boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
 
-            if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
+            if (!bdetailAddress) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, SolicitationDesignerActivity.this, AlertView.Style.Alert, null).show();
                 return;
             }

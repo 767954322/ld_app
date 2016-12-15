@@ -211,6 +211,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
                     detailAddress = detail_address.getText().toString();
                     boolean bdetailAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
+
+                    if (StringUtils.isEmpty(detailAddress)) {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+                                AlertView.Style.Alert, null).show();
+                        return;
+                    }
+
                     if (!bdetailAddress || StringUtils.isEmpty(detailAddress)) {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();

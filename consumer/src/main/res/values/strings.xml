@@ -706,6 +706,7 @@
     <string name="new_inventory_input_right_account_number">会员账户应为正确的手机号码</string>
     <string name="new_inventory_input_right_community_name">小区名称应为2-16个中文、英文、数字字符</string>
     <string name="new_inventory_input_right_detail_address">详细地址应为2-32个中文、英文、数字字符</string>
+    <string name="new_inventory_input_right_detail_address_empty">详细地址不能为空</string>
     <string name="new_inventory_save_project_fail">保存项目失败</string>
     <string name="new_inventory_save_project_succ">保存项目成功</string>
     <string name="new_inventory_if_cancel">是否放弃此次编辑?</string>
