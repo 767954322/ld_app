@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -346,25 +345,25 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             if (object != mAlertView) {
                 return;
             }
-            if (id == R.id.iv_sound_recording) {
+            if (id == R.id.imgbtn_sound_record) {
+                mAlertView.getView(R.id.imgbtn_sound_record).setSelected(!mAlertView.getView(R.id.imgbtn_sound_record).isSelected());
                 if (!isRecording) {
                     mVoiceRecordingStartTime = System.nanoTime();
                     mPresenter.startRecordAudio();
-                    mAlertView.setRecordStatus(CommonAudioAlert.RECORDING);
-                }
-            } else if (id == R.id.iv_sound_suspend) {
-                long endTime = System.nanoTime();
-                if ((endTime - mVoiceRecordingStartTime) / Math.pow(10, 9) >= IMChatInfo.VoiceLeastTime) {
-                    mPresenter.stopRecordAudio();
-                    mAlertView.setRecordStatus(CommonAudioAlert.RECORDED);
-                } else {
-                    mPresenter.cancelRecordAudio();
                     mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
-                    showToast("时间太短");
+                } else {
+                    long endTime = System.nanoTime();
+                    if ((endTime - mVoiceRecordingStartTime) / Math.pow(10, 9) >= IMChatInfo.VoiceLeastTime) {
+                        mPresenter.stopRecordAudio();
+                        mAlertView.setRecordStatus(CommonAudioAlert.RECORDED);
+                    } else {
+                        mPresenter.cancelRecordAudio();
+                        mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
+                        showToast("时间太短");
+                    }
+                    isRecording = false;
                 }
-                isRecording = false;
             } else if (id == R.id.iv_sound_playing) {
-                Log.d(TAG, "onItemClick: mAudioPath == " + mAudioPath);
                 mAudioPath = SharedPreferencesUtils.readString("AudioPath");
 //                if(!TextUtils.isEmpty(mAudioPath)){
 //                    mAudioHandler.startPlayAudio(mAudioPath);
@@ -372,7 +371,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                 if (!TextUtils.isEmpty(mAudioPath)) {
                     mAudioHandler.startPlayAudio(mAudioPath);
                 }
-            } else if (id == R.id.tv_done) {
+            } else if (id == R.id.btn_done) {
                 if (isRecording) {
                     mAudioHandler.stopVoiceRecord();
                 }

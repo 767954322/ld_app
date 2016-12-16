@@ -202,6 +202,9 @@ public class AlbumFragment extends PhotoSelectBaseFragment
 
         mFab.setOnClickListener(this);
         mOverlay.setOnClickListener(this);
+        if(mAlbumConfig.getStartData() != null && mAlbumConfig.getStartData().size() != 0){
+            showSelectedCount(mAlbumConfig.getStartData().size());
+        }
     }
 
     @Override

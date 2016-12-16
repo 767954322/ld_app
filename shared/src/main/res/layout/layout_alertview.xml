@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/content_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@color/bgColor_overlay">
     </FrameLayout>
 

@@ -191,6 +191,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void enterQualified(Task task, SHPrecheckForm shPrecheckForm) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,task提供各种表单的id,后者保存了辅助条件的信息
         Intent intent = new Intent(this, FormActivity.class);
         intent.putExtra("task", task);
         intent.putExtra("shPrecheckForm", shPrecheckForm);
@@ -201,6 +202,7 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void enterUnqualified(SHPrecheckForm shPrecheckForm) {
+        // TODO: 16/11/18 数据还未保存,需要将数据保存再内存中,
         Intent intent = new Intent(this,UnqualifiedActivity.class);
         intent.putExtra(UnqualifiedActivity.UNQUALIFIED_FORM,shPrecheckForm);
         startActivity(intent);

@@ -4,42 +4,37 @@
     android:id="@+id/rl_record_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/iv_sound_recording"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_sound_recording"/>
+    android:layout_height="150dp">
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/iv_sound_suspend"
+    <ImageButton
+        android:id="@+id/imgbtn_sound_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_suspend"/>
+        android:background="@drawable/btn_audio_record"
+        android:layout_centerInParent="true"/>
 
     <ImageView
         android:id="@+id/iv_sound_playing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/iv_sound_recording"
+        android:layout_toLeftOf="@id/imgbtn_sound_record"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_play_audio"
         android:layout_marginRight="26dp"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/tv_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_sound_recording"
-        android:layout_marginLeft="5.5dp"
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/imgbtn_sound_record"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="15dp"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical"
+        android:background="@drawable/small_button_blue"
+        android:textColor="@color/white"
+        style="?attr/buttonBarButtonStyle"
         android:textSize="@dimen/font_large"
-        android:text="@string/comment_alert_done"
-        android:textColor="@color/font_subtitle"
-        />
+        android:text="@string/comment_alert_done"/>
 </RelativeLayout>

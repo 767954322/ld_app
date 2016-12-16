@@ -86,9 +86,9 @@ public class AlbumActivity extends PhotoSelectBaseActivity {
         mSubmitBtn.setEnabled(enabled);
     }
 
-//    public void setToolbarTitle(CharSequence title) {
-//        mToolbar.setTitle(title);
-//    }
+    public void setToolbarTitle(CharSequence title) {
+        mToolbar.setTitle(title);
+    }
 
     @Override
     public void onBackPressed() {

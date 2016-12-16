@@ -1,10 +1,13 @@
 package com.autodesk.shejijia.shared.components.form.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,11 +15,13 @@ import android.widget.TextView;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.ConProgressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.CommentConfig;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentFragment;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPresenter;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
 import com.autodesk.shejijia.shared.components.form.contract.UnqualifiedContract;
@@ -42,6 +47,7 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
     private TextView mCheckPaperDetailTV;
     private Button mSubmitBtn;
     private Button mSubmitCancelBtn;
+    private AlertDialog mAlertDialog;
 
     private CommentFragment mCommentFragment;
     private SHPrecheckForm mPreCheckForm;
@@ -50,8 +56,6 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
     private String mCommentContent;
     private CommentPresenter mCommentPresenter;
     private UnqualifiedPresenter mPresenter;
-
-    private ConProgressDialog mProgressDialog;
 
     private onFinishListener mListener;
 
@@ -85,35 +89,51 @@ public class UnqualifiedSubmitFragment extends BaseConstructionFragment implemen
 
     @Override
     public void showDialog(String message) {
-        new CustomDialog(mContext, new CustomDialog.OnDialogClickListenerCallBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("提示");
+        builder.setMessage(message);
+        builder.setPositiveButton(UIUtils.getString(R.string.sure), new DialogInterface.OnClickListener() {
             @Override
-            public void onClickOkListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                mAlertDialog.dismiss();
                 showLoading();
                 mPresenter.upLoadFiles(mPicture, mAudioPath, mCommentContent, mPreCheckForm);
             }
-
+        });
+        builder.setNegativeButton(UIUtils.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClickCancelListener() {
-
+            public void onClick(DialogInterface dialog, int which) {
+                mAlertDialog.dismiss();
             }
-        }).showCustomViewDialog("提示", message, false, true, true, false);
+        });
+        mAlertDialog = builder.show();
+//        new CustomDialog(mContext, new CustomDialog.OnDialogClickListenerCallBack() {
+//            @Override
+//            public void onClickOkListener() {
+//                showLoading();
+//                mPresenter.upLoadFiles(mPicture, mAudioPath, mCommentContent, mPreCheckForm);
+//            }
+//
+//            @Override
+//            public void onClickCancelListener() {
+//
+//            }
+//        }).showCustomViewDialog("提示", message, false, true, true, false);
     }
 
     @Override
     public void showLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ConProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.submit_loading));
-        }
+        CustomProgress.show(getContext(), getString(R.string.submit_loading), false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
 
-        mProgressDialog.show();
+            }
+        });
     }
 
     @Override
     public void submitSuccess() {
-        if (mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        CustomProgress.cancelDialog();
         isSubmitFinish = true;
         mListener.onSubmitFinish();
     }

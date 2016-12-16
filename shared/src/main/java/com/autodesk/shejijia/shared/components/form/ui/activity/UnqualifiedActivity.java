@@ -1,9 +1,11 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.ScrollView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomDialog;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.common.constant.SHFormConstant;
 import com.autodesk.shejijia.shared.components.form.common.entity.categoryForm.SHPrecheckForm;
 import com.autodesk.shejijia.shared.components.form.ui.fragment.UnqualifiedEditFragment;
@@ -36,6 +39,7 @@ public class UnqualifiedActivity extends BaseActivity implements UnqualifiedSubm
     private RelativeLayout mSubmitSuccess;
     private ScrollView mScrollView;
     private Button mSubmitBtn;
+    private AlertDialog mAlertDialog;
 
 
     @Override
@@ -103,16 +107,33 @@ public class UnqualifiedActivity extends BaseActivity implements UnqualifiedSubm
     }
 
     public void showDialog(String message) {
-        new CustomDialog(this, new CustomDialog.OnDialogClickListenerCallBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage(message);
+        builder.setPositiveButton(UIUtils.getString(R.string.sure), new DialogInterface.OnClickListener() {
             @Override
-            public void onClickOkListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
-
+        });
+        builder.setNegativeButton(UIUtils.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClickCancelListener() {
-
+            public void onClick(DialogInterface dialog, int which) {
+                mAlertDialog.dismiss();
             }
-        }).showCustomViewDialog("提示",message,false,true,true,false);
+        });
+        mAlertDialog = builder.show();
+
+//        new CustomDialog(this, new CustomDialog.OnDialogClickListenerCallBack() {
+//            @Override
+//            public void onClickOkListener() {
+//                finish();
+//            }
+//
+//            @Override
+//            public void onClickCancelListener() {
+//
+//            }
+//        }).showCustomViewDialog("提示",message,false,true,true,false);
     }
 }

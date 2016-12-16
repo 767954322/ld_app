@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +24,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDis
 public class CommonAudioAlert {
 
     public static final int PRE_RECORD = 0;
-    public static final int RECORDING = 1;
     public static final int RECORDED = 2;
 
     private final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -34,10 +35,9 @@ public class CommonAudioAlert {
     private ViewGroup contentContainer;
     private ViewGroup decorView;    //activity的根View
     private ViewGroup rootView;     //AlertView 的 根View
-    private ImageView mRecordingImage;
-    private ImageView mSuspendImage;
     private ImageView mPlayImage;
-    private TextView mDoneText;
+    private Button mDoneBtn;
+    private ImageButton mRecordImgBtn;
 
     private boolean isDismiss;
 
@@ -72,10 +72,9 @@ public class CommonAudioAlert {
 
     private void initAudioAlertDetailViews(LayoutInflater inflater){
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_record_content, contentContainer);
-        mRecordingImage = (ImageView) viewGroup.findViewById(R.id.iv_sound_recording);
-        mSuspendImage = (ImageView) viewGroup.findViewById(R.id.iv_sound_suspend);
+        mRecordImgBtn = (ImageButton) viewGroup.findViewById(R.id.imgbtn_sound_record);
         mPlayImage = (ImageView) viewGroup.findViewById(R.id.iv_sound_playing);
-        mDoneText = (TextView) viewGroup.findViewById(R.id.tv_done);
+        mDoneBtn = (Button) viewGroup.findViewById(R.id.btn_done);
         setListener();
     }
 
@@ -89,10 +88,9 @@ public class CommonAudioAlert {
     }
 
     private void setListener(){
-        mRecordingImage.setOnClickListener(mInnerClickListener);
-        mSuspendImage.setOnClickListener(mInnerClickListener);
+        mRecordImgBtn.setOnClickListener(mInnerClickListener);
         mPlayImage.setOnClickListener(mInnerClickListener);
-        mDoneText.setOnClickListener(mInnerClickListener);
+        mDoneBtn.setOnClickListener(mInnerClickListener);
     }
 
     /**
@@ -156,18 +154,9 @@ public class CommonAudioAlert {
     public void setRecordStatus(int status){
         switch (status){
             case PRE_RECORD:
-                mRecordingImage.setVisibility(View.VISIBLE);
-                mSuspendImage.setVisibility(View.INVISIBLE);
-                mPlayImage.setVisibility(View.INVISIBLE);
-                break;
-            case RECORDING:
-                mRecordingImage.setVisibility(View.INVISIBLE);
-                mSuspendImage.setVisibility(View.VISIBLE);
                 mPlayImage.setVisibility(View.INVISIBLE);
                 break;
             case RECORDED:
-                mRecordingImage.setVisibility(View.VISIBLE);
-                mSuspendImage.setVisibility(View.INVISIBLE);
                 mPlayImage.setVisibility(View.VISIBLE);
                 break;
         }
