@@ -29,6 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
             android:layout_toRightOf="@+id/ibn_issuetype"
+            android:textColor="@color/issue_add_list_not_filled"
             android:text="@string/add_issuelist_style" />
 
         <View
@@ -68,6 +69,7 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/ibn_issuefllow"
+            android:textColor="@color/issue_add_list_not_filled"
             android:text="@string/add_issuelist_fllow" />
     </RelativeLayout>
 
@@ -93,6 +95,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_10"
             android:layout_toRightOf="@+id/ibn_issuenotify"
+            android:textColor="@color/issue_add_list_not_filled"
             android:text="@string/add_issuelist_notify" />
 
         <Switch
@@ -171,6 +174,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/size_10"
                 android:layout_toRightOf="@+id/ibn_issuedescrip"
+                android:textColor="@color/issue_add_list_not_filled"
                 android:text="@string/add_issuelist_descrip" />
 
         </RelativeLayout>

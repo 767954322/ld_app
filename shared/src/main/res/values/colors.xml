@@ -253,4 +253,7 @@
     <color name="issue_item_line">#5e5e5e</color>
     <color name="issue_add_invisible">#7aaad9</color>
     <color name="issue_add_visible">#ffffff</color>
+
+    <color name="issue_add_list_fill_in">#464b4e</color>
+    <color name="issue_add_list_not_filled">#b1bdc4</color>
 </resources>

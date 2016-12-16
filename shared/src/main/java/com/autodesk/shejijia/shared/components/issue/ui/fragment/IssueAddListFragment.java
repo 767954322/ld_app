@@ -87,6 +87,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         mIssueStyleContent = (TextView) rootView.findViewById(R.id.tx_issuetype);
         mIssueFllowContent = (TextView) rootView.findViewById(R.id.tx_issuefllow);
         mIssueReplyContent = (TextView) rootView.findViewById(R.id.tx_issuereply);
+        mIssueNotifyContent = (TextView) rootView.findViewById(R.id.tx_issuenotify);
         mDeleteVocie = (ImageView) rootView.findViewById(R.id.iv_delete_voice);
         mIssueDescriptionContent = (TextView) rootView.findViewById(R.id.tx_issuedescrip);
         mIssueImagesList = (RecyclerView) rootView.findViewById(R.id.recycler_view);
@@ -163,7 +164,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         } else if (i == R.id.iv_delete_voice) {
             mIssueAudio.setVisibility(View.GONE);
             mDescriptionVoice = null;
-            setPutTextViewStatus();
+            setPageStatus();
 
         }
     }
@@ -175,6 +176,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
         } else {
             mNotifyCustormer = 0;
         }
+        setPageStatus();
     }
 
     @Override
@@ -183,7 +185,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mFollowMember = mListMember.get(position);
             String chinaRole = IssueRoleUtils.getInstance().getChiRoleByEngRole(mFollowMember.getRole());
             mIssueFllowContent.setText(chinaRole + mFollowMember.getProfile().getName() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
-            setPutTextViewStatus();
+            setPageStatus();
         } else {
             mIssueType = mArrayType[position];
             String strType = activity.getResources().getStringArray(add_issue_type_list)[position];
@@ -192,7 +194,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mFollowMember = IssueRoleUtils.getInstance().getMemberByIssueType(mMapMember, strType);
             String followRole = IssueRoleUtils.getInstance().getChiRoleByIssueType(strType);
             mIssueFllowContent.setText(followRole + mFollowMember.getProfile().getName().trim() + UIUtils.getString(R.string.Fragment_addissue_fllow_end));
-            setPutTextViewStatus();
+            setPageStatus();
         }
         dismissPopwindow();
     }
@@ -320,7 +322,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
                 mDescriptionVoice = data.getStringExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_VOICE);
                 mDescriptionImage = data.getParcelableArrayListExtra(ConstructionConstants.IssueTracking.ADD_ISSUE_DESCRIPTION_RESULT_IMAGES);
                 handler.sendEmptyMessage(0);
-                setPutTextViewStatus();
+                setPageStatus();
             }
         }
     }
@@ -399,11 +401,34 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
     /**
      * 判断发送文字是否可点击
      */
-    private void setPutTextViewStatus() {
+    private void setPageStatus() {
 
         boolean okDescription = !TextUtils.isEmpty(mDescriptionContent) || !TextUtils.isEmpty(mDescriptionVoice);
 
         boolean allowAdd = mIssueType != -1 && okDescription && mFollowMember != null ? true : false;
+
+
+        if (okDescription) {
+            mIssueDescriptionContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_fill_in));
+        } else {
+            mIssueDescriptionContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_not_filled));
+        }
+        if (mIssueType != -1) {
+            mIssueStyleContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_fill_in));
+        } else {
+            mIssueStyleContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_not_filled));
+        }
+        if (mFollowMember != null) {
+            mIssueFllowContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_fill_in));
+        } else {
+            mIssueFllowContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_not_filled));
+        }
+        if (mNotifyCustormer == 1) {
+            mIssueNotifyContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_fill_in));
+        } else if (mNotifyCustormer == 0) {
+            mIssueNotifyContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_not_filled));
+        }
+
         if (allowAdd) {
             mAddIssue.setClickable(true);
             mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_visible));
@@ -429,6 +454,7 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
     private TextView mIssueStyleContent;
     private TextView mIssueFllowContent;
     private TextView mIssueReplyContent;
+    private TextView mIssueNotifyContent;
     private TextView mIssueDescriptionContent;
     private RecyclerView mIssueImagesList;
 
