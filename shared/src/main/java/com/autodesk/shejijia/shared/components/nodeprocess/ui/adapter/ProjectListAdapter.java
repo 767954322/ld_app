@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,11 +19,13 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,12 +114,28 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             projectVh.mCardView.setClipToOutline(false);
         }
 
-        if (!TextUtils.isEmpty(mProjectLists.get(position).getName())) {
-            projectVh.mProjectName.setText(mProjectLists.get(position).getName());
+        ProjectInfo projectInfo = mProjectLists.get(position);
+        if (!TextUtils.isEmpty(projectInfo.getName())) {
+            projectVh.mProjectName.setText(projectInfo.getName());
         }
-        if (mProjectLists.get(position).getPlan().getMilestone() != null) {
-            if (!TextUtils.isEmpty(mProjectLists.get(position).getPlan().getMilestone().getMilestoneName())) {
-                projectVh.mProjectStatus.setText(mProjectLists.get(position).getPlan().getMilestone().getMilestoneName());
+        if (projectInfo.getPlan().getMilestone() != null) {
+            if (!TextUtils.isEmpty(projectInfo.getPlan().getMilestone().getMilestoneName())) {
+                String milestoneName = projectInfo.getPlan().getMilestone().getMilestoneName();
+                if (projectInfo.isXDebug()) {
+                    projectVh.mProjectStatus.setTextColor(ContextCompat.getColor(mContext, R.color.con_font_red));
+                    String xDebugDateString = "UT: ";
+                    if (projectInfo.getXDebugCurrentTime() == null) {
+                        xDebugDateString += "null";
+                    } else {
+                        Date xDebugDate = DateUtil.iso8601ToDate(projectInfo.getXDebugCurrentTime());
+                        xDebugDateString += DateUtil.getStringDateByFormat(xDebugDate, mContext.getString(R.string.date_format_month_day));
+                    }
+                    projectVh.mProjectStatus.setText(milestoneName + "(" + xDebugDateString + ")");
+                } else {
+                    projectVh.mProjectStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+                    projectVh.mProjectStatus.setText(milestoneName);
+                }
+
             }
         }
 

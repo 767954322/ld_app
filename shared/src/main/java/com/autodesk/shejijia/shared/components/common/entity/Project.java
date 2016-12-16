@@ -34,6 +34,26 @@ public class Project implements Serializable{
     private String groupChatThreadId;
     @SerializedName("design_id")
     private String designId;
+    @SerializedName("x_debug")
+    private boolean xDebug;
+    @SerializedName("xdebug_current_time")
+    private String xDebugCurrentTime;
+
+    public boolean isXDebug() {
+        return xDebug;
+    }
+
+    public void setXDebug(boolean xDebug) {
+        this.xDebug = xDebug;
+    }
+
+    public String getXDebugCurrentTime() {
+        return xDebugCurrentTime;
+    }
+
+    public void setXDebugCurrentTime(String xDebugCurrentTime) {
+        this.xDebugCurrentTime = xDebugCurrentTime;
+    }
 
     public List<Like> getLikes() {
         return likes;

@@ -59,11 +59,15 @@ public class TaskActionHelper {
         List<String> taskActionList = new ArrayList<>();
         try {
             JSONObject memberActions = mTaskActionsJsonObject.getJSONObject(memType);
-            JSONObject taskCategoryActions = memberActions.getJSONObject(taskCategory);
-            JSONArray taskActions = taskCategoryActions.getJSONArray(taskStatus.toLowerCase());
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<String>>(){}.getType();
-            taskActionList = gson.fromJson(taskActions.toString(), listType);
+            if (memberActions.has(taskCategory)) {
+                JSONObject taskCategoryActions = memberActions.getJSONObject(taskCategory);
+                if (taskCategoryActions.has(taskStatus.toLowerCase())) {
+                    JSONArray taskActions = taskCategoryActions.getJSONArray(taskStatus.toLowerCase());
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<String>>(){}.getType();
+                    taskActionList = gson.fromJson(taskActions.toString(), listType);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

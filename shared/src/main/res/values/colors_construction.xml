@@ -48,6 +48,7 @@
     <color name="con_font_black">#464B4E</color>
     <color name="con_font_dark_grey">#7C8489</color>
     <color name="con_font_gray">#B1BDC4</color>
+    <color name="con_font_red">@color/con_red</color>
 
     <!--TODO remove later-->
     <color name="font_black">#323232</color>
