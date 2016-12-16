@@ -737,11 +737,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mTvYeas.setText(designer.getExperience() + "年");
             }
             if (null != designer && null != designer.getStyle_names() && !designer.getStyle_names().toString().equals("")) {
-
-                String style = designer.getStyle_names();
-                style = style.replaceAll(",", " ");
-                style = style.replaceAll("，", " ");
-
+                //fixbug DP-7564
+                String style = designer.getStyle_long_names();
+//                style = style.replaceAll(",", " ");
+//                style = style.replaceAll("，", " ");
                 mTvStyle.setText(style);
             } else {
                 mTvStyle.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
