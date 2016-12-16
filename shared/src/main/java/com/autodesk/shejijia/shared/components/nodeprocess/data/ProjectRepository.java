@@ -42,7 +42,6 @@ public final class ProjectRepository implements ProjectDataSource {
     private ProjectInfo mProjectInfo;
     private PlanInfo mActivePlan;
     private boolean mActivePlanEditing;
-    private boolean mIsDirty;
 
     private ProjectRepository() {
     }
@@ -87,63 +86,6 @@ public final class ProjectRepository implements ProjectDataSource {
     public void setActivePlanEditing(boolean activePlanEditing) {
         this.mActivePlanEditing = activePlanEditing;
     }
-
-    public interface ProjectDirtyListener {
-        void onProjectDirty(String projectId);
-    }
-
-    public interface TaskDirtyListener {
-        void onTaskDirty(String projectId, String taskId);
-
-    }
-
-    private HashSet<ProjectDirtyListener> mProjectDirtyListeners = new HashSet<>();
-
-    private HashSet<TaskDirtyListener> mTaskDirtyListeners = new HashSet<>();
-
-    public void addProjectDirtyListener(@NonNull ProjectDirtyListener listener) {
-        mProjectDirtyListeners.add(listener);
-    }
-
-    public void removeProjectDirtyListener(@NonNull ProjectDirtyListener listener) {
-        mProjectDirtyListeners.remove(listener);
-    }
-
-    public void addTaskDirtyListener(@NonNull TaskDirtyListener listener) {
-        mTaskDirtyListeners.add(listener);
-    }
-
-    public void removeTaskDirtyListener(@NonNull TaskDirtyListener listener) {
-        mTaskDirtyListeners.remove(listener);
-    }
-
-    public void notifyDataDirty(String projectId, String taskId) {
-        if (!TextUtils.isEmpty(projectId)) {
-            for (ProjectDirtyListener projectDirtyListener: mProjectDirtyListeners) {
-                projectDirtyListener.onProjectDirty(projectId);
-            }
-
-            if (!TextUtils.isEmpty(taskId)) {
-                for (TaskDirtyListener taskDirtyListener: mTaskDirtyListeners) {
-                    taskDirtyListener.onTaskDirty(projectId, taskId);
-                }
-            }
-        }
-    }
-//
-//    public void notifyDataDirty(Task task) {
-//        if (task != null) {
-//            for (ProjectDirtyListener projectDirtyListener: mProjectDirtyListeners) {
-//                projectDirtyListener.onProjectDirty(projectId);
-//            }
-//
-//            if (!TextUtils.isEmpty(taskId)) {
-//                for (TaskDirtyListener taskDirtyListener: mTaskDirtyListeners) {
-//                    taskDirtyListener.onTaskDirty(projectId, taskId);
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {

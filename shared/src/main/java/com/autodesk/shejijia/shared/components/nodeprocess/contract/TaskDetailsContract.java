@@ -47,7 +47,7 @@ public interface TaskDetailsContract {
 
         void showActions(@NonNull Task task, @NonNull ProjectInfo project);
 
-        void close();
+        void close(boolean dataChanged);
     }
 
     interface Presenter extends BasePresenter {

@@ -38,6 +38,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     private Task mTask;
 
     private String mEditingComment = null;
+    private boolean mDataChanged = false;
 
     public TaskDetailsPresenter(TaskDetailsContract.View taskDetailsView, ProjectInfo projectInfo, Task task) {
         this.mTaskDetailsView = taskDetailsView;
@@ -82,7 +83,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     @Override
     public void submitComment() {
         if (mEditingComment == null) {
-            mTaskDetailsView.close();
+            mTaskDetailsView.close(mDataChanged);
         } else {
             mTaskDetailsView.showUploading();
             Bundle params = new Bundle();
@@ -101,8 +102,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                     // TODO update dialog
                     // TODO dirty pre page
                     mTaskDetailsView.hideUploading();
-                    mTaskDetailsView.close();
-                    mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
+                    mTaskDetailsView.close(mDataChanged);
+                    mDataChanged = true;
                 }
 
                 @Override
@@ -116,7 +117,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                     }, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mTaskDetailsView.close();
+                            mTaskDetailsView.close(mDataChanged);
                         }
                     });
                 }
@@ -134,9 +135,8 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mProjectRepository.reserveTask(params, "RESERVE_TASK", new ResponseCallback<Void, ResponseError>() {
             @Override
             public void onSuccess(Void data) {
-                // TODO dirty pre page
-                mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
                 mTaskDetailsView.hideUploading();
+                mDataChanged = true;
                 fetchTask();
             }
 
@@ -157,7 +157,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mProjectRepository.confirmTask(params, "CONFIRM_TASK", new ResponseCallback<Void, ResponseError>() {
             @Override
             public void onSuccess(Void data) {
-                mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
+                mDataChanged = true;
                 mTaskDetailsView.hideUploading();
                 fetchTask();
             }

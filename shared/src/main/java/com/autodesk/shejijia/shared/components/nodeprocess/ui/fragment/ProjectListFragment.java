@@ -29,6 +29,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclervi
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
@@ -67,10 +68,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
-        mProjectListPresenter.start();
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.dateToIso8601(Calendar.getInstance().getTime());
-        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.ALL);
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.UNCOMPLET);
     }
 
     @Override
@@ -101,7 +101,6 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mProjectListPresenter.stop();
     }
 
     /*
@@ -301,6 +300,23 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mProjectListPresenter.checkDirty();
+        LogUtils.i("Wenhui", "requestcode=" + requestCode);
+        switch (requestCode) {
+            case ConstructionConstants.REQUEST_CODE_SHOW_PROJECT_DETAILS:
+                if (resultCode == Activity.RESULT_OK) {
+                    String projectId = data.getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+                    mProjectListPresenter.refreshProject(projectId);
+                }
+                break;
+            case ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS:
+                if (resultCode == Activity.RESULT_OK) {
+                    String projectId = data.getStringExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+                    String taskId = data.getStringExtra(ConstructionConstants.BUNDLE_KEY_TASK_ID);
+                    mProjectListPresenter.refreshTask(projectId, taskId);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

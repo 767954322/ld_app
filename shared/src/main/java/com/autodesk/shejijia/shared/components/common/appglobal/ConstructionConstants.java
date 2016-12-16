@@ -58,6 +58,7 @@ public class ConstructionConstants {
     public final static int REQUEST_CODE_ADD_TASK = 0x0112;
     public final static int REQUEST_CODE_UPLOAD_PHOTO = 0x0113;
     public final static int REQUEST_CODE_SHOW_TASK_DETAILS = 0x0114;
+    public final static int REQUEST_CODE_SHOW_PROJECT_DETAILS = 0x0115;
 
     //Bundle key
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";

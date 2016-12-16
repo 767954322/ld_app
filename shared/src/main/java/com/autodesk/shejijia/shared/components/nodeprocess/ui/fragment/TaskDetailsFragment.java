@@ -354,12 +354,21 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     }
 
     @Override
-    public void close() {
+    public void close(boolean dataChanged) {
         Fragment targetFragment = getTargetFragment();
         if (targetFragment != null) {
             LogUtils.i("Wenhui", "has targetFragment = " + targetFragment.getClass().getSimpleName());
-            targetFragment.onActivityResult(targetFragment.getTargetRequestCode(), Activity.RESULT_OK, null);
+            if (dataChanged) {
+                Intent intent = new Intent();
+                Task task = (Task) getArguments().getSerializable(BUNDLE_KEY_TASK);
+                intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, task.getProjectId());
+                intent.putExtra(ConstructionConstants.BUNDLE_KEY_TASK_ID, task.getTaskId());
+                targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+            } else {
+                targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, null);
+            }
         }
+
         dismiss();
     }
 

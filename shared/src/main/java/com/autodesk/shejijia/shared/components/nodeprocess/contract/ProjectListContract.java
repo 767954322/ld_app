@@ -32,12 +32,6 @@ public interface ProjectListContract {
 
     interface Presenter extends BasePresenter {
 
-        void start();
-
-        void stop();
-
-        void checkDirty();
-
         /*
         * 初始化请求参数
         * */
@@ -92,6 +86,10 @@ public interface ProjectListContract {
         * 获取未读消息或问题
         * */
         void getUnReadMessageIssue();
+
+        void refreshProject(@Nullable String projectId);
+
+        void refreshTask(@Nullable String projectId, @Nullable String taskId);
 
     }
 }

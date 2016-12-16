@@ -91,7 +91,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     protected void initData() {
         mIsRefresh = false;
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
-        mProjectDetailsPresenter.start();
         long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
@@ -115,7 +114,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mProjectDetailsPresenter.stop();
     }
 
     @Override
@@ -252,6 +250,10 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mIsRefresh = true;
                     mProjectDetailsPresenter.initRefreshState(false);
                     mProjectDetailsPresenter.getProjectDetails();
+                    long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
+                    Intent intent = new Intent();
+                    intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectId);
+                    getActivity().setResult(Activity.RESULT_OK, intent);
                 } else {
                     if (mCreatePlanBtn.getVisibility() == View.VISIBLE
                             && data != null && data.getBooleanExtra(ConstructionConstants.BUNDLE_KEY_IS_PLAN_EDITING, false)) {
@@ -268,6 +270,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 LogUtils.i("Wenhui", "onActivityResult REQUEST_CODE_SHOW_TASK_DETAILS");
                 if (resultCode == Activity.RESULT_OK) {
                     LogUtils.i("Wenhui", "refresh");
+                    getActivity().setResult(Activity.RESULT_OK, data);
                     mProjectDetailsPresenter.getProjectDetails();
                 }
                 break;

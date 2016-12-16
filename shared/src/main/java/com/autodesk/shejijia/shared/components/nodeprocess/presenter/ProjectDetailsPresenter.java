@@ -29,8 +29,7 @@ import java.util.List;
  * 项目详情presenter-->ProjectDetailsFragment
  */
 
-public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter, ProjectRepository.ProjectDirtyListener,
-        ProjectRepository.TaskDirtyListener {
+public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter {
 
     private Context mContext;
     private ProjectDetailsContract.View mProjectDetailsView;
@@ -45,16 +44,6 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         this.mContext = context;
         this.mProjectDetailsView = projectDetailsView;
         mProjectRepository = ProjectRepository.getInstance();
-    }
-
-    @Override
-    public void start() {
-        mProjectRepository.addProjectDirtyListener(this);
-    }
-
-    @Override
-    public void stop() {
-        mProjectRepository.removeProjectDirtyListener(this);
     }
 
     @Override
@@ -252,16 +241,5 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_UNREAD, isUnread);
         intent.putExtra(ConstructionConstants.BUNDLE_KEY_THREAD_ID, mThreadId);
         projectDetailsFragment.startActivityForResult(intent, requestCode);
-    }
-
-    @Override
-    public void onProjectDirty(String projectId) {
-        LogUtils.i("Wenhui", "onProjectDirty=" + projectId);
-        getProjectDetails();
-    }
-
-    @Override
-    public void onTaskDirty(String projectId, String taskId) {
-
     }
 }

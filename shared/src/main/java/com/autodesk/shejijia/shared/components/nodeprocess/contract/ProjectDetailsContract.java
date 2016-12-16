@@ -41,9 +41,5 @@ public interface ProjectDetailsContract {
         void navigateToMessageCenter(ProjectDetailsFragment projectDetailsFragment, boolean isUnread,int requestCode);//跳转消息中心
 
         void getUnreadMsgCount(String projectIds, String requestTag);
-
-        void start();
-
-        void stop();
     }
 }

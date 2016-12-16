@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,14 +51,20 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
     @Override
     protected void initData() {
         mPDTaskListPresenter = new ProjectDetailsTasksPresenter(this);
-        mPDTaskListPresenter.start();
         mPDTaskListPresenter.handleTaskList(getArguments());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPDTaskListPresenter.stop();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (getParentFragment() != null) {
+            getParentFragment().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void update(List<Task> taskList) {

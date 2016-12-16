@@ -10,7 +10,7 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 public interface ProjectMessageCenterContract {
     interface View extends BaseView{
         void refreshProjectMessagesView(Message messageInfo);
-//
+
         void loadMoreProjectMessagesView(Message messageInfo);
 
         void changeUnreadMsgStateView();

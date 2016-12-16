@@ -23,10 +23,6 @@ public interface ProjectDetailsTasksContract {
 
     interface Presenter extends BasePresenter {
 
-        void start();
-
-        void stop();
-
         void handleTaskList(Bundle taskBundle); //处理getArguments里的数据
 
         void navigateToTaskDetail(FragmentManager fragmentManager, List<Task> taskList, int position); //跳转节点详情对话框
