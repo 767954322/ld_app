@@ -105,24 +105,24 @@ public class UnqualifiedEditFragment extends BaseConstructionFragment implements
     @Override
     protected void initData() {
         mPreCheckForm = (SHPrecheckForm) getArguments().getSerializable(UnqualifiedActivity.UNQUALIFIED_FORM);
-//        for(CheckItem item : mPreCheckForm.getCheckItems()){
-//            if("equipment_whether_qualification".equals(item.getItemId())){
-//                mEquipment.setText(item.getStandard());
-//                continue;
-//            }
-//            if("acceptance_whether_check".equals(item.getItemId())){
-//                mCustomerDisAgree.setText(item.getStandard());
-//                continue;
-//            }
-//            if("monitor_whether_presence".equals(item.getItemId())){
-//                mMonitorAbsence.setText(item.getStandard());
-//                continue;
-//            }
-//            if("interface_wether_standard".equals(item.getItemId())){
-//                mInterface.setText(item.getStandard());
-//                continue;
-//            }
-//        }
+        for(CheckItem item : mPreCheckForm.getCheckItems()){
+            if("equipment_whether_qualification".equals(item.getItemId())){
+                mEquipment.setText(item.getStandard());
+                continue;
+            }
+            if("acceptance_whether_check".equals(item.getItemId())){
+                mCustomerDisAgree.setText(item.getStandard());
+                continue;
+            }
+            if("monitor_whether_presence".equals(item.getItemId())){
+                mMonitorAbsence.setText(item.getStandard());
+                continue;
+            }
+            if("interface_wether_standard".equals(item.getItemId())){
+                mInterface.setText(item.getStandard());
+                continue;
+            }
+        }
         initToolbar(mPreCheckForm.getTitle() + "表");
     }
 
