@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
@@ -206,19 +207,16 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
 
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag) {
-        mProjectDetailsView.showLoading();
         mProjectRepository.getUnreadMsgCount(projectIds, requestTag, new ResponseCallback<UnreadMsg, ResponseError>() {
             @Override
             public void onSuccess(UnreadMsg unreadMsgEntity) {
-                mProjectDetailsView.hideLoading();
                 mThreadId = unreadMsgEntity.getThreadId();
                 mProjectDetailsView.updateUnreadMsgCountView(unreadMsgEntity.getCount());
             }
 
             @Override
             public void onError(ResponseError error) {
-                mProjectDetailsView.hideLoading();
-                mProjectDetailsView.showNetError(error);
+                LogUtils.e("getUnreadMsgCount error " + error == null ? "null" : error.getMessage());
             }
         });
     }
