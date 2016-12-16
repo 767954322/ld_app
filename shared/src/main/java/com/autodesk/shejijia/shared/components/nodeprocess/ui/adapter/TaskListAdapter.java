@@ -88,7 +88,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String taskHeadStatus = TaskHeadPicHelper.getInstance().getActions(taskLists.get(position));
         switch (taskHeadStatus) {
             case TaskHeadPicHelper.SHOW_HEAD:
-                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(12), ScreenUtil.dip2px(8), ScreenUtil.dip2px(8), ScreenUtil.dip2px(16));
+                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(16));
                 String avatarUrl = TaskUtils.getAvatarUrl(mContext, mProject.getMembers());
                 if (!TextUtils.isEmpty(avatarUrl)) {
                     taskListVH.mTaskIcon.setVisibility(View.VISIBLE);
@@ -97,7 +97,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case TaskHeadPicHelper.SHOW_DEFAULT:
                 taskListVH.mTaskIcon.setVisibility(View.GONE);
-                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(16), ScreenUtil.dip2px(8), ScreenUtil.dip2px(8), ScreenUtil.dip2px(16));
+                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(16), ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(16));
                 String category = taskLists.get(position).getCategory();
                 if (!TextUtils.isEmpty(category)) {
                     Drawable drawable = null;

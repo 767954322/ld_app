@@ -97,7 +97,7 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             case TaskHeadPicHelper.SHOW_HEAD:
                 taskListVH.mTaskIconHead.setVisibility(View.VISIBLE);
                 taskListVH.mTaskIconDefault.setVisibility(View.GONE);
-                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(12), ScreenUtil.dip2px(8), ScreenUtil.dip2px(8), ScreenUtil.dip2px(16));
+                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(16));
                 if (!TextUtils.isEmpty(mAvatarUrl)) {
                     ImageUtils.loadUserAvatar(taskListVH.mTaskIconHead, mAvatarUrl);
                 }
@@ -105,7 +105,7 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
             case TaskHeadPicHelper.SHOW_DEFAULT:
                 taskListVH.mTaskIconDefault.setVisibility(View.VISIBLE);
                 taskListVH.mTaskIconHead.setVisibility(View.GONE);
-                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(16), ScreenUtil.dip2px(8), ScreenUtil.dip2px(8), ScreenUtil.dip2px(16));
+                taskListVH.mTaskDetails.setPadding(ScreenUtil.dip2px(16), ScreenUtil.dip2px(12), ScreenUtil.dip2px(12), ScreenUtil.dip2px(16));
                 if (!TextUtils.isEmpty(mTaskLists.get(position).getCategory())) {
                     String category = mTaskLists.get(position).getCategory();
                     switch (category) {
