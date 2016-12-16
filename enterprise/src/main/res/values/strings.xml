@@ -3,7 +3,11 @@
 
     <!--个人中心-->
     <string name="personal_project">已完成项目</string>
-    <string name="personal_more">更多</string>缓存已清完
+    <string name="personal_more">更多</string>
     <string name="clear_cache">清除本地缓存数据(包括图片和语音缓存共</string>
     <string name="git_commit_id">Git提交ID</string>
+
+    <string name="personal_update_head_pic">修改头像</string>
+    <string name="personal_select_album">从相册选择</string>
+    <string name="personal_photograph">拍照</string>
 </resources>

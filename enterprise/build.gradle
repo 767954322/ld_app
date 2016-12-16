@@ -60,15 +60,16 @@ configurations {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:'+rootProject.ext.androidSupportLibVersion
+    androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.androidSupportLibVersion
     alphaDebugCompile project(path: ':shared', configuration: 'alphaDebug')
     alphaReleaseCompile project(path: ':shared', configuration: 'alphaRelease')
     uatDebugCompile project(path: ':shared', configuration: 'uatDebug')
     uatReleaseCompile project(path: ':shared', configuration: 'uatRelease')
     productionDebugCompile project(path: ':shared', configuration: 'productionDebug')
     productionReleaseCompile project(path: ':shared', configuration: 'productionRelease')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_bottom_bg_shape"
+            android:divider="@drawable/linearlayout_divider_hor_shape"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                style="@style/popup_save_update_textview_style"
+                android:text="@string/personal_update_head_pic"
+                android:textColor="@color/gray"/>
+            <TextView
+                android:id="@+id/tv_sletect_album"
+                style="@style/popup_save_update_textview_style"
+                android:text="@string/personal_select_album"
+                android:textColor="@color/comment_blue"/>
+            <TextView
+                android:id="@+id/tv_photograph"
+                style="@style/popup_save_update_textview_style"
+                android:text="@string/personal_photograph"
+                android:textColor="@color/comment_blue"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/popup_save_update_textview_style"
+            android:background="@drawable/popup_textview_allradius_bg_selector"
+            android:text="@string/popup_save_update_cancel"
+            android:textColor="@color/comment_blue"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
