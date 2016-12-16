@@ -66,12 +66,6 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
         }
     }
 
-    public void update(List<Task> taskList) {
-        if (mTaskListAdapter != null) {
-            mTaskListAdapter.updateData(taskList);
-        }
-    }
-
     @Override
     public void refreshTaskListView(List<Task> taskList, String avatarUrl) {
         mTaskListAdapter = new ProjectDetailsTasksAdapter(taskList, avatarUrl, R.layout.listitem_projectdetails_task_list_view, mContext, this);

@@ -46,7 +46,6 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private int mLoadedSize = 0;//记录服务端返回的数据个数
     private int mTotalSize;//服务器一共多少数据
     private List<ProjectInfo> mProjectInfos;
-    private boolean mIsDirty;
 
     public ProjectListPresenter(Activity context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
@@ -99,6 +98,10 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     }
 
     private void loadProjectList(int offset) {
+        loadProjectListData(buildRequestParamsBundle(offset));
+    }
+
+    private Bundle buildRequestParamsBundle(int offset) {
         Bundle requestParamsBundle = new Bundle();
         if (mSelectedDate != null) {
             requestParamsBundle.putString("findDate", mSelectedDate);
@@ -111,7 +114,8 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         }
         requestParamsBundle.putInt("limit", PAGE_LIMIT);
         requestParamsBundle.putInt("offset", offset);
-        loadProjectListData(requestParamsBundle);
+
+        return requestParamsBundle;
     }
 
     private void loadProjectListData(Bundle requestParams) {
@@ -225,7 +229,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             return;
         }
 
-        loadUserTasksByProject(projectId);
+        onProjectDirty(projectId);
     }
 
     @Override
@@ -237,7 +241,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         onTaskDirty(projectId, taskId);
     }
 
-    private void loadUserTasksByProject(final String pid) {
+    private void onProjectDirty(final String pid) {
         int projectIndex = -1;
         for (int index = 0; index < mProjectInfos.size(); index++) {
             ProjectInfo projectInfo = mProjectInfos.get(index);
@@ -254,21 +258,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
         final int foundIndex = projectIndex;
         mProjectListView.showLoading();
-        Bundle requestParamsBundle = new Bundle();
-        if (mSelectedDate != null) {
-            requestParamsBundle.putString("findDate", mSelectedDate);
-        }
-
-        if (mFilterStatus != null) {
-            requestParamsBundle.putString("status", mFilterStatus);
-        }
-        if (mFilterLike != null) {
-            requestParamsBundle.putString("like", mFilterLike);
-        }
-        requestParamsBundle.putInt("limit", PAGE_LIMIT);
-        requestParamsBundle.putInt("offset", (foundIndex - 5 < 0 ? 0 : mOffset - 5));
 
         // TODO change to getUserTasksByProject, getUserTasksByProject is not work now, so here is a workaround
+        Bundle requestParamsBundle = buildRequestParamsBundle(foundIndex - 5 < 0 ? 0 : mOffset - 5);
         mProjectRepository.getProjectList(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, new ResponseCallback<ProjectList, ResponseError>() {
             @Override
             public void onSuccess(ProjectList data) {

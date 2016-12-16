@@ -37,7 +37,6 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     private String mThreadId;
     private boolean mIsHasTaskData;
     private boolean mIsNeedRefresh; //标记已经在项目详情页面下拉刷新时候的状态
-    private boolean mIsDirty;
 
     public ProjectDetailsPresenter(Context context, ProjectDetailsContract.View projectDetailsView) {
         this.mContext = context;

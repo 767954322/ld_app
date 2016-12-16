@@ -97,11 +97,6 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         mProjectListView.setRefreshing(true);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     /*
         * 筛选功能也会回调 onRefresh方法
         *

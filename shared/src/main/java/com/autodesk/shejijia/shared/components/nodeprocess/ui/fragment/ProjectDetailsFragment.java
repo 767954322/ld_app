@@ -111,11 +111,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onRefresh() {
         mIsRefresh = true;
         long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
