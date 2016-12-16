@@ -88,7 +88,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private boolean isPlaying;
     private long mVoiceRecordingStartTime;
 
-    private int mTimer;
+    private int mTimer = 0;
 
     public interface ImageItemClickListener {
         void onAddItemClick();
@@ -203,6 +203,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             mAudioPlay.setVisibility(View.GONE);
             mAudioRecord.setVisibility(View.VISIBLE);
             mAudioHandler.deleteVoiceRecord(mAudioPath);
+            mTimer = 0;
             mAudioPath = null;
             SharedPreferencesUtils.writeString("AudioPath", "");
         }
@@ -373,13 +374,33 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
                 }
             } else if (id == R.id.btn_done) {
                 if (isRecording) {
-                    mAudioHandler.stopVoiceRecord();
+                    mAlertView.getView(R.id.imgbtn_sound_record).setSelected(!mAlertView.getView(R.id.imgbtn_sound_record).isSelected());
+                    long endTime = System.nanoTime();
+                    if ((endTime - mVoiceRecordingStartTime) / Math.pow(10, 9) >= IMChatInfo.VoiceLeastTime) {
+                        mPresenter.stopRecordAudio();
+                        mAlertView.setRecordStatus(CommonAudioAlert.RECORDED);
+                        mAlertView.dismiss();
+                        mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
+                        mAudioRecord.setVisibility(View.GONE);
+                        mAudioPlay.setVisibility(View.VISIBLE);
+                        mAudioTime.setText(mTimer + "''");
+                    } else {
+                        mPresenter.cancelRecordAudio();
+                        mAlertView.dismiss();
+                        mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
+                        showToast("时间太短");
+                        isRecording = !isRecording;
+                    }
+                } else {
+                    mAlertView.setRecordStatus(CommonAudioAlert.RECORDED);
+                    mAlertView.dismiss();
+                    mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
+                    if(mTimer != 0){
+                        mAudioRecord.setVisibility(View.GONE);
+                        mAudioPlay.setVisibility(View.VISIBLE);
+                        mAudioTime.setText(mTimer + "''");
+                    }
                 }
-                mAlertView.dismiss();
-                mAlertView.setRecordStatus(CommonAudioAlert.PRE_RECORD);
-                mAudioRecord.setVisibility(View.GONE);
-                mAudioPlay.setVisibility(View.VISIBLE);
-                mAudioTime.setText(mTimer + "''");
             }
         }
     };
