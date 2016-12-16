@@ -65,8 +65,7 @@ public class OrderBeiShuFragment extends BaseFragment {
         mMyBeiShuMealAdapter = new MyBeiShuMealAdapter(UIUtils.getContext(), mBeiShuNeedsOrderListEntities, R.layout.item_lv_designer_beishu_order);
         mListView.setAdapter(mMyBeiShuMealAdapter);
     }
-
-
+    
 //    @Override
 //    public void onFragmentShown() {
 //        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
