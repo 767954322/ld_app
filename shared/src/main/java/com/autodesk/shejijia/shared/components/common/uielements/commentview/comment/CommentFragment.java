@@ -429,6 +429,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         public void audioPlayStart() {
             isPlaying = true;
             if(mSpinner != null){
+                mPlayAnimateImg.setImageDrawable(null);
                 mSpinner.start();
             }
         }
@@ -438,6 +439,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
             isPlaying = false;
             if(mSpinner != null){
                 mSpinner.stop();
+                mPlayAnimateImg.setImageResource(R.drawable.audior);
             }
         }
 

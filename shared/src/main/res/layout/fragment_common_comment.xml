@@ -98,6 +98,7 @@
                 android:layout_marginLeft="@dimen/chat_room_audiocell_audioimage_sidemargin"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerInside"
+                android:src="@drawable/audior"
                 android:background="@drawable/audio_animation_list_right"/>
             <TextView
                 android:id="@+id/tv_audio_play_duration"
