@@ -48,6 +48,11 @@ public class ProjectDetailsTasksAdapter extends RecyclerView.Adapter<RecyclerVie
         this.mTaskListItemClickListener = taskListItemListener;
     }
 
+    public void updateData(List<Task> taskLists) {
+        mTaskLists = taskLists;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(mResId, parent, false);

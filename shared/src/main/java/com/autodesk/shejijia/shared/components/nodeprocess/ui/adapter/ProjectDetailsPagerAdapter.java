@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-<<<<<<< Updated upstream
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-=======
->>>>>>> Stashed changes
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -49,9 +46,21 @@ public class ProjectDetailsPagerAdapter extends FragmentStatePagerAdapter {
         return mTaskLists.size();
     }
 
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return PagerAdapter.POSITION_NONE;
+//    }
+
     @Override
     public int getItemPosition(Object object) {
-        return PagerAdapter.POSITION_NONE;
+        ProjectDetailTasksFragment f = (ProjectDetailTasksFragment ) object;
+        if (f != null) {
+            int postion = f.getArguments().getInt("position", -1);
+            if (postion != -1) {
+                f.update(mTaskLists.get(postion));
+            }
+        }
+        return super.getItemPosition(object);
     }
 
     public void updateFragment(List<List<Task>> taskLists) {
@@ -65,6 +74,7 @@ public class ProjectDetailsPagerAdapter extends FragmentStatePagerAdapter {
         childTaskArrayList.addAll(mTaskLists.get(position));
         taskListBundle.putSerializable(ConstructionConstants.BUNDLE_KEY_TASK_LIST, childTaskArrayList);
         taskListBundle.putString(ConstructionConstants.BUNDLE_KEY_USER_AVATAR, mAvatarUrl);
+        taskListBundle.putInt("position", position);
         return ProjectDetailTasksFragment.newInstance(taskListBundle);
     }
 }

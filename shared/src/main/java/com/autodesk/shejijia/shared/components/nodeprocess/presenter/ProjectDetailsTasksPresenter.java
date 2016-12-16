@@ -17,7 +17,8 @@ import java.util.List;
  * Created by t_xuz on 11/14/16.
  */
 
-public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract.Presenter {
+public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract.Presenter, ProjectRepository.ProjectDirtyListener,
+        ProjectRepository.TaskDirtyListener {
 
     private ProjectDetailsTasksContract.View mPDTaskListView;
     private ProjectRepository mProjectRepository;
@@ -25,6 +26,16 @@ public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract
     public ProjectDetailsTasksPresenter(ProjectDetailsTasksContract.View mPDTaskListView) {
         this.mPDTaskListView = mPDTaskListView;
         mProjectRepository = ProjectRepository.getInstance();
+    }
+
+    @Override
+    public void start() {
+        mProjectRepository.addProjectDirtyListener(this);
+    }
+
+    @Override
+    public void stop() {
+        mProjectRepository.removeProjectDirtyListener(this);
     }
 
     @Override
@@ -43,5 +54,15 @@ public class ProjectDetailsTasksPresenter implements ProjectDetailsTasksContract
         TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(mProjectRepository.getActiveProject(), taskList.get(position));
         taskDetailsFragment.setTargetFragment((Fragment) mPDTaskListView, ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS);
         taskDetailsFragment.show(fragmentManager, "task_details");
+    }
+
+    @Override
+    public void onProjectDirty(String projectId) {
+
+    }
+
+    @Override
+    public void onTaskDirty(String projectId, String taskId) {
+
     }
 }

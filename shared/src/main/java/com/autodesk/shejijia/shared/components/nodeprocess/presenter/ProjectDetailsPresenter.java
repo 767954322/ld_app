@@ -257,7 +257,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     @Override
     public void onProjectDirty(String projectId) {
         LogUtils.i("Wenhui", "onProjectDirty=" + projectId);
-//        getProjectDetails();
+        getProjectDetails();
     }
 
     @Override

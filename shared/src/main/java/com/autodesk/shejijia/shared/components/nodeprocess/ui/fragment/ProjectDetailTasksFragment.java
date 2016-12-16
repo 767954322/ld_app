@@ -20,7 +20,8 @@ import java.util.List;
  * 项目详情页面下的task列表
  */
 
-public class ProjectDetailTasksFragment extends BaseConstructionFragment implements ProjectDetailsTasksContract.View, ProjectDetailsTasksAdapter.TaskListItemClickListener {
+public class ProjectDetailTasksFragment extends BaseConstructionFragment implements ProjectDetailsTasksContract.View,
+        ProjectDetailsTasksAdapter.TaskListItemClickListener {
 
     private RecyclerView mTaskListView;
     private ProjectDetailsTasksContract.Presenter mPDTaskListPresenter;
@@ -49,7 +50,20 @@ public class ProjectDetailTasksFragment extends BaseConstructionFragment impleme
     @Override
     protected void initData() {
         mPDTaskListPresenter = new ProjectDetailsTasksPresenter(this);
+        mPDTaskListPresenter.start();
         mPDTaskListPresenter.handleTaskList(getArguments());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPDTaskListPresenter.stop();
+    }
+
+    public void update(List<Task> taskList) {
+        if (mTaskListAdapter != null) {
+            mTaskListAdapter.updateData(taskList);
+        }
     }
 
     @Override

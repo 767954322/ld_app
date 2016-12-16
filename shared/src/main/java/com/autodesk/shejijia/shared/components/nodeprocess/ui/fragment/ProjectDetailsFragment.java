@@ -163,17 +163,17 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mCreatePlanBtn.setVisibility(View.GONE);
             mWorkStateView.setVisibility(View.GONE);
 
-            if (mIsRefresh) {
+            if (mIsRefresh || mFragmentPagerAdapter != null) {
+                LogUtils.i("Wenhui", "positon=" + mContentViewPager.getCurrentItem());
                 mFragmentPagerAdapter.updateFragment(taskLists);
             } else {
-                mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getFragmentManager(), avatarUrl, taskLists);
+                mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getChildFragmentManager(), avatarUrl, taskLists);
                 mContentViewPager.setAdapter(mFragmentPagerAdapter);
+                //progressbar indicator( must first have viewpager adapter)
+                mProgressBarIndicator.setupWithViewPager(mContentViewPager);
+                mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
+                mContentViewPager.setCurrentItem(currentMilestonePosition);
             }
-
-            //progressbar indicator( must first have viewpager adapter)
-            mProgressBarIndicator.setupWithViewPager(mContentViewPager);
-            mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
-            mContentViewPager.setCurrentItem(currentMilestonePosition);
         } else {
             mEditPlanBtn.setVisibility(View.GONE);
             mContentTipView.setVisibility(View.VISIBLE);
