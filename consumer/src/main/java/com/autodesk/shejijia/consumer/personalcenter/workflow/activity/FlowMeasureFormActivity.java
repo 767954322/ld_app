@@ -617,7 +617,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             @Override
             public void onTimeSelect(Date date) {
                 currentTime = getTime(date);
-                tvc_measure_form_time.setText(currentTime);
+                tvc_measure_form_time.setText(DateUtil.dateFormat(currentTime, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm"));
             }
         });
     }
