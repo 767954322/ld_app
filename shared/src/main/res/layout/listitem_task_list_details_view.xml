@@ -16,7 +16,7 @@
         android:id="@+id/img_task_icon"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="@dimen/spacing_padding_normal"
+        android:layout_marginEnd="@dimen/spacing_padding_nano"
         android:scaleType="centerInside"
         android:src="@drawable/default_head"
         android:visibility="visible" />
