@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -162,7 +161,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             mWorkStateView.setVisibility(View.GONE);
 
             if (mIsRefresh || mFragmentPagerAdapter != null) {
-                LogUtils.i("Wenhui", "positon=" + mContentViewPager.getCurrentItem());
                 mFragmentPagerAdapter.updateFragment(taskLists);
             } else {
                 mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getChildFragmentManager(), avatarUrl, taskLists);
@@ -267,9 +265,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 }
                 break;
             case ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS:
-                LogUtils.i("Wenhui", "onActivityResult REQUEST_CODE_SHOW_TASK_DETAILS");
                 if (resultCode == Activity.RESULT_OK) {
-                    LogUtils.i("Wenhui", "refresh");
                     getActivity().setResult(Activity.RESULT_OK, data);
                     mProjectDetailsPresenter.getProjectDetails();
                 }

@@ -1,9 +1,7 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
@@ -28,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,20 +54,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    public void updateItemData(int position, ProjectInfo projectInfo) {
+    public void updateItemData(ProjectInfo projectInfo) {
         for (int index = 0; index < mProjectLists.size(); index++) {
             ProjectInfo tmpProjectInfo = mProjectLists.get(index);
             if (projectInfo.getProjectId() == tmpProjectInfo.getProjectId()) {
+                mProjectLists.remove(index);
                 mProjectLists.add(index, projectInfo);
-                mProjectLists.remove(index + 1);
                 notifyItemChanged(index);
-                LogUtils.i("Wenhui", "update data");
                 break;
             }
         }
-//        this.mProjectLists.add(position, projectInfo);
-//        this.mProjectLists.remove(position + 1);
-//        notifyItemChanged(position);
     }
 
     /*

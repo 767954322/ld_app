@@ -4,7 +4,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +28,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclervi
 import com.autodesk.shejijia.shared.components.common.uielements.swiperecyclerview.SwipeRecyclerView;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
@@ -161,8 +159,8 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void updateItemData(int postion, ProjectInfo projectInfo) {
-        mProjectListAdapter.updateItemData(postion, projectInfo);
+    public void updateItemData(ProjectInfo projectInfo) {
+        mProjectListAdapter.updateItemData( projectInfo);
     }
 
     @Override
@@ -300,7 +298,6 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtils.i("Wenhui", "requestcode=" + requestCode);
         switch (requestCode) {
             case ConstructionConstants.REQUEST_CODE_SHOW_PROJECT_DETAILS:
                 if (resultCode == Activity.RESULT_OK) {

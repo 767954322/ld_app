@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -252,6 +251,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             return;
         }
 
+        final int foundIndex = projectIndex;
         mProjectListView.showLoading();
         Bundle requestParamsBundle = new Bundle();
         if (mSelectedDate != null) {
@@ -266,13 +266,17 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         }
         requestParamsBundle.putInt("limit", PAGE_LIMIT);
         requestParamsBundle.putInt("offset", (mOffset - 5 < 0 ? 0 : mOffset - 5));
+
+        // TODO change to getUserTasksByProject, getUserTasksByProject is not work now, so here is a workaround
         mProjectRepository.getProjectList(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, new ResponseCallback<ProjectList, ResponseError>() {
             @Override
             public void onSuccess(ProjectList data) {
                 mProjectListView.hideLoading();
                 for (ProjectInfo projectInfo: data.getData()) {
                     if (pid.equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
-                        mProjectListView.updateItemData(0, projectInfo);
+                        mProjectInfos.remove(foundIndex );
+                        mProjectInfos.add(foundIndex, projectInfo);
+                        mProjectListView.updateItemData(projectInfo);
                         break;
                     }
                 }
@@ -284,36 +288,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
                 mProjectListView.showError(error.getMessage());
             }
         });
-
-
-//        mProjectRepository.getUserTasksByProject(pid, requestParamsBundle, "GET_USER_TASKS_BY_PROJECT", new ResponseCallback<ProjectInfo, ResponseError>() {
-//            @Override
-//            public void onSuccess(ProjectInfo data) {
-//                LogUtils.i("Wenhui", "Got data");
-//                mProjectListView.hideLoading();
-//                for (int index = 0; index < mProjectInfos.size(); index++) {
-//                    ProjectInfo projectInfo = mProjectInfos.get(index);
-//                    if (projectInfo.getProjectId() == data.getProjectId()) {
-//                        mProjectInfos.add(index, data);
-//                        mProjectInfos.remove(index + 1);
-//                        LogUtils.i("Wenhui", "update data");
-//                        mProjectListView.updateItemData(index, projectInfo);
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onError(ResponseError error) {
-//                mProjectListView.hideLoading();
-//                mProjectListView.showError(error.getMessage());
-//            }
-//        });
-
     }
 
     private void onTaskDirty(String projectId, String taskId) {
-        LogUtils.i("Wenhui", "onTaskDirty = " + projectId);
         mProjectListView.showLoading();
         Bundle params = new Bundle();
         params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(projectId));
@@ -325,14 +302,13 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
                 for (int index = 0; index < mProjectInfos.size(); index++) {
                     ProjectInfo projectInfo = mProjectInfos.get(index);
                     if (data.getProjectId().equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
-                        LogUtils.i("Wenhui", "update data");
                         List<Task> tasks = projectInfo.getPlan().getTasks();
                         for (int index2 = 0; index2 < tasks.size(); index2++) {
                             Task task = tasks.get(index2);
                             if (task.getTaskId().equalsIgnoreCase(data.getTaskId())) {
                                 tasks.remove(task);
                                 tasks.add(index2, data);
-                                mProjectListView.updateItemData(index, projectInfo);
+                                mProjectListView.updateItemData(projectInfo);
                                 break;
                             }
                         }

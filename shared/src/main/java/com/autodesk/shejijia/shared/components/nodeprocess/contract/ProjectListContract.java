@@ -26,7 +26,7 @@ public interface ProjectListContract {
 
         void refreshLikesButton(String filterLike, Like newLike, int likePosition);
 
-        void updateItemData(int postion, ProjectInfo projectInfo);
+        void updateItemData(ProjectInfo projectInfo);
 
     }
 

@@ -80,7 +80,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     }
 
     @Override
-    public void updateItemData(int postion, ProjectInfo projectInfo) {
+    public void updateItemData(ProjectInfo projectInfo) {
 
     }
 }

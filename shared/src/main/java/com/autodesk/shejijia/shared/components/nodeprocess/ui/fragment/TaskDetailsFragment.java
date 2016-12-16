@@ -36,7 +36,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.com
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
@@ -357,7 +356,6 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
     public void close(boolean dataChanged) {
         Fragment targetFragment = getTargetFragment();
         if (targetFragment != null) {
-            LogUtils.i("Wenhui", "has targetFragment = " + targetFragment.getClass().getSimpleName());
             if (dataChanged) {
                 Intent intent = new Intent();
                 Task task = (Task) getArguments().getSerializable(BUNDLE_KEY_TASK);
