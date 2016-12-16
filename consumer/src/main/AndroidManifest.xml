@@ -71,11 +71,11 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!--android:host="app"-->
+            <!--android:pathPrefix="/android-open"-->
             <intent-filter>
                 <data
-                    android:host="app"
-                    android:pathPrefix="/android-open"
-                    android:scheme="consumer"/>
+                    android:scheme="com.autodesk.easyhome.consumer"/>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
