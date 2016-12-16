@@ -97,7 +97,13 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
     @Override
     protected void initData() {
         mIssueAddPresenter = new IssueAddPresenter(this, activity);
-        mProjectInfo = ProjectRepository.getInstance().getActiveProject();
+        ProjectInfo projectInfo = (ProjectInfo) activity.getIntent().getSerializableExtra("projectinfo");
+        if (projectInfo == null) {
+            mProjectInfo = ProjectRepository.getInstance().getActiveProject();
+        } else {
+            mProjectInfo = projectInfo;
+        }
+
         mAudioHandler = new AudioHandler(getContext(), mAudioListener);
         if (mProjectInfo != null) {
             mMapMember = IssueRoleUtils.getInstance().getMembersFromProject(mProjectInfo);
@@ -429,14 +435,15 @@ public class IssueAddListFragment extends BaseConstructionFragment implements Vi
             mIssueNotifyContent.setTextColor(UIUtils.getColor(R.color.issue_add_list_not_filled));
         }
 
-        if (allowAdd) {
-            mAddIssue.setClickable(true);
-            mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_visible));
-        } else {
-            mAddIssue.setClickable(false);
-            mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_invisible));
+        if(mAddIssue != null){
+            if (allowAdd) {
+                mAddIssue.setClickable(true);
+                mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_visible));
+            } else {
+                mAddIssue.setClickable(false);
+                mAddIssue.setTextColor(UIUtils.getColor(R.color.issue_add_invisible));
+            }
         }
-
     }
 
 

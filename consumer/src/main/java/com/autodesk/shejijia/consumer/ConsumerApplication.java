@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.base.activity.MPSplashActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -29,6 +30,8 @@ public class ConsumerApplication extends AdskApplication {
 
         reqisterWXAppId();
         AppFrame.initDebug(true);
+        //初始化网络请求队列
+        NetRequestManager.getInstance().init(this);
 
     }
 
