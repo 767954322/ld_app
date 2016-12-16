@@ -17,6 +17,7 @@
             android:layout_width="@dimen/size_40"
             android:layout_height="@dimen/size_40"
             android:gravity="center"
+            android:background="@drawable/icon_default_avator"
             app:poly_vertices="0" />
 
         <ImageView
