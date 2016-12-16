@@ -19,70 +19,102 @@
         android:layout_width="match_parent"
         android:layout_height="20dp" />
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:divider="@drawable/linearlayout_divider_hor_shape"
+        android:dividerPadding="@dimen/spacing_padding_double"
+        android:showDividers="middle"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_design_introduction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/linearlayout_divider_hor_shape"
-            android:dividerPadding="@dimen/spacing_padding_double"
-            android:orientation="vertical"
-            android:showDividers="middle">
+            android:layout_height="40dp"
+            android:background="@color/bg_ff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
-                android:id="@+id/tv_design_introduction"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_next"
-                android:gravity="center_vertical"
-                android:paddingBottom="12dp"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="12dp"
-                android:text="@string/designer_introduced"
+                android:layout_centerVertical="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal" />
+                android:text="@string/designer_introduced" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_version_description"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bg_ff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
-                android:id="@+id/tv_version_description"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_next"
-                android:gravity="center_vertical"
-                android:paddingBottom="12dp"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="12dp"
-                android:text="@string/version_introduced"
+                android:layout_centerVertical="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal" />
+                android:text="@string/version_introduced" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bg_ff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:text="@string/version_detail" />
 
             <TextView
                 android:id="@+id/tv_version"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="12dp"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="12dp"
-                android:text="@string/version_detail"
+                android:layout_alignParentRight="true"
+                android:text="Version WD0.0.2.4"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal" />
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bg_ff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
             <TextView
-                android:id="@+id/tv_git_commit_id"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="12dp"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="12dp"
-                android:text="@string/git_commit_id"
+                android:layout_centerVertical="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                android:text="@string/git_commit_id" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

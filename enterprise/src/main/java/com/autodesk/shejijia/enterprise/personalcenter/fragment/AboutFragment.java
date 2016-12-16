@@ -1,9 +1,13 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.enterprise.personalcenter.activity.DesignIntroductionActivity;
+import com.autodesk.shejijia.enterprise.personalcenter.activity.VersionDescriptionActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**
@@ -12,8 +16,9 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
  */
 @SuppressWarnings("ALL")
 public class AboutFragment extends BaseConstructionFragment implements View.OnClickListener{
-    private TextView mTvDesignIntroduction;
-    private TextView mTvVersionDescription;
+    private RelativeLayout mRlDesignIntroduction;
+    private RelativeLayout mRlVersionDescription;
+    private TextView mTvVersion;
 
     public static AboutFragment newInstance(){
         return new AboutFragment();
@@ -25,28 +30,30 @@ public class AboutFragment extends BaseConstructionFragment implements View.OnCl
 
     @Override
     protected void initView() {
-        mTvDesignIntroduction = (TextView)rootView.findViewById(R.id.tv_design_introduction);
-        mTvVersionDescription = (TextView)rootView.findViewById(R.id.tv_version_description);
+        mRlDesignIntroduction = (RelativeLayout)rootView.findViewById(R.id.rl_design_introduction);
+        mRlVersionDescription = (RelativeLayout)rootView.findViewById(R.id.rl_version_description);
+        mTvVersion = (TextView)rootView.findViewById(R.id.tv_version);
     }
 
     @Override
     protected void initData() {
+        mTvVersion.setText(Constant.VERSION_NUMBER);
     }
 
     @Override
     protected void initListener() {
-        mTvDesignIntroduction.setOnClickListener(this);
-        mTvVersionDescription.setOnClickListener(this);
+        mRlDesignIntroduction.setOnClickListener(this);
+        mRlVersionDescription.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tv_design_introduction:
-                ToastUtils.showLong(getActivity(),"dasdas");
+            case R.id.rl_design_introduction:
+                startActivity(new Intent(mContext,DesignIntroductionActivity.class));
                 break;
-            case R.id.tv_version_description:
-                ToastUtils.showLong(getActivity(),"123");
+            case R.id.rl_version_description:
+                startActivity(new Intent(mContext,VersionDescriptionActivity.class));
                 break;
             default:
                 break;

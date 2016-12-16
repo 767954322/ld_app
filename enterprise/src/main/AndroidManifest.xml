@@ -15,11 +15,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 判断手机型号 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 蒲公英权限-->
+    <!-- 蒲公英权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.READ_LOGS" /><!-- Optional -->
+    <uses-permission android:name="android.permission.READ_LOGS" /> <!-- Optional -->
 
-    <!--JPUSH权限-->
+
+    <!-- JPUSH权限 -->
     <permission
         android:name="com.autodesk.shejijia.enterprise.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -31,11 +32,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <!--自动获取焦点的权限-->
+    <!-- 自动获取焦点的权限 -->
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <!-- 调用相机的权限-->
+    <!-- 调用相机的权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -53,7 +53,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MPSplashActivity"
             android:alwaysRetainTaskState="true"
@@ -61,31 +60,30 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:noHistory="true"
-
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity"
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity"
+            android:alwaysRetainTaskState="true"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:alwaysRetainTaskState="true" />
-
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.album.AlbumActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.CropActivity"
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.common.uielements.commentview.photoselect.cropimage.CropActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".EnterpriseHomeActivity"
             android:alwaysRetainTaskState="true"
@@ -93,36 +91,28 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".personalcenter.activity.ProjectListActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".personalcenter.activity.MoreActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".personalcenter.activity.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity" />
-
-        <activity
-            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.UploadPhotoActivity"/>
-
+        <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.UploadPhotoActivity" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity"
             android:alwaysRetainTaskState="true"
@@ -130,7 +120,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity"
             android:alwaysRetainTaskState="true"
@@ -186,7 +175,7 @@
                 <category android:name="com.autodesk.shejijia.enterprise" />
             </intent-filter>
         </activity>
-        <!--form电子表格模块-->
+        <!-- form电子表格模块 -->
         <activity
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectIdCodeActivity"
             android:alwaysRetainTaskState="true"
@@ -205,9 +194,8 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckActivity"
             android:alwaysRetainTaskState="true"
@@ -225,12 +213,17 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/FormRecyclerStyle"/>
-        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.UnqualifiedActivity"
+            android:theme="@style/FormRecyclerStyle" />
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.UnqualifiedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PreCheckUnqualifiedCommitActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.issue.ui.activity.IssueListActivity"
             android:alwaysRetainTaskState="true"
@@ -256,12 +249,10 @@
             android:name="com.autodesk.shejijia.shared.components.im.service.webSocketService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -290,6 +281,7 @@
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
                 <category android:name="com.autodesk.shejijia.enterprise" />
             </intent-filter>
             <intent-filter>
@@ -319,7 +311,7 @@
             </intent-filter>
         </receiver>
 
-        <!--登陆登出等广播接收器-->
+        <!-- 登陆登出等广播接收器 -->
         <receiver
             android:name=".common.receiver.LoginNotificationReceiver"
             android:exported="false">
@@ -345,12 +337,13 @@
         <!-- ＵＭ统计 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="574fdc8c67e58ef66300065b"></meta-data>
+            android:value="574fdc8c67e58ef66300065b" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="AnZhuoShiChang" />
 
-
+        <activity android:name=".personalcenter.activity.DesignIntroductionActivity" />
+        <activity android:name=".personalcenter.activity.VersionDescriptionActivity"></activity>
     </application>
 
 </manifest>
