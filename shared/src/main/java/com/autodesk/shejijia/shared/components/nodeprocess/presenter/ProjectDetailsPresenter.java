@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActivity;
@@ -28,7 +29,8 @@ import java.util.List;
  * 项目详情presenter-->ProjectDetailsFragment
  */
 
-public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter {
+public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter, ProjectRepository.ProjectDirtyListener,
+        ProjectRepository.TaskDirtyListener {
 
     private Context mContext;
     private ProjectDetailsContract.View mProjectDetailsView;
@@ -37,11 +39,22 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     private String mThreadId;
     private boolean mIsHasTaskData;
     private boolean mIsNeedRefresh; //标记已经在项目详情页面下拉刷新时候的状态
+    private boolean mIsDirty;
 
     public ProjectDetailsPresenter(Context context, ProjectDetailsContract.View projectDetailsView) {
         this.mContext = context;
         this.mProjectDetailsView = projectDetailsView;
         mProjectRepository = ProjectRepository.getInstance();
+    }
+
+    @Override
+    public void start() {
+        mProjectRepository.addProjectDirtyListener(this);
+    }
+
+    @Override
+    public void stop() {
+        mProjectRepository.removeProjectDirtyListener(this);
     }
 
     @Override
@@ -241,4 +254,14 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         projectDetailsFragment.startActivityForResult(intent, requestCode);
     }
 
+    @Override
+    public void onProjectDirty(String projectId) {
+        LogUtils.i("Wenhui", "onProjectDirty=" + projectId);
+//        getProjectDetails();
+    }
+
+    @Override
+    public void onTaskDirty(String projectId, String taskId) {
+
+    }
 }

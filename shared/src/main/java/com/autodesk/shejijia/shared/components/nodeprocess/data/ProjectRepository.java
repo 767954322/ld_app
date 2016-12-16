@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.data;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
@@ -26,6 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.List;
 
@@ -38,6 +42,7 @@ public final class ProjectRepository implements ProjectDataSource {
     private ProjectInfo mProjectInfo;
     private PlanInfo mActivePlan;
     private boolean mActivePlanEditing;
+    private boolean mIsDirty;
 
     private ProjectRepository() {
     }
@@ -50,10 +55,106 @@ public final class ProjectRepository implements ProjectDataSource {
         return ProjectRepositoryHolder.INSTANCE;
     }
 
+    public ProjectInfo getActiveProject() {
+        return mProjectInfo;
+    }
+
+    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo, ResponseError> callback) {
+        if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
+            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
+                @Override
+                public void onSuccess(ProjectInfo data) {
+                    mActivePlanEditing = false;
+                    mActivePlan = data.getPlan();
+                    mActivePlan.setProjectId(String.valueOf(data.getProjectId()));
+                    callback.onSuccess(mActivePlan);
+                }
+
+                @Override
+                public void onError(ResponseError error) {
+                    callback.onError(error);
+                }
+            });
+        } else {
+            callback.onSuccess(mActivePlan);
+        }
+    }
+
+    public boolean isActivePlanEditing() {
+        return mActivePlan != null && mActivePlanEditing;
+    }
+
+    public void setActivePlanEditing(boolean activePlanEditing) {
+        this.mActivePlanEditing = activePlanEditing;
+    }
+
+    public interface ProjectDirtyListener {
+        void onProjectDirty(String projectId);
+    }
+
+    public interface TaskDirtyListener {
+        void onTaskDirty(String projectId, String taskId);
+
+    }
+
+    private HashSet<ProjectDirtyListener> mProjectDirtyListeners = new HashSet<>();
+
+    private HashSet<TaskDirtyListener> mTaskDirtyListeners = new HashSet<>();
+
+    public void addProjectDirtyListener(@NonNull ProjectDirtyListener listener) {
+        mProjectDirtyListeners.add(listener);
+    }
+
+    public void removeProjectDirtyListener(@NonNull ProjectDirtyListener listener) {
+        mProjectDirtyListeners.remove(listener);
+    }
+
+    public void addTaskDirtyListener(@NonNull TaskDirtyListener listener) {
+        mTaskDirtyListeners.add(listener);
+    }
+
+    public void removeTaskDirtyListener(@NonNull TaskDirtyListener listener) {
+        mTaskDirtyListeners.remove(listener);
+    }
+
+    public void notifyDataDirty(String projectId, String taskId) {
+        if (!TextUtils.isEmpty(projectId)) {
+            for (ProjectDirtyListener projectDirtyListener: mProjectDirtyListeners) {
+                projectDirtyListener.onProjectDirty(projectId);
+            }
+
+            if (!TextUtils.isEmpty(taskId)) {
+                for (TaskDirtyListener taskDirtyListener: mTaskDirtyListeners) {
+                    taskDirtyListener.onTaskDirty(projectId, taskId);
+                }
+            }
+        }
+    }
+//
+//    public void notifyDataDirty(Task task) {
+//        if (task != null) {
+//            for (ProjectDirtyListener projectDirtyListener: mProjectDirtyListeners) {
+//                projectDirtyListener.onProjectDirty(projectId);
+//            }
+//
+//            if (!TextUtils.isEmpty(taskId)) {
+//                for (TaskDirtyListener taskDirtyListener: mTaskDirtyListeners) {
+//                    taskDirtyListener.onTaskDirty(projectId, taskId);
+//                }
+//            }
+//        }
+//    }
+
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList, ResponseError> callback) {
         ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, callback);
     }
+
+    @Override
+    public void getUserTasksByProject(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback) {
+        ProjectRemoteDataSource.getInstance().getUserTasksByProject(pid, requestParams, requestTag, callback);
+    }
+
 
     @Override
     public void getProjectInfo(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
@@ -134,32 +235,6 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().updateTaskStatus(requestParams, requestTag, jsonRequest, callback);
     }
 
-    public ProjectInfo getActiveProject() {
-        return mProjectInfo;
-    }
-
-
-    public void getActivePlan(@NonNull String pid, String requestTag, final @NonNull ResponseCallback<PlanInfo, ResponseError> callback) {
-        if (mActivePlan == null || !mActivePlan.getProjectId().equalsIgnoreCase(pid)) {
-            getPlanByProjectId(pid, requestTag, new ResponseCallback<ProjectInfo, ResponseError>() {
-                @Override
-                public void onSuccess(ProjectInfo data) {
-                    mActivePlanEditing = false;
-                    mActivePlan = data.getPlan();
-                    mActivePlan.setProjectId(String.valueOf(data.getProjectId()));
-                    callback.onSuccess(mActivePlan);
-                }
-
-                @Override
-                public void onError(ResponseError error) {
-                    callback.onError(error);
-                }
-            });
-        } else {
-            callback.onSuccess(mActivePlan);
-        }
-    }
-
     @Override
     public void getUnreadMsgCount(String projectIds, String requestTag, @NonNull final ResponseCallback<UnreadMsg, ResponseError> callback) {
         MessageCenterHttpManagerImpl.getInstance().getUnreadMsgCount(projectIds, requestTag, new OkJsonArrayRequest.OKResponseCallback() {
@@ -178,19 +253,6 @@ public final class ProjectRepository implements ProjectDataSource {
                 callback.onSuccess(UnreadMsgEntityList.get(0));
             }
         });
-    }
-
-    public boolean isActivePlanEditing() {
-        return mActivePlan != null && mActivePlanEditing;
-    }
-
-    public void setActivePlanEditing(boolean activePlanEditing) {
-        this.mActivePlanEditing = activePlanEditing;
-    }
-
-    private PlanInfo copyPlan(PlanInfo planInfo) {
-        String jsonString = GsonUtil.beanToString(planInfo);
-        return GsonUtil.jsonToBean(jsonString, PlanInfo.class);
     }
 
     @Override

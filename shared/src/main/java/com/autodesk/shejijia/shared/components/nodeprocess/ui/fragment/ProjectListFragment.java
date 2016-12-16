@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -66,9 +67,10 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), getChildFragmentManager(), this);
+        mProjectListPresenter.start();
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.dateToIso8601(Calendar.getInstance().getTime());
-        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.UNCOMPLET);
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, "false", ConstructionConstants.ProjectStatus.ALL);
     }
 
     @Override
@@ -96,10 +98,16 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
         mProjectListView.setRefreshing(true);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mProjectListPresenter.stop();
+    }
+
     /*
-    * 筛选功能也会回调 onRefresh方法
-    *
-    * */
+        * 筛选功能也会回调 onRefresh方法
+        *
+        * */
     @Override
     public void onRefresh() {
         mEmptyView.setVisibility(View.GONE);
@@ -151,6 +159,11 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
     @Override
     public void refreshLikesButton(String filterLike, Like newLike, int likePosition) {
         mProjectListAdapter.updateProjectState(filterLike, newLike, likePosition);
+    }
+
+    @Override
+    public void updateItemData(int postion, ProjectInfo projectInfo) {
+        mProjectListAdapter.updateItemData(postion, projectInfo);
     }
 
     @Override
@@ -285,4 +298,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Pro
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mProjectListPresenter.checkDirty();
+    }
 }

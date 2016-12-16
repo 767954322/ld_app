@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+<<<<<<< Updated upstream
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+=======
+>>>>>>> Stashed changes
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -29,6 +32,11 @@ public class ProjectDetailsPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.mAvatarUrl = avatarUrl;
         this.mTaskLists = taskLists;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        return super.instantiateItem(container, position);
     }
 
     @Override

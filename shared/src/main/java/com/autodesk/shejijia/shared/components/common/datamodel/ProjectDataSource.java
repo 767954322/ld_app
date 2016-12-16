@@ -28,6 +28,8 @@ public interface ProjectDataSource {
     * */
     void getProjectList(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectList, ResponseError> callback);
 
+    void getUserTasksByProject(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback);
+
     /*
     * 获取项目详情－－含任务详情列表
     * */

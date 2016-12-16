@@ -102,6 +102,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                     // TODO dirty pre page
                     mTaskDetailsView.hideUploading();
                     mTaskDetailsView.close();
+                    mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
                 }
 
                 @Override
@@ -134,6 +135,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
             @Override
             public void onSuccess(Void data) {
                 // TODO dirty pre page
+                mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
                 mTaskDetailsView.hideUploading();
                 fetchTask();
             }
@@ -155,6 +157,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
         mProjectRepository.confirmTask(params, "CONFIRM_TASK", new ResponseCallback<Void, ResponseError>() {
             @Override
             public void onSuccess(Void data) {
+                mProjectRepository.notifyDataDirty(mTask.getProjectId(), mTask.getTaskId());
                 mTaskDetailsView.hideUploading();
                 fetchTask();
             }

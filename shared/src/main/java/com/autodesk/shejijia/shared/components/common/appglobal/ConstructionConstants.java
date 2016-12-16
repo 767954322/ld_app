@@ -57,6 +57,7 @@ public class ConstructionConstants {
     public final static int REQUEST_CODE_PICK_DATE_RANGE = 0x0111;
     public final static int REQUEST_CODE_ADD_TASK = 0x0112;
     public final static int REQUEST_CODE_UPLOAD_PHOTO = 0x0113;
+    public final static int REQUEST_CODE_SHOW_TASK_DETAILS = 0x0114;
 
     //Bundle key
     public static final String BUNDLE_KEY_PROJECT_ID = "project_id";
@@ -153,7 +154,6 @@ public class ConstructionConstants {
         public static final String MEDIA_TYPE_IMAGE = "image";
         public static final String MEDIA_TYPE_AUDIO = "audio";
 
-
         public static final String ISSUE_ROLE_ENGLISH_INSPECTORCOMPANY = "inspectorcompany";
         public static final String ISSUE_ROLE_ENGLISH_INSPECTOR = "inspector";
         public static final String ISSUE_ROLE_ENGLISH_MEMBER = "member";
@@ -161,8 +161,6 @@ public class ConstructionConstants {
         public static final String ISSUE_ROLE_ENGLISH_FOREMAN = "foreman";
         public static final String ISSUE_ROLE_ENGLISH_MATERIALSTAFF = "materialstaff";
         public static final String ISSUE_ROLE_ENGLISH_CLIENTMANAGER = "clientmanager";
-
-
     }
 
     public static class ProjectStatus {

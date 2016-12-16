@@ -42,5 +42,8 @@ public interface ProjectDetailsContract {
 
         void getUnreadMsgCount(String projectIds, String requestTag);
 
+        void start();
+
+        void stop();
     }
 }

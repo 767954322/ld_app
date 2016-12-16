@@ -46,6 +46,12 @@ public class ConstructionHttpManager implements IConstructionApi<OkJsonRequest.O
     }
 
     @Override
+    public void getUserTasksByProject(@NonNull String pid, @NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/users/projects/" + pid + "?", requestParams);
+        get(requestTag, requestUrl, callback);
+    }
+
+    @Override
     public void getProjectDetails(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + requestParams.getLong("pid")
                 + "?task_data=" + requestParams.getBoolean("task_data", false);

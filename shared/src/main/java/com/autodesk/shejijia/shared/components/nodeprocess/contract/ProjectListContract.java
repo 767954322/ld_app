@@ -26,9 +26,18 @@ public interface ProjectListContract {
 
         void refreshLikesButton(String filterLike, Like newLike, int likePosition);
 
+        void updateItemData(int postion, ProjectInfo projectInfo);
+
     }
 
     interface Presenter extends BasePresenter {
+
+        void start();
+
+        void stop();
+
+        void checkDirty();
+
         /*
         * 初始化请求参数
         * */

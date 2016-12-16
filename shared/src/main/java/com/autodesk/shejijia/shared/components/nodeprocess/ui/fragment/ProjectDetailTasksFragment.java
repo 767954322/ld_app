@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsTasksContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsTasksPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsTasksAdapter;

@@ -20,6 +20,8 @@ public interface IConstructionApi<T> {
     * */
     void getUserProjectLists(@NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
 
+    void getUserTasksByProject(@NonNull String pid, @NonNull Bundle requestParams, @Nullable String requestTag, @NonNull T callback);
+
     /*
     * 获取项目详情接口
     * */

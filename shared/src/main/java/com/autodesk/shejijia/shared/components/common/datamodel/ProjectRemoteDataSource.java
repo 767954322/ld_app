@@ -96,6 +96,11 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
+    public void getUserTasksByProject(String pid, Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo, ResponseError> callback) {
+        mConstructionHttpManager.getUserTasksByProject(pid, requestParams, requestTag, getDefaultCallback(callback, ProjectInfo.class));
+    }
+
+    @Override
     public void getProjectInfo(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo, ResponseError> callback) {
         mConstructionHttpManager.getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override

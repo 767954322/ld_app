@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -22,13 +23,15 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskDetai
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by t_xuz on 10/11/16.
  * 主页 项目(任务)列表页对应的presenter的实现类-->对应 TaskListFragment
  */
-public class ProjectListPresenter implements ProjectListContract.Presenter {
+public class ProjectListPresenter implements ProjectListContract.Presenter, ProjectRepository.ProjectDirtyListener,
+        ProjectRepository.TaskDirtyListener {
 
     private static final int PAGE_LIMIT = 10;
     private Context mContext;
@@ -42,12 +45,34 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private boolean mIsRefresh;
     private int mLoadedSize = 0;//记录服务端返回的数据个数
     private int mTotalSize;//服务器一共多少数据
+    private List<ProjectInfo> mProjectInfos;
+    private boolean mIsDirty;
 
     public ProjectListPresenter(Context context, FragmentManager fragmentManager, ProjectListContract.View projectListsView) {
         this.mContext = context;
         this.fragmentManager = fragmentManager;
         this.mProjectListView = projectListsView;
         mProjectRepository = ProjectRepository.getInstance();
+    }
+
+    @Override
+    public void start() {
+        mProjectRepository.addProjectDirtyListener(this);
+        mProjectRepository.addTaskDirtyListener(this);
+    }
+
+    @Override
+    public void stop() {
+        mProjectRepository.removeProjectDirtyListener(this);
+        mProjectRepository.removeTaskDirtyListener(this);
+    }
+
+    @Override
+    public void checkDirty() {
+        if (mIsDirty) {
+//            refreshProjectList();
+            mIsDirty = false;
+        }
     }
 
     @Override
@@ -123,16 +148,19 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
                 if (mIsRefresh) {
                     mProjectListView.refreshProjectListView(taskList.getData());
                     if (taskList.getData() != null && taskList.getData().size() > 0) {
+                        mProjectInfos = taskList.getData();
                         mLoadedSize = taskList.getData().size();
                         mOffset = mLoadedSize;
                     } else {
                         mLoadedSize = 0;
+                        mProjectInfos = new ArrayList<ProjectInfo>();
                     }
                 } else {
                     mProjectListView.addMoreProjectListView(taskList.getData());
                     if (taskList.getData() != null && taskList.getData().size() > 0) {
                         mLoadedSize += taskList.getData().size();
                         mOffset = mLoadedSize;
+                        mProjectInfos.addAll(taskList.getData());
                     }
                 }
             }
@@ -159,6 +187,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void navigateToTaskDetail(ProjectInfo projectInfo, Task task) {
         TaskDetailsFragment taskDetailsFragment = TaskDetailsFragment.newInstance(projectInfo, task);
+        taskDetailsFragment.setTargetFragment((Fragment) mProjectListView, ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS);
         taskDetailsFragment.show(fragmentManager, "task_details");
     }
 
@@ -206,6 +235,109 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onError(ResponseError error) {
                 mProjectListView.showNetError(error);
+            }
+        });
+    }
+
+    @Override
+    public void onProjectDirty(String projectId) {
+        mIsDirty = true;
+        LogUtils.i("Wenhui", "onProjectDirty = " + projectId);
+//        loadUserTasksByProject(projectId);
+    }
+
+    private void loadUserTasksByProject(final String pid) {
+//        mProjectListView.showLoading();
+        Bundle requestParamsBundle = new Bundle();
+        if (mSelectedDate != null) {
+            requestParamsBundle.putString("findDate", mSelectedDate);
+        }
+
+        if (mFilterStatus != null) {
+            requestParamsBundle.putString("status", mFilterStatus);
+        }
+        if (mFilterLike != null) {
+            requestParamsBundle.putString("like", mFilterLike);
+        }
+        requestParamsBundle.putInt("limit", PAGE_LIMIT);
+        requestParamsBundle.putInt("offset", (mOffset - 10 < 0 ? 0 : mOffset - 10));
+        mProjectRepository.getProjectList(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, new ResponseCallback<ProjectList, ResponseError>() {
+            @Override
+            public void onSuccess(ProjectList data) {
+//                mProjectListView.showLoading();
+                for (ProjectInfo projectInfo: data.getData()) {
+                    if (pid.equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
+                        mProjectListView.updateItemData(0, projectInfo);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+//                mProjectListView.hideLoading();
+                mProjectListView.showError(error.getMessage());
+            }
+        });
+
+
+//        mProjectRepository.getUserTasksByProject(pid, requestParamsBundle, "GET_USER_TASKS_BY_PROJECT", new ResponseCallback<ProjectInfo, ResponseError>() {
+//            @Override
+//            public void onSuccess(ProjectInfo data) {
+//                LogUtils.i("Wenhui", "Got data");
+//                mProjectListView.hideLoading();
+//                for (int index = 0; index < mProjectInfos.size(); index++) {
+//                    ProjectInfo projectInfo = mProjectInfos.get(index);
+//                    if (projectInfo.getProjectId() == data.getProjectId()) {
+//                        mProjectInfos.add(index, data);
+//                        mProjectInfos.remove(index + 1);
+//                        LogUtils.i("Wenhui", "update data");
+//                        mProjectListView.updateItemData(index, projectInfo);
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onError(ResponseError error) {
+//                mProjectListView.hideLoading();
+//                mProjectListView.showError(error.getMessage());
+//            }
+//        });
+
+    }
+
+    @Override
+    public void onTaskDirty(String projectId, String taskId) {
+        LogUtils.i("Wenhui", "onTaskDirty = " + projectId);
+        Bundle params = new Bundle();
+        params.putString(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(projectId));
+        params.putString(ConstructionConstants.BUNDLE_KEY_TASK_ID, String.valueOf(taskId));
+        mProjectRepository.getTask(params, "GET_TASK", new ResponseCallback<Task, ResponseError>() {
+            @Override
+            public void onSuccess(Task data) {
+                for (int index = 0; index < mProjectInfos.size(); index++) {
+                    ProjectInfo projectInfo = mProjectInfos.get(index);
+                    if (data.getProjectId().equalsIgnoreCase(String.valueOf(projectInfo.getProjectId()))) {
+                        LogUtils.i("Wenhui", "update data");
+                        List<Task> tasks = projectInfo.getPlan().getTasks();
+                        for (int index2 = 0; index2 < tasks.size(); index2++) {
+                            Task task = tasks.get(index2);
+                            if (task.getTaskId().equalsIgnoreCase(data.getTaskId())) {
+                                tasks.remove(task);
+                                tasks.add(index2, data);
+                                mProjectListView.updateItemData(index, projectInfo);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                mProjectListView.hideLoading();
+                mProjectListView.showError(error.getMessage());
             }
         });
     }

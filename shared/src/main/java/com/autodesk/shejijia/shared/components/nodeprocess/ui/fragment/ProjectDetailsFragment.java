@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -90,6 +91,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     protected void initData() {
         mIsRefresh = false;
         mProjectDetailsPresenter = new ProjectDetailsPresenter(getActivity(), this);
+        mProjectDetailsPresenter.start();
         long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
         if (projectId != 0) {
             LogUtils.e("projectDetails_projectId ", projectId + "");
@@ -108,6 +110,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         mCreatePlanBtn.setOnClickListener(this);
         mEditPlanBtn.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mProjectDetailsPresenter.stop();
     }
 
     @Override
@@ -254,6 +262,13 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             case REQUEST_CODE_PROJECT_MESSAGE_CENTER:
                 if (resultCode == Activity.RESULT_OK) {
                     mIsUnread = false;
+                }
+                break;
+            case ConstructionConstants.REQUEST_CODE_SHOW_TASK_DETAILS:
+                LogUtils.i("Wenhui", "onActivityResult REQUEST_CODE_SHOW_TASK_DETAILS");
+                if (resultCode == Activity.RESULT_OK) {
+                    LogUtils.i("Wenhui", "refresh");
+                    mProjectDetailsPresenter.getProjectDetails();
                 }
                 break;
             default:

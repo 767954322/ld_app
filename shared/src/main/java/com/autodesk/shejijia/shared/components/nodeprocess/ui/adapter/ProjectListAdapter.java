@@ -60,6 +60,22 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
+    public void updateItemData(int position, ProjectInfo projectInfo) {
+        for (int index = 0; index < mProjectLists.size(); index++) {
+            ProjectInfo tmpProjectInfo = mProjectLists.get(index);
+            if (projectInfo.getProjectId() == tmpProjectInfo.getProjectId()) {
+                mProjectLists.add(index, projectInfo);
+                mProjectLists.remove(index + 1);
+                notifyItemChanged(index);
+                LogUtils.i("Wenhui", "update data");
+                break;
+            }
+        }
+//        this.mProjectLists.add(position, projectInfo);
+//        this.mProjectLists.remove(position + 1);
+//        notifyItemChanged(position);
+    }
+
     /*
     * 根据星标接口，获得星标更新成功后的结果，从而更新内存中的该项目对应的数据源
     * */

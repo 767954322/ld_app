@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -35,6 +36,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.commentview.com
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.comment.CommentPreviewActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.commentview.model.entity.ImageInfo;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.form.ui.activity.FormActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.TaskDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.TaskDetailsPresenter;
@@ -353,6 +355,11 @@ public class TaskDetailsFragment extends AppCompatDialogFragment implements Task
 
     @Override
     public void close() {
+        Fragment targetFragment = getTargetFragment();
+        if (targetFragment != null) {
+            LogUtils.i("Wenhui", "has targetFragment = " + targetFragment.getClass().getSimpleName());
+            targetFragment.onActivityResult(targetFragment.getTargetRequestCode(), Activity.RESULT_OK, null);
+        }
         dismiss();
     }
 
