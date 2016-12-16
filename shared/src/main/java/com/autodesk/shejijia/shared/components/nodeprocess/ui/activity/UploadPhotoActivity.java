@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -44,7 +45,10 @@ public class UploadPhotoActivity extends BaseActivity implements UploadPhotoCont
 
     @Override
     protected void initView() {
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.upload_photo);
+        }
     }
 
     @Override
@@ -83,6 +87,7 @@ public class UploadPhotoActivity extends BaseActivity implements UploadPhotoCont
         CommentFragment commentFragment;
         if (savedInstanceState == null) {
             CommentConfig config = new CommentConfig();
+            config.seteLayoutType(CommentConfig.LayoutType.EDIT_IMAGE_ONLY);
             commentFragment = CommentFragment.getInstance(config);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();

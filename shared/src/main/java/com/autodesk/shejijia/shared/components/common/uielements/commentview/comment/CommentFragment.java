@@ -145,6 +145,7 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         mAudioTime = (TextView) view.findViewById(R.id.tv_audio_play_duration);
         mDeleteImage = (ImageView) view.findViewById(R.id.iv_delete_voice);
         mDeleteImage.setOnClickListener(this);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         if (isEditMode()) {
             initDetailShowStatus();
@@ -158,7 +159,6 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
 //                mAudioTime.setText();
             }
         }
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         initRecyclerView();
         mAlertView = new CommonAudioAlert(mContext, mItemListener);

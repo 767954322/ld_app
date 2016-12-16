@@ -113,7 +113,8 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT
+                || mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT_IMAGE_ONLY) {
             return mImages.size() + 1;
         } else {
             return mImages.size();
@@ -122,7 +123,8 @@ public class SelectedImgAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT) {
+        if (mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT
+                || mConfig.geteLayoutType() == CommentConfig.LayoutType.EDIT_IMAGE_ONLY) {
             if (mImages == null || mImages.size() == 0) {
                 return ADD_ITEM;
             } else {
