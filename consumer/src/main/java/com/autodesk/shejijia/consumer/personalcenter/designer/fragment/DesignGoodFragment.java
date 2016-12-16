@@ -46,13 +46,13 @@ public class DesignGoodFragment extends BaseFragment {
         mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
     }
 
-    @Override
-    public void onFragmentShown() {
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
-            onLoad2Refresh2Api();
-        }
-    }
+//    @Override
+//    public void onFragmentShown() {
+//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+//            onLoad2Refresh2Api();
+//        }
+//    }
 
     @Override
     protected void initData() {

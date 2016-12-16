@@ -67,14 +67,13 @@ public class OrderBeiShuFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onFragmentShown() {
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
-            setSwipeRefreshInfo();
-        }
-    }
+//    @Override
+//    public void onFragmentShown() {
+//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+//            setSwipeRefreshInfo();
+//        }
+//    }
 
     @Override
     protected void initData() {
@@ -83,6 +82,7 @@ public class OrderBeiShuFragment extends BaseFragment {
             return;
         }
         designer_id = mMemberEntity.getAcs_member_id();
+        setSwipeRefreshInfo();
     }
 
     private android.os.Handler handler = new android.os.Handler() {

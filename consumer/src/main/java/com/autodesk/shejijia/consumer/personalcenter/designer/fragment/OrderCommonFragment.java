@@ -106,23 +106,15 @@ public class OrderCommonFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
     }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    //
-    // fixme 这个方法当check到我的项目时候进行回调．
-    @Override
-    public void onFragmentShown() {
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
-            setSwipeRefreshInfo();
-        }
-    }
+    
+    // fixme 这个方法当check到我的项目时候进行回调． 7379
+//    @Override
+//    public void onFragmentShown() {
+//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+//            setSwipeRefreshInfo();
+//        }
+//    }
 
     /**
      * 获取普通订单数据

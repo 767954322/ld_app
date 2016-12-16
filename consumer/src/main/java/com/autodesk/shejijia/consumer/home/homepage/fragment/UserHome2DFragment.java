@@ -522,13 +522,15 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
             }
         }
         mOffset = offset + 10;
-        //设置数据小于等于2的是不显示没有更多数据了
-        if (mCaseLibraryBean.getCases().size() <= 2) {
-            mListView.setNoLoadMoreHideView(true);
-        }
+//        //设置数据小于等于2的是不显示没有更多数据了
+//        if (mCaseLibraryBean.getCases().size() <= 2) {
+//            mListView.setNoLoadMoreHideView(true);
+//        }
         if (mCaseLibraryBean.getCases().size() > 0) {
             ll_default_view.setVisibility(View.GONE);
+            mPtrLayout.setVisibility(View.VISIBLE);
         } else {
+            mPtrLayout.setVisibility(View.GONE);
             ll_default_view.setVisibility(View.VISIBLE);
         }
         casesEntities.addAll(mCaseLibraryBean.getCases());
