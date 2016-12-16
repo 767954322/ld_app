@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.commentview.co
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -77,6 +78,8 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
     private LinearLayout mAudioRecord;
     private LinearLayout mAudioPlay;
     private ImageView mDeleteImage;
+    private ImageView mPlayAnimateImg;
+    private AnimationDrawable mSpinner;
     private CommonAudioAlert mAlertView;
     private TextView mAudioTime;
 
@@ -137,6 +140,8 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         mAudioRecord.setOnClickListener(this);
         mAudioPlay = (LinearLayout) view.findViewById(R.id.ll_audio_play_container);
         mAudioPlay.setOnClickListener(this);
+        mPlayAnimateImg = (ImageView) view.findViewById(R.id.iv_audio_play);
+        mSpinner = (AnimationDrawable) mPlayAnimateImg.getBackground();
         mAudioTime = (TextView) view.findViewById(R.id.tv_audio_play_duration);
         mDeleteImage = (ImageView) view.findViewById(R.id.iv_delete_voice);
         mDeleteImage.setOnClickListener(this);
@@ -423,11 +428,17 @@ public class CommentFragment extends Fragment implements CommentContract.Comment
         @Override
         public void audioPlayStart() {
             isPlaying = true;
+            if(mSpinner != null){
+                mSpinner.start();
+            }
         }
 
         @Override
         public void audioPlayStop() {
             isPlaying = false;
+            if(mSpinner != null){
+                mSpinner.stop();
+            }
         }
 
     };
