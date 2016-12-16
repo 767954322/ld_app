@@ -250,7 +250,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                     mProjectDetailsPresenter.getProjectDetails();
                     long projectId = getArguments().getLong(ConstructionConstants.BUNDLE_KEY_PROJECT_ID);
                     Intent intent = new Intent();
-                    intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, projectId);
+                    intent.putExtra(ConstructionConstants.BUNDLE_KEY_PROJECT_ID, String.valueOf(projectId));
                     getActivity().setResult(Activity.RESULT_OK, intent);
                 } else {
                     if (mCreatePlanBtn.getVisibility() == View.VISIBLE

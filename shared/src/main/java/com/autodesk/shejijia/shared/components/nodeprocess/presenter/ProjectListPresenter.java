@@ -248,6 +248,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         }
 
         if (projectIndex == -1) {
+            LogUtils.e("Not found project " + pid);
             return;
         }
 
@@ -265,7 +266,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             requestParamsBundle.putString("like", mFilterLike);
         }
         requestParamsBundle.putInt("limit", PAGE_LIMIT);
-        requestParamsBundle.putInt("offset", (mOffset - 5 < 0 ? 0 : mOffset - 5));
+        requestParamsBundle.putInt("offset", (foundIndex - 5 < 0 ? 0 : mOffset - 5));
 
         // TODO change to getUserTasksByProject, getUserTasksByProject is not work now, so here is a workaround
         mProjectRepository.getProjectList(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, new ResponseCallback<ProjectList, ResponseError>() {
