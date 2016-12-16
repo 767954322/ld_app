@@ -187,7 +187,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void handleMeasureDelivery() {
         Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
-        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_unselect));
+        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.default_design_drawings_ico));
         if (isRoleCustomer()) {
             mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
         }
@@ -946,7 +946,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  * 量房订单
                  */
                 show3DAndHideLevel();
-                mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
+                mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_drawing_press));
                 mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                 if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
                     mDeliveryFilesEntitiesMeasure.add(fileBean);
@@ -1144,7 +1144,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  */
                 ArrayList<String> strings = DeliverySelector.select_design_file_id_map.get(4);
                 if (strings != null && strings.size() > 0) {
-                    mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
+                    mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_drawing_press));
                     sureSubmit();
                 } else {
                     cancelSubmit();
