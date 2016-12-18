@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import com.autodesk.shejijia.enterprise.personalcenter.datamodel.PersonalCenterRemoteDataSource;
@@ -13,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 
+import java.io.File;
 import java.util.Random;
 
 
@@ -33,7 +33,9 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
     }
 
     @Override
-    public void uploadPersonalHeadPicture(Bundle bundle, String requestTag) {
+    public void uploadPersonalHeadPicture(File file) {
+        String acsMemberId = UserInfoUtils.getAcsMemberId(mContext);
+        mPersonalCenterRemoteDataSource.uploadPersonalHeadPicture(file,acsMemberId);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
         intent.putExtra("scale", true);
         intent.putExtra("return-data", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
         intent.putExtra("noFaceDetection", true); // no face detection
         ((Activity)mContext).startActivityForResult(intent, requestCode);
     }

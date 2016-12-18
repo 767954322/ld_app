@@ -1,7 +1,11 @@
 package com.autodesk.shejijia.enterprise;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -299,9 +303,26 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case CROP_SMALL_PICTURE_CODE:
+                Bitmap bitmap = null;
                 if (mPersonalCenterContract.getUritempFile() != null) {
                     String path = mPersonalCenterContract.getUritempFile().getPath();
                     updatePersonalHeadPictureView("file:"+ path);
+                    mBottomPopUp.dismiss();
+                    try {
+                        try {
+                            File file = new File(path);
+//                            File file = new File(new URI(mPersonalCenterContract.getUritempFile().toString()));
+                            mPersonalCenterContract.uploadPersonalHeadPicture(file);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mPersonalCenterContract.getUritempFile()));
+//                        mPersonalCenterContract.uploadPersonalHeadPicture(saveBitmap2File(this, "headpic.png", bitmap));
+
+                    }catch (Exception e) {
+                        ToastUtils.showLong(this,"找不到图片");
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case CAMERA_INTENT_REQUEST_CODE://相机
@@ -310,6 +331,39 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
+    }
+    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
+        File f = new File(context.getCacheDir(), filename);
+        try {
+            f.createNewFile();
+
+            //将bitmap转为array数组
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            //讲数组写入到文件
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
+    }
+    private File uri2File(Uri uri) {
+        File file = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor actualimagecursor = this.managedQuery(uri, proj, null,
+                null, null);
+        int actual_image_column_index = actualimagecursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+        String img_path = actualimagecursor
+                .getString(actual_image_column_index);
+        file = new File(img_path);
+        return file;
     }
     @Override
     public void updatePersonalHeadPictureView(String avatar) {

@@ -11,6 +11,8 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import org.json.JSONObject;
 
+import java.io.File;
+
 /**
  * Created by luchongbin on 2016/12/18.
  */
@@ -39,5 +41,10 @@ public class PersonalCenterRemoteDataSource implements PersonalCenterDataSource 
                 callback.onError(responseError);
             }
         });
+    }
+
+    @Override
+    public void uploadPersonalHeadPicture(File file,String acsMemberId) {
+        PersonalCenterHttpManagerImpl.getInstance().uploadPersonalHeadPicture(file,acsMemberId);
     }
 }

@@ -1,8 +1,9 @@
 package com.autodesk.shejijia.enterprise.personalcenter;
 import android.net.Uri;
-import android.os.Bundle;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
+
+import java.io.File;
 
 /**
  * Created by luchongbin on 16-12-16.
@@ -15,7 +16,7 @@ public interface PersonalCenterContract {
     }
     interface Presenter extends BasePresenter {
 
-        void uploadPersonalHeadPicture(Bundle bundle, String requestTag);
+        void uploadPersonalHeadPicture(File file);
         void getPersonalHeadPicture(String requestTag);
         void systemPhoto(int requestCode);
         void cameraPhoto(int requestCode);
