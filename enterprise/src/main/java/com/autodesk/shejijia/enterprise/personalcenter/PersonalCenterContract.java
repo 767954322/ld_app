@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.personalcenter;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.framework.BasePresenter;
@@ -18,5 +20,10 @@ public interface PersonalCenterContract {
 
         void uploadPersonalHeadPicture(Bundle bundle, String requestTag);
         void getPersonalHeadPicture(String requestTag);
+        void systemPhoto(int requestCode);
+        void cameraPhoto(int requestCode);
+        void cropImageUri(Uri uri, int outputX, int outputY, int requestCode);
+        Uri getUritempFile();
+
     }
 }

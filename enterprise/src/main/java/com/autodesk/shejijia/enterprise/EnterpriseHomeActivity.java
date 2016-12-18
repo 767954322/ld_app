@@ -55,9 +55,9 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     private static final String FRAGMENT_TAG_TASK = "taskList";
     private static final String FRAGMENT_TAG_ISSUE = "issueList";
     private static final String FRAGMENT_TAG_GROUP_CHAT = "groupChatList";
-    private static final int SYS_INTENT_REQUEST = 0XFF01;
-    private static final int CAMERA_INTENT_REQUEST = 0XFF02;
-    private static final int CROP_SMALL_PICTURE = 5;
+    private static final int SYS_INTENT_REQUEST_CODE = 0XFF01;
+    private static final int CAMERA_INTENT_REQUEST_CODE = 0XFF02;
+    private static final int CROP_SMALL_PICTURE_CODE = 0XFF03;
 
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
@@ -72,8 +72,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     private TextView mUserRoleView;
     private PopupWindow mBottomPopUp;
     private String currentFragmentTag;
-    private Uri mUritempFile;
-
     private PersonalCenterContract.Presenter mPersonalCenterContract;
 
     @Override
@@ -300,21 +298,20 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case SYS_INTENT_REQUEST:
+            case SYS_INTENT_REQUEST_CODE:
                 if (data != null) {
                     Uri originalUri = data.getData();
-                    cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE);
+                    mPersonalCenterContract.cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_CODE);
                 }
                 break;
-            case CROP_SMALL_PICTURE:
-                if (mUritempFile != null) {
-                    String path = mUritempFile.getPath();
-                    ImageUtils.loadImageRound(mHeadPicBtn,"file:"+ path);
+            case CROP_SMALL_PICTURE_CODE:
+                if (mPersonalCenterContract.getUritempFile() != null) {
+                    String path = mPersonalCenterContract.getUritempFile().getPath();
+                    updatePersonalHeadPictureView("file:"+ path);
                 }
-
                 break;
-            case CAMERA_INTENT_REQUEST://相机
-                cropImageUri(mUritempFile, 300, 300, CROP_SMALL_PICTURE);
+            case CAMERA_INTENT_REQUEST_CODE://相机
+                mPersonalCenterContract.cropImageUri(mPersonalCenterContract.getUritempFile(), 300, 300, CROP_SMALL_PICTURE_CODE);
                 break;
             default:
                 break;
@@ -345,14 +342,14 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         tvSletectAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                systemPhoto();
+                mPersonalCenterContract.systemPhoto(SYS_INTENT_REQUEST_CODE);
 
             }
         });
         tvPhotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraPhoto();
+                mPersonalCenterContract.cameraPhoto(CAMERA_INTENT_REQUEST_CODE);
             }
         });
         tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -387,52 +384,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         mBottomPopUp.setAnimationStyle(R.style.pop_bottom_animation);
         BackGroundUtils.dimWindowBackground(this, 1.0f, 0.7f);
         mBottomPopUp.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-    }
-
-    private void systemPhoto() {
-        Random random = new Random();
-        int ss = Math.abs(random.nextInt(100));
-        mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" +ss+ "small.png");
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        intent.putExtra("return-data", true);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, SYS_INTENT_REQUEST);
-    }
-    private void cameraPhoto() {
-        String sdStatus = Environment.getExternalStorageState();
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-            return;
-        }
-        mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile);
-        startActivityForResult(intent, CAMERA_INTENT_REQUEST);
-    }
-
-    /**
-     * 图片截取
-     *
-     * @param uri
-     * @param outputX
-     * @param outputY
-     * @param requestCode
-     */
-    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", outputX);
-        intent.putExtra("outputY", outputY);
-        intent.putExtra("scale", true);
-        intent.putExtra("return-data", true);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true); // no face detection
-        startActivityForResult(intent, requestCode);
     }
 }
 
