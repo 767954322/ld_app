@@ -259,6 +259,7 @@ public class Constant {
         public static final String CITY = "city";
         public static final String DISTRICT_NAME = "district_name";
         public static final String DISTRICT = "district";
+        public static final String AVATAR = "avatar";
     }
 
     /**

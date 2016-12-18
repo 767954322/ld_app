@@ -11,12 +11,12 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 
 public interface PersonalCenterContract {
     interface View extends BaseView {
-
+        void updatePersonalHeadPictureView(String avatar);
 
     }
     interface Presenter extends BasePresenter {
 
-        void uploadPersonalHeadPic(Bundle bundle, String requestTag);
-        void getPersonalHeadPicPicture();
+        void uploadPersonalHeadPicture(Bundle bundle, String requestTag);
+        void getPersonalHeadPicture(String requestTag);
     }
 }

@@ -25,6 +25,7 @@ public class ConstructionConstants {
     public static final String ADDISSUE_URL = Config.CONSTRUCTION_ADDISSUE_URL;
 
     public static final String ACS_MEMBERS_URL = Config.ACS_MEMBERS;
+    public static final String MEMBER_PATH = Config.MEMBER_PATH;
 
     //下拉刷新,上拉加载更多事件标记
     public static final String REFRESH_EVENT = "refresh";

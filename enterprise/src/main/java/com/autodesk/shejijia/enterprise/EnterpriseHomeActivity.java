@@ -3,7 +3,6 @@ package com.autodesk.shejijia.enterprise;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -36,11 +34,10 @@ import com.autodesk.shejijia.enterprise.personalcenter.PersonalCenterContract;
 import com.autodesk.shejijia.enterprise.personalcenter.PersonalCenterPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
@@ -51,12 +48,10 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectLi
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.pgyersdk.update.PgyUpdateManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
-        NavigationView.OnNavigationItemSelectedListener {
-
+        NavigationView.OnNavigationItemSelectedListener,PersonalCenterContract.View {
     private static final String FRAGMENT_TAG_TASK = "taskList";
     private static final String FRAGMENT_TAG_ISSUE = "issueList";
     private static final String FRAGMENT_TAG_GROUP_CHAT = "groupChatList";
@@ -89,6 +84,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData(Bundle savedInstanceState) {
         mPersonalCenterContract = new PersonalCenterPresenter(this);
+        mPersonalCenterContract.getPersonalHeadPicture(getClass().getSimpleName());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -323,8 +319,23 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
-
     }
+    @Override
+    public void updatePersonalHeadPictureView(String avatar) {
+        ImageUtils.loadImageRound(mHeadPicBtn,avatar);
+    }
+
+    @Override
+    public void showNetError(ResponseError error) {}
+
+    @Override
+    public void showError(String errorMsg) {}
+
+    @Override
+    public void showLoading() {}
+
+    @Override
+    public void hideLoading() {}
 
     private void ShowBottomPopup() {
         View contentView = LayoutInflater.from(this).inflate(R.layout.popup_personal_headpic_dialog, null);
@@ -379,7 +390,9 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     }
 
     private void systemPhoto() {
-        mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        Random random = new Random();
+        int ss = Math.abs(random.nextInt(100));
+        mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" +ss+ "small.png");
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -389,11 +402,9 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     }
     private void cameraPhoto() {
         String sdStatus = Environment.getExternalStorageState();
-        /// Detection of sd is available .
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
             return;
         }
-//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile);
