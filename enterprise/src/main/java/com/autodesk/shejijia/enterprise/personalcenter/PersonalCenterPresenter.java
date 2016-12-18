@@ -8,8 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.datamodel.PersonalCenterRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;

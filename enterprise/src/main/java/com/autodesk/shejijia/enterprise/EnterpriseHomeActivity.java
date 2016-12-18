@@ -1,12 +1,7 @@
 package com.autodesk.shejijia.enterprise;
-
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -29,7 +24,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-
 import com.autodesk.shejijia.enterprise.personalcenter.PersonalCenterContract;
 import com.autodesk.shejijia.enterprise.personalcenter.PersonalCenterPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;

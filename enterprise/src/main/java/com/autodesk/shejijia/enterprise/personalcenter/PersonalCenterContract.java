@@ -1,9 +1,6 @@
 package com.autodesk.shejijia.enterprise.personalcenter;
-
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
