@@ -1,16 +1,7 @@
 package com.autodesk.shejijia.enterprise;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -62,16 +53,15 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     private RadioButton mSessionBtn;
     private RadioGroup mBottomGroup;
     private ImageView mHeadPicBtn;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-    private TextView toolbarTitle;//self define
+    private TextView mToolbarTitle;//self define
     private TextView mUserNameView;
     private TextView mUserRoleView;
     private PopupWindow mBottomPopUp;
-    private String currentFragmentTag;
+    private String mCurrentFragmentTag;
     private PersonalCenterContract.Presenter mPersonalCenterContract;
-//    private Uri uritempFile;
 
     @Override
     protected int getLayoutResId() {
@@ -93,8 +83,8 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
         mDrawerLayout = (DrawerLayout) this.findViewById(R.id.home_drawer_layout);
         mNavigationView = (NavigationView) this.findViewById(R.id.home_navigation_view);
-        toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
-        toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
+        mToolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
+        mToolbarTitle = (TextView) mToolbar.findViewById(R.id.tv_toolbar_title);
         View headerView = mNavigationView.getHeaderView(0);
         mUserNameView = (TextView) headerView.findViewById(R.id.tv_user_name);
         mUserRoleView = (TextView) headerView.findViewById(R.id.tv_user_role);
@@ -109,7 +99,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         //init NavigationView Event
         mNavigationView.setNavigationItemSelectedListener(this);
         mHeadPicBtn.setOnClickListener(this);
-        toolbarTitle.setOnClickListener(this);
+        mToolbarTitle.setOnClickListener(this);
         //pgy update register
         if (BuildConfig.DEBUG) {
 //            PgyUpdateManager.register(this);
@@ -142,15 +132,15 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         switch (checkId) {
             case R.id.rdoBtn_project_task:
                 controlShowFragment(FRAGMENT_TAG_TASK);
-                initToolbar(toolbar, toolbarTitle, true, true, getString(R.string.toolbar_task_title));
+                initToolbar(mToolbar, mToolbarTitle, true, true, getString(R.string.toolbar_task_title));
                 break;
             case R.id.rdoBtn_project_issue:
                 controlShowFragment(FRAGMENT_TAG_ISSUE);
-                initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_question_title));
+                initToolbar(mToolbar, mToolbarTitle, true, false, getString(R.string.toolbar_question_title));
                 break;
             case R.id.rdoBtn_project_session:
                 controlShowFragment(FRAGMENT_TAG_GROUP_CHAT);
-                initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_groupChat_title));
+                initToolbar(mToolbar, mToolbarTitle, true, false, getString(R.string.toolbar_groupChat_title));
                 break;
         }
     }
@@ -198,11 +188,11 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        Fragment oldFragment = fragmentManager.findFragmentByTag(currentFragmentTag);
+        Fragment oldFragment = fragmentManager.findFragmentByTag(mCurrentFragmentTag);
         if (oldFragment != null) {
             transaction.hide(oldFragment);
         }
-        currentFragmentTag = tag;
+        mCurrentFragmentTag = tag;
 
         Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
         if (currentFragment != null) {
@@ -317,6 +307,9 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     @Override
     public void updatePersonalHeadPictureView(String avatar) {
         ImageUtils.loadImageRound(mHeadPicBtn,avatar);
+        if(mBottomPopUp != null){
+            mBottomPopUp.dismiss();
+        }
     }
 
     @Override

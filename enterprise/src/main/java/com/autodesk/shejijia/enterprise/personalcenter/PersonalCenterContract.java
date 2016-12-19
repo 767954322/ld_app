@@ -2,9 +2,6 @@ package com.autodesk.shejijia.enterprise.personalcenter;
 import android.net.Uri;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
-
-import java.io.File;
-
 /**
  * Created by luchongbin on 16-12-16.
  */

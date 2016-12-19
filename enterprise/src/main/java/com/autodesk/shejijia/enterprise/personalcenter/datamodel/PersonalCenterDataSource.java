@@ -13,5 +13,5 @@ import java.io.File;
 
 public interface PersonalCenterDataSource {
     void getPersonalHeadPicPicture(String requestTag,String acsMemberId,@NonNull final ResponseCallback<String, ResponseError> callback);
-    void uploadPersonalHeadPicture(File file);
+    void uploadPersonalHeadPicture(File file,@NonNull final ResponseCallback<Boolean, Boolean> callback);
 }

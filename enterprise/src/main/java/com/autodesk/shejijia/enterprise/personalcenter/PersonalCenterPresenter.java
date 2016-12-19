@@ -8,35 +8,17 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-
-import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.datamodel.PersonalCenterRemoteDataSource;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-
 /**
  * Created by luchongbin on 16-12-16.
  */
@@ -106,7 +88,7 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
         intent.putExtra("return-data", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-        intent.putExtra("noFaceDetection", true); // no face detection
+        intent.putExtra("noFaceDetection", true);
         ((Activity)mContext).startActivityForResult(intent, requestCode);
     }
     @Override
@@ -122,25 +104,31 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
     @Override
     public void uploadPersonalHeadPicture(){
         if (mUritempFile != null) {
-            String path = mUritempFile.getPath();
-            mPersonalCenterContract.updatePersonalHeadPictureView("file:"+ path);
-
             Bitmap bitmap = null;
             File file;
             try {
+                String path = mUritempFile.getPath();
+                mPersonalCenterContract.updatePersonalHeadPictureView("file:"+ path);
                 bitmap = BitmapFactory.decodeStream(mContext.getContentResolver().openInputStream(mUritempFile));
-                file = saveBitmap2File(mContext, "headpic.png", bitmap);
+                file = saveBitmapToFile(bitmap);
                 try {
-                    CustomProgress.show(mContext, "头像上传中...", false, null);
-                    mPersonalCenterRemoteDataSource.uploadPersonalHeadPicture(file);
-//                    mPersonalCenterContract.updatePersonalHeadPictureView(file);
-//                    putFile2Server(file);
+                    CustomProgress.show(mContext, "", false, null);
+                    mPersonalCenterRemoteDataSource.uploadPersonalHeadPicture(file,new ResponseCallback<Boolean, Boolean>(){
+                        @Override
+                        public void onSuccess(Boolean data) {
+                            CustomProgress.cancelDialog();
+                        }
+
+                        @Override
+                        public void onError(Boolean error) {
+                            CustomProgress.cancelDialog();
+                        }
+                    });
                 } catch (Exception e) {
                     CustomProgress.cancelDialog();
                     e.printStackTrace();
                 }
             } catch (FileNotFoundException e) {
-                ToastUtils.showLong((Activity)mContext, "找不到图片");
                 e.printStackTrace();
             }
             if (bitmap != null) {
@@ -149,16 +137,8 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
 
         }
     }
-    /**
-     * bitmap 转为file 缓存文件
-     *
-     * @param context
-     * @param filename
-     * @param bitmap
-     * @return
-     */
-    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
-        File f = new File(context.getCacheDir(), filename);
+    private File saveBitmapToFile( Bitmap bitmap) {
+        File f = new File(mContext.getCacheDir(), "headPicture.png");
         try {
             f.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

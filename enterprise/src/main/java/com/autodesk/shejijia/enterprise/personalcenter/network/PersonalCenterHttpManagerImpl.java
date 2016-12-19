@@ -1,8 +1,5 @@
 package com.autodesk.shejijia.enterprise.personalcenter.network;
-
-import android.app.Activity;
 import android.support.annotation.NonNull;
-
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -11,7 +8,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.squareup.okhttp.Callback;
@@ -19,10 +15,7 @@ import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +40,7 @@ public class PersonalCenterHttpManagerImpl implements PersonalCenterHttpManager 
     }
 
     @Override
-    public void uploadPersonalHeadPicture(File file, @NonNull OkJsonRequest.OKResponseCallback callback) {
+    public void uploadPersonalHeadPicture(File file, @NonNull Callback callback) {
         try {
             uploadFileToServer(file,callback);
         } catch (Exception e) {
@@ -56,7 +49,7 @@ public class PersonalCenterHttpManagerImpl implements PersonalCenterHttpManager 
         }
     }
 
-    public void uploadFileToServer(File file,final OkJsonRequest.OKResponseCallback callback) throws Exception {
+    public void uploadFileToServer(File file,final Callback callback) throws Exception {
         if (!file.exists() && file.length() <= 0) {
             return;
         }
@@ -77,21 +70,21 @@ public class PersonalCenterHttpManagerImpl implements PersonalCenterHttpManager 
         reqBuilder.url(UrlConstants.URL_PUT_AMEND_DESIGNER_INFO_PHOTO);
         reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
         reqBuilder.put(reqBody);
-
-        okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
-//                callback.onErrorResponse();
-                CustomProgress.cancelDialog();
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                CustomProgress.cancelDialog();
-//                callback.onResponse();
-//                response.isSuccessful()
-            }
-        });
+        okHttpClient.newCall(reqBuilder.build()).enqueue(callback);
+//        okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+////                callback.onErrorResponse();
+//                CustomProgress.cancelDialog();
+//            }
+//
+//            @Override
+//            public void onResponse(Response response) throws IOException {
+//                CustomProgress.cancelDialog();
+////                callback.onResponse();
+////                response.isSuccessful()
+//            }
+//        });
     }
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
