@@ -28,7 +28,6 @@ public class ConsumerApplication extends AdskApplication {
         mMainThreadId = android.os.Process.myTid();
 
         reqisterWXAppId();
-        AppFrame.initDebug(true);
         //初始化网络请求队列
         NetRequestManager.getInstance().init(this);
     }
