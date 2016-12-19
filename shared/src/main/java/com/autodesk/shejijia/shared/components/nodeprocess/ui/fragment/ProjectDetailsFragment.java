@@ -204,8 +204,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if (count != 0) {
             mIsUnread = true;
             mMenuBadgeView.setVisibility(View.VISIBLE);
-            mMenuBadgeView.setText(String.valueOf(count));
         }
+        mMenuBadgeView.setText(count+"");
     }
 
     @Override
