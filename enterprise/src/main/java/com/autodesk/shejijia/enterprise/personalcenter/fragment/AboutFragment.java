@@ -21,7 +21,6 @@ public class AboutFragment extends BaseConstructionFragment implements View.OnCl
     private RelativeLayout mRlVersionDescription;
     private TextView mTvVersion;
     private TextView mTvGitCommitId;
-
     public static AboutFragment newInstance(){
         return new AboutFragment();
     }

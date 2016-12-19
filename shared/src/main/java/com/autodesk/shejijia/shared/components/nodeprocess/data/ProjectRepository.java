@@ -192,7 +192,9 @@ public final class ProjectRepository implements ProjectDataSource {
                 List<UnreadMsg> UnreadMsgEntityList = new Gson()
                         .fromJson(jsonArray.toString(), new TypeToken<List<UnreadMsg>>() {
                         }.getType());
-                callback.onSuccess(UnreadMsgEntityList.get(0));
+                if(UnreadMsgEntityList != null && UnreadMsgEntityList.size() > 0){
+                    callback.onSuccess(UnreadMsgEntityList.get(0));
+                }
             }
         });
     }
