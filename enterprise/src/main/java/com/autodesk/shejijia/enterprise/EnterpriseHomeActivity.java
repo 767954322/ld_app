@@ -39,15 +39,11 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
-import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.pgyersdk.update.PgyUpdateManager;
-
-import java.util.Random;
-
+import java.io.File;
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener,PersonalCenterContract.View {
     private static final String FRAGMENT_TAG_TASK = "taskList";
@@ -331,39 +327,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
-    }
-    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
-        File f = new File(context.getCacheDir(), filename);
-        try {
-            f.createNewFile();
-
-            //将bitmap转为array数组
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-            //讲数组写入到文件
-            FileOutputStream fos = new FileOutputStream(f);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return f;
-    }
-    private File uri2File(Uri uri) {
-        File file = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor actualimagecursor = this.managedQuery(uri, proj, null,
-                null, null);
-        int actual_image_column_index = actualimagecursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        actualimagecursor.moveToFirst();
-        String img_path = actualimagecursor
-                .getString(actual_image_column_index);
-        file = new File(img_path);
-        return file;
     }
     @Override
     public void updatePersonalHeadPictureView(String avatar) {
