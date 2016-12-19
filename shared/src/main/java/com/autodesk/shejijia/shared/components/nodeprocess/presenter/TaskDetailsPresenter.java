@@ -100,7 +100,7 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
                 @Override
                 public void onSuccess(Void data) {
                     // TODO update dialog
-                    // TODO dirty pre page
+                    mDataChanged = true;
                     mTaskDetailsView.hideUploading();
                     mTaskDetailsView.close(mDataChanged);
                     mDataChanged = true;
