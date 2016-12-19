@@ -1,12 +1,10 @@
 apply plugin: 'com.android.application'
 
 def buildNumber = ".0"
-def gitLastCommitId = "\"L110VS\""
-
+def gitLastCommitId = "\"L110Test\""
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
-
     defaultConfig {
         applicationId "com.autodesk.shejijia.enterprise"
         minSdkVersion rootProject.ext.androidMinSdkVersion
@@ -68,7 +66,6 @@ dependencies {
     uatReleaseCompile project(path: ':shared', configuration: 'uatRelease')
     productionDebugCompile project(path: ':shared', configuration: 'productionDebug')
     productionReleaseCompile project(path: ':shared', configuration: 'productionRelease')
-    compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     androidTestCompile 'com.android.support.test:runner:0.5'
