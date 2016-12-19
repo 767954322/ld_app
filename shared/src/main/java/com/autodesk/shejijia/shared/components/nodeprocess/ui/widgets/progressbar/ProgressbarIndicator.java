@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.entity.MilestoneStatus;
 
@@ -40,7 +39,7 @@ public class ProgressbarIndicator extends View {
     private static final int DEFAULT_STEP_RADIUS = 16;   //DP
     private static final int DEFAULT_LINE_STOKE_WIDTH = 2;  //DP
     private static final int DEFAULT_CIRCLE_STOKE_WIDTH = 6;  //DP
-    private static final int DEFAULT_STEP_COUNT = 6;  //DP
+    private static final int DEFAULT_STEP_COUNT = 6;
     private static final int DEFAULT_TEXT_SIZE = 15;  //SP
     private static final int DEFAULT_LINE_COLOR = R.color.progressbar_line_color;
     private static final int DEFAULT_LINE_DONE_COLOR = R.color.progressbar_line_done_color;
@@ -52,44 +51,45 @@ public class ProgressbarIndicator extends View {
     private static final int DEFAULT_CIRCLE_COMPLETE_SELECTED_COLOR = R.color.progressbar_circle_complete_selected_color;
     private static final int DEFAULT_TEXT_COLOR = R.color.progressbar_text_color;
 
-    private int radius;
-    private int stepsCount;
-    private int currentStepPosition;
-    private int currentStatus;
-    private int stepLineColor;
-    private int stepLineDoneColor;
-    private int circleUnOpenColor;
-    private int circleCompleteColor;
-    private int circleInProgressColor;
-    private int circleUnOpenSelectedColor;
-    private int circleInProgressSelectedColor;
-    private int circleCompleteSelectedColor;
-    private int textColor;
-    private float textSize;
-    private float strokeCircleWidth;
-    private float strokeAnimCircleWidth;
-    private float strokeLineWidth;
+    private int mRadius;
+    private int mStepsCount;
+    private int mCurrentStepPosition;
+    private int mCurrentStatus;
+    private int mStepLineColor;
+    private int mStepLineDoneColor;
+    private int mCircleUnOpenColor;
+    private int mCircleCompleteColor;
+    private int mCircleInProgressColor;
+    private int mCircleUnOpenSelectedColor;
+    private int mCircleInProgressSelectedColor;
+    private int mCircleCompleteSelectedColor;
+    private int mTextColor;
+    private float mTextSize;
+    private float mStrokeCircleWidth;
+    private float mStrokeAnimCircleWidth;
+    private float mStrokeLineWidth;
 
-    private int centerY;
-    private int startX;
-    private int endX;
-    private int stepDistance;
+    private int mCenterY;
+    private int mStartX;
+    private int mEndX;
+    private int mStepDistance;
 
-    private Paint linePaint;//虚线paint
-    private Paint circlePaint;//未选中circle paint
-    private Paint pStoke; //selected stroke circle
-    private Paint textPaint;//文本
+    private Paint mLinePaint;//虚线paint
+    private Paint mCirclePaint;//未选中circle paint
+    private Paint mCircleStokePaint; //selected stroke circle
+    private Paint mTextPaint;//文本
 
-    private int bitMapHeight, bitMapWidth;
+    private int mBitMapHeight, mBitMapWidth;
 
     private Path mDashPath;//虚线path
     private List<MilestoneStatus> mMilestoneStatusList;
-    private final Rect textBounds = new Rect();
-    private DashPathEffect dashPathEffect = new DashPathEffect(new float[]{8, 12}, 0);
-    private List<Bitmap> iconList = new ArrayList<>(3);
+    private String[] mStatusLists;
+    private final Rect mTextBounds = new Rect();
+    private DashPathEffect mDashPathEffect = new DashPathEffect(new float[]{8, 12}, 0);
+    private List<Bitmap> mIconList = new ArrayList<>(3);
 
-    private OnClickListener onClickListener;
-    private ObjectAnimator checkAnimator;
+    private OnClickListener mClickListener;
+    private ObjectAnimator mCheckAnimator;
 
     public ProgressbarIndicator(Context context) {
         this(context, null);
@@ -114,34 +114,35 @@ public class ProgressbarIndicator extends View {
 
         initAttributes(context, attributeSet);
 
-        linePaint = new Paint();
-        linePaint.setStrokeCap(Paint.Cap.ROUND);
-        linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setAntiAlias(true);
-//        linePaint.setDither(true);
+        mLinePaint = new Paint();
+        mLinePaint.setStrokeCap(Paint.Cap.ROUND);
+        mLinePaint.setStyle(Paint.Style.STROKE);
+        mLinePaint.setAntiAlias(true);
 
-        circlePaint = new Paint();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setStyle(Paint.Style.FILL);
+        mCirclePaint = new Paint();
+        mCirclePaint.setAntiAlias(true);
+        mCirclePaint.setStyle(Paint.Style.FILL);
 
-        pStoke = new Paint();
-        pStoke.setStyle(Paint.Style.STROKE);
-        pStoke.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mCircleStokePaint = new Paint();
+        mCircleStokePaint.setStyle(Paint.Style.STROKE);
+        mCircleStokePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
-        textPaint = new Paint();
-        textPaint.setAntiAlias(true);
-        textPaint.setStyle(Paint.Style.FILL);
+        mTextPaint = new Paint();
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setStyle(Paint.Style.FILL);
 
         mDashPath = new Path();
 
         Bitmap icUnOpen = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progressbar_unopen);
         Bitmap icInProgress = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progressbar_inprocess);
         Bitmap icComplete = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progressbar_complete);
-        bitMapHeight = icUnOpen.getHeight();
-        bitMapWidth = icUnOpen.getWidth();
-        iconList.add(icUnOpen);
-        iconList.add(icInProgress);
-        iconList.add(icComplete);
+        mBitMapHeight = icUnOpen.getHeight();
+        mBitMapWidth = icUnOpen.getWidth();
+        mIconList.add(icUnOpen);
+        mIconList.add(icInProgress);
+        mIconList.add(icComplete);
+
+        mStatusLists = getContext().getResources().getStringArray(R.array.project_progressbar_state);
     }
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
@@ -151,21 +152,21 @@ public class ProgressbarIndicator extends View {
         }
 
         try {
-            radius = (int) attr.getDimension(R.styleable.ProgressbarIndicator_piRadius, dip2px(context, DEFAULT_STEP_RADIUS));
-            stepsCount = attr.getInt(R.styleable.ProgressbarIndicator_piStepCount, DEFAULT_STEP_COUNT);
-            stepLineColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepLineColor, ContextCompat.getColor(context, DEFAULT_LINE_COLOR));
-            stepLineDoneColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepLineDoneColor, ContextCompat.getColor(context, DEFAULT_LINE_DONE_COLOR));
-            circleUnOpenColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepUnOpenCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_UNOPEN_COLOR));
-            circleInProgressColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepInProgressCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_INPROGRESS_COLOR));
-            circleCompleteColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepCompleteCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_COMPLETE_COLOR));
-            circleUnOpenSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepUnOpenSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_UNOPEN_SELECTED_COLOR));
-            circleInProgressSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepInProgressSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_INPROGRESS_SELECTED_COLOR));
-            circleCompleteSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepCompleteSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_COMPLETE_SELECTED_COLOR));
-            textColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepTextColor, ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
-            strokeCircleWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepCircleStrokeWidth, dip2px(context, DEFAULT_CIRCLE_STOKE_WIDTH));
-            textSize = attr.getDimension(R.styleable.ProgressbarIndicator_piStepTextSize, sp2px(context, DEFAULT_TEXT_SIZE));
-            strokeLineWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepLineStrokeWidth, dip2px(context, DEFAULT_LINE_STOKE_WIDTH));
-            strokeAnimCircleWidth = strokeCircleWidth;
+            mRadius = (int) attr.getDimension(R.styleable.ProgressbarIndicator_piRadius, dip2px(context, DEFAULT_STEP_RADIUS));
+            mStepsCount = attr.getInt(R.styleable.ProgressbarIndicator_piStepCount, DEFAULT_STEP_COUNT);
+            mStepLineColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepLineColor, ContextCompat.getColor(context, DEFAULT_LINE_COLOR));
+            mStepLineDoneColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepLineDoneColor, ContextCompat.getColor(context, DEFAULT_LINE_DONE_COLOR));
+            mCircleUnOpenColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepUnOpenCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_UNOPEN_COLOR));
+            mCircleInProgressColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepInProgressCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_INPROGRESS_COLOR));
+            mCircleCompleteColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepCompleteCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_COMPLETE_COLOR));
+            mCircleUnOpenSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepUnOpenSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_UNOPEN_SELECTED_COLOR));
+            mCircleInProgressSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepInProgressSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_INPROGRESS_SELECTED_COLOR));
+            mCircleCompleteSelectedColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepCompleteSelectedCircleColor, ContextCompat.getColor(context, DEFAULT_CIRCLE_COMPLETE_SELECTED_COLOR));
+            mTextColor = attr.getColor(R.styleable.ProgressbarIndicator_piStepTextColor, ContextCompat.getColor(context, DEFAULT_TEXT_COLOR));
+            mStrokeCircleWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepCircleStrokeWidth, dip2px(context, DEFAULT_CIRCLE_STOKE_WIDTH));
+            mTextSize = attr.getDimension(R.styleable.ProgressbarIndicator_piStepTextSize, sp2px(context, DEFAULT_TEXT_SIZE));
+            mStrokeLineWidth = attr.getDimension(R.styleable.ProgressbarIndicator_piStepLineStrokeWidth, dip2px(context, DEFAULT_LINE_STOKE_WIDTH));
+            mStrokeAnimCircleWidth = mStrokeCircleWidth;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -176,21 +177,21 @@ public class ProgressbarIndicator extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        radius = (int) bitMapHeight / 2;
-        setMeasuredDimension(widthMeasureSpec, radius * 5);
-        centerY = radius * 2;
-        startX = radius * 2;
-        endX = getWidth() - (radius * 2);
-        stepDistance = (endX - startX) / (stepsCount - 1);
+        mRadius = mBitMapHeight / 2;
+        setMeasuredDimension(widthMeasureSpec, mRadius * 5);
+        mCenterY = mRadius * 2;
+        mStartX = mRadius * 2;
+        mEndX = getWidth() - (mRadius * 2);
+        mStepDistance = (mEndX - mStartX) / (mStepsCount - 1);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        centerY = radius * 2;
-        startX = radius * 2;
-        endX = getWidth() - (radius * 2);
-        stepDistance = (endX - startX) / (stepsCount - 1);
+        mCenterY = mRadius * 2;
+        mStartX = mRadius * 2;
+        mEndX = getWidth() - (mRadius * 2);
+        mStepDistance = (mEndX - mStartX) / (mStepsCount - 1);
         invalidate();
     }
 
@@ -206,13 +207,13 @@ public class ProgressbarIndicator extends View {
     }
 
     public void setStepsCount(int stepsCount, List<MilestoneStatus> milestoneStatusList) {
-        this.stepsCount = stepsCount;
+        this.mStepsCount = stepsCount;
         this.mMilestoneStatusList = milestoneStatusList;
         invalidate();
     }
 
-    private void setCurrentStepPosition(int currentStepPosition) {
-        this.currentStepPosition = currentStepPosition;
+    private void setmCurrentStepPosition(int mCurrentStepPosition) {
+        this.mCurrentStepPosition = mCurrentStepPosition;
 //        setCheckedAnimation();
         invalidate();
     }
@@ -222,20 +223,20 @@ public class ProgressbarIndicator extends View {
     }
 
     public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+        this.mClickListener = onClickListener;
     }
 
-    public void setCurrentStatus(int currentStatus) {
-        this.currentStatus = currentStatus;
-        this.currentStepPosition = this.currentStatus;
+    public void setmCurrentStatus(int mCurrentStatus) {
+        this.mCurrentStatus = mCurrentStatus;
+        this.mCurrentStepPosition = this.mCurrentStatus;
         invalidate();
     }
 
     private void setCheckedAnimation() {
-        checkAnimator = ObjectAnimator.ofFloat(ProgressbarIndicator.this, "strokeAnimCircleWidth", 0f, strokeCircleWidth * 1.4f, strokeCircleWidth);
-        checkAnimator.setDuration(500);
-        checkAnimator.setInterpolator(new BounceInterpolator());
-        checkAnimator.start();
+        mCheckAnimator = ObjectAnimator.ofFloat(ProgressbarIndicator.this, "strokeAnimCircleWidth", 0f, mStrokeCircleWidth * 1.4f, mStrokeCircleWidth);
+        mCheckAnimator.setDuration(500);
+        mCheckAnimator.setInterpolator(new BounceInterpolator());
+        mCheckAnimator.start();
     }
 
     public void setupWithViewPager(@NonNull ViewPager viewPager, List<MilestoneStatus> milestoneStatusList) {
@@ -250,8 +251,8 @@ public class ProgressbarIndicator extends View {
         // 2.setCurrentPosition
         if (pagerAdapter.getCount() > 0) {
             final int currentItem = viewPager.getCurrentItem();
-            if (currentStepPosition != currentItem) {
-                currentStepPosition = currentItem;
+            if (mCurrentStepPosition != currentItem) {
+                mCurrentStepPosition = currentItem;
             }
         }
 
@@ -263,116 +264,224 @@ public class ProgressbarIndicator extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
+        if (mStepsCount < 1) {
             setVisibility(GONE);
             return;
         }
         super.onDraw(canvas);
-        int pointX = startX;
 
-        /** draw Line */
-        linePaint.setStrokeWidth(strokeLineWidth);
-        linePaint.setColor(stepLineColor);
-        mDashPath.moveTo(pointX, centerY);
-        mDashPath.lineTo(getWidth() - startX, centerY);
-        linePaint.setPathEffect(dashPathEffect);
-        canvas.drawPath(mDashPath, linePaint);
+        drawLines(canvas);
 
+        drawCircles(canvas);
 
-          /*draw circles*/
-        pointX = startX;
-        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
-            int radius = this.radius + dip2px(getContext(), 3);
-            if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
-                circlePaint.setColor(circleCompleteColor);
-                canvas.drawCircle(pointX, centerY, radius, circlePaint);
-            } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
-                if (currentStatus == 0) {
-                    circlePaint.setColor(circleUnOpenColor);
-                    canvas.drawCircle(pointX, centerY, radius, circlePaint);
-                } else {
-                    circlePaint.setColor(circleInProgressColor);
-                    canvas.drawCircle(pointX, centerY, radius, circlePaint);
-                }
-            } else {
-                circlePaint.setColor(circleUnOpenColor);
-                canvas.drawCircle(pointX, centerY, radius, circlePaint);
-            }
-            pointX += stepDistance;
-        }
+        drawBitmaps(canvas);
 
-        /*draw bitmap*/
-        pointX = startX;
-        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
-            if (iconList != null && iconList.size() == 3) {
-                if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
-                    canvas.drawBitmap(iconList.get(2), pointX - iconList.get(2).getWidth() / 2, centerY - iconList.get(2).getHeight() / 2, null);
-                } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
-                    if (currentStatus == 0) {
-                        canvas.drawBitmap(iconList.get(0), pointX - iconList.get(0).getWidth() / 2, centerY - iconList.get(0).getHeight() / 2, null);
+        drawSelectedCircles(canvas);
+
+        drawTexts(canvas);
+
+    }
+
+    /**
+     * draw Lines
+     */
+    private void drawLines(Canvas canvas) {
+        int pointX = mStartX;
+        mLinePaint.setStrokeWidth(mStrokeLineWidth);
+        mLinePaint.setColor(mStepLineColor);
+        mDashPath.moveTo(pointX, mCenterY);
+        mDashPath.lineTo(getWidth() - mStartX, mCenterY);
+        mLinePaint.setPathEffect(mDashPathEffect);
+        canvas.drawPath(mDashPath, mLinePaint);
+    }
+
+    /*
+    *draw circles
+    * */
+    private void drawCircles(Canvas canvas) {
+        int pointX = mStartX;
+
+        int radius = this.mRadius + dip2px(getContext(), 3);
+        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
+            for (int i = 0; i < mStepsCount; i++) {
+                if (i < mCurrentStatus) {
+                    mCirclePaint.setColor(mCircleCompleteColor);
+                    canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
+                } else if (i == mCurrentStatus) {
+                    if (mCurrentStatus == 0) {
+                        mCirclePaint.setColor(mCircleUnOpenColor);
+                        canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                     } else {
-                        canvas.drawBitmap(iconList.get(1), pointX - iconList.get(1).getWidth() / 2, centerY - iconList.get(1).getHeight() / 2, null);
+                        mCirclePaint.setColor(mCircleInProgressColor);
+                        canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                     }
                 } else {
-                    canvas.drawBitmap(iconList.get(0), pointX - iconList.get(0).getWidth() / 2, centerY - iconList.get(0).getHeight() / 2, null);
+                    mCirclePaint.setColor(mCircleUnOpenColor);
+                    canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                 }
-                pointX += stepDistance;
+                pointX += mStepDistance;
             }
-        }
-
-        /*draw selected circle*/
-        pointX = startX;
-        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
-            int radius = this.radius + dip2px(getContext(), 3);
-            if (i == currentStepPosition) {
+        } else {
+            for (int i = 0; i < mMilestoneStatusList.size(); i++) {
                 if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
-                    pStoke.setColor(circleCompleteSelectedColor);
+                    mCirclePaint.setColor(mCircleCompleteColor);
+                    canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                 } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
-                    if (currentStatus == 0) {
-                        pStoke.setColor(circleUnOpenSelectedColor);
+                    if (mCurrentStatus == 0) {
+                        mCirclePaint.setColor(mCircleUnOpenColor);
+                        canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                     } else {
-                        pStoke.setColor(circleInProgressSelectedColor);
+                        mCirclePaint.setColor(mCircleInProgressColor);
+                        canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                     }
                 } else {
-                    pStoke.setColor(circleUnOpenSelectedColor);
+                    mCirclePaint.setColor(mCircleUnOpenColor);
+                    canvas.drawCircle(pointX, mCenterY, radius, mCirclePaint);
                 }
-                //draw current step
-                pStoke.setStrokeWidth(Math.round(strokeAnimCircleWidth));
-                canvas.drawCircle(pointX, centerY, radius + dip2px(getContext(), 2), pStoke);
+                pointX += mStepDistance;
             }
-            pointX += stepDistance;
-        }
-
-        /*draw texts*/
-        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
-            String status = mMilestoneStatusList.get(i).getName();
-            textPaint.setColor(textColor);
-            textPaint.setTextSize(textSize);
-            textPaint.getTextBounds(status, 0, status.length(), textBounds);
-            int textStartX = (Math.abs(radius - textBounds.width() / 2) + radius) + stepDistance * i;
-            int textStartY = radius * 4 + (textBounds.height() / 2);
-            canvas.drawText(status, textStartX, textStartY, textPaint);
         }
     }
 
+    /*
+    *draw bitmap
+    * */
+    private void drawBitmaps(Canvas canvas) {
+        int pointX = mStartX;
+
+        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
+            for (int i = 0; i < mStepsCount; i++) {
+                if (mIconList != null && mIconList.size() == 3) {
+                    if (i < mCurrentStatus) {
+                        canvas.drawBitmap(mIconList.get(2), pointX - mIconList.get(2).getWidth() / 2, mCenterY - mIconList.get(2).getHeight() / 2, null);
+                    } else if (i == mCurrentStatus) {
+                        if (mCurrentStatus == 0) {
+                            canvas.drawBitmap(mIconList.get(0), pointX - mIconList.get(0).getWidth() / 2, mCenterY - mIconList.get(0).getHeight() / 2, null);
+                        } else {
+                            canvas.drawBitmap(mIconList.get(1), pointX - mIconList.get(1).getWidth() / 2, mCenterY - mIconList.get(1).getHeight() / 2, null);
+                        }
+                    } else {
+                        canvas.drawBitmap(mIconList.get(0), pointX - mIconList.get(0).getWidth() / 2, mCenterY - mIconList.get(0).getHeight() / 2, null);
+                    }
+                    pointX += mStepDistance;
+                }
+            }
+        } else {
+            for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+                if (mIconList != null && mIconList.size() == 3) {
+                    if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
+                        canvas.drawBitmap(mIconList.get(2), pointX - mIconList.get(2).getWidth() / 2, mCenterY - mIconList.get(2).getHeight() / 2, null);
+                    } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
+                        if (mCurrentStatus == 0) {
+                            canvas.drawBitmap(mIconList.get(0), pointX - mIconList.get(0).getWidth() / 2, mCenterY - mIconList.get(0).getHeight() / 2, null);
+                        } else {
+                            canvas.drawBitmap(mIconList.get(1), pointX - mIconList.get(1).getWidth() / 2, mCenterY - mIconList.get(1).getHeight() / 2, null);
+                        }
+                    } else {
+                        canvas.drawBitmap(mIconList.get(0), pointX - mIconList.get(0).getWidth() / 2, mCenterY - mIconList.get(0).getHeight() / 2, null);
+                    }
+                    pointX += mStepDistance;
+                }
+            }
+        }
+    }
+
+    /*
+    *draw selected circle
+    * */
+    private void drawSelectedCircles(Canvas canvas) {
+        int pointX = mStartX;
+
+        int radius = this.mRadius + dip2px(getContext(), 3);
+        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
+            for (int i = 0; i < mStepsCount; i++) {
+                if (i == mCurrentStepPosition) {
+                    if (i < mCurrentStatus) {
+                        mCircleStokePaint.setColor(mCircleCompleteSelectedColor);
+                    } else if (i == mCurrentStatus) {
+                        if (mCurrentStatus == 0) {
+                            mCircleStokePaint.setColor(mCircleUnOpenSelectedColor);
+                        } else {
+                            mCircleStokePaint.setColor(mCircleInProgressSelectedColor);
+                        }
+                    } else {
+                        mCircleStokePaint.setColor(mCircleUnOpenSelectedColor);
+                    }
+                    //draw current step
+                    mCircleStokePaint.setStrokeWidth(Math.round(mStrokeAnimCircleWidth));
+                    canvas.drawCircle(pointX, mCenterY, radius + dip2px(getContext(), 2), mCircleStokePaint);
+                }
+                pointX += mStepDistance;
+            }
+        } else {
+            for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+                if (i == mCurrentStepPosition) {
+                    if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
+                        mCircleStokePaint.setColor(mCircleCompleteSelectedColor);
+                    } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
+                        if (mCurrentStatus == 0) {
+                            mCircleStokePaint.setColor(mCircleUnOpenSelectedColor);
+                        } else {
+                            mCircleStokePaint.setColor(mCircleInProgressSelectedColor);
+                        }
+                    } else {
+                        mCircleStokePaint.setColor(mCircleUnOpenSelectedColor);
+                    }
+                    //draw current step
+                    mCircleStokePaint.setStrokeWidth(Math.round(mStrokeAnimCircleWidth));
+                    canvas.drawCircle(pointX, mCenterY, radius + dip2px(getContext(), 2), mCircleStokePaint);
+                }
+                pointX += mStepDistance;
+            }
+        }
+    }
+
+    /*
+    *draw texts
+    * */
+    private void drawTexts(Canvas canvas) {
+        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
+            if (mStatusLists != null && mStatusLists.length > 0) {
+                for (int i = 0; i < mStepsCount; i++) {
+                    String status = mStatusLists[i];
+                    mTextPaint.setColor(mTextColor);
+                    mTextPaint.setTextSize(mTextSize);
+                    mTextPaint.getTextBounds(status, 0, status.length(), mTextBounds);
+                    int textStartX = (Math.abs(mRadius - mTextBounds.width() / 2) + mRadius) + mStepDistance * i;
+                    int textStartY = mRadius * 4 + (mTextBounds.height() / 2);
+                    canvas.drawText(status, textStartX, textStartY, mTextPaint);
+                }
+            }
+        } else {
+            for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+                String status = mMilestoneStatusList.get(i).getName();
+                mTextPaint.setColor(mTextColor);
+                mTextPaint.setTextSize(mTextSize);
+                mTextPaint.getTextBounds(status, 0, status.length(), mTextBounds);
+                int textStartX = (Math.abs(mRadius - mTextBounds.width() / 2) + mRadius) + mStepDistance * i;
+                int textStartY = mRadius * 4 + (mTextBounds.height() / 2);
+                canvas.drawText(status, textStartX, textStartY, mTextPaint);
+            }
+        }
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int pointX = startX;
+        int pointX = mStartX;
         int xTouch;
         int yTouch;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 xTouch = (int) event.getX(0);
                 yTouch = (int) event.getY(0);
-                for (int i = 0; i < stepsCount; i++) {
-                    if (Math.abs(xTouch - pointX) < radius + 5 && Math.abs(yTouch - centerY) < radius + 5) {
+                for (int i = 0; i < mStepsCount; i++) {
+                    if (Math.abs(xTouch - pointX) < mRadius + 5 && Math.abs(yTouch - mCenterY) < mRadius + 5) {
 
-                        if (onClickListener != null) {
-                            onClickListener.onClick(i);
+                        if (mClickListener != null) {
+                            mClickListener.onClick(i);
                         }
                     }
-                    pointX = pointX + stepDistance;
+                    pointX = pointX + mStepDistance;
                 }
                 break;
         }
@@ -393,7 +502,7 @@ public class ProgressbarIndicator extends View {
 
         @Override
         public void onPageSelected(int position) {
-            progressbarIndicator.setCurrentStepPosition(position);
+            progressbarIndicator.setmCurrentStepPosition(position);
         }
 
         @Override
@@ -419,22 +528,22 @@ public class ProgressbarIndicator extends View {
     protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
-        savedState.radius = this.radius;
-        savedState.stepsCount = this.stepsCount;
-        savedState.currentStepPosition = this.currentStepPosition;
-        savedState.currentStatus = this.currentStatus;
-        savedState.stepLineColor = this.stepLineColor;
-        savedState.stepLineDoneColor = this.stepLineDoneColor;
-        savedState.circleUnOpenColor = this.circleUnOpenColor;
-        savedState.circleCompleteColor = this.circleCompleteColor;
-        savedState.circleInProgressColor = this.circleInProgressColor;
-        savedState.circleUnOpenSelectedColor = this.circleUnOpenSelectedColor;
-        savedState.circleInProgressSelectedColor = this.circleInProgressSelectedColor;
-        savedState.circleCompleteSelectedColor = this.circleCompleteSelectedColor;
-        savedState.textColor = this.textColor;
-        savedState.textSize = this.textSize;
-        savedState.strokeCircleWidth = this.strokeCircleWidth;
-        savedState.strokeLineWidth = this.strokeLineWidth;
+        savedState.mRadius = this.mRadius;
+        savedState.mStepsCount = this.mStepsCount;
+        savedState.mCurrentStepPosition = this.mCurrentStepPosition;
+        savedState.mCurrentStatus = this.mCurrentStatus;
+        savedState.mStepLineColor = this.mStepLineColor;
+        savedState.mStepLineDoneColor = this.mStepLineDoneColor;
+        savedState.mCircleUnOpenColor = this.mCircleUnOpenColor;
+        savedState.mCircleCompleteColor = this.mCircleCompleteColor;
+        savedState.mCircleInProgressColor = this.mCircleInProgressColor;
+        savedState.mCircleUnOpenSelectedColor = this.mCircleUnOpenSelectedColor;
+        savedState.mCircleInProgressSelectedColor = this.mCircleInProgressSelectedColor;
+        savedState.mCircleCompleteSelectedColor = this.mCircleCompleteSelectedColor;
+        savedState.mTextColor = this.mTextColor;
+        savedState.mTextSize = this.mTextSize;
+        savedState.mStrokeCircleWidth = this.mStrokeCircleWidth;
+        savedState.mStrokeLineWidth = this.mStrokeLineWidth;
         return super.onSaveInstanceState();
     }
 
@@ -446,43 +555,43 @@ public class ProgressbarIndicator extends View {
         }
         SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
-        this.radius = savedState.radius;
-        this.stepsCount = savedState.stepsCount;
-        this.currentStepPosition = savedState.currentStepPosition;
-        this.currentStatus = savedState.currentStatus;
-        this.stepLineColor = savedState.stepLineColor;
-        this.stepLineDoneColor = savedState.stepLineDoneColor;
-        this.circleUnOpenColor = savedState.circleUnOpenColor;
-        this.circleCompleteColor = savedState.circleCompleteColor;
-        this.circleInProgressColor = savedState.circleInProgressColor;
-        this.circleUnOpenSelectedColor = savedState.circleUnOpenSelectedColor;
-        this.circleInProgressSelectedColor = savedState.circleInProgressSelectedColor;
-        this.circleCompleteSelectedColor = savedState.circleCompleteSelectedColor;
-        this.textColor = savedState.textColor;
-        this.textSize = savedState.textSize;
-        this.strokeCircleWidth = savedState.strokeCircleWidth;
-        this.strokeLineWidth = savedState.strokeLineWidth;
+        this.mRadius = savedState.mRadius;
+        this.mStepsCount = savedState.mStepsCount;
+        this.mCurrentStepPosition = savedState.mCurrentStepPosition;
+        this.mCurrentStatus = savedState.mCurrentStatus;
+        this.mStepLineColor = savedState.mStepLineColor;
+        this.mStepLineDoneColor = savedState.mStepLineDoneColor;
+        this.mCircleUnOpenColor = savedState.mCircleUnOpenColor;
+        this.mCircleCompleteColor = savedState.mCircleCompleteColor;
+        this.mCircleInProgressColor = savedState.mCircleInProgressColor;
+        this.mCircleUnOpenSelectedColor = savedState.mCircleUnOpenSelectedColor;
+        this.mCircleInProgressSelectedColor = savedState.mCircleInProgressSelectedColor;
+        this.mCircleCompleteSelectedColor = savedState.mCircleCompleteSelectedColor;
+        this.mTextColor = savedState.mTextColor;
+        this.mTextSize = savedState.mTextSize;
+        this.mStrokeCircleWidth = savedState.mStrokeCircleWidth;
+        this.mStrokeLineWidth = savedState.mStrokeLineWidth;
 
     }
 
     static class SavedState extends BaseSavedState {
 
-        private int radius;
-        private int stepsCount;
-        private int currentStepPosition;
-        private int currentStatus;
-        private int stepLineColor;
-        private int stepLineDoneColor;
-        private int circleUnOpenColor;
-        private int circleCompleteColor;
-        private int circleInProgressColor;
-        private int circleUnOpenSelectedColor;
-        private int circleInProgressSelectedColor;
-        private int circleCompleteSelectedColor;
-        private int textColor;
-        private float textSize;
-        private float strokeCircleWidth;
-        private float strokeLineWidth;
+        private int mRadius;
+        private int mStepsCount;
+        private int mCurrentStepPosition;
+        private int mCurrentStatus;
+        private int mStepLineColor;
+        private int mStepLineDoneColor;
+        private int mCircleUnOpenColor;
+        private int mCircleCompleteColor;
+        private int mCircleInProgressColor;
+        private int mCircleUnOpenSelectedColor;
+        private int mCircleInProgressSelectedColor;
+        private int mCircleCompleteSelectedColor;
+        private int mTextColor;
+        private float mTextSize;
+        private float mStrokeCircleWidth;
+        private float mStrokeLineWidth;
 
         SavedState(Parcelable superState) {
             super(superState);
@@ -490,43 +599,43 @@ public class ProgressbarIndicator extends View {
 
         private SavedState(Parcel in) {
             super(in);
-            radius = in.readInt();
-            stepsCount = in.readInt();
-            currentStepPosition = in.readInt();
-            currentStatus = in.readInt();
-            stepLineColor = in.readInt();
-            stepLineDoneColor = in.readInt();
-            circleUnOpenColor = in.readInt();
-            circleCompleteColor = in.readInt();
-            circleInProgressColor = in.readInt();
-            circleUnOpenSelectedColor = in.readInt();
-            circleInProgressSelectedColor = in.readInt();
-            circleCompleteSelectedColor = in.readInt();
-            textColor = in.readInt();
-            textSize = in.readFloat();
-            strokeCircleWidth = in.readFloat();
-            strokeLineWidth = in.readFloat();
+            mRadius = in.readInt();
+            mStepsCount = in.readInt();
+            mCurrentStepPosition = in.readInt();
+            mCurrentStatus = in.readInt();
+            mStepLineColor = in.readInt();
+            mStepLineDoneColor = in.readInt();
+            mCircleUnOpenColor = in.readInt();
+            mCircleCompleteColor = in.readInt();
+            mCircleInProgressColor = in.readInt();
+            mCircleUnOpenSelectedColor = in.readInt();
+            mCircleInProgressSelectedColor = in.readInt();
+            mCircleCompleteSelectedColor = in.readInt();
+            mTextColor = in.readInt();
+            mTextSize = in.readFloat();
+            mStrokeCircleWidth = in.readFloat();
+            mStrokeLineWidth = in.readFloat();
         }
 
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeInt(radius);
-            out.writeInt(stepsCount);
-            out.writeInt(currentStepPosition);
-            out.writeInt(currentStatus);
-            out.writeInt(stepLineColor);
-            out.writeInt(stepLineDoneColor);
-            out.writeInt(circleUnOpenColor);
-            out.writeInt(circleCompleteColor);
-            out.writeInt(circleInProgressColor);
-            out.writeInt(circleUnOpenSelectedColor);
-            out.writeInt(circleInProgressSelectedColor);
-            out.writeInt(circleCompleteSelectedColor);
-            out.writeInt(textColor);
-            out.writeFloat(textSize);
-            out.writeFloat(strokeCircleWidth);
-            out.writeFloat(strokeLineWidth);
+            out.writeInt(mRadius);
+            out.writeInt(mStepsCount);
+            out.writeInt(mCurrentStepPosition);
+            out.writeInt(mCurrentStatus);
+            out.writeInt(mStepLineColor);
+            out.writeInt(mStepLineDoneColor);
+            out.writeInt(mCircleUnOpenColor);
+            out.writeInt(mCircleCompleteColor);
+            out.writeInt(mCircleInProgressColor);
+            out.writeInt(mCircleUnOpenSelectedColor);
+            out.writeInt(mCircleInProgressSelectedColor);
+            out.writeInt(mCircleCompleteSelectedColor);
+            out.writeInt(mTextColor);
+            out.writeFloat(mTextSize);
+            out.writeFloat(mStrokeCircleWidth);
+            out.writeFloat(mStrokeLineWidth);
         }
 
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {

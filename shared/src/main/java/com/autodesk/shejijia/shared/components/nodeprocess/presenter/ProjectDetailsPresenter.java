@@ -106,7 +106,6 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
         return false;
     }
 
-
     private void handleProjectInfo(ProjectInfo projectInfo) {
         /*handle planInfo data*/
         if (projectInfo.getPlan() != null) {
@@ -257,7 +256,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
 
             @Override
             public void onError(ResponseError error) {
-                LogUtils.e("getUnreadMsgCount error " + error == null ? "null" : error.getMessage());
+                LogUtils.e("getUnreadMsgCount error " + error.getMessage());
             }
         });
     }

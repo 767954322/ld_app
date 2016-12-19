@@ -164,7 +164,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
                 mContentViewPager.setAdapter(mFragmentPagerAdapter);
                 //progressbar indicator( must first have viewpager adapter)
                 mProgressBarIndicator.setupWithViewPager(mContentViewPager,milestoneStatusList);
-                mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
+                mProgressBarIndicator.setmCurrentStatus(currentMilestonePosition);
                 mContentViewPager.setCurrentItem(currentMilestonePosition);
             }
         } else {

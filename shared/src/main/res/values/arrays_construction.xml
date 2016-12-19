@@ -5,7 +5,7 @@
     <string-array name="project_progressbar_state">
         <item>开工</item>
         <item>隐蔽</item>
-        <item>防水</item>
+        <item>闭水</item>
         <item>中期</item>
         <item>基础</item>
         <item>竣工</item>
