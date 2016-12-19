@@ -4,16 +4,37 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+
+import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.datamodel.PersonalCenterRemoteDataSource;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -30,12 +51,6 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
         this.mContext = mContext;
         this.mPersonalCenterContract = (PersonalCenterContract.View) mContext;
         this.mPersonalCenterRemoteDataSource = PersonalCenterRemoteDataSource.getInstance();
-    }
-
-    @Override
-    public void uploadPersonalHeadPicture(File file) {
-        String acsMemberId = UserInfoUtils.getAcsMemberId(mContext);
-        mPersonalCenterRemoteDataSource.uploadPersonalHeadPicture(file,acsMemberId);
     }
 
     @Override
@@ -103,5 +118,59 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
         int randomNumber = Math.abs(random.nextInt(100));
         return Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" +randomNumber+ "small.png");
 
+    }
+    @Override
+    public void uploadPersonalHeadPicture(){
+        if (mUritempFile != null) {
+            String path = mUritempFile.getPath();
+            mPersonalCenterContract.updatePersonalHeadPictureView("file:"+ path);
+
+            Bitmap bitmap = null;
+            File file;
+            try {
+                bitmap = BitmapFactory.decodeStream(mContext.getContentResolver().openInputStream(mUritempFile));
+                file = saveBitmap2File(mContext, "headpic.png", bitmap);
+                try {
+                    CustomProgress.show(mContext, "头像上传中...", false, null);
+                    mPersonalCenterRemoteDataSource.uploadPersonalHeadPicture(file);
+//                    mPersonalCenterContract.updatePersonalHeadPictureView(file);
+//                    putFile2Server(file);
+                } catch (Exception e) {
+                    CustomProgress.cancelDialog();
+                    e.printStackTrace();
+                }
+            } catch (FileNotFoundException e) {
+                ToastUtils.showLong((Activity)mContext, "找不到图片");
+                e.printStackTrace();
+            }
+            if (bitmap != null) {
+                bitmap.recycle();
+            }
+
+        }
+    }
+    /**
+     * bitmap 转为file 缓存文件
+     *
+     * @param context
+     * @param filename
+     * @param bitmap
+     * @return
+     */
+    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
+        File f = new File(context.getCacheDir(), filename);
+        try {
+            f.createNewFile();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
     }
 }

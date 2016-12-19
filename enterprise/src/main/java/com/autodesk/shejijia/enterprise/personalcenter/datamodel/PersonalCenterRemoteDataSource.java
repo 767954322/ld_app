@@ -44,7 +44,7 @@ public class PersonalCenterRemoteDataSource implements PersonalCenterDataSource 
     }
 
     @Override
-    public void uploadPersonalHeadPicture(File file,String acsMemberId) {
-        PersonalCenterHttpManagerImpl.getInstance().uploadPersonalHeadPicture(file,acsMemberId);
+    public void uploadPersonalHeadPicture(File file) {
+        PersonalCenterHttpManagerImpl.getInstance().uploadPersonalHeadPicture(file);
     }
 }

@@ -3,9 +3,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -42,8 +47,7 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-import com.pgyersdk.update.PgyUpdateManager;
-import java.io.File;
+
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener,PersonalCenterContract.View {
     private static final String FRAGMENT_TAG_TASK = "taskList";
@@ -67,6 +71,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     private PopupWindow mBottomPopUp;
     private String currentFragmentTag;
     private PersonalCenterContract.Presenter mPersonalCenterContract;
+//    private Uri uritempFile;
 
     @Override
     protected int getLayoutResId() {
@@ -107,7 +112,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         toolbarTitle.setOnClickListener(this);
         //pgy update register
         if (BuildConfig.DEBUG) {
-            PgyUpdateManager.register(this);
+//            PgyUpdateManager.register(this);
         }
     }
 
@@ -299,27 +304,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case CROP_SMALL_PICTURE_CODE:
-                Bitmap bitmap = null;
-                if (mPersonalCenterContract.getUritempFile() != null) {
-                    String path = mPersonalCenterContract.getUritempFile().getPath();
-                    updatePersonalHeadPictureView("file:"+ path);
-                    mBottomPopUp.dismiss();
-                    try {
-                        try {
-                            File file = new File(path);
-//                            File file = new File(new URI(mPersonalCenterContract.getUritempFile().toString()));
-                            mPersonalCenterContract.uploadPersonalHeadPicture(file);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mPersonalCenterContract.getUritempFile()));
-//                        mPersonalCenterContract.uploadPersonalHeadPicture(saveBitmap2File(this, "headpic.png", bitmap));
-
-                    }catch (Exception e) {
-                        ToastUtils.showLong(this,"找不到图片");
-                        e.printStackTrace();
-                    }
-                }
+                mPersonalCenterContract.uploadPersonalHeadPicture();
                 break;
             case CAMERA_INTENT_REQUEST_CODE://相机
                 mPersonalCenterContract.cropImageUri(mPersonalCenterContract.getUritempFile(), 300, 300, CROP_SMALL_PICTURE_CODE);
@@ -328,6 +313,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 break;
         }
     }
+
     @Override
     public void updatePersonalHeadPictureView(String avatar) {
         ImageUtils.loadImageRound(mHeadPicBtn,avatar);
@@ -369,7 +355,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
                 mBottomPopUp.dismiss();
             }
         });
-
         contentView.setFocusable(true);
         contentView.setFocusableInTouchMode(true);
         mBottomPopUp = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

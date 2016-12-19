@@ -1,14 +1,17 @@
 package com.autodesk.shejijia.enterprise.personalcenter.network;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.squareup.okhttp.Callback;
@@ -44,45 +47,49 @@ public class PersonalCenterHttpManagerImpl implements PersonalCenterHttpManager 
     }
 
     @Override
-    public void uploadPersonalHeadPicture(File file, String acsMemberId) {
+    public void uploadPersonalHeadPicture(File file, @NonNull OkJsonRequest.OKResponseCallback callback) {
         try {
-            putFile2Server(file, acsMemberId);
+            uploadFileToServer(file,callback);
         } catch (Exception e) {
             CustomProgress.cancelDialog();
             e.printStackTrace();
         }
     }
 
-    private void putFile2Server(File file, String acsMemberId) throws Exception {
+    public void uploadFileToServer(File file,final OkJsonRequest.OKResponseCallback callback) throws Exception {
         if (!file.exists() && file.length() <= 0) {
             return;
         }
         MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
         OkHttpClient okHttpClient = getOkHttpClient();
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        String xToken = null;
+        if (memberEntity != null) {
+            xToken = memberEntity.getHs_accesstoken();
+        }
         RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, file);
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
-        builder.addFormDataPart("data", file.getName(), fileBody);
-//        builder.addFormDataPart("fileName",file)
-//        builder.addFormDataPart("name",file)
-//        builder.addFormDataPart("data",)
-//        builder.addFormDataPart("type","image/png");
+        builder.addFormDataPart("file", file.getName(), fileBody);
 
         RequestBody reqBody = builder.build();
         com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
         reqBuilder.url(UrlConstants.URL_PUT_AMEND_DESIGNER_INFO_PHOTO);
-        reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + acsMemberId);
+        reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
         reqBuilder.put(reqBody);
+
         okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
             @Override
             public void onFailure(com.squareup.okhttp.Request request, IOException e) {
-                System.out.print("001");
+//                callback.onErrorResponse();
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                } else {
-                }
+                CustomProgress.cancelDialog();
+//                callback.onResponse();
+//                response.isSuccessful()
             }
         });
     }

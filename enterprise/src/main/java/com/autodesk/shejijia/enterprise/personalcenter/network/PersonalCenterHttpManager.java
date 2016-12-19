@@ -12,5 +12,5 @@ import java.io.File;
 
 public interface PersonalCenterHttpManager {
     void getPersonalHeadPicPicture(String requestTag,String acsMemberId,@NonNull OkJsonRequest.OKResponseCallback callback);
-    void uploadPersonalHeadPicture(File file,String acsMemberId);
+    void uploadPersonalHeadPicture(File file,@NonNull OkJsonRequest.OKResponseCallback callback);
 }
