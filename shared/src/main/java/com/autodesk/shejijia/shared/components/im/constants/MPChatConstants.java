@@ -11,4 +11,5 @@ public class MPChatConstants
     public static final int MAX_AUDIO_RECORDING_DURATION = 60; //in second
 
     public static final String BUNDLE_VALUE_GROUP_CHAT_LIST = "group_chat_list";
+    public static final String BUNDLE_VALUE_GROUP_CHAT = "group_chat";
 }

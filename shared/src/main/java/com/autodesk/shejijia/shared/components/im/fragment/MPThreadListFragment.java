@@ -29,6 +29,7 @@ import com.autodesk.shejijia.shared.components.im.activity.ImageChatRoomActivity
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
 import com.autodesk.shejijia.shared.components.im.adapter.ThreadListAdapter;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntityInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
@@ -218,6 +219,9 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, user.user_id);
         intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, mMemberId);
         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+        if (mChatListType.equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT_LIST)){
+            intent.putExtra(ChatRoomActivity.CHAT_TYPE,MPChatConstants.BUNDLE_VALUE_GROUP_CHAT);
+        }
 
         int assetId = MPChatUtility.getAssetIdFromThread(thread);
         intent.putExtra(ChatRoomActivity.ASSET_ID, String.valueOf(assetId));

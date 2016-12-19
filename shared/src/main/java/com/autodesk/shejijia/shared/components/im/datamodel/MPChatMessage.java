@@ -17,10 +17,13 @@ public class MPChatMessage
     public String recipient_screen_name;
     public String message_id;
     public String read_time;
+    public String recipient_box;
+    public String sender_box;
     public eMPChatMessageType message_media_type;
     public String sender_profile_image;
     public String recipient_profile_image;
     public String command;
+    public String in_reply_to;
     public int media_file_id;
 
     public enum eMPChatMessageType
@@ -97,10 +100,13 @@ public class MPChatMessage
             msg.recipient_screen_name = jObject.optString("recipient_screen_name");
             msg.message_id = jObject.optString("message_id");
             msg.read_time = jObject.optString("read_time");
+            msg.recipient_box = jObject.optString("recipient_box");
+            msg.sender_box = jObject.optString("sender_box");
             msg.message_media_type = MPChatMessage.toMPChatMessageType(jObject.optString("message_media_type"));
             msg.sender_profile_image = jObject.optString("sender_profile_image");
             msg.recipient_profile_image = jObject.optString("recipient_profile_image");
             msg.command = jObject.optString("command");
+            msg.in_reply_to = jObject.optString("in_reply_to");
         }
         catch(JSONException e)
         {

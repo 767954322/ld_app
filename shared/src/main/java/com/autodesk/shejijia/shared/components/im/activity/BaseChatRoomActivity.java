@@ -61,6 +61,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     public static final String PROJECT_INFO = "project_info";
     public static final String MEDIA_TYPE = "media_type";
     public static final String PROJECT_TITLE = "project_title";
+    public static final String CHAT_TYPE = "chat_type";
 
     public interface CallBack {
         void call();
@@ -178,6 +179,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         mProjectInfo = bundle.getParcelable(PROJECT_INFO);
         mMediaType = bundle.getString(MEDIA_TYPE);
         mProjectTtile = bundle.getString(PROJECT_TITLE);
+        mChatType = bundle.getString(CHAT_TYPE);
     }
 
     protected void putInstanceStateToBundle(Bundle bundle) {
@@ -191,6 +193,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         bundle.putParcelable(PROJECT_INFO, mProjectInfo);
         bundle.putString(MEDIA_TYPE, mMediaType);
         bundle.putString(PROJECT_TITLE,mProjectTtile);
+        bundle.putString(CHAT_TYPE,mChatType);
     }
 
 
@@ -219,6 +222,11 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             return mAcsMemberId.equalsIgnoreCase("" + msg.sender_member_id);
 
         return false;
+    }
+
+    @Override
+    public String getChatType() {
+        return mChatType;
     }
 
     @Override
@@ -722,7 +730,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected String mProjectTtile;
     protected MPChatProjectInfo mProjectInfo;
     protected String mMediaType;
-
+    protected String mChatType;
 
     IWorkflowDelegate mIWorkflowDelegate;
 

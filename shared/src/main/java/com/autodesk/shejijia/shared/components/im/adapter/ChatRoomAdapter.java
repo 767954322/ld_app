@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.im.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
+import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
@@ -64,6 +66,8 @@ public class ChatRoomAdapter extends BaseAdapter {
         boolean isDateChangeForIndex(int index);
 
         View getMessageCellOfListView(int index);
+
+        String getChatType();
     }
 
 
@@ -99,21 +103,20 @@ public class ChatRoomAdapter extends BaseAdapter {
         }
     }
 
-
+    @Override
     public int getCount() {
         return mListInterface.getMessageCount();
     }
 
-
+    @Override
     public MPChatMessage getItem(int position) {
         return mListInterface.getMessageForIndex(position);
     }
 
-
+    @Override
     public long getItemId(int position) {
         return position;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -136,12 +139,18 @@ public class ChatRoomAdapter extends BaseAdapter {
                 setupAudioMessage(message, position, convertView);
                 break;
             case eCOMMAND:
-                setupCommandMessage(message, position, convertView);
+                if (mListInterface.getChatType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT)){
+                    setGroupChatCommand(message, position, convertView);
+                }else {
+                    setupCommandMessage(message, position, convertView);
+                }
                 break;
             default:
         }
 
-        setDateAndTime(message, holder, position);
+        if (!mListInterface.getChatType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT)) {
+            setDateAndTime(message, holder, position);
+        }
 
         return convertView;
     }
@@ -188,11 +197,15 @@ public class ChatRoomAdapter extends BaseAdapter {
             break;
             case eCOMMAND: {
                 try {
-                    holder.userImageView = (ImageView) convertView.findViewById(R.id.user_avatar);
-                    holder.commandTextView = (TextView) convertView.findViewById(R.id.command_text);
-                    holder.timeTextView = (TextView) convertView.findViewById(R.id.send_time);
-                    holder.commandButton = (Button) convertView.findViewById(R.id.command_button);
-                    holder.dateTextView = (TextView) convertView.findViewById(R.id.date_text);
+                    if (mListInterface.getChatType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT)){
+                        holder.commandTextView = (TextView) convertView.findViewById(R.id.command_text);
+                    }else {
+                        holder.userImageView = (ImageView) convertView.findViewById(R.id.user_avatar);
+                        holder.commandTextView = (TextView) convertView.findViewById(R.id.command_text);
+                        holder.timeTextView = (TextView) convertView.findViewById(R.id.send_time);
+                        holder.commandButton = (Button) convertView.findViewById(R.id.command_button);
+                        holder.dateTextView = (TextView) convertView.findViewById(R.id.date_text);
+                    }
                 } catch (Exception e) {
                 }
             }
@@ -217,7 +230,11 @@ public class ChatRoomAdapter extends BaseAdapter {
                 view = mListInterface.ifMessageSenderIsLoggedInUser(position) ? mInflater.inflate(R.layout.chat_voice_right_row, null) : mInflater.inflate(R.layout.chat_voice_left_row, null);
                 break;
             case eCOMMAND:
-                view = mInflater.inflate(R.layout.chat_command_row, null);
+                if (mListInterface.getChatType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT)){
+                    view = mInflater.inflate(R.layout.chat_command_group_row,null);
+                }else {
+                    view = mInflater.inflate(R.layout.chat_command_row, null);
+                }
                 break;
         }
         return view;
@@ -248,6 +265,19 @@ public class ChatRoomAdapter extends BaseAdapter {
 
         if (holder != null)
             holder.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void setGroupChatCommand(MPChatMessage message, final int position, final View view){
+        ViewHolder holder = (ViewHolder) view.getTag();
+
+        if (holder != null) {
+            if (message.command.equalsIgnoreCase("CHAT_WELCOME_MESSAGE")) {
+                if (!TextUtils.isEmpty(message.body)) {
+                    holder.commandTextView.setVisibility(View.VISIBLE);
+                    holder.commandTextView.setText(message.body);
+                }
+            }
+        }
     }
 
 
@@ -361,9 +391,11 @@ public class ChatRoomAdapter extends BaseAdapter {
 
     private void loadAvatarImage(ViewHolder holder, int position) {
         MPChatMessage message = getItem(position);
-        if (message.message_media_type == MPChatMessage.eMPChatMessageType.eCOMMAND)
-            holder.userImageView.setImageResource(R.drawable.icon_admin);
-        else {
+        if (message.message_media_type == MPChatMessage.eMPChatMessageType.eCOMMAND) {
+            if (!mListInterface.getChatType().equalsIgnoreCase(MPChatConstants.BUNDLE_VALUE_GROUP_CHAT)) {
+                holder.userImageView.setImageResource(R.drawable.icon_admin);
+            }
+        }else {
             if (MPChatUtility.isAvatarImageIsDefaultForUser(message.sender_profile_image))
                 (holder).userImageView.setImageResource(R.drawable.default_useravatar);
             else
