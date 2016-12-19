@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.entity.MilestoneStatus;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectDetailsPagerAdapter;
@@ -137,7 +138,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
     }
 
     @Override
-    public void updateProjectDetailsView(String memberType, String avatarUrl, List<List<Task>> taskLists, int currentMilestonePosition, boolean isKaiGongResolved) {
+    public void updateProjectDetailsView(String memberType, String avatarUrl, List<List<Task>> taskLists, List<MilestoneStatus> milestoneStatusList, int currentMilestonePosition, boolean isKaiGongResolved) {
 
         mProjectRootView.setVisibility(View.VISIBLE);
         if (mSwipeRefreshLayout.isRefreshing()) {
@@ -157,11 +158,12 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
             if (mIsRefresh || mFragmentPagerAdapter != null) {
                 mFragmentPagerAdapter.updateFragment(taskLists);
+                mProgressBarIndicator.setupWithViewPager(mContentViewPager,milestoneStatusList);
             } else {
                 mFragmentPagerAdapter = new ProjectDetailsPagerAdapter(getChildFragmentManager(), avatarUrl, taskLists);
                 mContentViewPager.setAdapter(mFragmentPagerAdapter);
                 //progressbar indicator( must first have viewpager adapter)
-                mProgressBarIndicator.setupWithViewPager(mContentViewPager);
+                mProgressBarIndicator.setupWithViewPager(mContentViewPager,milestoneStatusList);
                 mProgressBarIndicator.setCurrentStatus(currentMilestonePosition);
                 mContentViewPager.setCurrentItem(currentMilestonePosition);
             }
@@ -202,8 +204,8 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         if (count != 0) {
             mIsUnread = true;
             mMenuBadgeView.setVisibility(View.VISIBLE);
+            mMenuBadgeView.setText(String.valueOf(count));
         }
-        mMenuBadgeView.setText(count + "");
     }
 
     @Override

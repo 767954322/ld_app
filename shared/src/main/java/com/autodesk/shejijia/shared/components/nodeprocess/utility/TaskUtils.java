@@ -16,6 +16,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.uielements.PickDateDialogFragment;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
@@ -292,5 +293,33 @@ public class TaskUtils {
             }
         }
         return null;
+    }
+
+    public static String getTaskTemplateName(String taskTemplateId){
+        String taskTemplateName = null;
+        switch (taskTemplateId){
+            case ConstructionConstants.TaskTemplateId.KAI_GONG_JIAO_DI:
+                taskTemplateName = UIUtils.getString(R.string.kai_gong_jiao_di);
+                break;
+            case ConstructionConstants.TaskTemplateId.YINBIGONGCHENG_YANSHOU:
+                taskTemplateName = UIUtils.getString(R.string.yinbigongcheng_yanshou);
+                break;
+            case ConstructionConstants.TaskTemplateId.BI_SHUI_SHI_YAN:
+                taskTemplateName = UIUtils.getString(R.string.bi_shui_shi_yan);
+                break;
+            case ConstructionConstants.TaskTemplateId.ZHONGQI_YANSHOU:
+                taskTemplateName = UIUtils.getString(R.string.zhongqi_yanshou);
+                break;
+            case ConstructionConstants.TaskTemplateId.JICHU_WANGONG_YANSHOU:
+                taskTemplateName = UIUtils.getString(R.string.jichu_wangong_yanshou);
+                break;
+            case ConstructionConstants.TaskTemplateId.JUNGONG_YANSHOU:
+                taskTemplateName = UIUtils.getString(R.string.jungong_yanshou);
+                break;
+            default:
+                taskTemplateName = taskTemplateId;
+                break;
+        }
+        return taskTemplateName;
     }
 }

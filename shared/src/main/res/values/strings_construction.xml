@@ -160,7 +160,6 @@
     <string name="tip_form_commit">提交后不可修改</string>
     <string name="form_reinspection_log">强制复验项</string>
     <string name="form_rectification_log">监督整改项</string>
->>>>>>> e3c97dd49e04489f425de2fe14becec93d06def9
 
     <!--footer view text-->
     <string name="footer_no_more">没有更多</string>
@@ -209,5 +208,13 @@
     <string name="room">室</string>
     <string name="hall">厅</string>
     <string name="toilet">卫</string>
+
+    <!--验收节点名称-->
+    <string name="kai_gong_jiao_di">开工</string>
+    <string name="yinbigongcheng_yanshou">隐蔽</string>
+    <string name="bi_shui_shi_yan">闭水</string>
+    <string name="zhongqi_yanshou">中期</string>
+    <string name="jichu_wangong_yanshou">基础</string>
+    <string name="jungong_yanshou">竣工</string>
 
 </resources>

@@ -18,6 +18,7 @@ import com.autodesk.shejijia.shared.components.message.ProjectMessageCenterActiv
 import com.autodesk.shejijia.shared.components.message.entity.UnreadMsg;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
+import com.autodesk.shejijia.shared.components.nodeprocess.entity.MilestoneStatus;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectDetailsFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.utility.TaskUtils;
 
@@ -113,13 +114,53 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
             List<List<Task>> taskLists = handleTaskListData(projectInfo.getPlan());
             boolean isKaiGongResolved = isKaiGongResolved(projectInfo);
             String avatarUrl = TaskUtils.getAvatarUrl(mContext, projectInfo.getMembers());
+            List<MilestoneStatus> milestoneStatusList = handleMilestone(taskLists);
             if (taskLists != null) {
                 mProjectDetailsView.hideLoading();
-                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), avatarUrl, taskLists, currentMilestonePosition, isKaiGongResolved);
+                mProjectDetailsView.updateProjectDetailsView(UserInfoUtils.getMemberType(mContext), avatarUrl, taskLists, milestoneStatusList, currentMilestonePosition, isKaiGongResolved);
             } else {
                 mProjectDetailsView.showError("handle data error");
             }
         }
+    }
+
+    private List<MilestoneStatus> handleMilestone(List<List<Task>> taskLists) {
+        List<MilestoneStatus> milestoneStatusList = new ArrayList<>();
+        for (int i = 0; i < taskLists.size(); i++) {
+            boolean isHasFind = false;
+            for (int j = 0; j < taskLists.get(i).size(); j++) {
+                boolean isMilestone = taskLists.get(i).get(j).isMilestone();
+                String taskStatus = taskLists.get(i).get(j).getStatus();
+                if (isMilestone && taskStatus.equalsIgnoreCase(ConstructionConstants.TaskStatus.RESOLVED)) {//验收节点为已完成时就算是progressbar为已完成状态
+                    MilestoneStatus milestoneStatus = new MilestoneStatus();
+                    milestoneStatus.setName(TaskUtils.getTaskTemplateName(taskLists.get(i).get(j).getTaskTemplateId()));
+                    milestoneStatus.setStatus(UIUtils.getString(R.string.task_resolved));
+                    milestoneStatus.setPosition(i);
+                    milestoneStatusList.add(milestoneStatus);
+                    isHasFind = true;
+                    break;
+                } else {
+                    if (taskStatus.equalsIgnoreCase(ConstructionConstants.TaskStatus.INPROGRESS) //小节点里存在进行中或已延期就代表progressbar为未开始状态
+                            || taskStatus.equalsIgnoreCase(ConstructionConstants.TaskStatus.DELAYED)) {
+                        MilestoneStatus milestoneStatus = new MilestoneStatus();
+                        milestoneStatus.setName(TaskUtils.getTaskTemplateName(taskLists.get(i).get(taskLists.get(i).size() - 1).getTaskTemplateId()));
+                        milestoneStatus.setStatus(UIUtils.getString(R.string.task_inProgress));
+                        milestoneStatus.setPosition(i);
+                        milestoneStatusList.add(milestoneStatus);
+                        isHasFind = true;
+                        break;
+                    }
+                }
+            }
+            if (!isHasFind) {
+                MilestoneStatus milestoneStatus = new MilestoneStatus();
+                milestoneStatus.setName(TaskUtils.getTaskTemplateName(taskLists.get(i).get(taskLists.get(i).size() - 1).getTaskTemplateId()));
+                milestoneStatus.setStatus(UIUtils.getString(R.string.task_open));
+                milestoneStatus.setPosition(i);
+                milestoneStatusList.add(milestoneStatus);
+            }
+        }
+        return milestoneStatusList;
     }
 
     private int getCurrentMilestonePosition(PlanInfo planInfo) {

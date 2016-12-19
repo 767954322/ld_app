@@ -24,6 +24,9 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.entity.MilestoneStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +83,7 @@ public class ProgressbarIndicator extends View {
     private int bitMapHeight, bitMapWidth;
 
     private Path mDashPath;//虚线path
-    private String[] statusLists;
+    private List<MilestoneStatus> mMilestoneStatusList;
     private final Rect textBounds = new Rect();
     private DashPathEffect dashPathEffect = new DashPathEffect(new float[]{8, 12}, 0);
     private List<Bitmap> iconList = new ArrayList<>(3);
@@ -139,9 +142,6 @@ public class ProgressbarIndicator extends View {
         iconList.add(icUnOpen);
         iconList.add(icInProgress);
         iconList.add(icComplete);
-
-        statusLists = getContext().getResources().getStringArray(R.array.project_progressbar_state);
-
     }
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
@@ -205,8 +205,9 @@ public class ProgressbarIndicator extends View {
         return (int) (spValue * fontScale + 0.5f);
     }
 
-    public void setStepsCount(int stepsCount) {
+    public void setStepsCount(int stepsCount, List<MilestoneStatus> milestoneStatusList) {
         this.stepsCount = stepsCount;
+        this.mMilestoneStatusList = milestoneStatusList;
         invalidate();
     }
 
@@ -237,14 +238,14 @@ public class ProgressbarIndicator extends View {
         checkAnimator.start();
     }
 
-    public void setupWithViewPager(@NonNull ViewPager viewPager) {
+    public void setupWithViewPager(@NonNull ViewPager viewPager, List<MilestoneStatus> milestoneStatusList) {
         final PagerAdapter pagerAdapter = viewPager.getAdapter();
         if (pagerAdapter == null) {
             throw new IllegalArgumentException("ViewPager does not have a PagerAdapter set");
         }
 
-        // 1. we'll add Steps.
-        setStepsCount(pagerAdapter.getCount());
+        // 1. we'll add Steps and milestoneStatusList.
+        setStepsCount(pagerAdapter.getCount(), milestoneStatusList);
 
         // 2.setCurrentPosition
         if (pagerAdapter.getCount() > 0) {
@@ -262,7 +263,7 @@ public class ProgressbarIndicator extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (stepsCount < 1) {
+        if (mMilestoneStatusList == null || mMilestoneStatusList.size() == 0) {
             setVisibility(GONE);
             return;
         }
@@ -280,16 +281,16 @@ public class ProgressbarIndicator extends View {
 
           /*draw circles*/
         pointX = startX;
-        for (int i = 0; i < stepsCount; i++) {
-            int radius = this.radius + (int) dip2px(getContext(), 3);
-            if (i < currentStatus) {
+        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+            int radius = this.radius + dip2px(getContext(), 3);
+            if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
                 circlePaint.setColor(circleCompleteColor);
                 canvas.drawCircle(pointX, centerY, radius, circlePaint);
-            } else if (i == currentStatus) {
-                if (currentStatus == 0){
+            } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
+                if (currentStatus == 0) {
                     circlePaint.setColor(circleUnOpenColor);
                     canvas.drawCircle(pointX, centerY, radius, circlePaint);
-                }else {
+                } else {
                     circlePaint.setColor(circleInProgressColor);
                     canvas.drawCircle(pointX, centerY, radius, circlePaint);
                 }
@@ -297,17 +298,16 @@ public class ProgressbarIndicator extends View {
                 circlePaint.setColor(circleUnOpenColor);
                 canvas.drawCircle(pointX, centerY, radius, circlePaint);
             }
-
             pointX += stepDistance;
         }
 
         /*draw bitmap*/
         pointX = startX;
-        for (int i = 0; i < stepsCount; i++) {
+        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
             if (iconList != null && iconList.size() == 3) {
-                if (i < currentStatus) {
+                if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
                     canvas.drawBitmap(iconList.get(2), pointX - iconList.get(2).getWidth() / 2, centerY - iconList.get(2).getHeight() / 2, null);
-                } else if (i == currentStatus) {
+                } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
                     if (currentStatus == 0) {
                         canvas.drawBitmap(iconList.get(0), pointX - iconList.get(0).getWidth() / 2, centerY - iconList.get(0).getHeight() / 2, null);
                     } else {
@@ -322,15 +322,15 @@ public class ProgressbarIndicator extends View {
 
         /*draw selected circle*/
         pointX = startX;
-        for (int i = 0; i < stepsCount; i++) {
-            int radius = this.radius + (int) dip2px(getContext(), 3);
+        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+            int radius = this.radius + dip2px(getContext(), 3);
             if (i == currentStepPosition) {
-                if (i < currentStatus) {
+                if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_resolved))) {
                     pStoke.setColor(circleCompleteSelectedColor);
-                } else if (i == currentStatus) {
-                    if (currentStatus == 0){
+                } else if (mMilestoneStatusList.get(i).getStatus().equalsIgnoreCase(UIUtils.getString(R.string.task_inProgress))) {
+                    if (currentStatus == 0) {
                         pStoke.setColor(circleUnOpenSelectedColor);
-                    }else {
+                    } else {
                         pStoke.setColor(circleInProgressSelectedColor);
                     }
                 } else {
@@ -344,18 +344,15 @@ public class ProgressbarIndicator extends View {
         }
 
         /*draw texts*/
-        if (statusLists != null && statusLists.length > 0) {
-            for (int i = 0; i < stepsCount; i++) {
-                String status = statusLists[i];
-                textPaint.setColor(textColor);
-                textPaint.setTextSize(textSize);
-                textPaint.getTextBounds(status, 0, status.length(), textBounds);
-                int textStartX = (Math.abs(radius - textBounds.width() / 2) + radius) + stepDistance * i;
-                int textStartY = radius * 4 + (textBounds.height() / 2);
-                canvas.drawText(status, textStartX, textStartY, textPaint);
-            }
+        for (int i = 0; i < mMilestoneStatusList.size(); i++) {
+            String status = mMilestoneStatusList.get(i).getName();
+            textPaint.setColor(textColor);
+            textPaint.setTextSize(textSize);
+            textPaint.getTextBounds(status, 0, status.length(), textBounds);
+            int textStartX = (Math.abs(radius - textBounds.width() / 2) + radius) + stepDistance * i;
+            int textStartY = radius * 4 + (textBounds.height() / 2);
+            canvas.drawText(status, textStartX, textStartY, textPaint);
         }
-
     }
 
 
