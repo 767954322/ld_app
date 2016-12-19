@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def buildNumber = ".0"
-def gitLastCommitId = ""
+def gitLastCommitId = "\"L110VS\""
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -19,6 +19,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "GITLASTCOMMITID", gitLastCommitId
             minifyEnabled false
             versionNameSuffix "_debug"
         }

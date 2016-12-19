@@ -11,7 +11,7 @@ public class VersionDescriptionActivity extends AboutBaseActivity {
     private WebView mWvVersionDescription;
     private TextView mTvVersion;
     @Override
-    protected int getLayoutResId() {
+    protected int getSubLayoutResId() {
         return R.layout.activity_version_description;
     }
 

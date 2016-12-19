@@ -4,15 +4,13 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
-
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-
-public class DesignIntroductionActivity extends AboutBaseActivity {
+public class ConstructionIntroductionActivity extends AboutBaseActivity {
     private WebView mWvDesignerIntroduced;
     private TextView mTvVersion;
     @Override
-    protected int getLayoutResId() {
+    protected int getSubLayoutResId() {
         return R.layout.activity_design_introduction;
     }
 
@@ -29,8 +27,6 @@ public class DesignIntroductionActivity extends AboutBaseActivity {
             actionBar.setTitle(getString(R.string.designer_introduced));
         }
         mTvVersion.setText(Constant.VERSION_NUMBER);
-
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

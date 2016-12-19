@@ -44,7 +44,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     private static final String FRAGMENT_TAG_TASK = "taskList";
     private static final String FRAGMENT_TAG_ISSUE = "issueList";
     private static final String FRAGMENT_TAG_GROUP_CHAT = "groupChatList";
-    private static final int SYS_INTENT_REQUEST_CODE = 0XFF01;
+    private static final int SYSTEM_INTENT_REQUEST_CODE = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST_CODE = 0XFF02;
     private static final int CROP_SMALL_PICTURE_CODE = 0XFF03;
 
@@ -110,7 +110,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtn_personal_headPic:
-                ShowBottomPopup();
+                showBottomPopup();
                 break;
             case R.id.tv_toolbar_title:
                 // TODO: 10/25/16  get date from calendar and set data to taskListFragment
@@ -287,7 +287,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case SYS_INTENT_REQUEST_CODE:
+            case SYSTEM_INTENT_REQUEST_CODE:
                 if (data != null) {
                     Uri originalUri = data.getData();
                     mPersonalCenterContract.cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_CODE);
@@ -324,7 +324,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
     @Override
     public void hideLoading() {}
 
-    private void ShowBottomPopup() {
+    private void showBottomPopup() {
         View contentView = LayoutInflater.from(this).inflate(R.layout.popup_personal_headpic_dialog, null);
         TextView tvSletectAlbum = (TextView) contentView.findViewById(R.id.tv_sletect_album);
         TextView tvPhotograph = (TextView) contentView.findViewById(R.id.tv_photograph);
@@ -332,14 +332,14 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         tvSletectAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPersonalCenterContract.systemPhoto(SYS_INTENT_REQUEST_CODE);
+                mPersonalCenterContract.getSystemPhoto(SYSTEM_INTENT_REQUEST_CODE);
 
             }
         });
         tvPhotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPersonalCenterContract.cameraPhoto(CAMERA_INTENT_REQUEST_CODE);
+                mPersonalCenterContract.getCameraPhoto(CAMERA_INTENT_REQUEST_CODE);
             }
         });
         tvCancel.setOnClickListener(new View.OnClickListener() {

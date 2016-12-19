@@ -12,10 +12,10 @@ import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
  * Created by luchongbin on 16-12-16.
  */
 
-public class AboutBaseActivity extends BaseActivity {
+public abstract class AboutBaseActivity extends BaseActivity {
     @Override
     protected int getLayoutResId() {
-        return 0;
+        return getSubLayoutResId();
     }
 
     @Override
@@ -26,6 +26,8 @@ public class AboutBaseActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
 
     }
+    protected abstract int getSubLayoutResId();
+
     protected void initWebView(WebView webView,String url) {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);

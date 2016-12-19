@@ -14,8 +14,8 @@ public interface PersonalCenterContract {
     interface Presenter extends BasePresenter {
         void uploadPersonalHeadPicture();
         void getPersonalHeadPicture(String requestTag);
-        void systemPhoto(int requestCode);
-        void cameraPhoto(int requestCode);
+        void getSystemPhoto(int requestCode);
+        void getCameraPhoto(int requestCode);
         void cropImageUri(Uri uri, int outputX, int outputY, int requestCode);
         Uri getUritempFile();
     }

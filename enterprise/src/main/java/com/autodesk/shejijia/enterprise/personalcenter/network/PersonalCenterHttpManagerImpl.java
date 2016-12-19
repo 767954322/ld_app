@@ -71,20 +71,6 @@ public class PersonalCenterHttpManagerImpl implements PersonalCenterHttpManager 
         reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
         reqBuilder.put(reqBody);
         okHttpClient.newCall(reqBuilder.build()).enqueue(callback);
-//        okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
-////                callback.onErrorResponse();
-//                CustomProgress.cancelDialog();
-//            }
-//
-//            @Override
-//            public void onResponse(Response response) throws IOException {
-//                CustomProgress.cancelDialog();
-////                callback.onResponse();
-////                response.isSuccessful()
-//            }
-//        });
     }
 
     private void get(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_white"
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Version WD0.0.2.4"
+                tools:text="Version WD0.0.2.4"
                 android:textColor="@color/black"
                 android:layout_centerVertical="true" />
         </RelativeLayout>
@@ -110,6 +111,7 @@
                 android:text="@string/git_commit_id" />
 
             <TextView
+                android:id="@+id/tv_git_commit_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -342,7 +342,7 @@
             android:name="UMENG_CHANNEL"
             android:value="AnZhuoShiChang" />
 
-        <activity android:name=".personalcenter.activity.DesignIntroductionActivity" />
+        <activity android:name=".personalcenter.activity.ConstructionIntroductionActivity" />
         <activity android:name=".personalcenter.activity.VersionDescriptionActivity"></activity>
     </application>
 

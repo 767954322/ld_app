@@ -51,7 +51,7 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
     }
 
     @Override
-    public void systemPhoto(int requestCode) {
+    public void getSystemPhoto(int requestCode) {
         mUritempFile = getRandomUritempFile();
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
@@ -63,7 +63,7 @@ public class PersonalCenterPresenter implements PersonalCenterContract.Presenter
     }
 
     @Override
-    public void cameraPhoto(int requestCode) {
+    public void getCameraPhoto(int requestCode) {
         String sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
             return;
