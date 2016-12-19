@@ -38,7 +38,7 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.issue.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.ProjectListFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
+import com.pgyersdk.update.PgyUpdateManager;
 public class EnterpriseHomeActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener,
         NavigationView.OnNavigationItemSelectedListener,PersonalCenterContract.View {
     private static final String FRAGMENT_TAG_TASK = "taskList";
@@ -102,7 +102,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements View.OnClick
         mToolbarTitle.setOnClickListener(this);
         //pgy update register
         if (BuildConfig.DEBUG) {
-//            PgyUpdateManager.register(this);
+            PgyUpdateManager.register(this);
         }
     }
 
